@@ -7,9 +7,11 @@
 
 ## 博客维护memo
 
-网站内容在这里维护：https://github.com/chiechie/chiechie.github.io/
-网页主题在这里设置：https://github.com/chiechie/chiechie.github.io/blob/master/_config.yml
-每次有内容提交到仓库时，github pages会自动运行[Jekyll](https://jekyllrb.com/)，将mardown转换为网页。
+- 网站内容在这里维护：https://github.com/chiechie/chiechie.github.io/ 
+
+- 网页主题在这里设置：https://github.com/chiechie/chiechie.github.io/blob/master/_config.yml 
+
+- 每次有内容提交到仓库时，github pages会自动运行[Jekyll](https://jekyllrb.com/)，将mardown转换为网页
 
 
 

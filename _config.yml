@@ -2,9 +2,9 @@ title: Hi, 欢迎来到chiechie的博客
 github_username:  chiechie
 email: 328499034@qq.com
 
-# theme: jekyll-theme-cayman
-theme: minima
+theme: jekyll-theme-cayman
+# theme: minima
 
 plugins:
   - jekyll-feed
-  - jekyll-toc
+  # - jekyll-toc

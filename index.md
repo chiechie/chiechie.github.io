@@ -1,4 +1,5 @@
-# Hi, 我是chiechie，欢迎来到我的博客
+## Hi, 我是chiechie，欢迎来到我的博客
+
 
 ## 关于我
 
@@ -8,9 +9,9 @@
 
 ## 博客维护memo
 
-- 网站内容在这里维护：https://github.com/chiechie/chiechie.github.io/ 
+- 网站内容在[这里](https://github.com/chiechie/chiechie.github.io/)维护
 
-- 网页主题在这里设置：https://github.com/chiechie/chiechie.github.io/blob/master/_config.yml 
+- 网页主题在[这里](https://github.com/chiechie/chiechie.github.io/blob/master/_config.yml )设置
 
 - 每次有内容提交到仓库时，github pages会自动运行[Jekyll](https://jekyllrb.com/)，将mardown转换为网页
 

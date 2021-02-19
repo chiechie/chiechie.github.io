@@ -9,3 +9,4 @@ public/
 */.DS_Store
 */*/.DS_Store
 .idea/
+.deploy_git*

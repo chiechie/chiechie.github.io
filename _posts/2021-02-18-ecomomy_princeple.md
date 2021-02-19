@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "从劳动经济学到职业选择"
-subtitle: 'From Vim to Spacemacs'
+subtitle: '要不要996'
 author: "chiechie"
 header-style: text
 tags:
@@ -9,5 +9,5 @@ tags:
   - 就业
 ---
 
-## Review (only in slide)
-### Proving `0 + n = n`
+## ee3e3
+### e3e3e3

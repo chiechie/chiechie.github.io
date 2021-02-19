@@ -5,8 +5,9 @@
 # Site
 title: Chiechie Blog
 
-subtitle: ''
-description: "分享一些历史，科技，哲学，物理，投资相关领域的书籍，以及思考感悟"
+subtitle: "Set your course by the stars, not by the lights of passing ships. —— Omar Bradley"
+# description: "分享一些历史，科技，哲学，物理，投资相关领域的书籍，以及思考感悟"
+description: "算法工程师，reader & thinker"
 keywords: 博客, AI, 互联网"
 author: Chiechie
 language: zh-CN
@@ -20,6 +21,14 @@ weibo_username: Hh_Lae
 zhihu_username: chiechie8
 github_username: chiechie
 
+# sitemap:
+#   path: sitemap.xml
+#   template: ./sitemap_template.xml
+#   rel: false
+#   tags: true
+#   categories: true
+
+  
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
 url: http://example.com
@@ -76,7 +85,7 @@ index_generator:
   order_by: -date
 
 # Category & Tag
-default_category: uncategorized
+default_category: others
 category_map:
 tag_map:
 

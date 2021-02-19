@@ -19,3 +19,9 @@ node_modules
 .jekyll-cache
 */.DS_Store
 */*/.DS_Store
+public/
+.deploy_git/
+themes/
+.github/
+db.json
+_config.landscape.yml

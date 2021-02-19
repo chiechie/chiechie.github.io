@@ -1,27 +1,14 @@
-_site
-.sass-cache
-.jekyll-cache
-.jekyll-metadata
-vendor
-.bundle/*
-Gemfile
-Gemfile.lock
-_site
-_posts/_draft
-_posts/_archive
-_archive
 node_modules
 .vscode
 *.log
 *.lock
 *.sh
 .DS_Store
-.jekyll-cache
 */.DS_Store
 */*/.DS_Store
 public/
-.deploy_git/
-themes/
+# .deploy_git/
+# themes/
 .github/
 db.json
-_config.landscape.yml
+# _config.landscape.yml

@@ -6,7 +6,7 @@ layout: post
 
 ---
 
-Hi，我是chiechie，一名算法工程师。
+Hi，我是chiechie,一名互联网行业从业者，喜欢阅读和思考，感兴趣领域包括 历史，科技，哲学，物理，投资。
 
 目前居住在深圳，日常出没于[微博](https://weibo.com/chiechie/home?wvr=5)、[知乎](https://www.zhihu.com/people/chiechie8)、[Twitter](https://twitter.com/stellazhao9)、[Github](https://github.com/chiechie)。
 

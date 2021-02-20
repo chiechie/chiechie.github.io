@@ -3,7 +3,7 @@ layout: post
 title:  "时间序列概述"
 author: "chiechie"
 header-style: text
-categories: 时间序列
+categories: 技术类
 tags:
   - 时间序列
   - 统计  

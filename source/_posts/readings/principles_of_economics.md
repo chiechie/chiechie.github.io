@@ -1,6 +1,6 @@
 ---
 layout: draft
-title:  "经济学原理-c19-收入与歧视"
+title:  "经济学原理-收入与歧视"
 subtitle: '从劳动经济学到职业选择以及要不要996'
 author: "chiechie"
 header-style: text

@@ -3,7 +3,7 @@ title: 关于平台设计工作的一点想法
 date: 2021-02-23 23:39:15
 author: "chiechie"
 header-style: text
-categories: AIOps
+categories: 工作总结
 tags:
 - 工作沉淀
 ---

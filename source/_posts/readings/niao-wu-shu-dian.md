@@ -1,6 +1,9 @@
 ---
 title: 茑屋书店
 date: 2021-02-21 18:22:44
+author: "chiechie"
+categories: 阅读清单
+
 tags:
 - 人文主义
 - 投资

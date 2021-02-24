@@ -3,16 +3,14 @@ title: Naval-如何不靠运气致富？
 date: 2021-02-24 09:16:28
 author: "chiechie"
 header-style: text
-categories: readings
+categories: 投资
 tags:
   - 人物传记
   - 搞钱
 ---
 > 转载自：http://cnwmw.blogspot.com/2018/06/naval.html
-
-一般来说，富人不会分享自己发家致富的秘密。所以，有互联网以来，我看到许多在网上教人致富的人都发了财。在英文博客界，写关于如何发财的博文成为了一个专门的门类。而真正的有钱人只会用心灵鸡汤敷衍一下大众，根本不会提供任何方法论，更不要说是致富秘诀了。
-也有例外。硅谷投资人Naval Ravikant在5月31日突然一口气发了40条语录，内容就是关于如何不靠运气而致富。随后这40条文字被不断转发，翻译为多国语言，这一事件史称"推文风暴"。Naval是印度裔移民，20多年来一直在美国硅谷创业。他最著名的创业项目是AngelList，世界股权众筹平台的鼻祖；他最著名的投资项目有两个，一个是Twitter，一个是Uber。
-奇怪的是，国内互联网上的反响并不强烈。按理说这应该是中国人最感兴趣的话题了，而且要比各种心灵鸡汤高好几个段位，为什么会遭到冷遇呢？我分析了一下原因，主要有两点：1、网上的版本翻译得不好，每个中文字都认识，连起来看就不懂了；2、致富这个话题在中文互联网里，已经被鸡汤严重污染了，所以许多人根本理解不了Naval在说什么。
+硅谷投资人Naval Ravikant在5月31日突然一口气发了40条语录，内容就是关于如何不靠运气而致富。随后这40条文字被不断转发，翻译为多国语言，这一事件史称"推文风暴"。
+Naval是印度裔移民，20多年来一直在美国硅谷创业。他最著名的创业项目是AngelList，世界股权众筹平台的鼻祖；他最著名的投资项目有两个，一个是Twitter，一个是Uber。
 
 How to Get Rich (without getting lucky)
 
@@ -23,6 +21,7 @@ How to Get Rich (without getting lucky)
 翻译&注释：和菜头
 
 1. Seek wealth, not money or status. Wealth is having assets that earn while you sleep. Money is how we transfer time and wealth. Status is your place in the social hierarchy.
+
 去寻求财富，而非金钱或地位。财富就是你拥有资产，而资产在你睡觉的时候都还在为你赚钱；金钱是我们转换时间和财富的工具；身份是你在社会等级体系里所处的位置。
 
 2. Understand that ethical wealth creation is possible. If you secretly despise wealth, it will elude you.
@@ -31,36 +30,36 @@ How to Get Rich (without getting lucky)
 3. Ignore people playing status games. They gain status by attacking people playing wealth creation games.
 别去理会那些热衷于玩身份游戏的人，他们通过攻击那些创造财富的人以获得自己的身份。
 
-4.You're not going to get rich renting out your time. You must own equity，a piece of a business to gain your financial freedom.
+4. You're not going to get rich renting out your time. You must own equity，a piece of a business to gain your financial freedom.
 你不会通过出租自己的时间而变得富有。你必须拥有产权，也就是生意的一部分，以此才能赢得个人财务自由。
 
-5.You will get rich by giving society what it wants but does not yet know how to get. At scale.
+5. You will get rich by giving society what it wants but does not yet know how to get. At scale.
 
 提供社会大众想要但是他们还不知道如何获取的东西，你就会因此而致富。但有一点：你必须规模化地供应社会。
 
-6.Pick an industry where you can play long term games with long term people.
+6. Pick an industry where you can play long term games with long term people.
 
 选择一个你可以长期从事的产业，寻找一批可以一起长期共事的人。
 
-7.The Internet has massively broadened the possible space of careers. Most people haven't figured this out yet.
+7. The Internet has massively broadened the possible space of careers. Most people haven't figured this out yet.
 互联网极大拓展了一个人职业生涯的可能性。绝大多数人对此毫无认知。
 
-8.Play iterated games. All the returns in life, whether in wealth, relationships, or knowledge, come from compound interest.
+8. Play iterated games. All the returns in life, whether in wealth, relationships, or knowledge, come from compound interest.
 玩就玩复利游戏。无论是财富，人际关系或者是知识，所有你人生里获得的回报，都来自复利。
 
-9.Pick business partners with high intelligence, energy, and, above all, integrity.
+9. Pick business partners with high intelligence, energy, and, above all, integrity.
 在选择商业合作伙伴的时候，选择那些高智商、精力旺盛的家伙，但在这一切之上，他应该是个正直诚实的人。
 
-10.Don't partner with cynics and pessimists. Their beliefs are self-fulfilling.
+10. Don't partner with cynics and pessimists. Their beliefs are self-fulfilling.
 不要和愤世嫉俗者和悲观主义者合作，因为他们会任由坏事发生，以此证明他们的负面看法是正确的。
 
-11.Learn to sell. Learn to build. If you can do both, you will be unstoppable.
+11. Learn to sell. Learn to build. If you can do both, you will be unstoppable.
 学会如何销售，学会如何创建。如果你同时能做到这两件事，你的成功将无可阻挡。
 
-12.Arm yourself with specific knowledge, accountability, and leverage.
+12. Arm yourself with specific knowledge, accountability, and leverage.
 用独到知识，责任感和杠杆武装自己。
 
-13.Specific knowledge is knowledge that you cannot be trained for. If society can train you, it can train someone else, and replace you.
+13. Specific knowledge is knowledge that you cannot be trained for. If society can train you, it can train someone else, and replace you.
 独到知识是那种不可以通过培训而获得的知识。这是因为，如果这种知识可以经由培训而得，那么其他人同样也可以，并且以此取代你。
 
 14.Specific knowledge is found by pursuing your genuine curiosity and passion rather than whatever is hot right now.

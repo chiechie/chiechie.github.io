@@ -1,14 +1,11 @@
 ---
-title: 智能监控框架.md
+title: 智能监控框架
 date: 2021-02-23 22:40:28
 author: "chiechie"
 header-style: text
-categories: AIOps
+categories: 技术类
 tags:
-  - 时间序列
-  - 异常检测
-  - 关联分析
-  - 根因定位
+  - AIOps
 ---
 
 ## 我们的框架

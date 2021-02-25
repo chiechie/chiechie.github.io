@@ -435,6 +435,11 @@
   dependencies:
     "function-bind" "^1.1.1"
 
+"hexo-calendar@^1.0.4":
+  "integrity" "sha512-y1KK/2LAYL560+XzwEHrBKSlOOEWA1oOKvMNIzUOZ4jAHIHNqEFVTDlcax4C/E4XcbxwoJNN3arhdd3zMSWN6w=="
+  "resolved" "https://registry.npmjs.org/hexo-calendar/-/hexo-calendar-1.0.4.tgz"
+  "version" "1.0.4"
+
 "hexo-cli@^4.0.0":
   "integrity" "sha512-NJQYKnD41KUlNZzEyi8wDzPeGhrjwLLTa05dtkwq+lJch+j9idZTh4dgn3w/82o6Q/zygn+ibO1XvihMfFdSfw=="
   "resolved" "https://registry.yarnpkg.com/hexo-cli/-/hexo-cli-4.2.0.tgz"

@@ -4,7 +4,7 @@ title:  "经济学原理-收入与歧视"
 subtitle: '从劳动经济学到职业选择以及要不要996'
 author: "chiechie"
 header-style: text
-categories: 阅读清单
+categories: 经济学
 date: 2021-02-19 20:05:20
 
 tags:

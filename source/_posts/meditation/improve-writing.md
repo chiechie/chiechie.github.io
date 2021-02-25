@@ -30,6 +30,9 @@ tags:
 
 
 
+## 让表达有货
+- 禁止照搬或者复述别人的内容，要有自己的reflection
+
 
 ## 参考资料
 1. [zhihu--如何提升文笔？?](https://www.zhihu.com/question/440683258/answer/1698384333)

@@ -21,19 +21,56 @@ tags:
 
 如果是顶层有异常就需要下钻到更细分的维度，即研究更细致的原因，是哪个ip，或者网站，数量导致的。这一步可以使用多维度根因定位的方法。
 
-![img.png](/images/log_analizer.png)
+
 
 可以出一个这种方案：日志模版提取 + 多维度根因定位。
 其中，日志模版提取，要运维去定义规则。
 
 ## 看看别人怎么做的
-日志模式有什么难点？有的日志格式很明确，但是不同来源日志汇总到一起，格式就五花八门了。有没有什么方法能综合考虑多个来源的日志，并且从中提取出有效模式呢？有，本方法就是数据驱动的，分布式的，很快，比手动提取生成pattern的方法，效果一样好，
-介绍了3个应用场景
+### logmine
+
+日志模式有什么难点？有的日志格式很明确，但是不同来源的日志汇总到一起，格式就五花八门了。有没有什么方法对多个来源，并且从中提取出有效模式呢？有，就是在下--分布式计算，效果跟手动提pattern一样好。
+
+### high-level方式
+
+每个pattern中，有三类字段：fixed value， Variable and Wildcard
+
+-  固定值（fixed value field ）：有明确含义的，固化的，如www, httpd and INFO 。
+-  可变字段（A variable field）：如IP地址，邮箱，数字，日期，属于一个具体的类型的。
+- Wildcards ：任意的，are matched with values of all types
+
+![image-20210225214320632](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/logmine_image-20210225214320632.png)
+
+### 具体的做法
+
+![image-20210226000021042](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/image-20210226000021042.png)
+
+- step1. 将原始日志进行分词
+
+- step2. 模糊化ip类信息，也叫检查类型，类型就是IP，网址
+
+- step3. 得到k-v格式
+
+- step4. 将k排序
+
+- step5. 取key的交集
+
+
+
+
+
+![image-20210225215133870](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/image-20210225215133870.png)
+
+### logmin的demo
 
 
 
 ## 参考资料
-https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf
-https://pypi.org/project/logmine/
-https://www.ixueshu.com/h5/document/814a23b6b51168d40153bcb23ef479f1318947a18e7f9386.html
-https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf
+
+[logmine-paper](https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf)
+[logmine-pypi](https://pypi.org/project/logmine/)
+
+[apach_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)
+
+[硕士论文-模式识别在海量日志分析中的应用研究  "施佳奇"](https://www.ixueshu.com/h5/document/814a23b6b51168d40153bcb23ef479f1318947a18e7f9386.html)
+

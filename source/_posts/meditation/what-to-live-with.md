@@ -1,6 +1,7 @@
 ---
 title: 如何安身立命？
 header-style: text
+date: 2021-02-20 09:16:28
 
 categories: 沉思录
 author: "chiechie"

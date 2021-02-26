@@ -10,7 +10,7 @@ layout: post
 
 Hi，我是chiechie，一名互联网行业从业者。
 
-自由主义，经验怀疑主义，长期主义。
+自由主义，怀疑主义，长期主义。
 
 reader & thinker。
 

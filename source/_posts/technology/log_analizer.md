@@ -51,27 +51,44 @@ tags:
 即在调超参
 怎么评估一个抽象层级，即该level对应的所有pattern的好坏？从包含的信息量来衡量，一般来说wildcard个数越多，这个模版越没有什么信息。
 具体来说，可以定义一个量化的指标--cost function，取值越大，提取出来的n个模式效果越差：
+
 - ${Size}_i$: 第i个cluster包含的日志个数，
+  
 - ${WC}_i$: 第i个cluster中，wildcards个数
+  
 - ${Var}_i$:第i个cluster中，可变字段的个数。
+  
 - ${FV}_i$: 第i个cluster中，固定值字段的个数。
-默认，会看重wildcards个数，需使 包含该类字段的模式最少。
-对应的配置是:a1,a2,a3 = 1,0,0。 
-> 类似k-means聚类，对每个k，都可以使用该指标评估当前模式的好坏。 可以跨k进行对比。
-#### 怎么评估这个方法好？
-关于评估：怎么评估聚类的准确率？怎么评估模式识别的准确率？都是跟baseline算法对比。（都有了标准的算法了，还要你这个算法干嘛？）
-怎么评估聚类的准确率？ 跟一个baseline算法--OPTICS对比。提出了一个指标agreement score，即a/b，即最大公共子集的比例。
-怎么评估模式识别的准确率？ 跟一个baseline算法--UPGMA对比。
+
+默认，重点看wildcards个数，个数越多，信息量越少。
+对应的超参数配置是:a1,a2, a3 = 1,0,0
+
+> 类似k-means聚类，对每个k，都可以计算cluster的松散度。 可以跨k进行对比。
+
+
+#### 怎么评估这个方法？
+关于评估：怎么评估聚类的准确率？怎么评估模式识别的准确率？
+因为没有标签，所以两个算法都是跟baseline算法对比。（都有了baseline，还要你这个算法干嘛？）
+
+怎么评估聚类的准确率？ 跟一个baseline算法，即OPTICS对比。提出了一个指标agreement score，即最大公共子集的比例。
+
+怎么评估模式识别的准确率？ 跟一个baseline算法，即UPGMA对比。
 - UPGMA算法：对一大堆日志生成摘要，输入一个cluster的原始日志，输出一个patten，找到了最好的order。
+  
 - 使用UPGMA的结果作为ground truth，来评估模式识别算法的准确率。
+  
 - 先聚类，然后让UPGMA算法和本文的算法来给每个cluster生成摘要，
+  
 - 然后比较两者是否一致：一个字段一个字段地比较。准确率，为，摘要中命中的字段的比率。
-![图4-算法评估指标.png](evaluate.png)
+
+$\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}$
 
 
-#### 自己总结的局限性
+
+#### 自己的局限性
 对于复杂的，毫无规则的原始日志，无能为力。
-![图5-在毫无规律的日志上也束手无策.png](bad case.png)
+
+![图5-在毫无规律的日志上也束手无策.png](badcase.png)
 
 
 

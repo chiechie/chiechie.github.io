@@ -31,7 +31,7 @@ github_username: chiechie
   
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
-url: http://example.com
+url: https://chiechie.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -59,7 +59,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:

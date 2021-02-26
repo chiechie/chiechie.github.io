@@ -54,8 +54,7 @@ tags:
 - step5. 取key的交集
 
 
-![image-20210225215133870](/images/image-20210225215133870.png)
-
+![dede.png](/images/image-20210225215133870.png)
 ### logmin的demo
 
 

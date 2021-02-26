@@ -1,5 +1,4 @@
 ---
-layout: poste
 title: 如何安身立命？
 header-style: text
 

@@ -549,13 +549,10 @@
   dependencies:
     "ejs" "^2.6.1"
 
-"hexo-renderer-marked@^3.0.0":
-  "integrity" "sha512-U2EomSjsrixQXqqpZ3hYThLpKLg4RSC5hC6dwr/SZG/1LxKKfMoLA48wKgx+xSgzkydye0IBDJ+UAQPLaTfCdw=="
-  "resolved" "https://registry.yarnpkg.com/hexo-renderer-marked/-/hexo-renderer-marked-3.3.0.tgz"
-  "version" "3.3.0"
-  dependencies:
-    "hexo-util" "^2.1.0"
-    "marked" "^1.0.0"
+"hexo-renderer-pandoc@^0.3.0":
+  "integrity" "sha512-6O/OsnKy0RFf5Zgxk3lSxbslld7Nmc83vJZs0H+CNKdiTNfJV+ZAB9c/xAFC1XFwgqwtt5kKUoVMqXds4RZwKA=="
+  "resolved" "https://registry.npmjs.org/hexo-renderer-pandoc/-/hexo-renderer-pandoc-0.3.0.tgz"
+  "version" "0.3.0"
 
 "hexo-renderer-stylus@^2.0.0":
   "integrity" "sha512-1S4AG8RtzWqVrqKIYv2AJ4UYms5SHDjkdYS7IiGwgUejL24agbTktpAbnH2cG1JWZ15SRqYN0UGB9aAoSAgvEA=="
@@ -746,11 +743,6 @@
   "version" "2.0.2"
   dependencies:
     "tslib" "^2.0.3"
-
-"marked@^1.0.0":
-  "integrity" "sha512-H8lIX2SvyitGX+TRdtS06m1jHMijKN/XjfH6Ooii9fvxMlh8QdqBfBDkGUpMWH2kQNrtixjzYUa3SH8ROTgRRw=="
-  "resolved" "https://registry.yarnpkg.com/marked/-/marked-1.2.9.tgz"
-  "version" "1.2.9"
 
 "micromatch@^4.0.2":
   "integrity" "sha512-y7FpHSbMUMoyPbYUSzO6PaZ6FyRnQOpHuKwbo1G+Knck95XVU4QAiKdGEnj5wwoS7PlOgthX/09u5iFJ+aYf5Q=="

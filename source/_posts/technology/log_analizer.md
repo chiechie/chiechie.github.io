@@ -32,7 +32,7 @@ tags:
 
 ### logmine
 
-日志模式有什么难点？有的日志格式很明确，但是不同来源的日志汇总到一起，格式就五花八门了。有没有什么方法对多个来源，并且从中提取出有效模式呢？有，就是在下--分布式计算，效果跟手动提pattern一样好。
+日志模式有什么难点？有的日志格式很明确，但是不同来源的日志汇总到一起，格式就五花八门了。有没有什么方法对多个source的日志提取有效模式呢？有，就是在下--分布式计算，效果跟手动提pattern一样好。
 ![图1-层次化地提取日志模式](logmine_image-20210225214320632.png)
 
 #### pattern是怎么定义的？
@@ -44,6 +44,7 @@ tags:
 #### 提取pattern的具体流程以及如何评估pattern？
 
 ![图2-日志分析流程](image-20210226000021042.png)
+
 - step1. 将原始日志进行分词
 - step2. 提取可变字段（variable field），模糊掉，也叫检查类型
 - step3. 得到key-value格式
@@ -51,16 +52,13 @@ tags:
 - step5. 取key的交集
 
 ![图3-评价当前pattern的信息含量](cost_function.png)
-即在调超参
+即在调超参。
 怎么评估一个抽象层级，即该level对应的所有pattern的好坏？从包含的信息量来衡量，一般来说wildcard个数越多，这个模版越没有什么信息。
-具体来说，可以定义一个量化的指标--cost function，取值越大，提取出来的n个模式效果越差：
+具体来说，可以定义一个量化的指标--cost function，取值越大，提取出来的n个模式的信息量越少：
 
 - ${Size}_i$: 第i个cluster包含的日志个数，
-  
 - ${WC}_i$: 第i个cluster中，wildcards个数
-  
 - ${Var}_i$:第i个cluster中，可变字段的个数。
-  
 - ${FV}_i$: 第i个cluster中，固定值字段的个数。
 
 默认，重点看wildcards个数，个数越多，信息量越少。
@@ -76,6 +74,7 @@ tags:
 怎么评估聚类的准确率？ 跟一个baseline算法，即OPTICS对比。提出了一个指标agreement score，即最大公共子集的比例。
 
 怎么评估模式识别的准确率？ 跟一个baseline算法，即UPGMA对比。
+
 - UPGMA算法：对一大堆日志生成摘要，输入一个cluster的原始日志，输出一个patten，找到了最好的order。
   
 - 使用UPGMA的结果作为ground truth，来评估模式识别算法的准确率。
@@ -88,7 +87,7 @@ $\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c 
 
 
 
-#### 自己的局限性
+#### 局限性
 对于复杂的，毫无规则的原始日志，无能为力。
 
 ![图5-在毫无规律的日志上也束手无策.png](badcase.png)
@@ -98,6 +97,6 @@ $\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c 
 ## 参考资料
 1. [logmine-paper](https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf)
 2. [logmine-pypi](https://pypi.org/project/logmine/)
-3. [apach_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)
+3. [apache_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)
 4. [硕士论文-模式识别在海量日志分析中的应用研究  "施佳奇"](https://www.ixueshu.com/h5/document/814a23b6b51168d40153bcb23ef479f1318947a18e7f9386.html)
 

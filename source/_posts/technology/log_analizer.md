@@ -33,7 +33,6 @@ tags:
 ### high-level方式
 
 每个pattern中，有三类字段：fixed value， Variable and Wildcard
-
 -  固定值（fixed value field ）：有明确含义的，固化的，如www, httpd and INFO 。
 -  可变字段（A variable field）：如IP地址，邮箱，数字，日期，属于一个具体的类型的。
 - Wildcards ：任意的，are matched with values of all types

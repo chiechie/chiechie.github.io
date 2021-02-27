@@ -7,10 +7,10 @@ tags:
 - 计算机网路
 ---
 
-## 私有ip和公共ip分别是什么？
+## 私网IP 和 公网IP 分别是什么？
 
-- 私有ip，也叫private ip address，或者内网ip。是一个局域网内部，用于识别彼此身份的一个id。
-- 公共ip，也叫public ip address，或者外网ip。是在因特网汇总的，用户识别设备身份的一个id。
+- 私网IP，也叫private ip address，或者内网IP。是一个局域网内部，用于识别彼此身份的一个id。
+- 公网IP，也叫public ip address，或者外网IP。是在因特网汇总的，用户识别设备身份的一个id。
 
 
 ## modem 和 路由器 有什么区别？

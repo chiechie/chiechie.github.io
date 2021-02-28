@@ -11,18 +11,17 @@ tags:
 > 转载自：http://cnwmw.blogspot.com/2018/06/naval.html
 
 
-硅谷投资人Naval Ravikant在twitter上发的语录，内容就是关于如何不靠运气而致富，记录下。
+硅谷投资人Naval Ravikant在twitter上发表的语录，关于如何不靠运气而致富，记录下。
 
-## 摘录几个有感触的观点吧
+## 摘录几个有感触的观点
 1. 判断力需要经验，但它可以通过学习基本技能的方法更快速地建立起来。
    基本技能（foundational skills），我理解的是要学习经济学，心理学这些基础的哲学。
 2. 杠杆能够成倍地放大你的判断力（所产生的效能）。
    先提升判断力，再考虑加杠杆。
 3. 尽管你跟谁一起工作、做什么工作，要远比你的努力程度更加重要。但还是要倾尽全力去工作。
    跟优秀的人一起工作，做有意思的事情，比一个人埋头苦干，显然前者享受程度更高，并且成功的概率也越高。
-   但是没有这种好事，实际上我的工作是平淡寡味.
-   还是要work hard，沉淀经验；work hard的过程中，会想通一些东西，作为以后的沉淀。
-   
+   但是碰到这种好事的概率太小，实际上我的工作平淡寡味，但还是要work hard；
+   work hard的过程中，会想通一些东西，作为以后的沉淀。
 
 ## 如何不靠运气致富？-翻译
 
@@ -34,51 +33,51 @@ How to Get Rich (without getting lucky)
 
 去寻求财富，而非金钱或地位。财富就是你拥有资产，而资产在你睡觉的时候都还在为你赚钱；金钱是我们转换时间和财富的工具；身份是你在社会等级体系里所处的位置。
 
-2. Understand that ethical wealth creation is possible. If you secretly despise wealth, it will elude you.
+2.Understand that ethical wealth creation is possible. If you secretly despise wealth, it will elude you.
 
 要明白一件事：一个人完全可以不靠坑蒙拐骗站着赚取财富。如果你在暗中鄙视财富，那么财富也会躲着你。
 
-3. Ignore people playing status games. They gain status by attacking people playing wealth creation games.
+3.Ignore people playing status games. They gain status by attacking people playing wealth creation games.
 
 别去理会那些热衷于玩身份游戏的人，他们通过攻击那些创造财富的人以获得自己的身份。
 
-4. You're not going to get rich renting out your time. You must own equity，a piece of a business to gain your financial freedom.
+4.You're not going to get rich renting out your time. You must own equity，a piece of a business to gain your financial freedom.
 
 你不会通过出租自己的时间而变得富有。你必须拥有产权，也就是生意的一部分，以此才能赢得个人财务自由。
 
-5. You will get rich by giving society what it wants but does not yet know how to get. At scale.
+5.You will get rich by giving society what it wants but does not yet know how to get. At scale.
 
 提供社会大众想要但是他们还不知道如何获取的东西，你就会因此而致富。但有一点：你必须规模化地供应社会。
 
-6. Pick an industry where you can play long term games with long term people.
+6.Pick an industry where you can play long term games with long term people.
 
 选择一个你可以长期从事的产业，寻找一批可以一起长期共事的人。
 
-7. The Internet has massively broadened the possible space of careers. Most people haven't figured this out yet.
+7.The Internet has massively broadened the possible space of careers. Most people haven't figured this out yet.
 
 互联网极大拓展了一个人职业生涯的可能性。绝大多数人对此毫无认知。
 
-8. Play iterated games. All the returns in life, whether in wealth, relationships, or knowledge, come from compound interest.
+8.Play iterated games. All the returns in life, whether in wealth, relationships, or knowledge, come from compound interest.
 
 玩就玩复利游戏。无论是财富，人际关系或者是知识，所有你人生里获得的回报，都来自复利。
 
-9. Pick business partners with high intelligence, energy, and, above all, integrity.
+9.Pick business partners with high intelligence, energy, and, above all, integrity.
 
 在选择商业合作伙伴的时候，选择那些高智商、精力旺盛的家伙，但在这一切之上，他应该是个正直诚实的人。
 
-10. Don't partner with cynics and pessimists. Their beliefs are self-fulfilling.
+10.Don't partner with cynics and pessimists. Their beliefs are self-fulfilling.
 
 不要和愤世嫉俗者和悲观主义者合作，因为他们会任由坏事发生，以此证明他们的负面看法是正确的。
 
-11. Learn to sell. Learn to build. If you can do both, you will be unstoppable.
+11.Learn to sell. Learn to build. If you can do both, you will be unstoppable.
 
 学会如何销售，学会如何创建。如果你同时能做到这两件事，你的成功将无可阻挡。
 
-12. Arm yourself with specific knowledge, accountability, and leverage.
+12.Arm yourself with specific knowledge, accountability, and leverage.
 
 用独到知识，责任感和杠杆武装自己。
 
-13. Specific knowledge is knowledge that you cannot be trained for. If society can train you, it can train someone else, and replace you.
+13.Specific knowledge is knowledge that you cannot be trained for. If society can train you, it can train someone else, and replace you.
 
 独到知识是那种不可以通过培训而获得的知识。这是因为，如果这种知识可以经由培训而得，那么其他人同样也可以，并且以此取代你。
 
@@ -106,7 +105,7 @@ How to Get Rich (without getting lucky)
 
 最具责任感的人都具有独一无二的、世人皆知的、敢于冒险的个性特征，如奥普拉、川普、坎耶、埃隆。
 
-20."Give me a lever long enough, and a place to stand, and I will move the earth." — Archimedes
+20."Give me a lever long enough, and a place to stand, and I will move the earth."Archimedes
 
 只要给我一根足够长的杠杆，一处可以立足的地方，我就能撬起地球。——阿基米德
 
@@ -175,6 +174,7 @@ How to Get Rich (without getting lucky)
 你所做的事情，要努力做到世界最好。不断重新定义你在做什么，直到真的做到世界最好。
 
 37.There are no get rich quick schemes. That's just someone else getting rich off you.
+
 这个世界上并没有快速赚钱致富的方法，如果你想要找寻这种方法，那它只会让别人从你身上赚钱致富。
 
 38.Apply specific knowledge, with leverage, and eventually you will get what you deserve.

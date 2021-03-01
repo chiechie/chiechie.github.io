@@ -2,6 +2,8 @@
 title: 计算机网络基本原理
 author: chiechie
 date: 2021-02-28 20:19:10
+categories: 技术类
+
 tags:
 - 计算机网络
 ---

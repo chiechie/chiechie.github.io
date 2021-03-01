@@ -68,11 +68,6 @@ TCP/IP模型中包含哪些东西？
 - 传输层：告诉A中哪个程序来收包裹。
 - 应用层：就是包裹的内容。
 
- The physical layer is the delivery truck and the roads. 
-- The data link layer is how the delivery trucks get from one intersection to the next over and over. 
-- The network layer identifies which roads need to be taken to get from address A to address B. 
-- The transport layer ensures that delivery driver knows how to knock on your door to tell you your package has arrived. 
-- And the application layer is the contents of the package itself.
 
 ![img_4.png](img_4.png)
 

@@ -1,5 +1,5 @@
 ---
-title: 一同对IT系统进行根因定位的方法
+title: 对IT系统进行根因定位的一种方法
 author: chiechie
 date: 2021-03-01 17:25:23
 categories: 技术类
@@ -76,8 +76,5 @@ Kill container	杀死指定的容器
 
 
 
-
-
 ## 参考资料
-https://iwiki.woa.com/pages/viewpage.action?pageId=342866882
 

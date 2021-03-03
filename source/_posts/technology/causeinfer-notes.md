@@ -194,4 +194,4 @@ d. 对于一个双向的连接，随机选择一个方向。（这就是随机�
 ## 参考文献
 
 1. [2014INFOCOM_CauseInfer](https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf)
-2. [参考文献10-pc算法]()
+2. [2007-TheJournalofMachineLearningResearch-pc算法](Mhttps://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)

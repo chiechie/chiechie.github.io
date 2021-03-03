@@ -1,5 +1,5 @@
 ---
-title: 假设检验中的统计性
+title: 假设检验中的显著性
 author: chiechie
 date: 2021-03-03 12:24:02
 categories: 阅读清单

@@ -6,24 +6,27 @@ categories: 技术类
 mathjax: true
 
 tags:
-  - nlp
+  - NLP
   - AIOps
   - 日志分析
-
 ---
 
->  logmine是一个日志分类的方法。从多个来源的数据中，发现一定规律，并且将相似的日志归纳到一起，输出一个模式。
+>  logmine是一个日志分类的方法。从多个来源的数据中，发现一定规律，即将相似的日志归纳到一起，输出概要描述。
 >  
 > 日志模式（pattern）就是对一堆日志的总结。一个模式会包含模糊的词汇（比如IP，date，**），也会有具体的词汇（1.0.0.1）.
->
+
+
 
 # 问题描述以及解决方案
 日志模式有什么难点？有的日志格式很明确，但是不同来源的日志汇总到一起，格式就五花八门了。有没有什么方法对多个source的日志提取有效模式呢？有，就是在下--分布式计算，效果跟手动提pattern一样好。
+
 ![图1-层次化地提取日志模式](logmine_image-20210225214320632.png)
 
 ![图2-logmin-result](logmin-result.png)
 
 # 总结
+
+待补充
 
 -----
 
@@ -77,7 +80,6 @@ tags:
 - 然后比较两者是否一致：一个字段一个字段地比较。准确率，输出命中的字段的比率。
 
 $\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}$
-
 
 
 # 方法的局限性？

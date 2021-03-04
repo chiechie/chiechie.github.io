@@ -13,7 +13,7 @@ tags:
 
 > CauseInfer是一个解决故障定位的通用方案，原理是通过在历史数据中学习因果图，进而在发生故障时，推断出故障根因。
 >
-> 这篇文章对小赵来说太难啃了，主要是因为涉及大量专业领域知识，比如计算机网络，微服务架构等，我对这块不熟悉，需要补很多功课。
+> 这篇文章对我说太难啃了，主要是因为涉及大量专业领域知识，比如计算机网络，微服务架构等，对这块不熟悉，需要补很多功课。
 >
 > 输出的文章分成两篇: CauseInfer论文笔记1，即本文，讲背景知识和概要设计，以及直觉型的描述问题和解题思路，都是粗粒度的；[CauseInfer论文笔记2](https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/)，讲核心技术点，方案的实现逻辑，涉及到数学公式。
 > 
@@ -26,8 +26,8 @@ tags:
 
 - QPS：Queries Per Second，每秒查询次数
 - SLA （service level agreement）:服务等级协议。指的是整个协议，协议的内容包含了SLI，SLO以及恢复的方式和时间等等一系列所构成的协议。
-- SLI（service level indicator）:服务等级对象。指的是对象，例如：qps（，响应时间，准确性等
-- SLO（service level objective）:服务等级目标。指的是目标，例如：qps 99.99% ，响应时间10ms等
+- SLI（service level indicator）:服务等级对象。指的是对象，例如：qps，响应时间，准确性等
+- SLO（service level objective）:服务等级目标。指的是目标，例如：qps 99.99% ，响应时间10ms等。
 
 
 # 几个问题

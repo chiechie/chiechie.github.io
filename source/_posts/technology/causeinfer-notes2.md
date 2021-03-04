@@ -174,5 +174,5 @@ d. 对于一个双向的连接，随机选择一个方向。（这就是随机�
 # 参考文献
 
 1. [2014-INFOCOM_CauseInfer](https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf)
-2. [2007-The Journal of MachineLearning Research-pc算法](Mhttps://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)
+2. [2007-The Journal of MachineLearning Research-pc算法](https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)
 3. [别人对CauseInfer论文的解读](https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/)

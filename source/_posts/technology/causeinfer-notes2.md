@@ -10,11 +10,9 @@ tags:
 - 论文笔记
 
 ---
-> 前面一篇文章，从high-level的角度描述了causeinfer的工作流
+> 本文是《CauseInfer论文笔记》的第二篇，[《CauseInfer论文笔记1》](https://chiechie.github.io/2021/03/02/technology/causeinfer-notes1/)，从high-level的角度描述了causeinfer的工作流。这里要开始涉及到方案的具体的实现了，所以内容比较硬核
 >
-> 这里要开始涉及到方案的具体的实现了，所以内容比较硬核
->
-> 如果不是要实现的话，就不用看这篇文章了
+> 不做方案实现的话，可以不用看这篇文章
 
 # 技术方案
 

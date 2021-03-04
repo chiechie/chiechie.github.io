@@ -3,11 +3,12 @@ title: Naval-如何不靠运气致富？
 date: 2021-02-24 09:16:28
 author: "chiechie"
 header-style: text
-categories: 投资
+categories: 阅读清单
 tags:
   - 人物传记
   - 搞钱
 ---
+
 > 转载自：http://cnwmw.blogspot.com/2018/06/naval.html
 
 

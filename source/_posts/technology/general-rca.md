@@ -121,6 +121,6 @@ tags:
 
 # 参考资料
 
-1. [zhihu-关于因果推断](https://zhuanlan.zhihu.com/p/88173582)
+1. [知乎-关于因果推断](https://zhuanlan.zhihu.com/p/88173582)
 2. [根因推断的英文原文](http://www.stat.cmu.edu/~larry/=sml/Causation.pdf)
 3. [chiechie-因果推断的概念](https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/)

@@ -11,12 +11,12 @@ categories: 技术类
 ---
 
 
-# 因果问题分为因果推断和因果发现
+# 因果推断和因果发现
 
 因果问题分为两种
 
-- 一种是因果推断（causal inference），比如给定两个变量 X、Y，希望找到一个衡量它们之间因果关系的参数 theta；
-- 另一种是因果发现（causal discovery），即给定一组变量，找到他们之间的因果关系，在统计上是不可能的。
+- 一种是因果推断（causal inf erence），比如给定两个变量 X、Y，希望找到一个衡量它们之间因果关系的参数 theta；
+- 另一种是因果发现（causal discovery），即给定一组变量，找到他们之间的因果关系，这个在统计上是不可能的。
 
 # 两种数据产生途径
 
@@ -52,18 +52,19 @@ categories: 技术类
 
 $$p\left(y_{1}, \ldots, y_{k}\right)=\prod p\left(y_{j} \mid \operatorname{parents}\left(y_{j}\right)\right)$$
 
-下面举例说明，在给定一个因果图之后，如何做因果推断。考虑下面一个因果图，目标是求$p(y \mid \operatorname{set} X=x)$
+下面举例说明，在给定一个因果图之后，如何做因果推断。
+考虑下面一个因果图，目标是求$p(y \mid \operatorname{set} X=x)$
 
 - 首先，可以看出该 causal graph 提供的信息为 
 $p(x, y, z)=p(z) p(x \mid z) p(y \mid x, z)$
 
 - 接下来，由于考虑的是给定 X的影响，因此构建一个新图$G_{*}$,
-移除掉所有指向 X 的边，得到新的联合概率分布
+移除掉所有指向 X 的边，得到新的联合概率分布:
 $$p_{*}(y, z)=p(z) p(y \mid x, z)$$
 
 
 - 最后，该概率分布下的数值就是因果推断的结果:
-	$p(y \mid \text { set } X=x) \equiv p_{*}(y)=\int p_{*}(y, z) d z=\int p(z) p(y \mid x, z) d z$
+  $$p(y \mid \text { set } X=x) \equiv p_{*}(y)=\int p_{*}(y, z) d z=\int p(z) p(y \mid x, z) d z$$
 
 
 ### 因果图 和 概率图 的区别
@@ -72,8 +73,10 @@ $$p_{*}(y, z)=p(z) p(y \mid x, z)$$
 对于下两种 DAG，它们都是合理的 probability graph。即对于任意的联合概率分布 $p(w, r)$，都可以写成 $p(w) p(r \mid w)$ 或者 $p(r) p(w \mid r)$.
 但显然下雨是因、草坪湿是果，只有左边的图才是正确的 causal graph。
 
+![img.png](right_causal_graph.png.png)
 
-# Causal Discovery 是不可能的
+# 因果发现是不可能的
+
 总存在一个 faithful 的分布使得在样本足够多的时候，产生足够大的 type I error。
 
 # 参考

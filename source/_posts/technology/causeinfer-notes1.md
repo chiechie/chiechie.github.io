@@ -66,6 +66,13 @@ tags:
   
   是的，服务依赖图的粒度更细，是一个机器上的一个服务是一个节点。
 
+-  一个服务的SLO指标是怎么定义的？有什么规则？其他指标是怎么选取的？
+
+- 根因推断的时候，多个因导致的结果怎么推断出来？
+  
+- 根因推断的时候，多个根因怎么打分？
+
+
 
 #  CauseInfer工作流
 
@@ -100,19 +107,21 @@ tags:
 ## 离线分析
 在离线阶段，构建因果图（causality graph），这个是本文的核心技术点。
 
-- 因果图是一个两层分层的图。（two layered hierarchical causality graph）
-- 较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph）。
-- 较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph）
+- 因果图是一个两层分层的图（two layered hierarchical causality graph）
+  - 较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph）。
+  - 较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph）
 - 构造服务依赖图分为两步：第一步通过采集器获取边是否存在；第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。
 - 服务依赖图中的实体是怎么定义的呢？二元组 (ip, service name)，有的文章用3元组（three-tuple）表示--(ip, port, proto)，proto是传输协议的类型，比如TCP或者UDP，因为考虑到一个服务可能占用多个端口。举一个例子，在一个三层的系统中，一个web server可以通过任意一个端口访问application server的。如果，使用端口作为唯一服务的属性，这个服务依赖图，就会变得非常之大，即使所有请求都是由同一个服务发起的。
+
 
 ## 在线推断
 在实时阶段，使用因果图（causality graph）来做根因推断，得到可能的原因列表。
 
 ![图1-根因分析框架](img.png)
+（还要补充一下）
 
 
-详情请看下一章
+详情请看[CauseInfer论文笔记2](https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/)
 
 
 # 参考文献

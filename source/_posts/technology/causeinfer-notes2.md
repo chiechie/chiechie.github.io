@@ -51,14 +51,13 @@ tags:
 $$
 \rho_{X Y}(k)=\frac{\sum_{t=0}^{N-1}\left(Y_{t}-\bar{Y}\right)\left(X_{t-k}-\bar{X}\right)}{\sqrt{\sum_{t=0}^{N-1}\left(X_{t}-\bar{X}\right)^{2} \sum_{t=0}^{N-1}\left(Y_{t}-\bar{Y}\right)^{2}}} k \in Z
 $$
-k取什么值合适呢？
+k取什么值合适呢？平移后两个序列的相关性最大，如下，即为最优的$k^{*}$
 $$
 k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in[-30,30]\right\}
 $$
-找到最优的k
-$$ k^{*}>0$$, $$A \rightarrow B $$
- else 
- $$\(B \rightarrow A\)$$
+
+如果$k^{*}>0$,则A是B的因（cause），A导致了B, 记为 $$A \rightarrow B $$
+如果$k^{*}<0$,则B是A的因（cause），B导致了A，记为 $$B \rightarrow A $$
 
 
 ## 构建指标因果图

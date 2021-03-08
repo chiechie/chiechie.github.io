@@ -65,8 +65,21 @@ $$
 1. 构建因果图的骨架
 2. 确定因果关系的方向
 
+## PC算法
+
+PC算法是一种因果发现的算法，包括三步
+![img.png](pc-overview.png)
+1。 确定框架：从全连接图开始，移走条件独立的边
+![img.png](pc1.png)
+Z从空集开始，不断增加
+没有方向
+
+2。
+![img.png](pc2.png)
 使用的是PC算法，基本思路是，基于马尔科夫条件 和 D-separation的多个变量构建一个DAG。
 
+3。 
+![img.png](pc3.png)
 给出一些定义
 
 > D-Separation是一种用来判断变量是否条件独立的图形化方法，相比于非图形化方法，更加直观，且计算简单。对于一个DAG(有向无环图)E，D-Separation方法可以快速的判断出两个节点之间是否是条件独立的。
@@ -122,7 +135,7 @@ M5是一个孤立的服务，M4 → M2 的因果关系是反直觉的。M1 和 M
 
 ![图2-激进法构建出来的因果图](inference.png)
 
-所以激进派构建出来的因果图需要进一步的加工：基于以下限制条件，从DAG中选择最大的子图
+所以激进派构建出来的因果图需要进一步的加工：根据以下限制条件，从DAG中选择最大的子图
 
 a. 子图裁剪：TCP LATENCY指标是表象指标，他不可能是别的指标的cause了 
 b. 表象指标通过图中的每条路径都可以达到。
@@ -189,3 +202,4 @@ $$\operatorname{violation}(X)=\frac{X(t)-\overline{X_{t-60, t-1}}}{\sigma_{t-60,
 1. [2014-INFOCOM_CauseInfer](https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf)
 2. [2007-The Journal of MachineLearning Research-pc算法](https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)
 3. [别人对CauseInfer论文的解读](https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/)
+4. [pc](https://www.youtube.com/watch?v=o2A61bJ0UCw)

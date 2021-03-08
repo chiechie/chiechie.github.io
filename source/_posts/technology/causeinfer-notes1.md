@@ -107,13 +107,13 @@ CauseInfer的思路是这样的，构建一个因果图，来捕捉因果（caus
 - 提出了一个新的BCP突变点检测方法，比cusum更稳定，在长期的数据序列上
 - 提出了一个轻量的服务依赖方式的 发现方法，通过分析两个服务的流量延迟，很快定位到服务级别的性能异常，
 - 提供了一个基于原始PC-算法的因果图构建方法，使用这个因果图，我们肯呢个很准确定位到性能指标级别的性能问题的根因。
-- 设计和实现了CauseINfer，可以推断性能问题的根因，可以以较小的代价，较高的准确率找到性能问题的真正根因。
+- 设计和实现了CauseInfer，可以推断性能问题的根因，可以以较小的代价，较高的准确率找到性能问题的真正根因。
 
 整个故障定位框架是这样：
 
 ## 系统概览
 
-先描述causeinfer的框架，并且通过一个简单的例子来描述这个系统的工作流
+先描述CauseInfer的框架，并且通过一个简单的例子来描述这个系统的工作流
 
 ###  CauseInfer的框架
 
@@ -161,26 +161,37 @@ CauseInfer包含两个步骤：离线和在线。
 - 变点检测：将指标转化为0/1的二值序列，使用的是贝叶斯变点检测。
 - 因果图构建：使用二值指标来构建一个2层的层次化的因果图。
 
-### 数据收集
+### A：数据收集
 
 数据收集模块，收集高维度运行信息，从多个数据源，横跨多个不同的软件栈，包括应用，进程 和 操作系统。
 
 在因果图构建阶段，我们需要一个应用的SLO指标。然而，并不是所有的应用都显示地提供SLO指标（例如mysql，hadoop），
-并且，这个指标在不同应用中还不一样
-However not all the applications report SLO metric explicitly (e.g. Mysql,Hadoop) and it is variant
-in different applications, hence we propose a new unified SLO
-metric, tcp request latency (abbreviated as TCP LATENCY).
-TCP LATENCY is obtained by measuring the latency between
-the last inbound packet (i.e. request) and the first outbound
-packet (i.e. response) passing through a specific port. Although
-this metric is simple, it works well in our system. According
-to our observations, most of applications use TCP protocol as
-their fundamental transmission protocol like Mysql, Httpd,etc.
-Hence TCP LATENCY can be adopted to represent the SLO
-metric of most applications.
+并且，不同应用中SLO对应不同指标。因此我们提出了一个新的统一的SLO指标--tcp请求延迟，简称为TCP LATENCY。
+TCP LATENCY 衡量的是某个端口， 最后一个入站包（请求）和第一次出站包（响应）的时间间隔。
+大部分应用都是用TCP作为传输协议，例如 Mysql, Httpd等，因此TCP延迟，可以作为大部分应用的SLO指标。
+
+### B: 变点检测（ Change point detection）
+根据Pearl的因果（cause-effect）[7]概念，如果有两个变量有因果关系，一个变量的变化将导致另一个变化。因此，在构建因果图之前，我们首先确定时间序列中的变化。一般采用CUSUM [4]来检测突变点，
+但是由于对噪声的高敏感性，CUSUM很难检测出长期的变化，导致离线分析中高的误警。因此我们引入了更有效的方法，贝叶斯变点检测（缩写为BCP）[8]
+
+BCP的基本思想是找到一个underlying 参数序列，将时间序列划分为连续的blocks，每个blocks的参数一样
+突变点的位置，就是每个block的边缘。
+。给定一个观察序列：X =（x1，x2，···，xn），目的是
+找到一个分区：ρ=（P1，P2，P3，···，Pn-1），
+其中Pi = 1 表示在位置i + 1处发生了变化，否则Pi = 0。
+关于BCP的详细理论分析参考论文[8]。与CUSUM方法相比，BCP不需要设置突变点个数，以及原始序列中group个数。
+
+BCP效果更好，更适合分析长序列，但是不适合在线模式，
+所以我们仍采用CUSUM作为在线的变点检测方法。
+
+## C: 因果图构建
+
+在本节中，我们将描述两层的分层因果图（即服务依赖图和 性能指标因果图）构建过程。
+在collective变量中，如果Y的所有父母已经固定的，Y的分布将是固定的，并且不受其他变量影响。在这种因果关系中， 不允许两个变量互为因果。所以因果关系可以由DAG进行编码。
 
 
 ## 离线分析
+
 在离线阶段，构建因果图（causality graph），这个是本文的核心技术点。
 
 - 因果图是一个两层分层的图（two layered hierarchical causality graph）
@@ -210,3 +221,4 @@ metric of most applications.
 1. [2014-INFOCOM_CauseInfer](https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf)
 2. [2007-The Journal of MachineLearning Research-pc算法](https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)
 3. [别人对CauseInfer论文的解读](https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/)
+7. J. Pearl, Causality: models, reasoning and inference. Cambridge Univ Press, 2000, vol. 29.

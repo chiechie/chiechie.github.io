@@ -12,13 +12,14 @@ categories: 技术类
 
 
 
+## keras的实现
 
-initialization
-'''python
+```python
 keras.layers.Dense(10, activation="relu", kernel_initializer="he_normal")
-'''
+```
 
-![img.png](img.png) 
+
+![3种初始化方法](img.png) 
 
 
 ## 参考

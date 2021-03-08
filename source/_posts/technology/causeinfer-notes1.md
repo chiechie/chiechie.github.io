@@ -123,6 +123,11 @@ tags:
 
 详情请看[CauseInfer论文笔记2](https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/)
 
+## 评估
+
+我们解决的是一个因果推断的问题，因此常用的统计学的设计实验的思路在这里行不通。
+
+
 
 # 参考文献
 

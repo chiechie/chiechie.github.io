@@ -74,42 +74,118 @@ tags:
 
 
 
-#  CauseInfer工作流
 
-看图说话--causeinfer的工作流图
+# 背景介绍
+关于性能诊断领域，之前大部分工作都很粗糙，只涉及定位异常，但是我们觉得还应该包括，根因推断，使得软件维护更高效，提供更有用的信息给软件bug。
+
+解决所有的性能诊断问题，没有银弹（silver bullet）。本文也只是诊断性能问题的一个子集。
+
+性能问题的原因，运行环境变化-eg配置变化，当 review完一些开源软件的bugs之后，我们观察到，很多bugs都可能导致性能问题。
+
+这里，我们仅仅考虑那些bug--造成 物理资源消耗异常（eg CPU） 或者 逻辑资源异常（eg 锁）。
+
+为什么要选择这些bugs？ 不需要修改源代码，就可以搜集资源消耗指标；软件中存在太多这种bugs了。
+我们的目的是，找到导致这些指标异常（cpu消耗过多，db被锁）的根因
+我们不直接识别软件bug，我们提供一些提示。
+举个例子，如果我们定位到 根因是，锁的个数异常，则可能是系统中有一个并发bug
+
+
+# paper翻译
+
+## 引言 
+CauseInfer的思路是这样的，构建一个因果图，来捕捉因果（cause-effect ）关系，然后沿着因果路径推断出根因（root cause）。
+为了完成这个任务，CauseInfer自动化地构建了额一个两层的分层的因果图。
+一旦SLO，服务级别的目标异常了，这个推断过程就被触发。
+
+
+我们首先将性能异常定位到某个服务（eg，tomcat），通过检测该SLO指标是否异常。
+然后通过检测同一台机器上的其他性能指标是否异常，找到根因，
+更进一步为了保证效果的稳定，提出了突变点检测方法，基于贝叶斯理论--这个方法比传统的检测方法如cusum要好。
+通过在两组benchmark（Olio 和 TPC-W,）做实验评估，发现本方法可以定位出根因，准召分别是80%和85%。
+本文的贡献
+
+- 提出了一个新的BCP突变点检测方法，比cusum更稳定，在长期的数据序列上
+- 提出了一个轻量的服务依赖方式的 发现方法，通过分析两个服务的流量延迟，很快定位到服务级别的性能异常，
+- 提供了一个基于原始PC-算法的因果图构建方法，使用这个因果图，我们肯呢个很准确定位到性能指标级别的性能问题的根因。
+- 设计和实现了CauseINfer，可以推断性能问题的根因，可以以较小的代价，较高的准确率找到性能问题的真正根因。
+
+整个故障定位框架是这样：
+
+## 系统概览
+
+先描述causeinfer的框架，并且通过一个简单的例子来描述这个系统的工作流
+
+###  CauseInfer的框架
+
+看图说话--CauseInfer的框架
+
+对于每个节点-机器，都存在一个本地的因果图，
+因果推断的流程 在前端的SLO异常时被触发，然后迭代往复地 沿着服务依赖图的路径，跑到后端服务，
+如果在某个服务节点检测到SLO异常，那么就可以进行更精细的推断，--在指标依赖图上。
+【图1-根因分析框架】展示了基本结构和workflow，
+
 
 - 底层是一个业务系统的物理拓扑
 - 顶部是这个业务系统对应的因果图
 ![图1-根因分析框架](causeinfer_framework.jpeg)
+- 大虚线圆圈表示服务
+- 红色节点表示根本原因，
+- 黑色节点表示性能指标，
+- 绿色节点表示 SLO 指标，
+- 箭头表示方向 故障传播。
+- 图中的有向边代表的意思是，根源指标（cause metric ）异常 **导致** 表象指标异常（effect metric），
 
-- 因果图中
-  - 大虚线圆圈表示服务
-  - 红色节点表示根本原因，
-  - 黑色节点表示性能指标，
-  - 绿色节点表示 SLO 指标，
-  - 箭头表示方向 故障传播。
-  - 图中的有向边代表的意思是，根源指标（cause metric ）异常 **导致** 表象指标异常（effect metric），
+### 举个🌰演示工作流
 
-举例：
-假设服务 II 节点中的指标 E 是根因
+假设服务II节点中的指标 E 是根因
 
-- 当检测到服务 I 的 SLO 异常时，触发原因推断，
-- 对服务 I 节点进行根因分析，定位到指标A发生了性能异常，
-- 进一步使用服务调用图，可以推断出，服务I中的指标A异常可能是服务II的SLO异常导致。
-- 因此会继续在服务II中触发因果推断，这里用到存储在服务II节点中的指标因果图，
-- 最后我们找到了根因，指标E， 推断路径为：SLO（service II ） → A（service II ） → D（service II） → E（service II）
+- 当检测到服务 I 的 SLO 异常时，触发原因推断
+- 对服务 I 节点进行根因分析，定位根因是指标A，A就是服务II的SLO指标
+- 因此，服务II中的根因分析被触发，在服务II在的机器中，加载出相应的服务指标依赖图，服务I中的指标A异常可能是服务II的SLO异常导致。
+- 因此会继续在服务II中触发因果推断，这里用到该机器的指标因果图。
+- 总结：最后我们找到了根因--指标E， 推断路径为：SLO（service II ） → A（service II ） → D（service II） → E（service II）
+![图2example](eample1.png)
 
+另外，需要注意的是，推断结果包含多个根因，因此需要一个排序的步骤选择最可能的根因， 来降低误告。
 
-# 根因定位方案的框架
+## 系统细节
+CauseInfer包含两个步骤：离线和在线。
 
-整个故障定位框架是这样：
+在线阶段包括两个模块，数据收集和因果推断。
+
+- 数据收集模块，收集了运行的性能指标--多个数据源。
+- 因果推断模块，负责因果图遍历和对根因进行排序。
+
+离线阶段包括两个模块--变点检测和因果图构建
+
+- 变点检测：将指标转化为0/1的二值序列，使用的是贝叶斯变点检测。
+- 因果图构建：使用二值指标来构建一个2层的层次化的因果图。
+
+### 数据收集
+
+数据收集模块，收集高维度运行信息，从多个数据源，横跨多个不同的软件栈，包括应用，进程 和 操作系统。
+
+在因果图构建阶段，我们需要一个应用的SLO指标。然而，并不是所有的应用都显示地提供SLO指标（例如mysql，hadoop），
+并且，这个指标在不同应用中还不一样
+However not all the applications report SLO metric explicitly (e.g. Mysql,Hadoop) and it is variant
+in different applications, hence we propose a new unified SLO
+metric, tcp request latency (abbreviated as TCP LATENCY).
+TCP LATENCY is obtained by measuring the latency between
+the last inbound packet (i.e. request) and the first outbound
+packet (i.e. response) passing through a specific port. Although
+this metric is simple, it works well in our system. According
+to our observations, most of applications use TCP protocol as
+their fundamental transmission protocol like Mysql, Httpd,etc.
+Hence TCP LATENCY can be adopted to represent the SLO
+metric of most applications.
+
 
 ## 离线分析
 在离线阶段，构建因果图（causality graph），这个是本文的核心技术点。
 
 - 因果图是一个两层分层的图（two layered hierarchical causality graph）
-  - 较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph）。
-  - 较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph）
+  - 较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph），用于定位到服务级别的cause。
+  - 较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph），用于定位到性能异常的真正的元凶。
 - 构造服务依赖图分为两步：第一步通过采集器获取边是否存在；第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。
 - 服务依赖图中的实体是怎么定义的呢？二元组 (ip, service name)，有的文章用3元组（three-tuple）表示--(ip, port, proto)，proto是传输协议的类型，比如TCP或者UDP，因为考虑到一个服务可能占用多个端口。举一个例子，在一个三层的系统中，一个web server可以通过任意一个端口访问application server的。如果，使用端口作为唯一服务的属性，这个服务依赖图，就会变得非常之大，即使所有请求都是由同一个服务发起的。
 

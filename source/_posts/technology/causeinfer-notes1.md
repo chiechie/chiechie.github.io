@@ -170,7 +170,7 @@ CauseInfer包含两个步骤：离线和在线。
 TCP LATENCY 衡量的是某个端口， 最后一个入站包（请求）和第一次出站包（响应）的时间间隔。
 大部分应用都是用TCP作为传输协议，例如 Mysql, Httpd等，因此TCP延迟，可以作为大部分应用的SLO指标。
 
-### B: 变点检测（ Change point detection）
+### B: 变点检测
 根据Pearl的因果（cause-effect）[7]概念，如果有两个变量有因果关系，一个变量的变化将导致另一个变化。因此，在构建因果图之前，我们首先确定时间序列中的变化。一般采用CUSUM [4]来检测突变点，
 但是由于对噪声的高敏感性，CUSUM很难检测出长期的变化，导致离线分析中高的误警。因此我们引入了更有效的方法，贝叶斯变点检测（缩写为BCP）[8]
 
@@ -222,3 +222,4 @@ BCP效果更好，更适合分析长序列，但是不适合在线模式，
 2. [2007-The Journal of MachineLearning Research-pc算法](https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)
 3. [别人对CauseInfer论文的解读](https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/)
 7. J. Pearl, Causality: models, reasoning and inference. Cambridge Univ Press, 2000, vol. 29.
+8. D. Barry and J. A. Hartigan, “A bayesian analysis for change point problems,” Journal of the American Statistical Association, vol. 88, no. 421, pp. 309–319, 1993.

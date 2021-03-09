@@ -171,3 +171,4 @@ $$\operatorname{violation}(X)=\frac{X(t)-\overline{X_{t-60, t-1}}}{\sigma_{t-60,
 2. [2007-The Journal of MachineLearning Research-pc算法](https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)
 3. [别人对CauseInfer论文的解读](https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/)
 4. [chiechie对PC算法的总结](https://chiechie.github.io/2021/03/09/technology/PC-algo/)
+5. [CauseInfer论文笔记1](https://chiechie.github.io/2021/03/02/technology/causeinfer-notes1/)

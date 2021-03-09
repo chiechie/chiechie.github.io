@@ -161,6 +161,7 @@ CauseInfer包含两个步骤：离线和在线。
 - 变点检测：将指标转化为0/1的二值序列，使用的是贝叶斯变点检测。
 - 因果图构建：使用二值指标来构建一个2层的层次化的因果图。
 
+
 ### A：数据收集
 
 数据收集模块，收集高维度运行信息，从多个数据源，横跨多个不同的软件栈，包括应用，进程 和 操作系统。
@@ -184,11 +185,15 @@ BCP的基本思想是找到一个underlying 参数序列，将时间序列划分
 BCP效果更好，更适合分析长序列，但是不适合在线模式，
 所以我们仍采用CUSUM作为在线的变点检测方法。
 
-## C: 因果图构建
+### C: 因果图构建
 
 在本节中，我们将描述两层的分层因果图（即服务依赖图和 性能指标因果图）构建过程。
 在collective变量中，如果Y的所有父母已经固定的，Y的分布将是固定的，并且不受其他变量影响。在这种因果关系中， 不允许两个变量互为因果。所以因果关系可以由DAG进行编码。
 
+详细的服务依赖图 和 性能依赖图 的构建，参考[CauseInfer论文笔记2](https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/)
+
+
+## 总结一下离线和在线的流程
 
 ## 离线分析
 
@@ -200,15 +205,13 @@ BCP效果更好，更适合分析长序列，但是不适合在线模式，
 - 构造服务依赖图分为两步：第一步通过采集器获取边是否存在；第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。
 - 服务依赖图中的实体是怎么定义的呢？二元组 (ip, service name)，有的文章用3元组（three-tuple）表示--(ip, port, proto)，proto是传输协议的类型，比如TCP或者UDP，因为考虑到一个服务可能占用多个端口。举一个例子，在一个三层的系统中，一个web server可以通过任意一个端口访问application server的。如果，使用端口作为唯一服务的属性，这个服务依赖图，就会变得非常之大，即使所有请求都是由同一个服务发起的。
 
-
 ## 在线推断
 在实时阶段，使用因果图（causality graph）来做根因推断，得到可能的原因列表。
 
 ![图1-根因分析框架](img.png)
-（还要补充一下）
 
 
-详情请看[CauseInfer论文笔记2](https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/)
+
 
 ## 评估
 
@@ -221,5 +224,6 @@ BCP效果更好，更适合分析长序列，但是不适合在线模式，
 1. [2014-INFOCOM_CauseInfer](https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf)
 2. [2007-The Journal of MachineLearning Research-pc算法](https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)
 3. [别人对CauseInfer论文的解读](https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/)
+4. [CauseInfer论文笔记2](https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/)
 7. J. Pearl, Causality: models, reasoning and inference. Cambridge Univ Press, 2000, vol. 29.
 8. D. Barry and J. A. Hartigan, “A bayesian analysis for change point problems,” Journal of the American Statistical Association, vol. 88, no. 421, pp. 309–319, 1993.

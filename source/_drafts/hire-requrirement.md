@@ -43,9 +43,7 @@ tags:
 
 chiechie：
 如果领导定一个很低的指标，就是及格线，然后 剩下的让 你们自由发挥。
-
 确实现实中，太多随机因素会影响模型效果了，领导很难 提前规划 出要做成什么样（有点计划经济的感觉了）。
-
 在可控的方面（员工的积极性，参与度），做到最好，比较合理。
 
 
@@ -60,3 +58,19 @@ wzf: 做了什么项目 遇到什么问题 解决方案 让你在做一次 你�
 
 chiechie：
     1. 为了保证模型服务的稳定性，即不让它犯低级错误，有什么策略？
+
+
+bymbrofeng:
+    工作面试 tip:
+    
+    介绍自己过去工作/项目经历的时候, 要着重讲那些你做的决定（以及你是基于怎样的分析做出的决定，以及结果）
+    
+    大多数人介绍的时候只做到简单直叙的 流水账：我们做了 A，然后做了 B，然后做了 C。
+    
+    这流水账缺失的是：who made the decision to do A? was it you? if it's not, then I as your interviewer don't care about it so much, because you were just following orders. 
+    
+    如果你在之前的单位/公司中人微言轻，大的决定轮不到你做，没关系，讲讲那些你可以做的，哪怕很小的决定。
+    
+    为什么我作为面试官 care so much about YOUR decisions? because it's hard to tell anything about you when you are just following orders -- except maybe that you are good at following orders, which is a fine quality to have, but not enough for you to succeed at positions that require judgment, taste, ability to deal with uncertainty etc. 
+    
+    on the other hand, decisions, even small ones, can tell so much.

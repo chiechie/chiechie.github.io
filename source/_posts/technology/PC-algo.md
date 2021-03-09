@@ -30,7 +30,7 @@ D分离（D-Separation）定义很复杂，拿出来单独说。
 
 D分离这个性质有什么用呢？
 
-D分离是一种用来判断变量是否条件独立的图形化方法，相比于非图形化方法，更加直观，且计算简单。对于一个DAG(有向无环图)，D-Separation方法可以快速的判断出两个节点之间是否是条件独立的。
+D分离是一种用来判断变量是否条件独立的图形化方法，相比于非图形化方法，更加直观，且计算简单。 对于一个DAG(有向无环图)，D-Separation方法可以快速的判断出两个节点之间是否是条件独立的。
   
 # PC算法-概览
 
@@ -83,4 +83,4 @@ PC算法使用一个全连接的无向图，然后使用$G^2$描述条件独立�
 
 1. [2007-The Journal of MachineLearning Research-pc算法](https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)
 2. [pc算法-youtube](https://www.youtube.com/watch?v=o2A61bJ0UCw)
-3. [zhihu-因果图的基本概念](https://zhuanlan.zhihu.com/p/269625734)
+3. [因果图的基本概念-知乎](https://zhuanlan.zhihu.com/p/269625734)

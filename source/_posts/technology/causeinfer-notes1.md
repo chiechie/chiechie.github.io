@@ -63,23 +63,19 @@ tags:
   对的，每个主机上的每个服务都有一个自己的指标因果图。 然后跨主机的服务调用，就靠服务依赖图表示。
   
 - 因果图中不同的机器IP是否是不同的节点？
-  
   是的，服务依赖图的粒度更细，是一个机器上的一个服务是一个节点。
 
 -  一个服务的SLO指标是怎么定义的？有什么规则？其他指标是怎么选取的？
   一般来说是需要对每一个应用去定制化定义的，但是这里可以用一个统一的指标，即服务相应时长。   
 
 - 根因推断的时候，多个因导致的结果怎么推断出来？
-  这种复杂的问题解决不了。  
+  这种复杂的问题解决不了.
 
 - 根因推断的时候，多个根因怎么打分？
   找最异常的那个指标。
 
 
-
-
-
-
+  
 # paper翻译
 ## 摘要
 关于性能诊断领域，之前大部分工作都很粗糙，只涉及定位异常，但是我们觉得还应该包括根因推断，使得软件维护更高效，并且提供更有用的信息给软件bug。
@@ -173,7 +169,7 @@ TCP LATENCY 衡量的是某个端口， 最后一个入站包（请求）和第�
 
 ### B: 变点检测
 根据Pearl的因果（cause-effect）[7]概念，如果有两个变量有因果关系，一个变量的变化将导致另一个变化。因此，在构建因果图之前，我们首先确定时间序列中的变化。一般采用CUSUM [4]来检测突变点，
-但是由于对噪声的高敏感性，CUSUM很难检测出长期的变化，导致离线分析中高的误警。因此我们引入了更有效的方法，贝叶斯变点检测（缩写为BCP）[8]
+但是由于对噪声的高敏感性，CUSUM很难检测出长期的变化，导致离线分析的高误警。因此我们引入了更有效的方法，贝叶斯变点检测（缩写为BCP）[8]
 
 BCP的基本思想是找到一个underlying 参数序列，将时间序列划分为连续的blocks，每个blocks的参数一样
 突变点的位置，就是每个block的边缘。
@@ -210,13 +206,9 @@ BCP效果更好，更适合分析长序列，但是不适合在线模式，
 
 ![图1-根因分析框架](img.png)
 
-
-
-
 ## 评估
 
 我们解决的是一个因果推断的问题，因此常用的统计学的设计实验的思路在这里行不通。
-
 
 
 # 参考文献
@@ -225,5 +217,5 @@ BCP效果更好，更适合分析长序列，但是不适合在线模式，
 2. [2007-The Journal of MachineLearning Research-pc算法](https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)
 3. [别人对CauseInfer论文的解读](https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/)
 4. [CauseInfer论文笔记2](https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/)
-7. J. Pearl, Causality: models, reasoning and inference. Cambridge Univ Press, 2000, vol. 29.
-8. D. Barry and J. A. Hartigan, “A bayesian analysis for change point problems,” Journal of the American Statistical Association, vol. 88, no. 421, pp. 309–319, 1993.
+5. J. Pearl, Causality: models, reasoning and inference. Cambridge Univ Press, 2000, vol. 29.
+6. D. Barry, “A bayesian analysis for change point problems,” Journal of the American Statistical Association, vol. 88, no. 421, pp. 309–319, 1993.

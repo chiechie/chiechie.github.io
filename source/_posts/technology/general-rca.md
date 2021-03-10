@@ -131,6 +131,13 @@ tags:
 ![调用链路做根因分析.png](./general-rca/trace_rca.png)
 
 
+
+## 2. tsinghua的比赛2020
+亚信的方案
+1. 调用链路，逐个检测异常
+![img.png](yaxin.png)
+
+
 ## 3. tsinghua的比赛2021
 
 

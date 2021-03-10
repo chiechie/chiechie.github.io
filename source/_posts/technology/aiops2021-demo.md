@@ -51,8 +51,9 @@ kpi_0304.csv
 
 
 日志数据有3个重要字段：
+
 - cmdb_id： 日志是从哪台物理机器上产生
-- log_name: 日志对应的组件名和日志类别, 相当于4个采集器，eg ， catalina/gc/localhost/localhost_access_log
+- log_name: 日志对应的组件名和日志类别, 相当于4个采集器，eg catalina/gc/localhost/localhost_access_log
 - value: 日志内容, 里面的信息包括，日志级别，egINFO/WARNING/SEVERE，具体报错信息
 
 
@@ -68,11 +69,13 @@ kpi_0304.csv
 - parent_id：子调用的上一次调用
 - trace_id：一次trace对应的全局id，一个trace包括多次子调用
 - span_id： 本流程的Span ID，
+
 ![调用链](trace.png)
 
 ### 故障标签
 
 故障类型可分为--'应用故障', '网络故障', '资源故障'
+
 - 应用故障可分为2类：'JVM CPU负载高', 'JVM OOM Heap'
 - 网络故障可分为两类：'网络延迟', '网络隔离'
 - 资源故障可分为三类：CPU使用率爬升，内存使用率过高，磁盘IO写使用率过高
@@ -109,7 +112,7 @@ kpi_0304.csv
 ![指标根因分析](metric_rca.png)
 
 
-### 对比下 分析结果 和 标准答案
+### 对下 分析结果 和 标准答案
 
 ![对比](evaluate.png)
 

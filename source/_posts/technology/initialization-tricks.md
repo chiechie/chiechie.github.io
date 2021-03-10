@@ -17,7 +17,6 @@ categories: 技术类
 keras.layers.Dense(10, activation="relu", kernel_initializer="he_normal")
 ```
 
-
 ![3种初始化方法](img.png) 
 
 

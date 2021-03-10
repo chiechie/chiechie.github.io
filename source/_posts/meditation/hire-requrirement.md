@@ -1,18 +1,17 @@
 ---
-title: 招聘标准
+title: 关于招聘标准
 date: 2021-02-24 08:52:37
-categories: 职场
+categories: 沉思录
 author: "chiechie"
 
 tags:
 - 招聘
 - 管理
-- 引以为戒
+- 反省
 ---
 
-# 怎么招到合适的人
 
-## 一次失败的经历
+## 一次失败的招聘经历
 
 想到跟做到真是相差十万八千里
 我想找一个脚踏实地的人，有想法，又能顺畅沟通的人，不看candidate的教育背景。
@@ -32,45 +31,40 @@ tags:
 沟通有问题的一律不要。
 
 
-## 管理算法团队，怎么指定KPI？
+## 怎么管理算法团队
 
-现在有一个思路是OKR，为了避免那种 唯KPI论，走极端了，没有达到目的。
-即目标-key result
+现在有一个思路是OKR，即目标-key result。
+可避免唯KPI论--走极端，然而没达到目的。
 但是在实施过程中，会经常遇到，key result做好了，目标没有达成。
-并且如何从目标中拆解出路径-key result。这个对人的素质要求很高。
-大部分人达不到这个要求。
+
+如何从目标中拆解出路径-key result，这个对拆解的人的素质要求很高。
 
 
 chiechie：
 如果领导定一个很低的指标，就是及格线，然后 剩下的让 你们自由发挥。
 确实现实中，太多随机因素会影响模型效果了，领导很难 提前规划 出要做成什么样（有点计划经济的感觉了）。
-在可控的方面（员工的积极性，参与度），做到最好，比较合理。
+在可控的方面（员工的积极性，参与度），做到最好，比较合理，单又不好衡量，只能靠自觉。
 
 
 ## 大佬们一般问什么问题？
 
-wzf: 做了什么项目 遇到什么问题 解决方案 让你在做一次 你怎么做
-纯银：
+- wzf:
+    1. 做了什么项目 遇到什么问题 解决方案
+    2. 让你在做一次 你怎么做
+- 纯银：
     1. 你做的部分，目的是什么?
     2. 开工之前，需要搜集哪些关键信息？
     3. 某个方案中，哪些是关键部分（应该是想说不能妥协的吧），哪些是权衡之下的折衷考虑，哪些是边界情况
     4. 怎么用数据验证方案的效果，以及验证完之后效果如何?
-
-chiechie：
-    1. 为了保证模型服务的稳定性，即不让它犯低级错误，有什么策略？
-
-
-bymbrofeng:
-    工作面试 tip:
-    
-    介绍自己过去工作/项目经历的时候, 要着重讲那些你做的决定（以及你是基于怎样的分析做出的决定，以及结果）
-    
-    大多数人介绍的时候只做到简单直叙的 流水账：我们做了 A，然后做了 B，然后做了 C。
-    
-    这流水账缺失的是：who made the decision to do A? was it you? if it's not, then I as your interviewer don't care about it so much, because you were just following orders. 
-    
-    如果你在之前的单位/公司中人微言轻，大的决定轮不到你做，没关系，讲讲那些你可以做的，哪怕很小的决定。
-    
-    为什么我作为面试官 care so much about YOUR decisions? because it's hard to tell anything about you when you are just following orders -- except maybe that you are good at following orders, which is a fine quality to have, but not enough for you to succeed at positions that require judgment, taste, ability to deal with uncertainty etc. 
-    
-    on the other hand, decisions, even small ones, can tell so much.
+- wangshusen：
+    1. 最擅长什么？做过什么？问最擅长的小的领域，看是否在滑水。
+    2. 介绍自己做的东西，考察对方的知识广度。
+    3. 深度学习问下基础的知识点--BP/attention/convolution。
+- chiechie：
+    1. 为了保证模型效果，有什么策略？(太简单了吧)
+- bymbrofeng:
+    1. 介绍自己过去工作/项目经历的时候, 要着重讲那些你做的决定（以及你是基于怎样的分析做出的决定，以及结果）
+    2. 大多数人介绍的时候只做到简单直叙的 流水账：我们做了 A，然后做了 B，然后做了 C。
+    3. 这流水账缺失的是： who made the decision to do A? was it you? if it's not, then I as your interviewer don't care about it so much, because you were just following orders. 
+    4. 如果你在之前的单位/公司中人微言轻，大的决定轮不到你做，没关系，讲讲那些你可以做的，哪怕很小的决定。
+    5. 为什么我作为面试官 care so much about YOUR decisions? because it's hard to tell anything about you when you are just following orders -- except maybe that you are good at following orders, which is a fine quality to have, but not enough for you to succeed at positions that require judgment, taste, ability to deal with uncertainty etc. on the other hand, decisions, even small ones, can tell so much.

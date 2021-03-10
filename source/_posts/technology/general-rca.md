@@ -44,7 +44,6 @@ tags:
 ![图1-应用/主机/网络三种故障导致的结果](./general-rca/shougap.png)
 
 
-
 ## 根因定位方案&工作流图
 ![img.png](./general-rca/workflow.png)
 
@@ -76,7 +75,6 @@ tags:
 
 ## 关于事件的定义
 
-
 事件的定义确定了rca的定位能力的颗粒度。
 事件定义的粒度越粗糙，定位到的根因就越粗糙，起到的作用就越少。
 
@@ -92,61 +90,62 @@ tags:
 因果图长什么样子：
 ![因果图.png](./general-rca/yinguotu.png)
 
-在离线阶段，构建因果图（causality graph），这个是核心技术点。
+构建因果图（causality graph）是一个核心技术点。
 
 - 因果图是一个两层分层的图（two layered hierarchical causality graph）
 
   - 较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph），用于定位到服务级别的cause。
   - 较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph），用于定位到指标。
 
-- 构造服务依赖图分为两步：第一步通过采集器获取边是否存在；第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。
+- 构造「服务依赖图」分为两步（就是调用关系）：第一步通过采集器获取边是否存在；第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。
 
-- 构造指标因果图：使用先验经验+PC算法。 
+- 构造「指标因果图」：使用人工经验+PC算法。 
 
-- > pc算法是一种发现因果关系的算法，在满足一定的假设前提下，使用的基于统计的方法，推导出因果关系。
+  - > pc算法是一种发现因果关系的算法，在满足一定的假设前提下，使用的基于统计的方法，推导出因果关系。
 
 
 
-## 使用一个因果图进行推断
+## 使用因果图进行推断
 
 当前端的服务可用性指标（SLO）出现异常，就会触发根因分析
 
-如果没有完整的调用链路数据：
+
+一边定位调用链中的异常服务，一边下钻
 
 - 首先：找到异常的服务
 - 其次：找到服务所在的机器，搜集性能指标，对指标因果图进行深度优先搜索 ，推断本地是哪个指标导致服务性能问题。
 - 问题： 如果问题是别人造成的，就去找别人的问题：如果根因指标是依赖服务的SLO（注意，用到了调用链关系），这个推断就会继续，传播到远程的依赖的服务。
   一直追本溯源，一直到最底层的被调用方，即物理层。
 
-如果有完整的调用链路数据
+
+先定位调用链中异常服务，最后下钻
 
 - 定位到有故障的服务
 - 再去下钻分析，指标层面的故障
 
 
-# 来验证一下方案的可行性
+# 验证方案的可行性
 
 ## 1. 调用链路的场景
 
 ![调用链路做根因分析.png](./general-rca/trace_rca.png)
 
 
+## 2 AIOps挑战赛
 
-## 2. tsinghua的比赛2020
-亚信的方案
-1. 调用链路，逐个检测异常
-![img.png](yaxin.png)
-
-
-## 3. tsinghua的比赛2021
+1. [chiechie-aiops挑战赛2020-获奖方案分案](https://chiechie.github.io/2021/03/10/technology/aiops2020-yaxin/)
+2. [chiechie-aiops挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/technology/aiops-competition-demo/)
 
 
-## 4. cn2021的比赛
+
+# 其他（忽略）
+
+## cn2020比赛
 
 > 当理论建模 和 现实数据不一致时， 
 > 按照理论构建的模型，去理解数据，会觉得套不上去，很痛苦
 > 有可能是现实数据信息有缺失
-> 
+
 
 ## 更进一步的故障分类
 
@@ -170,3 +169,6 @@ tags:
 1. [知乎-关于因果推断](https://zhuanlan.zhihu.com/p/88173582)
 2. [根因推断的英文原文](http://www.stat.cmu.edu/~larry/=sml/Causation.pdf)
 3. [chiechie-因果推断的概念](https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/)
+4. [chiechie-aiops挑战赛2020-获奖方案分案](https://chiechie.github.io/2021/03/10/technology/aiops2020-yaxin/)
+5. [chiechie-aiops挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/technology/aiops-competition-demo/)
+6. [aiops挑战赛2020-官网](http://iops.ai/competition_detail/?competition_id=15&flag=1)

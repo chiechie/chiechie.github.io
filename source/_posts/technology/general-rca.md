@@ -83,6 +83,7 @@ tags:
 事件详细到指标的描述，件可以定位到细粒度的根因，
 
 
+
 ## 构造一个因果图
 
 先要确定这个因果图的skeleton，有哪些节点，什么方向。
@@ -126,7 +127,7 @@ tags:
 
 # 验证方案的可行性
 
-## 1. 调用链路的场景
+## 1. 调用链路根因分析
 
 ![调用链路做根因分析.png](./general-rca/trace_rca.png)
 
@@ -135,6 +136,11 @@ tags:
 
 1. [chiechie-aiops挑战赛2020-获奖方案分案](https://chiechie.github.io/2021/03/10/technology/aiops2020-yaxin/)
 2. [chiechie-aiops挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/technology/aiops-competition-demo/)
+
+
+
+## 3. 只有指标数据做根因分析
+
 
 
 

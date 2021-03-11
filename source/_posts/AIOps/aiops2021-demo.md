@@ -1,5 +1,5 @@
 ---
-title: aiops挑战赛2021-demo方案
+title: AIOps挑战赛2020-demo方案
 author: chiechie
 mathjax: true
 date: 2021-03-09 22:04:42

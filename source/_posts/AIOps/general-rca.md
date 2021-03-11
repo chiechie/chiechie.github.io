@@ -2,7 +2,7 @@
 title: 对IT系统进行根因定位的一种方法
 author: chiechie
 date: 2021-03-01 17:25:23
-categories: 技术类
+categories: AIOps
 
 tags:
 - 计算机网络

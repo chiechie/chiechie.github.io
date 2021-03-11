@@ -1,8 +1,8 @@
 ---
-title:  "日志监控怎么做？"
+title:  日志监控怎么做？
 author: "chiechie"
 header-style: text
-categories: 技术类
+categories: AIOps
 date: 2021-02-19 20:05:20
 mathjax: true
 

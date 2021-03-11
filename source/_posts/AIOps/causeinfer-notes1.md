@@ -3,7 +3,7 @@ title: CauseInfer论文笔记1-白话版
 author: chiechie
 date: 2021-03-02 14:41:39
 mathjax: true
-categories: 技术类
+categories: AIOps
 
 tags:
 - AIOps

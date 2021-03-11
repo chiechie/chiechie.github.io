@@ -1,7 +1,7 @@
 ---
 title: CauseInfer论文笔记2-硬核版
 author: chiechie
-categories: 技术类
+categories: AIOps
 mathjax: true
 date: 2021-03-03 22:50:18
 tags:

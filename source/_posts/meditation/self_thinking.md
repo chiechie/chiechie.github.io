@@ -6,7 +6,7 @@ author: "chiechie"
 header-style: text
 categories: 沉思录
 tags:
-  - 三省吾身
+  - 反省
 ---
 
 

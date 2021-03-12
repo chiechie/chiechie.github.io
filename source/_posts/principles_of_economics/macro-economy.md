@@ -5,7 +5,7 @@ mathjax: true
 date: 2021-03-11 21:30:23
 tags:
 - 宏观经济学
-categories: 经济学原理
+categories: 经济学
 ---
 
 ## 核心观点

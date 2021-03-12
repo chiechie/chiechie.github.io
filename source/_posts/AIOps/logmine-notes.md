@@ -83,5 +83,11 @@ $\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c 
 # 方法的局限性？
 对于复杂的，毫无规则的原始日志，无能为力。
 
-![图5-在毫无规律的日志上也束手无策.png](badcase.png)
+![图5-在毫无规律的日志上也束手无策](badcase.png)
 
+
+# 参考资料
+1. [logmine-paper](https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf)
+2. [logmine-pypi](https://pypi.org/project/logmine/)
+3. [apache_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)
+4. [chiechie-关于logmine的实践](https://github.com/chiechie/LogRobot)

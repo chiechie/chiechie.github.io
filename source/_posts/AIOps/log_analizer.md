@@ -24,7 +24,6 @@ tags:
 
 如果是顶层有异常就需要下钻到更细分的维度，即研究更细致的原因，是哪个ip，或者网站，数量导致的。这一步可以使用多维度根因定位的方法。
 
-
 可以出一个这种方案：日志模版提取 + 多维度根因定位。
 其中，日志模版提取，要运维去定义规则。
 
@@ -36,4 +35,4 @@ tags:
 2. [logmine-pypi](https://pypi.org/project/logmine/)
 3. [apache_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)
 4. [硕士论文-模式识别在海量日志分析中的应用研究  "施佳奇"](https://www.ixueshu.com/h5/document/814a23b6b51168d40153bcb23ef479f1318947a18e7f9386.html)
-
+5. [chiechie-关于logmine的实践](https://github.com/chiechie/LogRobot)

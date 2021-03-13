@@ -3,7 +3,7 @@ title: 关于做平台一点感受
 date: 2021-02-23 23:39:15
 author: "chiechie"
 header-style: text
-categories: 沉思录
+categories: 技术类
 tags:
 - 平台
 ---

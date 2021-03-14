@@ -26,7 +26,7 @@ tags:
 注意中西方区别：人们如何相互作用，虽然涉及到一个产业，但还只是单个市场，不是整体。所以在西方还是叫微观，但是在国内叫宏观。
 
 ### 做决策？
-人们如何做决策? 关键词tradeoffs， caost， margin，incentives
+人们如何做决策? 关键词tradeoffs， 成本（cost）， margin，incentives
 1. 人们面临得失交换，权衡取舍，
    tradeoffs，所以经济学家适合做管理
 2. 某种东西的成本是为了得到它，放弃的东西 cost

@@ -21,7 +21,7 @@ comments: true
 > 第二种异常模式可能不太容易理解，其实它可以来源于生活中一个十分直观的观察，例如我们从商店订购了一份外卖，2个小时后才收到，这时候我们应该认为是商店备餐慢，还是骑手送货慢呢，想要知道答案，只需要看一看同一时间，点了相同外卖的其他人，是否也出现了收货慢的情况。
 
 
-总结一下，文章说的很绕，但是原理很简单: 先从业务指标异常触发定位，然后从调用链中异常的服务，然后服务对应的机器，定位根因指标。
+文章说的很绕，原理很简单，总结下: 先从业务指标异常触发定位，然后从调用链中异常的服务，然后服务对应的机器，定位根因指标。
 
 ![根因定位框架](framework.png)
 
@@ -31,7 +31,7 @@ comments: true
 
 
 ## 参考资料
-1. [aiops挑战赛2020-官网](http://iops.ai/competition_detail/?competition_id=15&flag=1)
+1. [AIOps挑战赛2020-官网](http://iops.ai/competition_detail/?competition_id=15&flag=1)
 2. [2020AIOps挑战赛亚军亚信科技团队方案分享](https://mp.weixin.qq.com/s/hYiXUMveSprkIiOy8mCmCg)
 
 

@@ -68,3 +68,6 @@ chiechie：
     3. 这流水账缺失的是： who made the decision to do A? was it you? if it's not, then I as your interviewer don't care about it so much, because you were just following orders. 
     4. 如果你在之前的单位/公司中人微言轻，大的决定轮不到你做，没关系，讲讲那些你可以做的，哪怕很小的决定。
     5. 为什么我作为面试官 care so much about YOUR decisions? because it's hard to tell anything about you when you are just following orders -- except maybe that you are good at following orders, which is a fine quality to have, but not enough for you to succeed at positions that require judgment, taste, ability to deal with uncertainty etc. on the other hand, decisions, even small ones, can tell so much.
+- long哥：
+  1. 怎么快速在新团队建立影响力?
+  2. 有没有做过推动团队效率的事情?

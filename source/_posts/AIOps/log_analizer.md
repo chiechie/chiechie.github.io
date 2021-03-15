@@ -29,11 +29,12 @@ tags:
 
 ## 看看别人怎么做的
 
-????
+1. [关于logmine的实践--chiechie-](https://github.com/chiechie/LogRobot)
+
 
 ## 参考资料
 1. [logmine-paper](https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf)
 2. [logmine-pypi](https://pypi.org/project/logmine/)
 3. [apache_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)
 4. [硕士论文-模式识别在海量日志分析中的应用研究  "施佳奇"](https://www.ixueshu.com/h5/document/814a23b6b51168d40153bcb23ef479f1318947a18e7f9386.html)
-5. [chiechie-关于logmine的实践](https://github.com/chiechie/LogRobot)
+5. [关于logmine的实践--chiechie-](https://github.com/chiechie/LogRobot)

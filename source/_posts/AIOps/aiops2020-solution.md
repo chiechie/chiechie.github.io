@@ -1,5 +1,5 @@
 ---
-title: AIOps挑战赛2020-获奖方案分案
+title: AIOps挑战赛2020-获奖方案分享
 author: chiechie
 mathjax: true
 date: 2021-03-10 13:08:27
@@ -25,9 +25,7 @@ comments: true
 
 ![根因定位框架](framework.png)
 
-
 ![调用链路的异常检测和根因定位](rca.png)
-
 
 
 ## 参考资料

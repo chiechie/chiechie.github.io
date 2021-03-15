@@ -52,13 +52,26 @@ tags:
 [流程图-腾讯文档](https://docs.qq.com/flowchart/DVGJiQ0NXc2Z3dGVq)
 
 
-## 关于事件的定义和要用到哪些事件
+## 关于事件的定义
 
-采用ip + 服务名称 + 事件类型（可以用日志，指标，公告触发）
 
-但是类型一定是根一个一个实体--追责对象 绑定的。每一个追责对象，局部又有很多细微的根因指标。
+事件的定义确定了rca的定位能力的颗粒度。
+事件定义的粒度越粗糙，定位到的根因就越粗糙，起到的作用就越少。
 
-另外，如何确定一个实体的健康状态，即要不要下钻分析？--需要定义每个实体的SLO指标，一个方案是，我们都可以根据实体类型，在数据层面去定义关键的指标，如db我们关心什么指标，。。。。
+粗糙的事件描述只能定位到粗糙的根因。
+事件详细到指标的描述，件可以定位到机器的指标根因。
+事件详细到指标的描述，件可以定位到细粒度的根因，
+
+怎么定义一个事件？
+使用 [机器ip, 服务名称, 事件类型/指标名称]
+
+## 要用到那些数据？
+
+要用到的数据包括：日志，指标，事件。
+
+但是每条日志/指标/事件，一定是是跟一个实体绑定的（某个主机或者某个主机的某个应用），先定位到有问题的实体，然后定位该实体的哪个指标为根因。
+
+另外，如何确定一个实体的健康状态，要不要下钻分析？需要定义每个实体的SLO指标，一个方案是，我们都可以根据实体类型，在数据层面去定义关键的指标，如db我们关心什么指标.
 
 拓扑数据，要给到服务之间的相互调用关系，最终得到一个精确的方案。
 
@@ -73,18 +86,8 @@ tags:
 > 
 > 但是，这个就是个玩意子，短期来说，吸引人眼球，长期来说，这个东西注定要被更好的方案代替。
 > 
-> 但是，如果这个demo能够引导用户往正确的方向走，也有一定的收益，但是这个方向总归是有个限度的。
->
-> 正确的路和捷径的路 往往不是一条路。---wzf
+> 如果这个demo能够引导用户往正确的方向走，也有一定的收益，但是这个方向总归是有个限度的。
 
-## 关于事件的定义
-
-事件的定义确定了rca的定位能力的颗粒度。
-事件定义的粒度越粗糙，定位到的根因就越粗糙，起到的作用就越少。
-
-粗糙的事件描述只能定位到粗糙的根因。
-事件详细到指标的描述，件可以定位到机器的指标根因。
-事件详细到指标的描述，件可以定位到细粒度的根因，
 
 ## 构造因果图
 
@@ -104,7 +107,7 @@ tags:
 
 - 构造「指标因果图」：使用人工经验+PC算法。 
 
-  - > pc算法是一种发现因果关系的算法，在满足一定的假设前提下，使用的基于统计的方法，推导出因果关系。
+  > pc算法是一种发现因果关系的算法，在满足一定的假设前提下，使用的基于统计的方法，推导出因果关系。
 
 
 
@@ -135,14 +138,12 @@ tags:
 
 ## 2 AIOps挑战赛
 
-1. [chiechie-aiops挑战赛2020-获奖方案分案](https://chiechie.github.io/2021/03/10/technology/aiops2020-yaxin/)
-2. [chiechie-aiops挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/technology/aiops-competition-demo/)
+1. [chiechie-AIOps挑战赛2020-获奖方案分案](https://chiechie.github.io/2021/03/10/technology/aiops2020-yaxin/)
+2. [chiechie-AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/technology/aiops-competition-demo/)
 
 
 
 ## 3. 只有指标数据做根因分析
-
-
 
 
 # 其他（忽略）
@@ -176,6 +177,6 @@ tags:
 1. [知乎-关于因果推断](https://zhuanlan.zhihu.com/p/88173582)
 2. [根因推断的英文原文](http://www.stat.cmu.edu/~larry/=sml/Causation.pdf)
 3. [chiechie-因果推断的概念](https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/)
-4. [chiechie-aiops挑战赛2020-获奖方案分案](https://chiechie.github.io/2021/03/10/technology/aiops2020-yaxin/)
-5. [chiechie-aiops挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/technology/aiops-competition-demo/)
-6. [aiops挑战赛2020-官网](http://iops.ai/competition_detail/?competition_id=15&flag=1)
+4. [chiechie-AIOps挑战赛2020-获奖方案分案](https://chiechie.github.io/2021/03/10/technology/aiops2020-yaxin/)
+5. [chiechie-AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/technology/aiops-competition-demo/)
+6. [AIOps挑战赛2020-官网](http://iops.ai/competition_detail/?competition_id=15&flag=1)

@@ -41,11 +41,14 @@ tags:
 
 画一个图表示一下
 
-![图1-应用/主机/网络三种故障导致的结果](./general-rca/shougap.png)
+![图1-应用/主机/网络三种故障导致的结果](shougap.png)
 
 
 ## 根因定位方案&工作流图
-![img.png](./general-rca/workflow.png)
+
+![chiechie总结出来的流程图](workflow.png)
+
+[流程图-腾讯文档](https://docs.qq.com/flowchart/DVGJiQ0NXc2Z3dGVq)
 
 
 ## 关于事件的定义和要用到哪些事件
@@ -82,14 +85,12 @@ tags:
 事件详细到指标的描述，件可以定位到机器的指标根因。
 事件详细到指标的描述，件可以定位到细粒度的根因，
 
-
-
-## 构造一个因果图
+## 构造因果图
 
 先要确定这个因果图的skeleton，有哪些节点，什么方向。
 构建因果图的skeleton：基于服务调用关系以及其他的先验，基于数据分析因果关系，提取最大子图。
 因果图长什么样子：
-![因果图.png](./general-rca/yinguotu.png)
+![因果图.png](yinguotu.png)
 
 构建因果图（causality graph）是一个核心技术点。
 
@@ -110,7 +111,6 @@ tags:
 
 当前端的服务可用性指标（SLO）出现异常，就会触发根因分析
 
-
 一边定位调用链中的异常服务，一边下钻
 
 - 首先：找到异常的服务
@@ -129,7 +129,7 @@ tags:
 
 ## 1. 调用链路根因分析
 
-![调用链路做根因分析.png](./general-rca/trace_rca.png)
+![调用链路做根因分析.png](trace_rca.png)
 
 
 ## 2 AIOps挑战赛

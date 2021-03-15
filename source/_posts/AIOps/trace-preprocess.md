@@ -19,6 +19,7 @@ categories: AIOps
 - 【补充】这里的表格信息量很少，它不知道每次子调用，具体是那个应用在调用，也不知道之前的在此次子调用之前，该trace已经走过了哪些调用路径了。
 
 
+
 ## 参考资料
 1. [清华微众AIOps新作:基于深度学习的调用轨迹异常检测算法
 -微信公众号](https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA)

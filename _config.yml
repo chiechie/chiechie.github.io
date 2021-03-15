@@ -21,6 +21,7 @@ weibo_username: Hh_Lae
 zhihu_username: chiechie8
 github_username: chiechie
 
+
 # sitemap:
 #   path: sitemap.xml
 #   template: ./sitemap_template.xml
@@ -84,8 +85,9 @@ index_generator:
   per_page: 2
   order_by: -date
 
+
 # Category & Tag
-default_category: others
+default_category: 
 category_map:
 tag_map:
 

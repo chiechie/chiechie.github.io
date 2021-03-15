@@ -132,7 +132,6 @@
   dependencies:
     "anymatch" "~3.1.1"
     "braces" "~3.0.2"
-    "fsevents" "~2.3.1"
     "glob-parent" "~5.1.0"
     "is-binary-path" "~2.1.0"
     "is-glob" "~4.0.1"
@@ -522,6 +521,11 @@
   "version" "1.0.0"
   dependencies:
     "hexo-pagination" "1.0.0"
+
+"hexo-generator-timeline@^1.2.0":
+  "integrity" "sha512-15hhEJx7duzQ3aWE5wT6TYMaVnonDTrfv4XFxVLCIHvhRyb/3oUInkhgX62JEp1b0Zi5kSjBMwW8F+yV2DJsPw=="
+  "resolved" "https://registry.npmjs.org/hexo-generator-timeline/-/hexo-generator-timeline-1.2.0.tgz"
+  "version" "1.2.0"
 
 "hexo-i18n@^1.0.0":
   "integrity" "sha512-yw90JHr7ybUHN/QOkpHmlWJj1luVk5/v8CUU5NRA0n4TFp6av8NT7ujZ10GDawgnQEdMHnN5PUfAbNIVGR6axg=="
@@ -944,8 +948,6 @@
   "integrity" "sha512-c29LVsqOaLbBHuIbsTxaKENh1N2EQBOHaWv7gkHN4dgRbxSREqDnDbtFJYdpPauS4YCplMSNCABQ6Eeor69bAA=="
   "resolved" "https://registry.yarnpkg.com/prismjs/-/prismjs-1.23.0.tgz"
   "version" "1.23.0"
-  dependencies:
-    "clipboard" "^2.0.0"
   optionalDependencies:
     "clipboard" "^2.0.0"
 

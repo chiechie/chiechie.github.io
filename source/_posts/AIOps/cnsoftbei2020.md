@@ -23,8 +23,11 @@ categories: AIOps
 
 将每个事件看成一个指标的话，可以得到一个节点为2876的图
 
+## 关联分析
+  
+![corr](corr.png)
 
-![img.png](img.png)
+![节点个数](img.png)
 
 对应的 因果图巨大无比，如下：
 

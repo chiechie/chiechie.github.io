@@ -15,7 +15,7 @@ categories: AIOps
 
 ### 部署数据
 
-![部署数据](bushu.png)
+![部署数据](./aiops2021-demo/bushu.png)
 
 
 ### 指标数据
@@ -35,8 +35,8 @@ kpi_0304.csv
     'ServiceTest1', 'ServiceTest10', 'ServiceTest11', 'ServiceTest2',
      'ServiceTest3', 'ServiceTest4', 'ServiceTest5', 'ServiceTest6',
       'ServiceTest7', 'ServiceTest8', 'ServiceTest9'
-  
-![业务指标](yewu.png)
+
+![业务指标](./aiops2021-demo/yewu.png)
 
 #### 性能指标
 
@@ -45,7 +45,7 @@ kpi_0304.csv
 - cmdb_id: 指标归属的物理设备, 每个物理设备上收集到的指标一般来说包括两种，「操作系统」性能指标以及「服务」性能指标。
 - kpi_name: 指标归属的服务类型，比如归属于操作系统/java虚拟机/Redis/Tomcat/Mysql等
 
-![性能指标](xingneng.png)
+![性能指标](./aiops2021-demo/xingneng.png)
 
 ### 日志数据
 
@@ -70,7 +70,7 @@ kpi_0304.csv
 - trace_id：一次trace对应的全局id，一个trace包括多次子调用
 - span_id： 本流程的Span ID，
 
-![调用链](trace.png)
+![调用链](./aiops2021-demo/trace.png)
 
 
 
@@ -103,7 +103,7 @@ kpi_0304.csv
 2. 找出对应的根因的子调用--span_id
 3. 找到span_id的机器
 
-![调用链异常检测和根因定位](trace_rca.png)
+![调用链异常检测和根因定位](./aiops2021-demo/trace_rca.png)
 
 
 ### 对定位到的机器进行指标根因分析
@@ -111,12 +111,12 @@ kpi_0304.csv
 1. 搜集该机器的所有性能指标，进行异常检测
 2. 对于异常的指标，根据历史数据中学习到的因果图，进行根因推断。
 
-![指标根因分析](metric_rca.png)
+![指标根因分析](./aiops2021-demo/metric_rca.png)
 
 
 ### 对下 分析结果 和 标准答案
 
-![对比](evaluate.png)
+![对比](./aiops2021-demo/evaluate.png)
 
 
 

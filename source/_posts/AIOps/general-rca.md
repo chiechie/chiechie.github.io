@@ -17,9 +17,8 @@ tags:
 一个系统中任何一个组成部分都有可能出现故障，从而导致系统瘫痪。
 
 为了减少故障带来的损失，我们需要提前制定预案，即哪些表象对应这哪些故障，从而在故障发生时候，能快速地根据表现识别出故症结所在，进而进行故障处理。
-这个方案 是沿着减少故障影响的思路进行，还有一种思路是故障预测，但是技术不够成熟，在此不表。
 
-下面重点说第一个思路
+下面对这个解决方案进行说明。
 
 ## 因果图-故障传播图
 
@@ -42,18 +41,17 @@ tags:
 
 画一个图表示一下
 
-![图1-应用/主机/网络三种故障导致的结果](shougap.png)
+![图1-应用/主机/网络三种故障导致的结果](general-rca/shougap.png)
 
 
 ## 根因定位方案&工作流图
 
-![chiechie总结出来的流程图](workflow.png)
+![image-20210316150746837](./general-rca/workflow.png)
 
 [流程图-腾讯文档](https://docs.qq.com/flowchart/DVGJiQ0NXc2Z3dGVq)
 
 
 ## 关于事件的定义
-
 
 事件的定义确定了rca的定位能力的颗粒度。
 事件定义的粒度越粗糙，定位到的根因就越粗糙，起到的作用就越少。
@@ -81,25 +79,12 @@ tags:
 此外，还需要用到调用拓扑数据，即服务之间的相互调用关系，或者服务所部署的机器之间的关系，最终得到一个精确的方案。
 
 
-> chiechie:
-> 
-> 似乎能get到领导的意思，产品的目标是设计一个对的,代表最佳实践的方案，
-> 
-> 满足于一个折中的方案不是最终的目标---如果没有拓扑数据，最好是去补充拓扑数据，
-> 
-> 没有拓扑数据，可以做使用现在的纯data-driven的方式得到的流量关联图， 得到一个不可信但是可见的东西，
-> 
-> 但是，这个就是个玩意子，短期来说，吸引人眼球，长期来说，这个东西注定要被更好的方案代替。
-> 
-> 如果这个demo能够引导用户往正确的方向走，也有一定的收益，但是这个方向总归是有个限度的。
-
-
 ## 构造因果图
 
 先要确定这个因果图的skeleton，有哪些节点，什么方向。
 构建因果图的skeleton：基于服务调用关系以及其他的先验，基于数据分析因果关系，提取最大子图。
 因果图长什么样子：
-![因果图.png](yinguotu.png)
+![因果图.png](./general-rca/yinguotu.png)
 
 构建因果图（causality graph）是一个核心技术点。
 
@@ -138,50 +123,18 @@ tags:
 
 ## 1. 调用链路根因分析
 
-![调用链路做根因分析.png](trace_rca.png)
+![调用链路做根因分析.png](./general-rca/trace_rca.png)
 
 
 ## 2 AIOps挑战赛
 
-1. [chiechie-AIOps挑战赛2020-获奖方案分案](https://chiechie.github.io/2021/03/10/technology/aiops2020-yaxin/)
-2. [chiechie-AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/technology/aiops-competition-demo/)
-
-
-
-## 3. 只有指标数据做根因分析
-
-
-# 其他（忽略）
-
-## cn2020比赛
-
-> 当理论建模 和 现实数据不一致时， 
-> 按照理论构建的模型，去理解数据，会觉得套不上去，很痛苦
-> 有可能是现实数据信息有缺失
-
-
-## 更进一步的故障分类
-
-可以注入异常，并且验证一下，有点像压测
-
-操作系统异常/应用异常/网络异常/自定义异常/容器异常/应用内故障：
-
-- 操作系统异常:
-  cores高负载;I
-  IO异常（在IO设备上创作读写压力）；
-  Memory内存使用率过高；
-  Disk满了（填充一定比例到指定硬盘或路径）
-- 应用异常：进程被关掉了（Kill指定进程）--可以定位到响应的日志
-- 网络异常：网络拒绝（丢弃匹配到的所有网络流量）；网络延时（注入一定延时到匹配的网络流量上）；网络超时（注入故障，调用方表现为超时）； 网络丢包（对匹配的网络流量进行丢包）；数据错乱。
-- 自定义异常（程序异常）：python自定义异常（自定义python异常）
-- 容器异常：pod关了（kill指定的pod）；杀死指定的容器（Kill container）
+1. AIOps挑战赛2020-获奖方案分案
+2. AIOps挑战赛2021-demo方案
 
 
 # 参考资料
 
 1. [知乎-关于因果推断](https://zhuanlan.zhihu.com/p/88173582)
 2. [根因推断的英文原文](http://www.stat.cmu.edu/~larry/=sml/Causation.pdf)
-3. [chiechie-因果推断的概念](https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/)
-4. [chiechie-AIOps挑战赛2020-获奖方案分案](https://chiechie.github.io/2021/03/10/technology/aiops2020-yaxin/)
-5. [chiechie-AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/technology/aiops-competition-demo/)
 6. [AIOps挑战赛2020-官网](http://iops.ai/competition_detail/?competition_id=15&flag=1)
+

@@ -123,7 +123,7 @@ CauseInfer的思路是这样的，构建一个因果图，来捕捉因果（caus
 
 - 底层是一个业务系统的物理拓扑
 - 顶部是这个业务系统对应的因果图
-![图1-根因分析框架](causeinfer-notes1/causeinfer_framework.jpeg)
+![图1-根因分析框架](causeinfer_framework.jpeg)
 - 大虚线圆圈表示服务
 - 红色节点表示根本原因，
 - 黑色节点表示性能指标，
@@ -140,7 +140,7 @@ CauseInfer的思路是这样的，构建一个因果图，来捕捉因果（caus
 - 因此，服务II中的根因分析被触发，在服务II在的机器中，加载出相应的服务指标依赖图，服务I中的指标A异常可能是服务II的SLO异常导致。
 - 因此会继续在服务II中触发因果推断，这里用到该机器的指标因果图。
 - 总结：最后我们找到了根因--指标E， 推断路径为：SLO（service II ） → A（service II ） → D（service II） → E（service II）
-![图2example](causeinfer-notes1/eample1.png)
+![图2example](eample1.png)
 
 另外，需要注意的是，推断结果包含多个根因，因此需要一个排序的步骤选择最可能的根因， 来降低误告。
 
@@ -204,7 +204,7 @@ BCP效果更好，更适合分析长序列，但是不适合在线模式，
 ## 在线推断
 在实时阶段，使用因果图（causality graph）来做根因推断，得到可能的原因列表。
 
-![图1-根因分析框架](causeinfer-notes1/img.png)
+![图1-根因分析框架](img.png)
 
 ## 评估
 

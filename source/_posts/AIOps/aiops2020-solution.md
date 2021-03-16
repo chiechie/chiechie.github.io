@@ -23,9 +23,9 @@ comments: true
 
 文章说的很绕，原理很简单，总结下: 先从业务指标异常触发定位，然后从调用链中异常的服务，然后服务对应的机器，定位根因指标。
 
-![根因定位框架](framework.png)
+![根因定位框架](./aiops2020-solution/framework.png)
 
-![调用链路的异常检测和根因定位](rca.png)
+![调用链路的异常检测和根因定位](./aiops2020-solution/rca.png)
 
 
 ## 参考资料

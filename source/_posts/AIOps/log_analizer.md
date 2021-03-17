@@ -8,6 +8,8 @@ mathjax: true
 
 tags:
   - nlp
+  - 日志分析
+
 ---
 
 
@@ -29,7 +31,7 @@ tags:
 
 ## 看看别人怎么做的
 
-1. [关于logmine的实践--chiechie-](https://github.com/chiechie/LogRobot)
+1. [关于logmine的实践--chiechie](https://github.com/chiechie/LogRobot)
 
 
 ## 参考资料

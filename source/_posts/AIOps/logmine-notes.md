@@ -4,7 +4,6 @@ author: chiechie
 date: 2021-03-04 11:01:18
 categories: AIOps
 mathjax: true
-
 tags:
   - NLP
   - AIOps
@@ -12,37 +11,45 @@ tags:
   - 论文笔记 
 ---
 
->  logmine是一个日志分类的方法。从多个来源的数据中，发现一定规律，即将相似的日志归纳到一起，输出概要描述。
+>  logmine是一个日志分类的方法。从多来源的数据中，发现一定规律，即将相似的日志归纳到一起，输出概要描述。
 >  
 > 日志模式（pattern）就是对一堆日志的总结。一个模式会包含模糊的词汇（比如IP，date，**），也会有具体的词汇（1.0.0.1）.**
+>
+> 日志挖掘背后的直觉是，日志是自动化生成的消息，跟句子不一样。
+>
+> 一个应用生成的日志，都是固定的几种格式。但是标准的聚类算法，不会考虑一个应用产生的日志的相似性。
 
 
-
-# 问题描述以及解决方案
+# 问题描述
 日志模式有什么难点？有的日志格式很明确，但是不同来源的日志汇总到一起，格式就五花八门了。有没有什么方法对多个source的日志提取有效模式呢？有，就是在下--分布式计算，效果跟手动提pattern一样好。
 
 ![图1-层次化地提取日志模式](logmine_image-20210225214320632.png)
 
-![图2-logmin-result](logmin-result.png)
-
-# 总结
-
-1. 日志挖掘背后的直觉是，日志是自动化生成的消息，跟句子不一样。
-2. 一个应用生成的日志，都是固定的几种格式。但是标准的聚类算法，不会考虑一个应用产生的日志的相似性。
+![图2-logmine-result](logmin-result.png)
 
 
-## 1 分词 和 类型检测
+## 解决方案
+原始日志 ---> 聚类---> clusters---> 对每个cluster生成一个pattern
 
-1. 对每一条日志预处理：
+
+
+## 分词
+
+对每一条日志预处理：
 	- 使用空格做分词
 	- 检测预定义的类型，比如date，time，IP，数字，举个例子，将2015-07-09替换成date，
 	将192.168.10.15 替换成 IP. 这个替换规则可以让用户自己定义
-2. 在聚类之间，对每个词做type detection，可以让不同词语构成的日志，可能有更高的相似性。
+
+## 类型检测
+
+在聚类之间，对每个词做type detection，可以让不同词语构成的日志，可能有更高的相似性。
 避免出现过多的无意义的模式。
 
-## 2. 聚类
+## 聚类
 
-1. 衡量两条日志的相似性，使用的是距离函数：
+### 衡量两条原始日志的相似性
+
+衡量两条日志的相似性，使用的是距离函数：
 
 $$\operatorname{Dist}(P, Q)=1-\sum\limits_{i=1}^{\operatorname{Min}(\operatorname{len}(P), \operatorname{len}(Q))} \frac{\operatorname{Score}\left(P_{i}, Q_{i}\right)}{\operatorname{Max}(\operatorname{len}(P), \operatorname{len}(Q))}$$
 
@@ -52,9 +59,18 @@ $$\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathr
 - len(P): 是日志P的字段的个数
 - $k_1$: 是一个可调的参数, 默认取1，表示两条日志有1个字段相同就得分
 
-2. 如何衡量两个pattern的名字？
+## 衡量两个pattern的相似性
 
-改变一下score 函数
+pattern 长什么样呢？ 每个pattern有三类字段：fixed value， Variable 和 Wildcard
+
+- 固定值（fixed value field ）：如www, httpd and INFO ，有明确含义的，固化的。
+- 可变字段（A variable field）：如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的额。
+- Wildcards ：任意的字段，are matched with values of all types。
+
+
+所以，怎么衡量两个pattern之间的距离呢？
+
+跟日志一样，不同的是score不一样，要考虑 fixed value 和 变量字段，对相似性的权重不一样
 
 $$\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathrm{x}=\mathrm{y} \text { and both are fixed value } \\ k_{2} & \text { if } \mathrm{x}=\mathrm{y} \text { and both are variable } \\ 0 & \text { otherwise }\end{array}\right.$$
 
@@ -62,20 +78,14 @@ $$\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathrm{x}=
 - $k_2$: 表示两个变量字段，如果一样的话，相似度得分
 
 
-3. 找到cluster
+## 找cluster
 
 - 先定义一个内部的参数，叫MaxDist， 表示一个cluster的半径。
-- 对于任意一个新的日志，如果跟已有的cluster 距离都很远，就创建一个新的类，并且以他为新的cluster中心 
-	这里可以使用early abandon的策略，如果已对比的字段累计距离超过了半径，就不用再计算sore了。
-	
+- 对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就创建一个新的类，并且以他为新的cluster中心。
+  - 这里可使用early abandon的策略，如果已对比的字段累计距离超过了半径，这句话的词还没遍历完，可以提前停止了，距离只会越来越大。
 
-# 日志的模式长什么样？
+## 对于每个cluster，抽取pattern
 
-每个pattern有三类字段：fixed value， Variable 和 Wildcard
-
-- 固定值（fixed value field ）：如www, httpd and INFO ，有明确含义的，固化的。
-- 可变字段（A variable field）：如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的额。
-- Wildcards ：任意的字段，are matched with values of all types。
 
 
 # 提取日志模式的流程

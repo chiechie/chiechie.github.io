@@ -36,8 +36,6 @@ categories: AIOps
 
 
 
-
-
 ## 参考
 1. [CN-Softbei2020比赛](http://www.cnsoftbei.com/plus/view.php?aid=479)
 2. [chiechie的代码-github](https://github.com/chiechie/Insighter/blob/master/aiops_CN-Softbei_2020.ipynb)

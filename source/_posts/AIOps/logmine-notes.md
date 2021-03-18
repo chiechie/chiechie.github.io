@@ -20,7 +20,7 @@ tags:
 > 一个应用生成的日志，都是固定的几种格式。但是标准的聚类算法，不会考虑一个应用产生的日志的相似性。
 
 
-# 问题描述
+## 问题描述
 日志模式有什么难点？有的日志格式很明确，但是不同来源的日志汇总到一起，格式就五花八门了。有没有什么方法对多个source的日志提取有效模式呢？有，就是在下--分布式计算，效果跟手动提pattern一样好。
 
 ![图1-层次化地提取日志模式](logmine_image-20210225214320632.png)
@@ -59,7 +59,7 @@ $$\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathr
 - len(P): 是日志P的字段的个数
 - $k_1$: 是一个可调的参数, 默认取1，表示两条日志有1个字段相同就得分
 
-## 衡量两个pattern的相似性
+### 衡量两个pattern的相似性
 
 pattern 长什么样呢？ 每个pattern有三类字段：fixed value， Variable 和 Wildcard
 
@@ -78,17 +78,13 @@ $$\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathrm{x}=
 - $k_2$: 表示两个变量字段，如果一样的话，相似度得分
 
 
-## 找cluster
+### 找cluster
 
 - 先定义一个内部的参数，叫MaxDist， 表示一个cluster的半径。
 - 对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就创建一个新的类，并且以他为新的cluster中心。
-  - 这里可使用early abandon的策略，如果已对比的字段累计距离超过了半径，这句话的词还没遍历完，可以提前停止了，距离只会越来越大。
+  > 这里可使用early abandon的策略，如果已对比的字段累计距离超过了半径，这句话的词还没遍历完，可以提前停止了，距离只会越来越大。
 
-## 对于每个cluster，抽取pattern
-
-
-
-# 提取日志模式的流程
+### 对于每个cluster，抽取pattern
 
 ![图2-日志分析流程](image-20210226000021042.png)
 
@@ -97,6 +93,9 @@ $$\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathrm{x}=
 - step3. 得到key-value格式
 - step4. 将key排序
 - step5. 取key的交集
+
+
+## 怎么指定层次（level）？
 
 ![图3-评价当前pattern的信息含量](cost_function.png)
 即在调超参。
@@ -113,8 +112,13 @@ $$\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathrm{x}=
 
 > 类似k-means聚类，对每个k，都可以计算cluster的松散度。 可以跨k进行对比。
 
-# 怎么评估这个方法？
-关于评估：怎么评估聚类的准确率？怎么评估模式识别的准确率？
+## 怎么评估日志聚类的效果？
+
+整个问题的评估可以拆分为两个小问题的评估:
+
+- 怎么评估聚类的准确率？
+- 怎么评估模式识别的准确率？
+
 因为没有标签，所以两个算法都是跟baseline算法对比。（都有了baseline，还要你这个算法干嘛？）
 
 怎么评估聚类的准确率？ 跟一个baseline算法，即OPTICS对比。提出了一个指标agreement score，即最大公共子集的比例。
@@ -132,13 +136,15 @@ $$\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathrm{x}=
 $\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}$
 
 
-# 方法的局限性？
+## 方法的局限性？
+
 对于复杂的，毫无规则的原始日志，无能为力。
 
 ![图5-在毫无规律的日志上也束手无策](badcase.png)
 
 
-# 参考资料
+## 参考资料
+
 1. [logmine-paper](https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf)
 2. [logmine-pypi](https://pypi.org/project/logmine/)
 3. [apache_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)

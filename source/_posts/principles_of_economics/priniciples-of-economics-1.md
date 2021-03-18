@@ -36,6 +36,8 @@ tags:
 2. 某种东西的成本是为了得到它，放弃的东西。不是生产成本，而是放弃的其他东西带来的收益。
 3. 理性人考虑边际量margin。margin就是收益函数的导数，细小的变化引起的变化。理性人做决策看收益函数的导数，而不是看收益函数本身。
 4. 理性人对激励（incentives）做出反应即使。法律，政策 给人带来激励。
+   > Capitalism is a powerful engine of economic growth because it rewards people for investing in assets that generate value over time, which is an effective *incentive* system for creating and distributing technological gains. But the price of progress in capitalism is inequality.
+
 
 ### 人跟人如何相互作用？
 人跟人企业跟企业之间国家跟国家之间，如何相互作用？关键词贸易（trade），市场（ market）， 管制（ government）：
@@ -80,3 +82,4 @@ tags:
 ## 参考资料
 1. [youtube-清华大学-经济学原理1--钱颖一](https://www.youtube.com/watch?v=UKB-hPWqtEc&list=PLgvxkXbWub7g9n3OLO_QdObcJ6UCy2ojS)
 2. [youtube-清华大学-经济学原理2--钱颖一](https://www.youtube.com/watch?v=iyXyNyeBSIk&list=PLgvxkXbWub7g9n3OLO_QdObcJ6UCy2ojS&index=3)
+3. [](https://moores.samaltman.com/)

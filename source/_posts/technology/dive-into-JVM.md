@@ -27,7 +27,7 @@ categories: 技术类
 类似，JRE就是一个python解释器，JDK是Pycharm
 
 
-## reflection
+## chiechie's reflection
 
 1. 一个运营人员，只要了解MLSql语法，就能满足日常开发的需要。
 数据平台后台会在不知不觉中，完成对不同AI框架的兼容，了解底层的框架细节并不是一般运营人员必须掌握的知识？？这就是生搬硬套「虚拟机」的概念，主流的AI框架就两个，还要自动适配？

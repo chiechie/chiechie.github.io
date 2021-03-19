@@ -16,6 +16,7 @@ timezone: ''
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
 theme: next
+#theme: very-simple
 pjax: true
 weibo_username: Hh_Lae
 zhihu_username: chiechie8

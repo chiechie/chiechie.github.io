@@ -16,6 +16,7 @@
     "hexo-calendar": "^1.0.4",
     "hexo-deployer-git": "^3.0.0",
     "hexo-generator-archive": "^1.0.0",
+    "hexo-generator-calendar": "github:howiefh/hexo-generator-calendar",
     "hexo-generator-category": "^1.0.0",
     "hexo-generator-index": "^2.0.0",
     "hexo-generator-sitemap": "^2.1.0",

@@ -2,7 +2,7 @@
 layout: poste
 title: 想成为什么样的人？
 date: 2021-02-19 18:32:41
-categories: 沉思录
+categories: 认识自己
 author: "chiechie"
 tags:
 - 浴血黑帮

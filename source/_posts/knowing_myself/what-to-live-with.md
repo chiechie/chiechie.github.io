@@ -3,7 +3,7 @@ title: 如何安身立命？
 header-style: text
 date: 2021-02-19 09:16:28
 
-categories: 沉思录
+categories: 认识自己
 author: "chiechie"
 tags:
 - 人生哲学

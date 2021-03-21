@@ -1,13 +1,16 @@
 ---
 title: 关于招聘标准
 date: 2021-02-24 08:52:37
-categories: 沉思录
+categories: 
+- 沉思录
+- 方法论
 author: "chiechie"
 
 tags:
 - 招聘
 - 管理
 - 反省
+- 职场
 ---
 
 

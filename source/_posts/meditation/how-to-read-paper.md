@@ -2,7 +2,9 @@
 title: 如何读专业文献?
 author: chiechie
 date: 2021-02-26 09:30:52
-categories: 沉思录
+categories: 
+- 沉思录
+- 方法论
 header-style: text
 
 tags:

@@ -5,10 +5,14 @@ mathjax: true
 date: 2021-03-19 23:53:23
 tags:
 - SaaS
+- 投资
+- 股票估值
 categories:
 - 阅读
 - 行业研究
 ---
+
+> 看这本书，一是因为工作相关，而是想考察下资本市场上，如何对SaaS工资进行估值
 
 # 目标市场
 1. SaaS产品的目标市场，即给SaaS产品付费的企业，也就是金主。从营收占比分布来看，是橄榄形的，中间多，两头烧。
@@ -52,8 +56,7 @@ SaaS公司的标准化产品能够不断从客户那里吸取养分，在形成�
     - 百度搜索被今日头条赶超
     - 微信被抖音赶超
 
-
-
+   
 
 # SaaS公司的商业模式
 
@@ -71,4 +74,6 @@ SaaS公司的标准化产品能够不断从客户那里吸取养分，在形成�
 
 
 ## 参考资料
-http://www.ruanyifeng.com/blog/2017/07/iaas-paas-saas.html
+1. [Iaas，Paas 和 Saas的区别](http://www.ruanyifeng.com/blog/2017/07/iaas-paas-saas.html)
+2. [角逐PaaS：阿里 腾讯 用友们的阶级跨越之战
+](https://www.ebrun.com/20190505/332506.shtml)

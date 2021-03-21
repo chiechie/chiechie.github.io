@@ -26,4 +26,6 @@ categories:
 
 ## 参考
 1. [bilibili](https://www.bilibili.com/video/BV13K4y1b7yE?t=703)
-2. [slide](https://www.dropbox.com/s/uio0cep4a2454ar/Lecture_1_Sam.pdf?dl=0)
+2. [YC创业公开课-slide](https://www.dropbox.com/s/uio0cep4a2454ar/Lecture_1_Sam.pdf?dl=0)
+3. [sam altman的播客](https://blog.samaltman.com/)
+4. [](https://moores.samaltman.com/)

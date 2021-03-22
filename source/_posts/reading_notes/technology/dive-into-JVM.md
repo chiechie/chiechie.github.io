@@ -8,8 +8,10 @@ tags:
 - 计算机原理
 categories: 
 - 阅读
-- 技术
+- 计算机原理
 ---
+
+## Java的技术体系
 
 1. Java的技术体系包括：虚拟机，Java API，Java编程语言和第三方框架
 

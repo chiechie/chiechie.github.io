@@ -4,7 +4,7 @@ author: chiechie
 date: 2021-02-27 17:38:13
 categories:
 - 阅读
-- 技术
+- 计算机原理
 
 tags:
 - 计算机网络

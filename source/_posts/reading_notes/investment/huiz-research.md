@@ -20,15 +20,21 @@ categories:
 可能是在技术上的投入增加了。
 
 
-![年报和季报](img.png)
+![年报和季报](jibao.png)
 
 ## 管理层
 
+![img_1.png](gaoguan.png)
+
+## 行业分析和主要销售模式
+
+互联网保险行业，主要有三个销售模式
+
+- 2A2C：面向代理人和c端
+- 2B2C：huize
+- 2C： 微保，
+
 ![img_1.png](img_1.png)
-
-## 行业分析
-
-保险的市场份额比较大
 
 ## 公司的亮点
 
@@ -46,8 +52,8 @@ categories:
 
 
 ## 参考资料
+
 1. [2020年财报sec](https://www.sec.gov/Archives/edgar/data/0001778982/000119312521088464/d32761d20f.htm)
 2. [近年财报-yahoo](https://finance.yahoo.com/quote/HUIZ/financials?p=HUIZ)
-3. [券商报告](https://xueqiu.com/S/HUIZ)
-4. [互联网保险系列报告](http://pdf.dfcfw.com/pdf/H3_AP202003041375839267_1.pdf)
+4. [互联网保险系列报告-华创证券](http://pdf.dfcfw.com/pdf/H3_AP202003041375839267_1.pdf)
 

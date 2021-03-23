@@ -1,12 +1,11 @@
 ---
-title: 对富途的研究分析
+title: 对富途的个股分析
 author: chiechie
 mathjax: true
 date: 2021-03-12 22:14:27
 tags:
-- 搞钱
+- 个股分析
 categories: 
-- 阅读
 - 投资
 ---
 

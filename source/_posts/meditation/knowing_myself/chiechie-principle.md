@@ -4,7 +4,6 @@ author: chiechie
 mathjax: true
 date: 2021-03-18 09:24:00
 tags:
-
 - 人生经验
 categories: 
 - 沉思录
@@ -34,6 +33,7 @@ categories:
    > 英文版: stay hungry，stay foolish。
 
 6. 诚实是一种最高级的沟通技巧。
+7. 聪明的毒枭只贩毒不吸毒。
 
 
 

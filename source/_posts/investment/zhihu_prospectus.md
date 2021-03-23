@@ -1,12 +1,11 @@
 ---
-title: 知乎的股票可以买吗？
+title: 对知乎的个股分析
 author: chiechie
 mathjax: true
 date: 2021-03-14 12:07:21
 tags:
 - 个股分析
 categories: 
-- 阅读
 - 投资
 comments: true
 

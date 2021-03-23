@@ -33,7 +33,7 @@ categories:
    > 英文版: stay hungry，stay foolish。
 
 6. 诚实是一种最高级的沟通技巧。
-7. 头脑极度开放
+7. 聪明的毒枭只贩毒不吸毒。
 
 
 

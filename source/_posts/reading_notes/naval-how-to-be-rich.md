@@ -154,7 +154,7 @@ How to Get Rich (without getting lucky)
 
 31.Study microeconomics, game theory, psychology, persuasion, ethics, mathematics, and computers.
 
-# 去学习微观经济学、博弈论、心理学、说服力、伦理学、数学和计算机科学。
+去学习微观经济学、博弈论、心理学、说服力、伦理学、数学和计算机科学。
 
 32.Reading is faster than listening. Doing is faster than watching.
 

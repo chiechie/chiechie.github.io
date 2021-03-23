@@ -7,7 +7,6 @@ tags:
 - 雪球
 - 经济学
 categories:
-- 阅读
 - 投资
 ---
 

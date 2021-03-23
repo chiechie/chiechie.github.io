@@ -5,8 +5,8 @@ mathjax: true
 date: 2021-03-15 23:25:09
 tags:
 - 雪球
-- 经济学
-categories:
+- 经济学原理
+categories: 
 - 投资
 ---
 

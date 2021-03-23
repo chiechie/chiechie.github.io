@@ -1,5 +1,5 @@
 ---
-title: 热门行业的舆情数据
+title: 行业研究数据库
 author: chiechie
 mathjax: true
 date: 2021-03-16 10:49:46

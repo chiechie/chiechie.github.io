@@ -1,5 +1,5 @@
 ---
-title: 贝叶斯优化
+title: 自动调参之贝叶斯优化
 author: chiechie
 mathjax: true
 date: 2021-03-24 10:30:05
@@ -18,7 +18,7 @@ categories:
 
 ## 背景
 
-### 黑盒优化
+什么是「黑盒优化」？
 
 求解 
 $$ \max _{x \in \mathcal{X}} f(x)$$

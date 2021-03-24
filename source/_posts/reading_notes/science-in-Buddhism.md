@@ -7,7 +7,6 @@ tags:
 - 科学
 - 哲学
 categories: 
-- 阅读
 - 哲学
 
 ---

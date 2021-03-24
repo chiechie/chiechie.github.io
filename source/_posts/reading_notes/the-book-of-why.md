@@ -9,7 +9,6 @@ tags:
 - 哲学
 - 科普
 categories:
-- 阅读
 - 技术
 ---
 > 《the book of why》（中文版《为什么》）是一本关于因果关系的科普书，作者是因果推断领域专家-judea pearl，该书于2019年出版。

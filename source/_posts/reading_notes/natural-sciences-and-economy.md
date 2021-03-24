@@ -9,7 +9,6 @@ tags:
 - 物理
 - 哲学
 categories: 
-- 阅读
 - 经济学
 ---
 

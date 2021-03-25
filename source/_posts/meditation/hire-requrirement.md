@@ -2,7 +2,6 @@
 title: 招什么样的人？怎么招？
 date: 2021-02-24 08:52:37
 categories: 
-- 沉思录
 - 方法论
 author: "chiechie"
 

@@ -4,7 +4,6 @@ date: 2021-02-24 09:16:28
 author: "chiechie"
 header-style: text
 categories: 
-- 沉思录
 - 方法论
 tags:
   - 阅读

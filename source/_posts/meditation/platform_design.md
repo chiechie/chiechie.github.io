@@ -4,7 +4,6 @@ date: 2021-02-23 23:39:15
 author: "chiechie"
 header-style: text
 categories: 
-- 沉思录
 - 方法论
 tags:
 - 平台

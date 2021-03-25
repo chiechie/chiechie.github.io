@@ -36,6 +36,8 @@ categories:
 
 7. 聪明的毒枭只贩毒不吸毒。
 8. 一个领域总结的 经验在另外一个应用领域 也不能用。
+9. 我们本身更擅长发挥自己的优势而不是克服自己的缺点
+
 > 比如ai模型并不能迁移
 > 
 > 比如一个领域的专家可能是另外一个领域的白痴
@@ -45,5 +47,8 @@ categories:
 1. 有优点就可劲儿夸, 有缺点也要帮别人圆一下。
 2. 你对他人的评价都必须是可以放在任何场合被公开的。
 
+## 情绪
+1. “Feelings are just visitors. Let them come and go.”
+
 ## 参考
-1. [RayDalio的原则](https://weread.qq.com/web/reader/848324405e0fe08483ab6a4kc7432af0210c74d97b01b1c)
+1. [Ray Dalio的原则](https://weread.qq.com/web/reader/848324405e0fe08483ab6a4kc7432af0210c74d97b01b1c)

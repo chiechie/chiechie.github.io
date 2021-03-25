@@ -6,8 +6,7 @@ header-style: text
 categories: 
 - 鸡汤
 tags:
-  - 人物传记
-  - 搞钱
+- 人生哲学
 ---
 
 > 转载自：http://cnwmw.blogspot.com/2018/06/naval.html

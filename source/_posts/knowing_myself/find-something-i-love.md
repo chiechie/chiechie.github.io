@@ -4,7 +4,7 @@ author: chiechie
 mathjax: true
 date: 2021-03-21 10:49:41
 tags:
-- 职业选择
+- 职业规划
 - 得意忘形
 categories:
 - 认识自己

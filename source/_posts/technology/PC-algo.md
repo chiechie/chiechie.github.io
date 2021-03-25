@@ -5,6 +5,8 @@ mathjax: true
 date: 2021-03-09 10:06:00
 tags:
 - 因果推断
+- 贝叶斯
+
 categories:
 - 技术
 ---

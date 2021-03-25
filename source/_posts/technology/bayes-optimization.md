@@ -5,6 +5,7 @@ mathjax: true
 date: 2021-03-24 10:30:05
 tags:
 - auto-ml
+- 贝叶斯
 categories:
 - 技术
 ---
@@ -78,10 +79,9 @@ $x^{*}=\arg \max _{x \in \mathcal{X}} f(x)$
 6. 将5得到的新样本数据加入样本集中，回到第二步，进行下一个迭代，循环往复，直到模型的准确率没有提升。
 
 
-
 ## 参考资料
 
-1. [贝叶斯优化: 一种更好的超参数调优方式-tobe-知乎](https://zhuanlan.zhihu.com/p/29779000)
-2. [贝叶斯优化—Dai Zhongxiang-知乎](https://zhuanlan.zhihu.com/p/76269142)
+1. [贝叶斯优化-通俗版-tobe-知乎](https://zhuanlan.zhihu.com/p/29779000)
+2. [贝叶斯优化-技术版—Dai Zhongxiang-知乎](https://zhuanlan.zhihu.com/p/76269142)
 3. [贝叶斯优化-可视化版-distill](https://distill.pub/2020/bayesian-optimization/)
-4. [Aavisor-githubSHIXIAN](https://github.com/tobegit3hub/advisor)
+4. [开源工具-Aavisor-github](https://github.com/tobegit3hub/advisor)

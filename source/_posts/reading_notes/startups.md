@@ -5,8 +5,9 @@ mathjax: true
 date: 2021-03-20 09:48:16
 tags:
 - 创业
+- sam altman
 categories:
-- 创业
+- 阅读
 ---
 
 
@@ -15,6 +16,8 @@ categories:
 > 这门课由Y－Combinator新任掌门人Sam Altman发起，将邀请多位硅谷大牛授课，包括创业教父Paul Graham, 风投大咖Peter Thiel, Reid Hoffman, Marc Andreesse等等，课程将讨论如何寻找创业好点子，并对其进行评估，如何吸引用户和增长用户，如何做销售和市场营销，如何招聘员工，如何筹集资金，企业文化，经营管理，经营策略等。
 >
 > http://startupclass.club/
+
+## 总结
 
 1. 创业四要素：idea，product，team，Execution
 2. 确保你要进入的市场是真是存在，并且会增长。正确的市场可以这么描述：surfing other's wave，步入一部正在上升的电梯，或者成一个movement中的一员。都是在说一个东西，进入一个即将飞速发展的市场。你需要找到一股顺势，将自己的创业公司

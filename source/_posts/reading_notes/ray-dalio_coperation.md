@@ -34,5 +34,5 @@ categories:
 
 ## 参考
 
-1.[你事业的上限究竟在哪里？-公众号文章](https://mp.weixin.qq.com/s?src=11&timestamp=1615476352&ver=2940&signature=2sRvaRpQinI2YVCYYfi3Amq*2KJv2UTfXyQWq-uML68g4DuwxKNaulHbkixJc91hNrDn2MHZUVgTr8T4RSCLVRZa3pGGRXm921lm*wgATyH*Azwj-rBslwjClDhLx*eL&new=1)
+1. [你事业的上限究竟在哪里？-公众号文章](https://mp.weixin.qq.com/s?src=11&timestamp=1615476352&ver=2940&signature=2sRvaRpQinI2YVCYYfi3Amq*2KJv2UTfXyQWq-uML68g4DuwxKNaulHbkixJc91hNrDn2MHZUVgTr8T4RSCLVRZa3pGGRXm921lm*wgATyH*Azwj-rBslwjClDhLx*eL&new=1)
 2. [RayDalio的原则](https://weread.qq.com/web/reader/848324405e0fe08483ab6a4kc7432af0210c74d97b01b1c)

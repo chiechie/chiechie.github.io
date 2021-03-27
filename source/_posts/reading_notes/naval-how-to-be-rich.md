@@ -27,8 +27,11 @@ tags:
 ## 如何不靠运气致富？-翻译
 
 How to Get Rich (without getting lucky)
+
 作者：Naval Ravikant-硅谷投资人
+
 翻译&注释：和菜头
+
 
 1.Seek wealth, not money or status. Wealth is having assets that earn while you sleep. Money is how we transfer time and wealth. Status is your place in the social hierarchy.
 

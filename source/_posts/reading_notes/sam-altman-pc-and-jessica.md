@@ -8,6 +8,7 @@ tags:
 - 择业
 - 生产力
 - 做决策
+- 信念
 - sam altman
 categories:
 - 阅读

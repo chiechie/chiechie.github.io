@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Chiechie's 小宇宙
+title: Chiechie's Cosmos
 
 subtitle: "Set your course by the stars, not by the lights of passing ships. —— Omar Bradley"
 # description: "分享一些历史，科技，哲学，物理，投资相关领域的书籍，以及思考感悟"
@@ -16,10 +16,12 @@ timezone: ''
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
 theme: next
+#theme: very-simple
 pjax: true
 weibo_username: Hh_Lae
 zhihu_username: chiechie8
 github_username: chiechie
+
 
 # sitemap:
 #   path: sitemap.xml
@@ -31,7 +33,7 @@ github_username: chiechie
   
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
-url: http://example.com
+url: https://chiechie.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -59,7 +61,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -81,11 +83,12 @@ prismjs:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
-  per_page: 1
+  per_page: 2
   order_by: -date
 
+
 # Category & Tag
-default_category: others
+default_category: 
 category_map:
 tag_map:
 

@@ -9,4 +9,3 @@ tags:
   - 统计学
 ---
 
-https://www.zhihu.com/question/27670909/answer/1656784818

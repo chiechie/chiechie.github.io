@@ -1,5 +1,5 @@
 ---
-title: samaltman-如何提升生产力？
+title: YC成功的关键因素
 author: chiechie
 mathjax: true
 date: 2021-03-25 22:06:34
@@ -23,7 +23,7 @@ categories:
 
 ## 摘要
 
-1. 很多人想把yc的成功复制到其他领域，他们把yc的成功归纳于运气和网络效应。网络效应是说，一旦get things off the ground，就可以像个生态系统自己run起来了（self-sustaining）。但是大部分人都不知道怎么get things going。
+1. 很多人想把YC的成功复制到其他领域。他们把YC的成功归纳于运气和网络效应。网络效应是说，一旦get things off the ground，就可以像个生态系统自己run起来了（self-sustaining）。但是大部分人都不知道怎么get things going。
    > get something off the ground: 让something成功进行
 
 2. sam认为原因是PG和Jessica：

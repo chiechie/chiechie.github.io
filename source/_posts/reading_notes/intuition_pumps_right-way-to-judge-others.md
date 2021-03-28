@@ -3,7 +3,7 @@ title: 如何正确地批评别人？
 author: chiechie
 date: 2021-02-28 11:40:47
 categories: 
-- 心理学
+- 阅读
 tags:
 - 职场
 - 心理学

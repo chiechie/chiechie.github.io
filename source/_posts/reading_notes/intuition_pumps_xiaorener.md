@@ -3,11 +3,11 @@ title: 认知科学中的概念--"小人儿委员会"
 author: chiechie
 date: 2021-03-04 09:59:33
 categories: 
-- 心理学
-
+- 阅读
 tags:
 - 认知心理学
 - 人工智能
+
 ---
 
 ## 观点

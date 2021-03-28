@@ -23,3 +23,4 @@ categories:
 3. 《尼采讀本》
 4. 周國平《尼采：在世紀的轉折點上》
 5. [什么是「永恒回归」的思想？](https://www.zhihu.com/question/28967741)
+6. [老子和尼采](https://www.bilibili.com/video/BV11b411s712?from=search&seid=9777421423834308216)

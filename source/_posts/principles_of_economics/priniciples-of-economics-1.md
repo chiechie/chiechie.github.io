@@ -24,6 +24,7 @@ tags:
 
 
 ## 经济学的三类问题
+
 经济学的三类问题分别是：人们如何做决策，人们如何相互作用，整体经济如何运行。
 
 人们如何做决策 和 相互作用 在西方 叫「微观经济学」，整体经济如何运行是宏观经济学。
@@ -45,7 +46,7 @@ tags:
 
 5. 贸易让每个人的现状更好？服务，货物，思想都可以被交换。
 6. 市场通常是组织经济活动的一种很好的方法？market
-7. 政府**有时**可改善市场的结果？goverments 
+7. 政府**有时**可改善市场的结果？governments 
    
 ### 经济作为一个整体如何运行？
 经济作为一个整体如何运行 ？生产力（production）, 货币（money）, 通货膨胀（inflation） & 失业（unemployment）：
@@ -83,4 +84,4 @@ tags:
 ## 参考资料
 1. [youtube-清华大学-经济学原理1--钱颖一](https://www.youtube.com/watch?v=UKB-hPWqtEc&list=PLgvxkXbWub7g9n3OLO_QdObcJ6UCy2ojS)
 2. [youtube-清华大学-经济学原理2--钱颖一](https://www.youtube.com/watch?v=iyXyNyeBSIk&list=PLgvxkXbWub7g9n3OLO_QdObcJ6UCy2ojS&index=3)
-3. [](https://moores.samaltman.com/)
+3. [samaltman对现代社会的构想法](https://moores.samaltman.com/)

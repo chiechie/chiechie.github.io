@@ -14,8 +14,14 @@ tags:
 
 硅谷投资人Naval Ravikant在twitter上发表的语录，关于如何不靠运气而致富，记录下。
 
+<<<<<<< HEAD:source/_posts/investment/naval-how-to-be-rich.md
+## 摘录几个有感触的观点吧
+
+1. 判断力（judgement）需要经验，但它可以通过学习基本技能的方法更快速地建立起来。
+=======
 ## 摘录几个有感触的观点
 1. 判断力需要经验，但它可以通过学习基本技能的方法更快速地建立起来。
+>>>>>>> df1f09f7541666afd106706c3e924e76c5d92f63:source/_posts/reading_notes/naval-how-to-be-rich.md
    基本技能（foundational skills），我理解的是要学习经济学，心理学这些基础的哲学。
 2. 杠杆能够成倍地放大你的判断力（所产生的效能）。
    先提升判断力，再考虑加杠杆。

@@ -1,5 +1,5 @@
 ---
-title: 怎么应聘？
+title: 怎么写简历？
 author: chiechie
 mathjax: true
 date: 2021-03-26 09:59:58

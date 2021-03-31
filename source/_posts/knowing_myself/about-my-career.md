@@ -10,7 +10,7 @@ categories:
 ---
 
 
-
+## 偏可
 
 我自己是到了一个阶段了，不想只做纯科研了。
 
@@ -22,4 +22,5 @@ categories:
 
 科研—> 业务—> 科研
 
-链接：https://www.zhihu.com/question/348538256/answer/841085094
+## 参考
+1. [zhihu](https://www.zhihu.com/question/348538256/answer/841085094)

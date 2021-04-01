@@ -1,5 +1,5 @@
 ---
-title: 如何协作？
+title: 原则-如何协作？
 author: chiechie
 mathjax: true
 date: 2021-03-15 11:44:59
@@ -7,6 +7,7 @@ tags:
 - 职场
 - 写作
 - 团队
+- Ray Dalio
 categories: 
 - 阅读
 ---

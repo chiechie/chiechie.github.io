@@ -1,10 +1,11 @@
 ---
-title: 原则引言
+title: 原则-第一章
 author: chiechie
 mathjax: true
 date: 2021-03-30 09:12:54
 tags:
 - 人生哲学
+- Ray Dalio
 categories:
 - 阅读
 ---

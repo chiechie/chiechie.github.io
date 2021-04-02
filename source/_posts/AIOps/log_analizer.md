@@ -5,10 +5,9 @@ header-style: text
 categories: AIOps
 date: 2021-02-19 20:05:20
 mathjax: true
-
 tags:
-  - nlp
-  - 日志分析
+- NLP
+- 日志分析
 
 ---
 

@@ -16,7 +16,7 @@ categories:
 ## 摘要
 1. 花很多时间关注思考：这个领域最重要的问题是什么？你为什么不行动？拥有好的‘problem taste’，这个需要3个能力综合：独立思考，解释未来，以及识别攻击向量。
    
-   > Hamming question: what are the most important problems in your field, and why aren’t you working on them?
+   > Hamming question: what are the most important problems in your field, and why are you not working on them?
    > the best people do it the most, and have the best ‘problem taste’, which is some combination of learning to think independently, reason about the future, and identify attack vectors.
    
 2. 非常有毅力和意愿去work hard。不work hard大概率不能成功。（警惕那些相反说法的人，除非你愿意过他的事业；还要警惕一些人，曾经work hard）
@@ -30,4 +30,4 @@ categories:
 
 
 ## 参考
-1. [sam'sblog-研究员和创始人](https://blog.samaltman.com/researchers-and-founders)
+1. [sam's blog-研究员和创始人](https://blog.samaltman.com/researchers-and-founders)

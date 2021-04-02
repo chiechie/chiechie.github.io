@@ -13,7 +13,7 @@ categories:
 - 阅读
 ---
 
-## 做什么 What you work on
+## 做什-- What you work on
 
 ## 公理
 1. 做的方向是错的，生产力再高也是白搭。

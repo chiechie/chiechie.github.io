@@ -31,5 +31,5 @@ categories:
 ## 灵感来源
 
 1. [得意忘形播客#26：人际关系中的三个永恒公理](https://podcasts.apple.com/cn/podcast/%E5%BE%97%E6%84%8F%E5%BF%98%E5%BD%A2%E6%92%AD%E5%AE%A2/id1200767928?i=1000390381517)
-2. 影响力是一个虚妄的说法 by 李松蔚
-3. 每个人都只能为自己负责 by 李松蔚
+2. [影响力是一个虚妄的说法 by 李松蔚](https://zhuanlan.zhihu.com/p/22483566)
+3. [每个人都只能为自己负责 by 李松蔚](https://zhuanlan.zhihu.com/p/22783831)

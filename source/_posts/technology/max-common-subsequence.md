@@ -18,9 +18,16 @@ categories:
 矩阵中元素默认为0，
 第i行第j列的元素表示，A的子串（index从0到i）和B的子串(index葱从0到j)的最大公共子串的长度，并且这个公共子串在A的index为 ✨ 到i，在B的index为✨到j。
 
-
+例如
+```
+输入：text1 = "abcde", text2 = "ace" 
+输出：3  
+解释：最长公共子序列是 "ace" ，它的长度为 3 。
+```
+酱紫
 
 ### 最简单的实现
+
 
 ```python
 import numpy as np

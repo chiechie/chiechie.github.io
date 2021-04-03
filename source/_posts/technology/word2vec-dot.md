@@ -1,5 +1,5 @@
 ---
-title: 点积or夹角余弦？
+title: 点积or余弦？
 author: chiechie
 mathjax: true
 date: 2021-04-02 15:47:19

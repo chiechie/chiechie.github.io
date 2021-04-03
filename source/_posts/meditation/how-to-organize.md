@@ -3,9 +3,7 @@ title: 怎么管理团队？
 author: chiechie
 mathjax: true
 date: 2021-04-02 22:20:36
-categories: 
-- 沉思录
-author: "chiechie"
+categories: 沉思录
 tags:
 - 管理
 - 职场

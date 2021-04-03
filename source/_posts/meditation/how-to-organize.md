@@ -1,5 +1,5 @@
 ---
-title: 怎么管理团队？
+title: 怎么给算法项目制定KPI？
 author: chiechie
 mathjax: true
 date: 2021-04-02 22:20:36
@@ -9,7 +9,7 @@ tags:
 - 职场
 ---
 
-## 怎么管理算法团队
+## 
 
 现在流行OKR，即先制定目标，然后将目标拆解为key results，本意是避免教条主义。
 

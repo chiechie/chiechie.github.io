@@ -13,9 +13,7 @@ categories:
 - 阅读
 ---
 
-
-## 公理
-1. 做的方向是错的，生产力再高也是白搭。
+> 做的方向是错的，生产力再高也是白搭。
 
 
 ## 最佳实践
@@ -30,16 +28,10 @@ categories:
 我喜欢被推着我前进的人一起工作，并且inspire我更好。
    尽你所能远离-the cost of letting them take up your mental cycles is horrific. 
 7. You have to both pick the right problem and do the work.  There aren’t many shortcuts.  If you’re going to do something really important, you are very likely going to work both smart and hard.  The biggest prizes are heavily competed for.在绝大部分领域都是都这样。
-   
-
-## 关于制定优先级 的3个公理
-
-- 把最重要的事情做了
-- 不要浪费时间做蠢事
-- 制定很多lists
-
-## 具体实践
-
+8. 如何制定优先级？
+    - 把最重要的事情做了
+    - 不要浪费时间做蠢事
+    - 制定很多lists
 1. 制作很多lists，每年/月/天 要完成的事项。这样处理并发任务很有用： 当我对其中某一项工作不感兴趣的时候，就切换到另外一个我感兴趣的事情上去。
 2. 经常重新调整lists的内容：这会使我我经常思考lists上面的所有的事项，并且进行删减。
 3. 不要花时间去给事项做分类，或者给事项去评估工作量，最多给重要的事项标记一个star。

@@ -1,5 +1,5 @@
 ---
-title: 原则-我的人生历程
+title: 原则-1我的人生历程
 author: chiechie
 mathjax: true
 date: 2021-03-31 08:41:15

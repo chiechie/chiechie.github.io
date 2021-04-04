@@ -1,5 +1,5 @@
 ---
-title: samaltman-如何提升生产力？
+title: 如何提升生产力？
 author: chiechie
 mathjax: true
 date: 2021-03-25 22:06:34
@@ -25,10 +25,12 @@ categories:
  Stuff that you don’t like is a painful drag on morale and momentum. 不喜欢的事情会让你越做越痛苦，直到失去积极性。
 4. 关于外包（delegation):记住比较优势--每个人都可以很有生产力，当他们做自己喜欢做的事情时。所以，当你想要别人做你的工作时，搞清楚谁喜欢做并且擅长做这个事情，然后分发给他。
 5. 如果你发现很长一段时间，都在做不喜欢的事情，慎重考虑换一份工作。短期的焦虑经常发生，但是如果并不会岁时间消减，就应该找一个你更感兴趣的事情了。
-6. Doing great work经常需要某些类型的同时。尝试着围绕在聪明的，创造力的，欢快的，不会打击你的抱负的人。
-我喜欢被推着我前进的人一起工作，并且inspire我更好。
-   尽你所能远离-the cost of letting them take up your mental cycles is horrific. 
-7. You have to both pick the right problem and do the work.  There aren’t many shortcuts.  If you’re going to do something really important, you are very likely going to work both smart and hard.  The biggest prizes are heavily competed for.在绝大部分领域都是都这样。
+6. Doing great work经常给力的队友，试着围绕在聪明的，创造力的，欢快的，不会打击你的抱负的人。 比如我喜欢被推着我前进的人一起工作，并且能inspire我更好。 尽你所能远离一些糟糕的热--the cost of letting them take up your mental cycles is horrific. 
+7. You have to both pick the right problem and do the work.  There are not many shortcuts.  If you’re going to do something really important, you are very likely going to work both smart and hard.  The biggest prizes are heavily competed for.在绝大部分领域都是都这样。
+
+
+
+## 其他小技巧
 8. 如何制定优先级？
     - 把最重要的事情做了
     - 不要浪费时间做蠢事
@@ -40,9 +42,6 @@ categories:
 5. 预留一部分时间去见新的人和ideas。虽然可能90%的内容都是辣鸡，但是剩下的10%的内容的价值可以弥补90%的内容所花费的时间。
 6. 确保在处理正确的问题。working on the right problems
 7. 正确的目标是最优配置你的year，而不是天。
-
-
-## 其他提升生产力的小技巧
 1. 开发一些软件去做体力活。
 2. 避开让自己陷入bad moods的人和事。
 3. 每隔一两周我就不想做任何事情，没关系 这个情绪它自己会消散。

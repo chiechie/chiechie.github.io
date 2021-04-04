@@ -1,17 +1,19 @@
 ---
-title: geoffrey-parker_platform-revolution
+title: 平台革命3-设计成功平台的原则
 author: chiechie
 mathjax: true
-date: 2021-04-04 09:58:01
+date: 2021-04-04 15:29:31
 tags:
 - 平台
 - 平台治理
+- 商业模式
+- 行业研究
+- 创业
 categories: 
 - 阅读
 ---
 
-看书之前有几个疑问
-1. 平台xing
+
 
 
 

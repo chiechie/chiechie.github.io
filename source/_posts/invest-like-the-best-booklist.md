@@ -143,4 +143,4 @@ people tend to only read/notice information that confirms what they already beli
 
 
 ## 参考
-1. [读书俱乐部]（https://investorfieldguide.com/bookclub/）
+1. [读书俱乐部](https://investorfieldguide.com/bookclub/)

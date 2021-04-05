@@ -3,14 +3,13 @@ title: 原则-1我的人生历程
 author: chiechie
 mathjax: true
 date: 2021-03-31 08:41:15
-tags:
+tags: 
 - 人生哲学
 - 投资
 - 经济学
-categories:
+categories: 
 - 阅读
 ---
-
 
 
 ## 核心观点

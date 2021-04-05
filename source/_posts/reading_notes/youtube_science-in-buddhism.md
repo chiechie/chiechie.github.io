@@ -3,7 +3,7 @@ title: 论佛教的科学性
 author: chiechie
 date: 2021-02-28 22:36:32
 tags:
-- 佛教
+- 佛家
 - 科学
 - 哲学
 categories: 

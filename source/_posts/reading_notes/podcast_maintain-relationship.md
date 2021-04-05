@@ -3,10 +3,10 @@ title: 得意忘形播客#26 人际关系中的三个公理
 author: chiechie
 mathjax: true
 date: 2021-03-24 09:16:04
-tags:
+tags: 
 - 得意忘形
 - 心理学
-categories:
+categories: 
 - 阅读
 ---
 

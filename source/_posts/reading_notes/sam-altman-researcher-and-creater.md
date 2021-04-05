@@ -3,11 +3,11 @@ title: 研究员和创始人
 author: chiechie
 mathjax: true
 date: 2021-04-02 12:26:17
-tags:
+tags: 
 - 创业
 - sam altman
 - 人生哲学
-categories:
+categories: 
 - 阅读
 ---
 

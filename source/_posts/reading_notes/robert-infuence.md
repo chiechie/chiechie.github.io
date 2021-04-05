@@ -3,10 +3,11 @@ title: 影响力的武器
 author: chiechie
 mathjax: true
 date: 2021-03-28 15:01:11
-tags:
+tags: 
 - 动物行为科学 
 - 认知心理学
-categories:
+- 心理学
+categories: 
 - 阅读
 ---
 

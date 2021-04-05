@@ -3,7 +3,7 @@ title: 平台革命1-平台革命的演进
 author: chiechie
 mathjax: true
 date: 2021-04-04 09:58:01
-tags:
+tags: 
 - 平台
 - 平台治理
 - 商业模式

@@ -3,7 +3,7 @@ title: 原则-怎么做决策？
 author: chiechie
 mathjax: true
 date: 2021-03-23 09:05:11
-tags:
+tags: 
 - 方法论
 - 人生哲学
 - 心理学

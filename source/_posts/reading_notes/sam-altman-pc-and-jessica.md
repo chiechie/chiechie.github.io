@@ -3,14 +3,14 @@ title: YC成功的关键因素
 author: chiechie
 mathjax: true
 date: 2021-03-25 22:06:34
-tags:
+tags: 
 - 人生哲学
 - 择业
 - 生产力
 - 做决策
 - 信念
 - sam altman
-categories:
+categories: 
 - 阅读
 ---
 

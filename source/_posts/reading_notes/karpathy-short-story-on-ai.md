@@ -3,10 +3,13 @@ title: karpathy-GPT3的自述
 author: chiechie
 mathjax: true
 date: 2021-03-29 23:05:40
-tags:
+tags: 
 - Karpathy
+- NLP
 - sam altman
-categories:
+- 人工智能
+
+categories: 
 - 阅读
 ---
 

@@ -3,12 +3,12 @@ title: 《the book of why》读书笔记
 author: chiechie
 mathjax: true
 date: 2021-03-06 08:33:38
-tags:
+tags: 
 - 因果推断
 - 人工智能
 - 哲学
 - 贝叶斯
-categories:
+categories: 
 - 阅读
 ---
 > 《the book of why》（中文版《为什么》）是一本关于因果关系的科普书，作者是因果推断领域专家-judea pearl，该书于2019年出版。

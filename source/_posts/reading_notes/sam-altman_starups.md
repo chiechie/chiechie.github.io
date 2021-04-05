@@ -3,10 +3,10 @@ title: 如何启动一个创业项目？
 author: chiechie
 mathjax: true
 date: 2021-03-20 09:48:16
-tags:
+tags: 
 - 创业
 - sam altman
-categories:
+categories: 
 - 阅读
 ---
 

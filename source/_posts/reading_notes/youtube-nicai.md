@@ -3,10 +3,10 @@ title: 尼采的哲学思想解析
 author: chiechie
 mathjax: true
 date: 2021-03-28 21:42:03
-tags:
+tags: 
 - 西方哲学
 - 尼采
-categories:
+categories: 
 - 阅读
 ---
 > 尼采的哲学世界有几个关键词：

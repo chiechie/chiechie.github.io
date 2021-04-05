@@ -5,6 +5,7 @@ mathjax: true
 date: 2021-03-11 21:30:23
 tags:
 - 宏观经济学
+- 通货膨胀
 categories: 
 - 经济学
 ---

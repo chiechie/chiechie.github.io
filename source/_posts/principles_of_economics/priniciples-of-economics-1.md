@@ -82,7 +82,18 @@ tags:
 因为货币发多了-->通货膨胀-->企业的原料涨价-->企业倒闭-->员工失业，这个逻辑链路么？
     
 
+## 像经济学家一样思考
+ - 经济学中，几个表达的方法：
+     - 讲故事
+     - 图表
+     - 用数据推导
+ - 生产要素是什么？生产需要的投入品，比如土地，劳动，资本
+ - 循环流向图：一种图表示的模型，有假设
+ - 生产可能性边界：
+
 ## 参考资料
 1. [youtube-清华大学-经济学原理1--钱颖一](https://www.youtube.com/watch?v=UKB-hPWqtEc&list=PLgvxkXbWub7g9n3OLO_QdObcJ6UCy2ojS)
 2. [youtube-清华大学-经济学原理2--钱颖一](https://www.youtube.com/watch?v=iyXyNyeBSIk&list=PLgvxkXbWub7g9n3OLO_QdObcJ6UCy2ojS&index=3)
 3. [samaltman对现代社会的构想法](https://moores.samaltman.com/)
+4. [bilibili-钱颖一](https://www.bilibili.com/video/BV1gt411g7RU?p=3&t=1411
+)

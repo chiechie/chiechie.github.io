@@ -1,20 +1,22 @@
 ---
-title: invest_like_the_best的书单
+title: invest like the best的书单
 author: chiechie
 mathjax: true
 date: 2021-04-05 23:20:26
-tags:
-categories:
+tags: 
+- 投资
+- 书单
+categories: 
+- 投资
 ---
 
 
 
-## 1. 投资入门的人
+## 投资入门
 
 - Simple Wealth, Inevitable Wealth, Revised EditionHardcover – January 1, 2004
 - The Little Book of Common Sense Investing: The Only Way to Guarantee Your Fair Share of Stock Market Returns (Little Books. Big Profits 21 Kindle Edition
 - If You Can: How Millennials Can Get Rich Slowly
-- http://www.millennialinvest.com/potential-of-every-dollar/
 - Deep Risk: How History Informs Portfolio Design (Investing for Adults Book 3)Kindle Edition
 - The Richest Man in Babylon
 - The Behavior Gap: Simple Ways to Stop Doing Dumb Things with Money Kindle Edition
@@ -23,21 +25,16 @@ categories:
 in simple terms in just 30 minutes.
 
 
-## 2. 市场的演化历史
+## 市场的演化历史
 
-- Devil Take the Hindmost: A History of Financial Speculation Paperback – June 1, 2000。by Edward Chancellor 
-    - The best collection of stories about irrational investors and the damage they do
-- **The First Crash ** by Richard Dale
-    - A short book about the South Sea Trading Company bubble of 1720:
-the first great market bubble.
-- **The Worldly  Philosophers: The Lives, Times And Ideas Of The Great Economic Thinkers,  Seventh Edition ** By Robert L. Heilbroner
-    - __History told through the eyes of geniuses.
-
-- **The History of Money ** by Jack Weatherford ：A page turner that will help you understand the evolution of
+- Devil Take the Hindmost: A History of Financial Speculation Paperback – June 1, 2000。by Edward Chancellor.The best collection of stories about irrational investors and the damage they do
+- The First Crashby Richard Dale.A short book about the South Sea Trading Company bubble of 1720:the first great market bubble.
+- The Worldly  Philosophers: The Lives, Times And Ideas Of The Great Economic Thinkers,  Seventh Edition ** By Robert L. Heilbroner .History told through the eyes of geniuses.
+- The History of Money by Jack Weatherford,A page turner that will help you understand the evolution of
 money. http://www.millennialinvest.com/history-of-money/
 
 
-## 3. 市场的概述
+## 市场的概述
 
 是时候深入市场了
 
@@ -55,42 +52,31 @@ passive indexers (who just want to earn the overall market’s return).
 - [Seven Immutable Laws of Investing](http://enrichwise.com/wp-content/uploads/2015/05/Montier-James-7-Immutable-Laws-of-Investing-1.pdf), by the great James Montier
 - [Untangling skill and luck](https://hbr.org/2011/02/untangling-skill-and-luck), a very useful paper from Michael Mauboussin.
 
-## 4 投资策略 Investing Strategies
+## 投资策略
+
+投资策略 Investing Strategies
 
 - Beating the market is hard (and it isn’t for everyone), but these will help you on your journey.
-- **What Works on Wall Street **：by by James O’Shaughnessy。Uncovering the most successful investment strategies of the past
+- What Works on Wall Street **：by by James O’Shaughnessy。Uncovering the most successful investment strategies of the past
 60 years.
-- **Contrarian Investment Strategies **
-    - by David Dreman
-    - Why going against the grain is the best way to beat the market.
-- **Quantitative Value: A Practitioner's Guide to Automating Intelligent
-Investment and Eliminating Behavioral Errors (Wiley Finance)**，by Wesley R. Gray, Tobias E.Carlisle
-    - Using the lessons of great investors and researchers to build a value based strategy
-    - {{[[TODO]]}} 量化价值，
+- Contrarian Investment Strategies **。by David Dreman 。Why going against the grain is the best way to beat the market.
+- Quantitative Value: A Practitioner's Guide to Automating Intelligent
+Investment and Eliminating Behavioral Errors (Wiley Finance)**，by Wesley R. Gray, Tobias E.Carlisle 。Using the lessons of great investors and researchers to build a value based strategy 。量化价值，
 
-*Other articles
-- **High quality stocks beat low quality stocks** over the long-term.
-    - https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2312432
-- Warren Buffett has succeeded by focusing on four key
-ideas: value, quality, low risk, and smart use of leverage.
-**Read how here**.
-    -  [](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FDr1XJ_gbsf.pdf?alt=media&token=727a1573-80b4-45e0-b6f5-06dc5a069d5c)
-    - [](http://docs.lhpedersen.com/BuffettsAlpha.pdf)
-- **What Has Worked In Investing**, a great paper
-from Tweedy Browne that summarizes what strategies have
-worked best over the long term.
-    - [xx](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FfVzbbWkzMt.pdf?alt=media&token=c8505e91-1ed4-4227-b99d-128e890533f3)
-    - https://valuewalkpremium.com/wp-content/uploads/2013/10/WhatHasWorkedFundVersionWeb.pdf
-- [**A Brief Survey of Quantitative Investing**](https://www.youtube.com/watch?v=FqaP3VTKccE)
-great presentation by money manager Cliff Asness.
-    - 关于量化投资的简介
+Other articles
 
-## 5. 投资者心理学：How to Get Out Of Your Own Way
+- High quality stocks beat low quality stocks over the long-term. https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2312432
+- Warren Buffett has succeeded by focusing on four key ideas: value, quality, low risk, and smart use of leverage.
+- [Buffett’s Alpha](http://docs.lhpedersen.com/BuffettsAlpha.pdf)
+- [What Has Worked In Investing](https://valuewalkpremium.com/wp-content/uploads/2013/10/WhatHasWorkedFundVersionWeb.pdf)，a great paper from Tweedy Browne that summarizes what strategies have worked best over the long term.
+- [A Brief Survey of Quantitative Investing](https://www.youtube.com/watch?v=FqaP3VTKccE)，great presentation by money manager Cliff Asness. 关于量化投资的简介
 
-- Inside the Investor’s Brain, by Richard Peterson
-    - __The best overview of the investor’s brain and psyche. We are wired to be bad investors. Learning how is the first step to overcoming our wiring.
-- The Little Book of Behavioral Investing: How not to be your own worst enemy, by James Montier，
-    - Simple methods to get out of your own way.
+## 投资者心理学
+
+How to Get Out Of Your Own Way
+
+- Inside the Investor’s Brain, by Richard Peterson .The best overview of the investor’s brain and psyche. We are wired to be bad investors. Learning how is the first step to overcoming our wiring.
+- The Little Book of Behavioral Investing: How not to be your own worst enemy, by James Montier，Simple methods to get out of your own way.
 - A great TED talk by psychologist [Dan Ariely](https://www.ted.com/talks/dan_ariely_are_we_in_control_of_our_own_decisions)
 - Thinking, Fast and Slow 
 
@@ -110,7 +96,7 @@ discipline to stick with them) is the key to success in many areas of life.
 - Expert Political Judgment，by Philip E. Tetlock ，Never, ever, ever listen to expert forecasts. They are seductive and entertaining, but usually wrong.
 - Drunk Tank Pink: And Other Unexpected Forces that Shape How We Think, Feel, and Behave ，by Adam Alter 。The title says it all: we are less in control of our decisions and behavior than we like to think.
 - The Success Equation: Untangling Skill and Luck in Business, Sports, and Investing ，by Michael J. Mauboussin，__The role of luck in our lives, and why we should focus on process instead of outcomes.
-- Who's in Charge?:Free Will and the Science of the Brain ，by Michael S. Gazzaniga ，A fascinating discussion of the
+- Who's in Charge?Free Will and the Science of the Brain ，by Michael S. Gazzaniga ，A fascinating discussion of the
 mind and our lack of control.
 
 ## 娱乐和 教育
@@ -131,8 +117,8 @@ successful traders in history.
 Counterpoints/Glass Half Empty
 people tend to only read/notice information that confirms what they already believe (this is called “confirmation bias”). I therefore find it useful to read books that make 有说服力的（cogent） arguments against my central beliefs.
 
-- The Death of Money: The Coming Collapse  of the International Monetary System by James Rickards ：Why the U.S. dollar may face a grim future.
-- The Decline of the West - Vol I - Full Formatting by Oswald Spengler。Why the modern west looks a lot like previous empires (Babylonian, Roman, Egyptian, etc.) on the precipice of decline
+- The Death of Money: The Coming Collapse  of the International Monetary System by James Rickards .Why the U.S. dollar may face a grim future.
+- The Decline of the West - Vol I - Full Formatting by Oswald Spengler.Why the modern west looks a lot like previous empires (Babylonian, Roman, Egyptian, etc.) on the precipice of decline
 
 
 

@@ -11,14 +11,14 @@ categories:
 
 ## 1. 投资入门的人
 
-- Simple Wealth, Inevitable Wealth, Revised Edition Hardcover – January 1, 2004
-- The Little Book of Common Sense Investing: The Only Way to Guarantee Your Fair Share of Stock Market Returns (Little Books. Big Profits 21) Kindle Edition
+- Simple Wealth, Inevitable Wealth, Revised EditionHardcover – January 1, 2004
+- The Little Book of Common Sense Investing: The Only Way to Guarantee Your Fair Share of Stock Market Returns (Little Books. Big Profits 21 Kindle Edition
 - If You Can: How Millennials Can Get Rich Slowly
 - http://www.millennialinvest.com/potential-of-every-dollar/
-- Deep Risk: How History Informs Portfolio Design (Investing for Adults Book 3) Kindle Edition
-- **The Richest Man in Babylon**
-- The Behavior Gap: Simple Ways to Stop Doing Dumb Things with Money Kindle Edition
-- Your Money and Your Brain: How the New Science of Neuroeconomics Can Help Make You Rich Kindle Edition
+- Deep Risk: How History Informs Portfolio Design (Investing for Adults Book 3)Kindle Edition
+- The Richest Man in Babylon
+- The Behavior Gap: Simple Ways to Stop Doing Dumb Things with Money Kindle Edition
+- Your Money and Your Brain: How the New Science of Neuroeconomics Can Help Make You Rich Kindle Edition
 - This video, produced and narrated by [Ray Dalio](https://www.youtube.com/watch?v=PHe0bXAIuk0), explains the economy
 in simple terms in just 30 minutes.
 
@@ -32,10 +32,9 @@ in simple terms in just 30 minutes.
 the first great market bubble.
 - **The Worldly  Philosophers: The Lives, Times And Ideas Of The Great Economic Thinkers,  Seventh Edition ** By Robert L. Heilbroner
     - __History told through the eyes of geniuses.
-__
-- **The History of Money ** by Jack Weatherford
-    - __A page turner that will help you understand the evolution of
-money. __http://www.millennialinvest.com/history-of-money/
+
+- **The History of Money ** by Jack Weatherford ：A page turner that will help you understand the evolution of
+money. http://www.millennialinvest.com/history-of-money/
 
 
 ## 3. 市场的概述
@@ -59,32 +58,28 @@ passive indexers (who just want to earn the overall market’s return).
 ## 4 投资策略 Investing Strategies
 
 - Beating the market is hard (and it isn’t for everyone), but these will help you on your journey.
-- **What Works on Wall Street **
-    - by by James O’Shaughnessy
-    - Uncovering the most successful investment strategies of the past
+- **What Works on Wall Street **：by by James O’Shaughnessy。Uncovering the most successful investment strategies of the past
 60 years.
 - **Contrarian Investment Strategies **
     - by David Dreman
     - Why going against the grain is the best way to beat the market.
 - **Quantitative Value: A Practitioner's Guide to Automating Intelligent
-Investment and Eliminating Behavioral Errors (Wiley Finance)**
-    - by Wesley R. Gray, Tobias E.Carlisle
-    - __Using the lessons of great investors and researchers to build a value based strategy.
-__
+Investment and Eliminating Behavioral Errors (Wiley Finance)**，by Wesley R. Gray, Tobias E.Carlisle
+    - Using the lessons of great investors and researchers to build a value based strategy
     - {{[[TODO]]}} 量化价值，
-- **Other articles:
-**
+
+*Other articles
 - **High quality stocks beat low quality stocks** over the long-term.
     - https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2312432
 - Warren Buffett has succeeded by focusing on four key
 ideas: value, quality, low risk, and smart use of leverage.
 **Read how here**.
-    - {{pdf: https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FDr1XJ_gbsf.pdf?alt=media&token=727a1573-80b4-45e0-b6f5-06dc5a069d5c}}
-    - http://docs.lhpedersen.com/BuffettsAlpha.pdf
+    -  [](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FDr1XJ_gbsf.pdf?alt=media&token=727a1573-80b4-45e0-b6f5-06dc5a069d5c)
+    - [](http://docs.lhpedersen.com/BuffettsAlpha.pdf)
 - **What Has Worked In Investing**, a great paper
 from Tweedy Browne that summarizes what strategies have
 worked best over the long term.
-    - {{pdf: https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FfVzbbWkzMt.pdf?alt=media&token=c8505e91-1ed4-4227-b99d-128e890533f3}}
+    - [xx](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FfVzbbWkzMt.pdf?alt=media&token=c8505e91-1ed4-4227-b99d-128e890533f3)
     - https://valuewalkpremium.com/wp-content/uploads/2013/10/WhatHasWorkedFundVersionWeb.pdf
 - [**A Brief Survey of Quantitative Investing**](https://www.youtube.com/watch?v=FqaP3VTKccE)
 great presentation by money manager Cliff Asness.
@@ -127,15 +122,14 @@ that the investing game never really changes.
 - Clash of the Financial Pundits: How the Media Influences Your Investment Decisions for Better or Worse ，by Joshua M. Brown, Jeff Macke，Learn how to avoid the noise in the news and focus on what matters.
 - Market Wizards, Updated: Interviews With Top Traders ，by Jack D. Schwager ，Learn lessons from the most
 successful traders in history.
-- [Barry Ritholtz](https://ritholtz.com/), one of the most widely read market thinkers, has a series of phenomenal interviews with
-legends of business & investing. Each contains valuable lessons, you can find them all here.
+- [Barry Ritholtz](https://ritholtz.com/), one of the most widely read market thinkers, has a series of phenomenal interviews with  legends of business & investing. Each contains valuable lessons, you can find them all here.
 - Consuela Mack, like Ritholtz, interviews the leading minds in finance and investing on her weekly program
 “**Wealth Track**.” Each program is full of valuable insights.
 
 ## 换位思考？
 
 Counterpoints/Glass Half Empty
-people tend to only read/notice information that confirms what they already believe (this is called “confirmation bias”). I therefore find it useful to read books that make cogent arguments against my central beliefs.
+people tend to only read/notice information that confirms what they already believe (this is called “confirmation bias”). I therefore find it useful to read books that make 有说服力的（cogent） arguments against my central beliefs.
 
 - The Death of Money: The Coming Collapse  of the International Monetary System by James Rickards ：Why the U.S. dollar may face a grim future.
 - The Decline of the West - Vol I - Full Formatting by Oswald Spengler。Why the modern west looks a lot like previous empires (Babylonian, Roman, Egyptian, etc.) on the precipice of decline

@@ -29,6 +29,11 @@ $${\displaystyle IG(T,a)=\mathrm {H} {(T)}-\mathrm {H} {(T|a)},}$$
 
 
 # 决策树算法-id3
+Python Implementation of ID3
+
+
+https://github.com/dozercodes/DecisionTree
+https://github.com/SebastianMantey/Decision-Tree-from-Scratch/blob/master/notebooks/decision_tree_functions.py
 
 # 决策树算法-c4.5
 

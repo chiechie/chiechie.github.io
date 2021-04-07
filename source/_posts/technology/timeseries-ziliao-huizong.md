@@ -20,7 +20,7 @@ categories:
 - Deep State Space Models [Rangapuram et. al., 2018]
     - [paper](https://papers.nips.cc/paper/8004-deep-state-space-models-for-time-series-forecasting.pdf)
 - Spline Regression RNN [Gasthaus et. al., 2019]
-- 时间卷积网络(TCN): An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling
+- TCN: An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling,时间卷积网络
     - [paper](https://arxiv.org/pdf/1803.01271.pdf):引用量808， p14，2018
     - [code](https://github.com/locuslab/TCN/blob/master/TCN/tcn.py)
     - [code](https://github.com/locuslab/TCN)
@@ -56,51 +56,62 @@ categories:
 
 # 比赛
 
-- [M5 Competition](https://mofc.unic.ac.cy/m5-competition/)
-- [M4 Competition](https://github.com/Mcompetitions/M4-methods)
-- kaggle 比赛
-    - 商品销量预测
-        - [Walmart Store Sales Forecasting (2014)](https://www.kaggle.com/c/walmart-recruiting-store-sales-forecasting)
-            - Use historical markdown data to predict store sales
-            - 评估指标：weighted mean absolute error (WMAE)
-                - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FLDPLxG_AsI.png?alt=media&token=d615d942-e378-43d5-8fc4-a26d146bb0ac)
-            - 样本id： 商场id+部门id+日期（包含当天，未来一周）
-                - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FATkOrisXUk.png?alt=media&token=2dea8db9-d230-4266-9676-9e15bb2ed884)
-        - [Walmart Sales in Stormy Weather (2015)](https://www.kaggle.com/c/walmart-recruiting-sales-in-stormy-weather)
-            - Predict how sales of weather-sensitive products are affected by snow and rain
-            - 评估指标：Root Mean Squared Logarithmic Error (RMSLE)
-                - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_jeBzeQgo1.png?alt=media&token=45740607-7629-4005-bb27-773c8df4e9d2)
-            - 样本id：商场id + 商品id + 日期
-                - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD_Ba2ZU9Nw.png?alt=media&token=09ce23f2-d4a1-425d-a23c-ee85efea58a4)
-        - [Rossmann Store Sales (2015)](https://www.kaggle.com/c/rossmann-store-sales)
-            - Forecast sales using store, promotion, and competitor data
-            - tuneover：营业收入
-            - 评估指标：rmspe
-                - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FEA2frU1QNu.png?alt=media&token=e8991a1c-d50f-4390-833c-3925da591c89)
-            - 样本id： 商场id+日期
-                - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHbQ0SWOSpS.png?alt=media&token=a01d1b85-c213-45a4-8a5f-d52f1aaf698b)
-        - [Corporación Favorita Grocery Sales Forecasting (2018)](https://www.kaggle.com/c/favorita-grocery-sales-forecasting)
-            - accurately predict sales for a large grocery chain?
-            - 评估指标： Root Mean Squared Logarithmic Error (NWRMSLE)
-                - 容易腐烂（Perishable） items are given a weight of 1.25 where all other items are given a weight of 1.00.
-            - 样本id： 商品 id
-        - 运维类：道具销量和销售额预测
-    - 流量预测
-        - [Recruit Restaurant Visitor Forecasting (2018)](https://www.kaggle.com/c/recruit-restaurant-visitor-forecasting):
-            - Predict how many future visitors a restaurant will receive
-            - 样本id为： 餐馆id+日期
-                - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FM2vtlhu-kH.png?alt=media&token=0042496a-1f4e-4800-a982-8f2c0e6a8de7)
-            - 评估指标：[root mean squared logarithmic error](https://www.kaggle.com/wiki/RootMeanSquaredLogarithmicError).
-                - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FkPPvo0OwMp.png?alt=media&token=fd0cfe95-5a29-46ee-8ce6-905edfcf31c5)
-        - 运维类：在线人数预测/网络流量预测/下载量预测
-    - 流行病人数预测
-        - [COVID19 Global Forecasting (2020)](https://www.kaggle.com/c/covid19-global-forecasting-week-5): 预测新冠疫情世界各地，未来15天，每天确诊人数和死亡人数
-            - 输出：两个指标，3个分位数
-            - 样本id：城市id + 日期 + 指标id
-                - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FmBk7V4JsDj.png?alt=media&token=39226fde-0ee6-4f72-bef0-8182809ae110)
-            - 评估指标： Weighted Pinball Loss.
-                - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F6KVBbgq7pC.png?alt=media&token=a5eb8da1-0f10-45d7-8caf-5119b3d8c46c)
-    
+
+## 商品销量预测
+
+[Walmart Store Sales Forecasting (2014)](https://www.kaggle.com/c/walmart-recruiting-store-sales-forecasting)
+- Use historical markdown data to predict store sales
+- 评估指标：weighted mean absolute error (WMAE)
+    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FLDPLxG_AsI.png?alt=media&token=d615d942-e378-43d5-8fc4-a26d146bb0ac)
+- 样本id： 商场id+部门id+日期（包含当天，未来一周）
+    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FATkOrisXUk.png?alt=media&token=2dea8db9-d230-4266-9676-9e15bb2ed884)
+
+## 极端天气下的商品销量预测
+
+[Walmart Sales in Stormy Weather (2015)](https://www.kaggle.com/c/walmart-recruiting-sales-in-stormy-weather)
+- Predict how sales of weather-sensitive products are affected by snow and rain
+- 评估指标：Root Mean Squared Logarithmic Error (RMSLE)
+    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_jeBzeQgo1.png?alt=media&token=45740607-7629-4005-bb27-773c8df4e9d2)
+- 样本id：商场id + 商品id + 日期
+    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD_Ba2ZU9Nw.png?alt=media&token=09ce23f2-d4a1-425d-a23c-ee85efea58a4)
+
+## 营业收入预测
+
+[Rossmann Store Sales (2015)](https://www.kaggle.com/c/rossmann-store-sales)
+
+- Forecast sales using store, promotion, and competitor data
+- tuneover：营业收入
+- 评估指标：rmspe
+    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FEA2frU1QNu.png?alt=media&token=e8991a1c-d50f-4390-833c-3925da591c89)
+- 样本id： 商场id+日期
+    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHbQ0SWOSpS.png?alt=media&token=a01d1b85-c213-45a4-8a5f-d52f1aaf698b)
+
+## 肉类销量预测
+[Corporación Favorita Grocery Sales Forecasting (2018)](https://www.kaggle.com/c/favorita-grocery-sales-forecasting)
+- accurately predict sales for a large grocery chain?
+- 评估指标： Root Mean Squared Logarithmic Error (NWRMSLE)
+    - 容易腐烂（Perishable） items are given a weight of 1.25 where all other items are given a weight of 1.00.
+- 样本id： 商品 id
+
+## 餐厅人流量预测
+
+[Recruit Restaurant Visitor Forecasting (2018)](https://www.kaggle.com/c/recruit-restaurant-visitor-forecasting):
+    - Predict how many future visitors a restaurant will receive
+    - 样本id为： 餐馆id+日期
+        - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FM2vtlhu-kH.png?alt=media&token=0042496a-1f4e-4800-a982-8f2c0e6a8de7)
+    - 评估指标：[root mean squared logarithmic error](https://www.kaggle.com/wiki/RootMeanSquaredLogarithmicError).
+        - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FkPPvo0OwMp.png?alt=media&token=fd0cfe95-5a29-46ee-8ce6-905edfcf31c5)
+
+## 流行病人数预测
+
+[COVID19 Global Forecasting (2020)](https://www.kaggle.com/c/covid19-global-forecasting-week-5): 预测新冠疫情世界各地，未来15天，每天确诊人数和死亡人数:
+
+- 输出：两个指标，3个分位数
+- 样本id：城市id + 日期 + 指标id
+    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FmBk7V4JsDj.png?alt=media&token=39226fde-0ee6-4f72-bef0-8182809ae110)
+- 评估指标： Weighted Pinball Loss.
+    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F6KVBbgq7pC.png?alt=media&token=a5eb8da1-0f10-45d7-8caf-5119b3d8c46c)
+
 # 公开数据
 
 - [electricity数据集--Electricity dataset from UCI](https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014)： 
@@ -143,10 +154,10 @@ categories:
 - pytorch-forecasting
     - [doc](https://pytorch-forecasting.readthedocs.io/en/latest/contribute.html) | [code](https://github.com/jdb78/pytorch-forecasting)
     
-# 其他
-
-- [awesome time series--github](https://github.com/cuge1995/awesome-time-series#Datasets)
 
 # 参考 
 
 1. [数据集](https://github.com/jbrownlee/Datasets)
+2. [M5 Competition](https://mofc.unic.ac.cy/m5-competition/)
+3. [M4 Competition](https://github.com/Mcompetitions/M4-methods)
+4. [awesome time series--github](https://github.com/cuge1995/awesome-time-series#Datasets)

@@ -12,31 +12,29 @@ categories:
 
 # 算法
 
-- DeepAR: Probabilistic Forecasting with Autoregressive Recurrent Networks, Valentinet.al.,2017, ref 146, p12
+- DeepAR,2017, ref 146, p12
     - [paper](https://arxiv.org/pdf/1704.04110.pdf) | [code](https://github.com/awslabs/gluon-ts/tree/master/src/gluonts/model/deepar)
-- DeepFactor: Deep Factors for Forecasting [the 2019 ICML]，ref15
-    -  [paper](https://arxiv.org/abs/1905.12417)
-    - 使用全局的RNN模型学习不同时序间共同的模式，以及对每一个时间序列学习一个局部模型
-- Deep State Space Models [Rangapuram et. al., 2018]
+- DeepFactor, 2019 ICML，ref 15,使用全局的RNN模型学习不同时序间共同的模式，以及对每一个时间序列学习一个局部模型
+    - [paper](https://arxiv.org/abs/1905.12417)
+- Deep State Space Models,2018
     - [paper](https://papers.nips.cc/paper/8004-deep-state-space-models-for-time-series-forecasting.pdf)
-- Spline Regression RNN [Gasthaus et. al., 2019]
-- TCN: An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling,时间卷积网络
-    - [paper](https://arxiv.org/pdf/1803.01271.pdf):引用量808， p14，2018
-    - [code](https://github.com/locuslab/TCN/blob/master/TCN/tcn.py)
-    - [code](https://github.com/locuslab/TCN)
-- [Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting](https://arxiv.org/pdf/1912.09363.pdf) which outperforms DeepAR by Amazon by 36-69% in benchmarks,    - 引用7次，p27，2019
-    - [code](https://github.com/google-research/google-research/tree/master/tft)
-- prophet, 2017,ref3 70
-  - [paper](https://peerj.com/preprints/3190.pdf) |     - [code](https://github.com/facebook/prophet)
+- Spline Regression RNN , Gasthaus et. al., 2019
+- TCN: ref08， p14，2018
+    - [paper](https://arxiv.org/pdf/1803.01271.pdf) | [code](https://github.com/locuslab/TCN)
+- TFT:  ref 7次，p27，2019
+  - [paper](https://arxiv.org/pdf/1912.09363.pdf) | [code](https://github.com/google-research/google-research/tree/master/tft)
+- prophet, 2017,ref 370
+  - [paper](https://peerj.com/preprints/3190.pdf) | [code](https://github.com/facebook/prophet)
 - stock2vec
     - [paper](https://arxiv.org/abs/2010.01197)
 - Forecasting: Principles and Practic 
     - https://otexts.com/fpp2/
-- [N-BEATS: Neural basis expansion analysis for interpretable time series forecasting](http://arxiv.org/abs/1905.10437) which has (if used as ensemble) outperformed all other methods including ensembles of traditional statical methods in the M4 competition. The M4 competition is arguably the most important benchmark for univariate time series forecasting
+- N-BEATS
+  - [paper](http://arxiv.org/abs/1905.10437)
 
 # 框架
 
-- GluonTS: Probabilistic Time Series Models in Python.关于时序预测场景，亚马逊的方案是最成熟 和 最完善的，从论文，到实现代码，到产品化设计 到 后台工程化方案。
+- GluonTS: Probabilistic Time Series Models in Python.
     - [paper](https://arxiv.org/pdf/1906.05264.pdf)
     - [支持的算法列表](https://github.com/awslabs/gluon-ts/blob/master/REFERENCES.md)
     - [code](https://github.com/awslabs/gluon-ts) | [doc](https://gluon-ts.mxnet.io/)
@@ -60,20 +58,21 @@ categories:
 ## 商品销量预测
 
 [Walmart Store Sales Forecasting (2014)](https://www.kaggle.com/c/walmart-recruiting-store-sales-forecasting)
+
 - Use historical markdown data to predict store sales
 - 评估指标：weighted mean absolute error (WMAE)
-    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FLDPLxG_AsI.png?alt=media&token=d615d942-e378-43d5-8fc4-a26d146bb0ac)
+   ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FLDPLxG_AsI.png?alt=media&token=d615d942-e378-43d5-8fc4-a26d146bb0ac)
 - 样本id： 商场id+部门id+日期（包含当天，未来一周）
-    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FATkOrisXUk.png?alt=media&token=2dea8db9-d230-4266-9676-9e15bb2ed884)
+  ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FATkOrisXUk.png?alt=media&token=2dea8db9-d230-4266-9676-9e15bb2ed884)
 
 ## 极端天气下的商品销量预测
 
 [Walmart Sales in Stormy Weather (2015)](https://www.kaggle.com/c/walmart-recruiting-sales-in-stormy-weather)
 - Predict how sales of weather-sensitive products are affected by snow and rain
 - 评估指标：Root Mean Squared Logarithmic Error (RMSLE)
-    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_jeBzeQgo1.png?alt=media&token=45740607-7629-4005-bb27-773c8df4e9d2)
+  ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_jeBzeQgo1.png?alt=media&token=45740607-7629-4005-bb27-773c8df4e9d2)
 - 样本id：商场id + 商品id + 日期
-    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD_Ba2ZU9Nw.png?alt=media&token=09ce23f2-d4a1-425d-a23c-ee85efea58a4)
+  ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD_Ba2ZU9Nw.png?alt=media&token=09ce23f2-d4a1-425d-a23c-ee85efea58a4)
 
 ## 营业收入预测
 
@@ -82,35 +81,40 @@ categories:
 - Forecast sales using store, promotion, and competitor data
 - tuneover：营业收入
 - 评估指标：rmspe
-    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FEA2frU1QNu.png?alt=media&token=e8991a1c-d50f-4390-833c-3925da591c89)
+  ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FEA2frU1QNu.png?alt=media&token=e8991a1c-d50f-4390-833c-3925da591c89)
 - 样本id： 商场id+日期
-    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHbQ0SWOSpS.png?alt=media&token=a01d1b85-c213-45a4-8a5f-d52f1aaf698b)
+  ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHbQ0SWOSpS.png?alt=media&token=a01d1b85-c213-45a4-8a5f-d52f1aaf698b)
 
 ## 肉类销量预测
+
 [Corporación Favorita Grocery Sales Forecasting (2018)](https://www.kaggle.com/c/favorita-grocery-sales-forecasting)
+
 - accurately predict sales for a large grocery chain?
 - 评估指标： Root Mean Squared Logarithmic Error (NWRMSLE)
-    - 容易腐烂（Perishable） items are given a weight of 1.25 where all other items are given a weight of 1.00.
+    - 容易腐烂（Perishable）的品类给了更高的权重1.25, 其他品类给的1.
 - 样本id： 商品 id
 
 ## 餐厅人流量预测
 
 [Recruit Restaurant Visitor Forecasting (2018)](https://www.kaggle.com/c/recruit-restaurant-visitor-forecasting):
-    - Predict how many future visitors a restaurant will receive
-    - 样本id为： 餐馆id+日期
-        - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FM2vtlhu-kH.png?alt=media&token=0042496a-1f4e-4800-a982-8f2c0e6a8de7)
-    - 评估指标：[root mean squared logarithmic error](https://www.kaggle.com/wiki/RootMeanSquaredLogarithmicError).
-        - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FkPPvo0OwMp.png?alt=media&token=fd0cfe95-5a29-46ee-8ce6-905edfcf31c5)
+
+- Predict how many future visitors a restaurant will receive
+- 样本id为： 餐馆id+日期
+  ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FM2vtlhu-kH.png?alt=media&token=0042496a-1f4e-4800-a982-8f2c0e6a8de7)
+- 评估指标：[root mean squared logarithmic error](https://www.kaggle.com/wiki/RootMeanSquaredLogarithmicError).
+  ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FkPPvo0OwMp.png?alt=media&token=fd0cfe95-5a29-46ee-8ce6-905edfcf31c5)
 
 ## 流行病人数预测
 
-[COVID19 Global Forecasting (2020)](https://www.kaggle.com/c/covid19-global-forecasting-week-5): 预测新冠疫情世界各地，未来15天，每天确诊人数和死亡人数:
+[COVID19 Global Forecasting (2020)](https://www.kaggle.com/c/covid19-global-forecasting-week-5): 
+
+预测新冠疫情世界各地，未来15天，每天确诊人数和死亡人数:
 
 - 输出：两个指标，3个分位数
 - 样本id：城市id + 日期 + 指标id
-    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FmBk7V4JsDj.png?alt=media&token=39226fde-0ee6-4f72-bef0-8182809ae110)
+  ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FmBk7V4JsDj.png?alt=media&token=39226fde-0ee6-4f72-bef0-8182809ae110)
 - 评估指标： Weighted Pinball Loss.
-    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F6KVBbgq7pC.png?alt=media&token=a5eb8da1-0f10-45d7-8caf-5119b3d8c46c)
+  ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F6KVBbgq7pC.png?alt=media&token=a5eb8da1-0f10-45d7-8caf-5119b3d8c46c)
 
 # 公开数据
 

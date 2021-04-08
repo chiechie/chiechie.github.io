@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="总结一下  上交所和深交所都可以买卖股票期权 四大期货交易所可以交易期货  股票市场  滑点（slippage): 发出交易指令时，滑点跟成交价格一起发送，表示成交价格在这个范围内都可以成交。举个例子，EUR&#x2F;USD 汇率 是 1.2057，如果将最大滑点设置为2，那么程序会执行你的订单点那个价格位于 1.2057, 1.2058 or 1.2059, 时，但是 1.2060.就不执行了  衍生品">
+<meta property="og:type" content="article">
+<meta property="og:title" content="交易的基本知识">
+<meta property="og:url" content="https://chiechie.github.io/2021/02/20/investment/basic_things/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Cosmos">
+<meta property="og:description" content="总结一下  上交所和深交所都可以买卖股票期权 四大期货交易所可以交易期货  股票市场  滑点（slippage): 发出交易指令时，滑点跟成交价格一起发送，表示成交价格在这个范围内都可以成交。举个例子，EUR&#x2F;USD 汇率 是 1.2057，如果将最大滑点设置为2，那么程序会执行你的订单点那个价格位于 1.2057, 1.2058 or 1.2059, 时，但是 1.2060.就不执行了  衍生品">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chiechie.github.io/2021/02/20/investment/basic_things/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/02/20/investment/basic_things/img_1.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/02/20/investment/basic_things/img.png">
+<meta property="article:published_time" content="2021-02-20T10:09:12.000Z">
+<meta property="article:modified_time" content="2021-04-08T07:37:21.336Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="技术指标">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/02/20/investment/basic_things/img.png">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/02/20/investment/basic_things/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>交易的基本知识 | Chiechie's Cosmos</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Cosmos</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/20/investment/basic_things/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          交易的基本知识<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/investment/basic_things.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-20 18:09:12" itemprop="dateCreated datePublished" datetime="2021-02-20T18:09:12+08:00">2021-02-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="总结一下">总结一下</h2>
+<ul>
+<li>上交所和深交所都可以买卖股票期权</li>
+<li>四大期货交易所可以交易期货</li>
+</ul>
+<h2 id="股票市场">股票市场</h2>
+<ul>
+<li>滑点（slippage): 发出交易指令时，滑点跟成交价格一起发送，表示成交价格在这个范围内都可以成交。举个例子，EUR/USD 汇率 是 1.2057，如果将最大滑点设置为2，那么程序会执行你的订单点那个价格位于 1.2057, 1.2058 or 1.2059, 时，但是 1.2060.就不执行了</li>
+</ul>
+<h2 id="衍生品市场">衍生品市场</h2>
+<ul>
+<li><p>股票期权在什么时间交易？ 上交所期权合约的交易时间为每个交易日9:15至9:25、9:30至11:30、13：00至15:00。 其中，9:15至9:25为开盘集合竞价时间，14:57-15:00为收盘集合竞价时间，其余时段为连续竞价时间，本规则另有规定的除外。</p></li>
+<li><p>自动行权指的是在期权合约到期时，无需期权买方主动提出行权，一定程度实值的期权将自动被行权。 上交所规定券商应为投资者提供自动行权的服务，自动行权的触发条件和行权方式由券商与客户协定。</p></li>
+<li><p>作为行权方或被行权方，投资者应履行什么义务？ 投资者对认购期权行权的，应当在提交行权指令时向期权经营机构提交足额的行权资金。投资者对认沽期权行权的，应当在提交行权指令时在证券账户中存放足额的合约标的。投资者未按时提交或存放足额的资金或合约标的的，期权经营机构有权拒绝接受其行权指令。 行权交割采取现金结算方式的，投资者若为资金应付方，应当在行权交收前向期权经营机构提交足额的资金。 投资者被指派为认购期权被行权方的，应当在行权交收前在证券账户内存放足额的合约标的；甲方被指派为认沽期权被行权方的，应当在行权交收前向期权经营机构提交足额的被行权资金。</p></li>
+<li><p>股票期权合约行权采取「实物交割」，即行权交收日投资者通过合约账户对应的证券账户完成合约标的的行权交割，对于合约标的交割不足的，中国结算采取现金结算方式完成交割。</p></li>
+<li><p>什么是合约单位？ 合约单位是一张期权合约对应的标的资产数量，即买卖双方在约定的时间以约定的价格买入或卖出标的资产的数量。 例如，进才持有一张行权价格为12元的招宝公司股票认购期权，其合约单位为1000，即他有权在约定的时间以12元的价格向期权的卖方买入1000股该股票。</p></li>
+<li><p>什么是开仓和平仓？ 开仓是指投资者通过买入或卖出期权在市场上建立仓位。买入期权合约获得权利后建立的仓位为权利仓（long position, 也称为长仓）。卖出期权合约承担义务后建立的仓位为义务仓（short position,也称为短仓）,持有义务仓的一方为义务方。</p></li>
+</ul>
+<p>对已持有的期权仓位进行反向操作叫做平仓， 即权利方将持有的期权卖出并不再拥有权利; 义务方从其他投资者手中买回之前卖出的期权合约, 不再承担义务。平仓后投资者不再持有任何仓位，也不再有任何权利或义务。 - 场内期权和场外期权： - 场外期权：在商业银行（还有证券公司，期货公司）的柜台交易，是一种非标准化合约。 - 场内期权：标准化的合约，由交易所设计，在交易所内进行统一集中竞价交易，实行中央对手方清算（CCP）制度等。 - 场内期权按照基础资产可分为：商品类和金融类。 - 商品类期权包括：农产品，能源，贵金属，贱金属的，商品指数 <img src="img.png" alt="上海期货交易所的商品期货" /> - 金融类期权包括：股票，股票指数，利率，外汇。 <img src="img_1.png" alt="金融期货交易所的的沪深300股指期货合于e" /> - 几大期货交易所和交易品类举例： 1. 上海期货交易所：成立于1990年11月26日，上市交易的有铜、铝、天然橡胶、燃料油、黄金、白银、锌、铅、螺纹钢、线材。 2. 大连商品交易所：成立于1993年2月28日，上市交易的有玉米、黄大豆1号、黄大豆2号、豆粕、豆油、棕榈油、鸡蛋、线型低密度聚乙烯、聚氯乙烯、焦炭和焦煤共计11个期货品种。 3. 郑州商品交易所：成立于1990年10月12日，交易的品种有强筋小麦、普通小麦、PTA、一号棉花、白糖、菜籽油、早籼稻、玻璃、菜籽、菜粕、甲醇等期货品种。 4. 中国金融期货交易所:于2006年9月8日在上海成立，交易品种：股指期货，国债期货。eg沪深300、上证50、中证500股指期货和5年期、10年期国债期货5个金融期货合约 5. 芝加哥商业交易所：利率期权，汇率期权，能源期权，农产品期权 6. 芝加哥期权交易所（CBOE）：股票期权，股票指数期权，能源期权，ETF期权。</p>
+<ul>
+<li>商品交易顾问(Commodity Trading Advisor)，是期货行业中的一种基金管理方式。这一称呼原来专指农产品期货交易顾问，但是随着利率、股权期货的增多，CTA的业务也不再限于农产品期货交易，因此CTA有时也称管理期货(Managed Future)。在期货市场上，CTA是在20世纪70年代金融期货大规模发展后才得到大发展的期货市场结构之一，它使原来由套期保值者与投资者构成的期货市场二元结构转为三元结构。</li>
+<li>交易型开放式指数基金(ETF)： 是一种在交易所上市交易的、基金份额可变的一种开放式基金。</li>
+<li>股票期权合约： 上交所统一制定的、规定买方有权在将来特定时间以特定价格买入（或者卖出）约定股票（或者跟踪股票指数的ETF等标的物）的标准化合约。例如50ETF期权： 以上证50为标的物的期权合约。</li>
+<li>股指期货： IF、IH、IC是股指期货的代码
+<ul>
+<li>IF：Index Future，标的物是沪深300指数， 例如IF1507表示2015年7月交割的沪深300股指期货合约。</li>
+<li>IH：H表示“沪”，标的物是上证50，例如IH1507表示2015年7月交割的上证50股指期货合约。</li>
+<li>IC：C是China，标的物是中证500，例如IC1507表示2015年7月交割的中证500股指期货合约。</li>
+</ul></li>
+<li>中国波动率指数（简称iVIX指数）：是由上海证券交易所发布，用于衡量上证50ETF未来30日的波动预期。该指数是根据方差互换原理，结合50ETF期权的实际运作特点，并通过上海证券交易所交易的50ETF期权价格的计算编制而成。iVIX指数通过反推当前在交易的期权价格中蕴含的隐含波动率，反映出未来30日标的50ETF价格的波动水平。</li>
+<li>期货与远期/互换的区别：前者是场内，后者是场外。场内更透明，标准化，流动性高；场外更定制化，流动性低。</li>
+</ul>
+<h2 id="交易的策略">交易的策略</h2>
+<ul>
+<li><p>均值回归（mean reversion）：赌市场会回归理性。 <img src="img.png" alt="均值回归" /></p>
+<blockquote>
+<p>由于波动率最主要的特性是均值回归，故波动率的均值回归交易成为专业期权交易员最常见的一种交易方式</p>
+</blockquote></li>
+<li><p>动量策略（momentum）：赌市场会越来越疯狂</p></li>
+<li><p>方差溢价：指隐含波动率总是等于或者大于历史波动率</p></li>
+<li><p>成交量指标:</p>
+<ol type="1">
+<li>一般来说，资金流入流出的多少、成交量的大小，不是资产价格的领先指标，而是一个同步、甚至是滞后指标。</li>
+<li>对于有一些资金流入，投资者是可以加以参考的。这其中的一个要诀，就是这些流入的资金，是否真的对标的资产有深刻的认识。 比如说，当一家上市公司的大股东，以大笔现金增持一家上市公司的股票时，这种资金流入，就是非常值得投资者关注的</li>
+</ol></li>
+</ul>
+<h2 id="参考">参考</h2>
+<ol start="4" type="1">
+<li><a target="_blank" rel="noopener" href="https://www.htsc.com.cn/browser/view/gpqq.jsp#tit2">股票期货合约</a></li>
+<li><a target="_blank" rel="noopener" href="https://xueqiu.com/1340904670/172198829">重视成交量指标-雪球</a></li>
+<li><a target="_blank" rel="noopener" href="https://blackwellglobal.com/max-spread-slippage-mean/">对滑点和spread的解释</a></li>
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/59d32f0071645a1359d4060kd3d322001ad3d9446802347">发现价格-期货和金融衍生品微信读书</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%80%E6%9C%AF%E6%8C%87%E6%A0%87/" rel="tag"># 技术指标</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/02/19/AIOps/log_analizer/" rel="prev" title="日志监控怎么做？">
+      <i class="fa fa-chevron-left"></i> 日志监控怎么做？
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/02/20/reading_notes/ZenandArtofMotorcycle/" rel="next" title="禅与摩托车维修艺术">
+      禅与摩托车维修艺术 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="nav-number">1.</span> <span class="nav-text">总结一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%82%A1%E7%A5%A8%E5%B8%82%E5%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">股票市场</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8D%E7%94%9F%E5%93%81%E5%B8%82%E5%9C%BA"><span class="nav-number">3.</span> <span class="nav-text">衍生品市场</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E7%9A%84%E7%AD%96%E7%95%A5"><span class="nav-number">4.</span> <span class="nav-text">交易的策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="因果推断和因果发现 因果问题分为两种  一种是因果推断（causal inf erence），比如给定两个变量 X、Y，希望找到一个衡量它们之间因果关系的参数 theta； 另一种是因果发现（causal discovery），即给定一组变量，找到他们之间的因果关系，这个在统计上是不可能的。  两种数据产生途径 数据有两种产生途径：  一种是通过有意控制、随机化的实验得到的:例如拨测,能够直接做因">
+<meta property="og:type" content="article">
+<meta property="og:title" content="因果推断">
+<meta property="og:url" content="https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Cosmos">
+<meta property="og:description" content="因果推断和因果发现 因果问题分为两种  一种是因果推断（causal inf erence），比如给定两个变量 X、Y，希望找到一个衡量它们之间因果关系的参数 theta； 另一种是因果发现（causal discovery），即给定一组变量，找到他们之间的因果关系，这个在统计上是不可能的。  两种数据产生途径 数据有两种产生途径：  一种是通过有意控制、随机化的实验得到的:例如拨测,能够直接做因">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/right_causal_graph.png">
+<meta property="article:published_time" content="2021-03-04T15:23:02.000Z">
+<meta property="article:modified_time" content="2021-04-08T07:37:21.476Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="因果推断">
+<meta property="article:tag" content="贝叶斯">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/img.png">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>因果推断 | Chiechie's Cosmos</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Cosmos</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          因果推断<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/technology/cause-inference-learning.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-04 23:23:02" itemprop="dateCreated datePublished" datetime="2021-03-04T23:23:02+08:00">2021-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="因果推断和因果发现">因果推断和因果发现</h1>
+<p>因果问题分为两种</p>
+<ul>
+<li>一种是因果推断（causal inf erence），比如给定两个变量 X、Y，希望找到一个衡量它们之间因果关系的参数 theta；</li>
+<li>另一种是因果发现（causal discovery），即给定一组变量，找到他们之间的因果关系，这个在统计上是不可能的。</li>
+</ul>
+<h1 id="两种数据产生途径">两种数据产生途径</h1>
+<p>数据有两种产生途径：</p>
+<ul>
+<li>一种是通过有意控制、随机化的实验得到的:例如拨测,能够直接做因果推断</li>
+<li>一种是通过观测数据得到的: 需要另外知道一些先验知识，才能做因果推断。</li>
+</ul>
+<h1 id="用数学语言表达因果模型">用数学语言表达因果模型</h1>
+<p>因果模型有三种表达方式： - 反事实（counterfactuals） - 因果图（causal graph） - 结构方程模型（structural equation models）</p>
+<p>一个简单的例子『睡眠超过 7 小时的人』（X）『生病少』（Y)，只是代表 X 和 Y 之间有关联性，并不代表如果强制一个人睡眠超过 7 小时，ta 就能够生病少。因为可能『身体好的人』容易『睡眠超过 7 小时』，同时 ta 也『生病少』；但是一个本来身体不好的人，强制 ta 睡眠多，ta 可能也生病不会少。</p>
+<p>因果关系可以从随机化的实验中得到；但是很难从观察到的数据中得到。</p>
+<h2 id="反事实counterfactuals">反事实（Counterfactuals）</h2>
+<p>考虑一个 treatment X，和一个 outcome Y。我们能观察到的是一些数据 <span class="math inline">\(\left\{\left(X_{i}, Y_{i}\right)\right\}\)</span> ，但是我们无法知道如果对于某一个数据点 <span class="math inline">\(\left(X_{i}, Y_{i}\right)\)</span> ，如果改变 X 的值，Y 会怎么变。这件事情就叫做反事实（counterfactual）。</p>
+<p>Notes 里面给了一个图（下图），从数据上看，X 和 Y 是正相关的，但其实对于每一个 样本来说，如果增大 X，会引起 Y 的减小。这一点最开始看的时候并不好理解。举一个例子。研究航空公司票价（X）对销量（Y）的影响，显然，对于某一个客户来说，增加票价（X 变大）会降低客户购买意愿，即使得销量将达（Y 变小）。但是实际中的情况是，在节假日人们出行意愿大导致销量高（Y 大），定价也会相应变高（X 大），从而从数据上看，形成左边图的情形。</p>
+<figure>
+<img src="img.png" alt="反事实举例" /><figcaption aria-hidden="true">反事实举例</figcaption>
+</figure>
+<h2 id="因果图causal-graph">因果图（causal graph）</h2>
+<p>因果图是一个DAG，表明各变量之间的联合概率分布。</p>
+<p><span class="math display">\[p\left(y_{1}, \ldots, y_{k}\right)=\prod p\left(y_{j} \mid \operatorname{parents}\left(y_{j}\right)\right)\]</span></p>
+<p>下面举例说明，在给定一个因果图之后，如何做因果推断。 考虑下面一个因果图，目标是求<span class="math inline">\(p(y \mid \operatorname{set} X=x)\)</span></p>
+<ul>
+<li><p>首先，可以看出该 causal graph 提供的信息为 <span class="math inline">\(p(x, y, z)=p(z) p(x \mid z) p(y \mid x, z)\)</span></p></li>
+<li><p>接下来，由于考虑的是给定 X的影响，因此构建一个新图<span class="math inline">\(G_{*}\)</span>, 移除掉所有指向 X 的边，得到新的联合概率分布: <span class="math display">\[p_{*}(y, z)=p(z) p(y \mid x, z)\]</span></p></li>
+<li><p>最后，该概率分布下的数值就是因果推断的结果: <span class="math display">\[p(y \mid \text { set } X=x) \equiv p_{*}(y)=\int p_{*}(y, z) d z=\int p(z) p(y \mid x, z) d z\]</span></p></li>
+</ul>
+<h2 id="因果图-和-概率图-的区别">因果图 和 概率图 的区别</h2>
+<p>举例说明，比如下雨（Rain，R）和湿草坪（Wet Lawn，W）是不相互独立的 对于下两种 DAG，它们都是合理的 probability graph。即对于任意的联合概率分布 <span class="math inline">\(p(w, r)\)</span>，都可以写成 <span class="math inline">\(p(w) p(r \mid w)\)</span> 或者 <span class="math inline">\(p(r) p(w \mid r)\)</span>. 但显然下雨是因、草坪湿是果，只有左边的图才是正确的 causal graph。</p>
+<figure>
+<img src="right_causal_graph.png" alt="right_causal_graph" /><figcaption aria-hidden="true">right_causal_graph</figcaption>
+</figure>
+<h1 id="因果发现是不可能的">因果发现是不可能的</h1>
+<p>总存在一个 faithful 的分布使得在样本足够多的时候，产生足够大的 type I error。</p>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/88173582">zhihu-关于因果推断公开课翻译</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.stat.cmu.edu/~larry/=sml/Causation.pdf">英文原文</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/" rel="tag"># 因果推断</a>
+              <a href="/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/" rel="tag"># 贝叶斯</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/04/AIOps/logmine-notes/" rel="prev" title="logmine论文笔记">
+      <i class="fa fa-chevron-left"></i> logmine论文笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/05/meditation/about-problem-Definition-and-info-collection/" rel="next" title="关于「问题的定义和搜集哪些数据」的一次实践">
+      关于「问题的定义和搜集哪些数据」的一次实践 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD%E5%92%8C%E5%9B%A0%E6%9E%9C%E5%8F%91%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">因果推断和因果发现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E6%95%B0%E6%8D%AE%E4%BA%A7%E7%94%9F%E9%80%94%E5%BE%84"><span class="nav-number">2.</span> <span class="nav-text">两种数据产生途径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%95%B0%E5%AD%A6%E8%AF%AD%E8%A8%80%E8%A1%A8%E8%BE%BE%E5%9B%A0%E6%9E%9C%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">用数学语言表达因果模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E4%BA%8B%E5%AE%9Ecounterfactuals"><span class="nav-number">3.1.</span> <span class="nav-text">反事实（Counterfactuals）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%A0%E6%9E%9C%E5%9B%BEcausal-graph"><span class="nav-number">3.2.</span> <span class="nav-text">因果图（causal graph）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%A0%E6%9E%9C%E5%9B%BE-%E5%92%8C-%E6%A6%82%E7%8E%87%E5%9B%BE-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.3.</span> <span class="nav-text">因果图 和 概率图 的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%A0%E6%9E%9C%E5%8F%91%E7%8E%B0%E6%98%AF%E4%B8%8D%E5%8F%AF%E8%83%BD%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text">因果发现是不可能的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/01/meditation/ad-and-prediction/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/01/technology/ad-and-prediction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/01/meditation/ad-and-prediction/" class="post-title-link" itemprop="url">预测和异常检测</a>
+            <a href="/2021/04/01/technology/ad-and-prediction/" class="post-title-link" itemprop="url">预测和异常检测</a>
         </h2>
 
         <div class="post-meta">
@@ -195,7 +195,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+                <time title="修改时间：2021-04-09 18:16:27" itemprop="dateModified" datetime="2021-04-09T18:16:27+08:00">2021-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -224,6 +224,32 @@
 <h2 id="公理">公理</h2>
 <ol type="1">
 <li>异常检测比预测的任务更简单，异常检测只需自圆其说即可，时序预测需要拿现实数据来验证。</li>
+</ol>
+<h2 id="需求还是方案">需求还是方案？</h2>
+<p>怎么给一个合适的阈值？</p>
+<p>怎么给一个合适的窗口？</p>
+<p>这个是一个需求？—给用户定</p>
+<p>还是一个解决方案？—-我们给出最佳实践</p>
+<p>按照经验，怎么确定阈值？</p>
+<p>怎么确定异常？偏离正常的就是异常，不合群的 极少数 就是异常，like me</p>
+<ul>
+<li>如果这个群体就是一个五花八门的， 那么很难说哪一个是异常，因为都很有个性。eg美国的拉美裔，女权团体。</li>
+<li>如果一个群体在整体上是有秩序的，只有少部分个体表现的不符合这个秩序，这些人就是异常。</li>
+</ul>
+<h2 id="怎么确定个体是不是某个群体的异类呢">怎么确定个体是不是某个群体的异类呢？</h2>
+<ol type="1">
+<li>先判断群体的属性，有没有秩序？有秩序的话，是什么类型的秩序？</li>
+<li>如果没有秩序，说明，单纯的数据挖掘，获取不到可信的知识。就像做图像分类，本来给的一堆动物世界中的动物做训练，然后测试的时候，给了模型一个孙悟空，模型就不认识了。这个时候，教给算法做不是很合理，应该转交给更高级的人类去处理，他有领域知识，比机器聪明。</li>
+<li>如果有秩序，去比。
+<ol type="1">
+<li>这里面又涉及到，用户想检测什么类型的异常。</li>
+</ol></li>
+</ol>
+<h2 id="自己作为方法">自己作为方法</h2>
+<ol type="1">
+<li>用预测的方法，去做曲线模式判断，用拟合程度来判断符合哪个模式，即找到最佳视角能够解释这个现象</li>
+<li>将1中的视角选中，采用历史外推的方式，估算出正常区间，</li>
+<li>更进一步的，正常区间之外，想要找出某个类型的异常，就再次配置出异常类型。</li>
 </ol>
 <h2 id="推论">推论</h2>
 <ol type="1">

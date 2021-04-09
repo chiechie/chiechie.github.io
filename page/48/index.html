@@ -164,6 +164,96 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/19/AIOps/log_analizer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/19/AIOps/log_analizer/" class="post-title-link" itemprop="url">日志监控怎么做？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-19 20:05:20" itemprop="dateCreated datePublished" datetime="2021-02-19T20:05:20+08:00">2021-02-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="做项目之前的分析">做项目之前的分析</h2>
+<p>最近要做一个nlp的项目，需求就是从一堆杂乱无章的日志中，发现一些规律。 即哪些日志其实是在说一个事情，可归为一类； 哪些日志是新奇的，没有出现过的。</p>
+<p>有点像什么呢？就是给了一堆用户的数据，想对这些用户去做一个分群，本质是一个探索式的需求。 但是，有一些该场景特有的约束，和用户的画像维度一样，日志的画像维度也是其细分场景特有的， 比如，日志我们通常关注的是 时间，日志级别， 不关注的是具体的ip，网站，数量。 或者说，我们最先关注的不是这些微观的信息，而是最泛化的信息。</p>
+<p>如果是顶层有异常就需要下钻到更细分的维度，即研究更细致的原因，是哪个ip，或者网站，数量导致的。这一步可以使用多维度根因定位的方法。</p>
+<p>可以出一个这种方案：日志模版提取 + 多维度根因定位。 其中，日志模版提取，要运维去定义规则。</p>
+<h2 id="看看别人怎么做的">看看别人怎么做的</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">关于logmine的实践--chiechie</a></li>
+</ol>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf">logmine-paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://pypi.org/project/logmine/">logmine-pypi</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">apache_2k.log</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ixueshu.com/h5/document/814a23b6b51168d40153bcb23ef479f1318947a18e7f9386.html">硕士论文-模式识别在海量日志分析中的应用研究 "施佳奇"</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">关于logmine的实践--chiechie-</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/19/principles_of_economics/priniciples_of_economics_19/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -285,108 +375,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/19/knowing_myself/what-people-i-wanna-be/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/19/knowing_myself/what-people-i-wanna-be/" class="post-title-link" itemprop="url">想成为什么样的人？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-19 18:32:41" itemprop="dateCreated datePublished" datetime="2021-02-19T18:32:41+08:00">2021-02-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A4%E8%AF%86%E8%87%AA%E5%B7%B1/" itemprop="url" rel="index"><span itemprop="name">认识自己</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="想要自由">想要自由</h2>
-<p>想到了电影《浴血黑帮》的汤老师，有人这么评价他：</p>
-<blockquote>
-<p>世人慌慌张张，不过图碎银几两。 偏偏这碎银几两，能解世间万种惆怅。</p>
-</blockquote>
-<p>汤老师没有感情的羁绊，一心只知道搞钱。虽然背叛过汤姆，但是又如何？在这乱世之中，谁不是先顾着自己能活下来。</p>
-<p>过年看了李诞出了一本新书--《候场》，看完只觉得矫情。一边做着艺人捞钱，一边又一点都忍受不了甲方对他的不尊重和变相的压迫（压迫就是让他起早床，这算事儿？）。</p>
-<p>相比之下，汤老师简直太酷。 我也想成为这样的人--一个莫得感情的赚钱机器，能够在乱世中安身立命。 之后，我想要更多，我想要尊严，自由 和 安宁。 我还是更贪心一点。</p>
-<h2 id="哲学家还是实干家">哲学家还是实干家？</h2>
-<p>人的精力有限，需要选择将主要精力花费在哪些方面。</p>
-<p>成为一个理论家，还是实干家？理论家意味着花更多时间在思索现实中不会遇到的问题，比如哲学家，以及学术从业者。实干家聚焦在实际中遇到的难题，但是他们也会借助理论来武装自己，比如教员，Taleb。两种人聚焦的方向是不一样。</p>
-<p>我想成为一个什么样的人？一度想成为哲学家，觉得道家，佛家，西方哲学的思想非常强大。哲学家们思考的是最抽象最广泛的问题，研究的是最极致的方法论，可以覆盖我们生活工作的方方面面。</p>
-<p>但是，现在到了要处理这些问题的时候，发现，还是少了那么一点衔接的东西，就好像道法术，必须一整套都要会，理论才能转化为实践。但是哲学只是在「道」上面给出一个指引，要解决实际问题，还是得从实际出发。</p>
-<p>比如《毛选》中解决革命问题虽然参考了马克思的唯物辩证法，但是不是教条式照抄，而是结合现实中的多个矛盾，给出切实可行的行动指南，并且通过实践来不断地纠偏。</p>
-<p>我现在想成为想教员一样的，实干家。</p>
-<p>（谁知道10年后的我又怎么想呢？）</p>
-<h2 id="工程师还是产品经理">工程师还是产品经理？</h2>
-<p>一度认为工程师厉害得不行，肉眼可见的所有基础设施，生活用品，都少不了工程师的打造。</p>
-<p>一度不能理解乔布斯的伟大之处。</p>
-<p>现在这种偏见开始改变，工程师解决的都是确定性的问题，基于数据家的理论基础，基于前人的工具的建设，更多的是偏体力的机械的劳动。</p>
-<p>乔布斯是优秀的产品经理，是一个追求quality，敢于承担风险的企业界，这是真的「人」格魅力。</p>
-<p>虽然我能get到优秀的产品经理的价值，但是，我还是没有想好，自己要不要从事这个职业。</p>
-<h2 id="教条和反智">教条和反智？</h2>
-<p>一度是一个书呆子，做事情无比教条，觉得理论无比正确，丝毫不怀疑理论的正确性和实用性，坚信理论可以指导所有的实践。 一度又特别反智，差点走上“民科”的歧途。</p>
-<p>这两个极端都要不得，像教员看齐。聚焦于实际中的问题。</p>
-<blockquote>
-<p>哈佛商业评论-你的事业上线在哪里？</p>
-<p>要对自己有深刻认识——不仅清楚自己的优点和缺点，也知道自己是怎样学习新知识和与别人共事的，并且还明白自己的价值观是什么、自己又能在哪些方面做出最大贡献。</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -456,7 +444,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">97</span>
+          <span class="site-state-item-count">98</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -469,7 +457,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -566,6 +554,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

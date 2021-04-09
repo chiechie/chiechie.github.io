@@ -16,9 +16,12 @@ categories:
 > 最近工作正好涉及根因分析，加上我对因果推断领域比较感兴趣，所以将本书作为入门读物。打算以此为基础，再看技术paper。
 >
 > 这个是第一篇-引言-思维胜于数据
+> 
+> 重新review了一下读书笔记，感觉还是没有消化里面的内容
 
 
 ## 因果推断流程图
+
 
 ![图一--因果推断引擎](inference_engine.png)
 
@@ -67,10 +70,13 @@ categories:
    > 
    > 决策树生成算法，挑选节点的时候，有异曲同工之妙啊。
    
-   ![img.png](the-book-of-why/img.png)
+   ![决策树中的概率提高思想](img.png)
    
 2. 
 
 ## 参考
-1.[在线试读-引言])(http://bayes.cs.ucla.edu/WHY/why-intro.pdf)
-2.[知乎-反事实和干预](https://zhuanlan.zhihu.com/p/269625734)
+
+1. [the book of why-微信读书-引言](http://bayes.cs.ucla.edu/WHY/why-intro.pdf)
+1. [the book of why-微信读书-引言](http://bayes.cs.ucla.edu/WHY/why-intro.pdf)
+
+2. [知乎-反事实和干预](https://zhuanlan.zhihu.com/p/269625734)

@@ -13,7 +13,10 @@ tags:
 
 - 私网IP，也叫private ip address，或者内网IP。是一个局域网内部，用于识别彼此身份的一个id。
 - 公网IP，也叫public ip address，或者外网IP。是在因特网中，用户识别设备身份的一个id。
+> 早期，当联网设备只有一台电脑时，将你的电脑连向一个modem，会被分配一个ip，就是public ip，这个ip就是你的电脑在整个互联网的一个id
+> 随着家中联网设备变多（电视机，手机，平板），需要有一个路由的功能，加上上面的modem的功能，就是现在的路由器。他可以将public ip映射为家庭环境中的多个id，分配给多个设备。注意家庭中联网设备构成了一个局域网（LAN）。
 
+- (https://ljvmiranda921.github.io/notebook/2018/01/31/running-a-jupyter-notebook/)https://ljvmiranda921.github.io/notebook/2018/01/31/running-a-jupyter-notebook/
 
 ## modem 和 路由器 有什么区别？
 

@@ -3,8 +3,12 @@ title: 点积or余弦？
 author: chiechie
 mathjax: true
 date: 2021-04-02 15:47:19
-tags:
+tags: 
+- word2vec
+- NLP
+- 人工智能
 categories:
+- 技术
 ---
 
 

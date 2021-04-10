@@ -11,8 +11,10 @@ categories:
 ---
 
 > 灵魂拷问！
-    - 如果把word2vec用神经网络来技术来实现，那么模型参数是什么？跟词向量的关系是什么？或者说用神经网络的框架来 reformulate，
-    - 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个呢？怎么用呢？
+> 
+> 如果把word2vec用neural nets来实现，那么模型参数是什么？跟词向量的关系是什么？或者说用神经网络的框架如何reformulate这个问题？
+> 
+> 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个呢？怎么用呢？
 
 ## 原理部分：
  
@@ -21,30 +23,39 @@ word2vec原理推导:
 ### 跳字模型（skip gram）
 
 每个词被表示成2个d维向量，
-    - 词的索引为i，
-    - 中心词向量为 ， $$\boldsymbol{v}_{i} \in \mathbb{R}^{d}$$
-    - 背景词向量为 ,$$\boldsymbol{u}_{i} \in \mathbb{R}^{d}$$
-    - 词典索引集 : $$ \mathcal{V}=\{0,1, \ldots,|\mathcal{V}|-1\}$$
 
-- 模型的输出是 ： 条件概率
-- 学习的目标是： 最大化 所有观测值的条件概率，即
-    - $$\max \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)$$
-    - 等价于   $$\max \sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)$$
-    - 进一步，logP就是   $$\log P\left(w_{o} \mid w_{c}\right)=\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}-\log \left(\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)\right)$$
+- 词的索引为i，
+- 中心词向量为：$\boldsymbol{v}_{i} \in \mathbb{R}^{d}$
+- 背景词向量为：$\boldsymbol{u}_{i} \in \mathbb{R}^{d}$
+- 词典索引集： $\mathcal{V} =\{0,1, \ldots,|\mathcal{V}|-1\}$
+- 模型的输出是：条件概率
+- 学习的目标： 最大化 所有观测值的条件概率，即
+    $$\max \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)$$
+    等价于   $$\max \sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)$$
+    进一步，logP就是   $$\log P\left(w_{o} \mid w_{c}\right)=\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}-\log \left(\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)\right)$$
 
 直接照着最大化条件概率的目标学习可以吗？
 
-不行，可以看到上式的复杂度为|V|, 为了提高计算效率，有两个近似训练方案： 负采样 和 层次化softmax：
-- 负采样的想法是，最后一层不用softmax，而是sigmoid；
-- 目标函数是 交叉熵：观测值就是正样本，未出现的就是负样本（通过对词典采样K次得到）
-    - $$P\left(w^{(t+j)} \mid w^{(t)}\right)=P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right) \prod\limits_{k=1, w_{k} \sim P(w)}^{K} P\left(D=0 \mid w^{(t)}, w_{k}\right)$$
-    - 取对数就是
-    - $$\begin{aligned}-\log P\left(w^{(t+j)} \mid w^{(t)}\right) &=-\log P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log P\left(D=0 \mid w^{(t)}, w_{k}\right) \\ &=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \left(1-\sigma\left(\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right)\right) \\ &=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \sigma\left(-\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right) \end{aligned}$$
-- 好处是：计算 梯度的 复杂度 从N 减少到 K
+不行，可以看到上式的复杂度为|V|, 为了提高计算效率，有两个近似训练方案：负采样 和 层次化softmax
+
+## 近似的学习方法--负采样
+负采样的想法是，最后一层不用softmax，而是sigmoid,目标函数是 交叉熵：观测值就是正样本，未出现的就是负样本（通过对词典采样K次得到）
+
+$$P\left(w^{(t+j)} \mid w^{(t)}\right)=P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right) \prod\limits_{k=1, w_{k} \sim P(w)}^{K} P\left(D=0 \mid w^{(t)}, w_{k}\right)$$
+
+取对数就是
+
+$$\begin{aligned}-\log P\left(w^{(t+j)} \mid w^{(t)}\right) &=-\log P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log P\left(D=0 \mid w^{(t)}, w_{k}\right) \\ &=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \left(1-\sigma\left(\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right)\right) \\ &=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \sigma\left(-\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right) \end{aligned}$$
+
+好处是：计算 梯度的 复杂度 从N 减少到 K
+
+## 将word2vec重定义为一个nn问题
 
 word2vec将每个词表示成一个定长的向量，并使得这些向量能较好地表达不同词之间的相似和类比关系
+
 - 第一步：获取训练样本
     - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjpuHAmzTik.png?alt=media&token=47e0004c-bc7c-4fc5-af22-d227532a7548)
+    
 - 第二步：构建1个神经网络
     - 输入：上面的中心词的one-hot向量，形状为（词典大小，）
     - 输出：中心词周围出现的词的概率向量（相近词的概率），形状也是（词典大小）
@@ -56,10 +67,14 @@ word2vec将每个词表示成一个定长的向量，并使得这些向量能较
     - 训练数据的数量和质量
     - 词向量的大小
     - 训练算法
-- 怎么评估词向量的质量呢？--google提供了 测试数据 和 测试脚本
-    - chiechie：先人工定义一些 近义词组，反义词组，不相关词组，计算这些词组的 余弦距离，看是否跟之前定义的语义距离 一致。
-    - 提供2份 相关性测试集（relation test set）:
-        - word relation test set :**./demo-word-accuracy.sh**,
-        -  phrase relation test set:**./demo-phrase-accuracy.sh**
-    - 最好的结果：准确率 70% + 覆盖率 100%.
-    - https://github.com/tmikolov/word2vec
+
+## 怎么评估词向量的质量？
+
+google提供了 测试数据 和 测试脚本
+
+- chiechie：先人工定义一些 近义词组，反义词组，不相关词组，计算这些词组的 余弦距离，看是否跟之前定义的语义距离 一致。
+- 提供2份 相关性测试集（relation test set）:
+    - word relation test set :**./demo-word-accuracy.sh**,
+    -  phrase relation test set:**./demo-phrase-accuracy.sh**
+- 最好的结果：准确率 70% + 覆盖率 100%.
+- https://github.com/tmikolov/word2vec

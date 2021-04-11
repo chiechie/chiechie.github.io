@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/10/AIOps/aiops2020-solution/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/10/technology/probabilistic-graphic-models/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/10/AIOps/aiops2020-solution/" class="post-title-link" itemprop="url">AIOps挑战赛2020-获奖方案分享</a>
+            <a href="/2021/03/10/technology/probabilistic-graphic-models/" class="post-title-link" itemprop="url">概率图模型读书笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -188,7 +188,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-10 13:08:27" itemprop="dateCreated datePublished" datetime="2021-03-10T13:08:27+08:00">2021-03-10</time>
+              <time title="创建时间：2021-03-10 23:43:52" itemprop="dateCreated datePublished" datetime="2021-03-10T23:43:52+08:00">2021-03-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
                 </span>
             </span>
 
@@ -218,23 +218,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="亚信的方案">亚信的方案</h2>
-<blockquote>
-<p>对于调用链根因节点定位的模型实现，我们考虑过两种方案，一种是有监督的方法，即把一定时间切片内的调用链数据作特征提取，转化为一个多分类问题或者二分类问题，但这种方法泛化能力较差，严格依赖于当前系统的数据特征，不利于实际生产环境的迁移，另一方面，我们考虑到复赛数据特征可能与预赛数据不尽相同，因此我们选择了泛化性能更强的方法，也就是无监督的方法。 我们对每条调用链沿着调用关系进行动态搜索，使之构成一个节点间的依赖图，并在这个依赖图上定义了两种不同类型的故障模式，</p>
-<p>第一种定义为非疑似节点，指子节点延时除以父节点延时大于等于51%的节点,主要用于衡量子节点占用的父节点的资源。 第二种定义为疑似异常节点，指父节点耗时-子节点耗时，除以父节点耗时大于等于51%的子节点，衡量的是父节点自己占用的资源。</p>
-<p>第二种异常模式可能不太容易理解，其实它可以来源于生活中一个十分直观的观察，例如我们从商店订购了一份外卖，2个小时后才收到，这时候我们应该认为是商店备餐慢，还是骑手送货慢呢，想要知道答案，只需要看一看同一时间，点了相同外卖的其他人，是否也出现了收货慢的情况。</p>
-</blockquote>
-<p>文章说的很绕，原理很简单，总结下: 先从业务指标异常触发定位，然后从调用链中异常的服务，然后服务对应的机器，定位根因指标。</p>
-<figure>
-<img src="./aiops2020-solution/framework.png" alt="根因定位框架" /><figcaption aria-hidden="true">根因定位框架</figcaption>
-</figure>
-<figure>
-<img src="./aiops2020-solution/rca.png" alt="调用链路的异常检测和根因定位" /><figcaption aria-hidden="true">调用链路的异常检测和根因定位</figcaption>
-</figure>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=15&amp;flag=1">AIOps挑战赛2020-官网</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hYiXUMveSprkIiOy8mCmCg">2020AIOps挑战赛亚军亚信科技团队方案分享</a></li>
+          <ol type="1">
+<li>我们在计算机上对一个现实系统建模，并使用模型推理。我们将系统的认识编码到模型，同时要保证计算机能读懂该模型。举个例子，医疗诊断的模型可以表示疾病和症状&amp;化验结果的联系，推理算法可以利用这个模型，和特定患者的症状，回答与该患者相关的问题。陈述性表示（declarative representation）的一个关键特性是，知识和推理分离。</li>
+<li>我们常常不能确定系统的真实状态，</li>
 </ol>
 
       
@@ -255,7 +241,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/AIOps/aiops2021-demo/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/10/AIOps/cnsoftbei2020/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -269,7 +255,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/09/AIOps/aiops2021-demo/" class="post-title-link" itemprop="url">AIOps挑战赛2021-demo方案</a>
+            <a href="/2021/03/10/AIOps/cnsoftbei2020/" class="post-title-link" itemprop="url">CN-Softbei2020比赛</a>
         </h2>
 
         <div class="post-meta">
@@ -279,7 +265,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-09 22:04:42" itemprop="dateCreated datePublished" datetime="2021-03-09T22:04:42+08:00">2021-03-09</time>
+              <time title="创建时间：2021-03-10 14:37:13" itemprop="dateCreated datePublished" datetime="2021-03-10T14:37:13+08:00">2021-03-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -309,98 +295,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="数据解析">数据解析</h2>
-<p>比赛数据包括： 部署拓扑，指标数据，日志数据，调用链数据，故障标签</p>
-<h3 id="部署数据">部署数据</h3>
+          <blockquote>
+<p>数据来自CN-Softbei2020比赛--《基于网络拓扑及告警的故障根因定位系统实现及算法研究》</p>
+<p>现在实验一种很激进的做法---仅靠指标做根因分析</p>
+<p>当涉及的指标过多时, 得到的拓扑图非常复杂.</p>
+</blockquote>
+<h2 id="数据解析">数据解析</h2>
 <figure>
-<img src="./aiops2021-demo/bushu.png" alt="部署数据" /><figcaption aria-hidden="true">部署数据</figcaption>
+<img src="dataoverview.png" alt="dataoverview" /><figcaption aria-hidden="true">dataoverview</figcaption>
 </figure>
-<h3 id="指标数据">指标数据</h3>
-<p>指标数据包括业务指标 和 性能指标。 业务指标用于触发根因分析，性能指标用于局部的根因定位</p>
-<p>每个指标数据，都需要附带的信息有：归属物理设备id，以及相应用id，（这样才能做机器的指标依赖的额故障定位）</p>
-<h4 id="业务指标">业务指标</h4>
-<p>kpi_0304.csv</p>
-<ul>
-<li>rr：单位%，系统响应率</li>
-<li>sr：单位%，业务成功率</li>
-<li>cnt：单位条，交易量</li>
-<li>mrt：单位ms，平均响应时间</li>
-<li>tc：交易码, 有11种应用, 'ServiceTest1', 'ServiceTest10', 'ServiceTest11', 'ServiceTest2', 'ServiceTest3', 'ServiceTest4', 'ServiceTest5', 'ServiceTest6', 'ServiceTest7', 'ServiceTest8', 'ServiceTest9'</li>
-</ul>
+<p>将每个事件看成一个指标的话，可以得到一个节点为2876的图</p>
+<h2 id="关联分析">关联分析</h2>
 <figure>
-<img src="./aiops2021-demo/yewu.png" alt="业务指标" /><figcaption aria-hidden="true">业务指标</figcaption>
+<img src="corr.png" alt="corr" /><figcaption aria-hidden="true">corr</figcaption>
 </figure>
-<h4 id="性能指标">性能指标</h4>
-<p>每个应用的指标, 每个kpi会有一个对应的机器id（即cmdb_id）</p>
-<ul>
-<li>cmdb_id: 指标归属的物理设备, 每个物理设备上收集到的指标一般来说包括两种，「操作系统」性能指标以及「服务」性能指标。</li>
-<li>kpi_name: 指标归属的服务类型，比如归属于操作系统/java虚拟机/Redis/Tomcat/Mysql等</li>
-</ul>
 <figure>
-<img src="./aiops2021-demo/xingneng.png" alt="性能指标" /><figcaption aria-hidden="true">性能指标</figcaption>
+<img src="img.png" alt="节点个数" /><figcaption aria-hidden="true">节点个数</figcaption>
 </figure>
-<h3 id="日志数据">日志数据</h3>
-<p>日志数据有3个重要字段：</p>
-<ul>
-<li>cmdb_id： 日志是从哪台物理机器上产生</li>
-<li>log_name: 日志对应的组件名和日志类别, 相当于4个采集器，eg catalina/gc/localhost/localhost_access_log</li>
-<li>value: 日志内容, 里面的信息包括，日志级别，egINFO/WARNING/SEVERE，具体报错信息</li>
-</ul>
-<p>目前只有Tomcat4台服务器有日志数据；并且根据采集的不同的组件，收集的日志。</p>
-<h3 id="调用链数据">调用链数据</h3>
-<p>调用链路数据来自：trace/trace_0304.csv</p>
-<p>重要的字段有：</p>
-<ul>
-<li>cmdb_id: 即对应的服务是部署在哪个机器上的, 一次全局的trace_id 可能跨越几个设备</li>
-<li>parent_id：子调用的上一次调用</li>
-<li>trace_id：一次trace对应的全局id，一个trace包括多次子调用</li>
-<li>span_id： 本流程的Span ID，</li>
-</ul>
+<p>对应的 因果图巨大无比，如下：</p>
 <figure>
-<img src="./aiops2021-demo/trace.png" alt="调用链" /><figcaption aria-hidden="true">调用链</figcaption>
+<img src="correlation_topology.png" alt="图1-关联拓扑" /><figcaption aria-hidden="true">图1-关联拓扑</figcaption>
 </figure>
-<h3 id="故障标签">故障标签</h3>
-<p>故障类型可分为--'应用故障', '网络故障', '资源故障'</p>
-<ul>
-<li>应用故障可分为2类：'JVM CPU负载高', 'JVM OOM Heap'</li>
-<li>网络故障可分为两类：'网络延迟', '网络隔离'</li>
-<li>资源故障可分为三类：CPU使用率爬升，内存使用率过高，磁盘IO写使用率过高</li>
-</ul>
-<h2 id="demo方案">demo方案</h2>
-<p>流程：</p>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li>对「业务指标」进行异常检测，异常则触发下面的诊断。</li>
-<li>调用链异常检测和根因定位:「业务」指标异常了，定位是哪个中间件或者服务出现了异常，以及根因的那个服务。</li>
-<li>对应机器的指标进行根因定位：定位到了调用链中的根因服务，然后对该服务所在的机器进行下钻分析，进行更细粒度的根因指标定位，使用到了机器和中间件的「性能指标」。</li>
+<li><a target="_blank" rel="noopener" href="http://www.cnsoftbei.com/plus/view.php?aid=479">CN-Softbei2020比赛</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/Insighter/blob/master/aiops_CN-Softbei_2020.ipynb">chiechie的代码-github</a></li>
 </ol>
-<h3 id="业务指标异常检测略">业务指标异常检测(略)</h3>
-<p>找出第一个故障发生时刻：</p>
-<ul>
-<li>2021-03-04 08:39:00 - 2021-03-04 08:44:00</li>
-</ul>
-<h3 id="调用链异常检测和根因定位">调用链异常检测和根因定位</h3>
-<ol type="1">
-<li>找出异常调用路径--trace_id</li>
-<li>找出对应的根因的子调用--span_id</li>
-<li>找到span_id的机器</li>
-</ol>
-<figure>
-<img src="./aiops2021-demo/trace_rca.png" alt="调用链异常检测和根因定位" /><figcaption aria-hidden="true">调用链异常检测和根因定位</figcaption>
-</figure>
-<h3 id="对定位到的机器进行指标根因分析">对定位到的机器进行指标根因分析</h3>
-<ol type="1">
-<li>搜集该机器的所有性能指标，进行异常检测</li>
-<li>对于异常的指标，根据历史数据中学习到的因果图，进行根因推断。</li>
-</ol>
-<figure>
-<img src="./aiops2021-demo/metric_rca.png" alt="指标根因分析" /><figcaption aria-hidden="true">指标根因分析</figcaption>
-</figure>
-<h3 id="对下-分析结果-和-标准答案">对下 分析结果 和 标准答案</h3>
-<figure>
-<img src="./aiops2021-demo/evaluate.png" alt="对比" /><figcaption aria-hidden="true">对比</figcaption>
-</figure>
-<h2 id="参考资料">参考资料</h2>
-<p>1.<a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=17&amp;flag=1">aiops挑战赛2021-官网</a></p>
 
       
     </div>
@@ -498,7 +418,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">107</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

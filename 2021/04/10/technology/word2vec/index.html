@@ -20,20 +20,24 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="容忍自己的平庸和愚蠢 以前对别人苛刻，对自己更苛刻， 最近半年，变得心态平和很多。 接受不完美的自己和别人。 以前的心态，是「在路上」，觉得现在混乱，但未来会完美的。 需要放弃完美的状态。 因为解决了一个问题，后面来了一堆候补的问题。 以前这种应激性地，遇到问题，解决问题，是一种错误的方式。 就好像，停留在一个关卡，游戏打怪一样？打不完。 没有made it 这个东西。 意识到人的局限性（愚蠢，非">
+  <meta name="description" content="灵魂拷问！ 如果把word2vec用neural nets来实现，那么模型参数是什么？跟词向量的关系是什么？或者说用神经网络的框架如何reformulate这个问题？ 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个呢？怎么用呢？  原理部分： word2vec原理推导: 跳字模型（skip gram） 每个词被表示成2个d维向量，  词的索引为i， 中心">
 <meta property="og:type" content="article">
-<meta property="og:title" content="认识人的局限和接受事与愿违">
-<meta property="og:url" content="https://chiechie.github.io/2021/03/09/meditation/admint_human_limitations/index.html">
+<meta property="og:title" content="word2vec的原理">
+<meta property="og:url" content="https://chiechie.github.io/2021/04/10/technology/word2vec/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Cosmos">
-<meta property="og:description" content="容忍自己的平庸和愚蠢 以前对别人苛刻，对自己更苛刻， 最近半年，变得心态平和很多。 接受不完美的自己和别人。 以前的心态，是「在路上」，觉得现在混乱，但未来会完美的。 需要放弃完美的状态。 因为解决了一个问题，后面来了一堆候补的问题。 以前这种应激性地，遇到问题，解决问题，是一种错误的方式。 就好像，停留在一个关卡，游戏打怪一样？打不完。 没有made it 这个东西。 意识到人的局限性（愚蠢，非">
+<meta property="og:description" content="灵魂拷问！ 如果把word2vec用neural nets来实现，那么模型参数是什么？跟词向量的关系是什么？或者说用神经网络的框架如何reformulate这个问题？ 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个呢？怎么用呢？  原理部分： word2vec原理推导: 跳字模型（skip gram） 每个词被表示成2个d维向量，  词的索引为i， 中心">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-09T06:05:39.000Z">
-<meta property="article:modified_time" content="2021-04-08T07:37:21.404Z">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjpuHAmzTik.png?alt=media&amp;token=47e0004c-bc7c-4fc5-af22-d227532a7548">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FsFuwRdSRxR.png?alt=media&amp;token=03f6ea4c-aee0-4e11-993f-468505022f8d">
+<meta property="article:published_time" content="2021-04-10T14:23:20.000Z">
+<meta property="article:modified_time" content="2021-04-11T02:48:15.190Z">
 <meta property="article:author" content="Chiechie">
-<meta property="article:tag" content="认识自己">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="word2vec">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjpuHAmzTik.png?alt=media&amp;token=47e0004c-bc7c-4fc5-af22-d227532a7548">
 
-<link rel="canonical" href="https://chiechie.github.io/2021/03/09/meditation/admint_human_limitations/">
+<link rel="canonical" href="https://chiechie.github.io/2021/04/10/technology/word2vec/">
 
 
 <script id="page-configurations">
@@ -46,7 +50,7 @@
   };
 </script>
 
-  <title>认识人的局限和接受事与愿违 | Chiechie's Cosmos</title>
+  <title>word2vec的原理 | Chiechie's Cosmos</title>
   
 
 
@@ -167,7 +171,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/meditation/admint_human_limitations/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/10/technology/word2vec/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -180,7 +184,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          认识人的局限和接受事与愿违<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/meditation/admint_human_limitations.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          word2vec的原理<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/technology/word2vec.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -190,14 +194,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-09 14:05:39" itemprop="dateCreated datePublished" datetime="2021-03-09T14:05:39+08:00">2021-03-09</time>
+              <time title="创建时间：2021-04-10 22:23:20" itemprop="dateCreated datePublished" datetime="2021-04-10T22:23:20+08:00">2021-04-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+                <time title="修改时间：2021-04-11 10:48:15" itemprop="dateModified" datetime="2021-04-11T10:48:15+08:00">2021-04-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -205,7 +209,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
                 </span>
             </span>
 
@@ -220,18 +224,68 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="容忍自己的平庸和愚蠢">容忍自己的平庸和愚蠢</h2>
-<p>以前对别人苛刻，对自己更苛刻，</p>
-<p>最近半年，变得心态平和很多。</p>
-<p>接受不完美的自己和别人。</p>
-<p>以前的心态，是「在路上」，觉得现在混乱，但未来会完美的。</p>
-<p>需要放弃完美的状态。</p>
-<p>因为解决了一个问题，后面来了一堆候补的问题。</p>
-<p>以前这种应激性地，遇到问题，解决问题，是一种错误的方式。</p>
-<p>就好像，停留在一个关卡，游戏打怪一样？打不完。</p>
-<p>没有made it 这个东西。</p>
-<p>意识到人的局限性（愚蠢，非理性），自己的局限性。</p>
-<p>意识到事与愿违是一种常态。</p>
+        <blockquote>
+<p>灵魂拷问！</p>
+<p>如果把word2vec用neural nets来实现，那么模型参数是什么？跟词向量的关系是什么？或者说用神经网络的框架如何reformulate这个问题？</p>
+<p>既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个呢？怎么用呢？</p>
+</blockquote>
+<h2 id="原理部分">原理部分：</h2>
+<p>word2vec原理推导:</p>
+<h3 id="跳字模型skip-gram">跳字模型（skip gram）</h3>
+<p>每个词被表示成2个d维向量，</p>
+<ul>
+<li>词的索引为i，</li>
+<li>中心词向量为：<span class="math inline">\(\boldsymbol{v}_{i} \in \mathbb{R}^{d}\)</span></li>
+<li>背景词向量为：<span class="math inline">\(\boldsymbol{u}_{i} \in \mathbb{R}^{d}\)</span></li>
+<li>词典索引集： <span class="math inline">\(\mathcal{V} =\{0,1, \ldots,|\mathcal{V}|-1\}\)</span></li>
+<li>模型的输出是：条件概率</li>
+<li>学习的目标： 最大化 所有观测值的条件概率，即 <span class="math display">\[\max \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)\]</span> 等价于 <span class="math display">\[\max \sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)\]</span> 进一步，logP就是 <span class="math display">\[\log P\left(w_{o} \mid w_{c}\right)=\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}-\log \left(\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)\right)\]</span></li>
+</ul>
+<p>直接照着最大化条件概率的目标学习可以吗？</p>
+<p>不行，可以看到上式的复杂度为|V|, 为了提高计算效率，有两个近似训练方案：负采样 和 层次化softmax</p>
+<h2 id="近似的学习方法--负采样">近似的学习方法--负采样</h2>
+<p>负采样的想法是，最后一层不用softmax，而是sigmoid,目标函数是 交叉熵：观测值就是正样本，未出现的就是负样本（通过对词典采样K次得到）</p>
+<p><span class="math display">\[P\left(w^{(t+j)} \mid w^{(t)}\right)=P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right) \prod\limits_{k=1, w_{k} \sim P(w)}^{K} P\left(D=0 \mid w^{(t)}, w_{k}\right)\]</span></p>
+<p>取对数就是</p>
+<p><span class="math display">\[\begin{aligned}-\log P\left(w^{(t+j)} \mid w^{(t)}\right) &amp;=-\log P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log P\left(D=0 \mid w^{(t)}, w_{k}\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \left(1-\sigma\left(\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right)\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \sigma\left(-\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right) \end{aligned}\]</span></p>
+<p>好处是：计算 梯度的 复杂度 从N 减少到 K</p>
+<h2 id="将word2vec重定义为一个nn问题">将word2vec重定义为一个nn问题</h2>
+<p>word2vec将每个词表示成一个定长的向量，并使得这些向量能较好地表达不同词之间的相似和类比关系</p>
+<ul>
+<li>第一步：获取训练样本
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjpuHAmzTik.png?alt=media&amp;token=47e0004c-bc7c-4fc5-af22-d227532a7548" /></li>
+</ul></li>
+<li>第二步：构建1个神经网络
+<ul>
+<li>输入：上面的中心词的one-hot向量，形状为（词典大小，）</li>
+<li>输出：中心词周围出现的词的概率向量（相近词的概率），形状也是（词典大小）</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FsFuwRdSRxR.png?alt=media&amp;token=03f6ea4c-aee0-4e11-993f-468505022f8d" /></li>
+<li>模型参数（or权重向量）的形状和含义：
+<ul>
+<li>网络 第一层有300（词向量长度）个单元，权重向量的形状是 (词典大小，词向量长度)，表示 每个词的中心词向量</li>
+<li>网络 第二层有10000（词典大小）个单元，权重向量的形状是（词向量长度，词典大小），表示 每个词的背景词向量</li>
+</ul></li>
+</ul></li>
+<li>影响词向量质量的三个元素：
+<ul>
+<li>训练数据的数量和质量</li>
+<li>词向量的大小</li>
+<li>训练算法</li>
+</ul></li>
+</ul>
+<h2 id="怎么评估词向量的质量">怎么评估词向量的质量？</h2>
+<p>google提供了 测试数据 和 测试脚本</p>
+<ul>
+<li>chiechie：先人工定义一些 近义词组，反义词组，不相关词组，计算这些词组的 余弦距离，看是否跟之前定义的语义距离 一致。</li>
+<li>提供2份 相关性测试集（relation test set）:
+<ul>
+<li>word relation test set :<strong>./demo-word-accuracy.sh</strong>,</li>
+<li>phrase relation test set:<strong>./demo-phrase-accuracy.sh</strong></li>
+</ul></li>
+<li>最好的结果：准确率 70% + 覆盖率 100%.</li>
+<li>https://github.com/tmikolov/word2vec</li>
+</ul>
 
     </div>
 
@@ -241,7 +295,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E8%AE%A4%E8%AF%86%E8%87%AA%E5%B7%B1/" rel="tag"># 认识自己</a>
+              <a href="/tags/NLP/" rel="tag"># NLP</a>
+              <a href="/tags/word2vec/" rel="tag"># word2vec</a>
           </div>
 
         
@@ -250,12 +305,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/03/09/technology/PC-algo/" rel="prev" title="PC算法">
-      <i class="fa fa-chevron-left"></i> PC算法
+    <a href="/2021/04/10/reading_notes/xuzhiyuan/" rel="prev" title="对话许知远-如何做一个坦然的焦虑者？">
+      <i class="fa fa-chevron-left"></i> 对话许知远-如何做一个坦然的焦虑者？
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/03/09/AIOps/aiops2021-demo/" rel="next" title="AIOps挑战赛2021-demo方案">
-      AIOps挑战赛2021-demo方案 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/04/10/reading_notes/thinking-slow-and-fast/" rel="next" title="思考快与慢">
+      思考快与慢 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -315,7 +370,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%BF%8D%E8%87%AA%E5%B7%B1%E7%9A%84%E5%B9%B3%E5%BA%B8%E5%92%8C%E6%84%9A%E8%A0%A2"><span class="nav-number">1.</span> <span class="nav-text">容忍自己的平庸和愚蠢</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E9%83%A8%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">原理部分：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E5%AD%97%E6%A8%A1%E5%9E%8Bskip-gram"><span class="nav-number">1.1.</span> <span class="nav-text">跳字模型（skip gram）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%91%E4%BC%BC%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95--%E8%B4%9F%E9%87%87%E6%A0%B7"><span class="nav-number">2.</span> <span class="nav-text">近似的学习方法--负采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86word2vec%E9%87%8D%E5%AE%9A%E4%B9%89%E4%B8%BA%E4%B8%80%E4%B8%AAnn%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">将word2vec重定义为一个nn问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0%E8%AF%8D%E5%90%91%E9%87%8F%E7%9A%84%E8%B4%A8%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">怎么评估词向量的质量？</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -342,7 +397,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">107</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

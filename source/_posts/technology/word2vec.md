@@ -16,17 +16,29 @@ categories:
 > 
 > 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个呢？怎么用呢？
 
-## 原理部分：
- 
-word2vec原理推导:
+## 总结
+
+- 词的索引为i，
+- 中心词向量为：$\boldsymbol{v}_{i} \in \mathbb{R}^{d}$
+- 背景词向量为：$\boldsymbol{u}_{i} \in \mathbb{R}^{d}$
+
+我对wod2vec的理解: 本质对一个word的one-hot code降维。
+跟传统的降维方法如PCA比，区别在于，目标不一样。
+PCA： 经过编码-解码之后，信息丢失尽可能少。
+word2vec： 经过编码-解码之后，背景词可以映射为中心词，或者中心词可以映射为背景词，
+
+![img.png](img.png)
+
+将背景词映射为中心词叫Continuous Bag-of-Words (CBOW)
+将中心词映射为背景词叫Skip-gram model (SG)
+
+下面重点说一下Skip-gram model的原理。
 
 ### 跳字模型（skip gram）
 
 每个词被表示成2个d维向量，
 
-- 词的索引为i，
-- 中心词向量为：$\boldsymbol{v}_{i} \in \mathbb{R}^{d}$
-- 背景词向量为：$\boldsymbol{u}_{i} \in \mathbb{R}^{d}$
+
 - 词典索引集： $\mathcal{V} =\{0,1, \ldots,|\mathcal{V}|-1\}$
 - 模型的输出是：条件概率
 - 学习的目标： 最大化 所有观测值的条件概率，即
@@ -39,6 +51,7 @@ word2vec原理推导:
 不行，可以看到上式的复杂度为|V|, 为了提高计算效率，有两个近似训练方案：负采样 和 层次化softmax
 
 ## 近似的学习方法--负采样
+
 负采样的想法是，最后一层不用softmax，而是sigmoid,目标函数是 交叉熵：观测值就是正样本，未出现的就是负样本（通过对词典采样K次得到）
 
 $$P\left(w^{(t+j)} \mid w^{(t)}\right)=P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right) \prod\limits_{k=1, w_{k} \sim P(w)}^{K} P\left(D=0 \mid w^{(t)}, w_{k}\right)$$
@@ -77,4 +90,6 @@ google提供了 测试数据 和 测试脚本
     - word relation test set :**./demo-word-accuracy.sh**,
     -  phrase relation test set:**./demo-phrase-accuracy.sh**
 - 最好的结果：准确率 70% + 覆盖率 100%.
-- https://github.com/tmikolov/word2vec
+  
+## 参考
+1.[](https://github.com/tmikolov/word2vec)

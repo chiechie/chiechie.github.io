@@ -164,6 +164,104 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/07/technology/decision-tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/07/technology/decision-tree/" class="post-title-link" itemprop="url">决策树是二叉树还是多叉树？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-07 20:56:02" itemprop="dateCreated datePublished" datetime="2021-04-07T20:56:02+08:00">2021-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>今天被问到决策树是不是都是二叉树，我给问懵逼了。这触及到了我的知识盲区。</p>
+<p>仔细一调研，发现决策树算法早先的版本，是可以构造多叉树的。</p>
+</blockquote>
+<h1 id="总结">总结</h1>
+<p>决策树的 实现算法有三类：id3，c4.5和cart。前两者可以构造多叉树，cart只能构造二叉树。 因为cart效果最好，现在通常就用它。例如sklean的决策树默认用cart</p>
+<blockquote>
+<p>都说到这里了，就复习下决策树的基础知识吧</p>
+</blockquote>
+<h1 id="基本概念">基本概念</h1>
+<ul>
+<li>信息增益: 衡量的是给定了一个属性之后，类别列上获得的秩序的提升（也叫熵减）。</li>
+</ul>
+<p><span class="math display">\[{\displaystyle IG(T,a)=\mathrm {H} {(T)}-\mathrm {H} {(T|a)},}\]</span></p>
+<h1 id="决策树算法-id3">决策树算法-id3</h1>
+<p>Python Implementation of ID3</p>
+<p>https://github.com/dozercodes/DecisionTree https://github.com/SebastianMantey/Decision-Tree-from-Scratch/blob/master/notebooks/decision_tree_functions.py</p>
+<h1 id="决策树算法-c4.5">决策树算法-c4.5</h1>
+<h1 id="决策树算法-cart">决策树算法-cart</h1>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Information_gain_in_decision_trees">wiki-Information_gain_in_decision_trees</a></li>
+<li><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/tree/plot_unveil_tree_structure.html#sphx-glr-auto-examples-tree-plot-unveil-tree-structure-py">sklearn-decisiontree</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.quora.com/What-are-the-differences-between-ID3-C4-5-and-CART">quora-ID3-C4-5-and-CART的区别？</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/07/technology/timeseries-ziliao-huizong/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -407,170 +505,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/06/reading_notes/wonderful-zibenlun/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/06/reading_notes/wonderful-zibenlun/" class="post-title-link" itemprop="url">王德峰-资本论</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-06 23:44:41" itemprop="dateCreated datePublished" datetime="2021-04-06T23:44:41+08:00">2021-04-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="第一篇">第一篇</h1>
-<h2 id="第2章">第2章</h2>
-<ul>
-<li>社会科学 如 社会学，经济学 ，政治学的 研究事物的方法是，先构建一个逻辑自恰的理论体系，然后 观察现实世界，如果现实世界跟理论 不符合，就说，现在是背离了事物运行的正常的 轨道，是非理性的，需要人 去 纠正。（太自以为是了吧？）</li>
-<li>经济学从经济事实出发，社会学从社会事实出发 ，社会学从社会事实出发</li>
-<li>事实都是基于物理世界（事情）加上某个领域的叙述框架（老师用的词是 “范畴”）加工而成立的，实际上是带着某个特定的视角在描述这个物理事件。肯定是有偏的，而哲学是位于 这些（所谓的）社会科学更高一个层级。</li>
-<li>经济学 就是 围绕一系列经济事实 构建起来的一个理论，反应的是 范畴和 范畴之间的关系。这个关系是逻辑上的关系。</li>
-</ul>
-<h2 id="第3章-怎么花钱说明你选择拥有怎样的积累起来的劳动">第3章 怎么花钱说明你选择拥有怎样的积累起来的劳动</h2>
-<ul>
-<li>资本主义生产关系 是 有史以来，人类找到 最合理的 经济关系，
-<ul>
-<li>因为他没有政治强制，等级压迫，也没有奴隶主挥着鞭子赶着你到农场干活</li>
-<li>资本主义生产关系最大化地释放了生产力，怎么听着这么像共产主义？所以我觉得资本主义本身是一个政治范畴的概念，在经济范畴，资本主义可以替换成“多劳多得”，“自由市场”， “独立个体平等”，“等价交换”的概念</li>
-<li>但是资本主义生产关系同时也带来了一个弊端，就是 贫富差距，social power 差距的扩大</li>
-</ul></li>
-<li>对资本做理性的研究 叫 经济学。</li>
-<li>资本 是什么？ 能增值的货币</li>
-<li>工资是什么？ 劳动这种商品 的 等价交换物</li>
-<li>没有了这些文绉绉的 叙述框架，就没有了事实，但是事情 还是 每天都在发生。</li>
-</ul>
-<h2 id="第4章-人类生存的目标之一价值的增值">第4章 人类生存的目标之一「价值的增值」</h2>
-<ul>
-<li>【现象学还原】: 把每个领域的事实 洗掉 该领域的范畴，剩下的就是 事情本身。</li>
-<li>马克思在发动哲学革命的时候，做的就是【现象学还原】，</li>
-<li>自然事实 也是由 自然科学领域的范畴 构建的，也要洗掉，才是事情本身。物理事实的前提是物理学范畴。</li>
-<li>今天人类的 知识体系 就是要 基于 范畴 构建的 。每一个学科 都是在提出 范畴，以及 研究 范畴 和 范畴 之间的 逻辑关系 。</li>
-<li>每一个事实 本质上被 规定为 是合乎理性的 。（ 只有每个领域的 研究者 自己 才 这么认为吧）</li>
-<li>非逻辑的东西我们认为 是 非理性的。</li>
-<li>但是 经济学家 在 把自己 当成一门 严肃的 科学时，他们忽略了 一个 基本的真想，经济活动本质是不理性的。</li>
-</ul>
-<h2 id="第5章-人在实现财富自由后-可能面临的选择">第5章 人在实现财富自由后 可能面临的选择</h2>
-<ul>
-<li>市场上，大家都在 （竞）争什么？价值增值。</li>
-<li>据（经济学家）说竞争 会产生 一个 公平的效果。taleb也提到过 类似 的 观点，不过这些都是经济学家 在说的（鬼）话， 可能他们自己都不信</li>
-<li>大家在争的是权利（非理性的人与人的关系），而不是钱，是积累起来的劳动对活劳动 的支配权的竞争，</li>
-<li>职场是是不是 也是这样？ 职位高的人 就是他自己 积累的劳动，活劳动就是底层打工仔，支配权就是 可以任意分配 工作）。所以，就是说 ，</li>
-<li>也就是说 研究市场，可能 不适合 用经济学的知识，而是更适合用社会学的知识。</li>
-<li>人挣钱是为了温饱，安全（疾病，养老），scocial power（支配别人 还是 别人 支配你，这不同于政治权利，政治权利大家都是平等的你可以炒老板鱿鱼，）。</li>
-<li>马克思不是理性主义的哲学家，</li>
-<li>如果世界是按照理性法则运转，为什么会有冲突，矛盾，为什么要军队，国家？</li>
-<li>那么，如果不是理性的，原因是什么？
-<ul>
-<li>social power，资本就是social power，是一种非理性的 人与人 的关系</li>
-<li>资本增值 本质上 是 social power的 扩大</li>
-</ul></li>
-<li>为什么说 social power 是非理性的？
-<ul>
-<li>一部分人 支配 另一部分人，一部分人统治另 一部分人的 关系的。</li>
-</ul></li>
-<li>王国维说，世界上的学问分为两种：可爱而不可信；可信而不可爱。</li>
-<li>经济学理论是可爱而不信的，觉得学习的很安稳，逻辑自恰</li>
-<li>有没有学好，问自己两个问题，我对经济学理论是否掌握彻底；我应用经济理性思维的能力是不是足够了</li>
-<li>马克思是可信 而 不可爱的 学问，马克思谈斗争，圣母们有人道主义精神 就不爱听 了</li>
-</ul>
-<h1 id="第二篇">第二篇</h1>
-<h2 id="第6章-如果bill-gates-一开始就是慈善家-他不可能成为世界首富">第6章 如果bill gates 一开始就是慈善家 他不可能成为世界首富</h2>
-<ul>
-<li>bill gates在达沃斯论坛上 谈 创新型资本主义，今天的经济是穷人为富人打工的经济。</li>
-<li>资本在增值的 过程 就是在 创造贫困人口的 过程，负责，微软的 剩余价值从哪里来呢？它怎么能够发展壮大呢？</li>
-<li>现代贫困不是等级压迫的结果，是资本增值的 自然结果，
-<ul>
-<li>可以解释法国的黄马甲运动（政治那么自由了都），法国的大资产阶级（美国的华尔街大佬）越是获取更多的利润，一定会导致法国社会内部一部分人的 生活水平的下降。（似乎这种因果关系，很难 肉眼观测到，表面上黄马甲是燃油价格上升造成的，这只是导火线，法国大部分公司多年都没有张工资了）</li>
-<li>还有一个现象，为什么英国公投 脱欧成功了？从整体上看，加入欧盟 或者说 全球化对英国整体是有好处的呀，但是这个好处都落入 少数的大资本家手中了（做 贸易和金融行业），而参与投票的人 的政治权利 是平等的。</li>
-<li>英国公投 和 美国的特朗普上台 都是社会分裂（穷人 和 富人分裂）的产物。（我觉得 这才说到点上了，很多财经评论 和 媒体 长篇大论 都说不到电子上 ，废物）</li>
-<li>所以更本质的问题是，美国社会怎么分裂的呢？---全球化，
-<ul>
-<li>所以特朗普要 逆全球化。他要弥合 美国社会的分裂。</li>
-</ul></li>
-</ul></li>
-</ul>
-<h2 id="第7章-资本增值了才是财富">第7章 资本增值了才是财富</h2>
-<ul>
-<li>资本（capital）是当代财富（wealth）的社会形式。啥意思啊？--就是说今天的wealth都是capital，同时capital 也是人与人 的一种非理性（对抗性）关系--social power
-<ul>
-<li>wealth 不是 使用价值，而是 资本增值</li>
-<li>当wealh增加，power 也会等比例增加，造成社会分裂</li>
-<li>社会分裂之后 又需要整合呀，就出现了 社会政党 之间的 斗争</li>
-</ul></li>
-<li>军队 警察 监狱 是来维护** 社会权力**(social power)的</li>
-<li>power是社会权力，是非理性的 ，是 沉默的，无言的，穿上理性的外衣 就变成了right</li>
-<li>计划经济时期，social power等于political power，会产生特权阶层，毛泽东不想搞这一套，于是搞了个文化大革命----斗“走资本主义的当权派”</li>
-<li>不承认social power 会有什么问题？所有的经济活动叫投机倒把</li>
-<li>计划经济的通病---投资饥饿症</li>
-<li>非理性的power经过意识形态（ideology）的表达，上升为right---2006年出台的物权法</li>
-</ul>
-<h2 id="第8章-人们头脑中的重力观念">第8章 人们头脑中的“重力观念”</h2>
-<ul>
-<li>改革的目的就是 将社会权力 确认为 一个 非政治的 权力，所以再回到过去计划经济时代不可能了（也就是把社会权利当做political权力，这个相当于在走过去错误的道路）。现在的改革之路：扩大开放(欢迎国外的social power)，深化改革（进一步清洗掉社会权利上的政治维度）</li>
-<li>警惕历史唯心主义</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -640,7 +574,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">100</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

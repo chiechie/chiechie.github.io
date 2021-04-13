@@ -61,9 +61,6 @@ categories:
 
 
 
-
-
 ## 参考
-
 1. [geoffrey-parker-平台革命-微信读书](https://weread.qq.com/web/reader/e5332f00811e2cc6cg015c02)
 

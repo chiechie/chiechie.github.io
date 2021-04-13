@@ -121,6 +121,6 @@ people tend to only read/notice information that confirms what they already beli
 - The Decline of the West - Vol I - Full Formatting by Oswald Spengler.Why the modern west looks a lot like previous empires (Babylonian, Roman, Egyptian, etc.) on the precipice of decline
 
 
-
 ## 参考
 1. [读书俱乐部](https://investorfieldguide.com/bookclub/)
+2. [一小时的介绍商业知识](https://www.joincolossus.com/)

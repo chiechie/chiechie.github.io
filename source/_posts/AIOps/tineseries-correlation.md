@@ -16,21 +16,20 @@ categories:
 
 ## 一些疑问
 
-- 搞清楚该文章说的metric event 和 incident 指的是什么？ 是不是之前说的log template？
+- 文章说的metric/event/incident指的是什么？跟之前说的的log template有什么关系？
     - incident 就是指的一次事故和故障，我们说故障定位，就是需要对这一个事故找到根本原因。 （感觉也能跟BigPanda的告警关联之后的结果 对应起来），
-    - event：就是一个正常的操作比如程序A的启动，这个是需要运维指定的 他感兴趣的某个日志模版。
-        - 比如“Out of memory”
-        - 启动某个磁盘intensive程序
-        - 启动某个cpu intensive程序
-        - query-time out alerts，某个告警
-        - 感觉也包括BigPanda的rca模块的输入--变更事件）
+    - metric： 实值-时间序列（通常有固定的时间间隔），例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。
+    - event：就是一个正常的操作比如程序A的启动，这个是需要运维指定的 他感兴趣的某个日志模版。 比如“Out of memory” /启动某个磁盘intensive程序/ 启动某个cpu intensive程序/query-time out alerts/某个告警。感觉也包括BigPanda的rca模块的输入--变更事件）
     - metric：比如cpu使用率
+    
+实值-时间序列（通常有固定的时间间隔），例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。
+
 - 看完引言，感觉这个event 应该就是人 基于日志数据 指定的 特定的事件类型，比如说程序A的启动，程序B的启动，跟log3C的关联分析的流程做对比，这里的event更像是到了最后一步(4)，只有2类（发生event的样本个数--更简单只有0或者1，不发生event的样本个数），对比不同时间段，发生event的样本个数 和 kpi的相关关系。类似big pandas 的变更事件，或者 其他事件。
 - 这篇文章主要是解决的什么问题？ 总结下来就是 希望 找到 跟 incident 有关联的 多个event。 
 - 这篇文章
 - 先找 服务整体健康度的指标-整体KPI  （如 服务是否可用 或者 请求延迟， 也就是主指标），然后再找 这个 总体KPI 有关联关系的 一批系统指标（副指标）
     - 「关联关系」怎么定义？正常相关性，异常相关性，还是 业务上的关联性？
-- 4. 难点是什么？
+4. 难点是什么？
 - 传统的关联分析方法 不适合 现在的 异构数据分析
 - 这个关联性，反应的是 event 和 时序的异常相关性，而不是 正常+异常相关性。
 - 5. 这篇文章用的什么分析方法？还可以应用到哪些领域？ 
@@ -50,12 +49,7 @@ categories:
 - tsinghua的另外一片文章是讲怎么 将众多告警收敛成摘要。之前是对指标数据进行告警。
     - 背后的分析链路应该是：
         - 原始日志--> 提取感兴趣的指标-->对指标进行异常检测生成告警-->告警收敛
-- [[《identifies service system problems from system logs》-log3C]]【chiechie-high-level的总结】
-    - 讲了通过数据挖掘-对纯文本进行分析的一种思路
-    - 原始日志-->提取事件模版--> 聚合成 时间戳 + session id的日志序列计数向量--->聚类得到典型日志序列技术向量模式---> 日志序列模式 和 系统状态（核心KPI 之间的关系）相关性分析
-    - 将相关性分析 应用到了 具有 物理依赖关系的 数据上面，可以得到 因果关系。
-    - 跟指标异常检测的思路不一样，这个不看日志中提取出来的数值指标，看的是日志间的序列关系，出现的先后顺序，更适合用来做辅助 系统的故障定位（复杂的网状调用调用链路），而前者更适合做系统的性能监控，需要人工定义感兴趣的测量方式（人工指定特征）。
-    - 跟日志异常检测相比，本文的应用更加的end2end。
+
 - [[异常检测-系统日志分析]]
     - 原始日志-->提取事件模版-->得到日志序列计数向量---> 进行异常检测
 - bigpandas是怎么做的呢？[[BigPanda-RCA]]
@@ -88,18 +82,18 @@ categories:
 - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGkHOys2alH.png?alt=media&token=95dde9c8-0249-4033-a027-83bca9a543ff)
 - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fy5QnzhCHAl.png?alt=media&token=13774051-eb1f-4ada-a978-9cd7d2bee748)
 
-### 基本概念：
+### 基本概念
 
-- 时序数据（metric）：实值-时间序列（通常有固定的时间间隔），例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。
+- 时序数据（metric）：
 - 事件数据（event/log）：指的是记录了特定事件发生的序列，例如内存溢出事件等。日志数据 ( Logging Data )：描述某个对象的是离散的事情，例如有个应用出错，抛出了 NullPointerExcepction，个人认为 Logging Data 大约等同于 Event Data，所以告警信息在我认为，也是一种 Logging Data。
-- 事件序列（event sequence）：An event sequencein an online service is used to record the occurrences of a specific software message indicating that something has happened in the system, e.g., an event sequence of “Out of memory” contains events of “Out of memory”,  which occur when there is not enough memory in the system
-- 为了保证产品的服务质量、减少服务宕机时间，从而避免更大的经济损失，对关键的服务事件的诊断显得尤为重要。实际的运维工作中，对服务事件进行诊断时，运维人员可以通过分析与服务事件相关的时序数据，来对事件发生的原因进行分析。虽然这个相关关系不能完全准确的反映真实的因果关系，但是仍然可以为诊断提供一些很好的线索和启示。
+- 事件序列（event sequence）：用来记录某个特定的软件信息，代表某个事情发生，比如An event sequence in an online service is used to record the occurrences of a specific software message indicating that something has happened in the system, e.g., an event sequence of “Out of memory” contains events of “Out of memory”,  which occur when there is not enough memory in the system
+- 为了保证产品的服务质量、减少服务宕机时间，从而避免更大的经济损失，对关键的服务事件的诊断显得尤为重要。实际的运维工作中，对服务事件进行诊断时，运维人员可以通过分析与服务事件相关的时序数据，来对事件发生的原因进行分析。虽然这个相关关系不能完全准确的反映真实的因果关系，但是仍然可以为诊断提供一些很好的线索和启发。
+
 
 ### 总结
 
 - 本文将事件数据（E，Event）和时序（S，metric）数据相关关系问题转化为两样本问题（two-sample problem），并使用邻近算法（nearest neighbor method）判断是否相关。主要回答了三个问题：
-    - A．E和S之间是否存在相关关系？
-        - 使用nn方法判断相关性是否存在
+    - A．E和S之间是否存在相关关系？ 使用nn方法判断相关性是否存在
     - B．若存在相关关系，E和S的时间先后顺序是什么？E先发生，还是S先发生？
     - C．E和S的单调关系。假设S（或者E）先发生，S的增加还是降低导致的E发生？
         - 更进一步，相关性 是否 有特定的时序性，以及大小的先后性，通过分析event之前的子序列 和event之后的子序列的相关性。

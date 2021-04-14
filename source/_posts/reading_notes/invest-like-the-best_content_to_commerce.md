@@ -23,19 +23,17 @@ Jesse: TCG的创始人Peter Chernin之前已经在媒体行业耕耘了很长一
 我和peter从我们过去的经历都推断出，科技将会对媒体行业产生重大的影响。
 
 
-ESPN 和 HBO 都不知道他们的客户是谁. 但是我们的看法是 ，以后的趋势是，合适的内容将会 被直接分发到 对应的用户，因为现在品牌和移动设备变得无处不在。（打造品牌？需要几个人支撑？）我们想基于这个趋势，去投资，以及构建业务。
+ESPN 和 HBO 都不知道他们的客户是谁. 但是我们的看法是 ，以后的趋势是，合适的内容将会 被直接分发到 对应的用户，因为现在品牌和移动设备变得无处不在。（打造品牌？需要几个人支撑？）我们想基于这个趋势，去投资，以及构建业务。基于这个判断，我们重点关注influencers和一些内容生产者. 有一个youtuber，我们找到他，支持他制作内容，
+
+第二个就是， 
+The second theme that we were very focused on was subscription streaming video. We bought a business called Crunchyroll in 2013, which at the time was actually the third largest subscription video service after Netflix and Hulu. We grew that from 100,000 subs to north of four million subs. What Fullscreen and Crunchyroll represent are these areas where people can get extremely passionate about a particular thing. They're passionate about anime, they're passionate about this creator on YouTube. We thought there were interesting ways in this sort of new media economy to build businesses around them. I'll turn it over to Mike, who we tried to bring on as a partner in 2013, and he rebuffed us, eventually came on board.
+
 
 我们募集资金，不是以一个基金的结构，而是持有公司股权的结构，这种行为在当时是个异类。
 
 这种方式，给了我们极大的灵活性，所以，我们可以选择承担少量的风险，或者 大量的风险，我们没有封闭期，也没有上界（egmore than x% of the fund can't go in any individual deal.）并且我们寻找那些业务和品牌--能将内容直接分发给用户的。
 
-
-
-And we went to work looking for these businesses and brands that were delivering content directly to consumers. And we were very thematically focused. So the two themes that we were focused on first and foremost, one, and this was in 2010, were sort of influencers and creators on the internet. As we've been talking about, is quite in vogue again today 11 years later. And I think ultimately we were the first one to really invest against that trend. There was a really talented executive at YouTube who was in charge of their creator program at the time. He left and we backed him to start really the first business working with influencers and creators. The business was called Fullscreen.
-
-The second theme that we were very focused on was subscription streaming video. We bought a business called Crunchyroll in 2013, which at the time was actually the third largest subscription video service after Netflix and Hulu. We grew that from 100,000 subs to north of four million subs. What Fullscreen and Crunchyroll represent are these areas where people can get extremely passionate about a particular thing. They're passionate about anime, they're passionate about this creator on YouTube. We thought there were interesting ways in this sort of new media economy to build businesses around them. I'll turn it over to Mike, who we tried to bring on as a partner in 2013, and he rebuffed us, eventually came on board.
-
-Patrick: [00:07:50] Mike, what were you doing to rebuff them in 2013? And then what sealed the deal in 2015?
+Mike, what were you doing to rebuff them in 2013? And then what sealed the deal in 2015?
 
 Mike: [00:07:56] I'll never forget my first meeting with Jesse. We were down in Santa Monica, I was at Yahoo at the time. We had a big group down in Santa Monica. And Jesse and I were on this beautiful café on the beach. And Jesse's got like nice looking hair. And I'm kind of like a, it's a big deal for me to put an golf shirt on. And I'm like kind at central casting after having run like a digital startup built on Facebook and mobile. And I presume Jesse's working for like this big media exec. This is chalk and cheese. And then all of a sudden we completely hit it off. Like we were just talking about our families, we had similar interests in sports, we had similar interests in business. Really just clearly saw the world the same way.
 

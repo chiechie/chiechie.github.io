@@ -16,11 +16,20 @@ categories:
 
 1. how this business got started and what is unique in the DNA of TCG?
 
-Jesse: TCG的创始人Peter Chernin之前已经在媒体行业耕耘了很长一段时间（在fox和news corp担任高管15年和20年）。 He left in 2009. 我的第一份工作也是在fox的体育频道生产内容。then，在数字媒体的早期阶段（around 1999 to 2002），我开始在ifilm制作一档行业类节目，很多人应该没有听说过。我们是第一家在线上卖视频内容的公司。也是第一批在网上卖流媒体的公司。我们靠爆款视频爆发了。但是，我们还高兴的太早了。
+Jesse: TCG的创始人Peter Chernin之前已经在媒体行业耕耘了很长一段时间（在fox和news corp担任高管15年和20年，在2009年离开了）。我的第一份工作也是在fox的体育频道生产内容。then，在数字媒体的早期阶段（around 1999 to 2002），我开始在ifilm制作一档行业类节目，很多人应该没有听说过。我们是第一家在线上卖视频内容的公司。也是第一批在网上卖流媒体的公司。我们靠爆款视频爆发了。但是，我们还高兴的太早了。
 
-当泡沫破灭时，我们把业务卖给了viacom。And I ended up, I was at Goldman Sachs for a while doing investment banking and investing all within media, sports content, consumer, digital, et cetera. And when Peter left, he had been running, if you think about Fox and News Corp, largest set of international cable networks in the world, and one of the major broadcast networks in the US, the most successful film studio, the most successful TV studio. He created Hulu when he was there. Second to ESPN, the biggest sports media business in the world. And I think what he saw, and what I saw from my experience as well, was that technology was going to have this massive impact on the media industry. It's interesting, because people think of these as consumer brands, ESPN, HBO, MTV, but they're not consumer business. They had not been consumer businesses at the time. They're all distributed through intermediaries.
+当泡沫破灭时，我们把业务卖给了viacom。然后我去了高盛做投行，投资领域包括：媒体，运动内容，消费者，数字领域。
 
-ESPN didn't know who their customers were. HBO didn't know who their customers were. The customers were Comcast and DirecTV and Time Warner Cable. Our thesis was that was going to change as broadband and mobility became ubiquitous, and that content was going to be delivered directly to consumers. And we wanted to invest against that trend and build our business investing against that trend. For the first year or two we invested just with Peter's capital. And then we raised outside capital in about 2012, 2013. Not in a fund structure, but in a holding company structure, which is atypical today. We thought it gave us a lot of flexibility in how we would invest. So we could take minority stakes, we could take the majority stakes, we could potentially pursue larger deals. We didn't have the typical hold period that investors have. We didn't have concentration caps that investors have, or more than x% of the fund can't go in any individual deal.
+我和peter从我们过去的经历都推断出，科技将会对媒体行业产生重大的影响。
+
+
+ESPN 和 HBO 都不知道他们的客户是谁. 但是我们的看法是 ，以后的趋势是，合适的内容将会 被直接分发到 对应的用户，因为现在品牌和移动设备变得无处不在。（打造品牌？需要几个人支撑？）我们想基于这个趋势，去投资，以及构建业务。
+
+我们募集资金，不是以一个基金的结构，而是持有公司股权的结构，这种行为在当时是个异类。
+
+这种方式，给了我们极大的灵活性，所以，我们可以选择承担少量的风险，或者 大量的风险，我们没有封闭期，也没有上界（egmore than x% of the fund can't go in any individual deal.）并且我们寻找那些业务和品牌--能将内容直接分发给用户的。
+
+
 
 And we went to work looking for these businesses and brands that were delivering content directly to consumers. And we were very thematically focused. So the two themes that we were focused on first and foremost, one, and this was in 2010, were sort of influencers and creators on the internet. As we've been talking about, is quite in vogue again today 11 years later. And I think ultimately we were the first one to really invest against that trend. There was a really talented executive at YouTube who was in charge of their creator program at the time. He left and we backed him to start really the first business working with influencers and creators. The business was called Fullscreen.
 

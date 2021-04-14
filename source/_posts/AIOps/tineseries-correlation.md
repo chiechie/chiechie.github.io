@@ -1,5 +1,5 @@
 ---
-title: 时间序列关联性
+title: 时间序列关联性分析
 author: chiechie
 mathjax: true
 date: 2021-04-14 17:27:26
@@ -18,15 +18,12 @@ categories:
 
 - 文章说的metric/event/incident指的是什么？跟之前说的的log template有什么关系？
     - incident 就是指的一次事故和故障，我们说故障定位，就是需要对这一个事故找到根本原因。 （感觉也能跟BigPanda的告警关联之后的结果 对应起来），
-    - metric： 实值-时间序列（通常有固定的时间间隔），例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。
-    - event：就是一个正常的操作比如程序A的启动，这个是需要运维指定的 他感兴趣的某个日志模版。 比如“Out of memory” /启动某个磁盘intensive程序/ 启动某个cpu intensive程序/query-time out alerts/某个告警。感觉也包括BigPanda的rca模块的输入--变更事件）
-    - metric：比如cpu使用率
+    - metric： 实值时间序列（通常有固定的时间间隔），例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。
+    - event：就是一个正常的操作比如程序A的启动，这个是需要运维指定的 他感兴趣的某个日志模版。 比如“Out of memory” /启动某个磁盘intensive程序/ 启动某个cpu intensive程序/query-time out alerts/某个告警。也包括BigPanda的rca模块的输入--变更事件
     
-实值-时间序列（通常有固定的时间间隔），例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。
 
 - 看完引言，感觉这个event 应该就是人 基于日志数据 指定的 特定的事件类型，比如说程序A的启动，程序B的启动，跟log3C的关联分析的流程做对比，这里的event更像是到了最后一步(4)，只有2类（发生event的样本个数--更简单只有0或者1，不发生event的样本个数），对比不同时间段，发生event的样本个数 和 kpi的相关关系。类似big pandas 的变更事件，或者 其他事件。
 - 这篇文章主要是解决的什么问题？ 总结下来就是 希望 找到 跟 incident 有关联的 多个event。 
-- 这篇文章
 - 先找 服务整体健康度的指标-整体KPI  （如 服务是否可用 或者 请求延迟， 也就是主指标），然后再找 这个 总体KPI 有关联关系的 一批系统指标（副指标）
     - 「关联关系」怎么定义？正常相关性，异常相关性，还是 业务上的关联性？
 4. 难点是什么？

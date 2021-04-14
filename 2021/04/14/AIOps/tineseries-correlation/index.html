@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="performance counter： 性能监视器  一些疑问  文章说的metric&#x2F;event&#x2F;incident指的是什么？跟之前说的的log template有什么关系？  incident 就是指的一次事故和故障，我们说故障定位，就是需要对这一个事故找到根本原因。 （感觉也能跟BigPanda的告警关联之后的结果 对应起来）， metric： 实值-时间序列（通常有固定的时间间隔），例">
+  <meta name="description" content="performance counter： 性能监视器  一些疑问  文章说的metric&#x2F;event&#x2F;incident指的是什么？跟之前说的的log template有什么关系？  incident 就是指的一次事故和故障，我们说故障定位，就是需要对这一个事故找到根本原因。 （感觉也能跟BigPanda的告警关联之后的结果 对应起来）， metric： 实值时间序列（通常有固定的时间间隔），例如">
 <meta property="og:type" content="article">
-<meta property="og:title" content="时间序列关联性">
+<meta property="og:title" content="时间序列关联性分析">
 <meta property="og:url" content="https://chiechie.github.io/2021/04/14/AIOps/tineseries-correlation/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Cosmos">
-<meta property="og:description" content="performance counter： 性能监视器  一些疑问  文章说的metric&#x2F;event&#x2F;incident指的是什么？跟之前说的的log template有什么关系？  incident 就是指的一次事故和故障，我们说故障定位，就是需要对这一个事故找到根本原因。 （感觉也能跟BigPanda的告警关联之后的结果 对应起来）， metric： 实值-时间序列（通常有固定的时间间隔），例">
+<meta property="og:description" content="performance counter： 性能监视器  一些疑问  文章说的metric&#x2F;event&#x2F;incident指的是什么？跟之前说的的log template有什么关系？  incident 就是指的一次事故和故障，我们说故障定位，就是需要对这一个事故找到根本原因。 （感觉也能跟BigPanda的告警关联之后的结果 对应起来）， metric： 实值时间序列（通常有固定的时间间隔），例如">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FPKvEWDzw3o.png?alt=media&amp;token=582bc811-36e1-469a-945a-9cd248679e7f">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FefWyQfXARM.png?alt=media&amp;token=8e71b7da-8269-437b-bb35-740793503b30">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fy5QnzhCHAl.png?alt=media&amp;token=13774051-eb1f-4ada-a978-9cd7d2bee748">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMjzFINogsh.png?alt=media&amp;token=9002fb74-9363-4a57-a182-fac68f04bd60">
 <meta property="article:published_time" content="2021-04-14T09:27:26.000Z">
-<meta property="article:modified_time" content="2021-04-14T10:23:41.770Z">
+<meta property="article:modified_time" content="2021-04-14T11:01:17.525Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="论文笔记">
 <meta property="article:tag" content="人工智能">
@@ -55,7 +55,7 @@
   };
 </script>
 
-  <title>时间序列关联性 | Chiechie's Cosmos</title>
+  <title>时间序列关联性分析 | Chiechie's Cosmos</title>
   
 
 
@@ -189,7 +189,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          时间序列关联性<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AIOps/tineseries-correlation.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          时间序列关联性分析<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AIOps/tineseries-correlation.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -200,7 +200,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-14 17:27:26 / 修改时间：18:23:41" itemprop="dateCreated datePublished" datetime="2021-04-14T17:27:26+08:00">2021-04-14</time>
+              <time title="创建时间：2021-04-14 17:27:26 / 修改时间：19:01:17" itemprop="dateCreated datePublished" datetime="2021-04-14T17:27:26+08:00">2021-04-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -231,16 +231,11 @@
 <li>文章说的metric/event/incident指的是什么？跟之前说的的log template有什么关系？
 <ul>
 <li>incident 就是指的一次事故和故障，我们说故障定位，就是需要对这一个事故找到根本原因。 （感觉也能跟BigPanda的告警关联之后的结果 对应起来），</li>
-<li>metric： 实值-时间序列（通常有固定的时间间隔），例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。</li>
-<li>event：就是一个正常的操作比如程序A的启动，这个是需要运维指定的 他感兴趣的某个日志模版。 比如“Out of memory” /启动某个磁盘intensive程序/ 启动某个cpu intensive程序/query-time out alerts/某个告警。感觉也包括BigPanda的rca模块的输入--变更事件）</li>
-<li>metric：比如cpu使用率</li>
+<li>metric： 实值时间序列（通常有固定的时间间隔），例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。</li>
+<li>event：就是一个正常的操作比如程序A的启动，这个是需要运维指定的 他感兴趣的某个日志模版。 比如“Out of memory” /启动某个磁盘intensive程序/ 启动某个cpu intensive程序/query-time out alerts/某个告警。也包括BigPanda的rca模块的输入--变更事件</li>
 </ul></li>
-</ul>
-<p>实值-时间序列（通常有固定的时间间隔），例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。</p>
-<ul>
 <li>看完引言，感觉这个event 应该就是人 基于日志数据 指定的 特定的事件类型，比如说程序A的启动，程序B的启动，跟log3C的关联分析的流程做对比，这里的event更像是到了最后一步(4)，只有2类（发生event的样本个数--更简单只有0或者1，不发生event的样本个数），对比不同时间段，发生event的样本个数 和 kpi的相关关系。类似big pandas 的变更事件，或者 其他事件。</li>
 <li>这篇文章主要是解决的什么问题？ 总结下来就是 希望 找到 跟 incident 有关联的 多个event。</li>
-<li>这篇文章</li>
 <li>先找 服务整体健康度的指标-整体KPI （如 服务是否可用 或者 请求延迟， 也就是主指标），然后再找 这个 总体KPI 有关联关系的 一批系统指标（副指标）
 <ul>
 <li>「关联关系」怎么定义？正常相关性，异常相关性，还是 业务上的关联性？</li>

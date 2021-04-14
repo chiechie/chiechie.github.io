@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/25/reading_notes/sam-altman-productivity/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/27/technology/ABtest/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/25/reading_notes/sam-altman-productivity/" class="post-title-link" itemprop="url">如何提升生产力？</a>
+            <a href="/2021/03/27/technology/ABtest/" class="post-title-link" itemprop="url">ABtest</a>
         </h2>
 
         <div class="post-meta">
@@ -188,7 +188,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-25 22:06:34" itemprop="dateCreated datePublished" datetime="2021-03-25T22:06:34+08:00">2021-03-25</time>
+              <time title="创建时间：2021-03-27 23:43:55" itemprop="dateCreated datePublished" datetime="2021-03-27T23:43:55+08:00">2021-03-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -197,15 +197,6 @@
                 <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
 
           
 
@@ -219,44 +210,41 @@
 
       
           <blockquote>
-<p>做的方向是错的，生产力再高也是白搭。</p>
+<p>现在有很多平台都在做AB test，甚至还做成了一个变形金刚--实验平台，对于不同的推荐对象，给出不同的推荐方案</p>
+<p>正好目前在调研模型在线更新的流程和方案，似乎像是同一类需求。</p>
+<p>到底是不是同一类需求？是的话，实验平台的解决方案是什么？我们是否可以借鉴？</p>
+<p>下面来探讨一下</p>
 </blockquote>
-<h2 id="最佳实践">最佳实践</h2>
+<h2 id="为什么要做ab测试">为什么要做A/B测试？</h2>
+<p>A/B测试很好的避免了由于时间不同而引起的访客样本属性变化的问题，它能让两个版本面对属性相同或近似的访客群体，基于这种情况对所获得的数据才有可比性，分析结果才更加准确、可靠。</p>
+<p>A一般指实验组, B一般指 对照组，对照组一般指基线，一般都会有模型。</p>
 <ol type="1">
-<li>最厉害的那部分人，都拥有坚定不移的世界观，这个在人群中是非常罕见的。如果你经常赞同上一个跟你说过话的人，那就糟糕了。你需要stick to 你的信念，并且develop the confidence。这会使你变得勇敢，当你对某个重要事情的看法是对的，但是大部分人看不到。换言之，你是聪明的少数人。</li>
-<li>我会在我的schedule里面留下足够多的时间，来思考接下来要做什么。对我而言去找到what to work on 的最好的方式，就是阅读，见有趣的人，在大自然中花时间。</li>
-<li>我对我不关心或者我不喜欢的事情，我的生产力低下。所以，我会尽量不让自己做这样的事情，通过外包出去，或者拒绝。 Stuff that you don’t like is a painful drag on morale and momentum. 不喜欢的事情会让你越做越痛苦，直到失去积极性。</li>
-<li>关于外包（delegation):记住比较优势--每个人都可以很有生产力，当他们做自己喜欢做的事情时。所以，当你想要别人做你的工作时，搞清楚谁喜欢做并且擅长做这个事情，然后分发给他。</li>
-<li>如果你发现很长一段时间，都在做不喜欢的事情，慎重考虑换一份工作。短期的焦虑经常发生，但是如果并不会岁时间消减，就应该找一个你更感兴趣的事情了。</li>
-<li>Doing great work经常给力的队友，试着围绕在聪明的，创造力的，欢快的，不会打击你的抱负的人。 比如我喜欢被推着我前进的人一起工作，并且能inspire我更好。 尽你所能远离一些糟糕的热--the cost of letting them take up your mental cycles is horrific.</li>
-<li>You have to both pick the right problem and do the work. There are not many shortcuts. If you’re going to do something really important, you are very likely going to work both smart and hard. The biggest prizes are heavily competed for.在绝大部分领域都是都这样。</li>
+<li><p>treatment A 一般是重点考察对象，可以是最新版本的模型；treatment B是用来比对A的效果的，可以是上一个版本的模型/基线策略，</p></li>
+<li><p>为了排除用户群1和用户群2的群体差异，一般也会做BAtest。</p>
+<p>ABtest： treatment A 在用户群1测试，treatment B 在用户群2测试。</p>
+<p>BAtest：treatment B 在用户群1测试，treatment A 在用户群2测试。</p></li>
+<li><p>实际痛点：多数情况下流量不够，发现实验上线达不到预期（基线策略）直接下线。</p></li>
 </ol>
-<h2 id="其他小技巧">其他小技巧</h2>
-<ol start="8" type="1">
-<li>如何制定优先级？
-<ul>
-<li>把最重要的事情做了</li>
-<li>不要浪费时间做蠢事</li>
-<li>制定很多lists</li>
-</ul></li>
-<li>制作很多lists，每年/月/天 要完成的事项。这样处理并发任务很有用： 当我对其中某一项工作不感兴趣的时候，就切换到另外一个我感兴趣的事情上去。</li>
-<li>经常重新调整lists的内容：这会使我我经常思考lists上面的所有的事项，并且进行删减。</li>
-<li>不要花时间去给事项做分类，或者给事项去评估工作量，最多给重要的事项标记一个star。</li>
-<li>我尝试着以生成momentum为目标，去排优先级。我做的越多，感觉就越棒，然后我就更想做。我喜欢每天的开始和结束做的事情，都有很大的进展。（make progress）</li>
-<li>预留一部分时间去见新的人和ideas。虽然可能90%的内容都是辣鸡，但是剩下的10%的内容的价值可以弥补90%的内容所花费的时间。</li>
-<li>确保在处理正确的问题。working on the right problems</li>
-<li>正确的目标是最优配置你的year，而不是天。</li>
-<li>开发一些软件去做体力活。</li>
-<li>避开让自己陷入bad moods的人和事。</li>
-<li>每隔一两周我就不想做任何事情，没关系 这个情绪它自己会消散。</li>
-<li>给自己安排稍过量的任务，可以避免分心，也会使工作更高效。</li>
-<li>不要为了生产力，而忽视你的家人和朋友，这种做法很蠢，因为当你心情低落时，你很可能生产力为负数。</li>
-<li>最后，如果方向选错了，那么再怎么提高生产力都是做无用功。Think more about what to work on.</li>
-</ol>
-<h2 id="参考">参考</h2>
+<h2 id="来自推荐一线的工程师">来自推荐一线的工程师</h2>
+<p>zhouwei: 做AB实验我总结需要重点考虑三个点：</p>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://blog.samaltman.com/productivity">sam altman关于生产力的blog</a></li>
+<li>置信度. 分配多少流量才能保证实验数据可信。</li>
+<li>流量分布. 如何保证实验流量和大盘流量的分布一致性。</li>
+<li>观察周期. 实验流量需要观察多久结论正确。</li>
 </ol>
+<h2 id="来自chiechie-其他场景的算法工程师">来自chiechie-其他场景的算法工程师</h2>
+<p>推荐和一般场景的区别是，前者的流量是稀缺的。除此之外，两者本质都是在做线上模型对比</p>
+<ol type="1">
+<li>推荐：用户群1在一个时间点只能接受1个treatment，要么是A要么是B, 测试次数是有限的资源。</li>
+<li>其他场景：比如异常检测，测试数据集1在一个时间点可接受多个treatment。可以无线测，反正是一个莫得感情的信息流。</li>
+</ol>
+<h2 id="总结下">总结下</h2>
+<p>大家要解决的问题是相同的</p>
+<ol type="1">
+<li>有不同的模型（解决方案）</li>
+<li>模型有持续更新的版本</li>
+</ol>
+<p>需要根据线上情况选择性能最好的模型</p>
 
       
     </div>
@@ -276,7 +264,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/25/principles_of_economics/dalio-macro-economy/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/26/meditation/how_to_wite_cv/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -290,7 +278,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/25/principles_of_economics/dalio-macro-economy/" class="post-title-link" itemprop="url">Ray Dalio 的文章《宏观经济运行的框架》</a>
+            <a href="/2021/03/26/meditation/how_to_wite_cv/" class="post-title-link" itemprop="url">怎么推销自己</a>
         </h2>
 
         <div class="post-meta">
@@ -300,14 +288,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-25 21:52:50" itemprop="dateCreated datePublished" datetime="2021-03-25T21:52:50+08:00">2021-03-25</time>
+              <time title="创建时间：2021-03-26 09:59:58" itemprop="dateCreated datePublished" datetime="2021-03-26T09:59:58+08:00">2021-03-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+                <time title="修改时间：2021-04-11 10:48:15" itemprop="dateModified" datetime="2021-04-11T10:48:15+08:00">2021-04-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -315,7 +303,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">经济学</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -331,28 +319,30 @@
 
       
           <blockquote>
-<p>纯笔记</p>
+<p>简历的作用，是挑选出有意思的，值得一见的人。</p>
 </blockquote>
-<h2 id="公理">公理</h2>
-<ul>
-<li>A transaction consists of the buyer giving money (or credit) to a seller and the seller giving a good, a service or a financial asset to the buyer in exchange.</li>
-<li>A market consists of all the buyers and sellers making exchanges for the same things</li>
-<li>An economy consists of all of the transactions in all of its markets.</li>
-</ul>
-<p>So, while seemingly complex, aneconomy is reallyjustazillion simple things working together, which makes it look more complex than it really is.</p>
-<h2 id="经济运行框架">经济运行框架</h2>
-<h3 id="三大驱动力the-three-big-force">三大驱动力（The three big force）</h3>
-<p>我认为经济运行驱动力主要来自：</p>
-<p>1）生产率的趋势性增长 2）长期债务周期 3）短期债务周期（商业周期）。</p>
-<p>如下图所示：</p>
-<figure>
-<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
-<h2 id="经济体系的运行how-the-system-works">经济体系的运行（How the system works）</h2>
+<h2 id="自由介绍要点">自由介绍要点</h2>
+<p>好的自我介绍要包含的信息</p>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/19583066">知乎中译版-全文</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/24504039/answer/28104441">zhihu对Ray Dalio 的文章《宏观经济运行的框架》的评价</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av8482665/?from=search&amp;seid=4990527751514513299">Ray Dalio三十分钟视频看懂经济机器如何运转-视频</a></li>
+<li>what do you value?</li>
+<li>how to deal with your mates?</li>
+<li>what's your taste? &gt; you are what you consume</li>
+<li>what's your passion about?</li>
+<li>show your meditation?</li>
+</ol>
+<h2 id="实践建议">实践建议</h2>
+<ol type="1">
+<li>面试官可以这么问：你为了你喜欢做的事情，付出过怎样的代价？做出过怎样的妥协？</li>
+<li>展示自己的视野，能干点事儿，要知道最顶级的水平做到哪里了，要有国际化视野。</li>
+<li>介绍自己过去工作/项目经历的时候, 要着重讲那些你做的决定（以及你是基于怎样的分析做出的决定，以及结果）</li>
+<li>大多数人介绍的时候只做到简单直叙的 流水账：我们做了 A，然后做了 B，然后做了 C。</li>
+<li>这流水账缺失的是： who made the decision to do A? was it you? if it's not, then I as your interviewer don't care about it so much, because you were just following orders.</li>
+<li>如果你在之前的单位/公司中人微言轻，大的决定轮不到你做，没关系，讲讲那些你可以做的，哪怕很小的决定。</li>
+<li>为什么我作为面试官 care so much about YOUR decisions? because it's hard to tell anything about you when you are just following orders -- except maybe that you are good at following orders, which is a fine quality to have, but not enough for you to succeed at positions that require judgment, taste, ability to deal with uncertainty etc. on the other hand, decisions, even small ones, can tell so much.</li>
+</ol>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://podcasts.apple.com/cn/podcast/%E5%BE%97%E6%84%8F%E5%BF%98%E5%BD%A2%E6%92%AD%E5%AE%A2/id1200767928?i=1000424079668">得意忘形#49：请管好你的企鹅</a></li>
 </ol>
 
       
@@ -372,7 +362,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -438,7 +428,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -451,7 +441,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">114</span>
+        <span class="site-state-item-count">116</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

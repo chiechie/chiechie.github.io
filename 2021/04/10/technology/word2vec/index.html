@@ -20,22 +20,23 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="灵魂拷问！ 如果把word2vec用neural nets来实现，那么模型参数是什么？跟词向量的关系是什么？或者说用神经网络的框架如何reformulate这个问题？ 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个呢？怎么用呢？  原理部分： word2vec原理推导: 跳字模型（skip gram） 每个词被表示成2个d维向量，  词的索引为i， 中心">
+  <meta name="description" content="灵魂拷问！ 如果把word2vec用neural nets来实现，那么模型参数是什么？跟词向量的关系是什么？或者说用神经网络的框架如何reformulate这个问题？ 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个呢？怎么用呢？  总结  词的索引为i， 中心词向量为：\(\boldsymbol{v}_{i} \in \mathbb{R}^{d}\) 背">
 <meta property="og:type" content="article">
 <meta property="og:title" content="word2vec的原理">
 <meta property="og:url" content="https://chiechie.github.io/2021/04/10/technology/word2vec/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Cosmos">
-<meta property="og:description" content="灵魂拷问！ 如果把word2vec用neural nets来实现，那么模型参数是什么？跟词向量的关系是什么？或者说用神经网络的框架如何reformulate这个问题？ 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个呢？怎么用呢？  原理部分： word2vec原理推导: 跳字模型（skip gram） 每个词被表示成2个d维向量，  词的索引为i， 中心">
+<meta property="og:description" content="灵魂拷问！ 如果把word2vec用neural nets来实现，那么模型参数是什么？跟词向量的关系是什么？或者说用神经网络的框架如何reformulate这个问题？ 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个呢？怎么用呢？  总结  词的索引为i， 中心词向量为：\(\boldsymbol{v}_{i} \in \mathbb{R}^{d}\) 背">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/10/technology/word2vec/img.png">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjpuHAmzTik.png?alt=media&amp;token=47e0004c-bc7c-4fc5-af22-d227532a7548">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FsFuwRdSRxR.png?alt=media&amp;token=03f6ea4c-aee0-4e11-993f-468505022f8d">
 <meta property="article:published_time" content="2021-04-10T14:23:20.000Z">
-<meta property="article:modified_time" content="2021-04-11T02:48:15.190Z">
+<meta property="article:modified_time" content="2021-04-13T12:04:47.273Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="NLP">
 <meta property="article:tag" content="word2vec">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjpuHAmzTik.png?alt=media&amp;token=47e0004c-bc7c-4fc5-af22-d227532a7548">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/04/10/technology/word2vec/img.png">
 
 <link rel="canonical" href="https://chiechie.github.io/2021/04/10/technology/word2vec/">
 
@@ -201,7 +202,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-11 10:48:15" itemprop="dateModified" datetime="2021-04-11T10:48:15+08:00">2021-04-11</time>
+                <time title="修改时间：2021-04-13 20:04:47" itemprop="dateModified" datetime="2021-04-13T20:04:47+08:00">2021-04-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,14 +230,21 @@
 <p>如果把word2vec用neural nets来实现，那么模型参数是什么？跟词向量的关系是什么？或者说用神经网络的框架如何reformulate这个问题？</p>
 <p>既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个呢？怎么用呢？</p>
 </blockquote>
-<h2 id="原理部分">原理部分：</h2>
-<p>word2vec原理推导:</p>
-<h3 id="跳字模型skip-gram">跳字模型（skip gram）</h3>
-<p>每个词被表示成2个d维向量，</p>
+<h2 id="总结">总结</h2>
 <ul>
 <li>词的索引为i，</li>
 <li>中心词向量为：<span class="math inline">\(\boldsymbol{v}_{i} \in \mathbb{R}^{d}\)</span></li>
 <li>背景词向量为：<span class="math inline">\(\boldsymbol{u}_{i} \in \mathbb{R}^{d}\)</span></li>
+</ul>
+<p>我对wod2vec的理解: 本质对一个word的one-hot code降维。 跟传统的降维方法如PCA比，区别在于，目标不一样。 PCA： 经过编码-解码之后，信息丢失尽可能少。 word2vec： 经过编码-解码之后，背景词可以映射为中心词，或者中心词可以映射为背景词，</p>
+<figure>
+<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<p>将背景词映射为中心词叫Continuous Bag-of-Words (CBOW) 将中心词映射为背景词叫Skip-gram model (SG)</p>
+<p>下面重点说一下Skip-gram model的原理。</p>
+<h3 id="跳字模型skip-gram">跳字模型（skip gram）</h3>
+<p>每个词被表示成2个d维向量，</p>
+<ul>
 <li>词典索引集： <span class="math inline">\(\mathcal{V} =\{0,1, \ldots,|\mathcal{V}|-1\}\)</span></li>
 <li>模型的输出是：条件概率</li>
 <li>学习的目标： 最大化 所有观测值的条件概率，即 <span class="math display">\[\max \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)\]</span> 等价于 <span class="math display">\[\max \sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)\]</span> 进一步，logP就是 <span class="math display">\[\log P\left(w_{o} \mid w_{c}\right)=\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}-\log \left(\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)\right)\]</span></li>
@@ -284,8 +292,9 @@
 <li>phrase relation test set:<strong>./demo-phrase-accuracy.sh</strong></li>
 </ul></li>
 <li>最好的结果：准确率 70% + 覆盖率 100%.</li>
-<li>https://github.com/tmikolov/word2vec</li>
 </ul>
+<h2 id="参考">参考</h2>
+<p>1.<a target="_blank" rel="noopener" href="https://github.com/tmikolov/word2vec"></a></p>
 
     </div>
 
@@ -370,7 +379,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E9%83%A8%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">原理部分：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E5%AD%97%E6%A8%A1%E5%9E%8Bskip-gram"><span class="nav-number">1.1.</span> <span class="nav-text">跳字模型（skip gram）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%91%E4%BC%BC%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95--%E8%B4%9F%E9%87%87%E6%A0%B7"><span class="nav-number">2.</span> <span class="nav-text">近似的学习方法--负采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86word2vec%E9%87%8D%E5%AE%9A%E4%B9%89%E4%B8%BA%E4%B8%80%E4%B8%AAnn%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">将word2vec重定义为一个nn问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0%E8%AF%8D%E5%90%91%E9%87%8F%E7%9A%84%E8%B4%A8%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">怎么评估词向量的质量？</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E5%AD%97%E6%A8%A1%E5%9E%8Bskip-gram"><span class="nav-number">1.1.</span> <span class="nav-text">跳字模型（skip gram）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%91%E4%BC%BC%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95--%E8%B4%9F%E9%87%87%E6%A0%B7"><span class="nav-number">2.</span> <span class="nav-text">近似的学习方法--负采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86word2vec%E9%87%8D%E5%AE%9A%E4%B9%89%E4%B8%BA%E4%B8%80%E4%B8%AAnn%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">将word2vec重定义为一个nn问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0%E8%AF%8D%E5%90%91%E9%87%8F%E7%9A%84%E8%B4%A8%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">怎么评估词向量的质量？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -384,7 +393,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -397,7 +406,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">113</span>
+        <span class="site-state-item-count">114</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

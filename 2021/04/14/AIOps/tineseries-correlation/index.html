@@ -29,11 +29,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGkHOys2alH.png?alt=media&amp;token=95dde9c8-0249-4033-a027-83bca9a543ff">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fy5QnzhCHAl.png?alt=media&amp;token=13774051-eb1f-4ada-a978-9cd7d2bee748">
-<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FPKvEWDzw3o.png?alt=media&amp;token=582bc811-36e1-469a-945a-9cd248679e7f">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FefWyQfXARM.png?alt=media&amp;token=8e71b7da-8269-437b-bb35-740793503b30">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMjzFINogsh.png?alt=media&amp;token=9002fb74-9363-4a57-a182-fac68f04bd60">
 <meta property="article:published_time" content="2021-04-14T09:27:26.000Z">
-<meta property="article:modified_time" content="2021-04-15T05:15:56.490Z">
+<meta property="article:modified_time" content="2021-04-15T09:46:02.554Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="论文笔记">
 <meta property="article:tag" content="人工智能">
@@ -206,7 +205,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 13:15:56" itemprop="dateModified" datetime="2021-04-15T13:15:56+08:00">2021-04-15</time>
+                <time title="修改时间：2021-04-15 17:46:02" itemprop="dateModified" datetime="2021-04-15T17:46:02+08:00">2021-04-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -284,7 +283,13 @@
 <li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fy5QnzhCHAl.png?alt=media&amp;token=13774051-eb1f-4ada-a978-9cd7d2bee748" /></li>
 </ul>
 <h3 id="技术细节">技术细节</h3>
-<p>这里用到了2个trick-都是统计的假设检验的方法，一个是 使用 判断两个随机分布的相似性的指标 来分析因果关系，一个是使用 判断两个随机变量的 大小关系的指标 用来判断 关联到的 指标的方向。具体来说， - 判断因果关系是这么做：先将因果关系转换成以2个问题 - 判断--事件发生之前的 一段时间序列 跟 整个时间序列的相似性 - 如果差异大，说明指标 --&gt; event - 判断--事件发生之后的 一段时间序列 跟 整个时间序列的相似性。 - 如果差异大，说明event---&gt;指标 - 判断单调关系是这么做的： - 计算event前后，2个子序列的 均值的差 - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FPKvEWDzw3o.png?alt=media&amp;token=582bc811-36e1-469a-945a-9cd248679e7f" /> - 具体的判断规则如下： - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FefWyQfXARM.png?alt=media&amp;token=8e71b7da-8269-437b-bb35-740793503b30" /></p>
+<p>涉及到具体实现，要解决两个问题：1. 确定指标和事件的因果关系，即事件A--&gt;指标1； 2. 确定因果关系中指标的单调性，即事件A--&gt;指标1上升。</p>
+<p>这里用到了2个trick:一个是用两个随机分布的相似性指标来分析因果关系，一个是用两个随机变量的大小关系的指标用来判断关联到的指标的方向，两个都都是统计的假设检验的方法。</p>
+<p>具体来说，判断因果关系，可转换为以下2个问题： - 判断事件发生之前的 一段时间序列 跟 整个时间序列的相似性。如果差异大，说明指标 --&gt; event - 判断事件发生之后的 一段时间序列 跟 整个时间序列的相似性。如果差异大，说明event --&gt; 指标</p>
+<p>判断单调性，是这么做的： - 计算event前后，2个子序列的 均值的差 <span class="math display">\[ t_{s c o r e}=\frac{\mu_{\Gamma^{f r o n t}}-\mu_{\Gamma^{r e a r}}}{\sqrt{\frac{\sigma_{\Gamma^{f} r o n t}^{2}+\sigma_{\Gamma^{r e a r}}^{2}}{n}}} \]</span></p>
+<ul>
+<li>具体的判断规则如下： 如果，<span class="math inline">\(t_{score} &gt; \alpha\)</span>, wo <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FefWyQfXARM.png?alt=media&amp;token=8e71b7da-8269-437b-bb35-740793503b30" /></li>
+</ul>
 <h3 id="总结">总结</h3>
 <ul>
 <li>本文将事件数据（E，Event）和时序（S，metric）数据相关关系问题转化为两样本问题（two-sample problem），并使用邻近算法（nearest neighbor method）判断是否相关。主要回答了三个问题：
@@ -300,9 +305,9 @@
 </ul>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="http://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/SIGKDD-2014-Correlating-Events-with-Time-Series-for-Incident-Diagnosis.pdf">微软-时间序列关联分析paper</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/jixinpu/aiopstools/tree/master/aiopstools/association_analysis">关联分析code</a>: 360公司对该论文的开源实现</li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-NMwaCD4Kzkt4BTnr5JKDQ">智能运维公众号blog</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/SIGKDD-2014-Correlating-Events-with-Time-Series-for-Incident-Diagnosis.pdf">微软-指标与事件的关联分析paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jixinpu/aiopstools/tree/master/aiopstools/association_analysis">关联分析code</a>:</li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-NMwaCD4Kzkt4BTnr5JKDQ">智能运维前沿-微软AIOps工作：时序数据与事件的关联分析</a></li>
 </ol>
 
     </div>

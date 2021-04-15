@@ -12,6 +12,8 @@ categories:
 
 # 算法
 
+## 深度学习算法
+
 - DeepAR,2017, ref 146, p12
     - [paper](https://arxiv.org/pdf/1704.04110.pdf) | [code](https://github.com/awslabs/gluon-ts/tree/master/src/gluonts/model/deepar)
 - DeepFactor, 2019 ICML，ref 15,使用全局的RNN模型学习不同时序间共同的模式，以及对每一个时间序列学习一个局部模型

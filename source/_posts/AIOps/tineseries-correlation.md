@@ -62,19 +62,25 @@ categories:
 - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGkHOys2alH.png?alt=media&token=95dde9c8-0249-4033-a027-83bca9a543ff)
 - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fy5QnzhCHAl.png?alt=media&token=13774051-eb1f-4ada-a978-9cd7d2bee748)
 
+
+
 ### 技术细节
 
-这里用到了2个trick-都是统计的假设检验的方法，一个是 使用 判断两个随机分布的相似性的指标 来分析因果关系，一个是使用 判断两个随机变量的 大小关系的指标 用来判断 关联到的 指标的方向。具体来说，
-    - 判断因果关系是这么做：先将因果关系转换成以2个问题
-        - 判断--事件发生之前的 一段时间序列 跟 整个时间序列的相似性
-            - 如果差异大，说明指标 --> event
-        - 判断--事件发生之后的 一段时间序列 跟 整个时间序列的相似性。
-            - 如果差异大，说明event--->指标
-    - 判断单调关系是这么做的：
-        - 计算event前后，2个子序列的 均值的差
-            - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FPKvEWDzw3o.png?alt=media&token=582bc811-36e1-469a-945a-9cd248679e7f)
-        - 具体的判断规则如下：
-            - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FefWyQfXARM.png?alt=media&token=8e71b7da-8269-437b-bb35-740793503b30)
+涉及到具体实现，要解决两个问题：1. 确定指标和事件的因果关系，即事件A-->指标1； 2. 确定因果关系中指标的单调性，即事件A-->指标1上升。
+
+这里用到了2个trick:一个是用两个随机分布的相似性指标来分析因果关系，一个是用两个随机变量的大小关系的指标用来判断关联到的指标的方向，两个都都是统计的假设检验的方法。
+
+具体来说，判断因果关系，可转换为以下2个问题：
+- 判断事件发生之前的 一段时间序列 跟 整个时间序列的相似性。如果差异大，说明指标 --> event
+- 判断事件发生之后的 一段时间序列 跟 整个时间序列的相似性。如果差异大，说明event --> 指标
+
+判断单调性，是这么做的：
+    - 计算event前后，2个子序列的 均值的差
+    $$ t_{s c o r e}=\frac{\mu_{\Gamma^{f r o n t}}-\mu_{\Gamma^{r e a r}}}{\sqrt{\frac{\sigma_{\Gamma^{f} r o n t}^{2}+\sigma_{\Gamma^{r e a r}}^{2}}{n}}} $$
+
+- 具体的判断规则如下：
+  如果，$t_{score} > \alpha$, wo 
+  ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FefWyQfXARM.png?alt=media&token=8e71b7da-8269-437b-bb35-740793503b30)
 
 
 ### 总结
@@ -88,6 +94,7 @@ categories:
 
 
 ## 参考
-1. [微软-时间序列关联分析paper](http://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/SIGKDD-2014-Correlating-Events-with-Time-Series-for-Incident-Diagnosis.pdf)
-2. [关联分析code](https://github.com/jixinpu/aiopstools/tree/master/aiopstools/association_analysis):  360公司对该论文的开源实现
-3. [智能运维公众号blog](https://mp.weixin.qq.com/s/-NMwaCD4Kzkt4BTnr5JKDQ)
+
+1. [微软-指标与事件的关联分析paper](http://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/SIGKDD-2014-Correlating-Events-with-Time-Series-for-Incident-Diagnosis.pdf)
+2. [关联分析code](https://github.com/jixinpu/aiopstools/tree/master/aiopstools/association_analysis):
+3. [智能运维前沿-微软AIOps工作：时序数据与事件的关联分析](https://mp.weixin.qq.com/s/-NMwaCD4Kzkt4BTnr5JKDQ)

@@ -164,6 +164,106 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/27/technology/ABtest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/27/technology/ABtest/" class="post-title-link" itemprop="url">ABtest</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-27 23:43:55" itemprop="dateCreated datePublished" datetime="2021-03-27T23:43:55+08:00">2021-03-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>现在有很多平台都在做AB test，甚至还做成了一个变形金刚--实验平台，对于不同的推荐对象，给出不同的推荐方案</p>
+<p>正好目前在调研模型在线更新的流程和方案，似乎像是同一类需求。</p>
+<p>到底是不是同一类需求？是的话，实验平台的解决方案是什么？我们是否可以借鉴？</p>
+<p>下面来探讨一下</p>
+</blockquote>
+<h2 id="为什么要做ab测试">为什么要做A/B测试？</h2>
+<p>A/B测试很好的避免了由于时间不同而引起的访客样本属性变化的问题，它能让两个版本面对属性相同或近似的访客群体，基于这种情况对所获得的数据才有可比性，分析结果才更加准确、可靠。</p>
+<p>A一般指实验组, B一般指 对照组，对照组一般指基线，一般都会有模型。</p>
+<ol type="1">
+<li><p>treatment A 一般是重点考察对象，可以是最新版本的模型；treatment B是用来比对A的效果的，可以是上一个版本的模型/基线策略，</p></li>
+<li><p>为了排除用户群1和用户群2的群体差异，一般也会做BAtest。</p>
+<p>ABtest： treatment A 在用户群1测试，treatment B 在用户群2测试。</p>
+<p>BAtest：treatment B 在用户群1测试，treatment A 在用户群2测试。</p></li>
+<li><p>实际痛点：多数情况下流量不够，发现实验上线达不到预期（基线策略）直接下线。</p></li>
+</ol>
+<h2 id="来自推荐一线的工程师">来自推荐一线的工程师</h2>
+<p>zhouwei: 做AB实验我总结需要重点考虑三个点：</p>
+<ol type="1">
+<li>置信度. 分配多少流量才能保证实验数据可信。</li>
+<li>流量分布. 如何保证实验流量和大盘流量的分布一致性。</li>
+<li>观察周期. 实验流量需要观察多久结论正确。</li>
+</ol>
+<h2 id="来自chiechie-其他场景的算法工程师">来自chiechie-其他场景的算法工程师</h2>
+<p>推荐和一般场景的区别是，前者的流量是稀缺的。除此之外，两者本质都是在做线上模型对比</p>
+<ol type="1">
+<li>推荐：用户群1在一个时间点只能接受1个treatment，要么是A要么是B, 测试次数是有限的资源。</li>
+<li>其他场景：比如异常检测，测试数据集1在一个时间点可接受多个treatment。可以无线测，反正是一个莫得感情的信息流。</li>
+</ol>
+<h2 id="总结下">总结下</h2>
+<p>大家要解决的问题是相同的</p>
+<ol type="1">
+<li>有不同的模型（解决方案）</li>
+<li>模型有持续更新的版本</li>
+</ol>
+<p>需要根据线上情况选择性能最好的模型</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/26/meditation/how_to_wite_cv/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -259,117 +359,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/25/reading_notes/sam-altman-pc-and-jessica/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/25/reading_notes/sam-altman-pc-and-jessica/" class="post-title-link" itemprop="url">YC成功的关键因素</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-25 22:06:34" itemprop="dateCreated datePublished" datetime="2021-03-25T22:06:34+08:00">2021-03-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-09 09:00:27" itemprop="dateModified" datetime="2021-04-09T09:00:27+08:00">2021-04-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>Y Combinatior： 是一家投资公司，专注创业公司的种子轮。</p>
-<p>PG（Paul Graham）和 Jessica是YC的Founder之一</p>
-<p>看了半天，我还以为pg是宝洁，强行翻译, 有点好笑</p>
-</blockquote>
-<h2 id="摘要">摘要</h2>
-<ol type="1">
-<li><p>很多人想把YC的成功复制到其他领域。他们把YC的成功归纳于运气和网络效应。网络效应是说，一旦get things off the ground，就可以像个生态系统自己run起来了（self-sustaining）。但是大部分人都不知道怎么get things going。 &gt; get something off the ground: 让something成功进行</p></li>
-<li><p>sam认为原因是PG和Jessica：</p></li>
-</ol>
-<ul>
-<li>They took bets on unknown people and believed in them more than anyone had before.</li>
-<li>They set strong norms and fought back hard against bad behavior towards YC founders.</li>
-<li>They trusted their own convictions, were willing to do things their way, and were willing to be disliked by the existing power structures.</li>
-<li>They focused on the most important things, they worked hard, and they spent a huge amount of time 1:1 with people.</li>
-<li>They understood the value of community and long-term orientation. When YC was very small, it felt like a family.</li>
-<li>most importantly, they built an ecosystem，
-<ul>
-<li>This is easy to talk about but hard to do, because it requires not being greedy.</li>
-<li>YC has left a lot of money on the table; other people have made more money from the ecosystem than YC has itself.</li>
-<li>This has cemented YC’s place—the benefits to the partners, alumni, current batch founders, Hacker News readers, Demo Day investors, and everyone else around YC is a huge part of what makes it work.</li>
-</ul></li>
-</ul>
-<h2 id="chiechies-reflection">chiechie's reflection</h2>
-<ol type="1">
-<li>为什么搞平台的人都有一个"生态梦"？做成生态有什么特别的收益？ 自给自足（self-sustaining），造梦者开启上帝视角，坐收渔利。 小生态系统和永动机的区别是什么？--我跟领导视角的区别？</li>
-<li>think big：Y combinator会跟一个个创业者去谈，最后的收益也是创业者占大头，YC只拿部分，典型的利他主义，甚至称得上是有情怀，这个有点像腾讯。 我很反感的做法是，只想从生态的成员中吸取精华，这个就像阿里。阿里有钱可以这么做（不过能不能长久不好说），一般规模的企业凭什么动不动就想从结果出发，昭告天下"我要做生态，你们都得按照我的来"，谁搭理你。</li>
-<li>利他：我觉得一开始达到利他的境界太难了，应该是层层递进的。 共赢--&gt;not greedy--&gt;利他，利他就是让别人多赢一点，如果我的事业能持续下去，别人赢多一点又有什么关系呢。</li>
-<li>还有一个我很缺乏的东西，就是信念--convictions/belief，有了这个东西的人，敢于挑战既有的权利阶层，坚持自己的行事方式。我不知道，信念这个东西怎么构造出来，可能多读点书，多思考？</li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://blog.samaltman.com/pg-and-jessica">PG and Jessica</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -435,7 +428,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -448,7 +441,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">118</span>
+        <span class="site-state-item-count">119</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

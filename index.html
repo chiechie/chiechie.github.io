@@ -485,7 +485,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/16/AIOps/timeseries-anomaly-detection/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/14/reading_notes/nava-joerogan-show/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -499,7 +499,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/16/AIOps/timeseries-anomaly-detection/" class="post-title-link" itemprop="url">时序异常检测方案概述</a>
+            <a href="/2021/04/14/reading_notes/nava-joerogan-show/" class="post-title-link" itemprop="url">joerogan访谈nava</a>
         </h2>
 
         <div class="post-meta">
@@ -508,17 +508,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-04-16 15:26:42 / 修改时间：16:44:32" itemprop="dateCreated datePublished" datetime="2021-04-16T15:26:42+08:00">2021-04-16</time>
+              <time title="创建时间：2021-04-14 18:27:20" itemprop="dateCreated datePublished" datetime="2021-04-14T18:27:20+08:00">2021-04-14</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-15 23:11:04" itemprop="dateModified" datetime="2021-04-15T23:11:04+08:00">2021-04-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -533,34 +539,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="模型配置">模型配置</h2>
+          <blockquote>
+<p>人生只有一次，尽最大可能让他精彩。</p>
+</blockquote>
+<h2 id="摘要">摘要</h2>
 <ul>
-<li>历史依赖：取值为2天，还可以设置，取值越大，越不敏感。</li>
-<li>平滑窗口：取值为5个点，还可以设置，取值越大，越敏感。</li>
+<li><p>what you do, who you do with, how you do it, weight more important than how hard you work</p></li>
+<li><p>outputs are nonlinear based on the quality of the work that you put in</p></li>
+<li><p>the right way that work is like a lion, you and i are not like cows, we are not meant to graze all day right.</p></li>
+<li><p>一个公司的规模，取决于内部 和 外部的 交易成本（transaction costs）对比。信息时代带来的最大的便利就是，让 外部交易变得更便捷；现在的趋势是公司的最优规模在锐减。</p>
+<blockquote>
+<p>chiechie：会有越来越多的敏捷和有创意的小公司</p>
+<p>大公司的问题：每个小模块有自己的KPI，生产链路长。多任务并发的时候，经常会遇到性能瓶颈。</p>
+<p>根本原因可能是大公司的官僚式管理制度问题？每个模块只用对生产链路中，自己这一环的kpi负责，而不是对整个业务的最终效果负责，根本就违背了「风险共担」。</p>
+</blockquote></li>
+<li><p>现阶段ai是什么阶段？low ai，即模式识别。</p></li>
+<li><p>为什么短时间内通用ai不可能？人连大脑的运行机制都不懂。根据摩尔定律，我们要再花50年，算力才能赶上一个cell内部的计算速度.</p></li>
+<li><p>关于bankers是不是洗劫了社会的 财富？ 其实他们也冒了很大的风险，赌输了也会破产。</p></li>
+<li><p>关于资本主义 和 社会主义</p>
+<ul>
+<li>“资本主义”这个词声名狼藉了，可以换成 “自由市场”，</li>
+<li>“社会主义”强调结果公平，伴随的一定有violence--暴力重分配</li>
+<li>许多人年轻的时候是社会主义（heart），长大后是资本主义（head）</li>
+<li>taleb说，对我的家人，我是一个communist；对我最亲密的朋友来说，我是一个社会主义者；在我的state-level的政治中，我是一个democrat；higher levels的政治中我是一个republican；在federal level政治中，我是一个libertarian</li>
+<li>一个组织或者群体的规模越大，群体内利益差异就越大，相互之间的信任的可能就越少，会产生更多的cheating，为了让这个系统运作的越好 就需要 匹配的 激励机制，将激励机制发挥到极致的例子就是资本主义。 &gt; 管理小团队，like family；管理大团队，要奖惩机制。</li>
+<li>群体的规模越小，比如对待家人，成为一个社会主义，会让你更幸福，但是对陌生人不行。</li>
+</ul></li>
 </ul>
-<h2 id="主要处理流程">主要处理流程</h2>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li><p>对历史数据做平滑处理, 处理的函数为<code>numpy_ewma_vectorized_v2</code> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">numpy_ewma_vectorized_v2</span>(<span class="params">data, window</span>):</span></span><br><span class="line">    alpha = <span class="number">2</span> / (window + <span class="number">1.0</span>)</span><br><span class="line">    alpha_rev = <span class="number">1</span> - alpha</span><br><span class="line">    n = data.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    pows = alpha_rev ** (np.arange(n + <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    scale_arr = <span class="number">1</span> / pows[:-<span class="number">1</span>]</span><br><span class="line">    offset = data[<span class="number">0</span>] * pows[<span class="number">1</span>:]</span><br><span class="line">    pw0 = alpha * alpha_rev ** (n - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    mult = data * pw0 * scale_arr</span><br><span class="line">    cumsums = mult.cumsum()</span><br><span class="line">    out = offset + cumsums * scale_arr[::-<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure></p></li>
-<li><p>计算动态上下界：</p>
-<ul>
-<li>计算正常的波动区间：
-<ul>
-<li><p>计算残差序列 = 平滑后的历史依赖 - 原始的历史依赖 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">residual = history - history_s</span><br></pre></td></tr></table></figure></p></li>
-<li><p>取残差序列中大于0的部分，计算均值history_std_u，即为正常的向上波动范围 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">history_std_u = np.nanmean(residual[residual &gt; <span class="number">0</span>])</span><br></pre></td></tr></table></figure></p></li>
-<li><p>取残差序列中小于0的部分，计算均值history_std_l, 即为正常的向下波动范围 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">history_std_l = np.nanmean(residual[residual &lt; <span class="number">0</span>])</span><br></pre></td></tr></table></figure></p></li>
-</ul></li>
-<li>计算当前基线<code>history_mean</code>：历史依赖平滑后的最新一个时刻的取值，即为当前的基线。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">history_mean = history_s[-<span class="number">1</span>]</span><br></pre></td></tr></table></figure></li>
-<li>计算上下界： 上界 = 当前基线 + N_sigma * 向上波动范围 下界 = 当前基线 - N_sigma * 向上波动范围 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">upper_bound = history_mean + N * history_std_u</span><br><span class="line">lower_bound = history_mean + N * history_std_l</span><br></pre></td></tr></table></figure></li>
-</ul></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=3qHkcs3kG44">Joe Rogan Experience #1309 - Naval Ravikants</a></li>
 </ol>
-<h3 id="将敏感度映射为n">3. 将敏感度映射为N</h3>
-<p>小trick1--将敏感度映射为N（N可以控制上下波动范围）, N = 1 -convert_losseness_to_n(敏感度) <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_losseness_to_n</span>(<span class="params">l</span>):</span></span><br><span class="line">    looseness = [<span class="number">0.3</span>, <span class="number">0.5</span>, <span class="number">0.7</span>]</span><br><span class="line">    n_sigma = [<span class="number">4</span>, <span class="number">8</span>, <span class="number">16</span>]</span><br><span class="line">    n_sigma_sqrt = np.sqrt(n_sigma)</span><br><span class="line">    z1 = np.polyfit(looseness, n_sigma_sqrt, <span class="number">2</span>)</span><br><span class="line">    p1 = np.poly1d(z1)</span><br><span class="line">    <span class="keyword">return</span> np.square(p1(l))</span><br></pre></td></tr></table></figure></p>
-<h3 id="清洗极端值">4. 清洗极端值</h3>
-<p>小trick2--对历史数据做平滑处理之前，以及计算正常的上下波动范围之前，都应该对输入序列清洗极端值。</p>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">replace_etv</span>(<span class="params">arr</span>):</span></span><br><span class="line">    arr = np.array(arr)</span><br><span class="line">    arr_mean, arr_std = np.nanmedian(arr), np.<span class="built_in">max</span>([np.std(arr), eps])</span><br><span class="line">    u, l = arr_mean + <span class="number">5</span> * arr_std, arr_std - <span class="number">5</span> * arr_std</span><br><span class="line">    anom = (arr &gt; u) | (arr &lt; l)</span><br><span class="line">    arr[anom] = arr_mean</span><br><span class="line">    <span class="keyword">return</span> arr</span><br></pre></td></tr></table></figure></p>
-<h3 id="总结">总结</h3>
-<p>总结一下，整个处理逻辑放在<code>gaussian_detector</code>中</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gaussian_detector</span>(<span class="params">history, point, N=<span class="number">3</span>, alert_upward=<span class="number">1</span>, alert_down=<span class="number">1</span>, exp_window=<span class="number">5</span></span>):</span></span><br><span class="line">    history_s = copy.deepcopy(history)</span><br><span class="line">    </span><br><span class="line">    history_s = replace_etv(history_s)</span><br><span class="line">    history_s = numpy_ewma_vectorized_v2(history_s, exp_window)</span><br><span class="line"></span><br><span class="line">    residual = history - history_s</span><br><span class="line">    residual = replace_etv(residual)</span><br><span class="line"></span><br><span class="line">    history_mean = history_s[-<span class="number">1</span>]</span><br><span class="line">    history_std_u = np.nanmean(residual[residual &gt; <span class="number">0</span>])</span><br><span class="line">    history_std_l = np.nanmean(residual[residual &lt; <span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">    history_std_u = np.<span class="built_in">max</span>([history_std_u, eps])</span><br><span class="line">    history_std_l = np.<span class="built_in">min</span>([history_std_l, -eps])</span><br><span class="line"></span><br><span class="line">    upper_bound = history_mean + N * history_std_u</span><br><span class="line">    lower_bound = history_mean + N * history_std_l</span><br><span class="line"></span><br><span class="line">    is_up_anomaly = point &gt; upper_bound</span><br><span class="line">    is_down_anomaly = point &lt; lower_bound</span><br><span class="line">    is_anomaly = <span class="built_in">int</span>(is_up_anomaly | is_down_anomaly)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> is_anomaly, upper_bound, lower_bound, history_mean, history_std_u</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -579,7 +588,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -645,7 +654,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -658,7 +667,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">119</span>
+        <span class="site-state-item-count">118</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -164,140 +164,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/technology/PC-algo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/09/technology/PC-algo/" class="post-title-link" itemprop="url">PC算法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-09 10:06:00" itemprop="dateCreated datePublished" datetime="2021-03-09T10:06:00+08:00">2021-03-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="基本概念">基本概念</h1>
-<ul>
-<li><p>因果图（cause graph）：因果模型的一种表达方式，因果图是一个DAG， G=（V，E），对于每一个节点v，给定了他的双亲pa（v），v跟所有非后代都是独立的。</p></li>
-<li><p>冲撞点（collider）：一种V型结构的因果图，</p></li>
-<li><p>PC算法的两个假设：马尔可夫条件和faithfulness。</p></li>
-<li><p>马尔科夫条件：可用来区分因果关系和相关关系，被用于生成依赖关系集合，构造因果图框架。</p></li>
-<li><p>faithfulness假设：可以用来保证，V中的所有变量的独立关系，都可以通过D-seperation表达。</p></li>
-</ul>
-<h2 id="d-分离">D-分离</h2>
-<p>D分离（D-Separation）定义很复杂，拿出来单独说。</p>
-<p>定义: 设 X，Y，Z 是 DAG 中不相交的节点集合， <span class="math inline">\(\pi\)</span> 为一条连接 X 中某节点到 Y 中某节点的路径 （不管方向）。 如果路径 <span class="math inline">\(\pi\)</span> 上某节点满足如下的条件：</p>
-<ol type="1">
-<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 V结构 , 即<span class="math inline">\(X \rightarrow w \leftarrow Y\)</span>，且 w 及其后代不在 Z中；(因为collider关系，w不可观测时,X,Y 相互独立)</li>
-<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 非V结构 ，且w在Z中 。</li>
-</ol>
-<p>则称Z阻断了路径<span class="math inline">\(\pi\)</span>。</p>
-<p>如果Z阻断了所有的X到Y的路径，就说Z集合D分离了X和Y，记作<span class="math inline">\((X \perp Y \mid Z)_{G}\)</span>.</p>
-<p>D分离这个性质有什么用呢？</p>
-<p>D分离是一种用来判断变量是否条件独立的图形化方法，相比于非图形化方法，更加直观，且计算简单。 对于一个DAG(有向无环图)，D-Separation方法可以快速的判断出两个节点之间是否是条件独立的。</p>
-<h1 id="pc算法-概览">PC算法-概览</h1>
-<p>PC算法是一种发现因果关系的算法，在满足一定的假设的前提下（基于马尔科夫条件 和 D-separation），使用基于统计的方法（显著性检验-<span class="math inline">\(G^2\)</span>），推导出因果关系（代表因果关系的DAG）。实现流程包括三步:</p>
-<ol type="1">
-<li>确定因果图的框架，有哪些点，有哪些边</li>
-<li>确定边的方向</li>
-<li>传播方向</li>
-</ol>
-<figure>
-<img src="pc-overview.png" alt="图1-PC算法" /><figcaption aria-hidden="true">图1-PC算法</figcaption>
-</figure>
-<h1 id="确定因果图框架">确定因果图框架</h1>
-<p>从全连接图开始，移走条件独立的边</p>
-<figure>
-<img src="pc1.png" alt="图2-确定框架" /><figcaption aria-hidden="true">图2-确定框架</figcaption>
-</figure>
-<p>Z从空集开始，不断增加</p>
-<p>具体来说，可以用指标<span class="math inline">\(G^2\)</span>（条件交叉熵）来检验给定Z时，X和Y的独立性，这里X，Y，Z是互斥的。</p>
-<p><span class="math display">\[G^{2}=2 m C E(X, Y \mid Z)\]</span></p>
-<ul>
-<li>m：样本大小</li>
-<li>$ C E(X, Y Z)$:给定Z时，X和Y的条件交叉熵，</li>
-</ul>
-<blockquote>
-<p>显著性低于0.05，就说明条件分布和联合分布没有显著性差异，有因果关系 显著性超过0.05， 就说明条件分布和联合分布没有显著性差异，没有因果关系，是独立的。</p>
-</blockquote>
-<p>如果<span class="math inline">\(G^2\)</span>超过一个预先设定的显著性，比如0.05， 那么X和Y是条件独立的。</p>
-<p>PC算法使用一个全连接的无向图，然后使用<span class="math inline">\(G^2\)</span>描述条件独立性。</p>
-<h1 id="确定方向">确定方向</h1>
-<p>当DAG的架子搭起来了， 接下来的工作就是决定因果关系的方向了。这里使用到了D-seperation的方法。</p>
-<figure>
-<img src="pc2.png" alt="图3-确定方向" /><figcaption aria-hidden="true">图3-确定方向</figcaption>
-</figure>
-<h1 id="传播方向">传播方向</h1>
-<figure>
-<img src="pc3.png" alt="图4-传播方向" /><figcaption aria-hidden="true">图4-传播方向</figcaption>
-</figure>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=o2A61bJ0UCw">pc算法-youtube</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">因果图的基本概念-知乎</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/knowing_myself/free-career-choice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -376,10 +242,96 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/technology/initialization-tricks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/08/technology/initialization-tricks/" class="post-title-link" itemprop="url">神经网络训练的一些小tricks</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-08 10:17:31" itemprop="dateCreated datePublished" datetime="2021-03-08T10:17:31+08:00">2021-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="神经网络的layer如何设置初始化权重">神经网络的layer如何设置初始化权重？</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.layers.Dense(<span class="number">10</span>, activation=<span class="string">&quot;relu&quot;</span>, kernel_initializer=<span class="string">&quot;he_normal&quot;</span>)</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="img.png" alt="3种初始化方法" /><figcaption aria-hidden="true">3种初始化方法</figcaption>
+</figure>
+<h2 id="训练过程太长能否实时保存训练结果">训练过程太长，能否实时保存训练结果？</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 设置loss，优化算法</span></span><br><span class="line">model.<span class="built_in">compile</span>(loss=..., optimizer=...,</span><br><span class="line">              metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br><span class="line"></span><br><span class="line">EPOCHS = <span class="number">10</span></span><br><span class="line">checkpoint_filepath = <span class="string">&#x27;/tmp/checkpoint&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 定义回调函数</span></span><br><span class="line">model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(</span><br><span class="line">    filepath=checkpoint_filepath,</span><br><span class="line">    save_weights_only=<span class="literal">True</span>,</span><br><span class="line">    monitor=<span class="string">&#x27;val_accuracy&#x27;</span>,</span><br><span class="line">    mode=<span class="string">&#x27;max&#x27;</span>,</span><br><span class="line">    save_best_only=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model weights are saved at the end of every epoch, if it&#x27;s the best seen</span></span><br><span class="line"><span class="comment"># so far.</span></span><br><span class="line"><span class="comment"># 3.在fit中传入回调函数，模型会一边训练一边存储</span></span><br><span class="line">model.fit(epochs=EPOCHS, callbacks=[model_checkpoint_callback])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 从缓存路径中加载模型</span></span><br><span class="line"><span class="comment"># The model weights (that are considered the best) are loaded into the model.</span></span><br><span class="line">model.load_weights(checkpoint_filepath)</span><br></pre></td></tr></table></figure>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>Hands-On Machine Learning with Scikit-Learn and TensorFlow, P334</li>
+<li><a target="_blank" rel="noopener" href="https://keras.io/api/callbacks/model_checkpoint/">keras-model_checkpoint-官网文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://keras.io/api/layers/merging_layers/concatenate/">concatenate</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -445,7 +397,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -458,7 +410,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">119</span>
+        <span class="site-state-item-count">118</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

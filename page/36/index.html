@@ -164,6 +164,171 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/AIOps/aiops2021-demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/09/AIOps/aiops2021-demo/" class="post-title-link" itemprop="url">AIOps挑战赛2021-demo方案</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-09 22:04:42" itemprop="dateCreated datePublished" datetime="2021-03-09T22:04:42+08:00">2021-03-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="数据解析">数据解析</h2>
+<p>比赛数据包括： 部署拓扑，指标数据，日志数据，调用链数据，故障标签</p>
+<h3 id="部署数据">部署数据</h3>
+<figure>
+<img src="./aiops2021-demo/bushu.png" alt="部署数据" /><figcaption aria-hidden="true">部署数据</figcaption>
+</figure>
+<h3 id="指标数据">指标数据</h3>
+<p>指标数据包括业务指标 和 性能指标。 业务指标用于触发根因分析，性能指标用于局部的根因定位</p>
+<p>每个指标数据，都需要附带的信息有：归属物理设备id，以及相应用id，（这样才能做机器的指标依赖的额故障定位）</p>
+<h4 id="业务指标">业务指标</h4>
+<p>kpi_0304.csv</p>
+<ul>
+<li>rr：单位%，系统响应率</li>
+<li>sr：单位%，业务成功率</li>
+<li>cnt：单位条，交易量</li>
+<li>mrt：单位ms，平均响应时间</li>
+<li>tc：交易码, 有11种应用, 'ServiceTest1', 'ServiceTest10', 'ServiceTest11', 'ServiceTest2', 'ServiceTest3', 'ServiceTest4', 'ServiceTest5', 'ServiceTest6', 'ServiceTest7', 'ServiceTest8', 'ServiceTest9'</li>
+</ul>
+<figure>
+<img src="./aiops2021-demo/yewu.png" alt="业务指标" /><figcaption aria-hidden="true">业务指标</figcaption>
+</figure>
+<h4 id="性能指标">性能指标</h4>
+<p>每个应用的指标, 每个kpi会有一个对应的机器id（即cmdb_id）</p>
+<ul>
+<li>cmdb_id: 指标归属的物理设备, 每个物理设备上收集到的指标一般来说包括两种，「操作系统」性能指标以及「服务」性能指标。</li>
+<li>kpi_name: 指标归属的服务类型，比如归属于操作系统/java虚拟机/Redis/Tomcat/Mysql等</li>
+</ul>
+<figure>
+<img src="./aiops2021-demo/xingneng.png" alt="性能指标" /><figcaption aria-hidden="true">性能指标</figcaption>
+</figure>
+<h3 id="日志数据">日志数据</h3>
+<p>日志数据有3个重要字段：</p>
+<ul>
+<li>cmdb_id： 日志是从哪台物理机器上产生</li>
+<li>log_name: 日志对应的组件名和日志类别, 相当于4个采集器，eg catalina/gc/localhost/localhost_access_log</li>
+<li>value: 日志内容, 里面的信息包括，日志级别，egINFO/WARNING/SEVERE，具体报错信息</li>
+</ul>
+<p>目前只有Tomcat4台服务器有日志数据；并且根据采集的不同的组件，收集的日志。</p>
+<h3 id="调用链数据">调用链数据</h3>
+<p>调用链路数据来自：trace/trace_0304.csv</p>
+<p>重要的字段有：</p>
+<ul>
+<li>cmdb_id: 即对应的服务是部署在哪个机器上的, 一次全局的trace_id 可能跨越几个设备</li>
+<li>parent_id：子调用的上一次调用</li>
+<li>trace_id：一次trace对应的全局id，一个trace包括多次子调用</li>
+<li>span_id： 本流程的Span ID，</li>
+</ul>
+<figure>
+<img src="./aiops2021-demo/trace.png" alt="调用链" /><figcaption aria-hidden="true">调用链</figcaption>
+</figure>
+<h3 id="故障标签">故障标签</h3>
+<p>故障类型可分为--'应用故障', '网络故障', '资源故障'</p>
+<ul>
+<li>应用故障可分为2类：'JVM CPU负载高', 'JVM OOM Heap'</li>
+<li>网络故障可分为两类：'网络延迟', '网络隔离'</li>
+<li>资源故障可分为三类：CPU使用率爬升，内存使用率过高，磁盘IO写使用率过高</li>
+</ul>
+<h2 id="demo方案">demo方案</h2>
+<p>流程：</p>
+<ol type="1">
+<li>对「业务指标」进行异常检测，异常则触发下面的诊断。</li>
+<li>调用链异常检测和根因定位:「业务」指标异常了，定位是哪个中间件或者服务出现了异常，以及根因的那个服务。</li>
+<li>对应机器的指标进行根因定位：定位到了调用链中的根因服务，然后对该服务所在的机器进行下钻分析，进行更细粒度的根因指标定位，使用到了机器和中间件的「性能指标」。</li>
+</ol>
+<h3 id="业务指标异常检测略">业务指标异常检测(略)</h3>
+<p>找出第一个故障发生时刻：</p>
+<ul>
+<li>2021-03-04 08:39:00 - 2021-03-04 08:44:00</li>
+</ul>
+<h3 id="调用链异常检测和根因定位">调用链异常检测和根因定位</h3>
+<ol type="1">
+<li>找出异常调用路径--trace_id</li>
+<li>找出对应的根因的子调用--span_id</li>
+<li>找到span_id的机器</li>
+</ol>
+<figure>
+<img src="./aiops2021-demo/trace_rca.png" alt="调用链异常检测和根因定位" /><figcaption aria-hidden="true">调用链异常检测和根因定位</figcaption>
+</figure>
+<h3 id="对定位到的机器进行指标根因分析">对定位到的机器进行指标根因分析</h3>
+<ol type="1">
+<li>搜集该机器的所有性能指标，进行异常检测</li>
+<li>对于异常的指标，根据历史数据中学习到的因果图，进行根因推断。</li>
+</ol>
+<figure>
+<img src="./aiops2021-demo/metric_rca.png" alt="指标根因分析" /><figcaption aria-hidden="true">指标根因分析</figcaption>
+</figure>
+<h3 id="对下-分析结果-和-标准答案">对下 分析结果 和 标准答案</h3>
+<figure>
+<img src="./aiops2021-demo/evaluate.png" alt="对比" /><figcaption aria-hidden="true">对比</figcaption>
+</figure>
+<h2 id="参考资料">参考资料</h2>
+<p>1.<a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=17&amp;flag=1">aiops挑战赛2021-官网</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/technology/PC-algo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -294,88 +459,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/knowing_myself/free-career-choice/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/08/knowing_myself/free-career-choice/" class="post-title-link" itemprop="url">要不要做一个自由职业者？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-08 13:48:38" itemprop="dateCreated datePublished" datetime="2021-03-08T13:48:38+08:00">2021-03-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A4%E8%AF%86%E8%87%AA%E5%B7%B1/" itemprop="url" rel="index"><span itemprop="name">认识自己</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ol type="1">
-<li>自由职业，失败了只能怪自己。</li>
-<li>自由太久，想回到有序的有压迫性的状态。</li>
-<li>一个东西，比如自由，没有的时候，想要得到。得到了，会想。我要这玩意儿干嘛呢？</li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://steveshuo.com/65">Steve说65期 - 张潇雨 - 欲望可以有界，意义必然无穷</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -445,7 +528,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">103</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -458,7 +541,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">117</span>
+        <span class="site-state-item-count">118</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

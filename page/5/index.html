@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-18 20:18:20 / 修改时间：21:24:43" itemprop="dateCreated datePublished" datetime="2021-04-18T20:18:20+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 20:18:20 / 修改时间：22:05:20" itemprop="dateCreated datePublished" datetime="2021-04-18T20:18:20+08:00">2021-04-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -298,7 +298,7 @@
 <ul>
 <li>MDP能够对现实世界中很多问题建模，是研究强化学习的基础框架</li>
 <li>MDP要求环境变量是完全可观测，但是现实中部分可观测问题也可转化为MDP问题</li>
-<li>MRP with decision，多了action，以及action的条件概率转移矩阵<span class="math inline">\(P\left(s_{t+1}=s^{\prime} \mid s_{t}=s, a_{t}=a\right)\)</span></li>
+<li>「马尔可夫决策过程」相对于「马尔可夫奖励过程」多了决策，所以需要建模的对象多了两个要素：action 和 概率转移<span class="math inline">\(P\left(s_{t+1}=s^{\prime} \mid s_{t}=s, a_{t}=a\right)\)</span>。</li>
 <li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbPx8H2l13W.png?alt=media&amp;token=6e62ffdf-8434-40b4-b312-5037d805f911" /></li>
 <li>马尔可夫决策过程中的策略函数（policy evaluation）</li>
 <li>马尔可夫决策过程中的 控制：
@@ -306,7 +306,6 @@
 <li>策略迭代</li>
 <li>价值迭代</li>
 </ul></li>
-<li>可以表达为元组<span class="math inline">\((S, A, P, R, \gamma)\)</span></li>
 </ul>
 <p>什么是MDP中的预测和控制？ - 预测问题：给定poilcy时，求某个 状态的价值函数。 - 控制问题：最优的策略 以及对应 的状态价值函数。</p>
 <h2 id="mpmrpmdp三者的关系">MP/MRP/MDP三者的关系</h2>
@@ -361,7 +360,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-18 20:17:45 / 修改时间：21:21:21" itemprop="dateCreated datePublished" datetime="2021-04-18T20:17:45+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 20:17:45 / 修改时间：22:09:11" itemprop="dateCreated datePublished" datetime="2021-04-18T20:17:45+08:00">2021-04-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -392,38 +391,7 @@
 <li>value：3个价值函数: 行动价值函数，最优行动价值函数，状态价值函数</li>
 <li>policy：策略</li>
 </ul>
-<h3 id="强化学习的三个方向">强化学习的三个方向</h3>
-<ul>
-<li>价值学习： value-based，目的是学习最优行动价值函数。
-<ul>
-<li>Deep Q network: 近似最优行动价值函数</li>
-<li>时间差分（TD）算法:TD（Temporal Difference）算法：
-<ul>
-<li>SARSA算法
-<ul>
-<li>基于表格的方法</li>
-<li>[[基于神经网络的方法</li>
-</ul></li>
-<li>Q-learning算法</li>
-<li>Multi-step TD target</li>
-</ul></li>
-</ul></li>
-<li>策略学习：policy-based，目的是让agent直接学会最优策略。 actor critic
-<ul>
-<li>使用策略网络来近似策略函数， 使用策略梯度更新网络参数
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Frx6kfw7dc6.png?alt=media&amp;token=22e1d520-3194-42b5-b624-e52034b62b4d" /></li>
-</ul></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNC2bv9ZwlF.png?alt=media&amp;token=8fb33ced-8383-42fe-8fee-4742d9abadc4" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FV4DSavxJZ8.png?alt=media&amp;token=408e1eb5-24f9-4fd9-bbf5-a7d20a53f7fb" /></li>
-<li>计算policy梯度和action-value fuction
-<ul>
-<li>方法1-跟环境互动获取长期的收益<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F8F3Gq0YTEB.png?alt=media&amp;token=d6cd369f-ea76-41b0-84e1-66953c0d4e56" /></li>
-<li>方法2-构造价值网络来计算action-value</li>
-</ul></li>
-</ul></li>
-<li>价值学习和策略学习结合： actor critic <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FQX2HjRc5gn.png?alt=media&amp;token=18a877c8-f337-4c15-a9f5-7b3f410c8475" /></li>
-<li>监督学习 和 强化学习的区别
+<h3 id="监督学习-和-强化学习的区别">监督学习 和 强化学习的区别</h3>
 <ul>
 <li>监督学习
 <ul>
@@ -442,7 +410,6 @@
 <li>试错机制--在探索 和 利用中间寻找平衡</li>
 <li>强化学习没有一个导师（supervisor），只有一个奖励信号，并且还是有延迟的。</li>
 </ul></li>
-</ul></li>
 </ul>
 <h3 id="强化学习的特点">强化学习的特点</h3>
 <ul>
@@ -454,44 +421,6 @@
 <ul>
 <li>类似我们的模型自动更新，担心时间会对模型造成影响</li>
 <li>如果是增量学习，会造成影响</li>
-</ul></li>
-</ul>
-<h3 id="基本概念">基本概念</h3>
-<ul>
-<li>状态</li>
-<li>行动</li>
-<li>状态转移：状态转移可以是确定的也可以是随机的（随机性来源于环境）<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F0gnPu0zeUj.png?alt=media&amp;token=d6bcd51c-418f-4c1c-800b-e82842f20c27" /></li>
-<li>2个收益: 长期和即时收益。这两个收益都是随机变量，怎么利用收益函数来 引导agent做出好的策略？对收益求期望，也就是价值函数
-<ul>
-<li>强化学习中的两个收益：即时收益（reward)：对于某个s，a，env立刻返回的激励信号。长期收益（discounted return, aka，cumulative discounted future reward）：对于某个s，a，长期来看收益。</li>
-<li>这两个收益都是随机变量, <span class="math inline">\(R_t\)</span>的折扣累积就是长期收益</li>
-<li><span class="math inline">\(U_{t}=R_{t}+ \gamma R_{t+1}+\gamma ^{2} R_{t+2} \cdots\)</span></li>
-<li><span class="math inline">\(U_t\)</span>的随机性来自2个部分:
-<ul>
-<li>环境：状态转移概率, <span class="math inline">\(p\left(s^{\prime} \mid s, a\right)\)</span></li>
-<li>agent: policy函数</li>
-</ul></li>
-<li><span class="math inline">\(R_t\)</span>的随机性来自2个部分：<span class="math inline">\(s_t\)</span>和<span class="math inline">\(a_t\)</span></li>
-</ul></li>
-<li>策略网络：使用一个神经网络来近似策略函数</li>
-<li>3个价值函数: 行动价值函数，最优行动价值函数，状态价值函数
-<ul>
-<li>强化学习中的价值函数主要有两个作用：</li>
-<li>一是用来判断agent的策略的好坏，一是用来判断当前局势（state）的好坏。</li>
-<li>具体来说主要有3个：</li>
-<li>动作价值函数（action-value function）：表示在当前s和a下，采取某个策略<span class="math inline">\(\pi\)</span>之后的价值，<span class="math inline">\(Q_{\pi}\left(s_{t}, a_{t}\right)=E_{\pi}\left(U_{t} \mid S_{t}=s_{t}, A_{t}=a_{t}\right)\)</span>
-<ul>
-<li>可以给当前的a打分</li>
-</ul></li>
-<li>最优动作价值函数（optimal action-value function），当前s和a下，采取最优策略<span class="math inline">\(\pi^{\star}\)</span>的分数，<span class="math inline">\(Q^{*}\left(s_{t}, a_t\right)=\max\limits_{\pi} Q_{\pi}\left(s_{t}, a_t\right)\)</span></li>
-<li>状态价值函数：state value function，在后续采取某个策略<span class="math inline">\(\pi\)</span>的情况下，评判当前局势的好坏（是快赢了还是快输了）。用于给当前state打分。如果对s求期望<span class="math inline">\(\mathbb{E}_{S}\left[V_{\pi}(S)\right]\)</span>，就是对策略<span class="math inline">\(\pi\)</span>打分。
-<ul>
-<li><span class="math inline">\(V_{\pi}\left(s_{t}\right)=\operatorname{E_A}\left(Q_{\pi}\left(s_{t}, A\right)\right), A \sim \pi(.\mid s_t)\)</span></li>
-<li>如果动作（action）是离散变量：<span class="math inline">\(V_{\pi}\left(s_{t}\right) = \sum\limits_{a}Q_{\pi}(s_t,a) \pi\left(a \mid s_{t}\right)\)</span></li>
-<li>如果动作（action）是连续变量： <span class="math inline">\(V_{\pi}\left(s_{t}\right) = \int_{a} Q_{\pi} \left(s_{t}, a\right) \pi\left(a \mid s_{t} \right) d a\)</span></li>
-</ul></li>
-<li>前面两个（action-value function 和 optimal action-value function）都是评判state + action +policy。</li>
-<li>第三个（state value fuction） 单纯地评判当前局势（ state）+ policy，。</li>
 </ul></li>
 </ul>
 

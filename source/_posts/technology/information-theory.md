@@ -15,7 +15,7 @@ categories:
 
 这个绝对惊讶程度 可以拆解为 一个baseline（真实分布P的熵） + 一个相对差距（P和Q的距离）
 
-![img_1.png](information-theory/img_1.png)
+![img_1.png](./img_1.png)
 
 
 

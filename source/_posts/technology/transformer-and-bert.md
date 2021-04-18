@@ -1,5 +1,5 @@
 ---
-title: transformer和bert
+title: Transformer
 author: chiechie
 mathjax: true
 date: 2021-04-18 00:04:13
@@ -7,11 +7,13 @@ tags:
 - NLP
 - 神经网络
 - 模型可视化
+- Transformer
+- Bert
 categories:
 - 技术
 ---
 
-# Transformer介绍
+# Transformer
 
 > 先概括Transformer的主要设计思路；再讲每一步的具体技术细节。
 >

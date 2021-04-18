@@ -8,6 +8,7 @@ tags:
 - 时间序列
 - 预测
 - 神经网络
+- DeepAR
 categories:
 - 技术
 ---

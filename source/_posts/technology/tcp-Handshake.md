@@ -17,7 +17,7 @@ tags:
 - TCP-FIN-WAIT2-客户端视角： 「服务器」从 响应命令 到 完成命令，间隔的时间。
 
 
-![图1-握手原理](img.png)
+![图1-握手原理](dl-framework/img.png)
 
 
 ## 参考

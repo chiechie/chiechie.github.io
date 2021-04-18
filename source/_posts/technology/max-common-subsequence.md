@@ -84,7 +84,7 @@ class Solution(object):
                     compare_matrix[i + 1][j + 1] = max(compare_matrix[i+1][j], compare_matrix[i][j+1])
         return compare_matrix[i+1][j+1]
 ```
-![img.png](img.png)
+![img.png](dl-framework/img.png)
 
 ## 参考
 1. [leetcode地址](https://leetcode-cn.com/problems/longest-common-subsequence/)

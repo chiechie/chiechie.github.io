@@ -27,7 +27,7 @@ categories:
 PCA： 经过编码-解码之后，信息丢失尽可能少。
 word2vec： 经过编码-解码之后，背景词可以映射为中心词，或者中心词可以映射为背景词，
 
-![img.png](img.png)
+![img.png](dl-framework/img.png)
 
 将背景词映射为中心词叫Continuous Bag-of-Words (CBOW)
 将中心词映射为背景词叫Skip-gram model (SG)

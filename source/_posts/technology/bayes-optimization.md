@@ -84,7 +84,7 @@ $$ \max _{x \in \mathcal{X}} f(x)$$
 
 ### 图形版
 
-![贝叶斯优化](img.png)
+![贝叶斯优化](dl-framework/img.png)
 
 https://distill.pub/2020/bayesian-optimization/
 上图中

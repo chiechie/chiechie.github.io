@@ -22,8 +22,7 @@ categories:
 - Transformer的亮点在于将attention和self-attention机制完全剥离开之前rnn的结构，只跟dense层组合。
 
 
-
-##  0.High-Level ideas
+##  High-Level ideas
 
 首先把模型看作一个黑盒。 在机器翻译（eg英译德）任务中，它会将一个句子（例如英文）翻译成一种语言（机器语言），然后再将其翻译成另一种语言（例如德文）。
 
@@ -55,7 +54,6 @@ decoder除了这两层，还有一个encoder-decoder attention层，用来关注
 上面介绍了Transformer的主要组件，现在看一下组件之间的数据流向。
 
 和一般的 NLP任务一样，Transformer首先使用[embedding algorithm](https://medium.com/deeper-learning/glossary-of-deep-learning-word-embedding-f90c3cec34ca)将每个输入单词转换成一个向量。
-
 
 
 ![img](./transformer_embeddings.png) 

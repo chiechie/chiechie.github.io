@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-18 20:46:57 / 修改时间：21:18:32" itemprop="dateCreated datePublished" datetime="2021-04-18T20:46:57+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 20:46:57 / 修改时间：21:39:37" itemprop="dateCreated datePublished" datetime="2021-04-18T20:46:57+08:00">2021-04-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -268,8 +268,7 @@
 </ul></li>
 </ul>
 <h2 id="用随机策略做连续控制">用随机策略做连续控制</h2>
-<ul>
-<li>基本概念
+<h3 id="基本概念">基本概念</h3>
 <ul>
 <li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fza5rJJXnoe.png?alt=media&amp;token=48526a35-cc19-486c-b91b-3a0ef9df1edc" /></li>
 <li>策略梯度：--谁对谁的梯度？（状态价值函数 关于策略网络参数的梯度）
@@ -280,17 +279,16 @@
 <ul>
 <li><span class="math inline">\(\mathbf{g}(a)=\frac{\partial \ln \pi(a \mid s ; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(s, a), \text { where } a \sim \pi(\cdot \mid s ; \boldsymbol{\theta})\)</span></li>
 </ul></li>
-</ul></li>
-<li>连续控制问题 怎么设计方案？
-<ul>
-<li>chiechie的思索：第一反应是 使用回归模型，即策略网络是将state 映射到一个确定的action（比如机械臂转动多少度），但是从贝叶斯角度来理解现实问题的话，刚刚的处理方式是明显不合理的， 因为永远 不存在唯一的正确答案。（贝叶斯认为正确答案 是一个随机变量，只不过在不同区间的概率分布不一样）。</li>
-<li>接下来看看wang给的方案：
+</ul>
+<h3 id="连续控制问题-怎么设计方案">连续控制问题 怎么设计方案？</h3>
+<p>chiechie的思索：第一反应是 使用回归模型，即策略网络是将state 映射到一个确定的action（比如机械臂转动多少度），但是从贝叶斯角度来理解现实问题的话，刚刚的处理方式是明显不合理的， 因为永远 不存在唯一的正确答案。（贝叶斯认为正确答案 是一个随机变量，只不过在不同区间的概率分布不一样）。</p>
+<p>接下来看看wang给的方案：</p>
 <ul>
 <li>将连续的决策空间离散化为网格空间，但是会带来维树灾难</li>
 <li>使用确定性的梯度算法：上一节讲的内容，对于给定的状态，输出的action是唯一确定的。（这不就是我上面的想法吗？似乎不是，这个随机策略梯度更像是一种数值算法，类似sgd）</li>
 <li>使用随机策略网络，也就是本节要讲的内容</li>
-</ul></li>
-<li>【核心】构建一个输出pi的概率分布的策略网络：
+</ul>
+<p>【核心】构建一个输出pi的概率分布的策略网络：</p>
 <ul>
 <li>如何训练？ --使用随机策略梯度
 <ul>
@@ -320,8 +318,6 @@
 <ul>
 <li>reinforce==&gt; [[策略梯度中的Baseline 2/4-REINFORCE with Baseline]]</li>
 <li>actor-critic==&gt; [[策略梯度中的Baseline 3/4-A2C 方法]]</li>
-</ul></li>
-</ul></li>
 </ul></li>
 </ul></li>
 </ul></li>

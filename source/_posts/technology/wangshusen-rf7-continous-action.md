@@ -49,36 +49,44 @@ categories:
 
 ## 用随机策略做连续控制
 
-- 基本概念
-    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fza5rJJXnoe.png?alt=media&token=48526a35-cc19-486c-b91b-3a0ef9df1edc)
-    - 策略梯度：--谁对谁的梯度？（状态价值函数 关于策略网络参数的梯度）
-        - $\frac{\partial V_{\pi}(s)}{\partial \boldsymbol{\theta}}=\mathbb{E}_{A \sim \pi}\left[\frac{\partial \ln \pi(A \mid s ; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(s, A)\right]$
-    - 随机策略梯度
-        - $\mathbf{g}(a)=\frac{\partial \ln \pi(a \mid s ; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(s, a), \text { where } a \sim \pi(\cdot \mid s ; \boldsymbol{\theta})$
-- 连续控制问题 怎么设计方案？
-    - chiechie的思索：第一反应是 使用回归模型，即策略网络是将state 映射到一个确定的action（比如机械臂转动多少度），但是从贝叶斯角度来理解现实问题的话，刚刚的处理方式是明显不合理的， 因为永远 不存在唯一的正确答案。（贝叶斯认为正确答案 是一个随机变量，只不过在不同区间的概率分布不一样）。
-    - 接下来看看wang给的方案：
-        - 将连续的决策空间离散化为网格空间，但是会带来维树灾难
-        - 使用确定性的梯度算法：上一节讲的内容，对于给定的状态，输出的action是唯一确定的。（这不就是我上面的想法吗？似乎不是，这个随机策略梯度更像是一种数值算法，类似sgd）
-        - 使用随机策略网络，也就是本节要讲的内容
-    - 【核心】构建一个输出pi的概率分布的策略网络：
-        - 如何训练？ --使用随机策略梯度
-            - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F-HeYISazuj.png?alt=media&token=0d3ebe9c-6f04-4867-b2cb-553503e9a523)
-        - 策略梯度的第一个部分使用 辅助神经网络，第二部分使用 reinforce 或者 actor2critic来计算
-            - step1- 辅助神经网络：就是算实际action的似然概率，以此作为反馈信号，往后传播策略网络参数的梯度。
-                - 往前传播
-                    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FF3rR0gy8Su.png?alt=media&token=32c8deac-e6ed-4c36-8490-682457bd96cf)
-                - 往后传播
-                    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FqKuN1X6D_b.png?alt=media&token=aa379ddd-eb64-4674-a1c9-136f77996250)
-            - step2-计算Q value：然是在计算策略梯度的时候，又遇到了一个问题，就是如何计算Qvalue？又两种方法：
-                - reinforce： 玩完一局，然后那观测到的ut去近似
-                - actior-critic：使用价值网络来近似Q，
-                    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F1OdWlyBP_B.png?alt=media&token=4e37f7bb-e85d-4e0b-afb3-bbf99f3bb628)
-                - 还有更高级的方法--策略梯度with baseline: 
-                    - reinforce==> [[策略梯度中的Baseline 2/4-REINFORCE with Baseline]]
-                    - actor-critic==> [[策略梯度中的Baseline 3/4-A2C 方法]]
+### 基本概念
 
-    
+- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fza5rJJXnoe.png?alt=media&token=48526a35-cc19-486c-b91b-3a0ef9df1edc)
+- 策略梯度：--谁对谁的梯度？（状态价值函数 关于策略网络参数的梯度）
+    - $\frac{\partial V_{\pi}(s)}{\partial \boldsymbol{\theta}}=\mathbb{E}_{A \sim \pi}\left[\frac{\partial \ln \pi(A \mid s ; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(s, A)\right]$
+- 随机策略梯度
+    - $\mathbf{g}(a)=\frac{\partial \ln \pi(a \mid s ; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(s, a), \text { where } a \sim \pi(\cdot \mid s ; \boldsymbol{\theta})$
+
+### 连续控制问题 怎么设计方案？
+
+
+chiechie的思索：第一反应是 使用回归模型，即策略网络是将state 映射到一个确定的action（比如机械臂转动多少度），但是从贝叶斯角度来理解现实问题的话，刚刚的处理方式是明显不合理的， 因为永远 不存在唯一的正确答案。（贝叶斯认为正确答案 是一个随机变量，只不过在不同区间的概率分布不一样）。
+
+接下来看看wang给的方案：
+
+- 将连续的决策空间离散化为网格空间，但是会带来维树灾难
+- 使用确定性的梯度算法：上一节讲的内容，对于给定的状态，输出的action是唯一确定的。（这不就是我上面的想法吗？似乎不是，这个随机策略梯度更像是一种数值算法，类似sgd）
+- 使用随机策略网络，也就是本节要讲的内容
+
+【核心】构建一个输出pi的概率分布的策略网络：
+
+- 如何训练？ --使用随机策略梯度
+    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F-HeYISazuj.png?alt=media&token=0d3ebe9c-6f04-4867-b2cb-553503e9a523)
+- 策略梯度的第一个部分使用 辅助神经网络，第二部分使用 reinforce 或者 actor2critic来计算
+    - step1- 辅助神经网络：就是算实际action的似然概率，以此作为反馈信号，往后传播策略网络参数的梯度。
+        - 往前传播
+            - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FF3rR0gy8Su.png?alt=media&token=32c8deac-e6ed-4c36-8490-682457bd96cf)
+        - 往后传播
+            - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FqKuN1X6D_b.png?alt=media&token=aa379ddd-eb64-4674-a1c9-136f77996250)
+    - step2-计算Q value：然是在计算策略梯度的时候，又遇到了一个问题，就是如何计算Qvalue？又两种方法：
+        - reinforce： 玩完一局，然后那观测到的ut去近似
+        - actior-critic：使用价值网络来近似Q，
+            - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F1OdWlyBP_B.png?alt=media&token=4e37f7bb-e85d-4e0b-afb3-bbf99f3bb628)
+        - 还有更高级的方法--策略梯度with baseline: 
+            - reinforce==> [[策略梯度中的Baseline 2/4-REINFORCE with Baseline]]
+            - actor-critic==> [[策略梯度中的Baseline 3/4-A2C 方法]]
+
+
 ## 参考
 
 1. https://www.youtube.com/watch?v=rRIjgdxSvg8

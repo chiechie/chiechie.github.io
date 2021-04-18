@@ -70,7 +70,7 @@ categories:
 - 模型架构：训练过程（左边）和 预测过程（右边）：
 	![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjTfoJccA7q.png?alt=media&token=6850c357-b303-4053-81b8-2756678deb58)
 - 学习目标： 最大化likelyhood:
-     $$\mathcal{L}=-\sum\limits_{i=1}^{N} \sum\limits_{t=t_{0}}^{T} \log \ell\left(z_{i, t} \mid \theta\left(\mathbf{h}_{i, t}\right)\right)$$
+     $\mathcal{L}=-\sum\limits_{i=1}^{N} \sum\limits_{t=t_{0}}^{T} \log \ell\left(z_{i, t} \mid \theta\left(\mathbf{h}_{i, t}\right)\right)$
 - 【重点】对不同scale曲线怎么处理的？
     - 1.  不同曲线怎么做归一化和逆归一化？缺失值多&方差变化大
         - context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。
@@ -83,19 +83,19 @@ categories:
         - Q 如何得到概率分布呢？
         - A ：分两步走
             - 先拍一个概率分布的形式（函数族），eg高斯分布
-            - 使用量化指标$$< \mu, \sigma> $$进一步确定这个分布
+            - 使用量化指标$< \mu, \sigma> $进一步确定这个分布
         - Q  剩下的问题（不确定的因素）为，如何确定量化指标？
-        - A ：构建一个神经网络，输入x，输出 $$< \mu, \sigma> $$
+        - A ：构建一个神经网络，输入x，输出 $< \mu, \sigma> $
         - Q 那么nn怎么知道输出的u，sigma对不对呢，又没有监督信号 来指引，只有<x, y> pair
-        - A： 使用likelihood 和 y 来度量输出的$$< \mu, \sigma> $$质量好不好
+        - A： 使用likelihood 和 y 来度量输出的$< \mu, \sigma> $质量好不好
             - 有点像，有个人号称 他的理论知识渊博<u，sigma>(覆盖了y空间中所有的案例），现在要检验他的方法论对不对呢？只有一个实践案例----- 假设是对的，然后看是否适用该案例
         - 总结下：
             - 模型输出<u, sigma>, 实际给的ground truth：y
-            - loss为：$$- log Prob(\mu，\sigma，y） $$
+            - loss为：$- log Prob(\mu，\sigma，y） $
     - 前提，先假设预测的数据服从的分布族，有几个待估参数
         - 实值--假设是高斯分布
         - 整数--假设是一个二项分布
-    - 设计网络的时候，需要某一层输出是 分布的参数（例如$$\mu$$ 和 $$\sigma$$）,
-        - 训练的时候，将$$< \mu, \sigma> $$ 带入pdf，计算pdf中 ground truth的概率，取negtive log，作为反馈信号（-log prob就是loss），这个值越大（loss越小）说明模型预测的越准。
-        - 做推断的时候，将$$< \mu, \sigma> $$ 带入pdf， 进行采样，得到预测值
+    - 设计网络的时候，需要某一层输出是 分布的参数（例如$\mu$ 和 $\sigma$）,
+        - 训练的时候，将$< \mu, \sigma> $ 带入pdf，计算pdf中 ground truth的概率，取negtive log，作为反馈信号（-log prob就是loss），这个值越大（loss越小）说明模型预测的越准。
+        - 做推断的时候，将$< \mu, \sigma> $ 带入pdf， 进行采样，得到预测值
 - 【重点】输出的概率分布，怎么评估模型效果？

@@ -52,7 +52,7 @@ Notes 里面给了一个图（下图），从数据上看，X 和 Y 是正相关
 
 因果图是一个DAG，表明各变量之间的联合概率分布。
 
-$$p\left(y_{1}, \ldots, y_{k}\right)=\prod p\left(y_{j} \mid \operatorname{parents}\left(y_{j}\right)\right)$$
+$p\left(y_{1}, \ldots, y_{k}\right)=\prod p\left(y_{j} \mid \operatorname{parents}\left(y_{j}\right)\right)$
 
 下面举例说明，在给定一个因果图之后，如何做因果推断。
 考虑下面一个因果图，目标是求$p(y \mid \operatorname{set} X=x)$
@@ -62,11 +62,11 @@ $p(x, y, z)=p(z) p(x \mid z) p(y \mid x, z)$
 
 - 接下来，由于考虑的是给定 X的影响，因此构建一个新图$G_{*}$,
 移除掉所有指向 X 的边，得到新的联合概率分布:
-$$p_{*}(y, z)=p(z) p(y \mid x, z)$$
+$p_{*}(y, z)=p(z) p(y \mid x, z)$
 
 
 - 最后，该概率分布下的数值就是因果推断的结果:
-  $$p(y \mid \text { set } X=x) \equiv p_{*}(y)=\int p_{*}(y, z) d z=\int p(z) p(y \mid x, z) d z$$
+  $p(y \mid \text { set } X=x) \equiv p_{*}(y)=\int p_{*}(y, z) d z=\int p(z) p(y \mid x, z) d z$
 
 
 ## 因果图 和 概率图 的区别

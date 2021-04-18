@@ -25,7 +25,7 @@ categories:
 
 - 信息增益: 衡量的是给定了一个属性之后，类别列上获得的秩序的提升（也叫熵减）。
 
-$${\displaystyle IG(T,a)=\mathrm {H} {(T)}-\mathrm {H} {(T|a)},}$$
+${\displaystyle IG(T,a)=\mathrm {H} {(T)}-\mathrm {H} {(T|a)},}$
 
 
 # 决策树算法-id3

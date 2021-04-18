@@ -15,14 +15,15 @@ categories:
 > 简历的作用，是挑选出有意思的，值得一见的人。
 
 
-## 自由介绍要点
+## 自我介绍要点
 
 好的自我介绍要包含的信息
 
 1. what do you value?
 2. how to deal with your mates?
 3. what's your taste?
-> you are what you consume
+
+>  you are what you consume
 4. what's your passion about?
 5. show your meditation?
 

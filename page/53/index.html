@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/20/investment/basic_things/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/27/technology/principle-of-network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/20/investment/basic_things/" class="post-title-link" itemprop="url">交易的基本知识</a>
+            <a href="/2021/02/27/technology/principle-of-network/" class="post-title-link" itemprop="url">私网IP 和 公网IP</a>
         </h2>
 
         <div class="post-meta">
@@ -188,14 +188,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-20 18:09:12" itemprop="dateCreated datePublished" datetime="2021-02-20T18:09:12+08:00">2021-02-20</time>
+              <time title="创建时间：2021-02-27 17:38:13" itemprop="dateCreated datePublished" datetime="2021-02-27T17:38:13+08:00">2021-02-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-12 12:24:25" itemprop="dateModified" datetime="2021-04-12T12:24:25+08:00">2021-04-12</time>
+                <time title="修改时间：2021-04-11 10:48:15" itemprop="dateModified" datetime="2021-04-11T10:48:15+08:00">2021-04-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
                 </span>
             </span>
 
@@ -218,49 +218,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="总结一下">总结一下</h2>
+          <h2 id="私网ip-和-公网ip-分别是什么">私网IP 和 公网IP 分别是什么？</h2>
 <ul>
-<li>上交所和深交所都可以买卖股票期权</li>
-<li>四大期货交易所可以交易期货</li>
+<li><p>私网IP，也叫private ip address，或者内网IP。是一个局域网内部，用于识别彼此身份的一个id。</p></li>
+<li><p>公网IP，也叫public ip address，或者外网IP。是在因特网中，用户识别设备身份的一个id。 &gt; 早期，当联网设备只有一台电脑时，将你的电脑连向一个modem，会被分配一个ip，就是public ip，这个ip就是你的电脑在整个互联网的一个id &gt; 随着家中联网设备变多（电视机，手机，平板），需要有一个路由的功能，加上上面的modem的功能，就是现在的路由器。他可以将public ip映射为家庭环境中的多个id，分配给多个设备。注意家庭中联网设备构成了一个局域网（LAN）。</p></li>
+<li><p>(https://ljvmiranda921.github.io/notebook/2018/01/31/running-a-jupyter-notebook/)https://ljvmiranda921.github.io/notebook/2018/01/31/running-a-jupyter-notebook/</p></li>
 </ul>
-<h2 id="股票市场">股票市场</h2>
+<h2 id="modem-和-路由器-有什么区别">modem 和 路由器 有什么区别？</h2>
 <ul>
-<li>滑点（slippage): 发出交易指令时，滑点跟成交价格一起发送，表示成交价格在这个范围内都可以成交。举个例子，EUR/USD 汇率 是 1.2057，如果将最大滑点设置为2，那么程序会执行你的订单点那个价格位于 1.2057, 1.2058 or 1.2059, 时，但是 1.2060.就不执行了</li>
+<li>一台电脑如要跟其他电脑通信，需先hook up on 一个modem，然后modem给他分配一个IP，也就是外网ip。</li>
+<li>路由器是modem的升级版。 路由有两个作用：一个是连接家里的设备，另外一个是连接外面的世界。 家里的多个设备组成了一个局域网，即使不跟外面通信，他们之间是可以通信的，通信的过程中如何识别彼此呢？ 这就是路由器的第二个作用，给局域网中的每个设备分配一个IP--也就是内网IP，这个是局域网的成员才能读懂的代码。</li>
 </ul>
-<h2 id="衍生品市场">衍生品市场</h2>
+<h2 id="端口转发是什么">端口转发是什么？</h2>
+<p>由于外网只知道内网设备的外网地址，如何能让外网访问内网某个设备的某个端口的服务呢？ 一个办法就是将局域网中的所有设备和服务，先注册到路由器中，路由器就可以根据外网的请求的端口号码，将之转移到内网提供相应服务的设备上。 这个就是端口转发做的事情。</p>
+<h2 id="网络中的三种设备-集线器交换机-和-路由器">网络中的三种设备-集线器，交换机 和 路由器</h2>
+<p>集线器和交换机是用来创建一个个小网络（局域网），路由器将这些小网络连接起来，变成因特网。</p>
 <ul>
-<li><p>股票期权在什么时间交易？ 上交所期权合约的交易时间为每个交易日9:15至9:25、9:30至11:30、13：00至15:00。 其中，9:15至9:25为开盘集合竞价时间，14:57-15:00为收盘集合竞价时间，其余时段为连续竞价时间，本规则另有规定的除外。</p></li>
-<li><p>自动行权指的是在期权合约到期时，无需期权买方主动提出行权，一定程度实值的期权将自动被行权。 上交所规定券商应为投资者提供自动行权的服务，自动行权的触发条件和行权方式由券商与客户协定。</p></li>
-<li><p>作为行权方或被行权方，投资者应履行什么义务？ 投资者对认购期权行权的，应当在提交行权指令时向期权经营机构提交足额的行权资金。投资者对认沽期权行权的，应当在提交行权指令时在证券账户中存放足额的合约标的。投资者未按时提交或存放足额的资金或合约标的的，期权经营机构有权拒绝接受其行权指令。 行权交割采取现金结算方式的，投资者若为资金应付方，应当在行权交收前向期权经营机构提交足额的资金。 投资者被指派为认购期权被行权方的，应当在行权交收前在证券账户内存放足额的合约标的；甲方被指派为认沽期权被行权方的，应当在行权交收前向期权经营机构提交足额的被行权资金。</p></li>
-<li><p>股票期权合约行权采取「实物交割」，即行权交收日投资者通过合约账户对应的证券账户完成合约标的的行权交割，对于合约标的交割不足的，中国结算采取现金结算方式完成交割。</p></li>
-<li><p>什么是合约单位？ 合约单位是一张期权合约对应的标的资产数量，即买卖双方在约定的时间以约定的价格买入或卖出标的资产的数量。 例如，进才持有一张行权价格为12元的招宝公司股票认购期权，其合约单位为1000，即他有权在约定的时间以12元的价格向期权的卖方买入1000股该股票。</p></li>
-<li><p>什么是开仓和平仓？ 开仓是指投资者通过买入或卖出期权在市场上建立仓位。买入期权合约获得权利后建立的仓位为权利仓（long position, 也称为长仓）。卖出期权合约承担义务后建立的仓位为义务仓（short position,也称为短仓）,持有义务仓的一方为义务方。</p></li>
-</ul>
-<p>对已持有的期权仓位进行反向操作叫做平仓， 即权利方将持有的期权卖出并不再拥有权利; 义务方从其他投资者手中买回之前卖出的期权合约, 不再承担义务。平仓后投资者不再持有任何仓位，也不再有任何权利或义务。 - 场内期权和场外期权： - 场外期权：在商业银行（还有证券公司，期货公司）的柜台交易，是一种非标准化合约。 - 场内期权：标准化的合约，由交易所设计，在交易所内进行统一集中竞价交易，实行中央对手方清算（CCP）制度等。 - 场内期权按照基础资产可分为：商品类和金融类。 - 商品类期权包括：农产品，能源，贵金属，贱金属的，商品指数 <img src="img.png" alt="上海期货交易所的商品期货" /> - 金融类期权包括：股票，股票指数，利率，外汇。 <img src="img_1.png" alt="金融期货交易所的的沪深300股指期货合于e" /> - 几大期货交易所和交易品类举例： 1. 上海期货交易所：成立于1990年11月26日，上市交易的有铜、铝、天然橡胶、燃料油、黄金、白银、锌、铅、螺纹钢、线材。 2. 大连商品交易所：成立于1993年2月28日，上市交易的有玉米、黄大豆1号、黄大豆2号、豆粕、豆油、棕榈油、鸡蛋、线型低密度聚乙烯、聚氯乙烯、焦炭和焦煤共计11个期货品种。 3. 郑州商品交易所：成立于1990年10月12日，交易的品种有强筋小麦、普通小麦、PTA、一号棉花、白糖、菜籽油、早籼稻、玻璃、菜籽、菜粕、甲醇等期货品种。 4. 中国金融期货交易所:于2006年9月8日在上海成立，交易品种：股指期货，国债期货。eg沪深300、上证50、中证500股指期货和5年期、10年期国债期货5个金融期货合约 5. 芝加哥商业交易所：利率期权，汇率期权，能源期权，农产品期权 6. 芝加哥期权交易所（CBOE）：股票期权，股票指数期权，能源期权，ETF期权。</p>
-<ul>
-<li><p>商品交易顾问(Commodity Trading Advisor)，是期货行业中的一种基金管理方式。这一称呼原来专指农产品期货交易顾问，但是随着利率、股权期货的增多，CTA的业务也不再限于农产品期货交易，因此CTA有时也称管理期货(Managed Future)。在期货市场上，CTA是在20世纪70年代金融期货大规模发展后才得到大发展的期货市场结构之一，它使原来由套期保值者与投资者构成的期货市场二元结构转为三元结构。</p></li>
-<li><p>交易型开放式指数基金(ETF)： 是一种在交易所上市交易的、基金份额可变的一种开放式基金。</p></li>
-<li><p>股票期权合约： 上交所统一制定的、规定买方有权在将来特定时间以特定价格买入（或者卖出）约定股票（或者跟踪股票指数的ETF等标的物）的标准化合约。例如50ETF期权： 以上证50为标的物的期权合约。</p></li>
-<li><p>股指期货： IF、IH、IC是股指期货的代码</p>
-<ul>
-<li>IF：Index Future，标的物是沪深300指数， 例如IF1507表示2015年7月交割的沪深300股指期货合约。</li>
-<li>IH：H表示“沪”，标的物是上证50，例如IH1507表示2015年7月交割的上证50股指期货合约。</li>
-<li>IC：C是China，标的物是中证500，例如IC1507表示2015年7月交割的中证500股指期货合约。</li>
-</ul></li>
-<li><p>中国波动率指数（简称iVIX指数）：是由上海证券交易所发布，用于衡量上证50ETF未来30日的波动预期。该指数是根据方差互换原理，结合50ETF期权的实际运作特点，并通过上海证券交易所交易的50ETF期权价格的计算编制而成。iVIX指数通过反推当前在交易的期权价格中蕴含的隐含波动率，反映出未来30日标的50ETF价格的波动水平。</p></li>
-<li><p>期货与远期/互换的区别：前者是场内，后者是场外。场内更透明，标准化，流动性高；场外更定制化，流动性低。</p></li>
-<li><p>成交量指标:</p>
-<ol type="1">
-<li>一般来说，资金流入流出的多少、成交量的大小，不是资产价格的领先指标，而是一个同步、甚至是滞后指标。</li>
-<li>对于有一些资金流入，投资者是可以加以参考的。这其中的一个要诀，就是这些流入的资金，是否真的对标的资产有深刻的认识。 比如说，当一家上市公司的大股东，以大笔现金增持一家上市公司的股票时，这种资金流入，就是非常值得投资者关注的</li>
-</ol></li>
+<li>集线器（hub）： 把内网中的网络设备连接起来，只能广播。</li>
+<li>交换机（switch）：维护一个交换机表，记录了连接的网络设备的mac地址，支持网络设备间p2p通信</li>
+<li>路由器（router）：网关（gateway），网络出入口</li>
 </ul>
 <h2 id="参考">参考</h2>
-<ol start="4" type="1">
-<li><a target="_blank" rel="noopener" href="https://www.htsc.com.cn/browser/view/gpqq.jsp#tit2">股票期货合约</a></li>
-<li><a target="_blank" rel="noopener" href="https://xueqiu.com/1340904670/172198829">重视成交量指标-雪球</a></li>
-<li><a target="_blank" rel="noopener" href="https://blackwellglobal.com/max-spread-slippage-mean/">对滑点和spread的解释</a></li>
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/59d32f0071645a1359d4060kd3d322001ad3d9446802347">发现价格-期货和金融衍生品微信读书</a></li>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=92b-jjBURkw&amp;list=LL70j7MlBEzFqOk5aIHKzmxQ">私有ip和公共ip，以及端口forward</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=92b-jjBURkw&amp;list=LL70j7MlBEzFqOk5aIHKzmxQ">How to Enable SSH in Ubuntu---Install openssh-server？</a></li>
+<li><a target="_blank" rel="noopener" href="https://superuser.com/questions/104929/how-do-you-run-a-ssh-server-on-mac-os-x">how-do-you-run-a-ssh-server-on-mac-os-x</a></li>
 </ol>
 
       
@@ -281,7 +263,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/19/AIOps/log_analizer/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/26/technology/principle-of-zip/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -295,7 +277,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/19/AIOps/log_analizer/" class="post-title-link" itemprop="url">日志监控怎么做？</a>
+            <a href="/2021/02/26/technology/principle-of-zip/" class="post-title-link" itemprop="url">文件压缩的原理是什么？</a>
         </h2>
 
         <div class="post-meta">
@@ -305,14 +287,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-19 20:05:20" itemprop="dateCreated datePublished" datetime="2021-02-19T20:05:20+08:00">2021-02-19</time>
+              <time title="创建时间：2021-02-26 10:23:17" itemprop="dateCreated datePublished" datetime="2021-02-26T10:23:17+08:00">2021-02-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-14 18:24:31" itemprop="dateModified" datetime="2021-04-14T18:24:31+08:00">2021-04-14</time>
+                <time title="修改时间：2021-04-18 11:54:08" itemprop="dateModified" datetime="2021-04-18T11:54:08+08:00">2021-04-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -320,7 +302,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
                 </span>
             </span>
 
@@ -335,32 +317,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="做项目之前的分析">做项目之前的分析</h2>
-<p>最近要做一个nlp的项目，需求就是从一堆杂乱无章的日志中，发现一些规律。 即哪些日志其实是在说一个事情，可归为一类； 哪些日志是新奇的，没有出现过的。</p>
-<p>有点像什么呢？就是给了一堆用户的数据，想对这些用户去做一个分群，本质是一个探索式的需求。 但是，有一些该场景特有的约束，和用户的画像维度一样，日志的画像维度也是其细分场景特有的， 比如，日志我们通常关注的是 时间，日志级别， 不关注的是具体的ip，网站，数量。 或者说，我们最先关注的不是这些微观的信息，而是最泛化的信息。</p>
-<p>如果是顶层有异常就需要下钻到更细分的维度，即研究更细致的原因，是哪个ip，或者网站，数量导致的。这一步可以使用多维度根因定位的方法。</p>
-<p>可以出一个这种方案：日志模版提取 + 多维度根因定位。 其中，日志模版提取，要运维去定义规则。</p>
-<h2 id="看看别人怎么做的">看看别人怎么做的</h2>
-<ol type="1">
-<li><p><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">关于logmine的实践--chiechie</a></p></li>
-<li><p>log3C</p></li>
-</ol>
-<h3 id="log3c">log3C</h3>
-<p>《identifies service system problems from system logs》-log3C》【chiechie-high-level的总结】：</p>
+          <blockquote>
+<p>任何事务都可以分解为“一般性”和“特殊性”两部分。我们可以隐藏或者复用“一般性”，然后专家声明“特殊性”。我们也可以反过来，专家声明“一般性”，然后机器推导“特殊性”。</p>
+<p>最终的目的都是熵减，从复杂的现象中提取出规则的部分（regularity），减少信息编码表征的数据量</p>
+<p>和 zip 压缩文件，其实没啥区别</p>
+</blockquote>
+<p>几个G的文件用zip压缩之后，有时候可以变成十几兆，有时候又压缩不了多少，为什么呢？</p>
 <ul>
-<li>讲了通过数据挖掘-对纯文本进行分析的一种思路：原始日志--&gt;提取事件模版--&gt; 聚合成 时间戳 + session id的日志序列计数向量---&gt;聚类得到典型日志序列技术向量模式---&gt; 日志序列模式 和 系统状态（核心KPI 之间的关系）相关性分析</li>
-<li>将相关性分析 应用到了 具有 物理依赖关系的 数据上面，可以得到 因果关系。</li>
-<li>跟指标异常检测的思路不一样，这个不看日志中提取出来的数值指标，看的是日志间的序列关系，出现的先后顺序，更适合用来做辅助 系统的故障定位（复杂的网状调用调用链路），而前者更适合做系统的性能监控，需要人工定义感兴趣的测量方式（人工指定特征）。</li>
-<li>跟日志异常检测相比，本文的应用更加的end2end。</li>
+<li>压缩原理是 【通过寻找其中的规律，简化数字的排列】。
+<ul>
+<li>每个文件都由各种不同代码组成。比如01代码，这类文件只有数字0与1组合。那么：</li>
+<li>"00000110001111111111" 可以简化成 "5个0,2个1,3个0,10个1的排列"</li>
+<li>"100000000000"可以简化成数学的 "10^10"</li>
+</ul></li>
+<li>压缩的极限，就是这文件的「熵」，即本身的无序程度。 根据香农的信息理论，任何一个文件被无损压缩后的结果不可能小于其 熵 (信息论) 。</li>
 </ul>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf">logmine-paper</a></li>
-<li><a target="_blank" rel="noopener" href="https://pypi.org/project/logmine/">logmine-pypi</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">apache_2k.log</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ixueshu.com/h5/document/814a23b6b51168d40153bcb23ef479f1318947a18e7f9386.html">硕士论文-模式识别在海量日志分析中的应用研究 "施佳奇"</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">关于logmine的实践--chiechie-</a></li>
-</ol>
+<h2 id="参考">参考</h2>
+<p>https://www.zhihu.com/question/19925039</p>
 
       
     </div>
@@ -379,7 +352,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/52/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><span class="page-number current">53</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/54/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/52/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><span class="page-number current">53</span><a class="page-number" href="/page/54/">54</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/54/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -445,7 +418,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -458,7 +431,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">125</span>
+        <span class="site-state-item-count">126</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -555,59 +528,6 @@
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 

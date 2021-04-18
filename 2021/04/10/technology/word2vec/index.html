@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjpuHAmzTik.png?alt=media&amp;token=47e0004c-bc7c-4fc5-af22-d227532a7548">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FsFuwRdSRxR.png?alt=media&amp;token=03f6ea4c-aee0-4e11-993f-468505022f8d">
 <meta property="article:published_time" content="2021-04-10T14:23:20.000Z">
-<meta property="article:modified_time" content="2021-04-18T03:54:08.188Z">
+<meta property="article:modified_time" content="2021-04-18T13:18:32.092Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="NLP">
 <meta property="article:tag" content="word2vec">
@@ -202,7 +202,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 11:54:08" itemprop="dateModified" datetime="2021-04-18T11:54:08+08:00">2021-04-18</time>
+                <time title="修改时间：2021-04-18 21:18:32" itemprop="dateModified" datetime="2021-04-18T21:18:32+08:00">2021-04-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,15 +247,15 @@
 <ul>
 <li>词典索引集： <span class="math inline">\(\mathcal{V} =\{0,1, \ldots,|\mathcal{V}|-1\}\)</span></li>
 <li>模型的输出是：条件概率</li>
-<li>学习的目标： 最大化 所有观测值的条件概率，即 <span class="math display">\[\max \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)\]</span> 等价于 <span class="math display">\[\max \sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)\]</span> 进一步，logP就是 <span class="math display">\[\log P\left(w_{o} \mid w_{c}\right)=\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}-\log \left(\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)\right)\]</span></li>
+<li>学习的目标： 最大化 所有观测值的条件概率，即 <span class="math inline">\(\max \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)\)</span> 等价于 <span class="math inline">\(\max \sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)\)</span> 进一步，logP就是 <span class="math inline">\(\log P\left(w_{o} \mid w_{c}\right)=\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}-\log \left(\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)\right)\)</span></li>
 </ul>
 <p>直接照着最大化条件概率的目标学习可以吗？</p>
 <p>不行，可以看到上式的复杂度为|V|, 为了提高计算效率，有两个近似训练方案：负采样 和 层次化softmax</p>
 <h2 id="近似的学习方法-负采样">近似的学习方法-负采样</h2>
 <p>负采样的想法是，最后一层不用softmax，而是sigmoid,目标函数是 交叉熵：观测值就是正样本，未出现的就是负样本（通过对词典采样K次得到）</p>
-<p><span class="math display">\[P\left(w^{(t+j)} \mid w^{(t)}\right)=P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right) \prod\limits_{k=1, w_{k} \sim P(w)}^{K} P\left(D=0 \mid w^{(t)}, w_{k}\right)\]</span></p>
+<p><span class="math inline">\(P\left(w^{(t+j)} \mid w^{(t)}\right)=P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right) \prod\limits_{k=1, w_{k} \sim P(w)}^{K} P\left(D=0 \mid w^{(t)}, w_{k}\right)\)</span></p>
 <p>取对数就是</p>
-<p><span class="math display">\[\begin{aligned}-\log P\left(w^{(t+j)} \mid w^{(t)}\right) &amp;=-\log P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log P\left(D=0 \mid w^{(t)}, w_{k}\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \left(1-\sigma\left(\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right)\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \sigma\left(-\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right) \end{aligned}\]</span></p>
+<p><span class="math inline">\(\begin{aligned}-\log P\left(w^{(t+j)} \mid w^{(t)}\right) &amp;=-\log P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log P\left(D=0 \mid w^{(t)}, w_{k}\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \left(1-\sigma\left(\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right)\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \sigma\left(-\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right) \end{aligned}\)</span></p>
 <p>好处是：计算 梯度的 复杂度 从N 减少到 K</p>
 <h2 id="将word2vec重定义为一个nn问题">将word2vec重定义为一个nn问题</h2>
 <p>word2vec将每个词表示成一个定长的向量，并使得这些向量能较好地表达不同词之间的相似和类比关系</p>
@@ -393,7 +393,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -406,7 +406,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">125</span>
+        <span class="site-state-item-count">126</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

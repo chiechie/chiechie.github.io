@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/AIOps/aiops2021-demo/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/14/investment/zhihu_prospectus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/09/AIOps/aiops2021-demo/" class="post-title-link" itemprop="url">AIOps挑战赛2021-demo方案</a>
+            <a href="/2021/03/14/investment/zhihu_prospectus/" class="post-title-link" itemprop="url">对知乎的个股分析</a>
         </h2>
 
         <div class="post-meta">
@@ -188,7 +188,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-09 22:04:42" itemprop="dateCreated datePublished" datetime="2021-03-09T22:04:42+08:00">2021-03-09</time>
+              <time title="创建时间：2021-03-14 12:07:21" itemprop="dateCreated datePublished" datetime="2021-03-14T12:07:21+08:00">2021-03-14</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
                 </span>
             </span>
 
@@ -218,98 +218,45 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="数据解析">数据解析</h2>
-<p>比赛数据包括： 部署拓扑，指标数据，日志数据，调用链数据，故障标签</p>
-<h3 id="部署数据">部署数据</h3>
-<figure>
-<img src="./aiops2021-demo/bushu.png" alt="部署数据" /><figcaption aria-hidden="true">部署数据</figcaption>
-</figure>
-<h3 id="指标数据">指标数据</h3>
-<p>指标数据包括业务指标 和 性能指标。 业务指标用于触发根因分析，性能指标用于局部的根因定位</p>
-<p>每个指标数据，都需要附带的信息有：归属物理设备id，以及相应用id，（这样才能做机器的指标依赖的额故障定位）</p>
-<h4 id="业务指标">业务指标</h4>
-<p>kpi_0304.csv</p>
-<ul>
-<li>rr：单位%，系统响应率</li>
-<li>sr：单位%，业务成功率</li>
-<li>cnt：单位条，交易量</li>
-<li>mrt：单位ms，平均响应时间</li>
-<li>tc：交易码, 有11种应用, 'ServiceTest1', 'ServiceTest10', 'ServiceTest11', 'ServiceTest2', 'ServiceTest3', 'ServiceTest4', 'ServiceTest5', 'ServiceTest6', 'ServiceTest7', 'ServiceTest8', 'ServiceTest9'</li>
-</ul>
-<figure>
-<img src="./aiops2021-demo/yewu.png" alt="业务指标" /><figcaption aria-hidden="true">业务指标</figcaption>
-</figure>
-<h4 id="性能指标">性能指标</h4>
-<p>每个应用的指标, 每个kpi会有一个对应的机器id（即cmdb_id）</p>
-<ul>
-<li>cmdb_id: 指标归属的物理设备, 每个物理设备上收集到的指标一般来说包括两种，「操作系统」性能指标以及「服务」性能指标。</li>
-<li>kpi_name: 指标归属的服务类型，比如归属于操作系统/java虚拟机/Redis/Tomcat/Mysql等</li>
-</ul>
-<figure>
-<img src="./aiops2021-demo/xingneng.png" alt="性能指标" /><figcaption aria-hidden="true">性能指标</figcaption>
-</figure>
-<h3 id="日志数据">日志数据</h3>
-<p>日志数据有3个重要字段：</p>
-<ul>
-<li>cmdb_id： 日志是从哪台物理机器上产生</li>
-<li>log_name: 日志对应的组件名和日志类别, 相当于4个采集器，eg catalina/gc/localhost/localhost_access_log</li>
-<li>value: 日志内容, 里面的信息包括，日志级别，egINFO/WARNING/SEVERE，具体报错信息</li>
-</ul>
-<p>目前只有Tomcat4台服务器有日志数据；并且根据采集的不同的组件，收集的日志。</p>
-<h3 id="调用链数据">调用链数据</h3>
-<p>调用链路数据来自：trace/trace_0304.csv</p>
-<p>重要的字段有：</p>
-<ul>
-<li>cmdb_id: 即对应的服务是部署在哪个机器上的, 一次全局的trace_id 可能跨越几个设备</li>
-<li>parent_id：子调用的上一次调用</li>
-<li>trace_id：一次trace对应的全局id，一个trace包括多次子调用</li>
-<li>span_id： 本流程的Span ID，</li>
-</ul>
-<figure>
-<img src="./aiops2021-demo/trace.png" alt="调用链" /><figcaption aria-hidden="true">调用链</figcaption>
-</figure>
-<h3 id="故障标签">故障标签</h3>
-<p>故障类型可分为--'应用故障', '网络故障', '资源故障'</p>
-<ul>
-<li>应用故障可分为2类：'JVM CPU负载高', 'JVM OOM Heap'</li>
-<li>网络故障可分为两类：'网络延迟', '网络隔离'</li>
-<li>资源故障可分为三类：CPU使用率爬升，内存使用率过高，磁盘IO写使用率过高</li>
-</ul>
-<h2 id="demo方案">demo方案</h2>
-<p>流程：</p>
+          <blockquote>
+<p>知乎以后能扭亏为盈吗？</p>
+<p>在国内，知识付费的商业模式行得通吗？最大的阻碍是什么？</p>
+<p>知乎是一个中国的在线问单社区，类似国外的quora</p>
+<p>知乎3月5号向美国证券交易委员会（SEC）递交了IPO（initial public offering），寻求在纽交所上市，股票代码为“ZH”，并确定由瑞信、高盛和摩根大通担任承销商。</p>
+</blockquote>
+<hr />
+<p>下面是对知乎招股说明书的解读</p>
+<h2 id="知乎的财务数据和运营数据">知乎的财务数据和运营数据</h2>
+<p>FINANCIAL和OPERATING DATA</p>
 <ol type="1">
-<li>对「业务指标」进行异常检测，异常则触发下面的诊断。</li>
-<li>调用链异常检测和根因定位:「业务」指标异常了，定位是哪个中间件或者服务出现了异常，以及根因的那个服务。</li>
-<li>对应机器的指标进行根因定位：定位到了调用链中的根因服务，然后对该服务所在的机器进行下钻分析，进行更细粒度的根因指标定位，使用到了机器和中间件的「性能指标」。</li>
+<li>财务情况总结下，近一年营收翻倍（从6亿人民币到13亿人民币），但是仍然是亏损状态（从10亿到5亿）， <img src="caobao1.png" alt="图1-财务数据" /></li>
+<li>知乎月活有7500w用户，其中付费用户300w。付费会员比例是3.4% <img src="operation.png" alt="图2-运营数据" /></li>
+<li>营收构成，主要靠广告，其次是会员费，然后是基于内容的行业解决方案。2020年广告占比略微下降从86%下降到62%）， <img src="img_3.png" alt="img_3.png" /> 对于广告主来说，知乎的广告收入差不多每个用户可以卖12rmb。 <img src="img_4.png" alt="img_4.png" /></li>
+<li>知乎的员工有1651名，研发人员有671名。 <img src="img_1.png" alt="知乎的员工构成" /></li>
+<li>知乎的CEO是李源，占股8.2%，拥有46.6%的投票权。 <img src="img_2.png" alt="知乎的领导层" /></li>
 </ol>
-<h3 id="业务指标异常检测略">业务指标异常检测(略)</h3>
-<p>找出第一个故障发生时刻：</p>
-<ul>
-<li>2021-03-04 08:39:00 - 2021-03-04 08:44:00</li>
-</ul>
-<h3 id="调用链异常检测和根因定位">调用链异常检测和根因定位</h3>
+<h2 id="知乎的商业化">知乎的商业化</h2>
 <ol type="1">
-<li>找出异常调用路径--trace_id</li>
-<li>找出对应的根因的子调用--span_id</li>
-<li>找到span_id的机器</li>
+<li>商业化还是很困难的。知乎现在的风气像什么？一群乌合之众好为人师。建议是最廉价的东西，尤其对于不怎么要脸的人来说。站在知乎付费会员的角度，我交了钱让这些沙雕教我做人？这就很蠢。不过确实，如果知乎不提供小黄文这些功能，付费用户会觉得更加不值得。</li>
+<li>互联网中文社区的内容，99%都是垃圾，比例太大，如果放任自流，很有可能变成劣币驱逐良币的后果，戾气和攀比之风渐胜，恶劣的环境让本就稀少的高质量创作者如履薄冰。</li>
+<li>这个平台缺的是，对劣质信息的惩罚措施, 还有风险共担的机制。</li>
 </ol>
 <figure>
-<img src="./aiops2021-demo/trace_rca.png" alt="调用链异常检测和根因定位" /><figcaption aria-hidden="true">调用链异常检测和根因定位</figcaption>
+<img src="weibo.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
 </figure>
-<h3 id="对定位到的机器进行指标根因分析">对定位到的机器进行指标根因分析</h3>
+<h2 id="凤凰网的评论">凤凰网的评论</h2>
 <ol type="1">
-<li>搜集该机器的所有性能指标，进行异常检测</li>
-<li>对于异常的指标，根据历史数据中学习到的因果图，进行根因推断。</li>
+<li>2011年，知乎上线，成为一代互联网人的精神家园。刚开始的知乎是“小而美”的,邀请制之下门槛极高(现在的clubhouse)，不仅有李开复、徐小平等大佬入驻，还有各垂直专业人士提供的专业见解，都为知乎贴上精英的标签。</li>
+<li>随着用户体量的增长，在保持“小而美”和扩大用户规模上，作为知乎创始人的周源选择了后者。2013年4月1日，知乎正式开放个人用户注册，不到一年时间，注册用户迅速由40万攀升至400万；2017年9月，知乎进一步开放机构号注册。</li>
+<li>创新工场创始合伙人汪华留言称,不断扩圈过程中，包括他在内的老用户也感受到社区氛围的稀释。但是这个大方向是没有问题的，如果只停留在少数高端用户的圈子，最后会变成某种闭门造车，反而不利于产生更好更多元的内容。正因为知乎破圈，才有了更多的角度和丰富的内容，才有可能有更高质量的内容，所以在这个大方向下要做的深耕细作，而这次融资也会使得知乎有更多的资源和能力来解决这个问题。</li>
+<li>周源认为，当社区发展超过一定规模以后，平台方能做的事情一定是有限的，不可能去想着要管理或者说去控制每一个细节。“如果某种行为违背了国家法律规定或知乎社区规范，那么我们会毫不犹豫的把它“干掉”。如果没有，我们认为也不应当因噎废食。”</li>
+<li>对于知乎的未来，周源认为知乎不是乌托邦，也不是理想国。随着用户量级的提升，知乎会更加趋近于线下真实社会的投射。</li>
 </ol>
-<figure>
-<img src="./aiops2021-demo/metric_rca.png" alt="指标根因分析" /><figcaption aria-hidden="true">指标根因分析</figcaption>
-</figure>
-<h3 id="对下-分析结果-和-标准答案">对下 分析结果 和 标准答案</h3>
-<figure>
-<img src="./aiops2021-demo/evaluate.png" alt="对比" /><figcaption aria-hidden="true">对比</figcaption>
-</figure>
-<h2 id="参考资料">参考资料</h2>
-<p>1.<a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=17&amp;flag=1">aiops挑战赛2021-官网</a></p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://tech.ifeng.com/c/84OLbxuTeir">十年知乎IPO仍亏损：破圈争议与商业化难题凤凰网</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.sec.gov/Archives/edgar/data/1835724/000119312521070815/d72883df1.htm">知乎-招股说明书</a></li>
+</ol>
 
       
     </div>
@@ -329,7 +276,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/technology/PC-algo/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/13/principles_of_economics/classical-economy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -343,7 +290,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/09/technology/PC-algo/" class="post-title-link" itemprop="url">PC算法</a>
+            <a href="/2021/03/13/principles_of_economics/classical-economy/" class="post-title-link" itemprop="url">古典宏观经济模型</a>
         </h2>
 
         <div class="post-meta">
@@ -353,7 +300,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-09 10:06:00" itemprop="dateCreated datePublished" datetime="2021-03-09T10:06:00+08:00">2021-03-09</time>
+              <time title="创建时间：2021-03-13 10:44:13" itemprop="dateCreated datePublished" datetime="2021-03-13T10:44:13+08:00">2021-03-13</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -368,7 +315,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">经济学</span></a>
                 </span>
             </span>
 
@@ -383,66 +330,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="基本概念">基本概念</h1>
-<ul>
-<li><p>因果图（cause graph）：因果模型的一种表达方式，因果图是一个DAG， G=（V，E），对于每一个节点v，给定了他的双亲pa（v），v跟所有非后代都是独立的。</p></li>
-<li><p>冲撞点（collider）：一种V型结构的因果图，</p></li>
-<li><p>PC算法的两个假设：马尔可夫条件和faithfulness。</p></li>
-<li><p>马尔科夫条件：可用来区分因果关系和相关关系，被用于生成依赖关系集合，构造因果图框架。</p></li>
-<li><p>faithfulness假设：可以用来保证，V中的所有变量的独立关系，都可以通过D-seperation表达。</p></li>
-</ul>
-<h2 id="d-分离">D-分离</h2>
-<p>D分离（D-Separation）定义很复杂，拿出来单独说。</p>
-<p>定义: 设 X，Y，Z 是 DAG 中不相交的节点集合， <span class="math inline">\(\pi\)</span> 为一条连接 X 中某节点到 Y 中某节点的路径 （不管方向）。 如果路径 <span class="math inline">\(\pi\)</span> 上某节点满足如下的条件：</p>
-<ol type="1">
-<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 V结构 , 即<span class="math inline">\(X \rightarrow w \leftarrow Y\)</span>，且 w 及其后代不在 Z中；(因为collider关系，w不可观测时,X,Y 相互独立)</li>
-<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 非V结构 ，且w在Z中 。</li>
-</ol>
-<p>则称Z阻断了路径<span class="math inline">\(\pi\)</span>。</p>
-<p>如果Z阻断了所有的X到Y的路径，就说Z集合D分离了X和Y，记作<span class="math inline">\((X \perp Y \mid Z)_{G}\)</span>.</p>
-<p>D分离这个性质有什么用呢？</p>
-<p>D分离是一种用来判断变量是否条件独立的图形化方法，相比于非图形化方法，更加直观，且计算简单。 对于一个DAG(有向无环图)，D-Separation方法可以快速的判断出两个节点之间是否是条件独立的。</p>
-<h1 id="pc算法-概览">PC算法-概览</h1>
-<p>PC算法是一种发现因果关系的算法，在满足一定的假设的前提下（基于马尔科夫条件 和 D-separation），使用基于统计的方法（显著性检验-<span class="math inline">\(G^2\)</span>），推导出因果关系（代表因果关系的DAG）。实现流程包括三步:</p>
-<ol type="1">
-<li>确定因果图的框架，有哪些点，有哪些边</li>
-<li>确定边的方向</li>
-<li>传播方向</li>
-</ol>
-<figure>
-<img src="pc-overview.png" alt="图1-PC算法" /><figcaption aria-hidden="true">图1-PC算法</figcaption>
-</figure>
-<h1 id="确定因果图框架">确定因果图框架</h1>
-<p>从全连接图开始，移走条件独立的边</p>
-<figure>
-<img src="pc1.png" alt="图2-确定框架" /><figcaption aria-hidden="true">图2-确定框架</figcaption>
-</figure>
-<p>Z从空集开始，不断增加</p>
-<p>具体来说，可以用指标<span class="math inline">\(G^2\)</span>（条件交叉熵）来检验给定Z时，X和Y的独立性，这里X，Y，Z是互斥的。</p>
-<p><span class="math display">\[G^{2}=2 m C E(X, Y \mid Z)\]</span></p>
-<ul>
-<li>m：样本大小</li>
-<li>$ C E(X, Y Z)$:给定Z时，X和Y的条件交叉熵，</li>
-</ul>
-<blockquote>
-<p>显著性低于0.05，就说明条件分布和联合分布没有显著性差异，有因果关系 显著性超过0.05， 就说明条件分布和联合分布没有显著性差异，没有因果关系，是独立的。</p>
+          <blockquote>
+<p>下文是一篇形式主义的介绍</p>
+<p>宏观经济学到底能不能称得上是一门社会科学？有很多争议，因为就算怎么胡说八多，都反驳不了。所以，对于一般学科看重的严谨性，逻辑性，在宏观经济学这个领域就不必苛责了。</p>
+<p>但是，我想知道，当政府或者华尔街的人胡说的时候，一些名词指的是什么，最重要的，从他们说的鬼话可以推导出背后他们真实意图 和 他们掌握到的信息是什么？</p>
 </blockquote>
-<p>如果<span class="math inline">\(G^2\)</span>超过一个预先设定的显著性，比如0.05， 那么X和Y是条件独立的。</p>
-<p>PC算法使用一个全连接的无向图，然后使用<span class="math inline">\(G^2\)</span>描述条件独立性。</p>
-<h1 id="确定方向">确定方向</h1>
-<p>当DAG的架子搭起来了， 接下来的工作就是决定因果关系的方向了。这里使用到了D-seperation的方法。</p>
-<figure>
-<img src="pc2.png" alt="图3-确定方向" /><figcaption aria-hidden="true">图3-确定方向</figcaption>
-</figure>
-<h1 id="传播方向">传播方向</h1>
-<figure>
-<img src="pc3.png" alt="图4-传播方向" /><figcaption aria-hidden="true">图4-传播方向</figcaption>
-</figure>
-<h1 id="参考">参考</h1>
+<h2 id="古典宏观经济学的基本观点">古典宏观经济学的基本观点</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=o2A61bJ0UCw">pc算法-youtube</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">因果图的基本概念-知乎</a></li>
+<li>完全竞争市场：所有市场 包括产品市场，和 生产要素市场，都是完全流通的。</li>
+<li>萨伊定律：一种产品一生产出来，就立马会有相对应的等价值的市场被创造出来。（那，怎么解释产能过剩？）可以推出，总供给和总需求存在哼等关系。</li>
+<li>古典的宏观经济学想论证的一个主要观点：在完全竞争市场的假设下，萨伊定律成立。产品市场如果有产品过剩，只是局部过剩；劳动市场如果失业，也只是短暂的，过渡性的，摩擦失业和自愿失业。经济社会最终一定会走向充分就业。</li>
+<li>短期内，总产量取决于总就业量：生产函数取决于就业人口和设备资本投入，后者短期内不会怎么变化。生产函数会随着就业人口变多而增加，但是边际产量减少。</li>
+<li>总就业量取决于 劳动力的供给和对劳动力的需求：劳动力的供给取决于实际工资，</li>
+</ol>
+<h2 id="货币理论">货币理论</h2>
+<ol type="1">
+<li>古典模型假设货币只是交易媒介，没有储藏价值，货币需求量只是收入的函数。</li>
+<li>劳动供给和劳动需求 都取决于实际工资W/P的函数。</li>
+<li>各种要素固定时，短期内，产量或国民收入取决于就业量。</li>
+<li>产量一定时，物价水平P取决于货币存量，即货币供给量M，</li>
+<li>货币工资W取决于物价水平P和实际工资W/P，</li>
+<li>储蓄s 和 投资i 都取决于利率r。「利息」是储蓄的报酬，是投资的价格。均衡利率是储蓄函数和投资函数的交点。均衡利率，一方面决定了实际收入在消费和储蓄中的分配，一方面决定生产（等于实际生产）在消费品和资本品之间的分配。</li>
+</ol>
+<h2 id="货币政策-和-财政政策">货币政策 和 财政政策</h2>
+<ol type="1">
+<li>财政政策 是由政府的财政部门颁发的，跟税收有关，政府可以去购买商品和服务。</li>
+<li>货币政策 是由央行颁发的政策，跟货币有关，央行可以控制利率和钞票，以及发行国债，但是印钞票来购买金融资产。发行过多的货币会导致恶性通货膨胀，失业率升高，社会动荡，政府是不允许的。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV15s411b7xr?t=1845">经济机器是怎样运行的 by Ray Dalio</a></li>
+<li>《现代西方经济学-上册》高鸿业 吴易凤，经济科学出版社，1988年，P149</li>
 </ol>
 
       
@@ -462,7 +380,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/37/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><span class="page-number current">38</span><a class="page-number" href="/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/39/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/37/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><span class="page-number current">38</span><a class="page-number" href="/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/39/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -528,7 +446,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -541,7 +459,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">125</span>
+        <span class="site-state-item-count">126</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

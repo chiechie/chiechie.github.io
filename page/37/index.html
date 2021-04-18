@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/10/technology/tcp-Handshake/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/15/AIOps/trace-preprocess/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/10/technology/tcp-Handshake/" class="post-title-link" itemprop="url">tcp3次握手和4次挥手</a>
+            <a href="/2021/03/15/AIOps/trace-preprocess/" class="post-title-link" itemprop="url">调用链数据的预处理</a>
         </h2>
 
         <div class="post-meta">
@@ -188,95 +188,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-10 13:12:08" itemprop="dateCreated datePublished" datetime="2021-03-10T13:12:08+08:00">2021-03-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 11:54:08" itemprop="dateModified" datetime="2021-04-18T11:54:08+08:00">2021-04-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>看一下原理介绍</p>
-<ul>
-<li>TCP-FIN-WAIT1-客户端视角： 「客户端」 发出关闭指令后， 到服务器响应，间隔的时间。</li>
-<li>TCP-CLOSE-WAIT-服务端视角：「服务端」从接受”关闭指令“，到执行完成，间隔的时间。</li>
-<li>TCP-FIN-WAIT2-客户端视角： 「服务器」从 响应命令 到 完成命令，间隔的时间。</li>
-</ul>
-</blockquote>
-<figure>
-<img src="dl-framework/img.png" alt="图1-握手原理" /><figcaption aria-hidden="true">图1-握手原理</figcaption>
-</figure>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xy010902100449/article/details/48274635">TCP 握手和挥手图解（有限状态机）-CSDN博客</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/10/AIOps/aiops2020-solution/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/10/AIOps/aiops2020-solution/" class="post-title-link" itemprop="url">AIOps挑战赛2020-获奖方案分享</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-10 13:08:27" itemprop="dateCreated datePublished" datetime="2021-03-10T13:08:27+08:00">2021-03-10</time>
+              <time title="创建时间：2021-03-15 16:49:19" itemprop="dateCreated datePublished" datetime="2021-03-15T16:49:19+08:00">2021-03-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -306,23 +218,114 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="亚信的方案">亚信的方案</h2>
-<blockquote>
-<p>对于调用链根因节点定位的模型实现，我们考虑过两种方案，一种是有监督的方法，即把一定时间切片内的调用链数据作特征提取，转化为一个多分类问题或者二分类问题，但这种方法泛化能力较差，严格依赖于当前系统的数据特征，不利于实际生产环境的迁移，另一方面，我们考虑到复赛数据特征可能与预赛数据不尽相同，因此我们选择了泛化性能更强的方法，也就是无监督的方法。 我们对每条调用链沿着调用关系进行动态搜索，使之构成一个节点间的依赖图，并在这个依赖图上定义了两种不同类型的故障模式，</p>
-<p>第一种定义为非疑似节点，指子节点延时除以父节点延时大于等于51%的节点,主要用于衡量子节点占用的父节点的资源。 第二种定义为疑似异常节点，指父节点耗时-子节点耗时，除以父节点耗时大于等于51%的子节点，衡量的是父节点自己占用的资源。</p>
-<p>第二种异常模式可能不太容易理解，其实它可以来源于生活中一个十分直观的观察，例如我们从商店订购了一份外卖，2个小时后才收到，这时候我们应该认为是商店备餐慢，还是骑手送货慢呢，想要知道答案，只需要看一看同一时间，点了相同外卖的其他人，是否也出现了收货慢的情况。</p>
-</blockquote>
-<p>文章说的很绕，原理很简单，总结下: 先从业务指标异常触发定位，然后从调用链中异常的服务，然后服务对应的机器，定位根因指标。</p>
+          <h2 id="调用链的数据格式">调用链的数据格式</h2>
 <figure>
-<img src="./aiops2020-solution/framework.png" alt="根因定位框架" /><figcaption aria-hidden="true">根因定位框架</figcaption>
+<img src="img_1.png" alt="RPC框架下采集的调用链原始数据&amp;AIOps比赛的子调用数据" /><figcaption aria-hidden="true">RPC框架下采集的调用链原始数据&amp;AIOps比赛的子调用数据</figcaption>
 </figure>
-<figure>
-<img src="./aiops2020-solution/rca.png" alt="调用链路的异常检测和根因定位" /><figcaption aria-hidden="true">调用链路的异常检测和根因定位</figcaption>
-</figure>
+<ul>
+<li>最顶上的表格中是最原始的数据，中间表格和下面的表格是处理后的数据</li>
+<li>中间表格的是做调用链路分析（TraceAnomaly）用到的数据，用到了耗时，以及调用链的结构信息。</li>
+<li>最下面表格是2021AIOps比赛的调用链的数据，每个span_id表示一次子调用，即一次trace中，从触发该trace，开始的调用路径中，途径当前服务的那次子调用，对应表2中的一个call path。但是耗时是只包括当前服务从接受到call，到完成处理，开始response的时间间隔。</li>
+<li>【补充】这里的表格信息量很少，它不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。</li>
+</ul>
 <h2 id="参考资料">参考资料</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=15&amp;flag=1">AIOps挑战赛2020-官网</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hYiXUMveSprkIiOy8mCmCg">2020AIOps挑战赛亚军亚信科技团队方案分享</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA">清华微众AIOps新作:基于深度学习的调用轨迹异常检测算法 -微信公众号</a></li>
+<li><a href="https://chiechie.github.io/2021/03/09/AIOps/aiops2021-demo/">AIOps挑战赛2020-demo方案-chiechie</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/15/reading_notes/ray-dalio_coperation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/15/reading_notes/ray-dalio_coperation/" class="post-title-link" itemprop="url">原则-如何协作？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-15 11:44:59" itemprop="dateCreated datePublished" datetime="2021-03-15T11:44:59+08:00">2021-03-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>好无聊啊，为什么要把时间浪费在这些技巧上面</p>
+</blockquote>
+<h2 id="向上管理">向上管理</h2>
+<p>老板既不是组织结构图上的一个头衔，也不是一个“职能”。他们是有个性的人，他们有权以自己最得心应手的方式来工作。与他们共事的人有责任观察他们，了解他们的工作方式，并做出相应的自我调整，去适应老板最有效的工作方式。</p>
+<h2 id="跟同级的人沟通">跟同级的人沟通</h2>
+<ol type="1">
+<li><p>每个人都有他自己的做事方法，也有权按照自己的方式来工作，而不是按你的方法来工作。重要的是，<strong>他们能否有所作为以及他们持有什么样的价值观</strong>。</p></li>
+<li><p>每个人的工作方式不一样。提高效率的第一步是了解跟你合作的人，以利用他们的长处、工作方式和价值观。工作关系当以工作为基础，也以人为基础。</p></li>
+<li><p>人际关系责任的第二部分内容是沟通责任。人跟人之间的大部分冲突是因为：不知道别人在做什么，采取怎样的工作方式，想要做出什么样的贡献以及期望得到怎样的结果。不了解的原因是他们没去问。这种不去问明情况的做法，与其说是反映了人类的愚蠢，倒不如说是历史使然。在以前，人们没必要把这些情况告诉任何人。</p>
+<blockquote>
+<p>比如在中世纪的城市，一个区的每一个人从事的行业都一样。在乡村，土地刚一解冻，山谷里的每一个人就开始播种同一种农作物。即使有少数人做的事情和大家不一样，他们也是单独工作，因此不需要告诉任何人他们在做什么。</p>
+</blockquote></li>
+</ol>
+<h2 id="关于团队分工">关于团队分工</h2>
+<p>桥水使用一种称为“团队倾向简表”的测试来合理安排工作。“团队倾向简表”识别的5种类型是创造者、推进者、改进者、贯彻者和变通者。· 创造者提出新想法、新概念。他们喜欢非结构化、抽象的活动，喜欢创新和不走寻常路。· 推进者传递这些新想法并推进。他们喜欢感觉和人际关系，管理各种人的因素。他们非常善于激发工作热情。· 改进者挑战想法。他们分析计划以寻找缺陷，然后以很客观、符合逻辑的方式改进计划。他们喜欢事实和理论，以系统性的方式工作。· 贯彻者也可以叫作执行者。他们确保重要的工作得到执行，目标被实现。他们关注细节和结果。· 变通者是以上4种类型的结合。他们能根据特定需求调整自身，并能从各种各样的视角看待问题。</p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?src=11&amp;timestamp=1615476352&amp;ver=2940&amp;signature=2sRvaRpQinI2YVCYYfi3Amq*2KJv2UTfXyQWq-uML68g4DuwxKNaulHbkixJc91hNrDn2MHZUVgTr8T4RSCLVRZa3pGGRXm921lm*wgATyH*Azwj-rBslwjClDhLx*eL&amp;new=1">你事业的上限究竟在哪里？-公众号文章</a></li>
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/848324405e0fe08483ab6a4kc7432af0210c74d97b01b1c">RayDalio的原则</a></li>
 </ol>
 
       
@@ -342,7 +345,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -408,7 +411,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -421,7 +424,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">125</span>
+        <span class="site-state-item-count">126</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

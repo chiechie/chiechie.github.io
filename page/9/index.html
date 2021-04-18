@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/06/reading_notes/wonderful-zibenlun/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/transformer-and-bert/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/06/reading_notes/wonderful-zibenlun/" class="post-title-link" itemprop="url">王德峰-资本论</a>
+            <a href="/2021/04/18/technology/transformer-and-bert/" class="post-title-link" itemprop="url">Transformer</a>
         </h2>
 
         <div class="post-meta">
@@ -187,23 +187,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-04-06 23:44:41" itemprop="dateCreated datePublished" datetime="2021-04-06T23:44:41+08:00">2021-04-06</time>
+              <time title="创建时间：2021-04-18 00:04:13 / 修改时间：11:54:08" itemprop="dateCreated datePublished" datetime="2021-04-18T00:04:13+08:00">2021-04-18</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 12:18:51" itemprop="dateModified" datetime="2021-04-18T12:18:51+08:00">2021-04-18</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
                 </span>
             </span>
 
@@ -218,91 +212,260 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="第一篇">第一篇</h1>
-<h2 id="第2章">第2章</h2>
+          <h1 id="transformer">Transformer</h1>
+<blockquote>
+<p>先概括Transformer的主要设计思路；再讲每一步的具体技术细节。</p>
+<p>只想粗略了解Transformer的设计可以只看 “high-level ideas”这部分。</p>
+</blockquote>
 <ul>
-<li>社会科学 如 社会学，经济学 ，政治学的 研究事物的方法是，先构建一个逻辑自恰的理论体系，然后 观察现实世界，如果现实世界跟理论 不符合，就说，现在是背离了事物运行的正常的 轨道，是非理性的，需要人 去 纠正。（太自以为是了吧？）</li>
-<li>经济学从经济事实出发，社会学从社会事实出发 ，社会学从社会事实出发</li>
-<li>事实都是基于物理世界（事情）加上某个领域的叙述框架（老师用的词是 “范畴”）加工而成立的，实际上是带着某个特定的视角在描述这个物理事件。肯定是有偏的，而哲学是位于 这些（所谓的）社会科学更高一个层级。</li>
-<li>经济学 就是 围绕一系列经济事实 构建起来的一个理论，反应的是 范畴和 范畴之间的关系。这个关系是逻辑上的关系。</li>
+<li>Transformer是google2016年在论文《attention is all you need》提出的一个机器翻译模型。</li>
+<li>Transformer是一个很典型的seq2seq架构。</li>
+<li>Transformer的亮点在于将attention和self-attention机制完全剥离开之前rnn的结构，只跟dense层组合。</li>
 </ul>
-<h2 id="第3章-怎么花钱说明你选择拥有怎样的积累起来的劳动">第3章 怎么花钱说明你选择拥有怎样的积累起来的劳动</h2>
+<h2 id="high-level-ideas">High-Level ideas</h2>
+<p>首先把模型看作一个黑盒。 在机器翻译（eg英译德）任务中，它会将一个句子（例如英文）翻译成一种语言（机器语言），然后再将其翻译成另一种语言（例如德文）。</p>
+<p>打开Transformer的黑盒，我们看到一个encoders组件，一个decoders组件，以及它们之间的数据流。</p>
+<figure>
+<img src="./transformer_encoders_decoders.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>encoders内部stacked encoders(论文堆了六个)，decoders内部也是stacked decoders(论文堆了六个)。</p>
+<p>每一个encoder/decoder叫一个block。</p>
+<figure>
+<img src="./transformer_encoder_decoder_stack.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>encoder组件的6个block，在结构上都是相同的(但是它们没有共享权重)。</p>
+<p>每个block包含2层:</p>
 <ul>
-<li>资本主义生产关系 是 有史以来，人类找到 最合理的 经济关系，
-<ul>
-<li>因为他没有政治强制，等级压迫，也没有奴隶主挥着鞭子赶着你到农场干活</li>
-<li>资本主义生产关系最大化地释放了生产力，怎么听着这么像共产主义？所以我觉得资本主义本身是一个政治范畴的概念，在经济范畴，资本主义可以替换成“多劳多得”，“自由市场”， “独立个体平等”，“等价交换”的概念</li>
-<li>但是资本主义生产关系同时也带来了一个弊端，就是 贫富差距，social power 差距的扩大</li>
-</ul></li>
-<li>对资本做理性的研究 叫 经济学。</li>
-<li>资本 是什么？ 能增值的货币</li>
-<li>工资是什么？ 劳动这种商品 的 等价交换物</li>
-<li>没有了这些文绉绉的 叙述框架，就没有了事实，但是事情 还是 每天都在发生。</li>
+<li>self-attention层，参数不共享</li>
+<li>ffnn层，参数共享</li>
 </ul>
-<h2 id="第4章-人类生存的目标之一价值的增值">第4章 人类生存的目标之一「价值的增值」</h2>
+<figure>
+<img src="./Transformer_encoder.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>decoder除了这两层，还有一个encoder-decoder attention层，用来关注encoder的输出，作用类似于 <a target="_blank" rel="noopener" href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/">seq2seq models</a> 中的attention。</p>
+<figure>
+<img src="./Transformer_decoder.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="输入tensor">输入tensor</h2>
+<p>上面介绍了Transformer的主要组件，现在看一下组件之间的数据流向。</p>
+<p>和一般的 NLP任务一样，Transformer首先使用<a target="_blank" rel="noopener" href="https://medium.com/deeper-learning/glossary-of-deep-learning-word-embedding-f90c3cec34ca">embedding algorithm</a>将每个输入单词转换成一个向量。</p>
+<p><img src="./transformer_embeddings.png" alt="img" /> 如上图，每个单词都被embedded为大小为512的向量（上面的x1，x2，x3）。</p>
+<p>接下来，这个512的向量会流入self-attention和ffnn层。</p>
+<figure>
+<img src="./transformer_encoder_with_tensors.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>接下来，我们以一个短句为例，看一下Transfomer内部细节。</p>
+<h2 id="encoder">Encoder</h2>
+<p>前面提到，encoder的输入是多个向量构成的list--[x1，x,2]。</p>
+<p>接下来它是怎么处理这个list的呢？</p>
+<ol type="1">
+<li>将这些向量传递到一个"self-attention’"层，输出z1，z2</li>
+<li>然后将z1，z2 丢入一个前馈神经网络，输出r1，r2 。注意这一层的dense layer的参数对所有的z1，z2，是共享的。</li>
+</ol>
+<p>然后将r1，r2 传递给下一个编码器encoder2作为输入，encoder1的输入x1,x2和r1，r2的维度是一模一样的。</p>
+<figure>
+<img src="./transformer_encoder_with_tensors_2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="self-attention">self-attention</h3>
+<h4 id="high-level-ideas-1">High Level ideas</h4>
+<p>假设下面的句子是我们要翻译的输入句子:</p>
+<p>”<code>The animal didn't cross the street because it was too tired</code>”</p>
+<p>这个句子中的"it"指的是什么？它指的是“street”还是“Theanimal”？对于人类来说很简单区分，但对于算法就不那么简单了。</p>
+<p>当模型解读每个word时，self-attention会让模型回顾上下文信息，也就是输入序列中的其他word，从而帮助模型更好地理解这个word。</p>
+<p>RNN通过hidden state策略，使得 它将 当前词 与 上下文（准确来说只有上文）的信息进行融合。</p>
+<p>类似的，Transformer通过self-attention来实现这个目的。</p>
+<p>还是回到上面的例子，当模型处理单词"it"时，self-attention使它能够将"it"与"animal"联系起来。</p>
+<figure>
+<img src="./transformer_self-attention_visualization.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>上图表示，当我们在encoder #5 中对"it"编码时，self-attention会将一部分注意力集中在"Animal"上，并将“Animal”的信息融入了"it"的编码中。</p>
+<p>相关可视化工具参考Tensor2Tensor （<a target="_blank" rel="noopener" href="https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb">Tensor2Tensor notebook</a> ）。</p>
+<p>先看看如何使用向量计算self-attention，然后再看看使用矩阵如何实现。。</p>
+<h4 id="第一步-计算3个向量">第一步 计算3个向量</h4>
+<p>对于每个单词，我们创建三个向量：</p>
 <ul>
-<li>【现象学还原】: 把每个领域的事实 洗掉 该领域的范畴，剩下的就是 事情本身。</li>
-<li>马克思在发动哲学革命的时候，做的就是【现象学还原】，</li>
-<li>自然事实 也是由 自然科学领域的范畴 构建的，也要洗掉，才是事情本身。物理事实的前提是物理学范畴。</li>
-<li>今天人类的 知识体系 就是要 基于 范畴 构建的 。每一个学科 都是在提出 范畴，以及 研究 范畴 和 范畴 之间的 逻辑关系 。</li>
-<li>每一个事实 本质上被 规定为 是合乎理性的 。（ 只有每个领域的 研究者 自己 才 这么认为吧）</li>
-<li>非逻辑的东西我们认为 是 非理性的。</li>
-<li>但是 经济学家 在 把自己 当成一门 严肃的 科学时，他们忽略了 一个 基本的真想，经济活动本质是不理性的。</li>
+<li>一个 Query vector</li>
+<li>一个 Key vector</li>
+<li>一个 Value vector。</li>
 </ul>
-<h2 id="第5章-人在实现财富自由后-可能面临的选择">第5章 人在实现财富自由后 可能面临的选择</h2>
+<p>这些向量是通过将单词的embedding乘以三个矩阵来创建的。</p>
+<p>请注意，得到的新向量的维度（64）比embedding（512）小。</p>
+<p>这么设计的目的是，保证在加入了multi-head self- attention之后，encoder的输出和输入维度（512）还能保持一致。</p>
+<p><img src="./transformer_self_attention_vectors.png" alt="img" /> 这三个向量如何解读？为何有用？</p>
+<p>请听下文分解</p>
+<h4 id="第二步-计算权重分数">第二步 计算权重分数</h4>
+<p>第二步是计算权重分数<span class="math inline">\(\alpha\)</span>，目的是量化 其他单词应该被关注的程度。</p>
+<p>方法如下：</p>
+<p>当前单词的query vector和其他单词的 key vector求 内积。</p>
+<p>如下:</p>
+<p><span class="math inline">\(&lt;q_1, k_1&gt;, &lt;q_1, k_2&gt;, ... &lt; q1, k_m&gt;\)</span></p>
+<figure>
+<img src="./transformer_self_attention_score.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h4 id="第三步和第四步--权重分数归一化">第三步和第四步 -权重分数归一化</h4>
+<p>第三步：将第二步算出来的权重得分向量（长度为m）进行归一化，目的是让权重不要受到key vector的长度（paper里面是64）的影响，这样算梯度就更稳定，。</p>
+<p>第四步：将归一化的权重得分向量（长度为m）送入激活函数（paper里面是softmax），目的是得到一个概率向量，所有数值加起来为1。</p>
+<p>最终的向量，表示每个单词应该被当前单词关注的程度，值越大越应该被关注。。</p>
+<figure>
+<img src="./transformer_self-attention_softmax.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h4 id="第五步和第六步-计算context向量">第五步和第六步-计算context向量</h4>
+<p>第五步和第六步是将每个单词的value vector使用权重概率向量进行加权求和，作为当前单词的self-attention表达（长度为value vector的长度为64，用了8个头，一起输出是64* 8 = 512）。</p>
+<figure>
+<img src="./transformer_self-attention-output.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>然后就结束了。</p>
+<h4 id="使用矩阵运算对self-attention整个过程总结">使用矩阵运算对self-attention整个过程总结</h4>
+<p>我们把刚刚的过程再加入一个维度，也就是从一个单词 变成 多个单词，计算他们各自的self- attention表示，</p>
+<p>下面用矩阵表达：</p>
+<p>第一步是计算 Query、 Key 和 Value 矩阵：</p>
 <ul>
-<li>市场上，大家都在 （竞）争什么？价值增值。</li>
-<li>据（经济学家）说竞争 会产生 一个 公平的效果。taleb也提到过 类似 的 观点，不过这些都是经济学家 在说的（鬼）话， 可能他们自己都不信</li>
-<li>大家在争的是权利（非理性的人与人的关系），而不是钱，是积累起来的劳动对活劳动 的支配权的竞争，</li>
-<li>职场是是不是 也是这样？ 职位高的人 就是他自己 积累的劳动，活劳动就是底层打工仔，支配权就是 可以任意分配 工作）。所以，就是说 ，</li>
-<li>也就是说 研究市场，可能 不适合 用经济学的知识，而是更适合用社会学的知识。</li>
-<li>人挣钱是为了温饱，安全（疾病，养老），scocial power（支配别人 还是 别人 支配你，这不同于政治权利，政治权利大家都是平等的你可以炒老板鱿鱼，）。</li>
-<li>马克思不是理性主义的哲学家，</li>
-<li>如果世界是按照理性法则运转，为什么会有冲突，矛盾，为什么要军队，国家？</li>
-<li>那么，如果不是理性的，原因是什么？
-<ul>
-<li>social power，资本就是social power，是一种非理性的 人与人 的关系</li>
-<li>资本增值 本质上 是 social power的 扩大</li>
-</ul></li>
-<li>为什么说 social power 是非理性的？
-<ul>
-<li>一部分人 支配 另一部分人，一部分人统治另 一部分人的 关系的。</li>
-</ul></li>
-<li>王国维说，世界上的学问分为两种：可爱而不可信；可信而不可爱。</li>
-<li>经济学理论是可爱而不信的，觉得学习的很安稳，逻辑自恰</li>
-<li>有没有学好，问自己两个问题，我对经济学理论是否掌握彻底；我应用经济理性思维的能力是不是足够了</li>
-<li>马克思是可信 而 不可爱的 学问，马克思谈斗争，圣母们有人道主义精神 就不爱听 了</li>
+<li><p>我们将embeddings塞到一个矩阵 x ：行数表示单词个数，列表示embedding的长度</p></li>
+<li><p>权重矩阵(WQ、 WK、 WV）：行代表embedding向量的长度，列分别代表query空间，key空间，value空间的维度</p></li>
+<li><p>X分别和这几个矩阵相乘</p></li>
 </ul>
-<h1 id="第二篇">第二篇</h1>
-<h2 id="第6章-如果bill-gates一开始就是慈善家-他不可能成为世界首富">第6章 如果Bill Gates一开始就是慈善家 他不可能成为世界首富</h2>
+<figure>
+<img src="./transformer_self-attention-matrix-calculation.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>第二步，利用第一步的结果来计算attention的输出，用一个矩阵计算来 表达，简洁优雅</p>
+<figure>
+<img src="./transformer_self-attention-matrix-calculation-2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="多头怪兽">多头怪兽</h3>
+<p>论文通过增加"多头"注意机制进一步细化 self-attention layer。 这在两个方面改善了self-attention层的表现:</p>
+<ol type="1">
+<li><p>它扩展了模型关注不同位置的能力。 单头机制虽然会注意到其他单词，但是注意力还是 很有可能完全被当前自己的状态牵制。多头的话，相当于多审视几遍 这个注意力，减少完全 关注自己 情况发生的可能性。</p></li>
+<li><p>它给予attention层多个"表示子空间"。 正如我们接下来将看到的，通过多头，我们不仅有一组，而且有多组 query / key / value 权重矩阵(Transformer 使用八个头，因此我们最终为每个encoders / decoders设置了八组)。 这些集合中的每一个都是随机初始化的。</p>
+<p>训练完后，每组的三个矩阵，用于将embedding输入(或来自底层的编encoders/decoders向量)映射到表征子空间。</p></li>
+</ol>
+<figure>
+<img src="./transformer_attention_heads_qkv.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>类似上面提到的单头self-attention计算，我们现在只是用8个不同的权重矩阵算了8次，并且得到了8个不同的 z 矩阵</p>
+<figure>
+<img src="./transformer_attention_heads_z.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>后面怎么跟dense层进行衔接呢？</p>
+<ol type="1">
+<li>将这8个z矩阵进行列拼接（concat）</li>
+<li>拼接后的矩阵大小为m*512，丢入全连接层WO</li>
+</ol>
+<figure>
+<img src="./transformer_attention_heads_weight_matrix_o.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这几乎就是multi-headed self-attention的全部内容。把整个过程放在一个图中描述：</p>
+<figure>
+<img src="./transformer_multi-headed_self-attention-recap.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>回顾一下之前的例子，当我们对"it"进行encoding时，8个注意力头分别关注什么？</p>
+<p>先看2个头的情况：</p>
+<p>如下图所示，在对"it"进行encoding时，一个head（黄色）最关注"animal"上，而另一个head（绿色）最关注“tired”——某种意义上说，这个模型对"it"表达融合了"animal"和“tied”信息。</p>
+<figure>
+<img src="./transformer_self-attention_visualization_2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>再看8个头的情况：</p>
+<p>如下图所示，我们把8个头的信息都表达在图中，就会变得很难解释：</p>
+<figure>
+<img src="./transformer_self-attention_visualization_3.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="用位置编码positional-encoding表示序列的顺序">用位置编码（Positional Encoding）表示序列的顺序</h3>
+<p>到目前为止，我们的模型还没有考虑词的顺序关系。</p>
+<p>为了解决这个问题，transformer向每个输入embedding向量（x1）又加上一个位置编码向量（t1）。</p>
+<figure>
+<img src="./transformer_positional_encoding_vectors.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>假设embedding的维度是4，那么实际的位置编码看起来是这样的:</p>
+<figure>
+<img src="./transformer_positional_encoding_example.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这个模式意味什么？</p>
+<p>在下图中，每一行对应一个向量的位置编码。第一行表示第一个word。</p>
+<p>每行包含512个值，介于1和 -1之间。用颜色表示值的大小</p>
+<figure>
+<img src="./transformer_positional_encoding_large_example.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>可以看到所有的位置编码向量被分成了两半。 左半边的值是由一个函数(使用正弦函数)生成的，而右半边的值是由另一个函数(使用余弦函数)生成的。 然后将它们进行拼接（concate）。</p>
+<p>本文(3.5节)描述了位置编码<a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensor2tensor/blob/23bd23b9830059fbc349381b70d9429b5c40a139/tensor2tensor/layers/common_attention.py"><code>get_timing_signal_1d()</code></a>的公式。 这只是其中一种位置编码的方法。</p>
+<h3 id="残差连接和layer-normalization">残差连接和layer-normalization</h3>
+<p>encoder的架构中还有一个细节：在每个block中，self-attention和ffnn都有一个残差连接，然后接一个层标准化（layer-normalization）步骤。</p>
+<figure>
+<img src="./transformer_resideual_layer_norm.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>如果我们将残差连接和layer normalization用矩阵表示，就是下图：</p>
+<figure>
+<img src="./transformer_resideual_layer_norm_2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>decoder的sub-layers 也同样用到了add &amp; normalization的设计。</p>
+<p>下图是一个简化版的Transformer架构：由2个stacked encoder和2个stacked decoder组成。</p>
+<figure>
+<img src="./transformer_resideual_layer_norm_3.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="decoder">Decoder</h2>
+<p>现在来看看encoder和decoder是如何协作的：</p>
 <ul>
-<li>Bill Gates在达沃斯论坛谈创新型资本主义。</li>
-<li>今天的经济是穷人为富人打工的经济，资本在增值的过程就是在创造贫困人口的过程，损不足而补有余。否则，微软的剩余价值从哪里来呢？它怎么能够发展壮大呢？</li>
-<li>现代贫困不是等级压迫的结果，是资本增值的 自然结果。可以解释法国的黄马甲运动（政治那么自由了都），法国的大资产阶级（美国的华尔街大佬）越是获取更多的利润，一定会导致法国社会内部一部分人的 生活水平的下降。（似乎这种因果关系，很难 肉眼观测到，表面上黄马甲是燃油价格上升造成的，这只是导火线，法国大部分公司多年都没有张工资了）</li>
-<li>还有一个现象，为什么英国公投 脱欧成功了？从整体上看，加入欧盟 或者说 全球化对英国整体是有好处的呀，但是这个好处都落入 少数的大资本家手中了（做 贸易和金融行业），而参与投票的人 的政治权利 是平等的。</li>
-<li>英国公投 和 美国的特朗普上台 都是社会分裂（穷人 和 富人分裂）的产物。我觉得 这才说到点上了，很多财经评论 和 媒体 长篇大论 都说不到点子上 ，废物</li>
-<li>所以更本质的问题是，美国社会怎么分裂的呢？全球化。所以特朗普要逆全球化。他要弥合 美国社会的分裂。</li>
+<li>第一个的encoder的输入式原始的embedding；</li>
+<li>最后一个encoder输出是一个z向量，以及两个矩阵：keys matrix和value maxtrix</li>
 </ul>
-<h2 id="第7章-资本增值了才是财富">第7章 资本增值了才是财富</h2>
+<figure>
+<img src="./transformer_decoding_1.gif" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>encoding阶段（phase）完成后，我们开始decoding阶段，decoding的每个step描述如下：</p>
+<ol type="1">
+<li>每个step 输出一个element的概率分布。</li>
+<li>从step1的概率分布中抽样出word（或者直接选择概率最大的word），作为decoder的输入。</li>
+<li>重复step1，直到产生结束符。</li>
+</ol>
+<p>decoder也会用到位置编码，下图的右半边</p>
+<figure>
+<img src="./transformer_decoding_2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>decoder中的 self attention layers与encoder的运作方式略有不同:</p>
+<p>在decoder中，self-attention layer只能接触到输出序列中的前半部分。</p>
+<p>怎么做到呢？在softmax操作之前，masking序列后半部分(设为 -inf)</p>
+<p>"Encoder-Decoder Attention"层的工作原理和多头self-attention一样，只不过它的Queries矩阵来自下面的decoder的输出和stacked encoder中的Keys矩阵和Values矩阵 。</p>
+<h2 id="最后的dense层和softmax层">最后的dense层和Softmax层</h2>
+<p>stack decoders输出一个数值向量。 我们怎么把它变成一个词呢？</p>
+<p>这是最后的dense层+softmax在做的事情。</p>
+<p>dense层是一个简单的全连接神经网络，它将stack of decoders的输出映射为一个长多的logits向量（长度就是输出词汇表的大小）。</p>
+<p><img src="./transformer_decoder_output_softmax.gif" alt="img" /> 这个图从底部开始，生成一个vector作为decoder stack的输出。 然后它被转换成一个输出单词。</p>
+<h2 id="训练">训练</h2>
+<p>我们假设输出词汇表只包含六个单词("a"、"am"、"i"、"thanks"、"student"和"eos"("句子结束"的缩写))。</p>
+<blockquote>
+<p>模型的输出词汇表是在开始训练之前的预处理阶段创建的。一旦定义了输出词汇表，就可以使用 one-hot 编码 来表示词汇表中的每个单词。</p>
+</blockquote>
+<p>假设我们正在训练的目标是将"merci"翻译成"thanks"。</p>
+<p>也就是说，当我们输入“merci”的embedding向量，希望模型输出的概率分布向量中单词"thanks"的概率值最大。</p>
+<p>训练的过程：将模型输出与目标输出进行比较，然后使用反向传播方法调整模型的权重，使模型输出更接近目标输出。</p>
+<p>如何比较两种概率分布？ 可查看 <a target="_blank" rel="noopener" href="https://colah.github.io/posts/2015-09-Visual-Information/">cross-entropy</a>和 <a target="_blank" rel="noopener" href="https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained">Kullback-Leibler</a>. 。</p>
+<p>目标概率分布：</p>
+<p><img src="./output_target_probability_distributions.png" alt="img" /> 模型输出：</p>
+<figure>
+<img src="./transformer_output_trained_model_probability_distributions.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="go-forth-and-transform">Go Forth And Transform</h2>
+<p>还想更深度的了解transform可以查阅以下资料</p>
 <ul>
-<li>资本（capital）是当代财富（wealth）的社会形式。啥意思啊？--就是说今天的wealth都是capital，同时capital 也是人与人 的一种非理性（对抗性）关系--social power
-<ul>
-<li>wealth 不是 使用价值，而是 资本增值</li>
-<li>当wealh增加，power 也会等比例增加，造成社会分裂</li>
-<li>社会分裂之后 又需要整合呀，就出现了 社会政党 之间的 斗争</li>
-</ul></li>
-<li>军队 警察 监狱 是来维护** 社会权力**(social power)的</li>
-<li>power是社会权力，是非理性的 ，是 沉默的，无言的，穿上理性的外衣 就变成了right</li>
-<li>计划经济时期，social power等于political power，会产生特权阶层，毛不想搞这一套，于是搞了个文化大革命----斗“走资本主义的当权派”</li>
-<li>不承认social power 会有什么问题？所有的经济活动叫投机倒把</li>
-<li>计划经济的通病---投资饥饿症</li>
-<li>非理性的power经过意识形态（ideology）的表达，上升为right---2006年出台的物权法</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a> paper, the Transformer blog post ( (<a target="_blank" rel="noopener" href="https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html">Transformer: A Novel Neural Network Architecture for Language Understanding</a>), and the ) ，<a target="_blank" rel="noopener" href="https://ai.googleblog.com/2017/06/accelerating-deep-learning-research.html">Tensor2Tensor announcement</a>.</li>
+<li>Watch <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=rBCqOTEfxvg">Łukasz Kaiser’s talk</a> walking through the model and its details</li>
+<li>Play with the <a target="_blank" rel="noopener" href="https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb">Jupyter Notebook provided as part of the Tensor2Tensor repo</a></li>
+<li>Explore the <a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensor2tensor">Tensor2Tensor repo</a>.</li>
 </ul>
-<h2 id="第8章-人们头脑中的重力观念">第8章 人们头脑中的“重力观念”</h2>
+<p>Follow-up works:</p>
 <ul>
-<li>改革的目的就是 将社会权力 确认为 一个 非政治的 权力，所以再回到过去计划经济时代不可能了（也就是把社会权利当做political权力，这个相当于在走过去错误的道路）。现在的改革之路：扩大开放(欢迎国外的social power)，深化改革（进一步清洗掉社会权利上的政治维度）</li>
-<li>警惕历史唯心主义</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03059">Depthwise Separable Convolutions for Neural Machine Translation</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.05137">One Model To Learn Them All</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1801.09797">Discrete Autoencoders for Sequence Models</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1801.10198">Generating Wikipedia by Summarizing Long Sequences</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1802.05751">Image Transformer</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1804.00247">Training Tips for the Transformer Model</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1803.02155">Self-Attention with Relative Position Representations</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1803.03382">Fast Decoding in Sequence Models using Discrete Latent Variables</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1804.04235">Adafactor: Adaptive Learning Rates with Sublinear Memory Cost</a></li>
 </ul>
+<h1 id="bert模型">bert模型</h1>
+<figure>
+<img src="https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&amp;rect=0%2C0%2C2668%2C3126&amp;w=1980&amp;h=2320" alt="bert模型可视化" /><figcaption aria-hidden="true">bert模型可视化</figcaption>
+</figure>
 
       
     </div>
@@ -322,7 +485,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/06/reading_notes/xuxiaonian-shangyedebenzhi/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/14/reading_notes/nava-joerogan-show/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -336,7 +499,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/06/reading_notes/xuxiaonian-shangyedebenzhi/" class="post-title-link" itemprop="url">商业本质和互联网</a>
+            <a href="/2021/04/14/reading_notes/nava-joerogan-show/" class="post-title-link" itemprop="url">joerogan访谈nava</a>
         </h2>
 
         <div class="post-meta">
@@ -346,14 +509,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-06 23:43:55" itemprop="dateCreated datePublished" datetime="2021-04-06T23:43:55+08:00">2021-04-06</time>
+              <time title="创建时间：2021-04-14 18:27:20" itemprop="dateCreated datePublished" datetime="2021-04-14T18:27:20+08:00">2021-04-14</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+                <time title="修改时间：2021-04-15 23:11:04" itemprop="dateModified" datetime="2021-04-15T23:11:04+08:00">2021-04-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -376,247 +539,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="第一卷-前世网络">第一卷 前世网络</h1>
-<h2 id="第1章-运输网">第1章 运输网</h2>
-<h3 id="英国的铁路网发展历史">英国的铁路网发展历史</h3>
+          <blockquote>
+<p>人生只有一次，尽最大可能让他精彩。</p>
+</blockquote>
+<h2 id="摘要">摘要</h2>
 <ul>
-<li>18世纪下半叶，蒸汽机的应用拉开了工业革命的序幕，</li>
-<li>马车已无法满足运输煤炭、铁矿和重型机器的需要，英国人于是开挖了<strong>运河</strong>，随后又将运输的重心转移到<strong>铁路网</strong></li>
-<li>1825年9月27日，第一条蒸汽机驱动的公共<strong>铁路线</strong>在斯托克顿和达灵顿之间落成通车。由被称为“铁路之父”的乔治·斯蒂芬森（George Stephenson）设计，这一年亦被公认为铁路世纪的元年。
+<li><p>what you do, who you do with, how you do it, weight more important than how hard you work</p></li>
+<li><p>outputs are nonlinear based on the quality of the work that you put in</p></li>
+<li><p>the right way that work is like a lion, you and i are not like cows, we are not meant to graze all day right.</p></li>
+<li><p>一个公司的规模，取决于内部 和 外部的 交易成本（transaction costs）对比。信息时代带来的最大的便利就是，让 外部交易变得更便捷；现在的趋势是公司的最优规模在锐减。</p>
+<blockquote>
+<p>chiechie：会有越来越多的敏捷和有创意的小公司</p>
+<p>大公司的问题：每个小模块有自己的KPI，生产链路长。多任务并发的时候，经常会遇到性能瓶颈。</p>
+<p>根本原因可能是大公司的官僚式管理制度问题？每个模块只用对生产链路中，自己这一环的kpi负责，而不是对整个业务的最终效果负责，根本就违背了「风险共担」。</p>
+</blockquote></li>
+<li><p>现阶段ai是什么阶段？low ai，即模式识别。</p></li>
+<li><p>为什么短时间内通用ai不可能？人连大脑的运行机制都不懂。根据摩尔定律，我们要再花50年，算力才能赶上一个cell内部的计算速度.</p></li>
+<li><p>关于bankers是不是洗劫了社会的 财富？ 其实他们也冒了很大的风险，赌输了也会破产。</p></li>
+<li><p>关于资本主义 和 社会主义</p>
 <ul>
-<li>斯蒂芬森既是具有<strong>创新精神的工程师</strong>，也是出色的<strong>企业家</strong>，他和儿子以及另外两个合伙人成立了公司，专门生产<strong>机车车头</strong>。</li>
+<li>“资本主义”这个词声名狼藉了，可以换成 “自由市场”，</li>
+<li>“社会主义”强调结果公平，伴随的一定有violence--暴力重分配</li>
+<li>许多人年轻的时候是社会主义（heart），长大后是资本主义（head）</li>
+<li>taleb说，对我的家人，我是一个communist；对我最亲密的朋友来说，我是一个社会主义者；在我的state-level的政治中，我是一个democrat；higher levels的政治中我是一个republican；在federal level政治中，我是一个libertarian</li>
+<li>一个组织或者群体的规模越大，群体内利益差异就越大，相互之间的信任的可能就越少，会产生更多的cheating，为了让这个系统运作的越好 就需要 匹配的 激励机制，将激励机制发挥到极致的例子就是资本主义。 &gt; 管理小团队，like family；管理大团队，要奖惩机制。</li>
+<li>群体的规模越小，比如对待家人，成为一个社会主义，会让你更幸福，但是对陌生人不行。</li>
 </ul></li>
-<li>1829年，斯蒂芬森以“火箭号”<strong>牵引车头</strong>在技术竞赛中胜出，除了500英镑奖金，还赢得了从利物浦到曼彻斯特铁路线的设计与建筑合同</li>
-<li>1830年9月15日，利物浦到曼彻斯特 这条线路建成投入使用，开幕式成了新技术的盛大庆典，吸引了包括英国首相在内的政界和工业界要人到场，斯蒂芬森等人亲自驾驶8列火车从利物浦出发，在人们热情的欢呼声中抵达曼彻斯特。</li>
-<li>利物浦—曼彻斯特线的开通激发了英国人的投资热情，多条城际铁路接连开工。</li>
-<li>1845年 英国立法确定标准轨宽为1.435米，这个宽度后来成了世界标准。 ### 电网的发展 - 继铁路网之后，下一个登台的运输网是电网。铁路运送煤炭，电网运送（比如煤炭燃烧转化成的）电能。 - 电力让机器从工厂走进家庭，开创了家用电器的时代， - 与人们生活密切相关的<strong>服务业</strong>在制造业之后兴起，成为发达市场经济的主体 - 电力也为<strong>后续的技术创新</strong>，如电话、电视、电脑、无线通信和互联网，<strong>奠定了基础</strong>。 ### 世界（主要是美国）公路网发展历史</li>
-<li>铁路受到轨道的限制，电力传送需要架设高压线。有没有更为灵活的“运输工具”呢？</li>
-<li>1886年德国（Karl Benz）推出内燃机汽车的商业化产品，目的是发现灵活的“运输工具”</li>
-<li>1908年美国企业家亨利·福特（Henry Ford）采用流水线生产T型车，大幅度降低了汽车的成本和价格。汽车从奢侈品变成了中产阶级家庭的生活必需品。</li>
-<li>随着汽车的普及，<strong>公路再次兴盛</strong>，替代铁路成为区域性中短途交通运输的骨干。</li>
-<li>1965年前后美国动工修建连接各州的<strong>公路网</strong>，在长途运输上<strong>也将铁路边缘</strong>化了。 ## 第2章 技术、市场与经济增长</li>
-<li>英国实现可持续甚至是加速的经济增长，铁路功不可没。</li>
-<li>铁路对美国经济发展的促进作用更为显著，</li>
-<li>1875～1890年美国进入铁路的投资密集期，这一时期的GDP增长达到4.1%[插图]，铁路一度是除农业之外的最大<strong>就业部门。</strong></li>
-<li>从工业革命到今天的绝大部分时间里，供给侧涌现出的新技术是经济增长的根本和经久不衰的动力。新技术不仅创造了新的投资机会和就业机会，并且提高了劳动生产率，从而提高了人均收入，就业和收入的增加带来旺盛的消费需求</li>
-<li>铁路等新技术对于经济增长的意义在于，新技术引起了经济社会结构的改变，结构性变化带来<strong>资源使用和配置效率的</strong>飞跃</li>
-<li>早期工业化必需的大宗商品是煤炭和铁矿石，受到运输成本的限制，工厂一般都建设在煤矿和铁矿附近，铁路大幅度降低了运输成本，工业生产方式就此摆脱了矿产资源的地理位置局限，随着火车进入大小城镇乃至乡村。</li>
-<li>蒸汽机视为工业革命的心脏，铁路就是遍布全身的血管系统。</li>
-<li>仅有技术创新还不足以改变生产方式，<strong>市场规模</strong>才是变革的决定性推手。虽然机器的效率比手工高很多，但由于<strong>资本投入太大</strong>，生产批量过小会使分摊到单位产品上的机器成本过高。</li>
-<li>正是铁路将它所到之处的人口纳入统一的市场，造就了前所未有的市场规模。</li>
-<li>铁路网的出现促进了人口向城市的集中，特别是作为交通枢纽和商品集散地的大城市</li>
-<li>铁路运输具有快速、准时和成本低的特点，一方面吸引企业在城市开设工厂；另一方面也便利了人口从农村、郊区向城镇的迁移，满足了企业不断上涨的劳动力需求。</li>
-<li>人口聚集到城镇，社会分工进一步深化。</li>
-<li>城市里人口多、需求大，为专业的纺织和服装厂家提供了足够的市场空间，制衣于是从家庭劳动中分离出来。</li>
-<li>专业化分工越发达，对协作整合的要求越高</li>
-<li>铁路降低了运输成本，企业聚集在城镇，沟通便利，信息传播快，减少了交易成本</li>
-<li>就扩大市场规模、降低交易成本而言，今天的互联网和昔日的铁路网并无本质区别，人们一般认为的互联网创造的新业态，在历史上其实也有迹可循。</li>
-<li>凭借铁路邮购，西尔斯成长为美国乃至世界第一大零售商，</li>
-<li>直到20世纪70年代才让位于迅速崛起的沃尔玛，后者的商业模式优势同样来自网络技术—高速公路网，以及连接其遍布全球的商店和仓库的卫星通信网</li>
-<li>今天，沃尔玛又面临亚马逊的挑战，互联网使电商有可能直接触达数以亿计的个人消费者，因而有可能再次重塑零售业。</li>
-<li>新技术不仅催生新的商业模式，而且时常引发下一波的创新浪潮，技术进步呈现出自我繁衍和收益递增的趋势.</li>
-<li>为了通报和调度列车的运行，英国人1838年在西部铁路线上架设了世界上第一条商业电报线路</li>
-<li>不知不觉之中，伴随着四通八达的铁路网，历史上第一张<strong>通信网</strong>形成了.</li>
 </ul>
-<h2 id="第3章-通信网">第3章 通信网</h2>
-<ul>
-<li>有交换机之前: 无论电报或电话，人们只能做点对点的单线联系</li>
-<li>有了交换机之后：节省了电话网络的建设费用，而且用户数量越多，人均成本就越低</li>
-<li>AT&amp;T的兴衰史
-<ul>
-<li>1915年，AT&amp;T开通了东西海岸的长途电话服务。</li>
-<li>1921年，全美共有1400万部电话，几乎覆盖了城镇和农村的每一个家庭，其中AT&amp;T占有64%的市场份额，长途电话完全为其垄断</li>
-<li>1926年，跨越大西洋的伦敦—纽约电话电缆铺设完成，世界性的通信网初现端倪。</li>
-<li>1982年，AT&amp;T被迫分拆，原因之一是这个巨无霸在华尔街的支持下，不断收购独立的运营商，大树底下寸草不生，就像今天的大型互联网公司。</li>
-</ul></li>
-<li>移动技术的兴衰历史
-<ul>
-<li>1918年，德国人在柏林到左森的军用火车上试验了无线通信。</li>
-<li>第二次世界大战期间，各主要交战国广泛使用了肩载、车载、舰载和机载的无线通信设备，战后移动通信进入民用领域。</li>
-<li>1948年，AT&amp;T建立了第一个移动通信网，覆盖圣路易斯市和周边的100个城镇及铁路沿线的车站，这个系统被称为移动通信的第零代（0G）</li>
-<li>1973年4月3号，摩托罗拉的工程师马丁·库珀（Martin Cooper）拨打了世界上第一个手机电话</li>
-<li>1979年，一代（1G）模拟技术移动通信网络在日本东京建成。</li>
-<li>20世纪90年代出现第二代（2G）的数字化移动通信网，欧洲的标准是GSM，美国则采用CDMA标准。</li>
-<li>在1999年，日本电话电报公司（NTT DoCoMo）引入互联网服务，由此开始了移动通信和互联网的融合。
-<ul>
-<li>2G移动通信的应用很快从电话语音扩展到数据，特别是与互联网相关的数据，2G的数据传输速度和容量无法满足新的需求</li>
-</ul></li>
-<li>2001年5月日本电话电报公司开发的第一个商用3G系统投入使用，采用新的数据打包传送方法（packetswitching），大大提高了网络传输的效率
-<ul>
-<li>技术可能性的扩展刺激了应用的迅速增长，不久即达到3G网络的能力上限，</li>
-<li>新一代技术的开发势在必行</li>
-</ul></li>
-<li>2009年美国和斯堪的纳维亚的国家开发了基于IP[插图]的第四代移动通信技术（4G），一举将传输速度提高10倍以上，更重要的是，4G无线通信实现了和互联网的完全对接。
-<ul>
-<li>过去十年间，互联网移动通信飞速发展，接入网络的设备和服务应用急剧增加，数据流量暴涨，4G通信系统的容量很快将不敷使用。</li>
-<li>在这样的形势下，国际组织和各国政府启动了5G标准的制定工作，厂商纷纷投入资源研发5G的软硬件技术</li>
-</ul></li>
-<li>2018年6月，国际电信联盟批准了首个完整的5G国际标准
-<ul>
-<li>同年12月，韩国三大电信运营商在韩国部分地区推出5G服务；</li>
-<li>几天后，美国电话电报公司宣布在美国12个城市开放5G网络；</li>
-<li>2019年6月，中国工信部向中国电信等四家运营商发放了5G商用牌照</li>
-</ul></li>
-<li>蒸汽机使人类从农耕文明跨入现代工商文明，铁路将工商文明传播至世界五洲。
-<ul>
-<li>电力网、电话网和移动通信网继续了铁路的故事，创造了更大规模的市场，不断深化社会分工与协作，便利和丰富了人们的生活。 # 第二卷 今生互联网</li>
-</ul></li>
-</ul></li>
-<li>第4章 大学玉研究所阶段</li>
-<li>第5章 解除管制，商用爆发</li>
-<li>第6章 社交媒体 与 互联网新技术</li>
-</ul>
-<h1 id="第三卷-规模经济效应和协同效应">第三卷 规模经济效应和协同效应</h1>
-<ul>
-<li>第7章 多多以上</li>
-<li>第8章 从百货大楼到万物商店</li>
-<li>第9章 知彼知己， 错位竞争
-<ul>
-<li>脸书 vs linkedin</li>
-<li>如果不能差异化，公司的实力再强也难以动摇先发者的优势，失败的案例
-<ul>
-<li>新浪微博vs腾讯微博</li>
-<li>微信 vs 来往 # 第四卷 梅特卡夫效应和双边市场效应</li>
-</ul></li>
-</ul></li>
-<li>梅特卡夫效应</li>
-<li>双边市场效应</li>
-<li>似是而非的互联网</li>
-<li>经济学有什么用</li>
-</ul>
-<h1 id="第五卷-新旧零售都是零售">第五卷 新旧零售都是零售</h1>
-<ul>
-<li>电商？店商？</li>
-<li>长尾的致命诱惑</li>
-<li>企业为什么必须盈利</li>
-<li>错在盲目模仿</li>
-<li>不只是购物体验</li>
-</ul>
-<h1 id="第六卷-金融的本质与p2p的崩塌">第六卷 金融的本质与P2P的崩塌</h1>
-<ul>
-<li>背景
-<ul>
-<li>互联网进入金融行业的因缘：电商的发展迫切需要线上支付手段</li>
-<li>P2P（peer-to-peer）：在网上撮合资金的供给方（creditor）和需求方（debtor），不经过传统的线下金融中介（如商业银行）而完成融资的活动。</li>
-<li>大型金融机构占据主导地位，小微金融服务的供给严重不足，给了P2P非常大的市场空间，正像传统零售的低效成就了电商，线下支付手段的落后让电子支付大行其道一样。</li>
-<li>就P2P商业模式而论，它相当于没有牌照、没有线下网点和人员的商业银行，其功能却和常规银行一样：将储蓄资金转化为贷款。</li>
-</ul></li>
-<li>痛定思痛
-<ul>
-<li>金融业务的本质是减少资金提供者（出借人、理财人，以下统称“出借人”）和资金使用者（借款人）之间的信息不对称，控制逾期、坏账等违约风险，在确保资金安全的前提下，实现适度的收益。</li>
-<li>不少P2P公司的创始人和他们的投资人没有金融业的经验，秉持“互联网思维”，一味追求客户数和平台资产规模的快速增长，从一开始就违反了金融业“风控第一”的原则。</li>
-</ul></li>
-<li>金融的本质</li>
-<li>线下金融+互联网</li>
-<li>社区互联网</li>
-</ul>
-<h1 id="第七卷-平台无栏不成圈">第七卷 平台：无栏不成圈</h1>
-<ul>
-<li>要还是壁垒而非规模</li>
-<li>得技术者得天下</li>
-</ul>
-<h1 id="第八卷-共享公路还是租赁">第八卷 共享：公路还是租赁</h1>
-<ul>
-<li>线上出租</li>
-<li>情怀和利益
-<ul>
-<li>自由开源软件（free and open source software，FOSS） 被是为共享经济的典范。
-<ul>
-<li>free强调自由和权利，而非免费，即得到授权的使用者可以自由拷贝、修改和转发软件给他人，拥有这些权利，软件的免费或基本免费是个自然的结果</li>
-</ul></li>
-<li>人是生而自由的，却无往不在枷锁之中--卢梭</li>
-<li>自由开源的理想自诞生那天起，就无法挣脱商业利益的枷锁
-<ul>
-<li>现实为证，托瓦尔兹在发布Linux Kernel之初，网上响应者寥寥。半年之后，托瓦尔兹不得不放松限制，允许基于Linux软件的商业性开发与销售，很快用户数就从1991年的100人左右增加到1994年的50万人</li>
-<li>营利性公司参与开发，对开源软件的推广发挥了巨大的作用
-<ul>
-<li>2008～2010年，Linux Kernel核心代码的75%是由戴尔、IBM、惠普、甲骨文等大公司的程序员完成的</li>
-</ul></li>
-<li>Linux的宗旨，也从最初单纯的自由软件，转变为共享和商业应用并举</li>
-</ul></li>
-<li>诺奖得主梯若尔等人的一项研究（Lerner and Tirole,2002）表明，软件工程师之所以愿意学雷锋，
-<ul>
-<li>第一，是因为多种软件的开发可以提高他们的技能，有助于在公司的提职加薪。</li>
-<li>第二，在开源领域中的贡献增加了他们的市场知名度，从而增加他们未来的就业机会，例如进入其他的软件公司或风投行业。</li>
-<li>第三，开源软件比自己的常规性本职工作更富挑战，更“酷”，名声在外而获得同行的认可，满足个人的社会地位或得到尊重的心理需求。</li>
-</ul></li>
-<li>【无形的手】商业软件公司补贴自己的技术人员，鼓励他们参与开源软件的开发，用迂回的方式，解决了公共品供应激励不足的问题。市场这只无形之手，真是精妙无比！</li>
-<li>开源共享不会成为软件行业的主流模式，而是会和专有营利形成互补和相互促进的关系。</li>
-<li>底层基础软件的共性大于个性，<strong>易于进行跨公司、跨空间的开源研发</strong>。</li>
-<li>在直接面对终端客户的地方，应用场景差异化程度高，共同开发从技术上来讲是非常困难的，只能由软件公司针对具体需求做商业性的开发，而且只有利润驱动，软件公司才能对市场需求快速反应，才能长期补贴和支持开源项目。</li>
-</ul></li>
-<li>错的离谱的经济分析</li>
-</ul>
-<h1 id="第九卷-物联网和工业4.0">第九卷 物联网和工业4.0</h1>
-<ul>
-<li>工业互联网的逻辑</li>
-<li>工业互联网之难</li>
-<li>从工业1.0到工业4.0</li>
-<li>大数据+云计算=计划经济？</li>
-</ul>
-<h1 id="第十卷-数字化企业的组织变革">第十卷 数字化企业的组织变革</h1>
-<ul>
-<li>引言
-<ul>
-<li>企业是什么？
-<ul>
-<li>企业是个生产组织，在这个组织内，不同技能的人从事不同的工作，努力实现一个共同的目标—<strong>为客户</strong>提供<strong>高性价比</strong>的产品和服务。</li>
-</ul></li>
-<li>【企业管理模式】20世纪20年代，通用汽车公司董事长阿尔弗雷德·斯隆（Alfred Sloan）创建了<strong>集权—分权式</strong>的管理结构，成为工业3.0时代大公司的标准管理模式。
-<ul>
-<li>斯隆体系中有多个业务单元（BU），每个BU拥有相对完整的对本事业部的管理权，除了来自公司CEO的指令，不受公司其他BU和职能部门的干扰</li>
-<li>公司每年确定总体经营目标，再将销售额和利润等指标逐层分解落实到BU、工厂……，根据全年实际执行和目标之差，决定各级管理者和员工的奖惩，作为完成总体业绩目标的激励和保障机制</li>
-</ul></li>
-<li><strong>等级和职责分明</strong>，<strong>命令与控制型的科层组织</strong>主导了20世纪的管理思想和实际操作。</li>
-</ul></li>
-<li>解决方案变成问题本身
-<ul>
-<li>科层制解决了管理幅度和公司规模之间的矛盾，但是也会产生新的问题，不仅自上而下的指令传递和执行打了折扣，自下而上汇集的信息也随着层级的增加而产生越来越大的扭曲</li>
-<li>科层制本来是为了解决信息不对称的问题，现在却成了问题的本身，创造出各种新的信息不对称。</li>
-</ul></li>
-<li>层级压缩和职能简化
-<ul>
-<li>科层制源于克服信息不对称的需要，但又创造了新的信息不对称。</li>
-<li>数字化在相当大的程度上减少了信息不对称，应该有助于解决科层制的问题</li>
-</ul></li>
-<li>自驱动和自适应组织的兴起</li>
-<li>管理学的与时俱进</li>
-</ul>
-<h1 id="第十一卷-价值几许">第十一卷 价值几许</h1>
-<ul>
-<li>泡沫与网络起飞
-<ul>
-<li>像所有的新技术一样，互联网带来的秦所未有的可能性，引发了人们的无限想象，投资大钞随之汹涌而来。（跟铁路网的建设一样）</li>
-<li>但是也有被泡沫压垮的例子-woldcom。</li>
-<li>资人从迷梦中醒来，注意到很多互联网公司依然没有利润，市场于是怀疑高股价的合理性与可持续性。</li>
-<li>在没有明显触发因素的情况下，股价调整开始了，纳斯达克指数迅速从高位下跌。</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fok-oe_p7IV.png?alt=media&amp;token=03d9a094-4380-436d-b7b1-8a384a565437" /></li>
-<li>泡沫的逻辑其实很简单：一个动人的故事加上资金。互联网重复着技术创新的悲喜剧，人类的贪婪与恐惧从未改变过，舞台上更换的只是演员和道具。</li>
-</ul></li>
-<li>理性分析非理性繁荣
-<ul>
-<li>公司价值多少，取决于它的赢利能力以及投资者对赢利能力的估算。</li>
-<li>从投资者的角度看问题，拥有一家公司的终极目的是赚钱。</li>
-<li>赚钱有两个途径，分红或资本增值，</li>
-<li>盈利是公司价值的唯一源泉。</li>
-</ul></li>
-<li>梅特卡夫效应和估值
-<ul>
-<li>苹果是一家世界领先的科技公司，它的市盈率近年来只有15倍左右，其产品虽然技术含量很高，但是销售手机、电脑等硬件，商业模式既不具备梅特卡夫效应，也没有双边市场效应。虽然苹果有个巨大的App生态圈，经历了高增长，目前已趋于平稳。评价公司的赢利能力，主要看它能否推出热销的新产品，销量越大，则研发的规模经济效益越好。换句话说，从估值的角度看苹果公司，它更像传统的制造企业而不是互联网公司。</li>
-<li>社交网络节点的互动最多也最为频繁，产生了最强的梅特卡夫效应，理论上应该具有最高的估值，双边市场效应次之，</li>
-<li>在其他条件相同的情况下，仅用互联网做销售工具的企业如零售、共享单车、P2P等类型的估值最低。</li>
-<li>估值取决于多种因素，网络节点互动的效应仅为其中之一，梅特卡夫效应和双边市场效应能否转化为公司的收入，归根结底要看公司的产品和服务。</li>
-<li>“理性”的含义是投资收益最大化，这个词在金融学中通常和基本面投资等价，而基本面就是按照未来盈利估算的公司价值。</li>
-</ul></li>
-<li>另类理性
-<ul>
-<li>理性投资者根据公司的赢利能力买卖股票，这并不是说基于盈利的投资是市场上的唯一理性</li>
-<li>在很多情况下，忽略甚至完全不看基本面的趋势投资可以是理性的。</li>
-</ul></li>
-<li>尽管理性很少能作为探索未知领域的指路明灯。</li>
-<li>严密的演绎逻辑只是理性的一种而非全部的表达方式，看上去松散的、不那么可靠的和不那么“科学”的归纳法同样属于理性的范畴。</li>
-<li>市场是复杂的，演绎逻辑的推理只能提供极为有限的答案，基于简单规则的决策虽然谈不上“最优”，却是可行的且经常产生不错的效果。</li>
-</ul>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=3qHkcs3kG44">Joe Rogan Experience #1309 - Naval Ravikants</a></li>
+</ol>
 
       
     </div>
@@ -635,7 +588,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -701,7 +654,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -714,7 +667,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">125</span>
+        <span class="site-state-item-count">126</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

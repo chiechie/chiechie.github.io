@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/24/meditation/how_to_comment_others/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/31/reading_notes/zhihu-ml-prediction-and-decision/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/24/meditation/how_to_comment_others/" class="post-title-link" itemprop="url">怎么评价别人？</a>
+            <a href="/2021/03/31/reading_notes/zhihu-ml-prediction-and-decision/" class="post-title-link" itemprop="url">机器学习在预测和决策场景中的应用</a>
         </h2>
 
         <div class="post-meta">
@@ -188,7 +188,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-24 22:27:11" itemprop="dateCreated datePublished" datetime="2021-03-24T22:27:11+08:00">2021-03-24</time>
+              <time title="创建时间：2021-03-31 08:52:16" itemprop="dateCreated datePublished" datetime="2021-03-31T08:52:16+08:00">2021-03-31</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -218,52 +218,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>有领导/同事想让你评价另外一个同事，如何做呢？</p>
-<p>复盘一下我昨天问题，说别人缺点的时候，话说得太满，并且，没有客观的事情来论证。</p>
-<p>回忆一下，我对自己的评价也是这样。</p>
-</blockquote>
-<h2 id="公理">公理</h2>
+          <h2 id="一些reflection">一些reflection</h2>
 <ol type="1">
-<li>有优点就可劲儿夸, 有缺点也要帮别人圆一下。</li>
-<li>你对他人的评价，都必须是可以在任何场合公开的。</li>
-<li>人总是看高自己，看轻别人。</li>
-</ol>
-<h2 id="推论">推论</h2>
-<ol type="1">
-<li>不应该在不熟悉的人面前，吐槽产品和开发。</li>
-<li>不确定说什么，就说「不清楚」。说「不熟悉」某个同事人品是否有问题，完全可以。</li>
-<li>不要轻易用贬义词，用客观的词表达。</li>
-<li>无关紧要的缺点不要说。</li>
-<li>表达对别人的不满时，要不经意地说出来，并且要给对方找理由。</li>
-</ol>
-<h2 id="实践技巧">实践技巧</h2>
-<ol type="1">
-<li><p>用客观的词，比如描述经历，以及性格中大家都认可的地方，</p>
-<ul>
-<li>例如，“他性格细致，适合做产品设计的工作”，换成，“他做过产品工作，为人外向爱社交，挺适合做产品经理”</li>
-</ul></li>
-<li><p>评价别人的人品：</p>
-<ul>
-<li>对方人品不好，可以说“我和他没太多交集，目前我看不出他人品有什么问题”</li>
-<li>对方人品很好，大大地赞美。</li>
-</ul></li>
-<li><p>问同事的工作能力？基于内心的评分基础上再加上一个分数</p>
-<ul>
-<li>先说些跟工作无关的优点：人很聪明，做事情很积极和专注，最自己有要求</li>
-<li>"能力很差"，换成，"表现一般，基本能完成"</li>
-<li>"做事情很慢" ，换成 ，"做事情需要别人盯着，但是说了能改"</li>
-</ul></li>
-<li><p>话不要说满，不经意地表达不满，并且要给他找个理由，例如</p>
-<ul>
-<li>"进度很慢"，换成，"可能前期需要了解的比较多，导致进度有点慢，后面应该就比较快了"</li>
-<li>"效果不满意"，换成，"前期模型不稳定，但是框架已经搭建好了，后面还需要调调参数"</li>
-</ul></li>
-<li><p>预料到要被问评价，先想好身边的人的优点。</p></li>
+<li>机器学习的预测能力，实际上是一种归纳能力。也就是说当带预测数据完全来自已有训练样本的分布中时，才具备应用的可能性。</li>
+<li>强化学习中，决策的基础是基于对未来的长期的局势的预测。</li>
+<li>机器学习做预测，不适合的典型场景--股票预测，就是拿过去的股票数据去预测未来的股票数据。</li>
+<li>做预测是企业家的事情，是跟概率相关的，先不管它决策的对不对，多重空间的客观存在，推导出人是不可能给出一种确定的结果的。</li>
+<li>同时，在未来到来时，人的行为又可以改变后续的演化路径。人在未来的行与未来以及更未来的结局是纠缠态的。</li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/28649742">老板问我一个同事的人品和工作能力，我该如何回答呢？</a></li>
+<li>https://www.zhihu.com/question/437563654/answer/1729894854</li>
 </ol>
 
       
@@ -284,7 +249,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/24/technology/bayes-optimization/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/31/reading_notes/ray-dalio-principle-mylife/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -298,7 +263,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/24/technology/bayes-optimization/" class="post-title-link" itemprop="url">自动调参之贝叶斯优化</a>
+            <a href="/2021/03/31/reading_notes/ray-dalio-principle-mylife/" class="post-title-link" itemprop="url">原则-1我的人生历程</a>
         </h2>
 
         <div class="post-meta">
@@ -308,14 +273,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-24 10:30:05" itemprop="dateCreated datePublished" datetime="2021-03-24T10:30:05+08:00">2021-03-24</time>
+              <time title="创建时间：2021-03-31 08:41:15" itemprop="dateCreated datePublished" datetime="2021-03-31T08:41:15+08:00">2021-03-31</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 11:54:08" itemprop="dateModified" datetime="2021-04-18T11:54:08+08:00">2021-04-18</time>
+                <time title="修改时间：2021-04-08 16:02:47" itemprop="dateModified" datetime="2021-04-08T16:02:47+08:00">2021-04-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -323,7 +288,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -338,99 +303,47 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>「贝叶斯优化」技术是求解黑盒最优化问题的一种方法，该技术可拓展到自动调参的场景中。</p>
-<p>接下来从直觉的角度，描述「贝叶斯优化」的思路</p>
-<p>效用函数是我对采集函数（acquisition function）的意译，得「意」可忘形，没必要扣字眼。</p>
-</blockquote>
-<h2 id="背景">背景</h2>
-<p>什么是「黑盒优化」？</p>
-<p>求解 <span class="math display">\[ \max _{x \in \mathcal{X}} f(x)\]</span> 但是<span class="math inline">\(f(x)\)</span>的内部运行机制，我们一无所知，即<span class="math inline">\(f(x)\)</span>对我们而言就是一个黑盒</p>
-<h2 id="技术选型">技术选型</h2>
-<h3 id="进一步明确问题">进一步明确问题</h3>
-<p>「自动调参」（或者「超参转化」）本质上就是在求解一组最优的超参数，使得这组超参在样本集上的效果最好。 这个需求可以抽象为一个典型的黑盒优化问题，即 <span class="math display">\[ \max _{x \in \mathcal{X}} f(x)\]</span></p>
-<ul>
-<li>x代表一组超参数的取值，是一个向量，每个元素代表一个超参数，一个算法可能包含成千上万个超参数。</li>
-<li>f(x)代表一组超参数取某个值时，模型的准确率）。</li>
-</ul>
-<p>模型越复杂，超参数就越多（即x里面的元素越多），调参的工作就越依赖经验，并且也非常耗时。</p>
-<p>调参的过程中存在的痛点：极其依赖算法理论和工程经验，调试过程繁琐。</p>
-<p>那么有没有什么技术能将人力解放出来呢？</p>
-<p>有的，目前比较常用的思路有贝叶斯优化算法（Bayes Optimization），随机搜索，网络搜索, 以及贝叶斯优化的变形（SMAC和TPE）</p>
-<h3 id="候选方案">候选方案</h3>
-<p>先看随机搜索 和 网格搜索</p>
-<ul>
-<li><p>网格搜索和随机搜索: <img src="grid_random_search.png" alt="随机搜索和网格搜索" /></p>
-<ul>
-<li>网格搜索：如左图，需要指定搜索范围和间隔， 优点：考虑到了搜索空间内所有的参数组，缺点：存在组合爆炸的问题.</li>
-<li>随机搜索：意思是，在超参空间进行随机采样，将采样得到的超参作为best guess。如右图，采用随机采样的方式得到新的超参。优点：容易理解。缺点：可能搜索不到最优的超参.</li>
-</ul></li>
-<li><p>贝叶斯优化: BayesOptimazation(r，p, m，n_iters，算法名称，</p>
-<ul>
-<li>优点：不需要指定搜索范围，效果优于随机搜索</li>
-</ul></li>
-<li><p>贝叶斯优化的变形-SMAC和TPE</p>
-<ul>
-<li>SMAC：代理函数变成了回归随机森林</li>
-<li>TPE：代理函数变成了高斯混合模型 <img src="bianxing.png" alt="img.png" /></li>
-</ul></li>
-</ul>
-<h2 id="贝叶斯优化概述">贝叶斯优化概述</h2>
-<h3 id="文字版">文字版</h3>
-<p>贝叶斯优化算法（Bayes Optimization），它的大概思路是这样的：</p>
+          <h2 id="核心观点">核心观点</h2>
 <ol type="1">
-<li>收集样本&lt;x,f(x)&gt;，x是一组超参，f(x)表示这组超参下，训练出来的模型的准确率。</li>
-<li>使用样本&lt;x,f(x)&gt; 拟合一个高斯过程回归器（GaussianProgressRegressor）</li>
-<li>基于高斯过程回归器构造一个acquisition函数,用来衡量超参数空间中，当前每个区域的潜在收益。一般来说acquisition函数就是均值加上n倍方差（Upper condence bound算法）。</li>
-<li>搜索acquisition函数的最大值，即最值得探索的点（Next Best Guess）。</li>
-<li>将找到Best Guess（一组超参）带入原来算法，重新训练一遍，并记录下此时模型的准确率。</li>
-<li>将5得到的新样本数据加入样本集中，回到第二步，进行下一个迭代，循环往复，直到模型的准确率没有提升或者达到最大的迭代次数。</li>
+<li>"自由派"意味着致力于快速而合理的额方式向前奋进，保守派意味着固守传统。</li>
+<li>尽管几乎所有人都会估计未来和当下大同小异，但未来通常会和当下大相径庭。</li>
+<li>当政府决策者向你承诺他们不会允许货币贬值发生时，不要相信他们。他们越是坚决地做出这样的承诺，局势也许就越严重，因而货币贬值即将发生的概率也越大。</li>
+<li>所有的行为都会产生与该行为大致相称的后果，这个后果会引出一个反向的政策，以及市场的反转。举个例子，宽松的货币政策会导致更高的通胀率和股价上涨，进一步会引起央行收紧货币政策，导致通胀率下降，以及股价下跌。</li>
+<li>几乎所有的事情都是“情景再现”，历史上几乎所有事情都以符合逻辑的因果关系不断发生过。【逻辑是什么？】</li>
+<li>政治和经济是交织在一起的，并且通常是经济因素先起作用，「水门事件」就是一个例子。</li>
+<li>亏钱的经历增强了人对犯错误的恐惧感，让人意识到了风险控制的重要性，必须确保任何一次押注，甚至赌注组合，都不能使自己的损失超过可以接受的限度。</li>
+<li>在交易中，你必须既有防御心又有进攻心。如果没有进攻心，你就赚不到钱；而如果没有防御心，你的钱就保不住。</li>
+<li>在课堂上，供给和需求都是用出售的商品数量进行衡量的。我发现，用付出的金额（而不是购买的商品数量）衡量需求，考察买家和卖家分别是谁以及他们为什么买卖，是一种实用得多的方式。</li>
+<li>一个塑造者，通常会在别人的质疑和反对之下，提出独特和有价值的愿景，并以美好的方式成功将其实现。比如乔布斯，邓小平，爱因斯坦，牛顿，也包括我们身边的人--驱动变革并且创建了持久组织的人。</li>
+<li>塑造者们有一个很有意思的共性：对未来，眼界要比多数人宽广。他们的眼界要么来自自己，要么是从其他能看到更多东西的人那里学习。塑造者们总能看到多个level，并且能综合不同level上总结的观点。大多数人通常是一叶障目。创造性，系统性，现实性在他们身上合而为一。</li>
+<li>此外，塑造者们还既坚定又开明。对于事情应该怎么做，他们在头脑里有十分坚定的规划，同时又始终愿意在现实中检验这些头脑规划、调整做法，从而使规划效果变得更好。 &gt; 拥有坚定belief是我目前的短板</li>
+<li>对历史上的经济衰退进行不受时间局限的描述，找多个衰退时期的表现，分析共性和差异，总结出标准的经济衰退的样貌，进而理解不同经历衰退之间的差异。</li>
 </ol>
-<h3 id="图形版">图形版</h3>
-<figure>
-<img src="dl-framework/img.png" alt="贝叶斯优化" /><figcaption aria-hidden="true">贝叶斯优化</figcaption>
-</figure>
-<p>https://distill.pub/2020/bayesian-optimization/ 上图中</p>
+<h2 id="chiechies-reflection">chiechie's reflection</h2>
+<ol type="1">
+<li><p>股价反映了人们的预期，当实际结果比预期好时，股价上涨；实际结果比预期差时，股价下降；大多数人因为近期涨，所以预期这个增长会保持，一旦未来到了，没有达到预期，就跌了。</p></li>
+<li><p>现象1: 美元与黄金脱钩，美元贬值，现象2：股市大涨。现象1和现象2在历史上总是一前一后发生的。背后的逻辑链可能是这样，政府大量印钞票，导致市场上美元泛滥。在外汇市场，美元供给变多，均衡价格就会变小，也就是贬值；在国内市场，泛滥的美元会涌入股市，进一步抬高股市的价格。</p></li>
+<li><p>当通货膨胀过高时，央行会收紧货币政策，进而导致股价下跌。</p></li>
+<li><p>塑造者们可以看到各个level的图景，并且能综合分析，他们兼具创造性，现实性，系统性，这个给了我几个启发：</p>
 <ul>
-<li>横轴是超参，</li>
-<li>上面图的纵轴：超参数取不同值时，模型的准确率。
-<ul>
-<li>黑色的线代表拟合出来的均值线，灰色区域代表拟合出来的置信区间</li>
-<li>红色的线代表超参和准确率的真实关系 红点代表下一次要探索的点</li>
+<li>只懂细节，没有high-level的技术taste，就会缺少creativity，只会解题，不会创造产品，不会推动社会进步。</li>
+<li>只有high-level的技术taste，没有low-level 的细节知识储备，缺少reality，容易变成天马行空，不切实际。</li>
+<li>多个level的信息还要整合统一到一个叙事框架，即塑造者脑中的系统性蓝图。</li>
 </ul></li>
-<li>下面图的纵轴：超参数取不同值时，采集函数的值，取值越大，表示该区域越有可能存在最优超参。</li>
-</ul>
-<h2 id="贝叶斯优化细节">贝叶斯优化细节</h2>
-<p>调参的过程中存在的痛点：极其依赖算法理论和工程经验，调试过程繁琐。那么有没有什么技术能将人力解放出来呢？ 有的，目前比较常用的思路就是贝叶斯优化算法（Bayes Optimization），它的大概思路是这样的：</p>
-<p>为了求解该问题： <span class="math inline">\(x^{*}=\arg \max _{x \in \mathcal{X}} f(x)\)</span></p>
-<ol type="1">
-<li>收集样本<span class="math inline">\(&lt;x_i,f(x_i)&gt;\)</span>，x是一组超参，f(x)表示这组超参下，训练出来的模型的准确率。</li>
-<li>使用样本<span class="math inline">\(&lt;x_i,f(x_i)&gt;\)</span>拟合一个高斯过程回归器（GaussianProgressRegressor）<span class="math inline">\(\hat G\)</span></li>
-<li>基于<span class="math inline">\(\hat G\)</span>构造一个效用函数。效用函数是用来衡量当前的超参数组成的空间中，探索每个区域的潜在收益或者效用（注意我们的目标是，找到<span class="math inline">\(x_\star\)</span>，使得f(x)取到最大值）。 最简单的acquisition function就是均值加上n倍方差（Upper condence bound算法）。</li>
-<li>利用效用函数,我们去找最值得探索的点（Next Best Guess）</li>
-<li>将找到的最佳的超参组合带入模型重新训练一遍，并记录下此时模型的准确率。<span class="math inline">\(&lt;x_j,f(x_j)&gt;\)</span></li>
-<li>将5得到的新样本数据加入样本集中，回到第二步，进行下一个迭代，循环往复，直到模型的准确率没有提升。</li>
+<li><p>识别塑造者的技能，除了用审视自己，可以用来评判一些公司的创始人的能力，可以作为对公司估值的一项指标。</p></li>
 </ol>
-<h3 id="代理函数">代理函数</h3>
-<p>代理函数，就是对黑盒模型性能的评估函数。 原始的贝叶斯优化算法，使用的是高斯过程，后面一些变形就变成了其他的算法。</p>
-<h3 id="采集函数">采集函数</h3>
-<p>怎么采集下一步要探索的超参？两种采样思路：探索(exploration)与利用(exploitation)。</p>
-<p>采集函数（acquisition function）即综合考虑了两种因素，对值得探索的超参的空间，给予高估值。</p>
-<h3 id="难点1-离散变量">难点1-离散变量</h3>
-<p>贝叶斯优化本身只适用于连续变量，但是实际上很多模型地参数都是离散的，那么如何解决呢？ 直觉上来说，有两个思路:</p>
+<h2 id="学习到的分析框架">学习到的分析框架</h2>
 <ol type="1">
-<li>层次的混合搜索：整形参数采用网格搜索或者随机搜索</li>
-<li>贝叶斯模型：在连续空间搜多到best guess之后，截断成整数，加工成样本，然后送入下一次迭代</li>
+<li>为了预估谷物 和 豆类 的价格，需要预测谷物的供给量和需求量。谷物的供给，需要考虑种植面积，天气的因素。谷物的需求，需要考虑供应链下游的需求，谷物是给牲畜做饲料的，所以需要搜集目前牲畜的饲养量，按照经验牲畜吃多少的谷物，从而预测未来一段时间，会有多大的谷物购买需求。 还可以再细分，但是大的分析框架，就是供给和需求模型.</li>
+<li>按照这个分析框架，可以构建一个专家系统。</li>
 </ol>
-<h2 id="参考资料">参考资料</h2>
+<h2 id="学习到的沟通技巧">学习到的沟通技巧</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/29779000">贝叶斯优化-通俗版-tobe-知乎</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/76269142">贝叶斯优化-技术版—Dai Zhongxiang-知乎</a></li>
-<li><a target="_blank" rel="noopener" href="https://distill.pub/2020/bayesian-optimization/">贝叶斯优化-可视化版-distill</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/tobegit3hub/advisor">开源工具-Advisor-github</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.google.com/ai-platform/optimizer/docs/overview">谷歌的调参工具</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xys430381_1/article/details/103871212">csdn</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3587b24f1a6d">jianshu</a></li>
+<li>20世纪70年代末，我开始把我对市场的观察通过电报发给客户。这些《每日观察》（“谷物和油料种子”“牲畜和肉类”“经济和金融市场”）的源起很简单：尽管我们的首要业务是管理风险敞口，但我们的客户也给我打电话，请教我对市场的看法。接这些电话很费时间，所以我认定，更有效的方式是每天把我的想法写下来，以便其他人理解我的逻辑，并帮着一起改进它。这是一项很好的自律措施，因为这迫使我每天都进行研究和反思。这也成为我们企业的一个主要沟通渠道。《每日观察》已经持续了将近40年，累计近1万篇。今天，世界各地的客户和决策者都在阅读、思考和讨论它。目前我依然在和桥水的其他人一起写《每日观察》，并期待一直写下去，直到人们不愿再读它，或者我离世。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/848324405e0fe08483ab6a4kc7432af0210c74d97b01b1c">Ray Dalio的原则</a></li>
 </ol>
 
       
@@ -450,7 +363,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -516,7 +429,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -529,7 +442,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">125</span>
+        <span class="site-state-item-count">126</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-18 11:56:59 / 修改时间：12:19:41" itemprop="dateCreated datePublished" datetime="2021-04-18T11:56:59+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 11:56:59 / 修改时间：12:22:04" itemprop="dateCreated datePublished" datetime="2021-04-18T11:56:59+08:00">2021-04-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -220,8 +220,8 @@
 <li>best practice1: 把每个样本（历史依赖）的scale 取对数，放入样本。 （因为所有的lags项在归一化之后已经丢失了scale信息，为了避免这个信息的丢失，还是把log scale 放入特征，用于区别不同的曲线的模式）</li>
 <li>best practice2: 在rnn中，每一层rnn后都接了一个residual 和 一个 dropout。（原文没有提到）</li>
 <li>best practice3: 为了学习到 数据的周期性模式，除了一定要有的context_length，代码还会跳着取lag , 类似空洞卷积。 而这些 周期性的lag项，是被硬编码 在代码 里面的，比如 年 月 日 的周期性。</li>
-<li>对于AIOps建设的启发，对于根因分析，日志关联 等大部分场景，业界没有可参考的工具。只能求助学术界，那么可参考的只有论文 以及 kaggle比赛 等， 这些方案只是demo类型，没有在工业界的数据和真实需求上验证过，那从这个demo 到 落地可用 还有大量的优化工作要做，所以需要预留 一段时间， 来 验证demo效果和 优化demo</li>
 </ul>
+<p>对于AIOps建设的启发，对于根因分析，日志关联 等大部分场景，业界没有可参考的工具。只能求助学术界，那么可参考的只有论文 以及 kaggle比赛 等， 这些方案只是demo类型，没有在工业界的数据和真实需求上验证过，那从这个demo 到 落地可用 还有大量的优化工作要做，所以需要预留 一段时间， 来 验证demo效果和 优化demo</p>
 
       
     </div>

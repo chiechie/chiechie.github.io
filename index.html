@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-18 11:56:59 / 修改时间：11:59:07" itemprop="dateCreated datePublished" datetime="2021-04-18T11:56:59+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 11:56:59 / 修改时间：12:19:41" itemprop="dateCreated datePublished" datetime="2021-04-18T11:56:59+08:00">2021-04-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -214,7 +214,7 @@
       
           <p>以deepAR为例,最开始把deepAR当黑盒用的时候，发现效果很神奇，不调参，换不同数据进去效果都还挺好，周期性和趋势性都还能学到。</p>
 <p>后面就觉得很奇怪，按照自己构建rnn的经验，调参就要反反复复好多次，最后效果还不一定好。使用gluon-TS的代码我没有调参的，并且默认的网络结构很简单 不太可能过拟合.</p>
-<p>看了源代码之后，有一个很大的感受就是，<strong>完成论文 demo 和 完成一个业界可用方案， 两者差别 ，可能是 0到1 和 1到100的距离。</strong></p>
+<p>看了源代码之后，有一个很大的感受就是，<strong>完成论文 demo 和 完成一个业界可用方案， 两者的工作量 ，可能是 0到1 和 1到100的距离。</strong></p>
 <p>按照paper所说，整个网络结构非常之简单，1层rnn + 1层 dense层（输出分布参数），构成2层rnn，大概十几行代码。 但是，<strong>真正大量的代码 都在 做 预处理以及 模型训练的一些小trick。 这些小trick，对提升模型效果非常有帮助，但是paper里面是没有的，而是工程团队总结出来的最佳实践</strong>。（我甚至怀疑论文的作者都不知道，因为作者自己写了一个pytorch版本，没有见到相关的处理，并且训练时长是gluon-TS的100倍以上）</p>
 <ul>
 <li>best practice1: 把每个样本（历史依赖）的scale 取对数，放入样本。 （因为所有的lags项在归一化之后已经丢失了scale信息，为了避免这个信息的丢失，还是把log scale 放入特征，用于区别不同的曲线的模式）</li>

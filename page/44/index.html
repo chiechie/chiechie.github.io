@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/28/technology/principle-of-computer-network/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/02/technology/bigdata-plus-cloudcomputing-equal-PlannedEconomy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/28/technology/principle-of-computer-network/" class="post-title-link" itemprop="url">计算机网络基本原理</a>
+            <a href="/2021/03/02/technology/bigdata-plus-cloudcomputing-equal-PlannedEconomy/" class="post-title-link" itemprop="url">大数据是否意味计划经济成为可能？</a>
         </h2>
 
         <div class="post-meta">
@@ -188,14 +188,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-28 20:19:10" itemprop="dateCreated datePublished" datetime="2021-02-28T20:19:10+08:00">2021-02-28</time>
+              <time title="创建时间：2021-03-02 23:18:18" itemprop="dateCreated datePublished" datetime="2021-03-02T23:18:18+08:00">2021-03-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+                <time title="修改时间：2021-04-15 10:43:10" itemprop="dateModified" datetime="2021-04-15T10:43:10+08:00">2021-04-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
                 </span>
             </span>
 
@@ -218,30 +218,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="怎么学习">怎么学习？</h2>
-<p>直接看理论，觉得太抽象了。</p>
-<p>引用一个同事说的吧，可能多从实践出发理解会更深刻。 IDC机器上tcpdump，本地机器wireshark都用起来，看网络包究竟是怎样的。 写个网络编程的demo比如echo server 用iptables模拟一些异常再抓包看看。 linux 网络相关系统调用的各个参数，比如listen的backlog。 内核里面关于网络的参数，比如/proc/sys/net/core/rmem_max之类的。 甚至还可以看看最近几年相对比较新的东西比如DPDK，RDMA之类的，有兴趣自然会提升学习的热情。</p>
-<h2 id="基本概念">基本概念</h2>
-<p>什么是协议（protocol）？ 一堆定义好的标准集合没，每台电脑都要遵守，才能够正常通信</p>
-<p>什么是计算机网络？ 覆盖所有相关事物：电脑之间如何通信 网络的作用是，保证每台电脑都能倾听到彼此，并且每台电脑说的话，其他电脑也能听得懂</p>
-<p>什么是TCP/IP模型？ <img src="img_1.png" alt="图1-TCP/IP网络模型" /> 是一个5层的模型 ，每一层都有自己的协议，除了TCP还有，其他的模型如OSI。</p>
-<p>为什么要分层？ 为了让职能分化（specialization）？让不同的人做不同的事？</p>
-<p>TCP/IP模型中包含哪些东西？ - 物理层：即一些物理设备，跟电脑相互联系的，是通过网线（cable）连接的。物理层的几个核心元素是：cable，connectors，发送信号</p>
-<p><img src="img_2.png" alt="图2-物理层-使用网线将物理设备连接起来" /> - 数据层：也叫网络接口层（networklayer），这里是第一次涉及到协议（才开始跟内容有关，物理层仅跟cable有关） 数据连接层，负责定义如何解读这些信号。这一步之后，两边才能交流（communicate，不然就是鸡同鸭讲）。数据连接层有很多协议，最出名的叫"以太网"，尽管现在无线技术越来越popular， 在物理层之上，以太网标准定义了一个协议，负责从同一个网络的一个节点获取数据，accross a single link。</p>
-<ul>
-<li><p>网络层，也叫internetwork层 允许不用的网络进行通信，当然，依靠的是路由器 这里涉及到一个的概念 internetwork ：一系列的网络，通过路由器，彼此相连接。 最有名的internetwork叫Internet。 这一层常用的协议叫：IP即 Internet Protocol IP是Internet和大部分更小的网络的核心，他的作用是将数据从一个节点传给另一个节点。 network software通常被分类为：client 和 server client应用初始化一个request， 并且通过netwrok发送给server应用 ， server将response通过network发送回来</p></li>
-<li><p>传输层，邮件的传输格式和网页的传输格式不一样，这个区别就是在这一层定义的。 会议一下， 网络层在两个node之间传输数据， 一个node，可以运行多个client应用或者server应用， 传输层sort out哪一个client和server 应该去获取数据。 第四层传输层用最常见的协议--TCP，Transmission Control Protocol。 虽然TCP和IP经常被放到一起说，但是要注意，TCP和IP网络模型的不同层的协议。 除了TCP，其他的传输层协议，也会利用IP先将数据送达， 例如UDP，user datagram protocol UDP和TCP的区别在于，TCP机制可确保数据安全被送达，但是UDP并不要求。</p>
-<p>TCP和UDP是用来确保数据被一个node上正确的程序所接受。 对比以下，IP只能保证数据传达到正确的node。 类似送快递，IP可以保证包括从武汉商店送到深圳的腾讯大厦， TCP可以保证包裹 送至 对应的员工手中。</p></li>
-<li><p>应用层，这一层的协议是跟具体的应用类型相关的 比如网页类型的应用要准手http协议 邮件类型的应用要准讯smtp协议。</p></li>
-</ul>
-<p>再用送快递打个比方 - 物理层，就是一个一运送快递的卡车和道路 - 数据连接层：卡车将包裹从一个 - 网络层：识别出 从A到B要走哪条路 - 传输层：告诉A中哪个程序来收包裹。 - 应用层：就是包裹的内容。</p>
-<figure>
-<img src="img_4.png" alt="图3-用送快递类比TCP/IP网络模型的运行机制" /><figcaption aria-hidden="true">图3-用送快递类比TCP/IP网络模型的运行机制</figcaption>
-</figure>
-<h2 id="参考资料">参考资料</h2>
+          <blockquote>
+<p>有了大数据和人工智能，政府是否变成了一个全知全能的存在？计划经济是否可以重登舞台？</p>
+</blockquote>
+<h2 id="一些观点">一些观点</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/computer-networking/home/welcome">The Bits and Bytes of Computer Networking</a></li>
-<li><a target="_blank" rel="noopener" href="https://open.163.com/newview/movie/free?pid=ME74DFHFC&amp;mid=ME74E6NLA">西安交通大学公开课-计算机网络原理</a></li>
+<li>市场经济和计划经济是两种配置资源的模式，在现实中，两种模式是并存的。 一般来说，企业内部权威支配下的计划主导，企业和企业，企业和个人，个人和个人是市场主导。</li>
+<li>诺奖得主哈耶克指出，计划经济的最大问题是「信息」。中央计划者拿不到最全面的「信息」，来辅助制定经济决策。他不知道消费者的偏好，不知道技术和成本，所以不可能有效配置资源。</li>
+<li>相对来说，市场的优势在于，以“价格”为枢纽，建立了更高效率的信息收集器和发布器。消费者和企业分散的决策，通过市场交易形成「价格」，价格融合了消费者的偏好和企业的成本信息，接下来会传播到市场。</li>
+<li>技术狂热者认为无所不在的传感器使得大数据量收集成为可能，中央计划者随即可拥有他们所需要的一切信息。哈耶克进一步辨析到，计划经济者错误地假设，经济和社会计划所需要的数据在计划之前就已经存在。但是，这又一个逻辑错误，收集到的数据和 制定计划用的数据在时间上是滞后的。也就是说，传感器再多再全，只能收集数据而不是产生数据，产生数据的仍然是在市场上进行交易的人。集中式的权威永远无法得到足够数据。此外，市场还是信息的发生器，供求信息通过货币表达。</li>
+<li>那么人脑植入芯片，将感觉转化为价格信号可行吗？需要定制化芯片，成本太高。而在市场中，感觉转化为价格信号，这个成本几乎为零，具体一点，消费者在购买商品和服务时，自动和无偿地完成了这个关键的转化。</li>
+<li>技术狂热者，可能会说，有没有可能通过技术绕过「产生数据」这个步骤？从滞后的数据直接推断消费者的行为？有，AI就是专门做这个事情。但是从过去预测未来必须具备两个前提条件：消费者 的偏好不变 以及 厂商的技术和产品不变。但是在当代的创新经济中，厂商的技术和产品变化多端，进一步造成人们的偏好更为频繁的变化。从而两点都不成立。</li>
+<li>市场还有一个作用是激励产生创新企业家，这个是从整个社会角度说的。创新企业家如乔布斯，他的伟大之处在于，自身有驱动力追求完美的产品，并且勇于承担失败的风险。 相比之下，登月计划虽然涉及尖端复杂科技，但是都是已知可解的工程性问题，没有不确定性。 企业创新好比原始人在亚马逊热带雨林中摸索前行，现代人的登月则像在GPS导引下穿行于北京那样的超大城市。创新需要乔布斯那样的企业家，而资深工程师或官员即可计划和指挥登月工程。</li>
+<li>市场经济的元素--私有产权，自由市场，自愿交易，都是技术革命的必要前提。产权保证了企业家的创新收益，让他们感到值得冒险搏击（理性人会对激励做出反应）；自由市场为技术创新配置资金人才，为成功的高风险准备好了高回报。硅谷既有思想的市场，也有技术，人才，资本的市场，成为创新发源地是必然。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/62e321a071a486b862ee729k9a132c802349a1158154a83">许小年-商业的本质和互联网-第9章</a></li>
 </ol>
 
       
@@ -262,7 +255,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/28/reading_notes/intuition_pumps_right-way-to-judge-others/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/02/AIOps/causeinfer-notes1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -276,7 +269,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/28/reading_notes/intuition_pumps_right-way-to-judge-others/" class="post-title-link" itemprop="url">如何正确地批评别人？</a>
+            <a href="/2021/03/02/AIOps/causeinfer-notes1/" class="post-title-link" itemprop="url">CauseInfer论文笔记1-白话版</a>
         </h2>
 
         <div class="post-meta">
@@ -286,7 +279,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-28 11:40:47" itemprop="dateCreated datePublished" datetime="2021-02-28T11:40:47+08:00">2021-02-28</time>
+              <time title="创建时间：2021-03-02 14:41:39" itemprop="dateCreated datePublished" datetime="2021-03-02T14:41:39+08:00">2021-03-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -301,7 +294,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -317,48 +310,130 @@
 
       
           <blockquote>
-<p>工作中验收产品/算法方案，审视自己的方案，去别人就某个观点进行argue，都需要这个技能。</p>
-<p>《直觉泵和其他思考工具》对于如何正确地批评别人以及批评那些方面，提出了指引--拉波波特法则和史特金定律，</p>
-<p>拉波波特法则是对「归谬法」的一个补充，是一个更温和的，更让人容易接受的方式。</p>
-<p>史特金定律告诉我们每个领域闪闪发光的知识只有10%或者更少，我们不应该浪费时间，批量一些毫无亮点的东西</p>
+<p>CauseInfer是一个解决故障定位的通用方案，原理是通过在历史数据中学习因果图，进而在发生故障时，推断出故障根因。</p>
+<p>这篇文章对我说太难啃了，主要是因为涉及大量专业领域知识，比如计算机网络，微服务架构等，对这块不熟悉，需要补很多功课。</p>
+<p>输出的文章分成两篇: CauseInfer论文笔记1，即本文，讲背景知识和概要设计，以及直觉型的描述问题和解题思路，都是粗粒度的；<a href="https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/">CauseInfer论文笔记2</a>，讲核心技术点，方案的实现逻辑，涉及到数学公式。</p>
+<p>原则上，第一篇不用技术背景也能看明白，问题是啥，解题思路是啥。第二篇就是给算法人员看的，要出方案了，所以要越详细越好。</p>
 </blockquote>
-<h2 id="避免变成一个杠精">避免变成一个杠精！</h2>
-<p>我们在寻找对方说法中隐藏的矛盾时常常容易走过头，变成鸡蛋里挑骨头，变成彻头彻尾的嘲弄。这种认定对手的想法中一定藏有矛盾的冲动，给了你一个容易击中的靶子，怂恿你对别人的看法做出无情解读。</p>
-<p>然而，<strong>这个容易击中的靶子通常与我们真正关心的问题不是一回事儿</strong>，你只是在浪费大家的时间和耐心而已，最多是给支持你的观点的人提供了一点消遣。</p>
-<h2 id="拉波波特法则">拉波波特法则</h2>
-<p>拉波波特法则的内容如下：</p>
-<table>
-<tbody>
-<tr class="odd">
-<td>如何撰写一篇成功的批评性评论?</td>
-</tr>
-<tr class="even">
-<td>① 你应该非常清楚、生动、不偏不倚地重述对手的想法，使得你的对手说：“谢谢你，我刚才要是像你这么表述就好了。”</td>
-</tr>
-<tr class="odd">
-<td>② 你应该把对方观点中你所同意的部分都列出来，尤其是那种并非被人们广泛接受了的观点。</td>
-</tr>
-<tr class="even">
-<td>③ 你应该提到那些从你对手那里学到的东西。</td>
-</tr>
-<tr class="odd">
-<td>④ 只有完成了以上三点，你才能说一句反驳或批评的话。</td>
-</tr>
-</tbody>
-</table>
-<p>遵循此法则的一个直接的好处就是，你的对手会因此乐于倾听你的批评。因为，他们看到你已站在他们的立场上，理解了他们的想法，同时你也展示出了良好的判断力，在一些重要的事情上和他们达成了共识，甚至在有些地方还被他们说服了。</p>
-<p>遵循拉波波特法则，有时内心会有挣扎，因为有些对手不值得我们如此尊重。但对于值得尊重的对手，当我们用了这个方法，总是能有意外之喜。</p>
-<h2 id="史特金定律">史特金定律</h2>
-<p>科幻作家泰德·史特金（Ted Sturgeon）这个评价科幻小说，"百分之九十的科幻小说确实很渣。但是，任何事物当中的百分之九十都是渣滓，而其中那不是渣滓的百分之十才是有意义的。我敢说，那百分之十的科幻小说可以与人类从古至今写就的任何作品相媲美。"</p>
-<p>对史特金定律更通俗的一种表达是：“任何事物当中的百分之九十都是垃圾（crap）。” 百分之九十的分子生物学实验、百分之九十的诗歌、百分之九十的哲学书、数学系里百分之九十的同行评议文章，等等，都是垃圾。</p>
-<h2 id="不要把时间浪费在无意义的事情上">不要把时间浪费在无意义的事情上</h2>
-<p>从史特金定律中我们应该学到：每个领域，每个人身上都有一大堆愚蠢、平庸、糟糕透顶的东西存在。最伟大的思想家经过些许巧妙扭曲之后，他们最好的学说、最精妙的分析也会显得又臭又长，变成彻头彻尾的蠢话。</p>
-<p>为了不浪费你的时间和大家的耐心，请确保你关注的是你能找到的该领域或者个人身上最好的东西，比如获奖之作、杰出成果、大家都赞不绝口的精品，而非糟粕。</p>
-<h2 id="怎么用知乎">怎么用知乎？</h2>
-<p>知乎对我而言最大的意义是，它上面质量前 10% 的内容价值是相当大的，远超其他主流中文互联网平台——至于剩下的，本来互联网上绝大部分内容都是垃圾，知乎也只是体现了世界的常态而已。这也提醒我对于那些有争议的领域，在噪音中找到真正有价值的东西，比带着偏见全盘否定要好上太多。 --张潇雨</p>
-<h2 id="参考">参考</h2>
+<h1 id="名词解释">名词解释</h1>
+<p>来，补充业务知识</p>
+<ul>
+<li>QPS：Queries Per Second，每秒查询次数</li>
+<li>SLA （service level agreement）:服务等级协议。指的是整个协议，协议的内容包含了SLI，SLO以及恢复的方式和时间等等一系列所构成的协议。</li>
+<li>SLI（service level indicator）:服务等级对象。指的是对象，例如：qps，响应时间，准确性等</li>
+<li>SLO（service level objective）:服务等级目标。指的是目标，例如：qps 99.99% ，响应时间10ms等。</li>
+</ul>
+<h1 id="几个问题">几个问题</h1>
+<p>看完第一遍之后，还有几个问题</p>
+<ul>
+<li><p>因果图是什么？</p>
+<p>因果图是一个两层分层的图。（two layered hierarchical causality graph） 较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph）。 较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph）</p></li>
+<li><p>指标因果图和服务依赖图是什么关系？</p>
+<p>指标因果图 和 服务依赖图可以看成是因果图的两个视图。</p>
+<p>因果图 = 指标因果图（刻画局部的依赖关系） + 服务依赖图（刻画整个信息设备的依赖关系）。</p>
+<p>指标因果图是细粒度的视图，表达的是一台机器上，一个服务的指标和多个机器之间的故障传播关系。</p>
+<p>服务依赖图是粗粒度的视图，表达的是不同机器的不同服务之间的故障传播关系。</p></li>
+<li><p>因果图是怎么构建？</p>
+<p>两种方式结合：采集调用链构建拓扑 + 数据分析得到因果关系</p></li>
+<li><p>因果图构建好了，如果做因果推断？</p>
+<p>深度优先遍历，找有故障的父母亲，直到找到根结点，或者正常的上游。</p></li>
+<li><p>一个主机上的服务，构建一个因果图？</p>
+<p>对的，每个主机上的每个服务都有一个自己的指标因果图。 然后跨主机的服务调用，就靠服务依赖图表示。</p></li>
+<li><p>因果图中不同的机器IP是否是不同的节点？ 是的，服务依赖图的粒度更细，是一个机器上的一个服务是一个节点。</p></li>
+<li><p>一个服务的SLO指标是怎么定义的？有什么规则？其他指标是怎么选取的？ 一般来说是需要对每一个应用去定制化定义的，但是这里可以用一个统一的指标，即服务相应时长。</p></li>
+<li><p>根因推断的时候，多个因导致的结果怎么推断出来？ 这种复杂的问题解决不了.</p></li>
+<li><p>根因推断的时候，多个根因怎么打分？ 找最异常的那个指标。</p></li>
+</ul>
+<h1 id="paper">paper</h1>
+<h2 id="摘要">摘要</h2>
+<p>关于性能诊断领域，之前大部分工作都很粗糙，只涉及定位异常，但是我们觉得还应该包括根因推断，使得软件维护更高效，并且提供更有用的信息给软件bug。</p>
+<p>解决所有的性能诊断问题，没有银弹（silver bullet）。本文也只是诊断性能问题的一个子集。</p>
+<p>当review完一些开源软件的bugs之后，我们观察到，很多bugs都可能导致性能问题。</p>
+<p>这里，我们仅仅考虑那些造成资源异常的bugs，例如 物理资源消耗异常（eg CPU） 或者 逻辑资源异常（eg 锁）。</p>
+<p>为什么要选择这些bugs？ 不需要关注源代码，就可以搜集资源消耗指标；软件中存在太多这种bugs了。 我们的目的是，找到导致这些指标异常（cpu消耗过多，db被锁）的原因，我们不直接识别软件bug，我们提供一些提示。 举个例子，如果我们定位到根因是，锁的个数异常，则可能是系统中有一个并发bug。</p>
+<h2 id="引言">引言</h2>
+<p>CauseInfer的思路是这样的，构建一个因果图，来捕捉因果（cause-effect ）关系，然后沿着因果路径推断出根因（root cause）。 为了完成这个任务，CauseInfer自动化地构建了额一个两层的分层的因果图。</p>
+<p>一旦服务级别目标（SLO）异常了，就触发因果推断。 首先将性能异常定位到某个服务（eg，tomcat），通过检测该SLO指标是否异常。 然后通过检测同一台机器上的其他性能指标是否异常，找到根因， 更进一步为了保证效果的稳定，提出了突变点检测方法，基于贝叶斯理论--这个方法比传统的检测方法如cusum要好。 通过在两组benchmark（Olio 和 TPC-W,）做实验评估，发现本方法可以定位出根因，准召分别是80%和85%。 本文的贡献</p>
+<ul>
+<li>提出了一个新的BCP突变点检测方法，比cusum更稳定，在长期的数据序列上</li>
+<li>提出了一个轻量的服务依赖方式的 发现方法，通过分析两个服务的流量延迟，很快定位到服务级别的性能异常，</li>
+<li>提供了一个基于原始PC-算法的因果图构建方法，使用这个因果图，我们肯呢个很准确定位到性能指标级别的性能问题的根因。</li>
+<li>设计和实现了CauseInfer，可以推断性能问题的根因，可以以较小的代价，较高的准确率找到性能问题的真正根因。</li>
+</ul>
+<h2 id="系统概览">系统概览</h2>
+<p>先描述CauseInfer的框架，并且通过一个简单的例子来描述这个系统的工作流</p>
+<h3 id="causeinfer的框架">CauseInfer的框架</h3>
+<p>看图说话--CauseInfer的框架</p>
+<p>对于每个节点-机器，都存在一个本地的因果图， 因果推断的流程 在前端的SLO异常时被触发，然后迭代往复地 沿着服务依赖图的路径，跑到后端服务， 如果在某个服务节点检测到SLO异常，那么就可以进行更精细的推断，--在指标依赖图上。 【图1-根因分析框架】展示了基本结构和workflow，</p>
+<ul>
+<li>底层是一个业务系统的物理拓扑</li>
+<li>顶部是这个业务系统对应的因果图 <img src="causeinfer_framework.jpeg" alt="图1-根因分析框架" /></li>
+<li>大虚线圆圈表示服务</li>
+<li>红色节点表示根本原因，</li>
+<li>黑色节点表示性能指标，</li>
+<li>绿色节点表示 SLO 指标，</li>
+<li>箭头表示方向 故障传播。</li>
+<li>图中的有向边代表的意思是，因果关系</li>
+</ul>
+<h3 id="举个演示工作流">举个🌰演示工作流</h3>
+<p>假设服务II节点中的指标 E 是根因</p>
+<ul>
+<li>当检测到服务 I 的 SLO 异常时，触发原因推断</li>
+<li>对服务 I 节点进行根因分析，定位根因是指标A，A就是服务II的SLO指标</li>
+<li>因此，服务II中的根因分析被触发，在服务II在的机器中，加载出相应的服务指标依赖图，服务I中的指标A异常可能是服务II的SLO异常导致。</li>
+<li>因此会继续在服务II中触发因果推断，这里用到该机器的指标因果图。</li>
+<li>总结：最后我们找到了根因--指标E， 推断路径为：SLO（service II ） → A（service II ） → D（service II） → E（service II） <img src="eample1.png" alt="图2example" /></li>
+</ul>
+<p>另外，需要注意的是，推断结果包含多个根因，因此需要一个排序的步骤选择最可能的根因， 来降低误告。</p>
+<h2 id="系统细节">系统细节</h2>
+<p>CauseInfer包含两个步骤：离线和在线。</p>
+<p>在线阶段包括两个模块，数据收集和因果推断。</p>
+<ul>
+<li>数据收集模块，收集了运行的性能指标--多个数据源。</li>
+<li>因果推断模块，负责因果图遍历和对根因进行排序。</li>
+</ul>
+<p>离线阶段包括两个模块--变点检测和因果图构建</p>
+<ul>
+<li>变点检测：将指标转化为0/1的二值序列，使用的是贝叶斯变点检测。</li>
+<li>因果图构建：使用二值指标来构建一个2层的层次化的因果图。</li>
+</ul>
+<h3 id="a数据收集">A：数据收集</h3>
+<p>数据收集模块，收集高维度运行信息，从多个数据源，横跨多个不同的软件栈，包括应用，进程 和 操作系统。</p>
+<p>在因果图构建阶段，我们需要一个应用的SLO指标。然而，并不是所有的应用都显示地提供SLO指标（例如mysql，hadoop）， 并且，不同应用中SLO对应不同指标。因此我们提出了一个新的统一的SLO指标--tcp请求延迟，简称为TCP LATENCY。 TCP LATENCY 衡量的是某个端口， 最后一个入站包（请求）和第一次出站包（响应）的时间间隔。 大部分应用都是用TCP作为传输协议，例如 Mysql, Httpd等，因此TCP延迟，可以作为大部分应用的SLO指标。</p>
+<h3 id="b-变点检测">B: 变点检测</h3>
+<p>根据Pearl的因果（cause-effect）[7]概念，如果有两个变量有因果关系，一个变量的变化将导致另一个变化。因此，在构建因果图之前，我们首先确定时间序列中的变化。一般采用CUSUM [4]来检测突变点， 但是由于对噪声的高敏感性，CUSUM很难检测出长期的变化，导致离线分析的高误警。因此我们引入了更有效的方法，贝叶斯变点检测（缩写为BCP）[8]</p>
+<p>BCP的基本思想是找到一个underlying 参数序列，将时间序列划分为连续的blocks，每个blocks的参数一样 突变点的位置，就是每个block的边缘。 。给定一个观察序列：X =（x1，x2，···，xn），目的是 找到一个分区：ρ=（P1，P2，P3，···，Pn-1）， 其中Pi = 1 表示在位置i + 1处发生了变化，否则Pi = 0。 关于BCP的详细理论分析参考论文[8]。与CUSUM方法相比，BCP不需要设置突变点个数，以及原始序列中group个数。</p>
+<p>BCP效果更好，更适合分析长序列，但是不适合在线模式， 所以我们仍采用CUSUM作为在线的变点检测方法。</p>
+<h3 id="c-因果图构建">C: 因果图构建</h3>
+<p>在本节中，我们将描述两层的分层因果图（即服务依赖图和 性能指标因果图）构建过程。 在collective变量中，如果Y的所有父母已经固定的，Y的分布将是固定的，并且不受其他变量影响。在这种因果关系中， 不允许两个变量互为因果。所以因果关系可以由DAG进行编码。</p>
+<p>详细的服务依赖图 和 性能依赖图 的构建，参考<a href="https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/">CauseInfer论文笔记2</a></p>
+<h2 id="总结一下离线和在线的流程">总结一下离线和在线的流程</h2>
+<h2 id="离线分析">离线分析</h2>
+<p>在离线阶段，构建因果图（causality graph），这个是本文的核心技术点。</p>
+<ul>
+<li>因果图是一个两层分层的图（two layered hierarchical causality graph）
+<ul>
+<li>较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph），用于定位到服务级别的cause。</li>
+<li>较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph），用于定位到性能异常的真正的元凶。</li>
+</ul></li>
+<li>构造服务依赖图分为两步：第一步通过采集器获取边是否存在；第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。</li>
+<li>服务依赖图中的实体是怎么定义的呢？二元组 (ip, service name)，有的文章用3元组（three-tuple）表示--(ip, port, proto)，proto是传输协议的类型，比如TCP或者UDP，因为考虑到一个服务可能占用多个端口。举一个例子，在一个三层的系统中，一个web server可以通过任意一个端口访问application server的。如果，使用端口作为唯一服务的属性，这个服务依赖图，就会变得非常之大，即使所有请求都是由同一个服务发起的。</li>
+</ul>
+<h2 id="在线推断">在线推断</h2>
+<p>在实时阶段，使用因果图（causality graph）来做根因推断，得到可能的原因列表。</p>
+<figure>
+<img src="img.png" alt="图1-根因分析框架" /><figcaption aria-hidden="true">图1-根因分析框架</figcaption>
+</figure>
+<h2 id="评估">评估</h2>
+<p>我们解决的是一个因果推断的问题，因此常用的统计学的设计实验的思路在这里行不通。</p>
+<h1 id="参考文献">参考文献</h1>
 <ol type="1">
-<li>《直觉泵和其他思考工具》-丹尼尔·丹尼特</li>
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf">2014-INFOCOM_CauseInfer</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/">别人对CauseInfer论文的解读</a></li>
+<li><a href="https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/">CauseInfer论文笔记2</a></li>
+<li>J. Pearl, Causality: models, reasoning and inference. Cambridge Univ Press, 2000, vol. 29.</li>
+<li>D. Barry, “A bayesian analysis for change point problems,” Journal of the American Statistical Association, vol. 88, no. 421, pp. 309–319, 1993.</li>
 </ol>
 
       
@@ -378,7 +453,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/43/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><span class="page-number current">44</span><a class="page-number" href="/page/45/">45</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/45/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/43/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><span class="page-number current">44</span><a class="page-number" href="/page/45/">45</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/45/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -444,7 +519,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -457,7 +532,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">118</span>
+        <span class="site-state-item-count">123</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -554,6 +629,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

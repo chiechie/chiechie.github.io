@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/14/AIOps/tineseries-correlation/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/knowing_myself/about-bielief/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/14/AIOps/tineseries-correlation/" class="post-title-link" itemprop="url">时间序列关联性分析</a>
+            <a href="/2021/04/18/knowing_myself/about-bielief/" class="post-title-link" itemprop="url">关于信念</a>
         </h2>
 
         <div class="post-meta">
@@ -187,23 +187,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-04-14 17:27:26" itemprop="dateCreated datePublished" datetime="2021-04-14T17:27:26+08:00">2021-04-14</time>
+              <time title="创建时间：2021-04-18 09:51:38 / 修改时间：11:54:08" itemprop="dateCreated datePublished" datetime="2021-04-18T09:51:38+08:00">2021-04-18</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-16 00:15:56" itemprop="dateModified" datetime="2021-04-16T00:15:56+08:00">2021-04-16</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -218,67 +212,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>performance counter： 性能监视器</p>
-</blockquote>
-<h2 id="背景">背景</h2>
-<p>为了保证产品的服务质量、减少服务宕机时间，从而避免更大的经济损失，对关键的服务事件的诊断显得尤为重要。实际的运维工作中，对服务事件进行诊断时，运维人员可以通过分析与服务事件相关的时序数据，来对事件发生的原因进行分析。虽然这个相关关系不能完全准确的反映真实的因果关系，但是仍然可以为诊断提供一些很好的线索和启发。</p>
-<ul>
-<li><p>如下图， 两个事件：程序A启动和程序B启动，一个时序：cpu使用率。 可以看到，事件（程序A的运行）与时序（CPU使用率）存在相关关系，并且程序A启动会导致CPU使用率升高，记为A-&gt;cpu上升。</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMjzFINogsh.png?alt=media&amp;token=9002fb74-9363-4a57-a182-fac68f04bd60" /></p></li>
+          <ul>
+<li>对现阶段的我来说，没有信念的支撑，工作中的小问题被无限放大了，并且没有动力去解决。</li>
+<li>合作过的yp和fh，工作有激情，有韧性，遇到问题就去搞定它，从不畏手畏脚，我非常羡慕他们这种状态。他们的共同点是，有自己信念，yp很坚信auto-ml是以后的趋势，fh坚信低门槛的建模工具是以后的趋势，他们有信念支撑，所以工作中遇到的问题，很自然地就会想到去解决，都不是什么大不了的事情。</li>
+<li>昨天跟聂老板聊到他创业经历，之前创业失败过四五次，但是换方向换到现在行业之后，立马感觉这个产品要成（一种直觉吧）。我追着问，是怎么感受到的？他说在市场上发了一个广告之后，立马有大量的人来询价，跟他之前做的几款产品的感受完全不一样。还问了他一般坚持一个方向多久，就知道失败了，他说是半年。当了老板之后考虑的东西完全不一样了，比如合伙人的决策机制（同股同权肯定要垮），核心骨干要跑路，销售要跳单，避税，这些问题怎么处理。这种小公司竞争过大公司的特殊之处是什么？他们这个行业，只有大而不强的公司，对用户需求相应不及时，小公司相对灵活，响应及时。在某个细分赛道，小公司有比较优势的,可以把性价比做到很高，售后服务也非常及时。</li>
 </ul>
-<p>希望能使用数据驱动的方法，找到类似的相关组合，也就是&lt;事件, 指标&gt;对，例如A-&gt;cpu上升，</p>
-<h2 id="基本概念">基本概念</h2>
-<ul>
-<li>时间序列（metric）： 通常有固定的时间间隔，例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。</li>
-<li>事件（event）：就是一个正常的操作比如程序A的启动，这个是需要运维指定的 他感兴趣的某个日志模版。 比如“Out of memory” /启动某个磁盘intensive程序/ 启动某个cpu intensive程序/query-time out alerts/某个告警，类似log3C的日志pattern，big pandas 的变更事件。event报告告警和日志。</li>
-<li>日志(logging)：例如有个应用出错，抛出了NullPointerExcepction。</li>
-<li>事件序列（event sequence）：记录了特定事件发生的序列。</li>
-<li>故障（incident）：故障定位，就是要找到这个故障的根因。 （感觉也能跟BigPanda的告警关联之后的结果 对应起来），</li>
-</ul>
-<h2 id="总结">总结</h2>
-<ul>
-<li>这篇文章主要是解决的什么问题？找到事件（E，event）和指标（S，metric）的相关性。</li>
-<li>具体的思路？将这个问题转换为统计中的两样本问题，并且使用邻近算法判断相关性。</li>
-<li>难点是什么？异构数据 + 异常关联性，异构指的是文本+时序，异常关联性，指的是，只关心事件和指标异常时刻的相关性。</li>
-<li>用的什么分析方法？还可以应用到哪些领域？ 用2-sample解决event 和 指标 之间的关联关系，可推广到所有离散变量的相关性分析中。</li>
-<li>这篇文章没有解决的问题是？这些问题有什么解决方法？ 本文还是比较学术派，只是给了一个 分析指标 和 事件 的相关性 方法，至于怎么从众多原始日志和告警中得到事件，以及分析出来的相关性怎么应用到故障定位上面去，没有说。但是这两步 对于实际应用来说 是必不可少的。</li>
-<li>BigPandas将众多告警基于业务关系（拓扑数据）收敛成incident，然后将incident跟变更事件进行关联，得到的变更事件就是root cause</li>
-</ul>
-<h3 id="技术细节">技术细节</h3>
-<p>要解决两个问题：</p>
-<ol type="1">
-<li>确定指标和事件的因果关系，即事件A--&gt;指标1：两个随机分布的相似性指标</li>
-<li>确定因果关系中指标的单调性，即事件A--&gt;指标1上升：判断两个随机变量的大小关系的指标</li>
-</ol>
-<p>都是统计中的假设检验的方法。</p>
-<p>判断方向可以转化为以下问题：</p>
-<ol type="1">
-<li>判断事件发生前的 一段序列 跟 整个时序的相似性。如果差异大，说明指标 --&gt; event</li>
-<li>判断事件发生后的 一段序列 跟 整个时序的相似性。如果差异大，说明event --&gt; 指标</li>
-</ol>
-<p>判断单调性，是这么做的：</p>
-<ol type="1">
-<li><p>计算event前后，2个子序列的 均值的差 <span class="math display">\[ t_{s c o r e}=\frac{\mu_{\Gamma^{f r o n t}}-\mu_{\Gamma^{r e a r}}}{\sqrt{\frac{\sigma_{\Gamma^{f} r o n t}^{2}+\sigma_{\Gamma^{r e a r}}^{2}}{n}}} \]</span></p></li>
-<li><p>判断单调性：</p></li>
-</ol>
-<ul>
-<li><p>如果<span class="math inline">\(t_{score} &gt; \alpha\)</span>, 得到负的单调性，即<img src="img.png" alt="img.png" /></p></li>
-<li><p>如果<span class="math inline">\(t_{score} &lt; -\alpha\)</span>, 得到正的单调性。</p>
-<p>这里P=0.025对应<span class="math inline">\(\alpha=1.96\)</span>，P=0.001对应<span class="math inline">\(\alpha=2.58\)</span></p></li>
-</ul>
-<h3 id="实验">实验</h3>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGkHOys2alH.png?alt=media&amp;token=95dde9c8-0249-4033-a027-83bca9a543ff" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fy5QnzhCHAl.png?alt=media&amp;token=13774051-eb1f-4ada-a978-9cd7d2bee748" /></li>
-</ul>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/SIGKDD-2014-Correlating-Events-with-Time-Series-for-Incident-Diagnosis.pdf">微软-指标与事件的关联分析paper</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/jixinpu/aiopstools/tree/master/aiopstools/association_analysis">关联分析code</a>:</li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-NMwaCD4Kzkt4BTnr5JKDQ">智能运维前沿-微软AIOps工作：时序数据与事件的关联分析</a></li>
-<li>H. B. Mann and D. R. Whitney. On a test of whether one of two random variables is stochastically larger than the other. The annals of mathematical statistics, 1947.</li>
-</ol>
 
       
     </div>
@@ -298,7 +236,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/14/technology/DeepAR%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/dl-framework/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -312,7 +250,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/14/technology/DeepAR%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">DeepAR笔记</a>
+            <a href="/2021/04/18/technology/dl-framework/" class="post-title-link" itemprop="url">模型推断的框架</a>
         </h2>
 
         <div class="post-meta">
@@ -323,7 +261,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-14 17:21:19 / 修改时间：17:30:31" itemprop="dateCreated datePublished" datetime="2021-04-14T17:21:19+08:00">2021-04-14</time>
+              <time title="创建时间：2021-04-18 08:53:17 / 修改时间：11:54:08" itemprop="dateCreated datePublished" datetime="2021-04-18T08:53:17+08:00">2021-04-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -346,124 +284,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="一些疑惑">一些疑惑</h2>
+          <blockquote>
+<p>解答了一直以来，关于模型部署的疑惑</p>
+</blockquote>
 <ul>
-<li>时序预测的技术难点在哪里？</li>
-<li>模型的输入是来自多个序列（有点点像类似迁移学习中的样本的横向扩展，以及持续学习中灌多个样本：
+<li>1 为什么说模型部署难？
 <ul>
-<li>为了保证模型不会出现灾难性遗忘掉先学到的模式，需要把来自不同的曲线的样本打散？</li>
-<li>如果说序列之间的模式本身就不一致，会不会导致模型学习到一个混乱的模式？</li>
-<li>要不要求序列本身就是相似的？</li>
-<li>不同scale的曲线如何share一个模型 ？</li>
-<li>1个deepAR 模型可以容纳的最大的曲线条数是多少？每个曲线的样本个数是多少？</li>
-</ul></li>
-<li>deepAR不适用的场景有哪些？</li>
-<li>encoder和decoder的权重是共享的么？</li>
-<li>预测target为count类型或者为正的数值类型，模型是怎么做的？</li>
-</ul>
-<h2 id="论文重点结论">论文重点结论</h2>
-<h2 id="相关技术综述">相关技术综述</h2>
-<ul>
-<li>classic时序预测： arima/state space/exponential smoothing
-<ul>
-<li>只对单个曲线做预测，缺点是要一个个曲线去做模型选择，并且每个样本曲线需要积累大量的历史数据</li>
-</ul></li>
-<li>基于神经网络：
-<ul>
-<li>单个曲线训练</li>
-<li>分组训练：发现即使分了组，每个组里面的曲线差异也很大</li>
-<li>全局训练：DeepAR是第一个</li>
-</ul></li>
-<li>【支线】其他领域：nlp，图像生成，语音生成技术 都可以用于时间序列，但是要注意有两个不同点：
-<ul>
-<li>时序场景中，下游的决策应用依赖输出概率分布</li>
-<li>时序场景中，输出为count类型，使用负的二项分布计算likelihood，这个时候不能使用标准的归一化方法，参考
-<ul>
-<li>归一化层，目前主要有这几个方法：Batch Normalization（2015年）、Layer Normalization（2016年）、Instance Normalization（2017年）、Group Normalization（2018年）、Switchable Normalization（2018年）；</li>
-</ul></li>
-</ul></li>
-<li>技术难点：
-<ul>
-<li>现实中需要对多个曲线建模，分别建模人工成本高</li>
-<li>不同曲线scale不一样，但是学习一个global model对nn来说挑战很大（nn擅长局部建模）</li>
-<li>预测概率分布</li>
-</ul></li>
-</ul>
-<h2 id="总结">总结</h2>
-<ul>
-<li>deepAR是一种时间序列预测算法.</li>
-<li>deepAR不做点估计，而是估计概率分布</li>
-<li>由于deepAR输出的是概率分布，所以对未来一段时间的预测，需要采样递归生成，但是采样只是1个路径，如果希望得到期望，需要重复采样</li>
-<li>适用于噪声较大的数据：相较于点估计能提供更有用的信息，如方差，在金融领域这个值代表风险，价值的(比如var用于计算准备金)。</li>
-<li>在交易上的启发：构建基于波动率的策略，风险大的情况下不交易。</li>
-</ul>
-<h2 id="deepar原理">deepAR原理</h2>
-<p>基本概念&amp;符号说明：</p>
-<ul>
-<li><span class="math inline">\(z_{i,t}\)</span>: 第i个时间序列在t时刻的值</li>
-<li><span class="math inline">\(P\left(\mathbf{z}_{i, t_{0}: T} \mid \mathbf{z}_{i, 1: t_{0}-1}, \mathbf{x}_{i, 1: T}\right)\)</span>: 模型输出</li>
-<li>conditioning range： <span class="math inline">\(t_0\)</span>表示历史依赖长度</li>
-<li>prediction range：预测区间</li>
-<li><span class="math inline">\(\mathbf{Z}_{i, t_{0}: T}\)</span>: 预测区间内，Z的取值</li>
-<li>model distribution:</li>
-<li>likelihood factors:</li>
-<li>自回归循环神经网络</li>
-<li>ancestral</li>
-<li>模型架构：训练过程（左边）和 预测过程（右边）： <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjTfoJccA7q.png?alt=media&amp;token=6850c357-b303-4053-81b8-2756678deb58" /></li>
-<li>学习目标： 最大化likelyhood: <span class="math display">\[\mathcal{L}=-\sum\limits_{i=1}^{N} \sum\limits_{t=t_{0}}^{T} \log \ell\left(z_{i, t} \mid \theta\left(\mathbf{h}_{i, t}\right)\right)\]</span></li>
-<li>【重点】对不同scale曲线怎么处理的？
-<ul>
-<li><ol type="1">
-<li>不同曲线怎么做归一化和逆归一化？缺失值多&amp;方差变化大</li>
-</ol>
-<ul>
-<li>context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。</li>
-<li>相当于在第一层做了layer Normalization</li>
+<li>因为部署的环境不一样，所以需要许多定制化的工作</li>
 </ul></li>
 <li><ol start="2" type="1">
-<li>不同曲线的长度和重要性不一样，如果是按照曲线id来均匀采样，会导致重要的曲线学的不够（underfit）</li>
+<li>tensorflow和pytorch这两个框架不能直接用于推理吗？</li>
 </ol>
 <ul>
-<li>不做均匀采样，而是做加权采样--使用1里面计算得到的scale作为权重</li>
+<li>可以，但是性能不佳。推理阶段相对训练阶段对模型服务的性能要求更高，比如模型稳定性，响应延迟等，。</li>
+<li>tensorflow和pytorch本身是训练框架，拿来兼做推理框架其实不可以。</li>
+<li>但是在推理阶段，如果业务要求模型服务 高可用，训练框架就显得过于臃肿了而不合时宜了，需要更轻量的框架，如pytorch，tensorRT等。 <img src="dl-framework/img.png" alt="img.png" /></li>
 </ul></li>
-</ul></li>
-<li>【重点】deepAR是怎么得到概率分布的？
+<li><ol start="3" type="1">
+<li>DL框架产业现状？</li>
+</ol>
 <ul>
-<li>比较intutive的推导--updata0926
+<li>训练框架是标准品</li>
+<li>推理框架是定制品：这里提到了一点就是使用场景没有<strong>网络效应</strong>，我理解就是规模效应，客观环境决定了，“推理框架”相对于“训练框架” 而言，不是一个好摘的果子
 <ul>
-<li>我们希望得到条件概率分布，即p（z｜x），</li>
-<li>Q 如何得到概率分布呢？</li>
-<li>A ：分两步走
-<ul>
-<li>先拍一个概率分布的形式（函数族），eg高斯分布</li>
-<li>使用量化指标<span class="math display">\[&lt; \mu, \sigma&gt; \]</span>进一步确定这个分布</li>
-</ul></li>
-<li>Q 剩下的问题（不确定的因素）为，如何确定量化指标？</li>
-<li>A ：构建一个神经网络，输入x，输出 <span class="math display">\[&lt; \mu, \sigma&gt; \]</span></li>
-<li>Q 那么nn怎么知道输出的u，sigma对不对呢，又没有监督信号 来指引，只有&lt;x, y&gt; pair</li>
-<li>A： 使用likelihood 和 y 来度量输出的<span class="math display">\[&lt; \mu, \sigma&gt; \]</span>质量好不好
-<ul>
-<li>有点像，有个人号称 他的理论知识渊博&lt;u，sigma&gt;(覆盖了y空间中所有的案例），现在要检验他的方法论对不对呢？只有一个实践案例----- 假设是对的，然后看是否适用该案例</li>
-</ul></li>
-<li>总结下：
-<ul>
-<li>模型输出&lt;u, sigma&gt;, 实际给的ground truth：y</li>
-<li>loss为：<span class="math display">\[- log Prob(\mu，\sigma，y） \]</span></li>
+<li>客观环境（部署依赖整个生产链路的环境，包括硬件厂商，应用服务）导致了没有统一的条件</li>
 </ul></li>
 </ul></li>
-<li>前提，先假设预测的数据服从的分布族，有几个待估参数
-<ul>
-<li>实值--假设是高斯分布</li>
-<li>整数--假设是一个二项分布</li>
-</ul></li>
-<li>设计网络的时候，需要某一层输出是 分布的参数（例如<span class="math display">\[\mu\]</span> 和 <span class="math display">\[\sigma\]</span>）,
-<ul>
-<li>训练的时候，将<span class="math display">\[&lt; \mu, \sigma&gt; \]</span> 带入pdf，计算pdf中 ground truth的概率，取negtive log，作为反馈信号（-log prob就是loss），这个值越大（loss越小）说明模型预测的越准。</li>
-<li>做推断的时候，将<span class="math display">\[&lt; \mu, \sigma&gt; \]</span> 带入pdf， 进行采样，得到预测值</li>
-</ul></li>
-</ul></li>
-<li>【重点】输出的概率分布，怎么评估模型效果？</li>
 </ul>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>file:///Users/stellazhao/Desktop/深度学习框架-2020-0630-Qlearning分享-Turbo-PPT.pdf</li>
+</ol>
 
       
     </div>
@@ -482,7 +333,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -548,7 +399,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -561,7 +412,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">118</span>
+        <span class="site-state-item-count">123</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

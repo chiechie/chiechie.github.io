@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/reading_notes/podcast_natural-sciences-and-economy/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/AIOps/aiops2021-demo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/08/reading_notes/podcast_natural-sciences-and-economy/" class="post-title-link" itemprop="url">许成钢教授谈治学</a>
+            <a href="/2021/03/09/AIOps/aiops2021-demo/" class="post-title-link" itemprop="url">AIOps挑战赛2021-demo方案</a>
         </h2>
 
         <div class="post-meta">
@@ -188,7 +188,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-08 09:38:42" itemprop="dateCreated datePublished" datetime="2021-03-08T09:38:42+08:00">2021-03-08</time>
+              <time title="创建时间：2021-03-09 22:04:42" itemprop="dateCreated datePublished" datetime="2021-03-09T22:04:42+08:00">2021-03-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -218,21 +218,98 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="摘录">摘录</h2>
-<ol type="1">
-<li>坚持长期主义还是走捷径？年轻的时候肤浅，一辈子都会肤浅，由此就葬送了。<strong>在能够生存的情况下，要努力想得更深，走得更远</strong>。</li>
-<li>牛顿的天体力学是物理学理论的一个突破。牛顿的突破从哪来？ 牛顿知道了开普勒的椭圆轨道和伽利略的自由落体的定律，他认为这两个简单的数学公式互相矛盾、连不起来的。在他看来，无论天上的行星，还是地上的东西，都属于上帝制造的世界，那就属于同一种规律。牛顿把这些公式全部连在一起，就有了物理学的第一个体系。从此才有了科学。</li>
-<li>还有一个例子，就是电。无线电的发明是从麦克斯韦方程组（Maxwell's equations）里通过纯理论的方式推出来的。在麦克斯韦之前，法拉第等人已经分别把电和磁的现象写成了一个个很简单的公式，直到许多这样的公式放在一起，它们之间似乎应该有关系的时候，才到了形成理论的时候。所以没有这些人做的这些早期的电和磁的工作，就没有麦克斯韦方程组，也就没有后来的爱因斯坦的相对论。所以，所有的这些了不起的理论发展，实际上都是因为实证，你要先<strong>发现这些非常可靠的规律性现象</strong>。如果没规律就没科学，科学就是找规律的。做科学，有规律我才看，没规律不看。当然，这涉及到你的判断了。你可以借助现有理论帮助你判断，或者你的直觉可以帮助你判断，总而言之你要有个判断。</li>
-<li>经济学作为一门科学现在理论发展到什么阶段了？ 经济学和物理学比，还走在第谷开普勒的地方。经济学是零散的，片段互相连不起来，这就是今天的经济学的状态。经济学怎么才能有更多的连起来的东西？唯一的办法就是历史。如果你只看现在，那就是一个截面（cross-section），那就是一张照片，你只看一张照片是没有可能把人类社会是怎么回事弄清楚的。在历史上寻找，是你唯一能弄清楚人类社会的办法</li>
-<li>当你问题看得更大、看得更多、看得更深的时候，你会发现你见到的规律性的现象是有条件的。在你不知道条件的时候，你会以为它是一个普世的（universal）规律，但实际上它是有条件的。</li>
-<li>关于实验经济学
+          <h2 id="数据解析">数据解析</h2>
+<p>比赛数据包括： 部署拓扑，指标数据，日志数据，调用链数据，故障标签</p>
+<h3 id="部署数据">部署数据</h3>
+<figure>
+<img src="./aiops2021-demo/bushu.png" alt="部署数据" /><figcaption aria-hidden="true">部署数据</figcaption>
+</figure>
+<h3 id="指标数据">指标数据</h3>
+<p>指标数据包括业务指标 和 性能指标。 业务指标用于触发根因分析，性能指标用于局部的根因定位</p>
+<p>每个指标数据，都需要附带的信息有：归属物理设备id，以及相应用id，（这样才能做机器的指标依赖的额故障定位）</p>
+<h4 id="业务指标">业务指标</h4>
+<p>kpi_0304.csv</p>
 <ul>
-<li>实验经济学仍然处在探索之中。最早的诺贝尔经济奖授予研究纯心理学工作的团队，涉及到经济学的基础—人的偏好。人们过去做了一些重大假设，假设人们的心理偏好。在实验室里，人们发现了这些假设是被违反的，从而动摇了经济学的基础。</li>
-<li>实验大体上有两类：心理学实验 和 医学临床实验。心理学实验是无争议的，非常重要。有争议的地方在于从社会科学的角度讲，哪些问题是最重要的？对于临床试验，关键问题就是你的问题是什么？目的是discovery，那很好，是科学。如果目的是policy，为了验证某个理论，那是工程。</li>
-</ul></li>
+<li>rr：单位%，系统响应率</li>
+<li>sr：单位%，业务成功率</li>
+<li>cnt：单位条，交易量</li>
+<li>mrt：单位ms，平均响应时间</li>
+<li>tc：交易码, 有11种应用, 'ServiceTest1', 'ServiceTest10', 'ServiceTest11', 'ServiceTest2', 'ServiceTest3', 'ServiceTest4', 'ServiceTest5', 'ServiceTest6', 'ServiceTest7', 'ServiceTest8', 'ServiceTest9'</li>
+</ul>
+<figure>
+<img src="./aiops2021-demo/yewu.png" alt="业务指标" /><figcaption aria-hidden="true">业务指标</figcaption>
+</figure>
+<h4 id="性能指标">性能指标</h4>
+<p>每个应用的指标, 每个kpi会有一个对应的机器id（即cmdb_id）</p>
+<ul>
+<li>cmdb_id: 指标归属的物理设备, 每个物理设备上收集到的指标一般来说包括两种，「操作系统」性能指标以及「服务」性能指标。</li>
+<li>kpi_name: 指标归属的服务类型，比如归属于操作系统/java虚拟机/Redis/Tomcat/Mysql等</li>
+</ul>
+<figure>
+<img src="./aiops2021-demo/xingneng.png" alt="性能指标" /><figcaption aria-hidden="true">性能指标</figcaption>
+</figure>
+<h3 id="日志数据">日志数据</h3>
+<p>日志数据有3个重要字段：</p>
+<ul>
+<li>cmdb_id： 日志是从哪台物理机器上产生</li>
+<li>log_name: 日志对应的组件名和日志类别, 相当于4个采集器，eg catalina/gc/localhost/localhost_access_log</li>
+<li>value: 日志内容, 里面的信息包括，日志级别，egINFO/WARNING/SEVERE，具体报错信息</li>
+</ul>
+<p>目前只有Tomcat4台服务器有日志数据；并且根据采集的不同的组件，收集的日志。</p>
+<h3 id="调用链数据">调用链数据</h3>
+<p>调用链路数据来自：trace/trace_0304.csv</p>
+<p>重要的字段有：</p>
+<ul>
+<li>cmdb_id: 即对应的服务是部署在哪个机器上的, 一次全局的trace_id 可能跨越几个设备</li>
+<li>parent_id：子调用的上一次调用</li>
+<li>trace_id：一次trace对应的全局id，一个trace包括多次子调用</li>
+<li>span_id： 本流程的Span ID，</li>
+</ul>
+<figure>
+<img src="./aiops2021-demo/trace.png" alt="调用链" /><figcaption aria-hidden="true">调用链</figcaption>
+</figure>
+<h3 id="故障标签">故障标签</h3>
+<p>故障类型可分为--'应用故障', '网络故障', '资源故障'</p>
+<ul>
+<li>应用故障可分为2类：'JVM CPU负载高', 'JVM OOM Heap'</li>
+<li>网络故障可分为两类：'网络延迟', '网络隔离'</li>
+<li>资源故障可分为三类：CPU使用率爬升，内存使用率过高，磁盘IO写使用率过高</li>
+</ul>
+<h2 id="demo方案">demo方案</h2>
+<p>流程：</p>
+<ol type="1">
+<li>对「业务指标」进行异常检测，异常则触发下面的诊断。</li>
+<li>调用链异常检测和根因定位:「业务」指标异常了，定位是哪个中间件或者服务出现了异常，以及根因的那个服务。</li>
+<li>对应机器的指标进行根因定位：定位到了调用链中的根因服务，然后对该服务所在的机器进行下钻分析，进行更细粒度的根因指标定位，使用到了机器和中间件的「性能指标」。</li>
 </ol>
-<h2 id="参考">参考</h2>
-<p>1.<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/OOZabR5vQgmQzFIPrkJyoA">微信公众号-RandomWalk Theory-许成钢教授谈治学</a></p>
+<h3 id="业务指标异常检测略">业务指标异常检测(略)</h3>
+<p>找出第一个故障发生时刻：</p>
+<ul>
+<li>2021-03-04 08:39:00 - 2021-03-04 08:44:00</li>
+</ul>
+<h3 id="调用链异常检测和根因定位">调用链异常检测和根因定位</h3>
+<ol type="1">
+<li>找出异常调用路径--trace_id</li>
+<li>找出对应的根因的子调用--span_id</li>
+<li>找到span_id的机器</li>
+</ol>
+<figure>
+<img src="./aiops2021-demo/trace_rca.png" alt="调用链异常检测和根因定位" /><figcaption aria-hidden="true">调用链异常检测和根因定位</figcaption>
+</figure>
+<h3 id="对定位到的机器进行指标根因分析">对定位到的机器进行指标根因分析</h3>
+<ol type="1">
+<li>搜集该机器的所有性能指标，进行异常检测</li>
+<li>对于异常的指标，根据历史数据中学习到的因果图，进行根因推断。</li>
+</ol>
+<figure>
+<img src="./aiops2021-demo/metric_rca.png" alt="指标根因分析" /><figcaption aria-hidden="true">指标根因分析</figcaption>
+</figure>
+<h3 id="对下-分析结果-和-标准答案">对下 分析结果 和 标准答案</h3>
+<figure>
+<img src="./aiops2021-demo/evaluate.png" alt="对比" /><figcaption aria-hidden="true">对比</figcaption>
+</figure>
+<h2 id="参考资料">参考资料</h2>
+<p>1.<a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=17&amp;flag=1">aiops挑战赛2021-官网</a></p>
 
       
     </div>
@@ -252,7 +329,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/07/technology/virtual-machine/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/technology/PC-algo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -266,7 +343,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/07/technology/virtual-machine/" class="post-title-link" itemprop="url">思考工具--虚拟机</a>
+            <a href="/2021/03/09/technology/PC-algo/" class="post-title-link" itemprop="url">PC算法</a>
         </h2>
 
         <div class="post-meta">
@@ -276,14 +353,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-07 12:02:36" itemprop="dateCreated datePublished" datetime="2021-03-07T12:02:36+08:00">2021-03-07</time>
+              <time title="创建时间：2021-03-09 10:06:00" itemprop="dateCreated datePublished" datetime="2021-03-09T10:06:00+08:00">2021-03-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-09 14:11:22" itemprop="dateModified" datetime="2021-04-09T14:11:22+08:00">2021-04-09</time>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -291,7 +368,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
                 </span>
             </span>
 
@@ -306,34 +383,66 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>以虚拟机为原型的一个学习方法, 即「层层嵌套」，先使用high-level的视角：「只见森林不见树木」，再使用low-level的视角。</p>
-<p>虚拟机的设计范式，将逻辑复杂度从硬件转移到软件，当服务出现故障时，需要在多层次的软件层中找原因，隐隐有种不安。</p>
-</blockquote>
-<h1 id="总结">总结</h1>
+          <h1 id="基本概念">基本概念</h1>
+<ul>
+<li><p>因果图（cause graph）：因果模型的一种表达方式，因果图是一个DAG， G=（V，E），对于每一个节点v，给定了他的双亲pa（v），v跟所有非后代都是独立的。</p></li>
+<li><p>冲撞点（collider）：一种V型结构的因果图，</p></li>
+<li><p>PC算法的两个假设：马尔可夫条件和faithfulness。</p></li>
+<li><p>马尔科夫条件：可用来区分因果关系和相关关系，被用于生成依赖关系集合，构造因果图框架。</p></li>
+<li><p>faithfulness假设：可以用来保证，V中的所有变量的独立关系，都可以通过D-seperation表达。</p></li>
+</ul>
+<h2 id="d-分离">D-分离</h2>
+<p>D分离（D-Separation）定义很复杂，拿出来单独说。</p>
+<p>定义: 设 X，Y，Z 是 DAG 中不相交的节点集合， <span class="math inline">\(\pi\)</span> 为一条连接 X 中某节点到 Y 中某节点的路径 （不管方向）。 如果路径 <span class="math inline">\(\pi\)</span> 上某节点满足如下的条件：</p>
 <ol type="1">
-<li>设计者一般会根据实体机的功能和用途去给实体取名字。</li>
-<li>计算机也类似，不同的是，他被要求做成千上万件事情。用户只用点开不同的程序，就能够让计算机内部实现切换，从而转换成不同的装置去完成不同的工作。每套装置都是一个单独的小机器，这就是虚拟机。</li>
-<li>对计算机来说，指令就是齿轮和滑轮。所有的信息都要转换成二进制代码0和1。他们是计算能够读写的唯一语言。芯片上的电路会分流0/1代码，逻辑门不断开合，将信息流输送到某条电路，并且以这种方式来下达指令。计算机上唯一可移动的部件--是硬件上百万个的小空位，可以在1态和0态之间切换。计算机在某个时刻具有什么功能，取决于百万个微型元件的设置。</li>
-<li>若一台实体机的各组件相互配合，呈现不同状态，具备极强可塑性，只需施加一套特殊指令，就能把它变成虚拟机。虚拟机处理的是信息，它能够跟实体计算机做一样的工作：实体计算机中的可移动部件只是硬件中的状态变化；虚拟机可以直接操纵状态变化，来代表那些"可移动部件"。举个例子，你可以在草稿纸上演算除法，也可以在头脑中演算。两者都可以得出结果，因为我们的目标是得到一种信息--除法的结果。计算机十分擅长在头脑中演算，我们用计算机的时候，很难分清楚，自己操作的是一个专用的硬连线机器，还是一部多用途芯片上运行的虚拟机。</li>
-<li>几乎所有的电梯，空调，汽车都使用廉价的计算机芯片，它能运行PC的所有程序，但是我们却选择让他们只运行一个简单的程序--刻录在只读存储器上的代码，例如点火控制或者周期除霜。为什么呢？多功能芯片生产成本更低。</li>
-<li>虚拟机最初表示的是"实体机的一种独立有效的复制品"，实体机是实在的硬件，由硅芯片和芯片组成，称为A。而虚拟机是运行在另外一台实体机B上的计算机程序，他能完美地模拟计算机A；速度可能会慢点，毕竟他要先保障自己硬件B上的基本操作有效运行（通用操作），才能组织其硬件A上的那些操作。（基于linux开发的程序想要运行在window上，需要在windows机器上开发一个虚拟机；在开发阶段开发的程序要部署到生产环境，可以在生产环境安装一个容器，然后将生产环境的程序安插在容器内）</li>
-<li>虚拟机带来的好处是，避免资源浪费：假设有很多只能在MAC上运行的软件，你没有mac，他们就没法用，如果可以在PC上编写一个模拟MAC的虚拟机，然后这些mac软件就可以使用了。你的电脑会认定自己是真的mac，而且那些软件更加浑然不知。</li>
-<li>目前，绝大多数程序都需要专门的操作系统而不是专门的硬件，相同的硬件可以运行不同的操作系统。一种操作系统本身就是一个虚拟机，它能够让一个程序在略有差异的两台机器上同样有效运行。但是一个操作系统毕竟没有模拟任何实际存在的硬件，他只是按照要求创建出虚构的机器，接受待定的输入。</li>
-<li>JAVA虚拟机（JVM）是当今最流行的一种虚拟机，它比较像一个操作系统。用Java语言编写的web应用可以跨平台使用，不管是用windows还是安卓还是macOS。why？因为java程序的运行环境只依赖JVM，而每个操作系统都有专门的JVM，当运行某个java程序时时，跟你设备匹配的JVM会自动下载到你的电脑，几秒就装好了。然后，各种java小程序就可以运行了。</li>
-<li>可以看到，几乎所有的计算机程序都是虚拟机--由指令构成的软件，一旦运行，将通用计算机变成了专用计算机，这种专用计算机本可以专门设计和创建专门的硬件（例如AI芯片）。只需要在通用计算机上简单安装和运行程序，就可以得到一台功能清晰的计算机。</li>
-<li>图灵机或者笔记本，只能一条条执行指令，再次基础上扩展除了"并行"计算机的概念，可以一次执行数百万条指令。</li>
-<li>考虑一个在国际象棋的程序，它由common lisp这种高级语言写成，在一台pc上运行的windows操作系统上运行。实际上，这台pc伪装成了一台windows机器，这台windows机器又伪装成了一台lisp机器，这台lisp机器又伪装成了一台国际象棋游戏机。</li>
-<li>无论在哪个level上，我们总是只见森林不见树木，low-level的细节总是很容易忽略。计算机上虚拟机的层层嵌套和「小人儿功能主义」中小人儿的层层嵌套，两者之间的雷同并非巧合。虚拟机推动人类的创造和理解，完成了很多创造性任务。这些计算机的成就也给人类带来了启发：如果对大脑也实施类似的逆向工程，或许也能有所收获。</li>
-<li>所有说法语的人 都具备某种版本的法语虚拟机，说英语的人大脑里面也有一套固定模式的系统--英语虚拟机，如何在大脑中建立语言虚拟机？尚未有答案，不过可以看看计算机是怎么做的：编译器将高层指令翻译成可以在硬件上执行的代码，只需程序员在high-level设计出一个想法，它就有把握生成一个可执行的程序。</li>
+<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 V结构 , 即<span class="math inline">\(X \rightarrow w \leftarrow Y\)</span>，且 w 及其后代不在 Z中；(因为collider关系，w不可观测时,X,Y 相互独立)</li>
+<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 非V结构 ，且w在Z中 。</li>
 </ol>
+<p>则称Z阻断了路径<span class="math inline">\(\pi\)</span>。</p>
+<p>如果Z阻断了所有的X到Y的路径，就说Z集合D分离了X和Y，记作<span class="math inline">\((X \perp Y \mid Z)_{G}\)</span>.</p>
+<p>D分离这个性质有什么用呢？</p>
+<p>D分离是一种用来判断变量是否条件独立的图形化方法，相比于非图形化方法，更加直观，且计算简单。 对于一个DAG(有向无环图)，D-Separation方法可以快速的判断出两个节点之间是否是条件独立的。</p>
+<h1 id="pc算法-概览">PC算法-概览</h1>
+<p>PC算法是一种发现因果关系的算法，在满足一定的假设的前提下（基于马尔科夫条件 和 D-separation），使用基于统计的方法（显著性检验-<span class="math inline">\(G^2\)</span>），推导出因果关系（代表因果关系的DAG）。实现流程包括三步:</p>
+<ol type="1">
+<li>确定因果图的框架，有哪些点，有哪些边</li>
+<li>确定边的方向</li>
+<li>传播方向</li>
+</ol>
+<figure>
+<img src="pc-overview.png" alt="图1-PC算法" /><figcaption aria-hidden="true">图1-PC算法</figcaption>
+</figure>
+<h1 id="确定因果图框架">确定因果图框架</h1>
+<p>从全连接图开始，移走条件独立的边</p>
+<figure>
+<img src="pc1.png" alt="图2-确定框架" /><figcaption aria-hidden="true">图2-确定框架</figcaption>
+</figure>
+<p>Z从空集开始，不断增加</p>
+<p>具体来说，可以用指标<span class="math inline">\(G^2\)</span>（条件交叉熵）来检验给定Z时，X和Y的独立性，这里X，Y，Z是互斥的。</p>
+<p><span class="math display">\[G^{2}=2 m C E(X, Y \mid Z)\]</span></p>
+<ul>
+<li>m：样本大小</li>
+<li>$ C E(X, Y Z)$:给定Z时，X和Y的条件交叉熵，</li>
+</ul>
 <blockquote>
-<p>概念验证：无需动用神奇组织，我们找到了一种方法，能够清楚地说出"具有数万亿活动部件的计算机，它的那种高等能力到底是什么?"--编译器。</p>
+<p>显著性低于0.05，就说明条件分布和联合分布没有显著性差异，有因果关系 显著性超过0.05， 就说明条件分布和联合分布没有显著性差异，没有因果关系，是独立的。</p>
 </blockquote>
+<p>如果<span class="math inline">\(G^2\)</span>超过一个预先设定的显著性，比如0.05， 那么X和Y是条件独立的。</p>
+<p>PC算法使用一个全连接的无向图，然后使用<span class="math inline">\(G^2\)</span>描述条件独立性。</p>
+<h1 id="确定方向">确定方向</h1>
+<p>当DAG的架子搭起来了， 接下来的工作就是决定因果关系的方向了。这里使用到了D-seperation的方法。</p>
+<figure>
+<img src="pc2.png" alt="图3-确定方向" /><figcaption aria-hidden="true">图3-确定方向</figcaption>
+</figure>
+<h1 id="传播方向">传播方向</h1>
+<figure>
+<img src="pc3.png" alt="图4-传播方向" /><figcaption aria-hidden="true">图4-传播方向</figcaption>
+</figure>
 <h1 id="参考">参考</h1>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/21532330716e9c7a215e76c">直觉泵和其他思考工具-丹尼尔·丹尼特-微信读书</a></li>
-<li><a href="https://chiechie.github.io/2021/03/18/technology/dive-into-JVM/">关于JVM的延伸笔记-chiechie</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=o2A61bJ0UCw">pc算法-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">因果图的基本概念-知乎</a></li>
 </ol>
 
       
@@ -353,7 +462,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/37/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><span class="page-number current">38</span><a class="page-number" href="/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/39/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/37/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><span class="page-number current">38</span><a class="page-number" href="/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/39/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -419,7 +528,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -432,7 +541,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">118</span>
+        <span class="site-state-item-count">123</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

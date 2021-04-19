@@ -69,8 +69,8 @@ categories:
     - reinforcement learning 中模型输出会影响未来输入，必须考虑输出的后果
 - on-policy 和 off-policy 的 区别？
   - 都是用来更新价值网络的学习算法
-    - on-policy是按照当前的policy来估计q-value
-    - off-policy是按照最优的policy来估计q-value
+  - on-policy是按照当前的policy来估计q-value
+  - off-policy是按照最优的policy来估计q-value
     
 ## 工业界应用
 

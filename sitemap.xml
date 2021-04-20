@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://chiechie.github.io/2021/04/20/technology/dl-framework-from-view-of-compression/</loc>
+    
+    <lastmod>2021-04-20</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://chiechie.github.io/2021/02/26/meditation/how-to-read-paper/</loc>
+    
+    <lastmod>2021-04-20</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://chiechie.github.io/2021/04/20/meditation/about-management/</loc>
     
     <lastmod>2021-04-20</lastmod>
@@ -758,13 +772,6 @@
   </url>
   
   <url>
-    <loc>https://chiechie.github.io/2021/02/26/meditation/how-to-read-paper/</loc>
-    
-    <lastmod>2021-04-08</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://chiechie.github.io/2021/02/19/knowing_myself/what-people-i-wanna-be/</loc>
     
     <lastmod>2021-04-08</lastmod>
@@ -886,14 +893,14 @@
 
   
   <url>
-    <loc>https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/</loc>
+    <loc>https://chiechie.github.io/tags/%E8%81%8C%E4%B8%9A%E8%A7%84%E5%88%92/</loc>
     <lastmod>2021-04-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://chiechie.github.io/tags/%E8%81%8C%E4%B8%9A%E8%A7%84%E5%88%92/</loc>
+    <loc>https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/</loc>
     <lastmod>2021-04-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1082,27 +1089,6 @@
   </url>
   
   <url>
-    <loc>https://chiechie.github.io/tags/%E5%AE%8F%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/</loc>
-    <lastmod>2021-04-20</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://chiechie.github.io/tags/%E9%80%9A%E8%B4%A7%E8%86%A8%E8%83%80/</loc>
-    <lastmod>2021-04-20</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://chiechie.github.io/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/</loc>
-    <lastmod>2021-04-20</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://chiechie.github.io/tags/%E6%83%85%E7%BB%AA%E7%AE%A1%E7%90%86/</loc>
     <lastmod>2021-04-20</lastmod>
     <changefreq>daily</changefreq>
@@ -1146,6 +1132,27 @@
   
   <url>
     <loc>https://chiechie.github.io/tags/%E6%B5%B4%E8%A1%80%E9%BB%91%E5%B8%AE/</loc>
+    <lastmod>2021-04-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://chiechie.github.io/tags/%E5%AE%8F%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/</loc>
+    <lastmod>2021-04-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://chiechie.github.io/tags/%E9%80%9A%E8%B4%A7%E8%86%A8%E8%83%80/</loc>
+    <lastmod>2021-04-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://chiechie.github.io/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/</loc>
     <lastmod>2021-04-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1334,6 +1341,20 @@
   </url>
   
   <url>
+    <loc>https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2021-04-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/</loc>
+    <lastmod>2021-04-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://chiechie.github.io/tags/Karpathy/</loc>
     <lastmod>2021-04-20</lastmod>
     <changefreq>daily</changefreq>
@@ -1355,14 +1376,7 @@
   </url>
   
   <url>
-    <loc>https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/</loc>
-    <lastmod>2021-04-20</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/</loc>
+    <loc>https://chiechie.github.io/tags/%E8%81%8C%E4%B8%9A/</loc>
     <lastmod>2021-04-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1377,13 +1391,6 @@
   
   <url>
     <loc>https://chiechie.github.io/tags/%E5%B0%BC%E9%87%87/</loc>
-    <lastmod>2021-04-20</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://chiechie.github.io/tags/%E8%81%8C%E4%B8%9A/</loc>
     <lastmod>2021-04-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1812,14 +1819,14 @@
   </url>
   
   <url>
-    <loc>https://chiechie.github.io/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/</loc>
+    <loc>https://chiechie.github.io/categories/%E6%B2%89%E6%80%9D%E5%BD%95/</loc>
     <lastmod>2021-04-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://chiechie.github.io/categories/%E6%B2%89%E6%80%9D%E5%BD%95/</loc>
+    <loc>https://chiechie.github.io/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/</loc>
     <lastmod>2021-04-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

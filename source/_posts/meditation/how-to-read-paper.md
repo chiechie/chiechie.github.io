@@ -41,6 +41,8 @@ tags:
 
 ## 怎么样就算把文章读懂了？
 
+> “What I cannot create, I do not understand.” - Richard Feynman
+
 主要靠输出来检验自己，输出3个版本：
 
 - 1分钟类讲清楚，这个文章做了什么？目的是什么？

@@ -24,7 +24,7 @@ categories:
 
 ## 马尔可夫链（MP）
 
-马尔可夫链 （MP）：$\left(S, P^{\pi}\right)$
+马尔可夫链 （MP， Markov Process）：$\left(S, P^{\pi}\right)$
 
 - 一个状态转移如果符合马尔可夫，即一个状态的下一个状态只取决于当前状态，而跟他当前状态之前的状态都没有关系
 - $P=\left[\begin{array}{cccc}P\left(s_{1} \mid s_{1}\right) & P\left(s_{2} \mid s_{1}\right) & \ldots & P\left(s_{N} \mid s_{1}\right) \\ P\left(s_{1} \mid s_{2}\right) & P\left(s_{2} \mid s_{2}\right) & \ldots & P\left(s_{N} \mid s_{2}\right) \\ \vdots & \vdots & \ddots & \vdots \\ P\left(s_{1} \mid s_{N}\right) & P\left(s_{2} \mid s_{N}\right) & \ldots & P\left(s_{N} \mid s_{N}\right)\end{array}\right]$
@@ -34,7 +34,7 @@ categories:
 
 ## 马尔可夫奖励过程（MRP）
 
-马尔可夫奖励过程（MRP）：$\left(S, P, R, \gamma\right)$
+马尔可夫奖励过程（MRP， Markov Reward Process）：$\left(S, P, R, \gamma\right)$
 
 - MRP = MP + reward
 - R是奖励函数：$R\left(s_{t}=s\right)=\mathbb{E}\left[r_{t} \mid s_{t}=s\right]$
@@ -69,7 +69,7 @@ categories:
     
 ##  马尔可夫决策过程（ MDP）
 
-马尔可夫决策过程（MDP）： $\operatorname{MDP}(S, A, P, R, \gamma)$ 
+马尔可夫决策过程（MDP， Markov Decision Process）： $\operatorname{MDP}(S, A, P, R, \gamma)$ 
 
 - MDP能够对现实世界中很多问题建模，是研究强化学习的基础框架
 - MDP要求环境变量是完全可观测，但是现实中部分可观测问题也可转化为MDP问题

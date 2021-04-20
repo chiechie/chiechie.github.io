@@ -120,9 +120,9 @@ $x^{*}=\arg \max _{x \in \mathcal{X}} f(x)$
 
 ### 采集函数
 
-怎么采集下一步要探索的超参？两种采样思路：探索(exploration)与利用(exploitation)。
+怎么采集下一步要探索的超参？
 
-采集函数（acquisition function）即综合考虑了两种因素，对值得探索的超参的空间，给予高估值。
+采集函数（acquisition function）综合考虑了两种因素，期望和不确定性。对值得探索的超参的空间，给予高估值。
 
 
 ### 难点1-离散变量
@@ -140,5 +140,5 @@ $x^{*}=\arg \max _{x \in \mathcal{X}} f(x)$
 3. [贝叶斯优化-可视化版-distill](https://distill.pub/2020/bayesian-optimization/)
 4. [开源工具-Advisor-github](https://github.com/tobegit3hub/advisor)
 5. [谷歌的调参工具](https://cloud.google.com/ai-platform/optimizer/docs/overview)
-5. [csdn](https://blog.csdn.net/xys430381_1/article/details/103871212)
-6. [jianshu](https://www.jianshu.com/p/3587b24f1a6d)
+5. [超参数优---贝叶斯优化及其改进（PBT优化）csdn](https://blog.csdn.net/xys430381_1/article/details/103871212)
+6. [微软新工具 NNI 使用指南之 Tuner 篇-jianshu](https://www.jianshu.com/p/3587b24f1a6d)

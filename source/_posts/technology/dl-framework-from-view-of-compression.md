@@ -1,5 +1,5 @@
 ---
-title: dl_framework_from_view_of_compression
+title: 深度学习理论的统一框架-基于压缩视角
 author: chiechie
 mathjax: true
 date: 2021-04-20 18:39:48

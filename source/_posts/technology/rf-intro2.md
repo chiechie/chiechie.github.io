@@ -74,15 +74,14 @@ categories:
 - MDP能够对现实世界中很多问题建模，是研究强化学习的基础框架
 - MDP要求环境变量是完全可观测，但是现实中部分可观测问题也可转化为MDP问题
 - 「马尔可夫决策过程」相对于「马尔可夫奖励过程」多了决策，所以需要建模的对象多了两个要素：action 和 概率转移$P\left(s_{t+1}=s^{\prime} \mid s_{t}=s, a_{t}=a\right)$。
-- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbPx8H2l13W.png?alt=media&token=6e62ffdf-8434-40b4-b312-5037d805f911)
+    ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbPx8H2l13W.png?alt=media&token=6e62ffdf-8434-40b4-b312-5037d805f911)
 - 马尔可夫决策过程中的策略函数（policy evaluation）
-- 马尔可夫决策过程中的 控制：
-    - 策略迭代
-    - 价值迭代
+- 马尔可夫决策过程中的控制：策略迭代和价值迭代
 
 什么是MDP中的预测和控制？
-- 预测问题：给定poilcy时，求某个 状态的价值函数。
-- 控制问题：最优的策略 以及对应 的状态价值函数。
+
+- 预测问题：给定策略时，求某个状态的价值函数。（先知）
+- 控制问题：最优的策略，和对应的状态价值函数。（军师）
 
 ## MP/MRP/MDP三者的关系
 

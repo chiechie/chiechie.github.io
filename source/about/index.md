@@ -12,7 +12,7 @@ Hi，我是chiechie，一名互联网行业从业者。
 
 自由主义，怀疑主义，长期主义。
 
-reader & thinker。
+a reader & thinker。
 
 感兴趣领域包括历史，科技，哲学，物理，投资，商业，[这个博客](https://chiechie.github.io)会记录一些思考和读书笔记。
 

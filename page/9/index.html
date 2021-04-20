@@ -164,6 +164,104 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/dl-framework/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/technology/dl-framework/" class="post-title-link" itemprop="url">模型推断的框架</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-18 08:53:17 / 修改时间：11:54:08" itemprop="dateCreated datePublished" datetime="2021-04-18T08:53:17+08:00">2021-04-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>解答了一直以来，关于模型部署的疑惑</p>
+</blockquote>
+<ul>
+<li>1 为什么说模型部署难？
+<ul>
+<li>因为部署的环境不一样，所以需要许多定制化的工作</li>
+</ul></li>
+<li><ol start="2" type="1">
+<li>tensorflow和pytorch这两个框架不能直接用于推理吗？</li>
+</ol>
+<ul>
+<li>可以，但是性能不佳。推理阶段相对训练阶段对模型服务的性能要求更高，比如模型稳定性，响应延迟等，。</li>
+<li>tensorflow和pytorch本身是训练框架，拿来兼做推理框架其实不可以。</li>
+<li>但是在推理阶段，如果业务要求模型服务 高可用，训练框架就显得过于臃肿了而不合时宜了，需要更轻量的框架，如pytorch，tensorRT等。 <img src="dl-framework/img.png" alt="img.png" /></li>
+</ul></li>
+<li><ol start="3" type="1">
+<li>DL框架产业现状？</li>
+</ol>
+<ul>
+<li>训练框架是标准品</li>
+<li>推理框架是定制品：这里提到了一点就是使用场景没有<strong>网络效应</strong>，我理解就是规模效应，客观环境决定了，“推理框架”相对于“训练框架” 而言，不是一个好摘的果子
+<ul>
+<li>客观环境（部署依赖整个生产链路的环境，包括硬件厂商，应用服务）导致了没有统一的条件</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>file:///Users/stellazhao/Desktop/深度学习框架-2020-0630-Qlearning分享-Turbo-PPT.pdf</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/transformer-and-bert/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -481,114 +579,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/14/reading_notes/nava-joerogan-show/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/14/reading_notes/nava-joerogan-show/" class="post-title-link" itemprop="url">joerogan访谈nava</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-14 18:27:20" itemprop="dateCreated datePublished" datetime="2021-04-14T18:27:20+08:00">2021-04-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 23:11:04" itemprop="dateModified" datetime="2021-04-15T23:11:04+08:00">2021-04-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>人生只有一次，尽最大可能让他精彩。</p>
-</blockquote>
-<h2 id="摘要">摘要</h2>
-<ul>
-<li><p>what you do, who you do with, how you do it, weight more important than how hard you work</p></li>
-<li><p>outputs are nonlinear based on the quality of the work that you put in</p></li>
-<li><p>the right way that work is like a lion, you and i are not like cows, we are not meant to graze all day right.</p></li>
-<li><p>一个公司的规模，取决于内部 和 外部的 交易成本（transaction costs）对比。信息时代带来的最大的便利就是，让 外部交易变得更便捷；现在的趋势是公司的最优规模在锐减。</p>
-<blockquote>
-<p>chiechie：会有越来越多的敏捷和有创意的小公司</p>
-<p>大公司的问题：每个小模块有自己的KPI，生产链路长。多任务并发的时候，经常会遇到性能瓶颈。</p>
-<p>根本原因可能是大公司的官僚式管理制度问题？每个模块只用对生产链路中，自己这一环的kpi负责，而不是对整个业务的最终效果负责，根本就违背了「风险共担」。</p>
-</blockquote></li>
-<li><p>现阶段ai是什么阶段？low ai，即模式识别。</p></li>
-<li><p>为什么短时间内通用ai不可能？人连大脑的运行机制都不懂。根据摩尔定律，我们要再花50年，算力才能赶上一个cell内部的计算速度.</p></li>
-<li><p>关于bankers是不是洗劫了社会的 财富？ 其实他们也冒了很大的风险，赌输了也会破产。</p></li>
-<li><p>关于资本主义 和 社会主义</p>
-<ul>
-<li>“资本主义”这个词声名狼藉了，可以换成 “自由市场”，</li>
-<li>“社会主义”强调结果公平，伴随的一定有violence--暴力重分配</li>
-<li>许多人年轻的时候是社会主义（heart），长大后是资本主义（head）</li>
-<li>taleb说，对我的家人，我是一个communist；对我最亲密的朋友来说，我是一个社会主义者；在我的state-level的政治中，我是一个democrat；higher levels的政治中我是一个republican；在federal level政治中，我是一个libertarian</li>
-<li>一个组织或者群体的规模越大，群体内利益差异就越大，相互之间的信任的可能就越少，会产生更多的cheating，为了让这个系统运作的越好 就需要 匹配的 激励机制，将激励机制发挥到极致的例子就是资本主义。 &gt; 管理小团队，like family；管理大团队，要奖惩机制。</li>
-<li>群体的规模越小，比如对待家人，成为一个社会主义，会让你更幸福，但是对陌生人不行。</li>
-</ul></li>
-</ul>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=3qHkcs3kG44">Joe Rogan Experience #1309 - Naval Ravikants</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -654,7 +648,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-count">121</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

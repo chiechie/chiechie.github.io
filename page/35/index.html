@@ -164,6 +164,120 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/18/technology/dive-into-JVM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/18/technology/dive-into-JVM/" class="post-title-link" itemprop="url">深入理解JVM</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-18 11:55:45" itemprop="dateCreated datePublished" datetime="2021-03-18T11:55:45+08:00">2021-03-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-18 11:54:08" itemprop="dateModified" datetime="2021-04-18T11:54:08+08:00">2021-04-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="java的技术体系">Java的技术体系</h2>
+<ol type="1">
+<li>Java的技术体系包括：虚拟机，Java API，Java编程语言和第三方框架</li>
+</ol>
+<figure>
+<img src="dl-framework/img.png" alt="图1-Java的技术体系" /><figcaption aria-hidden="true">图1-Java的技术体系</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>虚拟机层隐藏了基层技术的复杂性，以及操作系统和机器的差异性。运行的程序的物理机器千差万别，而JVM则在千差万别的物理机器上构建了统一的运行平台，实现了，在任意一台虚拟机上变异的程序都能在任何一台虚拟机上运行。这使得java应用的开发比传统c应用的开发更加高效，程序员可以把主要经历集中在具体业务逻辑上，而不是物理硬件的兼容性上。一般情况下，一个程序员只要了解Java API，Java愈发，以及学习适当的第三方开发框架，就能满足日常开发的需要了，虚拟机会在用户不知不觉中完成对硬件平台的兼容以及对内存等资源的管理工作。了解虚拟机的额运作并不是一般开发人员必须掌握的知识。</li>
+<li>然而，凡事都具备两面性，java被应用到更多的领域之后，暴露了其在稳定性方面的问题。Java程序很可能在10个人同时使用时正常，但是在1万个人同时使用的时候就会缓慢，死锁。要满足1万个人同时使用，需要更高性能的物理硬件，但是在绝大多数情况下，提升硬件效能无法等比例地提升程序的运作性能和并发能力，甚至可能对程序的运作状况完全没有任何改善（这个有点像做一个创新项目，不断地砸钱，加人不一定能等比例地看到效果），卡住性能的原因有两个：
+<ul>
+<li>java虚拟机：为了给所有硬件提供一致的虚拟平台，牺牲了一些与硬件相关的性能</li>
+<li>java开发人员：如果开发人员不了解虚拟机的技术特性，运行原理，就无法写出最适合虚拟机运行的代码。</li>
+</ul></li>
+<li>目前商用的高性能Java虚拟机，都提供了相当多的优化特性，用于满足应用程序对性能和稳定性的要求。</li>
+</ol>
+<h2 id="延伸阅读-关于jre和jdk">延伸阅读-关于JRE和JDK</h2>
+<ul>
+<li><p>JRE： Java Runtime EnvironmentJDK，JRE是java运行时环境，包含了java虚拟机，java基础类库。是使用java语言编写的程序运行所需要的软件环境，是提供给想运行java程序的用户使用的。</p></li>
+<li><p>JDK：Java Development Kit，JDK是java开发工具包，是程序员使用java语言编写java程序所需的开发工具包，是提供给程序员使用的。JDK包含了JRE，同时还包含了编译java源码的编译器javac，还包含了很多java程序调试和分析的工具：jconsole，jvisualvm等工具软件，还包含了java程序编写所需的文档和demo例子程序。如果你需要运行java程序，只需安装JRE就可以了。如果你需要编写java程序，需要安装JDK。JRE根据不同操作系统（如：windows，linux等）和不同JRE提供商（IBM,ORACLE等）有很多版本，最常用的是Oracle公司收购SUN公司的JRE版本。</p></li>
+</ul>
+<p>类似，JRE就是一个python解释器，JDK是Pycharm</p>
+<h2 id="chiechies-reflection">chiechie's reflection</h2>
+<ol type="1">
+<li><p>一个运营人员，只要了解MLSql语法，就能满足日常开发的需要。 数据平台后台会在不知不觉中，完成对不同AI框架的兼容，了解底层的框架细节并不是一般运营人员必须掌握的知识？？这就是生搬硬套「虚拟机」的概念，主流的AI框架就两个，还要自动适配？</p></li>
+<li><p>虚拟机存在的背景是，操作系统和物理机器五花八门，构造虚拟机有规模效应：</p>
+<ul>
+<li>没有虚拟机的时候，10个操作系统，实现1个应用，要开发10个Java版本；实现100个应用，要开发1000个Java版本，开发成本 = 应用个数 * 操作系统的类别</li>
+<li>有了虚拟机，10个操作系统，我只用开发10个JVM；实现100个应用，我也只用开发100个Java版本。开发成本 = 应用个数 + 操作系统的类别</li>
+</ul></li>
+<li><p>随着应用个数爆发式增长，有虚拟机方式的开发成本要比没有虚拟机的开发成本少一个倍数（就是市面上操作系统的个数）。 操作系统的类别如果就1个，这么做成本并不会减少，并且会新增一部分协作带来的成本：本来一个算法工程师能搞定的代码，硬要拆分成两个人去做，拆分和沟通都需要成本吗，并且收益也不明显。</p></li>
+</ol>
+<p>这也能论证，生产发展到一定水平，会出现分工：一部分人去开发底层的虚拟机，一部分人去开发上层的应用。</p>
+<ol start="4" type="1">
+<li>高级开发 要了解Java虚拟机底层原理。 初级开发只要会用java和api就好了，开发应用就好了。初级和高级的人员分布是金字塔形状。 算法也一样， 初级算法工程师，只用了解调包就好，高级算法要了解算法原理，毕竟有一些难题，只知道调包搞不定，可能要改造下算法，有时候，还要了解底层代码的实现，然后再次开发，来提升性能。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/9b832f305933f09b86bd2a9kecc32f3013eccbc87e4b62e">深入理解JVM-微信读书</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20317448/answer/14737358">JRE 和 JDK 的区别是什么？知乎</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/18/meditation/chiechie-principle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -327,99 +441,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/16/technology/max-common-subsequence/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/16/technology/max-common-subsequence/" class="post-title-link" itemprop="url">提取两个字符串的最大公共子串</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-16 23:46:13" itemprop="dateCreated datePublished" datetime="2021-03-16T23:46:13+08:00">2021-03-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 11:54:08" itemprop="dateModified" datetime="2021-04-18T11:54:08+08:00">2021-04-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="题目和思路">题目和思路</h2>
-<p>题目：求两个字符串的最大公共子串。 这个公共子串可以是连续的也可以是不连续的，区别不大，下面只看连续的情况。</p>
-<p>思路是，构造一个矩阵，行为字符串A的每个字符，列为字符串B的每个字符 矩阵中元素默认为0， 第i行第j列的元素表示，A的子串（index从0到i）和B的子串(index葱从0到j)的最大公共子串的长度，并且这个公共子串在A的index为 ✨ 到i，在B的index为✨到j。</p>
-<p>例如 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：text1 &#x3D; &quot;abcde&quot;, text2 &#x3D; &quot;ace&quot; </span><br><span class="line">输出：3  </span><br><span class="line">解释：最长公共子序列是 &quot;ace&quot; ，它的长度为 3 。</span><br></pre></td></tr></table></figure> 酱紫</p>
-<h3 id="最简单的实现">最简单的实现</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment">## 不连续子串的版本</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestCommonSubsequence</span>(<span class="params">self, text1, text2</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :type text1: str</span></span><br><span class="line"><span class="string">        :type text2: str</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        compare_matrix = np.zeros((<span class="built_in">len</span>(text1) + <span class="number">1</span>, <span class="built_in">len</span>(text2) + <span class="number">1</span>))</span><br><span class="line">        <span class="keyword">for</span> i, s1 <span class="keyword">in</span> <span class="built_in">enumerate</span>(text1):</span><br><span class="line">            <span class="keyword">for</span> j, s2 <span class="keyword">in</span> <span class="built_in">enumerate</span>(text2):</span><br><span class="line">                <span class="keyword">if</span> s1 == s2:</span><br><span class="line">                    compare_matrix[i + <span class="number">1</span>, j + <span class="number">1</span>] = compare_matrix[:(i+<span class="number">1</span>), :(j+<span class="number">1</span>)].<span class="built_in">max</span>() + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">int</span>(compare_matrix.<span class="built_in">max</span>())</span><br><span class="line"><span class="comment">## 连续子串的版本</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestCommonSubsequence</span>(<span class="params">self, text1, text2</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :type text1: str</span></span><br><span class="line"><span class="string">        :type text2: str</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        compare_matrix = np.zeros((<span class="built_in">len</span>(text1) + <span class="number">1</span>, <span class="built_in">len</span>(text2) + <span class="number">1</span>))</span><br><span class="line">        <span class="keyword">for</span> i, s1 <span class="keyword">in</span> <span class="built_in">enumerate</span>(text1):</span><br><span class="line">            <span class="keyword">for</span> j, s2 <span class="keyword">in</span> <span class="built_in">enumerate</span>(text2):</span><br><span class="line">                <span class="keyword">if</span> s1 == s2:</span><br><span class="line">                    compare_matrix[i + <span class="number">1</span>, j + <span class="number">1</span>] = compare_matrix[i, j] + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">int</span>(compare_matrix.<span class="built_in">max</span>())</span><br></pre></td></tr></table></figure>
-<p>虽然结果对了，但是耗时太久，消耗内存大。</p>
-<h3 id="优化了一下运行时间">优化了一下运行时间</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestCommonSubsequence</span>(<span class="params">self, text1, text2</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :type text1: str</span></span><br><span class="line"><span class="string">        :type text2: str</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        l1 , l2 = <span class="built_in">len</span>(text1)  , <span class="built_in">len</span>(text2)</span><br><span class="line">        compare_matrix = [[<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(l2 + <span class="number">1</span>)] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(l1 + <span class="number">1</span>)]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(l1):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(l2):</span><br><span class="line">                <span class="keyword">if</span> text1[i] == text2[j]:</span><br><span class="line">                    compare_matrix[i + <span class="number">1</span>][j + <span class="number">1</span>] = compare_matrix[i][j] + <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    connitues = <span class="number">0</span></span><br><span class="line">                    compare_matrix[i + <span class="number">1</span>][j + <span class="number">1</span>] = <span class="built_in">max</span>(compare_matrix[i+<span class="number">1</span>][j], compare_matrix[i][j+<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span> compare_matrix[i+<span class="number">1</span>][j+<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="dl-framework/img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-common-subsequence/">leetcode地址</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/34/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/36/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/34/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/36/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -485,7 +510,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-count">121</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

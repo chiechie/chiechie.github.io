@@ -3,13 +3,14 @@ title: 怎么给算法项目制定KPI？
 author: chiechie
 mathjax: true
 date: 2021-04-02 22:20:36
-categories: 沉思录
+categories: 
+- 沉思录
 tags:
 - 管理
 - 职场
 ---
 
-
+> 至今没有想清楚
 
 现在流行OKR，即先制定目标，然后将目标拆解为key results，本意是避免教条主义。
 

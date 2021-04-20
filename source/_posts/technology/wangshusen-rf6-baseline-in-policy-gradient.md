@@ -10,7 +10,6 @@ categories:
 - 技术
 ---
 
-
 ## 策略梯度中的Baseline 1/4-数学推导
 - https://www.youtube.com/watch?v=yNEqbptitZs
 - Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。Baseline 可以是任何不依赖于动作的函数。这节课我们做数学推导，得出带有 baseline 的策略梯度，并对它做蒙特卡洛近似。在后面的两节课中，我们把它用在 REINFORCE 和 A2C 方法中。
@@ -87,5 +86,6 @@ https://www.youtube.com/watch?v=mtT4TSGSon8
         - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4cy4PbmERs.png?alt=media&token=07f13dfc-b03b-43f5-a99e-82690b8b6a79)
     - one -step A2C 是 multi-step A2C 的一个特例，使用了最少的观测数据。multi-step的效果更好
         - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNV4Q90x0xU.png?alt=media&token=eed6b59f-01e5-4803-9475-27a7f594bab9)
-- 参考：
-    - https://www.youtube.com/watch?v=hN9WMIMMeAI&t=64s
+
+## 参考
+1. https://www.youtube.com/watch?v=hN9WMIMMeAI&t=64s

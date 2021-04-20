@@ -164,6 +164,74 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf4-actor-critic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/technology/wangshusen-rf4-actor-critic/" class="post-title-link" itemprop="url">wangshusen-rf4-混合方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-18 20:35:01 / 修改时间：21:39:37" itemprop="dateCreated datePublished" datetime="2021-04-18T20:35:01+08:00">2021-04-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>等待补充</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf3-policy-based/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -269,134 +337,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf2-value-based/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/technology/wangshusen-rf2-value-based/" class="post-title-link" itemprop="url">wangshusen-rf2-基于价值的强化学习方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-04-18 20:30:11 / 修改时间：21:18:32" itemprop="dateCreated datePublished" datetime="2021-04-18T20:30:11+08:00">2021-04-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="几个问题">几个问题：</h2>
-<ul>
-<li>价值 指的是什么？</li>
-<li>怎么使用深度学习技术来求解这个问题？难点在哪里？</li>
-<li>跟DQN并列的概念还有哪些？</li>
-<li>DQN网络的输入输出是什么？中间结构是什么？</li>
-<li>DQN怎么更新参数？</li>
-</ul>
-<h2 id="回答">回答</h2>
-<ul>
-<li>「价值」 指的是 <strong>最优动作价值函数</strong>，即如果后续action都遵循<strong>最优策略</strong>，那么当前的&lt;state，action&gt;的得分。</li>
-<li><strong>最优动作价值函数</strong> 相当于 一个 先知。</li>
-<li>回到强化学习要解决的问题本身（MDP）--agent的目标是 打赢游戏（最大化total reward），那么我们将这个目标拆解为两个步骤，
-<ul>
-<li><ol type="1">
-<li>找到最优动作价值函数</li>
-</ol></li>
-<li><ol start="2" type="1">
-<li>在最优价值函数的指引下作出最优决策</li>
-</ol></li>
-</ul></li>
-<li>DQN的想法就是，使用一个深度神经网络拟合 <strong>最优动作价值函数</strong></li>
-<li>难点在于，谁都不知道 先知（<strong>最优价值函数</strong>）长什么样子（少数情况，如玩游戏可能可以知道）</li>
-<li>DQN的输入是state，输出是所有action对应的分数
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FfsQADMgSRa.png?alt=media&amp;token=18bf844e-aa59-4016-85d6-8cdfc801a9ce" title="fig:" alt="价值网络" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&amp;token=71ba382a-432c-4c00-8759-692d84c03f3d" title="fig:" alt="策略网络" /></li>
-</ul></li>
-<li>怎么更新模型参数
-<ul>
-<li>可以把一整局游戏玩完，搜集到反馈信号（total reward）再去更新DQN的参数。</li>
-<li>也可以玩一步，更新一下参数，就是TD算法</li>
-</ul></li>
-</ul>
-<h2 id="时序差分算法td算法">时序差分算法（TD算法）</h2>
-<ul>
-<li>TD error: 对于上一步&lt;<span class="math inline">\(s_{t-1}, a_{t-1}\)</span>&gt;的reward， 模型估值-真实值
-<ul>
-<li>模型作出的估计（模型对上一个状态估计的价值 - 模型对当前状态估计的价值） - 真实 reward （来自 environment）</li>
-</ul></li>
-<li>TD target： 对于上一步&lt;<span class="math inline">\(s_{t-1}, a_{t-1}\)</span>&gt;的长期value，
-<ul>
-<li>真实reward（来自 environment） + 折扣* 模型对当前状态估计的价值</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FROMmZ-LTGx.png?alt=media&amp;token=dae7cba7-84e1-4e7f-8638-60eaa2b1c166" /></li>
-</ul></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FEuWKISitjj.png?alt=media&amp;token=0427aa38-bad9-46f3-98bd-a1eb051df5cd" title="fig:" alt="时序差分算法" /></li>
-</ul>
-<h2 id="没想清楚">没想清楚</h2>
-<ul>
-<li>更新模型参数时，如果 把一整局游戏玩完，搜集到反馈信号（total reward）再去更新DQN的参数，那么，中间的决策过程怎么放到训练样本里面来？玩多次么？怎么搜集「最优价值」的反馈信号？</li>
-<li>Q函数 和 reward 函数 是不是可以相互转化？--是这样把？
-<ul>
-<li>Q 函数 == reward （来自 environment）+ 策略（来自 agent）</li>
-<li>Q * 函数 == reward （来自 environment）+ 最优策略（来自 agent）</li>
-</ul></li>
-</ul>
-<h2 id="时序差分算法的其他资料">时序差分算法的其他资料</h2>
-<ol type="1">
-<li>Sutton and others: A convergent O(n) algorithm for off-policy temporal-difference learning with linear function approximation. In NIPS, 2008.</li>
-<li>Sutton and others: Fast gradient-descent methods for temporal-difference learning with linear function approximation. In ICML, 2009.</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -479,7 +419,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-count">127</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

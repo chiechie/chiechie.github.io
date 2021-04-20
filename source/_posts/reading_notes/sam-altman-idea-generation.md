@@ -1,5 +1,5 @@
 ---
-title: 生成创意
+title: 创业点子
 author: chiechie
 mathjax: true
 date: 2021-04-13 08:22:53

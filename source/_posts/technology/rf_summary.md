@@ -78,7 +78,7 @@ categories:
 
 ### 价值学习，策略学习，动作裁判学习 这三种方法 存在的必要？
 
-- 既然有了policy Function 或者 Q, 都可以告诉agen怎么操作。那有什么必要去做 actor-critic 算法呢？单独学两个神经网络不就可以了？
+- 既然有了policy Function 或者 Q, 都可以告诉agent怎么操作。那有什么必要去做 actor-critic 算法呢？单独学两个神经网络不就可以了？
 - 问题就是不容易学呀！所以才会有Actor-Critic这种复杂的方法。
 
 ### 强化学习 适合哪些应用场景？图像分类 适合用吗？为什么 auto-ml适合用？

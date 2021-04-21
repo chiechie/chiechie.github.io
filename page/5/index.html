@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf3-policy-based/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf5-advanced-value-based/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/technology/wangshusen-rf3-policy-based/" class="post-title-link" itemprop="url">wangshusen-rf3-基于策略的强化学习方法</a>
+            <a href="/2021/04/18/technology/wangshusen-rf5-advanced-value-based/" class="post-title-link" itemprop="url">wangshusen-rf5-价值学习高级技巧1/3-经验回放</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-18 20:33:30 / 修改时间：21:28:38" itemprop="dateCreated datePublished" datetime="2021-04-18T20:33:30+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 20:40:17 / 修改时间：21:14:43" itemprop="dateCreated datePublished" datetime="2021-04-18T20:40:17+08:00">2021-04-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -212,47 +212,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="问题">问题</h2>
+          <ul>
+<li>经验回放(experience replay）： 就是把n条transition记录存下来(bufffer)，更新价值的时候，从里面抽样。好处是可以重复利用经验。</li>
+<li>技术发展路线
 <ul>
-<li>基于策略学习 的大致思路是怎么样的？
-<ul>
-<li>目的还是要让agent 实现最大的value，拆解为2步
-<ol type="1">
-<li>学习最优的策略（策略函数）</li>
-<li>根据最优策略作出决策</li>
-</ol></li>
+<li>93年提出「经验回放」的想法</li>
+<li>15年的DQN使用到了「经验回放」</li>
+<li>之后各种模型训练都会用到该技巧</li>
+<li>「经验回放」演化成了强化学习里面的标准方法</li>
 </ul></li>
-<li>难点在哪里？
+<li>「经验回放」的变体
 <ul>
-<li>state 太多，action 太多，</li>
+<li>最优「经验回放」： 给予极端场景更高的权重
+<ul>
+<li>增加transition采样的权重</li>
+<li>减少使用transition更新价值网络时的 learning rate</li>
 </ul></li>
-<li>深度学习技术是怎么帮助 实现策略学习的？
-<ul>
-<li>构造一个神经网络来拟合策略函数，这个神经网络 叫做策略网络</li>
 </ul></li>
-</ul>
-<h2 id="策略网络是什么">策略网络是什么？</h2>
-<p>输入：state，输出：多个action 下的概率，最后一层的激活函数用softmax。</p>
-<ul>
-<li>（input 和 output 的shape 和 DQ网络 一样）</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&amp;token=71ba382a-432c-4c00-8759-692d84c03f3d" title="fig:" alt="策略网络" /></li>
-</ul>
-<h2 id="状态价值函数是啥">状态价值函数是啥？</h2>
-<p>状态价值函数 ：基于某个策略，评价当下处境的好坏。state value function，对所有action求期望</p>
-<ul>
-<li>action-value function ： reward（env） + policy（agent）</li>
-<li>policy （agent）</li>
-<li>动作的随机性来自策略</li>
-<li>状态的随机性来自环境的状态转移</li>
-</ul>
-<h2 id="策略梯度是啥">策略梯度是啥？</h2>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F-uknITMKCq.png?alt=media&amp;token=e1a97c61-4fef-4837-8983-f74ec86f3e5f" title="fig:" alt="策略梯度公式" /></li>
-</ul>
-<h2 id="策略网络的是怎么更新参数的">策略网络的是怎么更新参数的？</h2>
-<ul>
-<li>policy-gradient算法，目标是 求一个 最优策略，使得在这个策略下，几乎所有的状态价值 都是最大的（就是对状态 求期望）</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGvhdfoS3jM.png?alt=media&amp;token=52ed6dde-1bd6-4428-856b-e319d58800d1" title="fig:" alt="Update policy network using policy gradient" /></li>
 </ul>
 
       
@@ -273,7 +249,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf2-value-based/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf4-actor-critic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -287,7 +263,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/technology/wangshusen-rf2-value-based/" class="post-title-link" itemprop="url">wangshusen-rf2-基于价值的强化学习方法</a>
+            <a href="/2021/04/18/technology/wangshusen-rf4-actor-critic/" class="post-title-link" itemprop="url">wangshusen-rf4-混合方法</a>
         </h2>
 
         <div class="post-meta">
@@ -298,7 +274,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-18 20:30:11 / 修改时间：21:18:32" itemprop="dateCreated datePublished" datetime="2021-04-18T20:30:11+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 20:35:01 / 修改时间：21:39:37" itemprop="dateCreated datePublished" datetime="2021-04-18T20:35:01+08:00">2021-04-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -321,67 +297,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="几个问题">几个问题：</h2>
-<ul>
-<li>价值 指的是什么？</li>
-<li>怎么使用深度学习技术来求解这个问题？难点在哪里？</li>
-<li>跟DQN并列的概念还有哪些？</li>
-<li>DQN网络的输入输出是什么？中间结构是什么？</li>
-<li>DQN怎么更新参数？</li>
-</ul>
-<h2 id="回答">回答</h2>
-<ul>
-<li>「价值」 指的是 <strong>最优动作价值函数</strong>，即如果后续action都遵循<strong>最优策略</strong>，那么当前的&lt;state，action&gt;的得分。</li>
-<li><strong>最优动作价值函数</strong> 相当于 一个 先知。</li>
-<li>回到强化学习要解决的问题本身（MDP）--agent的目标是 打赢游戏（最大化total reward），那么我们将这个目标拆解为两个步骤，
-<ul>
-<li><ol type="1">
-<li>找到最优动作价值函数</li>
-</ol></li>
-<li><ol start="2" type="1">
-<li>在最优价值函数的指引下作出最优决策</li>
-</ol></li>
-</ul></li>
-<li>DQN的想法就是，使用一个深度神经网络拟合 <strong>最优动作价值函数</strong></li>
-<li>难点在于，谁都不知道 先知（<strong>最优价值函数</strong>）长什么样子（少数情况，如玩游戏可能可以知道）</li>
-<li>DQN的输入是state，输出是所有action对应的分数
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FfsQADMgSRa.png?alt=media&amp;token=18bf844e-aa59-4016-85d6-8cdfc801a9ce" title="fig:" alt="价值网络" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&amp;token=71ba382a-432c-4c00-8759-692d84c03f3d" title="fig:" alt="策略网络" /></li>
-</ul></li>
-<li>怎么更新模型参数
-<ul>
-<li>可以把一整局游戏玩完，搜集到反馈信号（total reward）再去更新DQN的参数。</li>
-<li>也可以玩一步，更新一下参数，就是TD算法</li>
-</ul></li>
-</ul>
-<h2 id="时序差分算法td算法">时序差分算法（TD算法）</h2>
-<ul>
-<li>TD error: 对于上一步&lt;<span class="math inline">\(s_{t-1}, a_{t-1}\)</span>&gt;的reward， 模型估值-真实值
-<ul>
-<li>模型作出的估计（模型对上一个状态估计的价值 - 模型对当前状态估计的价值） - 真实 reward （来自 environment）</li>
-</ul></li>
-<li>TD target： 对于上一步&lt;<span class="math inline">\(s_{t-1}, a_{t-1}\)</span>&gt;的长期value，
-<ul>
-<li>真实reward（来自 environment） + 折扣* 模型对当前状态估计的价值</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FROMmZ-LTGx.png?alt=media&amp;token=dae7cba7-84e1-4e7f-8638-60eaa2b1c166" /></li>
-</ul></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FEuWKISitjj.png?alt=media&amp;token=0427aa38-bad9-46f3-98bd-a1eb051df5cd" title="fig:" alt="时序差分算法" /></li>
-</ul>
-<h2 id="没想清楚">没想清楚</h2>
-<ul>
-<li>更新模型参数时，如果 把一整局游戏玩完，搜集到反馈信号（total reward）再去更新DQN的参数，那么，中间的决策过程怎么放到训练样本里面来？玩多次么？怎么搜集「最优价值」的反馈信号？</li>
-<li>Q函数 和 reward 函数 是不是可以相互转化？--是这样把？
-<ul>
-<li>Q 函数 == reward （来自 environment）+ 策略（来自 agent）</li>
-<li>Q * 函数 == reward （来自 environment）+ 最优策略（来自 agent）</li>
-</ul></li>
-</ul>
-<h2 id="时序差分算法的其他资料">时序差分算法的其他资料</h2>
-<ol type="1">
-<li>Sutton and others: A convergent O(n) algorithm for off-policy temporal-difference learning with linear function approximation. In NIPS, 2008.</li>
-<li>Sutton and others: Fast gradient-descent methods for temporal-difference learning with linear function approximation. In ICML, 2009.</li>
-</ol>
+          <p>等待补充</p>
 
       
     </div>
@@ -400,7 +316,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -466,7 +382,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">122</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -479,7 +395,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">129</span>
+        <span class="site-state-item-count">131</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

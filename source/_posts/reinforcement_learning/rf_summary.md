@@ -73,6 +73,7 @@ categories:
 - 推荐系统
 - 网约车调度
 
+参考: [chiechie的笔记-关于强化学习的应用场景](https://chiechie.github.io/2021/04/21/reinforcement_learning/rf-application/)
 
 ## 一些思考
 

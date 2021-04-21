@@ -12,11 +12,16 @@ categories:
 
 > 来自zhoubolei的公开课
 
+- 强化学习的基础是马尔可夫决策过程一个马尔可夫决策过程由状态空间，决策空间，状态转移，奖励函数组成。
+- 总结一下，强化学习就是一系列的决策过程，他试图找到一个长期收益最大的一系列的决策行为。
+
+
+
 # 马尔可夫过程
 ## 基本概念
 
 - 状态转移矩阵P：$p\left(s_{t+1}=s^{\prime} \mid s_{t}=s\right)$
-    - $P=\left[\begin{array}{cccc}P\left(s_{1} \mid s_{1}\right) & P\left(s_{2} \mid s_{1}\right) & \ldots & P\left(s_{N} \mid s_{1}\right) \\ P\left(s_{1} \mid s_{2}\right) & P\left(s_{2} \mid s_{2}\right) & \ldots & P\left(s_{N} \mid s_{2}\right) \\ \vdots & \vdots & \ddots & \vdots \\ P\left(s_{1} \mid s_{N}\right) & P\left(s_{2} \mid s_{N}\right) & \ldots & P\left(s_{N} \mid s_{N}\right)\end{array}\right]$
+    $P=\left[\begin{array}{cccc}P\left(s_{1} \mid s_{1}\right) & P\left(s_{2} \mid s_{1}\right) & \ldots & P\left(s_{N} \mid s_{1}\right) \\ P\left(s_{1} \mid s_{2}\right) & P\left(s_{2} \mid s_{2}\right) & \ldots & P\left(s_{N} \mid s_{2}\right) \\ \vdots & \vdots & \ddots & \vdots \\ P\left(s_{1} \mid s_{N}\right) & P\left(s_{2} \mid s_{N}\right) & \ldots & P\left(s_{N} \mid s_{N}\right)\end{array}\right]$
 - horizon：在每个episode中，最大时间步数
 - episode：轨迹，从这个马尔可夫链 中采样得到的，每采样一轮就得到叫一个轨迹
 - 马尔可夫性质： future is independent of the past given the present

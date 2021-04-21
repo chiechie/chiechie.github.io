@@ -12,13 +12,18 @@ categories:
 - 技术
 ---
 
-## 几个应用场景
+## 应用场景
 1. 商品推荐: 每个用户的信息作为state，推荐的商品是action，长期看用户的点击率/浏览时长/消费额reward
 2. 网约车调度：定义state为 <地址，时间>，价值函数value为每个地址在每个时间的冷门程度
 3. 自动生成SQL语句：
 4. 神经网络结构搜索(NAS)：
    
     > NAS is closely related to hyperparameter optimization and is a subfield of automated machine learning (AutoML)
+
+
+
+### 网约车调度
+
 
 
 ### 神经网络结构搜索（NAS）
@@ -57,8 +62,8 @@ NAS是auto-ml的子领域，为了让机器去设计神经网络。
 
 
 ## 参考
-
-1. [DRL](https://github.com/wangshusen/DRL/tree/master/Notes_CN)
-2. [NAS](https://lilianweng.github.io/lil-log/2020/08/06/neural-architecture-search.html)
+1. [DRL-wangshusen中文教材](https://github.com/wangshusen/DRL/tree/master/Notes_CN)
+2. [NAS-介绍](https://lilianweng.github.io/lil-log/2020/08/06/neural-architecture-search.html)
 3. [NAS-wiki](https://en.wikipedia.org/wiki/Neural_architecture_search)
-4. [DARTS: Differentiable Architecture Search](https://arxiv.org/abs/1806.09055)
+4. [DARTS: Differentiable Architecture Search-paper](https://arxiv.org/abs/1806.09055)
+5. [chiechie: 贝叶斯优化](https://chiechie.github.io/2021/03/24/technology/bayes-optimization//)

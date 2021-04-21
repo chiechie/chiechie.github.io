@@ -341,7 +341,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-21 08:27:53" itemprop="dateModified" datetime="2021-04-21T08:27:53+08:00">2021-04-21</time>
+                <time title="修改时间：2021-04-21 19:14:54" itemprop="dateModified" datetime="2021-04-21T19:14:54+08:00">2021-04-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -367,13 +367,14 @@
           <blockquote>
 <p>来自zhoubolei的公开课</p>
 </blockquote>
+<ul>
+<li>强化学习的基础是马尔可夫决策过程一个马尔可夫决策过程由状态空间，决策空间，状态转移，奖励函数组成。</li>
+<li>总结一下，强化学习就是一系列的决策过程，他试图找到一个长期收益最大的一系列的决策行为。</li>
+</ul>
 <h1 id="马尔可夫过程">马尔可夫过程</h1>
 <h2 id="基本概念">基本概念</h2>
 <ul>
-<li>状态转移矩阵P：<span class="math inline">\(p\left(s_{t+1}=s^{\prime} \mid s_{t}=s\right)\)</span>
-<ul>
-<li><span class="math inline">\(P=\left[\begin{array}{cccc}P\left(s_{1} \mid s_{1}\right) &amp; P\left(s_{2} \mid s_{1}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{1}\right) \\ P\left(s_{1} \mid s_{2}\right) &amp; P\left(s_{2} \mid s_{2}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{2}\right) \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ P\left(s_{1} \mid s_{N}\right) &amp; P\left(s_{2} \mid s_{N}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{N}\right)\end{array}\right]\)</span></li>
-</ul></li>
+<li>状态转移矩阵P：<span class="math inline">\(p\left(s_{t+1}=s^{\prime} \mid s_{t}=s\right)\)</span> <span class="math inline">\(P=\left[\begin{array}{cccc}P\left(s_{1} \mid s_{1}\right) &amp; P\left(s_{2} \mid s_{1}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{1}\right) \\ P\left(s_{1} \mid s_{2}\right) &amp; P\left(s_{2} \mid s_{2}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{2}\right) \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ P\left(s_{1} \mid s_{N}\right) &amp; P\left(s_{2} \mid s_{N}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{N}\right)\end{array}\right]\)</span></li>
 <li>horizon：在每个episode中，最大时间步数</li>
 <li>episode：轨迹，从这个马尔可夫链 中采样得到的，每采样一轮就得到叫一个轨迹</li>
 <li>马尔可夫性质： future is independent of the past given the present
@@ -585,7 +586,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

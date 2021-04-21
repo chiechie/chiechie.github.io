@@ -21,18 +21,16 @@ categories:
 - 词的索引为i，
 - 中心词向量为：$\boldsymbol{v}_{i} \in \mathbb{R}^{d}$
 - 背景词向量为：$\boldsymbol{u}_{i} \in \mathbb{R}^{d}$
-
 我对wod2vec的理解: 本质对一个word的one-hot code降维。
 跟传统的降维方法如PCA比，区别在于，目标不一样。
 PCA： 经过编码-解码之后，信息丢失尽可能少。
 word2vec： 经过编码-解码之后，背景词可以映射为中心词，或者中心词可以映射为背景词，
-
 ![img.png](dl-framework/img.png)
-
 将背景词映射为中心词叫Continuous Bag-of-Words (CBOW)
 将中心词映射为背景词叫Skip-gram model (SG)
-
 下面重点说一下Skip-gram model的原理。
+
+
 
 ### 跳字模型（skip gram）
 

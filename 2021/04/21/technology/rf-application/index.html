@@ -28,7 +28,7 @@
 <meta property="og:description" content="几个应用场景  商品推荐: 每个用户的信息作为state，推荐的商品是action，长期看用户的点击率&#x2F;浏览时长&#x2F;消费额reward 网约车调度：定义state为 &lt;地址，时间&gt;，价值函数value为每个地址在每个时间的冷门程度 自动生成SQL语句： 神经网络结构搜索(NAS)：  NAS is closely related to hyperparameter optimizatio">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-21T00:22:04.000Z">
-<meta property="article:modified_time" content="2021-04-21T01:00:31.521Z">
+<meta property="article:modified_time" content="2021-04-21T09:02:33.391Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="强化学习">
 <meta property="article:tag" content="人工智能">
@@ -194,7 +194,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-21 08:22:04 / 修改时间：09:00:31" itemprop="dateCreated datePublished" datetime="2021-04-21T08:22:04+08:00">2021-04-21</time>
+              <time title="创建时间：2021-04-21 08:22:04 / 修改时间：17:02:33" itemprop="dateCreated datePublished" datetime="2021-04-21T08:22:04+08:00">2021-04-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -224,14 +224,31 @@
 <li><p>自动生成SQL语句：</p></li>
 <li><p>神经网络结构搜索(NAS)：</p>
 <blockquote>
-<p>NAS is closely related to hyperparameter optimization and is a subfield of automated machine learning (AutoML).[5]</p>
+<p>NAS is closely related to hyperparameter optimization and is a subfield of automated machine learning (AutoML)</p>
 </blockquote></li>
 </ol>
+<h3 id="神经网络结构搜索nas">神经网络结构搜索（NAS）</h3>
+<p>就好像下一盘棋一样，一局玩完可能要很久，所以每走一步，都可以，判断当前这步棋走的水平如何。</p>
+<p>但是只有当一盘都下完了，我们才真的知道具体的reward。</p>
+<p>NAS是auto-ml的子领域，为了让机器去设计神经网络。 2017年谷歌发了一篇paper，使用基于强化学习的思路，去设计网络结构。 具体思路是这样的，假设要设计一个20层的CNN，超参个数为20*3，即每一层卷积，需要设置： - 卷积核数量 - 卷积核大小 - 步长大小</p>
+<p>怎么定义为强化学习的问题呢？</p>
+<ul>
+<li>state为：截至目前，已经确定的超参。</li>
+<li>action：60个超参数中的一个的取值。</li>
+<li>policy value function为：选择某组超参，长期收益，也就是验证集上的准确率。</li>
+<li>策略网络，也就是用来逼近策略价值函数，是一个RNN。</li>
+</ul>
+<p>输入向量 <span class="math inline">\(x_t\)</span> 是对上一个超参数 <span class="math inline">\(a_{t−1}\)</span> 做 Embedding 得到的/ 高斯过程回归算法--代理函数，超参和效果的映射函数，实际上就等价于，策略价值函数的特殊情况。（只对所有的超参都给定时，才能给出价值）</p>
+<p>这个本质上就是一个有监督的方法，</p>
+<p>为什么强化学习NAS不采用这个简单的有监督方法，而要把这个问题拆解得更稀碎，不等所有超参确定完，而是确定一个超参，就要评估一下可行性呢？</p>
+<p>应用强化学习的代价是需要大量的训练样本，至少上万个奖励，即从初始化开始训练几万个 CNN。 这种强化学习 NAS 方法的计算量非常大。在这种强化学习 NAS 方法提出之后，很快就 有更好的 NAS 方法出现，无需使用强化学习。有兴趣的读者可以了解一下 DARTS 方法 [68];DARTS 及其变体是比较实用的 NAS 方法。</p>
+<p>这里有一个很有意思的问题，为什么不用监督算法拟合策略函数呢？ 因为超参有可能是离散的，也就是说，损失和奖励对于策略网络参数<span class="math inline">\(theta\)</span>不可微，这个时候，怎么拟合呢？想想贝叶斯优化里面，对正整数类型的超参，别扭的处理方法。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DRL/tree/master/Notes_CN">DRL</a></li>
 <li><a target="_blank" rel="noopener" href="https://lilianweng.github.io/lil-log/2020/08/06/neural-architecture-search.html">NAS</a></li>
 <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Neural_architecture_search">NAS-wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1806.09055">DARTS: Differentiable Architecture Search</a></li>
 </ol>
 
     </div>
@@ -319,7 +336,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">几个应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">几个应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%90%9C%E7%B4%A2nas"><span class="nav-number">1.1.</span> <span class="nav-text">神经网络结构搜索（NAS）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

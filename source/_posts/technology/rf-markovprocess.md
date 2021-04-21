@@ -1,5 +1,5 @@
 ---
-title: zhoubolei-强化学习2-马尔可夫过程
+title: 强化学习2-马尔可夫过程
 author: chiechie
 mathjax: true
 date: 2021-04-18 20:18:20
@@ -10,6 +10,9 @@ categories:
 - 技术
 ---
 
+> 来自zhoubolei的公开课
+
+# 马尔可夫过程
 ## 基本概念
 
 - 状态转移矩阵P：$p\left(s_{t+1}=s^{\prime} \mid s_{t}=s\right)$
@@ -90,3 +93,27 @@ categories:
 - MRP是MP + Reward，但是还是随波逐流
 - MDP + action，多了主观能动性
 - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FIuFRm5JvB6.png?alt=media&token=1ad94ce8-0886-4329-8902-dbf859b8ef22)
+
+
+# 基于模型的方法
+
+## 课前--大大问号
+
+- model-based 是什么？对环境建模是什么意思？model-based是强化学习中一种技术，核心思想就是对环境建模，使用计算机构建仿真环境。
+- 提出该方法是为了解决什么问题？有哪些应用场景？model-based是为了解决样本获取成本高的问题。例如，无人驾驶/无人机，如果让机器在真实交通环境中行驶，并且通过于真实环境互动来获取数据，那必然以发生多次严重车祸作为获取样本的巨大代价。在机器人场景中应用较多。
+- 类似的流派或者同级别的 不同的流派 还有什么？跟model-based相对的概念是model-free，它直接通过跟环境交互来获取样本，假设现实中获取样本的成本几乎为0。现在的强化学习论文中，大部分是采用的这个方法。
+- model-based方法是怎么实现的？对环境建模：输入<state,action>，输出下一个<state,reward> 。
+- 在多大程度上能解决背景中的问题。有没有引发新的问题？
+- 有没有理论支撑？
+- 不能做什么？
+    - 有理论支撑的话，理论上能证明解决不了什么问题？
+    - 工程或者落地时的难点？
+- 我们的基于股票预测结果构造策略 可以reformulate 成强化学习中的 什么方法？
+
+
+## 参考资料
+
+1. [周博磊课程-bilibili](https://www.bilibili.com/video/BV1hV411d7Sg)
+2. [知乎：model-based和model-free模型优缺点](https://www.zhihu.com/question/318703290/answer/751123263)
+3. [知乎：model-based方法介绍](https://zhuanlan.zhihu.com/p/72642285)
+4. [知乎：model-based和model-free模型优缺点](https://www.zhihu.com/question/318703290/answer/751123263)

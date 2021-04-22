@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="背景  electricity数据集--Electricity dataset from UCI： 参数  input_size： window_size-stride_size，14 stride window_size： 192 hour or 8天 stride_size: 24 hour，滑窗步长   问题  gluon-ts里面将输入做对数处理效果会不会好一点？  不用，mxnet已经做">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用gluon-ts做时序预测">
+<meta property="og:url" content="https://chiechie.github.io/2021/04/22/AIOps/gluon-ts_experiment_report/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Cosmos">
+<meta property="og:description" content="背景  electricity数据集--Electricity dataset from UCI： 参数  input_size： window_size-stride_size，14 stride window_size： 192 hour or 8天 stride_size: 24 hour，滑窗步长   问题  gluon-ts里面将输入做对数处理效果会不会好一点？  不用，mxnet已经做">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUD6-nafIsi.png?alt=media&amp;token=a359d00d-bde2-41b2-bb96-d9222cb4514c">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FxofMTtcgaV.png?alt=media&amp;token=26cd83f2-717e-4c9c-8a93-da589dcfe63d">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHF_Qc1aO1g.png?alt=media&amp;token=3591cf24-bfdf-44b7-894b-ba03652522f1">
+<meta property="article:published_time" content="2021-04-22T09:35:59.000Z">
+<meta property="article:modified_time" content="2021-04-22T10:12:17.631Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="博客, AI, 互联网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUD6-nafIsi.png?alt=media&amp;token=a359d00d-bde2-41b2-bb96-d9222cb4514c">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/04/22/AIOps/gluon-ts_experiment_report/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>使用gluon-ts做时序预测 | Chiechie's Cosmos</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Cosmos</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/22/AIOps/gluon-ts_experiment_report/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用gluon-ts做时序预测<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AIOps/gluon-ts_experiment_report.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-22 17:35:59 / 修改时间：18:12:17" itemprop="dateCreated datePublished" datetime="2021-04-22T17:35:59+08:00">2021-04-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="背景">背景</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014">electricity数据集--Electricity dataset from UCI</a>：</li>
+<li>参数
+<ul>
+<li>input_size： window_size-stride_size，14</li>
+<li>stride</li>
+<li>window_size： 192 hour or 8天</li>
+<li>stride_size: 24 hour，滑窗步长</li>
+</ul></li>
+</ul>
+<h2 id="问题">问题</h2>
+<ul>
+<li>gluon-ts里面将输入做对数处理效果会不会好一点？
+<ul>
+<li>不用，mxnet已经做了， 并且额外做预处理，可能还会带来负面影响，
+<ul>
+<li>loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，</li>
+</ul></li>
+<li>参考论文--context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。</li>
+</ul></li>
+<li>为什么pytorch的训练要7个小时？mxnet训练只要10min？
+<ul>
+<li>主要在样本采样这块</li>
+</ul></li>
+<li>自己能不用tensorflow复现mxnet的效果？
+<ul>
+<li>对比参数量，准确率，计算时间，内存消耗</li>
+</ul></li>
+<li>为什DeepAR和DeepFator的loss scale 差这么大?
+<ul>
+<li>loss的含义都不一样
+<ul>
+<li>deepAR的loss计算方式： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss</span>(<span class="params">self, x: Tensor</span>) -&gt; Tensor:</span></span><br><span class="line">	<span class="keyword">return</span> -self.log_prob(x)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li>deepFator的loss计算方式： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">negative_normal_likelihood</span>(<span class="params">self, F, y, mu, sigma</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        F.log(sigma)</span><br><span class="line">        + <span class="number">0.5</span> * math.log(<span class="number">2</span> * math.pi)</span><br><span class="line">        + <span class="number">0.5</span> * F.square((y - mu) / sigma)</span><br><span class="line">    )</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li>对不同曲线预测的时候，为什么有的曲线效果很， 好有的曲线效果很差？
+<ul>
+<li>deepAR会针对不同曲线，给loss 赋予不同的权重：loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，</li>
+</ul></li>
+</ul>
+<h2 id="算法前期调研中的一些小插曲">算法前期调研中的一些小插曲</h2>
+<p>网上找到了pytorch版本的deepAR版，但是很慢</p>
+<ul>
+<li>Student： 训练过程很慢 要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？</li>
+<li>Teacher： 看了amazon已经将deepAR做了产品化，按照算法开发的流程肯定经历了效率优化的，并且deepAR的文章发于2017年4月，到目前为止amazon应该做了多次迭代的，所以去查一下近3年的amazon deepAR 相关的资料，看有没有开源的稳定的算法代码。</li>
+<li>Student：找到了--基于MXNET的gluon-ts（于2019年6月发表），mxnet在electricty上的训练和预测时间大概是10min左右</li>
+<li>Teacher：很好，接下来可以考虑更多的产品化方面的事情了，结合运维场景；另外注意到CNN-QR的训练效率也很不错，把这几个算法的准确率对比看一下</li>
+<li>Student：整体上准确率 CNN-QR略逊于DeepAR，但是考虑到计算效率，两者还是不相上下。
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUD6-nafIsi.png?alt=media&amp;token=a359d00d-bde2-41b2-bb96-d9222cb4514c" /></li>
+</ul></li>
+<li>Teacher：下一步，试着CNN-QR的拓展。</li>
+<li>Student：好的</li>
+<li>Teacher： DeepAR用于异常检测 的效果也测试下</li>
+<li>Student：使用数据平台的两台主机的cpu指标测试，发现cpu的效果还不错，体现在 不同类型的曲线，他们的方差趋势都预测的很准。
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FxofMTtcgaV.png?alt=media&amp;token=26cd83f2-717e-4c9c-8a93-da589dcfe63d" /></li>
+</ul></li>
+<li>Teacher：使用有异常标注的数据测试具体的指标，两种都测下--批量预测 和 实时预测</li>
+<li>Student：在获取数据阶段踩了一些坑，因为维度太多，全部数据维度都要 会导致拉数据接口快挂了</li>
+<li>Teacher：找出其中最重要的维度（重要度 即每个维度的记录的条数或者指标求和）</li>
+<li>Student： 从5w个维度过滤出来了100个维度，剩下的大部分维度怎么弄呢？</li>
+<li>Teacher：先管好这个100个维度，跑一跑模型，剩下的数据质量差可以暂时不监控。</li>
+<li>Student： 这批数据有个特点--不同曲线形态模式很不一样，我怀疑1个模型很容易学混，接下来就证实了这一点（100个曲线上面的图，待补充）<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHF_Qc1aO1g.png?alt=media&amp;token=3591cf24-bfdf-44b7-894b-ba03652522f1" /></li>
+<li>Teacher： 尝试加入feat_static_cat特征，来区分不同曲线。</li>
+<li>Student：有些许变化，但是改进还不太明显。另外在做实验过程中，发现几个优化的方向
+<ul>
+<li><strong>epoch</strong>： 从 5 到 50，带来了大量的提升</li>
+<li><strong>lstm</strong>的网络结构参数：layers从2到1，units从40到20，准确率有部分提升</li>
+</ul></li>
+<li>Teacher：因为样本较少（3k个训练样本）更适合用简单的模型</li>
+<li>Student：除了直接使用deepar的默认scale以及概率分布的参数，还尝试了另外一个方法： 因为cpu使用率本身是0～1，将数据预处理（除以100）到0～1 之间后跑，但是直接跑模型会报错， 做了以下设置才能跑：
+<ul>
+<li>scale设置为False</li>
+<li>value 为边界点（0或者1）时，加入扰动项</li>
+<li>输出的概率分布设置为beta分布 输出的上下界，非常符合比率型设定（上界不会超过1，下界不会低于0），但是就是准确率不高，一看就是学混了（移花接木，局部的模式 太弱了）</li>
+</ul></li>
+<li>出bug了，排查问题</li>
+</ul>
+<h2 id="deepar实验v1">deepAR实验v1</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/zhykoties/TimeSeries">code</a>： pytorch版本</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> series <span class="keyword">in</span> trange(num_series):</span><br><span class="line">    cov_age = stats.zscore(np.arange(total_time-data_start[series]))</span><br><span class="line">    <span class="keyword">if</span> train:</span><br><span class="line">        covariates[data_start[series]:time_len, <span class="number">0</span>] = cov_age[:time_len-data_start[series]]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        covariates[:, <span class="number">0</span>] = cov_age[-time_len:]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(windows_per_series[series]):</span><br><span class="line">        <span class="keyword">if</span> train:</span><br><span class="line">            window_start = stride_size*i+data_start[series]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            window_start = stride_size*i</span><br></pre></td></tr></table></figure>
+<pre><code>    - num_covariates： 4个
+    - pred_days : 7
+    - num_vovariates: 4个
+        - 周几
+        - 几点
+        - 月份
+- [整理](https://iwiki.woa.com/pages/viewpage.action?pageId=326062234)</code></pre>
+<ul>
+<li>deepFactor vs deepAR效果对比： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>台主机的网络入流量数据：</span><br><span class="line">deepFactor</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;MSE&quot;</span>: <span class="number">303732622110915.06</span>,</span><br><span class="line">    <span class="string">&quot;abs_error&quot;</span>: <span class="number">2275600640.0</span>,</span><br><span class="line">    <span class="string">&quot;abs_target_sum&quot;</span>: <span class="number">16922566656.0</span>,</span><br><span class="line">    <span class="string">&quot;abs_target_mean&quot;</span>: <span class="number">100729563.42857143</span>,</span><br><span class="line">    <span class="string">&quot;seasonal_error&quot;</span>: <span class="number">7606565.400503778</span>,</span><br><span class="line">    <span class="string">&quot;MASE&quot;</span>: <span class="number">1.7807303548412023</span>,</span><br><span class="line">    <span class="string">&quot;MAPE&quot;</span>: <span class="number">0.12016319151568138</span>,</span><br><span class="line">    <span class="string">&quot;sMAPE&quot;</span>: <span class="number">0.13137161232512512</span>,</span><br><span class="line">    <span class="string">&quot;OWA&quot;</span>: NaN,</span><br><span class="line">    <span class="string">&quot;MSIS&quot;</span>: <span class="number">71.22905232846578</span>,</span><br><span class="line">    <span class="string">&quot;QuantileLoss[0.5]&quot;</span>: <span class="number">2275600712.0</span>,</span><br><span class="line">    <span class="string">&quot;Coverage[0.5]&quot;</span>: <span class="number">0.23214285714285715</span>,</span><br><span class="line">    <span class="string">&quot;RMSE&quot;</span>: <span class="number">17427926.500617195</span>,</span><br><span class="line">    <span class="string">&quot;NRMSE&quot;</span>: <span class="number">0.17301699627612852</span>,</span><br><span class="line">    <span class="string">&quot;ND&quot;</span>: <span class="number">0.1344713651456159</span>,</span><br><span class="line">    <span class="string">&quot;wQuantileLoss[0.5]&quot;</span>: <span class="number">0.13447136940028964</span>,</span><br><span class="line">    <span class="string">&quot;mean_wQuantileLoss&quot;</span>: <span class="number">0.13447136940028964</span>,</span><br><span class="line">    <span class="string">&quot;MAE_Coverage&quot;</span>: <span class="number">0.26785714285714285</span></span><br><span class="line">&#125;</span><br><span class="line">deepAR结果：</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;MSE&quot;</span>: <span class="number">103720750278558.47</span>,</span><br><span class="line">    <span class="string">&quot;abs_error&quot;</span>: <span class="number">1316331008.0</span>,</span><br><span class="line">    <span class="string">&quot;abs_target_sum&quot;</span>: <span class="number">16922566656.0</span>,</span><br><span class="line">    <span class="string">&quot;abs_target_mean&quot;</span>: <span class="number">100729563.42857143</span>,</span><br><span class="line">    <span class="string">&quot;seasonal_error&quot;</span>: <span class="number">7606565.400503778</span>,</span><br><span class="line">    <span class="string">&quot;MASE&quot;</span>: <span class="number">1.0300711564944531</span>,</span><br><span class="line">    <span class="string">&quot;MAPE&quot;</span>: <span class="number">0.07665473185019729</span>,</span><br><span class="line">    <span class="string">&quot;sMAPE&quot;</span>: <span class="number">0.07928408221885551</span>,</span><br><span class="line">    <span class="string">&quot;OWA&quot;</span>: NaN,</span><br><span class="line">    <span class="string">&quot;MSIS&quot;</span>: <span class="number">16.15919346419098</span>,</span><br><span class="line">    <span class="string">&quot;QuantileLoss[0.5]&quot;</span>: <span class="number">1316330924.0</span>,</span><br><span class="line">    <span class="string">&quot;Coverage[0.5]&quot;</span>: <span class="number">0.27976190476190477</span>,</span><br><span class="line">    <span class="string">&quot;RMSE&quot;</span>: <span class="number">10184338.480164457</span>,</span><br><span class="line">    <span class="string">&quot;NRMSE&quot;</span>: <span class="number">0.10110575419485757</span>,</span><br><span class="line">    <span class="string">&quot;ND&quot;</span>: <span class="number">0.07778554132822911</span>,</span><br><span class="line">    <span class="string">&quot;wQuantileLoss[0.5]&quot;</span>: <span class="number">0.07778553636444309</span>,</span><br><span class="line">    <span class="string">&quot;mean_wQuantileLoss&quot;</span>: <span class="number">0.07778553636444309</span>,</span><br><span class="line">    <span class="string">&quot;MAE_Coverage&quot;</span>: <span class="number">0.22023809523809523</span></span><br><span class="line">&#125;</span><br><span class="line">结论：看来deepAR还是略胜deepFactor一范畴</span><br></pre></td></tr></table></figure></li>
+<li>lol整体预测</li>
+<li>lol分商品预测</li>
+<li>pct预测</li>
+<li>cpu使用率</li>
+<li>磁盘使用率</li>
+<li>网路流量检测</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/21/investment/didi/" rel="prev" title="对滴滴的分析">
+      <i class="fa fa-chevron-left"></i> 对滴滴的分析
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%89%8D%E6%9C%9F%E8%B0%83%E7%A0%94%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8F%92%E6%9B%B2"><span class="nav-number">3.</span> <span class="nav-text">算法前期调研中的一些小插曲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deepar%E5%AE%9E%E9%AA%8Cv1"><span class="nav-number">4.</span> <span class="nav-text">deepAR实验v1</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">130</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

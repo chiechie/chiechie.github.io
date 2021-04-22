@@ -164,6 +164,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reinforcement_learning/wangshusen-rf5-advanced-value-based/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/reinforcement_learning/wangshusen-rf5-advanced-value-based/" class="post-title-link" itemprop="url">wangshusen-rf5-价值学习高级技巧1/3-经验回放</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-18 20:40:17 / 修改时间：21:14:43" itemprop="dateCreated datePublished" datetime="2021-04-18T20:40:17+08:00">2021-04-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>经验回放(experience replay）： 就是把n条transition记录存下来(bufffer)，更新价值的时候，从里面抽样。好处是可以重复利用经验。</li>
+<li>技术发展路线
+<ul>
+<li>93年提出「经验回放」的想法</li>
+<li>15年的DQN使用到了「经验回放」</li>
+<li>之后各种模型训练都会用到该技巧</li>
+<li>「经验回放」演化成了强化学习里面的标准方法</li>
+</ul></li>
+<li>「经验回放」的变体
+<ul>
+<li>最优「经验回放」： 给予极端场景更高的权重
+<ul>
+<li>增加transition采样的权重</li>
+<li>减少使用transition更新价值网络时的 learning rate</li>
+</ul></li>
+</ul></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reinforcement_learning/wangshusen-rf4-actor-critic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -213,115 +298,6 @@
 
       
           <p>等待补充</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reinforcement_learning/wangshusen-rf3-policy-based/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/reinforcement_learning/wangshusen-rf3-policy-based/" class="post-title-link" itemprop="url">wangshusen-rf3-基于策略的强化学习方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-04-18 20:33:30 / 修改时间：21:28:38" itemprop="dateCreated datePublished" datetime="2021-04-18T20:33:30+08:00">2021-04-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="问题">问题</h2>
-<ul>
-<li>基于策略学习 的大致思路是怎么样的？
-<ul>
-<li>目的还是要让agent 实现最大的value，拆解为2步
-<ol type="1">
-<li>学习最优的策略（策略函数）</li>
-<li>根据最优策略作出决策</li>
-</ol></li>
-</ul></li>
-<li>难点在哪里？
-<ul>
-<li>state 太多，action 太多，</li>
-</ul></li>
-<li>深度学习技术是怎么帮助 实现策略学习的？
-<ul>
-<li>构造一个神经网络来拟合策略函数，这个神经网络 叫做策略网络</li>
-</ul></li>
-</ul>
-<h2 id="策略网络是什么">策略网络是什么？</h2>
-<p>输入：state，输出：多个action 下的概率，最后一层的激活函数用softmax。</p>
-<ul>
-<li>（input 和 output 的shape 和 DQ网络 一样）</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&amp;token=71ba382a-432c-4c00-8759-692d84c03f3d" title="fig:" alt="策略网络" /></li>
-</ul>
-<h2 id="状态价值函数是啥">状态价值函数是啥？</h2>
-<p>状态价值函数 ：基于某个策略，评价当下处境的好坏。state value function，对所有action求期望</p>
-<ul>
-<li>action-value function ： reward（env） + policy（agent）</li>
-<li>policy （agent）</li>
-<li>动作的随机性来自策略</li>
-<li>状态的随机性来自环境的状态转移</li>
-</ul>
-<h2 id="策略梯度是啥">策略梯度是啥？</h2>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F-uknITMKCq.png?alt=media&amp;token=e1a97c61-4fef-4837-8983-f74ec86f3e5f" title="fig:" alt="策略梯度公式" /></li>
-</ul>
-<h2 id="策略网络的是怎么更新参数的">策略网络的是怎么更新参数的？</h2>
-<ul>
-<li>policy-gradient算法，目标是 求一个 最优策略，使得在这个策略下，几乎所有的状态价值 都是最大的（就是对状态 求期望）</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGvhdfoS3jM.png?alt=media&amp;token=52ed6dde-1bd6-4428-856b-e319d58800d1" title="fig:" alt="Update policy network using policy gradient" /></li>
-</ul>
 
       
     </div>
@@ -406,7 +382,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

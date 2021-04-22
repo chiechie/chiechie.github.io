@@ -187,10 +187,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-04-21 08:22:04 / 修改时间：19:08:33" itemprop="dateCreated datePublished" datetime="2021-04-21T08:22:04+08:00">2021-04-21</time>
+              <time title="创建时间：2021-04-21 08:22:04" itemprop="dateCreated datePublished" datetime="2021-04-21T08:22:04+08:00">2021-04-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-22 15:19:01" itemprop="dateModified" datetime="2021-04-22T15:19:01+08:00">2021-04-22</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -226,15 +232,21 @@
 <h3 id="神经网络结构搜索nas">神经网络结构搜索（NAS）</h3>
 <p>就好像下一盘棋一样，一局玩完可能要很久，所以每走一步，都可以，判断当前这步棋走的水平如何。</p>
 <p>但是只有当一盘都下完了，我们才真的知道具体的reward。</p>
-<p>NAS是auto-ml的子领域，为了让机器去设计神经网络。 2017年谷歌发了一篇paper，使用基于强化学习的思路，去设计网络结构。 具体思路是这样的，假设要设计一个20层的CNN，超参个数为20*3，即每一层卷积，需要设置： - 卷积核数量 - 卷积核大小 - 步长大小</p>
+<p>NAS是auto-ml的子领域，为了让机器去设计神经网络。 2017年谷歌发了一篇paper，使用基于强化学习的思路，去设计网络结构。 具体思路是这样的，假设要设计一个20层的CNN，超参个数为20*3，即每一层卷积，需要设置：</p>
+<ul>
+<li>卷积核数量</li>
+<li>卷积核大小</li>
+<li>步长大小</li>
+</ul>
 <p>怎么定义为强化学习的问题呢？</p>
 <ul>
 <li>state为：截至目前，已经确定的超参。</li>
 <li>action：60个超参数中的一个的取值。</li>
 <li>policy value function为：选择某组超参，长期收益，也就是验证集上的准确率。</li>
-<li>策略网络，也就是用来逼近策略价值函数，是一个RNN。</li>
+<li>策略网络，也就是用来逼近策略函数，是一个RNN。</li>
 </ul>
-<p>输入向量 <span class="math inline">\(x_t\)</span> 是对上一个超参数 <span class="math inline">\(a_{t−1}\)</span> 做 Embedding 得到的/ 高斯过程回归算法--代理函数，超参和效果的映射函数，实际上就等价于，策略价值函数的特殊情况。（只对所有的超参都给定时，才能给出价值）</p>
+<p>输入向量 <span class="math inline">\(x_t\)</span> 是对上一个超参数 <span class="math inline">\(a_{t−1}\)</span> 做 Embedding 得到的</p>
+<p>高斯过程回归算法--代理函数，超参和效果的映射函数，实际上就等价于，策略价值函数的特殊情况。（只对所有的超参都给定时，才能给出价值）</p>
 <p>这个本质上就是一个有监督的方法，</p>
 <p>为什么强化学习NAS不采用这个简单的有监督方法，而要把这个问题拆解得更稀碎，不等所有超参确定完，而是确定一个超参，就要评估一下可行性呢？</p>
 <p>应用强化学习的代价是需要大量的训练样本，至少上万个奖励，即从初始化开始训练几万个 CNN。 这种强化学习 NAS 方法的计算量非常大。在这种强化学习 NAS 方法提出之后，很快就 有更好的 NAS 方法出现，无需使用强化学习。有兴趣的读者可以了解一下 DARTS 方法 [68];DARTS 及其变体是比较实用的 NAS 方法。</p>

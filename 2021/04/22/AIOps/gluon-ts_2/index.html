@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="构建概率分布  StudentT分布，有三个参数：mu，sigma，mu 123456789def s(mu: Tensor, sigma: Tensor, nu: Tensor) -&gt; Tensor:    F &#x3D; self.F    gammas &#x3D; F.sample_gamma(        alpha&#x3D;nu &#x2F; 2.0, beta&#x3D;2.0 &#x2F; (nu * F.square(sigm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用gluon-ts做时序预测(2)">
+<meta property="og:url" content="https://chiechie.github.io/2021/04/22/AIOps/gluon-ts_2/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Cosmos">
+<meta property="og:description" content="构建概率分布  StudentT分布，有三个参数：mu，sigma，mu 123456789def s(mu: Tensor, sigma: Tensor, nu: Tensor) -&gt; Tensor:    F &#x3D; self.F    gammas &#x3D; F.sample_gamma(        alpha&#x3D;nu &#x2F; 2.0, beta&#x3D;2.0 &#x2F; (nu * F.square(sigm">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F8TYYuBdntP.png?alt=media&amp;token=90dbf3d6-2a89-499e-8316-af08b540c41c">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FlQP5XUIibI.png?alt=media&amp;token=d0dc0aed-bf50-43b0-8ced-f580af0d593c">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FyUrVcW7cVK.png?alt=media&amp;token=6af2ee80-183e-4aed-acdc-877bf09e4859">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FN9r8UcjmWW.png?alt=media&amp;token=f10dde5d-71e6-4de8-9483-f95ad213fb8a">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fh2sU85bMJq.png?alt=media&amp;token=1c752076-827a-469a-af0e-a51fbe3c4e9e">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbFiYx7kM9g.png?alt=media&amp;token=83eccdba-5fd3-4f73-9804-ae8536ba16a7">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVuuzwiLxCK.png?alt=media&amp;token=151a163b-35ae-407e-8ac1-a6381a545f5a">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F8Yt16rezmJ.png?alt=media&amp;token=68cbc539-27a7-4edc-ab76-20606b9a85b8">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FxEvAhUsdiL.png?alt=media&amp;token=a3c18b94-a391-4009-ada4-ff57c1976c6d">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFq-O8QcOd2.png?alt=media&amp;token=0a7c6572-919f-4b1d-92e7-76fb03bd5298">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F1dIVCi8Mpg.png?alt=media&amp;token=7d838f06-5a69-49ed-8f2f-ff6b7d240a5e">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fx642RB3BnL.png?alt=media&amp;token=ae3bce56-8d23-451f-9d42-2ef0cb61282a">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FqKMkZR5D1f.png?alt=media&amp;token=cfa9cf7f-5285-463a-a02f-f088a67b80c0">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FV9lPxmzhet.png?alt=media&amp;token=3e05ec82-c5d7-4499-84f1-21a38a529661">
+<meta property="article:published_time" content="2021-04-22T11:36:28.000Z">
+<meta property="article:modified_time" content="2021-04-22T12:23:03.748Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="的">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F8TYYuBdntP.png?alt=media&amp;token=90dbf3d6-2a89-499e-8316-af08b540c41c">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/04/22/AIOps/gluon-ts_2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>使用gluon-ts做时序预测(2) | Chiechie's Cosmos</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Cosmos</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/22/AIOps/gluon-ts_2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用gluon-ts做时序预测(2)<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AIOps/gluon-ts_2.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-22 19:36:28 / 修改时间：20:23:03" itemprop="dateCreated datePublished" datetime="2021-04-22T19:36:28+08:00">2021-04-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="构建概率分布">构建概率分布</h2>
+<ul>
+<li><p>StudentT分布，有三个参数：mu，sigma，mu <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">s</span>(<span class="params">mu: Tensor, sigma: Tensor, nu: Tensor</span>) -&gt; Tensor:</span></span><br><span class="line">    F = self.F</span><br><span class="line">    gammas = F.sample_gamma(</span><br><span class="line">        alpha=nu / <span class="number">2.0</span>, beta=<span class="number">2.0</span> / (nu * F.square(sigma)), dtype=dtype</span><br><span class="line">    )</span><br><span class="line">    normal = F.sample_normal(</span><br><span class="line">        mu=mu, sigma=<span class="number">1.0</span> / F.sqrt(gammas), dtype=dtype</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> normal</span><br></pre></td></tr></table></figure></p></li>
+<li><p>TransformedDistribution: 将近似正态分布 转换为 带scale的 真实分布</p></li>
+<li><p>distr_args：StudentT分布的3个参数&lt;mu，sigma，nu&gt;</p></li>
+<li><p>TrainDataLoader: 将TS分解成小片段</p></li>
+<li><p>sequence = F.concat(past_target, future_target, dim=1)</p></li>
+<li><p>sequence_length： self.history_length + self.prediction_length</p></li>
+<li><p>subsequences_length = self.context_length + self.prediction_length</p></li>
+<li><p>data_entry是：一个样本 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">data_entry.keys()</span><br><span class="line">----</span><br><span class="line">Out[<span class="number">10</span>]: dict_keys(</span><br><span class="line">  [<span class="string">&#x27;start&#x27;</span>, <span class="string">&#x27;source&#x27;</span>, </span><br><span class="line">	<span class="string">&#x27;feat_static_cat&#x27;</span>, <span class="string">&#x27;feat_static_real&#x27;</span>, </span><br><span class="line">  <span class="string">&#x27;past_time_feat&#x27;</span>, <span class="string">&#x27;future_time_feat&#x27;</span>, </span><br><span class="line">  <span class="string">&#x27;past_observed_values&#x27;</span>, <span class="string">&#x27;future_observed_values&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;past_target&#x27;</span>, <span class="string">&#x27;future_target&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;past_is_pad&#x27;</span>, <span class="string">&#x27;forecast_start&#x27;</span>])</span><br></pre></td></tr></table></figure></p></li>
+<li><p>history_length：真实用到的历史依赖数据，self.history_length = self.context_length（就是72） + max(self.lags_seq)：lags是滞后项，用来捕捉长期的周期性,793</p></li>
+<li><p>extract_pred_target：时间序列中找到非预测区间的片段 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">extract_pred_target</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    time_series: Union[pd.Series, pd.DataFrame], forecast: Forecast</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) -&gt; np.ndarray:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Parameters</span></span><br><span class="line"><span class="string">    ----------</span></span><br><span class="line"><span class="string">    time_series</span></span><br><span class="line"><span class="string">    forecast</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns</span></span><br><span class="line"><span class="string">    -------</span></span><br><span class="line"><span class="string">    np.ndarray</span></span><br><span class="line"><span class="string">        time series cut in the Forecast object dates</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">assert</span> forecast.index.intersection(time_series.index).equals(</span><br><span class="line">        forecast.index</span><br><span class="line">    ), (</span><br><span class="line">        <span class="string">&quot;Cannot extract prediction target since the index of forecast is outside the index of target\n&quot;</span></span><br><span class="line">        <span class="string">f&quot;Index of forecast: <span class="subst">&#123;forecast.index&#125;</span>\n Index of target: <span class="subst">&#123;time_series.index&#125;</span>&quot;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># cut the time series using the dates of the forecast object</span></span><br><span class="line">    <span class="keyword">return</span> np.atleast_1d(</span><br><span class="line">        np.squeeze(time_series.loc[forecast.index].transpose())</span><br><span class="line">    )</span><br></pre></td></tr></table></figure></p></li>
+<li><p>lags_seq: 滞后项的个数</p>
+<ul>
+<li>len(self.lags_seq)是40，</li>
+</ul></li>
+<li><p>seq_len 是什么？rnn的序列长度，72</p></li>
+<li><p>target是什么？</p>
+<ul>
+<li>target = past_target[721:] + future_target</li>
+<li>形状为(batch_size, seq_len, *target_shape)</li>
+</ul></li>
+<li><p>past_observed_values是什么？</p>
+<ul>
+<li>指示变量（observed_indicator）： 0表示改位置的取值是缺失的，1表示是真实的观测值， 一般跟另外一个形状相同的实值向量配套实用。（以past_observed_values为例，就是跟past_values一起使用）</li>
+<li>形状为&lt;batch_size, history_length &gt;， eg 1x793</li>
+</ul></li>
+<li><p>past_target是什么？</p>
+<ul>
+<li>past_target 是长度为history_length的序列</li>
+<li>原始的TS序列变成1个past_target 还是多个 past_target ？
+<ul>
+<li>从节省样本的角度应该是多个</li>
+<li>测试的时候确实只用了最新的窗口，但是训练的时候不是，详细见下面</li>
+<li>看训练过程的日志：
+<ul>
+<li>根据信息-测试用例1
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F8TYYuBdntP.png?alt=media&amp;token=90dbf3d6-2a89-499e-8316-af08b540c41c" /></li>
+<li>2/50 [00:06&lt;00:20, 1.85it/s, epoch=3/10, avg_epoch_loss=17.6]</li>
+<li>50/50 [00:24&lt;00:00, 2.04it/s, epoch=1/10, avg_epoch_loss=19]</li>
+<li>每次迭代/梯度更新 使用了1/1.85s = 0.54s；</li>
+<li>完整的一轮学习耗时预估为20s</li>
+<li>批量大小为64</li>
+</ul></li>
+<li>可以推测：
+<ul>
+<li>批量个数为50</li>
+<li>总样本个数为：50 * 64 = 3200个</li>
+<li>检验： 0.54s * 50 == 20？ 差不多</li>
+</ul></li>
+<li>再测试下--测试用例2
+<ul>
+<li>32% █████████████| 16/50 [00:03&lt;00:05, 6.44it/s, epoch=1/10, avg_epoch_loss=19.7]</li>
+<li>批量大小为1</li>
+<li>每次迭代使用1 / 6.44s = 0.155 s</li>
+<li>完整一轮学习使用了8s</li>
+<li>推断：批量个数为50；总样本个数 50 * 1 =50个</li>
+<li>检验：0.155 * 50 == 8s?---是对的</li>
+</ul></li>
+<li>综合测试用例1 和 测试用例2：
+<ul>
+<li>batch_size 为64时， 每次迭代时间为0.54s；</li>
+<li>batch_size 为8时， 每次迭代时间为1/7.00 = 0.145s；</li>
+<li>batch_size 为1时， 每次迭代时间为0.155s；</li>
+<li>batch_size 为128时， 每次迭代时间为1 / 2.08==0.48s</li>
+</ul></li>
+<li>思考：为什么只能有50个batch？这不是很浪费样本吗？
+<ul>
+<li>因为每次样本都是随机采样，所以增加epochs的效果， 等价于提升样本使用率。（不是很确定）</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>这是因为给的原始的TS长度只有context_length, 所以history_length的更早位置的数据是0</li>
+</ul></li>
+<li><p>past_target 和 past_observed_values有什么联系？</p></li>
+<li><p>past_time_feat是什么？&lt;batch_size, history_length, 6&gt;，形状为1x793x6</p></li>
+<li><p>loss的长度是多少？形状为(batch_size, seq_len)，loss = distr.loss(target)</p></li>
+<li><p>unroll_encoder的输入输出是什么？</p>
+<ul>
+<li>输入：
+<ul>
+<li>feat_static_cat，1x1，0</li>
+<li>feat_static_real，1x1，0</li>
+<li>past_time_feat，1x793x6</li>
+<li>past_target，1x793</li>
+<li>past_observed_values，1x793</li>
+</ul></li>
+<li>输出：
+<ul>
+<li>a: 形状为1x72x40</li>
+<li>state: list, 长度为4, 4个1*40的array
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FlQP5XUIibI.png?alt=media&amp;token=d0dc0aed-bf50-43b0-8ced-f580af0d593c" /></li>
+</ul></li>
+<li>scale：1*1， 89839590</li>
+<li>static_feat： 1*3 的矩阵
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FyUrVcW7cVK.png?alt=media&amp;token=6af2ee80-183e-4aed-acdc-877bf09e4859" /></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>rnn.unroll</p>
+<ul>
+<li>update一点理解： 可以把rnn看成一个带状态的函数，最原子的操作（对应的主体取名叫单元rnn把）是输入m个特征（注意 都是一个时间点）输出num_cell个实数，同时更新自己的状态（也就是num_cell个参数），拓展到多个时间点，只是把单元rnn 加上了一个计算调度，自动的运行seq_len次（seq2seq中encoder序列长度，或做推理的时候 encoder序列长度 + k）</li>
+<li>输入：
+<ul>
+<li>inputs：1x72x49， 【input_lags, time_feat, repeated_static_feat】
+<ul>
+<li>input_lags：
+<ul>
+<li>1x72x40，seq_len = 72, self.lags_seq_len = 40</li>
+</ul></li>
+<li>time_feat： 1x72x6</li>
+<li>repeated_static_feat：1x72x3，把static_feat 拷贝72份（context_length）
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FN9r8UcjmWW.png?alt=media&amp;token=f10dde5d-71e6-4de8-9483-f95ad213fb8a" /></li>
+</ul></li>
+</ul></li>
+<li>length： subsequences_length==144, 表示seq2seq架构中，encoder序列的长度（72） + decoder序列的长度（72）</li>
+</ul></li>
+<li>输出：
+<ul>
+<li>outputs： 1x72x40</li>
+<li>state：1x40</li>
+</ul></li>
+</ul></li>
+<li><p>sampling_decoder的输入输出是什？</p>
+<ul>
+<li>输入：rnn输出的 output 就不要了，只要state相关信息，以及未来要用到的信息
+<ul>
+<li>past_target： 1x793</li>
+<li>future_time_feat：1x72x6 ，这个是需要针对future period 计算的</li>
+<li>static_feat：1x3， [[-1.0517105 0. 18.313536 ]， (batch_size, num_features + prod(target_shape)), num_features包括嵌入特征（-1.0517105）和静态特征（0），以及target的scale （ 18.313536 ]）， 这个就是拷贝 past 算好的</li>
+</ul></li>
+</ul></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in addition to embedding features, </span></span><br><span class="line"><span class="comment">#  use the log scale as it can help prediction too</span></span><br><span class="line"></span><br><span class="line">static_feat = F.concat(</span><br><span class="line">            embedded_cat,</span><br><span class="line">            feat_static_real,</span><br><span class="line">            F.log(scale)</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(self.target_shape) == <span class="number">0</span></span><br><span class="line">            <span class="keyword">else</span> F.log(scale.squeeze(axis=<span class="number">1</span>)),</span><br><span class="line">            dim=<span class="number">1</span>,</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<pre><code>        - scale：1*1，89839590，(batch_size, 1, *target_shape)
+        - state：4个1*40的向量， list of (batch_size, num_cells) tensors
+    - 输出：
+        - 1x100x72，Shape: (batch_size, num_sample_paths, prediction_length).
+        - A tensor containing sampled paths. 
+    - 中间处理逻辑：
+        -  for k in range(prediction_length):
+            - 构造inputs: 
+                - get_lagged_subsequences构造lags： 返回[72, 40]
+                    - sequence：repeated_past_target, 形状为  100x793
+                    - sequence_length=self.history_length + k, 表示rnn处理的长度
+                    - indices=self.shifted_lags, 就是原始的滞后项，长度为40
+                    - subsequences_length=1,
+                    - 输出：
+            - rnn.unroll(...) ： 这个rnn.unroll 是将单元rnn更新多次 
+- future_observed_values是什么？
+    - 形状为(batch_size, prediction_length, *target_shape)
+- ObservedValue是什么？
+    - 形状为(batch_size, seq_len, *target_shape)
+    - observed_values  =  past_observed_values[721:793]  + future_observed_values </code></pre>
+<ul>
+<li>归一化，获取lags，特征工程，特征拼接，这四个步骤的顺序是怎么样的？
+<ul>
+<li>概览
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fh2sU85bMJq.png?alt=media&amp;token=1c752076-827a-469a-af0e-a51fbe3c4e9e" /></li>
+</ul></li>
+<li>deepar 细节图：
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbFiYx7kM9g.png?alt=media&amp;token=83eccdba-5fd3-4f73-9804-ae8536ba16a7" /></li>
+</ul></li>
+</ul></li>
+<li>DeepAR的神经网络没法可视化？-有没有替代方案？</li>
+<li>看一下deepAR的周期性误差算的是什么？有做归一化吗？</li>
+<li>【借鉴】归一化是怎么做的？
+<ul>
+<li><code>python _, scale = self.scaler(   past_target.slice_axis(       axis=1, begin=-self.context_length, end=None   ),   past_observed_values.slice_axis(       axis=1, begin=-self.context_length, end=None   ), )</code></li>
+<li>只用history_length中最近context_length的subTS作为样本，并且剔除掉缺失值， 求均值，作为scale
+<ul>
+<li>这个只是一个示范，可以看一下输入输出的结构，他实际上并没有做归一化 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NOPScaler</span>(<span class="params">Scaler</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    The ``NOPScaler`` assigns a scale equals to 1 to each input item,</span></span><br><span class="line"><span class="string">    i.e.,</span></span><br><span class="line"><span class="string">    no scaling is applied upon calling the ``NOPScaler``.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @validated()</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># noinspection PyMethodOverriding</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">compute_scale</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">        self, F, data: Tensor, observed_indicator: Tensor</span></span></span><br><span class="line"><span class="function"><span class="params">    </span>) -&gt; Tensor:</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Parameters</span></span><br><span class="line"><span class="string">        ----------</span></span><br><span class="line"><span class="string">        F</span></span><br><span class="line"><span class="string">            A module that can either refer to the Symbol API or the NDArray</span></span><br><span class="line"><span class="string">            API in MXNet.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        data</span></span><br><span class="line"><span class="string">            tensor containing the data to be scaled.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        observed_indicator</span></span><br><span class="line"><span class="string">            observed_indicator: binary tensor with the same shape as</span></span><br><span class="line"><span class="string">            ``data``, that has 1 in correspondence of observed data points,</span></span><br><span class="line"><span class="string">            and 0 in correspondence of missing data points.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Returns</span></span><br><span class="line"><span class="string">        -------</span></span><br><span class="line"><span class="string">        Tensor</span></span><br><span class="line"><span class="string">            shape (N, C), identically equal to 1.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> F.ones_like(data).mean(axis=self.axis)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li>然后 对所有的lags项（72 * 40） 除以 scale。</li>
+</ul></li>
+</ul>
+<h2 id="gluon中怎么实现概率层">gluon中怎么实现概率层？</h2>
+<ul>
+<li>gluon中怎么实现概率层？class ArgProj(gluon.HybridBlock):A block that can be used to project from a dense layer to distribution</li>
+<li>estimator训练的时候会调用predict吗？</li>
+<li>forecast是什么？为什么要定义这个对象？
+<ul>
+<li>是一个生成器，这个对象 表示“预备算”的状态</li>
+<li>使用next 或者 for 循环的时候，才真的开始计算。</li>
+</ul></li>
+<li>动态特征和 静态 特征 都是全局的还是局部的，还是混合的？</li>
+<li>HybridBlock 和 Predictor的 区别是什么？
+<ul>
+<li>A <code>Predictor</code> wrapping a <code>HybridBlock</code> used for inference.</li>
+</ul></li>
+<li>既然有了预测网络，为什么还要定义predictor对象？
+<ul>
+<li><code>Predictor</code>对象 == <code>Transformation</code> + 预测网络</li>
+</ul></li>
+<li><code>Predictor</code>输出概率分布的参数 还是 采样的结果？
+<ul>
+<li>采样结果, btw 概率分布是中间变量</li>
+</ul></li>
+<li>MyPredNetwork.predict()可以处理多个样本吗？
+<ul>
+<li>看PredNetwork的hybrid_ward 的 注释是可以的呀，都支持输入batch的数据了，之前怎么想的 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DeepARPredictionNetwork</span>(<span class="params">DeepARNetwork</span>):</span></span><br><span class="line">    </span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">hybrid_forward</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">        self,</span></span></span><br><span class="line"><span class="function"><span class="params">        F,</span></span></span><br><span class="line"><span class="function"><span class="params">        feat_static_cat: Tensor,  <span class="comment"># (batch_size, num_features)</span></span></span></span><br><span class="line"><span class="function"><span class="params">        feat_static_real: Tensor,  <span class="comment"># (batch_size, num_features)</span></span></span></span><br><span class="line"><span class="function"><span class="params">        past_time_feat: Tensor,  <span class="comment"># (batch_size, history_length, num_features)</span></span></span></span><br><span class="line"><span class="function"><span class="params">        past_target: Tensor,  <span class="comment"># (batch_size, history_length, *target_shape)</span></span></span></span><br><span class="line"><span class="function"><span class="params">        past_observed_values: Tensor,  <span class="comment"># (batch_size, history_length, *target_shape)</span></span></span></span><br><span class="line"><span class="function"><span class="params">        future_time_feat: Tensor,  <span class="comment"># (batch_size, prediction_length, num_features)</span></span></span></span><br><span class="line"><span class="function"><span class="params">    </span>) -&gt; Tensor:</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Predicts samples, all tensors should have NTC layout.</span></span><br><span class="line"><span class="string">        Parameters</span></span><br><span class="line"><span class="string">        ----------</span></span><br><span class="line"><span class="string">        F</span></span><br><span class="line"><span class="string">        feat_static_cat : (batch_size, num_features)</span></span><br><span class="line"><span class="string">        feat_static_real : (batch_size, num_features)</span></span><br><span class="line"><span class="string">        past_time_feat : (batch_size, history_length, num_features)</span></span><br><span class="line"><span class="string">        past_target : (batch_size, history_length, *target_shape)</span></span><br><span class="line"><span class="string">        past_observed_values : (batch_size, history_length, *target_shape)</span></span><br><span class="line"><span class="string">        future_time_feat : (batch_size, prediction_length, num_features)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Returns</span></span><br><span class="line"><span class="string">        -------</span></span><br><span class="line"><span class="string">        Tensor</span></span><br><span class="line"><span class="string">            Predicted samples</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>spark MLlib是不是这么做的还要再确认下</li>
+<li>最底层的rnn.unroll层是支持的 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># output shape: (batch_size * num_samples, 1, num_cells)</span></span><br><span class="line"><span class="comment"># state shape: (batch_size * num_samples, num_cells)</span></span><br><span class="line">rnn_outputs, repeated_states = self.rnn.unroll(</span><br><span class="line">    inputs=decoder_input,</span><br><span class="line">    length=<span class="number">1</span>,</span><br><span class="line">    begin_state=repeated_states,</span><br><span class="line">    layout=<span class="string">&quot;NTC&quot;</span>,</span><br><span class="line">    merge_outputs=<span class="literal">True</span>,</span><br><span class="line">)</span><br><span class="line"><span class="comment">### decoder_input： &lt;NDArray 100x1x49 @cpu(0)&gt;</span></span><br><span class="line"><span class="comment">### rnn_outputs： &lt;NDArray 100x1x40 @cpu(0)&gt;</span></span><br><span class="line"><span class="comment">### repeated_states： &lt;NDArray 100x40 @cpu(0)&gt;]</span></span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li>model_analysis（画图） 和 evaluate （<code>make_evaluation_predictions</code>来计算评估指标的函数），对应的不是一个预测时间段， 导致指标 和 图对应不起来
+<ul>
+<li>真正评估的时候以model_analysis为准</li>
+<li>dataflow上面调试的时候以<code>make_evaluation_predictions</code>这种方式为准</li>
+</ul></li>
+<li><code>make_evaluation_predictions</code>内部的逻辑是什么样的？它的预测 和 预测网络的预测有什么不一样？--时间段不一样
+<ul>
+<li>以回测为目的的预测：就是说 它一定要保证评估有充足的数据（最尾上的长度为 预测区间 的一截）；坏处是，会存在模型预测的输入不够的情况（eg 测试数据长度为future_size, 结果全被拿去做 评估集了，模型预测输入就没了，当然模型会padding为0）</li>
+</ul></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_evaluation_predictions</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    dataset: Dataset, predictor: Predictor, num_samples: <span class="built_in">int</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span>) -&gt; Tuple[Iterator[Forecast], Iterator[pd.Series]]:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Return predictions on the last portion of predict_length time units of the</span></span><br><span class="line"><span class="string">    target. </span></span><br><span class="line"><span class="string">    Such portion is cut before making predictions, </span></span><br><span class="line"><span class="string">    such a function can be used in evaluations where accuracy is evaluated on the last portion of</span></span><br><span class="line"><span class="string">    the target.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Parameters</span></span><br><span class="line"><span class="string">    ----------</span></span><br><span class="line"><span class="string">    dataset</span></span><br><span class="line"><span class="string">        Dataset where the evaluation will happen. Only the portion excluding</span></span><br><span class="line"><span class="string">        the prediction_length portion is used when making prediction.</span></span><br><span class="line"><span class="string">    predictor</span></span><br><span class="line"><span class="string">        Model used to draw predictions.</span></span><br><span class="line"><span class="string">    num_samples</span></span><br><span class="line"><span class="string">        Number of samples to draw on the model when evaluating.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns</span></span><br><span class="line"><span class="string">    -------</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    prediction_length = predictor.prediction_length</span><br><span class="line">    freq = predictor.freq</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#lead_time: 预测跳点，预测的时间段为lead_time ～ prediction_length + lead_time</span></span><br><span class="line">    lead_time = predictor.lead_time</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_ts_dataframe</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">        data_iterator: Iterator[DataEntry],</span></span></span><br><span class="line"><span class="function"><span class="params">    </span>) -&gt; Iterator[DataEntry]:</span></span><br><span class="line">        <span class="keyword">for</span> data_entry <span class="keyword">in</span> data_iterator:</span><br><span class="line">            data = data_entry.copy()</span><br><span class="line">            index = pd.date_range(</span><br><span class="line">                start=data[<span class="string">&quot;start&quot;</span>],</span><br><span class="line">                freq=freq,</span><br><span class="line">                periods=data[<span class="string">&quot;target&quot;</span>].shape[-<span class="number">1</span>],</span><br><span class="line">            )</span><br><span class="line">            data[<span class="string">&quot;ts&quot;</span>] = pd.DataFrame(</span><br><span class="line">                index=index, data=data[<span class="string">&quot;target&quot;</span>].transpose()</span><br><span class="line">            )</span><br><span class="line">            <span class="keyword">yield</span> data</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">ts_iter</span>(<span class="params">dataset: Dataset</span>) -&gt; pd.DataFrame:</span></span><br><span class="line">        <span class="keyword">for</span> data_entry <span class="keyword">in</span> add_ts_dataframe(<span class="built_in">iter</span>(dataset)):</span><br><span class="line">            <span class="keyword">yield</span> data_entry[<span class="string">&quot;ts&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将target序列截断： </span></span><br><span class="line">    <span class="comment">#     扔掉最后的prediction_length + lead_time条记录        </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">truncate_target</span>(<span class="params">data</span>):</span></span><br><span class="line">        data = data.copy()</span><br><span class="line">        target = data[<span class="string">&quot;target&quot;</span>]</span><br><span class="line">        <span class="keyword">assert</span> (</span><br><span class="line">            target.shape[-<span class="number">1</span>] &gt;= prediction_length</span><br><span class="line">        )  <span class="comment"># handles multivariate case (target_dim, history_length)</span></span><br><span class="line">        data[<span class="string">&quot;target&quot;</span>] = target[..., : -prediction_length - lead_time]</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line">    <span class="comment"># TODO filter out time series with target shorter than prediction length</span></span><br><span class="line">    <span class="comment"># TODO or fix the evaluator so it supports missing values instead (all</span></span><br><span class="line">    <span class="comment"># TODO the test set may be gone otherwise with such a filtering)</span></span><br><span class="line">	<span class="comment">## step 1 - 使用truncate_target 截断测试集中 最后一个“future”窗口的值</span></span><br><span class="line">    <span class="comment">##          并使用AdhocTransform将truncate_target逻辑映射到每一个序列数据上</span></span><br><span class="line">    dataset_trunc = TransformedDataset(</span><br><span class="line">        dataset, transformations=[transform.AdhocTransform(truncate_target)]</span><br><span class="line">    )</span><br><span class="line">    <span class="comment">## step 2 - 使用predictor的predict方法 对截断后剩下的序列 做预测，以sample_path的格式返回预测值</span></span><br><span class="line">	<span class="comment">## step 3 - 输出dataset的pd.DataFrame格式</span></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        predictor.predict(dataset_trunc, num_samples=num_samples),</span><br><span class="line">        ts_iter(dataset),</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<h3 id="forcast是什么forcast.mean形状是什么">forcast是什么？<code>forcast.mean</code>形状是什么？</h3>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">forecast.mean.shape</span><br><span class="line">Out[<span class="number">25</span>]: (<span class="number">168</span>,)</span><br></pre></td></tr></table></figure>
+<h3 id="如果只做预测-不做评估要怎么搞">如果只做预测 不做评估要怎么搞？</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># step 1： 将context长度的测试数据输入predictor.predict()</span></span><br><span class="line">forecast = predictor.predict(test_data, num_samples=<span class="number">10</span>)</span><br><span class="line">forecast_list = <span class="built_in">list</span>(forecast)</span><br><span class="line"><span class="comment"># step 2： 获取多个序列的输出（forecast对象包含了这些信息），</span></span><br><span class="line"><span class="comment"># 通过 forecast_list[0].samples 获取到 对每个序列的 预测值，也就是sample_path</span></span><br><span class="line"><span class="comment"># sample_path的形状为(采样个数，预测窗口长度)</span></span><br><span class="line">forecast_list[<span class="number">0</span>].samples.shape</span><br><span class="line">   ...: </span><br><span class="line">Out[<span class="number">35</span>]: (<span class="number">10</span>, <span class="number">168</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>特征模块（gluonts.transform.feature module）有什么功能？
+<ul>
+<li><strong>AddAgeFeature</strong>：Adds an ‘age’ feature to the data_entry.</li>
+<li><strong>AddConstFeature</strong>：将一个常数扩充到时间轴上
+<ul>
+<li>If is_train=True，the feature matrix has the same length as the target field. If is_train=False，the feature matrix has length len(target) + pred_length</li>
+</ul></li>
+<li><strong>AddObservedValuesIndicator</strong>：将缺失值用dummy值替换，增加一个index变量，区分有值 和 没有值 的情况。</li>
+<li><strong>AddTimeFeatures</strong>：
+<ul>
+<li>Ifis_train=True the feature matrix has the same length as the target field. If is_train=False the feature matrix has length len(target) + pred_length</li>
+</ul></li>
+<li><strong>target_transformation_length</strong>：
+<ul>
+<li>If is_train=True，return len(target)</li>
+<li>If is_train=False, eturn len(target) + pred_length</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="estimatorgluonestimatordeeparestimator三者的关系">Estimator，GluonEstimator，DeepAREstimator三者的关系</h2>
+<blockquote>
+<p>update 10月26 日-- 重新理解Estimator，GluonEstimator，DeepAREstimator三者的关系</p>
+</blockquote>
+<ul>
+<li>本质 是 通过定义抽象类 以及 规范 来 实现 应用时候 的 可扩展性。</li>
+<li>Estimator 是各种Estimator的最本质的功能的抽象 定义成的类，即”训练“（train方法），拿到训练数据和验证数据（optional），返回__Predictor__。</li>
+<li>GluonEstimator 和 DeepAREstimator 都是在这个 框架下，功能的 细化 和 扩展。</li>
+<li>Estimator的 直属子类有 DummyEstimator 和 GluonEstimator，DummyEstimator 的功能就是在训练的时候 直接返回一个预先构造好的__Predictor__ 。</li>
+<li>Estimator的另外一个直属子类 GluonEstimator 的定义就规范多了，是一个标准的完整的算法类，参考：
+<ul>
+<li>父类（gluonts.model.GluonEstimator）：
+<ul>
+<li>create_transformation: 抽象方法</li>
+<li>create_training_network：抽象方法</li>
+<li>create_predictor：抽象方法</li>
+<li>train_model： 执行训练，返回TrainOutput, 依次调用：
+<ul>
+<li>self.create_transformation()： 返回<code>transformation</code></li>
+<li>self.create_training_network()：返回<code>trained_net</code></li>
+<li>self.trainer()：<code>trainer = Trainer(epochs=epochs, batch_size=batch_size)</code></li>
+<li>self.create_predictor(): 输入<code>transformation</code>和 <code>trained_net</code>， 返回<code>predictor</code>，<code>self.create_predictor(transformation, trained_net)</code></li>
+</ul></li>
+<li>train：执行训练，返回TrainOutput.predictor
+<ul>
+<li>self.train_model()： ### 为什么要定义这两层抽象类呢（Estimator 和 GluonEstimator 都是抽象类，实际执行的是的DeepAREstimator）？</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><strong>我的猜测是，很多组件 是 对 某一组对象生效的，这两层的抽象 实际上是在 定义“组”，以及 对 每一组成员的行为 制定规范（通过抽象方法）。</strong></li>
+<li>设想一个场景，现在要实现一个逻辑，调用10个实际类的fit方法（DeepAREstimator和 它的同伴们），注意！ 在执行之前，我是不知道具体要调用哪个类的fit的：
+<ul>
+<li>不抽象的话 需要写 10次处理逻辑：遍历10个类，写10 个if else来 调用某个方法。（后面增加到11类，这个if else又要改）</li>
+<li>抽象的话 就只需要写1次处理逻辑： 调用抽象类，以及抽象类的方法。</li>
+</ul></li>
+<li>而如果这个逻辑 要实现N次，按照不抽象的写法，就要写10 * N 次 if else。</li>
+</ul>
+<h2 id="对象关系">对象关系</h2>
+<p>gluon-ts 对象关系（自上而下；从系统顶层or外层 到 底层 or 里层）： - 基类（gluonts.model.Estimator）：相当于平台层，实现主流程, 核心方法有 - train: 执行训练，返回predictor，抽象方法 - 父类（gluonts.model.GluonEstimator）： - create_transformation: 抽象方法 - create_training_network：抽象方法 - create_predictor：抽象方法 - train_model： 执行训练，返回TrainOutput, 依次调用： - self.create_transformation()： 返回<code>transformation</code> - self.create_training_network()：返回<code>trained_net</code> - self.trainer()：<code>trainer = Trainer(epochs=epochs, batch_size=batch_size)</code> - self.create_predictor(): 输入<code>transformation</code>和 <code>trained_net</code>， 返回<code>predictor</code>，<code>self.create_predictor(transformation, trained_net)</code> - train：执行训练，返回TrainOutput.predictor，self.train_model()： - 子类（gluonts.model.deepar.DeepAREstimator）：相当于用户层，负责具体算法的逻辑, 需要实现3个函数，其他的方法（只要是负责调度类的逻辑如train，他和它的兄弟类 都是可共享的 ），直接调用它的父类 的就好 - <strong>create_transformation</strong>： 返回<code>Transformation</code>对象, 依次调用 - AddObservedValuesIndicator： - AddTimeFeatures： - AddAgeFeature - <strong>create_training_network</strong>： 返回 <code>trained_network</code>对象，调用 - DeepARTrainingNetwork 实例化 - <strong>create_predictor</strong>：返回：<code>Predictor</code>对象 - DeepARPredictionNetwork 实例化 - copy_parameters：将训练好的网络参数传给预测网络 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy_parameters(trained_network, prediction_network)</span><br></pre></td></tr></table></figure> - RepresentableBlockPredictor：transform + 预测网络 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">RepresentableBlockPredictor(</span><br><span class="line">            input_transform=transformation,</span><br><span class="line">            prediction_net=prediction_network,</span><br><span class="line">            batch_size=self.trainer.batch_size,</span><br><span class="line">            freq=self.freq,</span><br><span class="line">            prediction_length=self.prediction_length,</span><br><span class="line">            ctx=self.trainer.ctx,</span><br><span class="line">            dtype=self.dtype,</span><br><span class="line">        )</span><br></pre></td></tr></table></figure></p>
+<h3 id="辅助类deepartrainingnetwork-和-deeparpredictionnetwork">辅助类（DeepARTrainingNetwork 和 DeepARPredictionNetwork）</h3>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVuuzwiLxCK.png?alt=media&amp;token=151a163b-35ae-407e-8ac1-a6381a545f5a" /></li>
+<li>DeepARNetwork：父类
+<ul>
+<li>unroll_encoder：
+<ul>
+<li>get_lagged_subsequences：</li>
+<li>scaler：</li>
+<li>self.rnn.unroll：</li>
+</ul></li>
+</ul></li>
+<li>DeepARTrainingNetwork：
+<ul>
+<li>hybrid_forward： 返回 loss 和 weighted_loss
+<ul>
+<li>distribution：
+<ul>
+<li>unroll_encoder</li>
+</ul></li>
+<li>distr.loss
+<ul>
+<li>loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，
+<ul>
+<li>observed_values 是 past_observed_values 和 future_observed_values 联合的结果 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment"># (batch_size, seq_len, *target_shape)</span></span><br><span class="line">    observed_values = F.concat(</span><br><span class="line">        past_observed_values.slice_axis(</span><br><span class="line">            axis=<span class="number">1</span>,</span><br><span class="line">            begin=self.history_length - self.context_length,</span><br><span class="line">            end=self.history_length,</span><br><span class="line">        ),</span><br><span class="line">        future_observed_values,</span><br><span class="line">        dim=<span class="number">1</span>,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="comment"># loss_weights 是根据observed_values的min确定的</span></span><br><span class="line">loss_weights = (</span><br><span class="line">        observed_values</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">len</span>(self.target_shape) == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">else</span> observed_values.<span class="built_in">min</span>(axis=-<span class="number">1</span>, keepdims=<span class="literal">False</span>)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    weighted_loss = weighted_average(</span><br><span class="line">        F=F, x=loss, weights=loss_weights, axis=<span class="number">1</span></span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">  	loss = F.where(condition=loss_weights, x=loss, y=F.zeros_like(loss))</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> weighted_loss, loss</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul></li>
+<li>DeepARPredictionNetwork：
+<ul>
+<li>hybrid_forward： unroll_encoder 和 sampling_decoder</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="自定义一个点预测模型从系统-底层-到-顶层or从-里层-到-外层">自定义一个点预测模型（从系统 底层 到 顶层，or从 里层 到 外层 ）：</h2>
+<h4 id="第1步定义训练网络-和-预测网络">第1步：定义训练网络 和 预测网络</h4>
+<ul>
+<li>训练网络 和 预测网络 都要实现hybrid_forward方法，该方法就是在定义训练网络 和 预测网络被调用时的逻辑
+<ul>
+<li>训练网络 的hybrid_forward方法 应该返回 预测值 和 真实值 的loss</li>
+<li>预测网络 的hybrid_forward 返回 预测值</li>
+</ul></li>
+<li>构造一个训练网络：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gluonts.model.estimator <span class="keyword">import</span> GluonEstimator</span><br><span class="line"><span class="keyword">from</span> gluonts.model.predictor <span class="keyword">import</span> Predictor, RepresentableBlockPredictor</span><br><span class="line"><span class="keyword">from</span> gluonts.core.component <span class="keyword">import</span> validated</span><br><span class="line"><span class="keyword">from</span> gluonts.support.util <span class="keyword">import</span> copy_parameters</span><br><span class="line"><span class="keyword">from</span> gluonts.transform <span class="keyword">import</span> ExpectedNumInstanceSampler, Transformation, InstanceSplitter</span><br><span class="line"><span class="keyword">from</span> gluonts.dataset.field_names <span class="keyword">import</span> FieldName</span><br><span class="line"><span class="keyword">from</span> mxnet.gluon <span class="keyword">import</span> HybridBlock</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTrainNetwork</span>(<span class="params">gluon.HybridBlock</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, prediction_length, **kwargs</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(**kwargs)</span><br><span class="line">        self.prediction_length = prediction_length</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> self.name_scope():</span><br><span class="line">            <span class="comment"># Set up a 3 layer neural network that directly predicts the target values</span></span><br><span class="line">            self.nn = mx.gluon.nn.HybridSequential()</span><br><span class="line">            self.nn.add(mx.gluon.nn.Dense(units=<span class="number">40</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">            self.nn.add(mx.gluon.nn.Dense(units=<span class="number">40</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">            self.nn.add(mx.gluon.nn.Dense(units=self.prediction_length, activation=<span class="string">&#x27;softrelu&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hybrid_forward</span>(<span class="params">self, F, past_target, future_target</span>):</span></span><br><span class="line">        prediction = self.nn(past_target)</span><br><span class="line">        <span class="comment"># calculate L1 loss with the future_target to learn the median</span></span><br><span class="line">        <span class="keyword">return</span> (prediction - future_target).<span class="built_in">abs</span>().mean(axis=-<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>内嵌网络（真实的神经网络，是训练网络的一个成员，self.nn）的输入输出：
+<ul>
+<li>输入：past value</li>
+<li>输出：prediction，长度为prediction_length</li>
+</ul></li>
+<li>hybrid_forward函数的输入输出：
+<ul>
+<li>输入：past target，future target</li>
+<li>输出：prediction（self.nn(past_target)） 和 future target的 l1距离</li>
+</ul></li>
+<li>代码示范</li>
+<li>构造一个预测网络：</li>
+<li>网络结构应该和训练网络保持一致（通过继承inheriting 训练网络类 来做到）</li>
+<li>网络的输入输出：
+<ul>
+<li>输入：past target</li>
+<li>输出：prediction, 长度为prediction_length</li>
+</ul></li>
+<li>hybrid_forward的输入输出：
+<ul>
+<li>输入：past_target</li>
+<li>输出：prediction, 长度为prediction_length</li>
+</ul></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPredNetwork</span>(<span class="params">MyTrainNetwork</span>):</span></span><br><span class="line">    <span class="comment"># The prediction network only receives past_target and returns predictions</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hybrid_forward</span>(<span class="params">self, F, past_target</span>):</span></span><br><span class="line">        prediction = self.nn(past_target)</span><br><span class="line">        <span class="keyword">return</span> prediction.expand_dims(axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="第2步构造一个estimator须实现3个方法">第2步：构造一个estimator，须实现3个方法：</h3>
+<ul>
+<li>create_transformation方法：包括特征转换逻辑 和 训练时的数据切分方式
+<ul>
+<li>返回<code>Transformation</code> 对象</li>
+</ul></li>
+<li>create_training_network方法：返回训练网络，也会把超参存下来
+<ul>
+<li>返回<code>trained_network</code>对象</li>
+</ul></li>
+<li>create_predictor方法：创建预测网络，并返回一个Predictor对象
+<ul>
+<li>返回<code>Predictor</code>对象：定义了predict方法，transformer + 预测网络 。</li>
+</ul></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyEstimator</span>(<span class="params">GluonEstimator</span>):</span></span><br><span class="line"><span class="meta">    @validated()</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">        self,</span></span></span><br><span class="line"><span class="function"><span class="params">        freq: <span class="built_in">str</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        context_length: <span class="built_in">int</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        prediction_length: <span class="built_in">int</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        trainer: Trainer = Trainer(<span class="params"></span>)</span></span></span><br><span class="line"><span class="function"><span class="params">    </span>) -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(trainer=trainer)</span><br><span class="line">        self.context_length = context_length</span><br><span class="line">        self.prediction_length = prediction_length</span><br><span class="line">        self.freq = freq</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create_transformation</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># Feature transformation that the model uses for input.</span></span><br><span class="line">        <span class="comment"># Here we use a transformation that randomly select training samples from all time series.</span></span><br><span class="line">        <span class="keyword">return</span> InstanceSplitter(</span><br><span class="line">                    target_field=FieldName.TARGET,</span><br><span class="line">                    is_pad_field=FieldName.IS_PAD,</span><br><span class="line">                    start_field=FieldName.START,</span><br><span class="line">                    forecast_start_field=FieldName.FORECAST_START,</span><br><span class="line">                    train_sampler=ExpectedNumInstanceSampler(num_instances=<span class="number">1</span>),</span><br><span class="line">                    past_length=self.context_length,</span><br><span class="line">                    future_length=self.prediction_length,</span><br><span class="line">                )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create_training_network</span>(<span class="params">self</span>) -&gt; MyTrainNetwork:</span></span><br><span class="line">        <span class="keyword">return</span> MyTrainNetwork(</span><br><span class="line">            prediction_length=self.prediction_length</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create_predictor</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">        self, transformation: Transformation, trained_network: HybridBlock</span></span></span><br><span class="line"><span class="function"><span class="params">    </span>) -&gt; Predictor:</span></span><br><span class="line">        prediction_network = MyPredNetwork(</span><br><span class="line">            prediction_length=self.prediction_length</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        copy_parameters(trained_network, prediction_network)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> RepresentableBlockPredictor(</span><br><span class="line">            input_transform=transformation,</span><br><span class="line">            prediction_net=prediction_network,</span><br><span class="line">            batch_size=self.trainer.batch_size,</span><br><span class="line">            freq=self.freq,</span><br><span class="line">            prediction_length=self.prediction_length,</span><br><span class="line">            ctx=self.trainer.ctx,</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<h3 id="第3步训练estimator得到predictor">第3步：训练estimator，得到predictor</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">estimator = MyEstimator(</span><br><span class="line">    prediction_length=dataset.metadata.prediction_length,</span><br><span class="line">    context_length=<span class="number">100</span>,</span><br><span class="line">    freq=dataset.metadata.freq,</span><br><span class="line">    trainer=Trainer(ctx=<span class="string">&quot;cpu&quot;</span>,</span><br><span class="line">                    epochs=<span class="number">5</span>,</span><br><span class="line">                    learning_rate=<span class="number">1e-3</span>,</span><br><span class="line">                    num_batches_per_epoch=<span class="number">100</span></span><br><span class="line">                   )</span><br><span class="line">)</span><br><span class="line">predictor = estimator.train(dataset.train)</span><br></pre></td></tr></table></figure>
+<pre><code>    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FhvZeUsSk1L.png?alt=media&amp;token=234da86d-ad2b-4b58-a191-d8d5ccba5c82)</code></pre>
+<h3 id="第4步-创建forecasts">第4步 ：创建forecasts</h3>
+<ul>
+<li><code>make_evaluation_predictions</code> 函数会调用<code>Predictor</code>的predict方法，从而获取预测值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">forecast_it, ts_it = make_evaluation_predictions(</span><br><span class="line">    dataset=dataset.test,</span><br><span class="line">    predictor=predictor,</span><br><span class="line">    num_samples=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">forecasts = <span class="built_in">list</span>(forecast_it)</span><br><span class="line">tss = <span class="built_in">list</span>(ts_it)</span><br><span class="line"></span><br><span class="line"><span class="comment">## tss 是最完整的曲线，forecasts只有后面一截</span></span><br><span class="line">plot_prob_forecasts(tss[<span class="number">0</span>], forecasts[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FmPC-fmVxIs.png?alt=media&amp;token=f9b7f8c0-2717-47f7-930a-cc76a30d8855)</code></pre>
+<ul>
+<li>这里的num_samples设置为100，就会获得100次相同的预测结果（点预测没有随机性） ### 第5步 ： 评估forecasts</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">evaluator = Evaluator(quantiles=[<span class="number">0.1</span>, <span class="number">0.5</span>, <span class="number">0.9</span>])</span><br><span class="line">agg_metrics, item_metrics = evaluator(<span class="built_in">iter</span>(tss), <span class="built_in">iter</span>(forecasts), num_series=<span class="built_in">len</span>(dataset.test))</span><br></pre></td></tr></table></figure>
+<p>返回两部分： 整体指标 以及 每个商品指标 - 整体指标（agg_metrics） - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F8Yt16rezmJ.png?alt=media&amp;token=68cbc539-27a7-4edc-ab76-20606b9a85b8" /> - 每个商品评估指标（item_metrics） - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FxEvAhUsdiL.png?alt=media&amp;token=a3c18b94-a391-4009-ada4-ff57c1976c6d" /></p>
+<h3 id="gluon-ts-release记录">GLUON-TS release记录</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/releases/tag/v0.4.0">0.4.0</a>
+<ul>
+<li>Models
+<ul>
+<li>Option for DeepAR and DeepState to allow an <strong>embedding </strong>vector instead of the same value for all <strong>categorical</strong> features. (<a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/pull/315">#315</a>)</li>
+<li>Add option for <strong>feat_static_real</strong> in DeepAREstimator. (<a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/pull/324">#324</a>)</li>
+<li>Added support for changing dataytpe in DeepAREstimator. (<a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/pull/363">#363</a>)</li>
+</ul></li>
+<li>Distributions
+<ul>
+<li>Added Dirichlet distribution. (<a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/pull/417">#417</a>)</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="使用过程中的bug">使用过程中的bug</h3>
+<ul>
+<li>ujson dumps NaN but doesn't load it 3511，https://github.com/micropython/micropython/issues/3511 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">serialize_data_entry</span>(<span class="params">data_entry: DataEntry</span>) -&gt; Dict:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Encode the numpy values in the a DataEntry dictionary into lists so the</span></span><br><span class="line"><span class="string">    dictionary can be json serialized.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">serialize_field</span>(<span class="params">field</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(field, np.ndarray):</span><br><span class="line">            <span class="comment"># circumvent https://github.com/micropython/micropython/issues/3511</span></span><br><span class="line">            nan_ix = np.isnan(field)</span><br><span class="line">            field = field.astype(np.object_)</span><br><span class="line">            field[nan_ix] = <span class="string">&quot;NaN&quot;</span></span><br><span class="line">            <span class="keyword">return</span> field.tolist()</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">str</span>(field)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        k: serialize_field(v)</span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> data_entry.data.items()</span><br><span class="line">        <span class="keyword">if</span> v <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure> 使用simplednn的时候，报错</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GluonTSUserError: Got <span class="literal">NaN</span> <span class="keyword">in</span> first epoch.</span><br><span class="line">Try reducing initial learning rate.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>原因1：target中含有nan值，有的算法处理了，有的算法没有处理，deepAR处理乐的.（github给的解决方案）
+<ul>
+<li>solution： 清洗target中的nan</li>
+</ul></li>
+<li>原因2: gluonts的容错机制不行，第一个epho挂了。。不知道为啥, best_epoch_no 为-1，就报错了
+<ul>
+<li>解决方案：epoch从1--&gt;2+</li>
+</ul></li>
+<li>原因3: 可能是随机种子设置的不好，重新跑一遍就好了。。。无语</li>
+</ul>
+<h3 id="算法测试多个算法">【算法】测试多个算法</h3>
+<p>包括"transformer", "gp", "deepfactor", "deepar", "dnn", "prophet", "deepstate","wavenet"</p>
+<h4 id="已通过">已通过</h4>
+<ul>
+<li>deepar：效果很稳定
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFq-O8QcOd2.png?alt=media&amp;token=0a7c6572-919f-4b1d-92e7-76fb03bd5298" /></li>
+</ul></li>
+<li>prophet： 效果很稳定，小数据量时 效果比deepar好。
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F1dIVCi8Mpg.png?alt=media&amp;token=7d838f06-5a69-49ed-8f2f-ff6b7d240a5e" /></li>
+</ul></li>
+<li>deepfactor： 效果很不稳定
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fx642RB3BnL.png?alt=media&amp;token=ae3bce56-8d23-451f-9d42-2ef0cb61282a" /></li>
+</ul></li>
+<li>transformer： 训练时间过长5min，训练集才1400个点
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FqKMkZR5D1f.png?alt=media&amp;token=cfa9cf7f-5285-463a-a02f-f088a67b80c0" /></li>
+</ul></li>
+<li>dnn：效果一般，不推荐。应该就是裸跑dnn
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FV9lPxmzhet.png?alt=media&amp;token=3e05ec82-c5d7-4499-84f1-21a38a529661" /></li>
+</ul></li>
+</ul>
+<h4 id="未通过">未通过</h4>
+<ul>
+<li>deepstate： 训练报错 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">value = data[self.field]</span><br><span class="line">KeyError: <span class="string">&#x27;feat_static_cat&#x27;</span></span><br></pre></td></tr></table></figure></li>
+<li>wavenet：训练时间过长</li>
+<li>gp：输出怎么是贴零的？</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%9A%84/" rel="tag"># 的</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/22/AIOps/gluon-ts_1/" rel="prev" title="使用gluon-ts做时序预测(1)">
+      <i class="fa fa-chevron-left"></i> 使用gluon-ts做时序预测(1)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83"><span class="nav-number">1.</span> <span class="nav-text">构建概率分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gluon%E4%B8%AD%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E6%A6%82%E7%8E%87%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">gluon中怎么实现概率层？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#forcast%E6%98%AF%E4%BB%80%E4%B9%88forcast.mean%E5%BD%A2%E7%8A%B6%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.</span> <span class="nav-text">forcast是什么？forcast.mean形状是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E5%8F%AA%E5%81%9A%E9%A2%84%E6%B5%8B-%E4%B8%8D%E5%81%9A%E8%AF%84%E4%BC%B0%E8%A6%81%E6%80%8E%E4%B9%88%E6%90%9E"><span class="nav-number">2.2.</span> <span class="nav-text">如果只做预测 不做评估要怎么搞？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#estimatorgluonestimatordeeparestimator%E4%B8%89%E8%80%85%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">Estimator，GluonEstimator，DeepAREstimator三者的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%85%B3%E7%B3%BB"><span class="nav-number">4.</span> <span class="nav-text">对象关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%85%E5%8A%A9%E7%B1%BBdeepartrainingnetwork-%E5%92%8C-deeparpredictionnetwork"><span class="nav-number">4.1.</span> <span class="nav-text">辅助类（DeepARTrainingNetwork 和 DeepARPredictionNetwork）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E7%82%B9%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E4%BB%8E%E7%B3%BB%E7%BB%9F-%E5%BA%95%E5%B1%82-%E5%88%B0-%E9%A1%B6%E5%B1%82or%E4%BB%8E-%E9%87%8C%E5%B1%82-%E5%88%B0-%E5%A4%96%E5%B1%82"><span class="nav-number">5.</span> <span class="nav-text">自定义一个点预测模型（从系统 底层 到 顶层，or从 里层 到 外层 ）：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC1%E6%AD%A5%E5%AE%9A%E4%B9%89%E8%AE%AD%E7%BB%83%E7%BD%91%E7%BB%9C-%E5%92%8C-%E9%A2%84%E6%B5%8B%E7%BD%91%E7%BB%9C"><span class="nav-number">5.0.1.</span> <span class="nav-text">第1步：定义训练网络 和 预测网络</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E6%AD%A5%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAestimator%E9%A1%BB%E5%AE%9E%E7%8E%B03%E4%B8%AA%E6%96%B9%E6%B3%95"><span class="nav-number">5.1.</span> <span class="nav-text">第2步：构造一个estimator，须实现3个方法：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC3%E6%AD%A5%E8%AE%AD%E7%BB%83estimator%E5%BE%97%E5%88%B0predictor"><span class="nav-number">5.2.</span> <span class="nav-text">第3步：训练estimator，得到predictor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC4%E6%AD%A5-%E5%88%9B%E5%BB%BAforecasts"><span class="nav-number">5.3.</span> <span class="nav-text">第4步 ：创建forecasts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gluon-ts-release%E8%AE%B0%E5%BD%95"><span class="nav-number">5.4.</span> <span class="nav-text">GLUON-TS release记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84bug"><span class="nav-number">5.5.</span> <span class="nav-text">使用过程中的bug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%8B%E8%AF%95%E5%A4%9A%E4%B8%AA%E7%AE%97%E6%B3%95"><span class="nav-number">5.6.</span> <span class="nav-text">【算法】测试多个算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%B2%E9%80%9A%E8%BF%87"><span class="nav-number">5.6.1.</span> <span class="nav-text">已通过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AA%E9%80%9A%E8%BF%87"><span class="nav-number">5.6.2.</span> <span class="nav-text">未通过</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">131</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

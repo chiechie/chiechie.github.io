@@ -126,10 +126,11 @@ gluon-ts 对象关系（自上而下，从系统顶层 到 底层）
 ### 归一化
 
 归一化，获取lags，特征工程，特征拼接，这四个步骤的顺序是怎么样的？
+
 - 概览
-    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fh2sU85bMJq.png?alt=media&token=1c752076-827a-469a-af0e-a51fbe3c4e9e)
-- deepar 细节图：
-    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbFiYx7kM9g.png?alt=media&token=83eccdba-5fd3-4f73-9804-ae8536ba16a7)
+    ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fh2sU85bMJq.png?alt=media&token=1c752076-827a-469a-af0e-a51fbe3c4e9e)
+- 细节图：
+    ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbFiYx7kM9g.png?alt=media&token=83eccdba-5fd3-4f73-9804-ae8536ba16a7)
 
 - DeepAR的神经网络没法可视化？-有没有替代方案？
 - 看一下deepAR的周期性误差算的是什么？有做归一化吗？

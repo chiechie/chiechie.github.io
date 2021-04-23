@@ -1,10 +1,13 @@
 ---
-title: 使用gluon-ts做时序预测
+title: 使用gluon-ts做时序预测(1)
 author: chiechie
 mathjax: true
 date: 2021-04-22 17:35:59
-tags:
+tags: 
+- AIOps
+- 时间序列
 categories:
+- 技术
 ---
 
 ## 背景
@@ -15,8 +18,7 @@ categories:
     - stride
     - window_size： 192 hour or 8天
     - stride_size:  24 hour，滑窗步长
-    
-
+  
 ## 问题
 
 - gluon-ts里面将输入做对数处理效果会不会好一点？

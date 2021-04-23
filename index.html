@@ -195,7 +195,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-23 12:34:05" itemprop="dateModified" datetime="2021-04-23T12:34:05+08:00">2021-04-23</time>
+                <time title="修改时间：2021-04-23 18:38:32" itemprop="dateModified" datetime="2021-04-23T18:38:32+08:00">2021-04-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -220,6 +220,8 @@
       
           <h2 id="对象关系">对象关系</h2>
 <p>gluon-ts 对象关系（自上而下；从系统顶层 到 底层）：</p>
+<h3 id="主要类-estimatorgluonestimatordeeparestimator">主要类-Estimator/GluonEstimator/DeepAREstimator</h3>
+<p>从基础类到父类GluonEstimator，再到具体的算法类DeepAREstimator</p>
 <ul>
 <li>基类-gluonts.model.Estimator：相当于平台层，实现主流程, 核心方法有
 <ul>
@@ -254,40 +256,8 @@
 <li><strong>create_predictor</strong>：返回：<code>Predictor</code>对象
 <ul>
 <li>DeepARPredictionNetwork 实例化</li>
-<li>copy_parameters：将训练好的网络参数传给预测网络 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy_parameters(trained_network, prediction_network)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>RepresentableBlockPredictor：transform + 预测网络 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">RepresentableBlockPredictor(</span><br><span class="line">            input_transform=transformation,</span><br><span class="line">            prediction_net=prediction_network,</span><br><span class="line">            batch_size=self.trainer.batch_size,</span><br><span class="line">            freq=self.freq,</span><br><span class="line">            prediction_length=self.prediction_length,</span><br><span class="line">            ctx=self.trainer.ctx,</span><br><span class="line">            dtype=self.dtype,</span><br><span class="line">        )</span><br></pre></td></tr></table></figure></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
-<h3 id="辅助类-deepartrainingnetwork-和-deeparpredictionnetwork">辅助类-DeepARTrainingNetwork 和 DeepARPredictionNetwork</h3>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVuuzwiLxCK.png?alt=media&amp;token=151a163b-35ae-407e-8ac1-a6381a545f5a" /></li>
-<li>DeepARNetwork：父类
-<ul>
-<li>unroll_encoder：
-<ul>
-<li>get_lagged_subsequences：</li>
-<li>scaler：</li>
-<li>self.rnn.unroll：</li>
-</ul></li>
-</ul></li>
-<li>DeepARTrainingNetwork：
-<ul>
-<li>hybrid_forward： 返回 loss 和 weighted_loss
-<ul>
-<li>distribution：
-<ul>
-<li>unroll_encoder</li>
-</ul></li>
-<li>distr.loss
-<ul>
-<li>loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，
-<ul>
-<li>observed_values 是 past_observed_values 和 future_observed_values 联合的结果 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment"># (batch_size, seq_len, *target_shape)</span></span><br><span class="line">    observed_values = F.concat(</span><br><span class="line">        past_observed_values.slice_axis(</span><br><span class="line">            axis=<span class="number">1</span>,</span><br><span class="line">            begin=self.history_length - self.context_length,</span><br><span class="line">            end=self.history_length,</span><br><span class="line">        ),</span><br><span class="line">        future_observed_values,</span><br><span class="line">        dim=<span class="number">1</span>,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="comment"># loss_weights 是根据observed_values的min确定的</span></span><br><span class="line">loss_weights = (</span><br><span class="line">        observed_values</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">len</span>(self.target_shape) == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">else</span> observed_values.<span class="built_in">min</span>(axis=-<span class="number">1</span>, keepdims=<span class="literal">False</span>)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    weighted_loss = weighted_average(</span><br><span class="line">        F=F, x=loss, weights=loss_weights, axis=<span class="number">1</span></span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">  	loss = F.where(condition=loss_weights, x=loss, y=F.zeros_like(loss))</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> weighted_loss, loss</span><br></pre></td></tr></table></figure></li>
-</ul></li>
-</ul></li>
+<li>copy_parameters：将训练好的网络参数传给预测网络：<code>copy_parameters(trained_network, prediction_network)</code></li>
+<li>RepresentableBlockPredictor：transform + 预测网络 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">                        input_transform&#x3D;transformation,</span><br><span class="line">                        prediction_net&#x3D;prediction_network,</span><br><span class="line">                        batch_size&#x3D;self.trainer.batch_size,</span><br><span class="line">                        freq&#x3D;self.freq,</span><br><span class="line">                        prediction_length&#x3D;self.prediction_length,</span><br><span class="line">                        ctx&#x3D;self.trainer.ctx,</span><br><span class="line">                        dtype&#x3D;self.dtype,</span><br><span class="line">                    )&#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line">### 辅助类-DeepARTrainingNetwork 和 DeepARPredictionNetwork</span><br><span class="line"></span><br><span class="line">- ![](https:&#x2F;&#x2F;firebasestorage.googleapis.com&#x2F;v0&#x2F;b&#x2F;firescript-577a2.appspot.com&#x2F;o&#x2F;imgs%2Fapp%2Frf_learning%2FVuuzwiLxCK.png?alt&#x3D;media&amp;token&#x3D;151a163b-35ae-407e-8ac1-a6381a545f5a)</span><br><span class="line">- DeepARNetwork：父类</span><br><span class="line">    - unroll_encoder：</span><br><span class="line">        - get_lagged_subsequences：</span><br><span class="line">        - scaler：</span><br><span class="line">        - self.rnn.unroll：</span><br><span class="line">- DeepARTrainingNetwork：</span><br><span class="line">    - hybrid_forward： 返回 loss 和 weighted_loss</span><br><span class="line">        - distribution：</span><br><span class="line">            - unroll_encoder</span><br><span class="line">        - distr.loss</span><br><span class="line">            - loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，</span><br><span class="line">                - observed_values 是 past_observed_values 和 future_observed_values 联合的结果</span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line">        # (batch_size, seq_len, *target_shape)</span><br><span class="line">        observed_values &#x3D; F.concat(</span><br><span class="line">            past_observed_values.slice_axis(</span><br><span class="line">                axis&#x3D;1,</span><br><span class="line">                begin&#x3D;self.history_length - self.context_length,</span><br><span class="line">                end&#x3D;self.history_length,</span><br><span class="line">            ),</span><br><span class="line">            future_observed_values,</span><br><span class="line">            dim&#x3D;1,</span><br><span class="line">        )</span><br><span class="line">    </span><br><span class="line">  		# loss_weights 是根据observed_values的min确定的</span><br><span class="line">  		loss_weights &#x3D; (</span><br><span class="line">            observed_values</span><br><span class="line">            if (len(self.target_shape) &#x3D;&#x3D; 0)</span><br><span class="line">            else observed_values.min(axis&#x3D;-1, keepdims&#x3D;False)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        weighted_loss &#x3D; weighted_average(</span><br><span class="line">            F&#x3D;F, x&#x3D;loss, weights&#x3D;loss_weights, axis&#x3D;1</span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">      	loss &#x3D; F.where(condition&#x3D;loss_weights, x&#x3D;loss, y&#x3D;F.zeros_like(loss))</span><br><span class="line"></span><br><span class="line">    return weighted_loss, loss</span><br></pre></td></tr></table></figure></li>
 <li>DeepARPredictionNetwork：
 <ul>
 <li>hybrid_forward： unroll_encoder 和 sampling_decoder</li>
@@ -946,7 +916,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">131</span>
+        <span class="site-state-item-count">130</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -4,14 +4,19 @@ author: chiechie
 mathjax: true
 date: 2021-04-22 19:36:28
 tags: 
-- 的
+- AIOps
+- 时间序列
 categories: 
 - 技术
 ---
 
 ## 对象关系
 
-gluon-ts 对象关系（自上而下；从系统顶层 到 底层）：
+gluon-ts 对象关系（自上而下；从系统顶层 到 底层）
+
+### 主要类-Estimator/GluonEstimator/DeepAREstimator
+
+从基础类到父类GluonEstimator，再到具体的算法类DeepAREstimator
 
 - 基类-gluonts.model.Estimator：相当于平台层，实现主流程, 核心方法有
     - train: 执行训练，返回predictor，抽象方法
@@ -33,39 +38,27 @@ gluon-ts 对象关系（自上而下；从系统顶层 到 底层）：
     - **create_training_network**： 返回 `trained_network`对象，调用
         - DeepARTrainingNetwork 实例化
     - **create_predictor**：返回：`Predictor`对象
-        - DeepARPredictionNetwork 实例化
-        - copy_parameters：将训练好的网络参数传给预测网络
-```python
-copy_parameters(trained_network, prediction_network)
-```
-            - RepresentableBlockPredictor：transform + 预测网络
-```python
-RepresentableBlockPredictor(
-            input_transform=transformation,
-            prediction_net=prediction_network,
-            batch_size=self.trainer.batch_size,
-            freq=self.freq,
-            prediction_length=self.prediction_length,
-            ctx=self.trainer.ctx,
-            dtype=self.dtype,
-        )
-```
+        - DeepARPredictionNetwork实例化
+        - copy_parameters：将训练好的网络参数传给预测网络。
+          eg, copy_parameters(trained_network, prediction_network)
+        - RepresentableBlockPredictor：transform + 预测网络
 
 ### 辅助类-DeepARTrainingNetwork 和 DeepARPredictionNetwork
 
 - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVuuzwiLxCK.png?alt=media&token=151a163b-35ae-407e-8ac1-a6381a545f5a)
-- DeepARNetwork：父类
+
+#### 父类-DeepARNetwork：
     - unroll_encoder：
         - get_lagged_subsequences：
         - scaler：
         - self.rnn.unroll：
-- DeepARTrainingNetwork：
-    - hybrid_forward： 返回 loss 和 weighted_loss
-        - distribution：
-            - unroll_encoder
-        - distr.loss
-            - loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，
-                - observed_values 是 past_observed_values 和 future_observed_values 联合的结果
+
+#### DeepARTrainingNetwork：
+- hybrid_forward： 返回 loss 和 weighted_loss
+    - distribution：unroll_encoder
+    - distr.loss
+        - loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，
+            - observed_values 是 past_observed_values 和 future_observed_values 联合的结果
 ```python
         # (batch_size, seq_len, *target_shape)
         observed_values = F.concat(
@@ -93,8 +86,9 @@ RepresentableBlockPredictor(
 
     return weighted_loss, loss
 ```
-        - DeepARPredictionNetwork：
-            - hybrid_forward： unroll_encoder 和 sampling_decoder
+#### DeepARPredictionNetwork
+
+- hybrid_forward： unroll_encoder 和 sampling_decoder
 
 
 ## 构建概率分布

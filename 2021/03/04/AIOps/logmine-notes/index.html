@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="logmine是一个日志分类的方法。将多来源的日志汇总分析，找出一定规律。将相似的日志归纳到一类，并且对这类输出概要描述。 日志模式（pattern）就是对一堆日志的总结。一个模式会包含模糊的word（比如IP，date，），也会有具体的word（1.0.0.5）. 并且，日志是自动化生成的消息，一个应用生成的日志都是固定的几种格式，跟一般的日志还不一样，  问题描述 日志模式有什么难点？有的日">
+  <meta name="description" content="logmine是一个日志分类的方法。将多来源的日志汇总分析，找出一定规律。将相似的日志归纳到一类，并且对这类输出概要描述。 日志模式（pattern）就是对一堆日志的总结。一个模式会包含模糊的word（比如IP，date，...），也会有具体的word（1.0.0.5, ...）. 并且，日志是自动化生成的消息，一个应用生成的日志都是固定的几种格式，跟一般的日志还不一样，  问题描述 日志模式有">
 <meta property="og:type" content="article">
 <meta property="og:title" content="logmine论文笔记">
 <meta property="og:url" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Cosmos">
-<meta property="og:description" content="logmine是一个日志分类的方法。将多来源的日志汇总分析，找出一定规律。将相似的日志归纳到一类，并且对这类输出概要描述。 日志模式（pattern）就是对一堆日志的总结。一个模式会包含模糊的word（比如IP，date，），也会有具体的word（1.0.0.5）. 并且，日志是自动化生成的消息，一个应用生成的日志都是固定的几种格式，跟一般的日志还不一样，  问题描述 日志模式有什么难点？有的日">
+<meta property="og:description" content="logmine是一个日志分类的方法。将多来源的日志汇总分析，找出一定规律。将相似的日志归纳到一类，并且对这类输出概要描述。 日志模式（pattern）就是对一堆日志的总结。一个模式会包含模糊的word（比如IP，date，...），也会有具体的word（1.0.0.5, ...）. 并且，日志是自动化生成的消息，一个应用生成的日志都是固定的几种格式，跟一般的日志还不一样，  问题描述 日志模式有">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/logmine_image-20210225214320632.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/logmin-result.png">
@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/cost_function.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/badcase.png">
 <meta property="article:published_time" content="2021-03-04T03:01:18.000Z">
-<meta property="article:modified_time" content="2021-04-23T03:58:11.016Z">
+<meta property="article:modified_time" content="2021-04-23T04:00:16.385Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="AIOps">
 <meta property="article:tag" content="论文笔记">
@@ -207,7 +207,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-23 11:58:11" itemprop="dateModified" datetime="2021-04-23T11:58:11+08:00">2021-04-23</time>
+                <time title="修改时间：2021-04-23 12:00:16" itemprop="dateModified" datetime="2021-04-23T12:00:16+08:00">2021-04-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -232,7 +232,7 @@
       
         <blockquote>
 <p>logmine是一个日志分类的方法。将多来源的日志汇总分析，找出一定规律。将相似的日志归纳到一类，并且对这类输出概要描述。</p>
-<p>日志模式（pattern）就是对一堆日志的总结。一个模式会包含模糊的word（比如IP，date，<strong>），也会有具体的word（1.0.0.5）.</strong></p>
+<p>日志模式（pattern）就是对一堆日志的总结。一个模式会包含模糊的word（比如IP，date，...），也会有具体的word（1.0.0.5, ...）.</p>
 <p>并且，日志是自动化生成的消息，一个应用生成的日志都是固定的几种格式，跟一般的日志还不一样，</p>
 </blockquote>
 <h2 id="问题描述">问题描述</h2>

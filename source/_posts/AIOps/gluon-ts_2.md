@@ -270,11 +270,15 @@ static_feat = F.concat(
     - ObservedValue是什么？
         - 形状为(batch_size, seq_len, *target_shape)
         - observed_values  =  past_observed_values[721:793]  + future_observed_values 
-- 归一化，获取lags，特征工程，特征拼接，这四个步骤的顺序是怎么样的？
-    - 概览
-        - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fh2sU85bMJq.png?alt=media&token=1c752076-827a-469a-af0e-a51fbe3c4e9e)
-    - deepar 细节图：
-        - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbFiYx7kM9g.png?alt=media&token=83eccdba-5fd3-4f73-9804-ae8536ba16a7)
+
+## 归一化和特征工程
+
+归一化，获取lags，特征工程，特征拼接，这四个步骤的顺序是怎么样的？
+- 概览
+    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fh2sU85bMJq.png?alt=media&token=1c752076-827a-469a-af0e-a51fbe3c4e9e)
+- deepar 细节图：
+    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbFiYx7kM9g.png?alt=media&token=83eccdba-5fd3-4f73-9804-ae8536ba16a7)
+
 - DeepAR的神经网络没法可视化？-有没有替代方案？
 - 看一下deepAR的周期性误差算的是什么？有做归一化吗？
 - 【借鉴】归一化是怎么做的？
@@ -287,7 +291,8 @@ _, scale = self.scaler(
         axis=1, begin=-self.context_length, end=None
     ),
 )```
-    - 只用history_length中最近context_length的subTS作为样本，并且剔除掉缺失值， 求均值，作为scale
+
+- 只用history_length中最近context_length的subTS作为样本，并且剔除掉缺失值， 求均值，作为scale
         -  这个只是一个示范，可以看一下输入输出的结构，他实际上并没有做归一化
 ```python
 class NOPScaler(Scaler):
@@ -329,7 +334,7 @@ class NOPScaler(Scaler):
 ```
     - 然后 对所有的lags项（72 * 40） 除以 scale。
 
-## gluon中怎么实现概率层？
+## 训练和预测
 
 - gluon中怎么实现概率层？class ArgProj(gluon.HybridBlock):A block that can be used to project from a dense layer to distribution
 - estimator训练的时候会调用predict吗？
@@ -496,16 +501,17 @@ forecast_list[0].samples.shape
    ...: 
 Out[35]: (10, 168)
 ```
-- 特征模块（gluonts.transform.feature module）有什么功能？
-    - **AddAgeFeature**：Adds an ‘age’ feature to the data_entry.
-    - **AddConstFeature**：将一个常数扩充到时间轴上
-        - If is_train=True，the feature matrix has the same length as the target field. If is_train=False，the feature matrix has length len(target) + pred_length
-    - **AddObservedValuesIndicator**：将缺失值用dummy值替换，增加一个index变量，区分有值 和 没有值 的情况。
-    - **AddTimeFeatures**：
-        - Ifis_train=True the feature matrix has the same length as the target field. If is_train=False the feature matrix has length len(target) + pred_length
-    - **target_transformation_length**：
-        - If is_train=True，return len(target) 
-        -  If is_train=False, eturn len(target) + pred_length
+## 特征模块（gluonts.transform.feature module）有什么功能？
+
+- **AddAgeFeature**：Adds an ‘age’ feature to the data_entry.
+- **AddConstFeature**：将一个常数扩充到时间轴上
+    - If is_train=True，the feature matrix has the same length as the target field. If is_train=False，the feature matrix has length len(target) + pred_length
+- **AddObservedValuesIndicator**：将缺失值用dummy值替换，增加一个index变量，区分有值 和 没有值 的情况。
+- **AddTimeFeatures**：
+    - Ifis_train=True the feature matrix has the same length as the target field. If is_train=False the feature matrix has length len(target) + pred_length
+- **target_transformation_length**：
+    - If is_train=True，return len(target) 
+    -  If is_train=False, eturn len(target) + pred_length
 
 ## Estimator，GluonEstimator，DeepAREstimator三者的关系
 

@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-22 19:36:28 / 修改时间：20:23:03" itemprop="dateCreated datePublished" datetime="2021-04-22T19:36:28+08:00">2021-04-22</time>
+              <time title="创建时间：2021-04-22 19:36:28 / 修改时间：20:59:35" itemprop="dateCreated datePublished" datetime="2021-04-22T19:36:28+08:00">2021-04-22</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -212,7 +212,84 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="构建概率分布">构建概率分布</h2>
+          <h2 id="对象关系">对象关系</h2>
+<p>gluon-ts 对象关系（自上而下；从系统顶层 到 底层）：</p>
+<ul>
+<li>基类-gluonts.model.Estimator：相当于平台层，实现主流程, 核心方法有
+<ul>
+<li>train: 执行训练，返回predictor，抽象方法</li>
+</ul></li>
+<li>父类-gluonts.model.GluonEstimator：
+<ul>
+<li>create_transformation: 抽象方法</li>
+<li>create_training_network：抽象方法</li>
+<li>create_predictor：抽象方法</li>
+<li>train_model： 执行训练，返回TrainOutput, 依次调用：
+<ul>
+<li>self.create_transformation()： 返回<code>transformation</code></li>
+<li>self.create_training_network()：返回<code>trained_net</code></li>
+<li>self.trainer()：<code>trainer = Trainer(epochs=epochs, batch_size=batch_size)</code></li>
+<li>self.create_predictor(): 输入<code>transformation</code>和 <code>trained_net</code>， 返回<code>predictor</code>，<code>self.create_predictor(transformation, trained_net)</code></li>
+<li>train：执行训练，返回TrainOutput.predictor，self.train_model()：</li>
+</ul></li>
+</ul></li>
+<li>子类（gluonts.model.deepar.DeepAREstimator）：相当于用户层，负责具体算法的逻辑, 需要实现3个函数，其他的调度类方法继承父类，例如train，和它的兄弟类共享。
+<ul>
+<li><strong>create_transformation</strong>： 返回<code>Transformation</code>对象, 依次调用
+<ul>
+<li>AddObservedValuesIndicator：</li>
+<li>AddTimeFeatures：</li>
+<li>AddAgeFeature</li>
+</ul></li>
+<li><strong>create_training_network</strong>： 返回 <code>trained_network</code>对象，调用
+<ul>
+<li>DeepARTrainingNetwork 实例化</li>
+</ul></li>
+<li><strong>create_predictor</strong>：返回：<code>Predictor</code>对象
+<ul>
+<li>DeepARPredictionNetwork 实例化</li>
+<li>copy_parameters：将训练好的网络参数传给预测网络 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy_parameters(trained_network, prediction_network)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>RepresentableBlockPredictor：transform + 预测网络 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">RepresentableBlockPredictor(</span><br><span class="line">            input_transform=transformation,</span><br><span class="line">            prediction_net=prediction_network,</span><br><span class="line">            batch_size=self.trainer.batch_size,</span><br><span class="line">            freq=self.freq,</span><br><span class="line">            prediction_length=self.prediction_length,</span><br><span class="line">            ctx=self.trainer.ctx,</span><br><span class="line">            dtype=self.dtype,</span><br><span class="line">        )</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="辅助类-deepartrainingnetwork-和-deeparpredictionnetwork">辅助类-DeepARTrainingNetwork 和 DeepARPredictionNetwork</h3>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVuuzwiLxCK.png?alt=media&amp;token=151a163b-35ae-407e-8ac1-a6381a545f5a" /></li>
+<li>DeepARNetwork：父类
+<ul>
+<li>unroll_encoder：
+<ul>
+<li>get_lagged_subsequences：</li>
+<li>scaler：</li>
+<li>self.rnn.unroll：</li>
+</ul></li>
+</ul></li>
+<li>DeepARTrainingNetwork：
+<ul>
+<li>hybrid_forward： 返回 loss 和 weighted_loss
+<ul>
+<li>distribution：
+<ul>
+<li>unroll_encoder</li>
+</ul></li>
+<li>distr.loss
+<ul>
+<li>loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，
+<ul>
+<li>observed_values 是 past_observed_values 和 future_observed_values 联合的结果 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment"># (batch_size, seq_len, *target_shape)</span></span><br><span class="line">    observed_values = F.concat(</span><br><span class="line">        past_observed_values.slice_axis(</span><br><span class="line">            axis=<span class="number">1</span>,</span><br><span class="line">            begin=self.history_length - self.context_length,</span><br><span class="line">            end=self.history_length,</span><br><span class="line">        ),</span><br><span class="line">        future_observed_values,</span><br><span class="line">        dim=<span class="number">1</span>,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="comment"># loss_weights 是根据observed_values的min确定的</span></span><br><span class="line">loss_weights = (</span><br><span class="line">        observed_values</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">len</span>(self.target_shape) == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">else</span> observed_values.<span class="built_in">min</span>(axis=-<span class="number">1</span>, keepdims=<span class="literal">False</span>)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    weighted_loss = weighted_average(</span><br><span class="line">        F=F, x=loss, weights=loss_weights, axis=<span class="number">1</span></span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">  	loss = F.where(condition=loss_weights, x=loss, y=F.zeros_like(loss))</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> weighted_loss, loss</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul></li>
+<li>DeepARPredictionNetwork：
+<ul>
+<li>hybrid_forward： unroll_encoder 和 sampling_decoder</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="构建概率分布">构建概率分布</h2>
 <ul>
 <li><p>StudentT分布，有三个参数：mu，sigma，mu <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">s</span>(<span class="params">mu: Tensor, sigma: Tensor, nu: Tensor</span>) -&gt; Tensor:</span></span><br><span class="line">    F = self.F</span><br><span class="line">    gammas = F.sample_gamma(</span><br><span class="line">        alpha=nu / <span class="number">2.0</span>, beta=<span class="number">2.0</span> / (nu * F.square(sigma)), dtype=dtype</span><br><span class="line">    )</span><br><span class="line">    normal = F.sample_normal(</span><br><span class="line">        mu=mu, sigma=<span class="number">1.0</span> / F.sqrt(gammas), dtype=dtype</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> normal</span><br></pre></td></tr></table></figure></p></li>
 <li><p>TransformedDistribution: 将近似正态分布 转换为 带scale的 真实分布</p></li>
@@ -494,44 +571,8 @@
 </ul></li>
 <li>而如果这个逻辑 要实现N次，按照不抽象的写法，就要写10 * N 次 if else。</li>
 </ul>
-<h2 id="对象关系">对象关系</h2>
-<p>gluon-ts 对象关系（自上而下；从系统顶层or外层 到 底层 or 里层）： - 基类（gluonts.model.Estimator）：相当于平台层，实现主流程, 核心方法有 - train: 执行训练，返回predictor，抽象方法 - 父类（gluonts.model.GluonEstimator）： - create_transformation: 抽象方法 - create_training_network：抽象方法 - create_predictor：抽象方法 - train_model： 执行训练，返回TrainOutput, 依次调用： - self.create_transformation()： 返回<code>transformation</code> - self.create_training_network()：返回<code>trained_net</code> - self.trainer()：<code>trainer = Trainer(epochs=epochs, batch_size=batch_size)</code> - self.create_predictor(): 输入<code>transformation</code>和 <code>trained_net</code>， 返回<code>predictor</code>，<code>self.create_predictor(transformation, trained_net)</code> - train：执行训练，返回TrainOutput.predictor，self.train_model()： - 子类（gluonts.model.deepar.DeepAREstimator）：相当于用户层，负责具体算法的逻辑, 需要实现3个函数，其他的方法（只要是负责调度类的逻辑如train，他和它的兄弟类 都是可共享的 ），直接调用它的父类 的就好 - <strong>create_transformation</strong>： 返回<code>Transformation</code>对象, 依次调用 - AddObservedValuesIndicator： - AddTimeFeatures： - AddAgeFeature - <strong>create_training_network</strong>： 返回 <code>trained_network</code>对象，调用 - DeepARTrainingNetwork 实例化 - <strong>create_predictor</strong>：返回：<code>Predictor</code>对象 - DeepARPredictionNetwork 实例化 - copy_parameters：将训练好的网络参数传给预测网络 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy_parameters(trained_network, prediction_network)</span><br></pre></td></tr></table></figure> - RepresentableBlockPredictor：transform + 预测网络 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">RepresentableBlockPredictor(</span><br><span class="line">            input_transform=transformation,</span><br><span class="line">            prediction_net=prediction_network,</span><br><span class="line">            batch_size=self.trainer.batch_size,</span><br><span class="line">            freq=self.freq,</span><br><span class="line">            prediction_length=self.prediction_length,</span><br><span class="line">            ctx=self.trainer.ctx,</span><br><span class="line">            dtype=self.dtype,</span><br><span class="line">        )</span><br></pre></td></tr></table></figure></p>
-<h3 id="辅助类deepartrainingnetwork-和-deeparpredictionnetwork">辅助类（DeepARTrainingNetwork 和 DeepARPredictionNetwork）</h3>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVuuzwiLxCK.png?alt=media&amp;token=151a163b-35ae-407e-8ac1-a6381a545f5a" /></li>
-<li>DeepARNetwork：父类
-<ul>
-<li>unroll_encoder：
-<ul>
-<li>get_lagged_subsequences：</li>
-<li>scaler：</li>
-<li>self.rnn.unroll：</li>
-</ul></li>
-</ul></li>
-<li>DeepARTrainingNetwork：
-<ul>
-<li>hybrid_forward： 返回 loss 和 weighted_loss
-<ul>
-<li>distribution：
-<ul>
-<li>unroll_encoder</li>
-</ul></li>
-<li>distr.loss
-<ul>
-<li>loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，
-<ul>
-<li>observed_values 是 past_observed_values 和 future_observed_values 联合的结果 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment"># (batch_size, seq_len, *target_shape)</span></span><br><span class="line">    observed_values = F.concat(</span><br><span class="line">        past_observed_values.slice_axis(</span><br><span class="line">            axis=<span class="number">1</span>,</span><br><span class="line">            begin=self.history_length - self.context_length,</span><br><span class="line">            end=self.history_length,</span><br><span class="line">        ),</span><br><span class="line">        future_observed_values,</span><br><span class="line">        dim=<span class="number">1</span>,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="comment"># loss_weights 是根据observed_values的min确定的</span></span><br><span class="line">loss_weights = (</span><br><span class="line">        observed_values</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">len</span>(self.target_shape) == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">else</span> observed_values.<span class="built_in">min</span>(axis=-<span class="number">1</span>, keepdims=<span class="literal">False</span>)</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    weighted_loss = weighted_average(</span><br><span class="line">        F=F, x=loss, weights=loss_weights, axis=<span class="number">1</span></span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">  	loss = F.where(condition=loss_weights, x=loss, y=F.zeros_like(loss))</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> weighted_loss, loss</span><br></pre></td></tr></table></figure></li>
-</ul></li>
-</ul></li>
-<li>DeepARPredictionNetwork：
-<ul>
-<li>hybrid_forward： unroll_encoder 和 sampling_decoder</li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
 <h2 id="自定义一个点预测模型从系统-底层-到-顶层or从-里层-到-外层">自定义一个点预测模型（从系统 底层 到 顶层，or从 里层 到 外层 ）：</h2>
-<h4 id="第1步定义训练网络-和-预测网络">第1步：定义训练网络 和 预测网络</h4>
+<h3 id="第1步定义训练网络-和-预测网络">第1步：定义训练网络 和 预测网络</h3>
 <ul>
 <li>训练网络 和 预测网络 都要实现hybrid_forward方法，该方法就是在定义训练网络 和 预测网络被调用时的逻辑
 <ul>
@@ -593,35 +634,20 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">forecast_it, ts_it = make_evaluation_predictions(</span><br><span class="line">    dataset=dataset.test,</span><br><span class="line">    predictor=predictor,</span><br><span class="line">    num_samples=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">forecasts = <span class="built_in">list</span>(forecast_it)</span><br><span class="line">tss = <span class="built_in">list</span>(ts_it)</span><br><span class="line"></span><br><span class="line"><span class="comment">## tss 是最完整的曲线，forecasts只有后面一截</span></span><br><span class="line">plot_prob_forecasts(tss[<span class="number">0</span>], forecasts[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
 <pre><code>- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FmPC-fmVxIs.png?alt=media&amp;token=f9b7f8c0-2717-47f7-930a-cc76a30d8855)</code></pre>
 <ul>
-<li>这里的num_samples设置为100，就会获得100次相同的预测结果（点预测没有随机性） ### 第5步 ： 评估forecasts</li>
+<li>这里的num_samples设置为100，就会获得100次相同的预测结果（点预测没有随机性）</li>
 </ul>
+<h3 id="第5步评估forecasts">第5步：评估forecasts</h3>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">evaluator = Evaluator(quantiles=[<span class="number">0.1</span>, <span class="number">0.5</span>, <span class="number">0.9</span>])</span><br><span class="line">agg_metrics, item_metrics = evaluator(<span class="built_in">iter</span>(tss), <span class="built_in">iter</span>(forecasts), num_series=<span class="built_in">len</span>(dataset.test))</span><br></pre></td></tr></table></figure>
 <p>返回两部分： 整体指标 以及 每个商品指标 - 整体指标（agg_metrics） - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F8Yt16rezmJ.png?alt=media&amp;token=68cbc539-27a7-4edc-ab76-20606b9a85b8" /> - 每个商品评估指标（item_metrics） - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FxEvAhUsdiL.png?alt=media&amp;token=a3c18b94-a391-4009-ada4-ff57c1976c6d" /></p>
-<h3 id="gluon-ts-release记录">GLUON-TS release记录</h3>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/releases/tag/v0.4.0">0.4.0</a>
-<ul>
-<li>Models
-<ul>
-<li>Option for DeepAR and DeepState to allow an <strong>embedding </strong>vector instead of the same value for all <strong>categorical</strong> features. (<a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/pull/315">#315</a>)</li>
-<li>Add option for <strong>feat_static_real</strong> in DeepAREstimator. (<a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/pull/324">#324</a>)</li>
-<li>Added support for changing dataytpe in DeepAREstimator. (<a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/pull/363">#363</a>)</li>
-</ul></li>
-<li>Distributions
-<ul>
-<li>Added Dirichlet distribution. (<a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/pull/417">#417</a>)</li>
-</ul></li>
-</ul></li>
-</ul>
-<h3 id="使用过程中的bug">使用过程中的bug</h3>
+<h2 id="使用过程中的bug">使用过程中的bug</h2>
 <ul>
 <li>ujson dumps NaN but doesn't load it 3511，https://github.com/micropython/micropython/issues/3511 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">serialize_data_entry</span>(<span class="params">data_entry: DataEntry</span>) -&gt; Dict:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Encode the numpy values in the a DataEntry dictionary into lists so the</span></span><br><span class="line"><span class="string">    dictionary can be json serialized.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">serialize_field</span>(<span class="params">field</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(field, np.ndarray):</span><br><span class="line">            <span class="comment"># circumvent https://github.com/micropython/micropython/issues/3511</span></span><br><span class="line">            nan_ix = np.isnan(field)</span><br><span class="line">            field = field.astype(np.object_)</span><br><span class="line">            field[nan_ix] = <span class="string">&quot;NaN&quot;</span></span><br><span class="line">            <span class="keyword">return</span> field.tolist()</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">str</span>(field)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        k: serialize_field(v)</span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> data_entry.data.items()</span><br><span class="line">        <span class="keyword">if</span> v <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure> 使用simplednn的时候，报错</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GluonTSUserError: Got <span class="literal">NaN</span> <span class="keyword">in</span> first epoch.</span><br><span class="line">Try reducing initial learning rate.</span><br></pre></td></tr></table></figure>
 <ul>
-<li>原因1：target中含有nan值，有的算法处理了，有的算法没有处理，deepAR处理乐的.（github给的解决方案）
+<li>原因1：target中含有nan值，有的算法处理了，有的算法没有处理，deepAR处理了的.
 <ul>
-<li>solution： 清洗target中的nan</li>
+<li>solution： 清洗target中的nan。</li>
 </ul></li>
 <li>原因2: gluonts的容错机制不行，第一个epho挂了。。不知道为啥, best_epoch_no 为-1，就报错了
 <ul>
@@ -629,7 +655,7 @@
 </ul></li>
 <li>原因3: 可能是随机种子设置的不好，重新跑一遍就好了。。。无语</li>
 </ul>
-<h3 id="算法测试多个算法">【算法】测试多个算法</h3>
+<h3 id="测试多个算法">测试多个算法</h3>
 <p>包括"transformer", "gp", "deepfactor", "deepar", "dnn", "prophet", "deepstate","wavenet"</p>
 <h4 id="已通过">已通过</h4>
 <ul>

@@ -29,25 +29,18 @@ categories:
     - 主要在样本采样这块
 - 自己能不用tensorflow复现mxnet的效果？
     - 对比参数量，准确率，计算时间，内存消耗
-- 为什DeepAR和DeepFator的loss scale 差这么大?
-    - loss的含义都不一样
-        - deepAR的loss计算方式：
- ```python
+- 为什DeepAR和DeepFator的loss scale 差这么大? loss的含义都不一样
+    - deepAR和deepFator的loss计算方式：
+```python
 def loss(self, x: Tensor) -> Tensor:
 	return -self.log_prob(x)
-```
-    - deepFator的loss计算方式：
- ```python
+
 def negative_normal_likelihood(self, F, y, mu, sigma):
-    return (
-        F.log(sigma)
-        + 0.5 * math.log(2 * math.pi)
-        + 0.5 * F.square((y - mu) / sigma)
-    )
+    return (F.log(sigma) + 0.5 * math.log(2 * math.pi)+ 0.5 * F.square((y - mu) / sigma))
 ```
 - 对不同曲线预测的时候，为什么有的曲线效果很， 好有的曲线效果很差？
-    - deepAR会针对不同曲线，给loss 赋予不同的权重：loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，
-
+    - deepAR会针对不同曲线，给loss 赋予不同的权重：loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的。
+  
 ## 算法前期调研中的一些小插曲
 
 网上找到了pytorch版本的deepAR版，但是很慢
@@ -79,15 +72,13 @@ def negative_normal_likelihood(self, F, y, mu, sigma):
     - value 为边界点（0或者1）时，加入扰动项
     - 输出的概率分布设置为beta分布
     输出的上下界，非常符合比率型设定（上界不会超过1，下界不会低于0），但是就是准确率不高，一看就是学混了（移花接木，局部的模式 太弱了）
-
 - 出bug了，排查问题
 
 
 ## deepAR实验v1
 
-
 - deepFactor vs deepAR效果对比：
-- 网路流量检测:deepAR还是略胜deepFactor一范畴
+- 网路流量检测:deepAR略胜deepFactor
 - lol整体预测
 - lol分商品预测 
 - pct预测

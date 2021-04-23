@@ -82,81 +82,18 @@ def negative_normal_likelihood(self, F, y, mu, sigma):
 
 - 出bug了，排查问题
 
+
 ## deepAR实验v1
 
-- [code](https://github.com/zhykoties/TimeSeries)： pytorch版本
 
-    
-```python
-    for series in trange(num_series):
-        cov_age = stats.zscore(np.arange(total_time-data_start[series]))
-        if train:
-            covariates[data_start[series]:time_len, 0] = cov_age[:time_len-data_start[series]]
-        else:
-            covariates[:, 0] = cov_age[-time_len:]
-        for i in range(windows_per_series[series]):
-            if train:
-                window_start = stride_size*i+data_start[series]
-            else:
-                window_start = stride_size*i
-```
-        - num_covariates： 4个
-        - pred_days : 7
-        - num_vovariates: 4个
-            - 周几
-            - 几点
-            - 月份
-    - [整理](https://iwiki.woa.com/pages/viewpage.action?pageId=326062234)
 - deepFactor vs deepAR效果对比：
-```python
-1台主机的网络入流量数据：
-deepFactor
-{
-    "MSE": 303732622110915.06,
-    "abs_error": 2275600640.0,
-    "abs_target_sum": 16922566656.0,
-    "abs_target_mean": 100729563.42857143,
-    "seasonal_error": 7606565.400503778,
-    "MASE": 1.7807303548412023,
-    "MAPE": 0.12016319151568138,
-    "sMAPE": 0.13137161232512512,
-    "OWA": NaN,
-    "MSIS": 71.22905232846578,
-    "QuantileLoss[0.5]": 2275600712.0,
-    "Coverage[0.5]": 0.23214285714285715,
-    "RMSE": 17427926.500617195,
-    "NRMSE": 0.17301699627612852,
-    "ND": 0.1344713651456159,
-    "wQuantileLoss[0.5]": 0.13447136940028964,
-    "mean_wQuantileLoss": 0.13447136940028964,
-    "MAE_Coverage": 0.26785714285714285
-}
-deepAR结果：
-{
-    "MSE": 103720750278558.47,
-    "abs_error": 1316331008.0,
-    "abs_target_sum": 16922566656.0,
-    "abs_target_mean": 100729563.42857143,
-    "seasonal_error": 7606565.400503778,
-    "MASE": 1.0300711564944531,
-    "MAPE": 0.07665473185019729,
-    "sMAPE": 0.07928408221885551,
-    "OWA": NaN,
-    "MSIS": 16.15919346419098,
-    "QuantileLoss[0.5]": 1316330924.0,
-    "Coverage[0.5]": 0.27976190476190477,
-    "RMSE": 10184338.480164457,
-    "NRMSE": 0.10110575419485757,
-    "ND": 0.07778554132822911,
-    "wQuantileLoss[0.5]": 0.07778553636444309,
-    "mean_wQuantileLoss": 0.07778553636444309,
-    "MAE_Coverage": 0.22023809523809523
-}
-结论：看来deepAR还是略胜deepFactor一范畴
-```
+- 网路流量检测:deepAR还是略胜deepFactor一范畴
 - lol整体预测
 - lol分商品预测 
 - pct预测
 - cpu使用率
 - 磁盘使用率
-- 网路流量检测
+
+
+## 参考
+1. [code版本](https://github.com/zhykoties/TimeSeries)： pytorch版本

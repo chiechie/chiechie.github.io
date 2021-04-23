@@ -710,7 +710,7 @@ GluonTSUserError: Got NaN in first epoch.
 Try reducing initial learning rate.
 ```
 
-- 原因1：target中含有nan值，有的算法处理了（DeepAR处理了），有的算法没有处理
+- 原因1：target中含有nan值，有的算法处理了（DeepAR处理了），有的算法(simpleDNN)没有处理
     - 解决方案： 清洗target中的nan。
 - 原因2: gluonts的容错机制不行，第一个epoch挂了，导致best_epoch_no 为-1，报错
     - 解决方案：epoch从1->2

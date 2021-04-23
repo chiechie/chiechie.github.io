@@ -27,8 +27,8 @@ gluon-ts 对象关系（自上而下，从系统顶层 到 底层）
     - train_model： 执行训练，返回TrainOutput, 依次调用：
         - self.create_transformation()： 返回`transformation`
         - self.create_training_network()：返回`trained_net`
-        - self.trainer()：```trainer = Trainer(epochs=epochs, batch_size=batch_size)```
-        - self.create_predictor(): 输入`transformation`和 `trained_net`， 返回`predictor`，```self.create_predictor(transformation, trained_net)```
+        - self.trainer()：trainer = Trainer(epochs=epochs, batch_size=batch_size)
+        - self.create_predictor(): 输入`transformation`和 `trained_net`， 返回`predictor`，self.create_predictor(transformation, trained_net)
         - train：执行训练，返回TrainOutput.predictor，self.train_model()： 
 - 子类（gluonts.model.deepar.DeepAREstimator）：相当于用户层，负责具体算法的逻辑, 需要实现3个函数，其他的调度类方法继承父类，例如train，和它的兄弟类共享。
     - **create_transformation**： 返回`Transformation`对象, 依次调用
@@ -47,19 +47,19 @@ gluon-ts 对象关系（自上而下，从系统顶层 到 底层）
 
 - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVuuzwiLxCK.png?alt=media&token=151a163b-35ae-407e-8ac1-a6381a545f5a)
 
-#### 父类-DeepARNetwork：
-    - unroll_encoder：
-        - get_lagged_subsequences：
-        - scaler：
-        - self.rnn.unroll：
+
+#### 父类-DeepARNetwork
+
+- unroll_encoder：
+    - get_lagged_subsequences：
+    - scaler：
+    - self.rnn.unroll：
 
 #### DeepARTrainingNetwork
 
 - hybrid_forward： 返回 loss 和 weighted_loss
-    - distribution：unroll_encoder
-    - distr.loss
-        - loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，
-            - observed_values 是 past_observed_values 和 future_observed_values 联合的结果
+    - loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的学习的不好的曲线。
+
 ```python
         # (batch_size, seq_len, *target_shape)
         observed_values = F.concat(
@@ -87,11 +87,13 @@ gluon-ts 对象关系（自上而下，从系统顶层 到 底层）
 
     return weighted_loss, loss
 ```
+
+
 #### DeepARPredictionNetwork
 
 - hybrid_forward： unroll_encoder 和 sampling_decoder
 
-### Estimator，GluonEstimator，DeepAREstimator三者的关系
+### Estimator/GluonEstimator/DeepAREstimator三者的关系
 
 > update 10月26 日-- 重新理解Estimator，GluonEstimator，DeepAREstimator三者的关系
 
@@ -111,6 +113,7 @@ gluon-ts 对象关系（自上而下，从系统顶层 到 底层）
             - self.create_predictor(): 输入`transformation`和 `trained_net`， 返回`predictor`，```self.create_predictor(transformation, trained_net)```
         - train：执行训练，返回TrainOutput.predictor
             - self.train_model()： 
+
 ### 为什么要定义这两层抽象类呢（Estimator 和 GluonEstimator 都是抽象类，实际执行的是的DeepAREstimator）？
 
 - **我的猜测是，很多组件 是 对 某一组对象生效的，这两层的抽象 实际上是在 定义“组”，以及 对 每一组成员的行为 制定规范（通过抽象方法）。**
@@ -383,6 +386,7 @@ Out[10]: dict_keys(
     - 采样结果, btw 概率分布是中间变量
 - MyPredNetwork.predict()可以处理多个样本吗？
     - 看PredNetwork的hybrid_ward 的 注释是可以的呀，都支持输入batch的数据了，之前怎么想的
+
 ```python
 class DeepARPredictionNetwork(DeepARNetwork):
     

@@ -187,10 +187,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-04-22 19:36:28 / 修改时间：20:59:35" itemprop="dateCreated datePublished" datetime="2021-04-22T19:36:28+08:00">2021-04-22</time>
+              <time title="创建时间：2021-04-22 19:36:28" itemprop="dateCreated datePublished" datetime="2021-04-22T19:36:28+08:00">2021-04-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-23 12:34:05" itemprop="dateModified" datetime="2021-04-23T12:34:05+08:00">2021-04-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -447,31 +453,21 @@
 - ObservedValue是什么？
     - 形状为(batch_size, seq_len, *target_shape)
     - observed_values  =  past_observed_values[721:793]  + future_observed_values </code></pre>
+<h2 id="归一化和特征工程">归一化和特征工程</h2>
+<p>归一化，获取lags，特征工程，特征拼接，这四个步骤的顺序是怎么样的？ - 概览 - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fh2sU85bMJq.png?alt=media&amp;token=1c752076-827a-469a-af0e-a51fbe3c4e9e" /> - deepar 细节图： - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbFiYx7kM9g.png?alt=media&amp;token=83eccdba-5fd3-4f73-9804-ae8536ba16a7" /></p>
 <ul>
-<li>归一化，获取lags，特征工程，特征拼接，这四个步骤的顺序是怎么样的？
-<ul>
-<li>概览
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fh2sU85bMJq.png?alt=media&amp;token=1c752076-827a-469a-af0e-a51fbe3c4e9e" /></li>
-</ul></li>
-<li>deepar 细节图：
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbFiYx7kM9g.png?alt=media&amp;token=83eccdba-5fd3-4f73-9804-ae8536ba16a7" /></li>
-</ul></li>
-</ul></li>
 <li>DeepAR的神经网络没法可视化？-有没有替代方案？</li>
 <li>看一下deepAR的周期性误差算的是什么？有做归一化吗？</li>
 <li>【借鉴】归一化是怎么做的？
 <ul>
 <li><code>python _, scale = self.scaler(   past_target.slice_axis(       axis=1, begin=-self.context_length, end=None   ),   past_observed_values.slice_axis(       axis=1, begin=-self.context_length, end=None   ), )</code></li>
-<li>只用history_length中最近context_length的subTS作为样本，并且剔除掉缺失值， 求均值，作为scale
-<ul>
-<li>这个只是一个示范，可以看一下输入输出的结构，他实际上并没有做归一化 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NOPScaler</span>(<span class="params">Scaler</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    The ``NOPScaler`` assigns a scale equals to 1 to each input item,</span></span><br><span class="line"><span class="string">    i.e.,</span></span><br><span class="line"><span class="string">    no scaling is applied upon calling the ``NOPScaler``.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @validated()</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># noinspection PyMethodOverriding</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">compute_scale</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">        self, F, data: Tensor, observed_indicator: Tensor</span></span></span><br><span class="line"><span class="function"><span class="params">    </span>) -&gt; Tensor:</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Parameters</span></span><br><span class="line"><span class="string">        ----------</span></span><br><span class="line"><span class="string">        F</span></span><br><span class="line"><span class="string">            A module that can either refer to the Symbol API or the NDArray</span></span><br><span class="line"><span class="string">            API in MXNet.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        data</span></span><br><span class="line"><span class="string">            tensor containing the data to be scaled.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        observed_indicator</span></span><br><span class="line"><span class="string">            observed_indicator: binary tensor with the same shape as</span></span><br><span class="line"><span class="string">            ``data``, that has 1 in correspondence of observed data points,</span></span><br><span class="line"><span class="string">            and 0 in correspondence of missing data points.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Returns</span></span><br><span class="line"><span class="string">        -------</span></span><br><span class="line"><span class="string">        Tensor</span></span><br><span class="line"><span class="string">            shape (N, C), identically equal to 1.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> F.ones_like(data).mean(axis=self.axis)</span><br></pre></td></tr></table></figure></li>
 </ul></li>
+<li>只用history_length中最近context_length的subTS作为样本，并且剔除掉缺失值， 求均值，作为scale - 这个只是一个示范，可以看一下输入输出的结构，他实际上并没有做归一化 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NOPScaler</span>(<span class="params">Scaler</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    The ``NOPScaler`` assigns a scale equals to 1 to each input item,</span></span><br><span class="line"><span class="string">    i.e.,</span></span><br><span class="line"><span class="string">    no scaling is applied upon calling the ``NOPScaler``.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @validated()</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># noinspection PyMethodOverriding</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">compute_scale</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">        self, F, data: Tensor, observed_indicator: Tensor</span></span></span><br><span class="line"><span class="function"><span class="params">    </span>) -&gt; Tensor:</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Parameters</span></span><br><span class="line"><span class="string">        ----------</span></span><br><span class="line"><span class="string">        F</span></span><br><span class="line"><span class="string">            A module that can either refer to the Symbol API or the NDArray</span></span><br><span class="line"><span class="string">            API in MXNet.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        data</span></span><br><span class="line"><span class="string">            tensor containing the data to be scaled.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        observed_indicator</span></span><br><span class="line"><span class="string">            observed_indicator: binary tensor with the same shape as</span></span><br><span class="line"><span class="string">            ``data``, that has 1 in correspondence of observed data points,</span></span><br><span class="line"><span class="string">            and 0 in correspondence of missing data points.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Returns</span></span><br><span class="line"><span class="string">        -------</span></span><br><span class="line"><span class="string">        Tensor</span></span><br><span class="line"><span class="string">            shape (N, C), identically equal to 1.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> F.ones_like(data).mean(axis=self.axis)</span><br></pre></td></tr></table></figure>
+<ul>
 <li>然后 对所有的lags项（72 * 40） 除以 scale。</li>
 </ul></li>
 </ul>
-<h2 id="gluon中怎么实现概率层">gluon中怎么实现概率层？</h2>
+<h2 id="训练和预测">训练和预测</h2>
 <ul>
 <li>gluon中怎么实现概率层？class ArgProj(gluon.HybridBlock):A block that can be used to project from a dense layer to distribution</li>
 <li>estimator训练的时候会调用predict吗？</li>
@@ -514,8 +510,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">forecast.mean.shape</span><br><span class="line">Out[<span class="number">25</span>]: (<span class="number">168</span>,)</span><br></pre></td></tr></table></figure>
 <h3 id="如果只做预测-不做评估要怎么搞">如果只做预测 不做评估要怎么搞？</h3>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># step 1： 将context长度的测试数据输入predictor.predict()</span></span><br><span class="line">forecast = predictor.predict(test_data, num_samples=<span class="number">10</span>)</span><br><span class="line">forecast_list = <span class="built_in">list</span>(forecast)</span><br><span class="line"><span class="comment"># step 2： 获取多个序列的输出（forecast对象包含了这些信息），</span></span><br><span class="line"><span class="comment"># 通过 forecast_list[0].samples 获取到 对每个序列的 预测值，也就是sample_path</span></span><br><span class="line"><span class="comment"># sample_path的形状为(采样个数，预测窗口长度)</span></span><br><span class="line">forecast_list[<span class="number">0</span>].samples.shape</span><br><span class="line">   ...: </span><br><span class="line">Out[<span class="number">35</span>]: (<span class="number">10</span>, <span class="number">168</span>)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>特征模块（gluonts.transform.feature module）有什么功能？
+<h2 id="特征模块gluonts.transform.feature-module有什么功能">特征模块（gluonts.transform.feature module）有什么功能？</h2>
 <ul>
 <li><strong>AddAgeFeature</strong>：Adds an ‘age’ feature to the data_entry.</li>
 <li><strong>AddConstFeature</strong>：将一个常数扩充到时间轴上
@@ -531,7 +526,6 @@
 <ul>
 <li>If is_train=True，return len(target)</li>
 <li>If is_train=False, eturn len(target) + pred_length</li>
-</ul></li>
 </ul></li>
 </ul>
 <h2 id="estimatorgluonestimatordeeparestimator三者的关系">Estimator，GluonEstimator，DeepAREstimator三者的关系</h2>

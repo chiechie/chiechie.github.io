@@ -30,11 +30,11 @@ categories:
 - 自己能不用tensorflow复现mxnet的效果？
     - 对比参数量，准确率，计算时间，内存消耗
 - 为什DeepAR和DeepFator的loss scale 差这么大? loss的含义都不一样
-    - deepAR和deepFator的loss计算方式：
 ```python
+# deepAR和deepFator
 def loss(self, x: Tensor) -> Tensor:
 	return -self.log_prob(x)
-
+# deepFator
 def negative_normal_likelihood(self, F, y, mu, sigma):
     return (F.log(sigma) + 0.5 * math.log(2 * math.pi)+ 0.5 * F.square((y - mu) / sigma))
 ```
@@ -77,8 +77,7 @@ def negative_normal_likelihood(self, F, y, mu, sigma):
 
 ## deepAR实验v1
 
-- deepFactor vs deepAR效果对比：
-- 网路流量检测:deepAR略胜deepFactor
+- deepFactor vs deepAR效果对比： 网路流量检测中deepAR略胜一筹
 - lol整体预测
 - lol分商品预测 
 - pct预测

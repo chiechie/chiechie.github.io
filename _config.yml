@@ -41,6 +41,7 @@ pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
   trailing_html: true # Set to false to remove trailing '.html' from permalinks
 
+
 # Directory
 source_dir: source
 public_dir: public
@@ -86,6 +87,10 @@ index_generator:
   per_page: 2
   order_by: -date
 
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
 
 # Category & Tag
 default_category: 
@@ -95,6 +100,7 @@ tag_map:
 # Metadata elements
 ## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
 meta_generator: true
+
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date

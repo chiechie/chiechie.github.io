@@ -12,11 +12,11 @@ categories:
 
 ## 对象关系
 
-gluon-ts 对象关系（自上而下，从系统顶层 到 底层）
+gluon-ts 对象关系
 
 ### 主要类-Estimator/GluonEstimator/DeepAREstimator
 
-从基础类到父类GluonEstimator，再到具体的算法类DeepAREstimator
+算法逻辑写在DeepAREstimator
 
 - 基类-gluonts.model.Estimator：相当于平台层，实现主流程, 核心方法有
     - train: 执行训练，返回predictor，抽象方法
@@ -45,7 +45,7 @@ gluon-ts 对象关系（自上而下，从系统顶层 到 底层）
 
 ### 辅助类-DeepARTrainingNetwork 和 DeepARPredictionNetwork
 
-- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVuuzwiLxCK.png?alt=media&token=151a163b-35ae-407e-8ac1-a6381a545f5a)
+![DeepARTrainingNetwork 和 DeepARPredictionNetwork](/img_1.png)
 
 
 #### 父类-DeepARNetwork
@@ -58,70 +58,27 @@ gluon-ts 对象关系（自上而下，从系统顶层 到 底层）
 #### DeepARTrainingNetwork
 
 - hybrid_forward： 返回 loss 和 weighted_loss
-    - loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的学习的不好的曲线。
-
-```python
-        # (batch_size, seq_len, *target_shape)
-        observed_values = F.concat(
-            past_observed_values.slice_axis(
-                axis=1,
-                begin=self.history_length - self.context_length,
-                end=self.history_length,
-            ),
-            future_observed_values,
-            dim=1,
-        )
+    - loss_weights 是根据observed_values的min确定样本权重。小量岗的样本，即使loss很大，总loss也不care。
     
-  		# loss_weights 是根据observed_values的min确定的
-  		loss_weights = (
-            observed_values
-            if (len(self.target_shape) == 0)
-            else observed_values.min(axis=-1, keepdims=False)
-        )
-
-        weighted_loss = weighted_average(
-            F=F, x=loss, weights=loss_weights, axis=1
-        )
-        
-      	loss = F.where(condition=loss_weights, x=loss, y=F.zeros_like(loss))
-
-    return weighted_loss, loss
-```
-
 
 #### DeepARPredictionNetwork
 
 - hybrid_forward： unroll_encoder 和 sampling_decoder
 
-### Estimator/GluonEstimator/DeepAREstimator三者的关系
+### 总结Estimator/GluonEstimator/DeepAREstimator三者的关系
 
 > update 10月26 日-- 重新理解Estimator，GluonEstimator，DeepAREstimator三者的关系
 
-- 本质 是 通过定义抽象类  以及  规范 来 实现 应用时候 的 可扩展性。
-- Estimator 是各种Estimator的最本质的功能的抽象 定义成的类，即”训练“（train方法），拿到训练数据和验证数据（optional），返回__Predictor__。
+- 通过定义抽象类 以及 规范来实现 应用时候 的 可扩展性。
+- Estimator中定义了各种Estimator的公共方法--train方法，拿到训练数据和验证数据（optional），返回__Predictor__。
 - GluonEstimator 和 DeepAREstimator 都是在这个 框架下，功能的 细化 和 扩展。
-- Estimator的 直属子类有 DummyEstimator 和 GluonEstimator，DummyEstimator 的功能就是在训练的时候 直接返回一个预先构造好的__Predictor__ 。
-- Estimator的另外一个直属子类 GluonEstimator 的定义就规范多了，是一个标准的完整的算法类，参考：
-    - 父类（gluonts.model.GluonEstimator）：
-        - create_transformation: 抽象方法
-        - create_training_network：抽象方法
-        - create_predictor：抽象方法
-        - train_model： 执行训练，返回TrainOutput, 依次调用：
-            - self.create_transformation()： 返回`transformation`
-            - self.create_training_network()：返回`trained_net`
-            - self.trainer()：```trainer = Trainer(epochs=epochs, batch_size=batch_size)```
-            - self.create_predictor(): 输入`transformation`和 `trained_net`， 返回`predictor`，```self.create_predictor(transformation, trained_net)```
-        - train：执行训练，返回TrainOutput.predictor
-            - self.train_model()： 
+- 除了GluonEstimator，Estimator还有一个直属子类--DummyEstimator，功能是，在train方法中返回一个预先构造好的__Predictor__ 。
+- GluonEstimator 的定义就规范多了，是一个标准的完整的算法类
 
-### 为什么要定义这两层抽象类呢（Estimator 和 GluonEstimator 都是抽象类，实际执行的是的DeepAREstimator）？
 
-- **我的猜测是，很多组件 是 对 某一组对象生效的，这两层的抽象 实际上是在 定义“组”，以及 对 每一组成员的行为 制定规范（通过抽象方法）。**
-- 设想一个场景，现在要实现一个逻辑，调用10个实际类的fit方法（DeepAREstimator和 它的同伴们），注意！ 在执行之前，我是不知道具体要调用哪个类的fit的：
-    - 不抽象的话 需要写 10次处理逻辑：遍历10个类，写10 个if else来 调用某个方法。（后面增加到11类，这个if else又要改）
-    - 抽象的话 就只需要写1次处理逻辑： 调用抽象类，以及抽象类的方法。
-- 而如果这个逻辑 要实现N次，按照不抽象的写法，就要写10 * N 次  if else。
+### 为什么要定义这两层抽象类（Estimator 和 GluonEstimator 都是抽象类，实际执行的是的DeepAREstimator）？
 
+不定义规范的话，每个算法的训练的接口不一样，那岂不是要给每个算法写个专门的调度逻辑，去适配他？
 
 
 ## 预处理
@@ -195,7 +152,10 @@ class NOPScaler(Scaler):
 - 然后 对所有的lags项（72 * 40） 除以 scale。
 
 ### 特征模块
+
+
 特征模块（gluonts.transform.feature module）有什么功能？
+
 - **AddAgeFeature**：Adds an ‘age’ feature to the data_entry.
 - **AddConstFeature**：将一个常数扩充到时间轴上
     - If is_train=True，the feature matrix has the same length as the target field. If is_train=False，the feature matrix has length len(target) + pred_length

@@ -164,197 +164,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/14/technology/DeepAR%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/14/technology/DeepAR%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">DeepAR笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-14 17:21:19" itemprop="dateCreated datePublished" datetime="2021-04-14T17:21:19+08:00">2021-04-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 21:18:32" itemprop="dateModified" datetime="2021-04-18T21:18:32+08:00">2021-04-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="一些疑惑">一些疑惑</h2>
-<ul>
-<li>时序预测的技术难点在哪里？</li>
-<li>模型的输入是来自多个序列（有点点像类似迁移学习中的样本的横向扩展，以及持续学习中灌多个样本：
-<ul>
-<li>为了保证模型不会出现灾难性遗忘掉先学到的模式，需要把来自不同的曲线的样本打散？</li>
-<li>如果说序列之间的模式本身就不一致，会不会导致模型学习到一个混乱的模式？</li>
-<li>要不要求序列本身就是相似的？</li>
-<li>不同scale的曲线如何share一个模型 ？</li>
-<li>1个deepAR 模型可以容纳的最大的曲线条数是多少？每个曲线的样本个数是多少？</li>
-</ul></li>
-<li>deepAR不适用的场景有哪些？</li>
-<li>encoder和decoder的权重是共享的么？</li>
-<li>预测target为count类型或者为正的数值类型，模型是怎么做的？</li>
-</ul>
-<h2 id="论文重点结论">论文重点结论</h2>
-<h2 id="相关技术综述">相关技术综述</h2>
-<ul>
-<li>classic时序预测： arima/state space/exponential smoothing
-<ul>
-<li>只对单个曲线做预测，缺点是要一个个曲线去做模型选择，并且每个样本曲线需要积累大量的历史数据</li>
-</ul></li>
-<li>基于神经网络：
-<ul>
-<li>单个曲线训练</li>
-<li>分组训练：发现即使分了组，每个组里面的曲线差异也很大</li>
-<li>全局训练：DeepAR是第一个</li>
-</ul></li>
-<li>【支线】其他领域：nlp，图像生成，语音生成技术 都可以用于时间序列，但是要注意有两个不同点：
-<ul>
-<li>时序场景中，下游的决策应用依赖输出概率分布</li>
-<li>时序场景中，输出为count类型，使用负的二项分布计算likelihood，这个时候不能使用标准的归一化方法，参考
-<ul>
-<li>归一化层，目前主要有这几个方法：Batch Normalization（2015年）、Layer Normalization（2016年）、Instance Normalization（2017年）、Group Normalization（2018年）、Switchable Normalization（2018年）；</li>
-</ul></li>
-</ul></li>
-<li>技术难点：
-<ul>
-<li>现实中需要对多个曲线建模，分别建模人工成本高</li>
-<li>不同曲线scale不一样，但是学习一个global model对nn来说挑战很大（nn擅长局部建模）</li>
-<li>预测概率分布</li>
-</ul></li>
-</ul>
-<h2 id="总结">总结</h2>
-<ul>
-<li>deepAR是一种时间序列预测算法.</li>
-<li>deepAR不做点估计，而是估计概率分布</li>
-<li>由于deepAR输出的是概率分布，所以对未来一段时间的预测，需要采样递归生成，但是采样只是1个路径，如果希望得到期望，需要重复采样</li>
-<li>适用于噪声较大的数据：相较于点估计能提供更有用的信息，如方差，在金融领域这个值代表风险，价值的(比如var用于计算准备金)。</li>
-<li>在交易上的启发：构建基于波动率的策略，风险大的情况下不交易。</li>
-</ul>
-<h2 id="deepar原理">deepAR原理</h2>
-<p>基本概念&amp;符号说明：</p>
-<ul>
-<li><span class="math inline">\(z_{i,t}\)</span>: 第i个时间序列在t时刻的值</li>
-<li><span class="math inline">\(P\left(\mathbf{z}_{i, t_{0}: T} \mid \mathbf{z}_{i, 1: t_{0}-1}, \mathbf{x}_{i, 1: T}\right)\)</span>: 模型输出</li>
-<li>conditioning range： <span class="math inline">\(t_0\)</span>表示历史依赖长度</li>
-<li>prediction range：预测区间</li>
-<li><span class="math inline">\(\mathbf{Z}_{i, t_{0}: T}\)</span>: 预测区间内，Z的取值</li>
-<li>model distribution:</li>
-<li>likelihood factors:</li>
-<li>自回归循环神经网络</li>
-<li>ancestral</li>
-<li>模型架构：训练过程（左边）和 预测过程（右边）： <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjTfoJccA7q.png?alt=media&amp;token=6850c357-b303-4053-81b8-2756678deb58" /></li>
-<li>学习目标： 最大化likelyhood: <span class="math inline">\(\mathcal{L}=-\sum\limits_{i=1}^{N} \sum\limits_{t=t_{0}}^{T} \log \ell\left(z_{i, t} \mid \theta\left(\mathbf{h}_{i, t}\right)\right)\)</span></li>
-<li>【重点】对不同scale曲线怎么处理的？
-<ul>
-<li><ol type="1">
-<li>不同曲线怎么做归一化和逆归一化？缺失值多&amp;方差变化大</li>
-</ol>
-<ul>
-<li>context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。</li>
-<li>相当于在第一层做了layer Normalization</li>
-</ul></li>
-<li><ol start="2" type="1">
-<li>不同曲线的长度和重要性不一样，如果是按照曲线id来均匀采样，会导致重要的曲线学的不够（underfit）</li>
-</ol>
-<ul>
-<li>不做均匀采样，而是做加权采样--使用1里面计算得到的scale作为权重</li>
-</ul></li>
-</ul></li>
-<li>【重点】deepAR是怎么得到概率分布的？
-<ul>
-<li>比较intutive的推导--updata0926
-<ul>
-<li>我们希望得到条件概率分布，即p（z｜x），</li>
-<li>Q 如何得到概率分布呢？</li>
-<li>A ：分两步走
-<ul>
-<li>先拍一个概率分布的形式（函数族），eg高斯分布</li>
-<li>使用量化指标$&lt; , &gt; $进一步确定这个分布</li>
-</ul></li>
-<li>Q 剩下的问题（不确定的因素）为，如何确定量化指标？</li>
-<li>A ：构建一个神经网络，输入x，输出 $&lt; , &gt; $</li>
-<li>Q 那么nn怎么知道输出的u，sigma对不对呢，又没有监督信号 来指引，只有&lt;x, y&gt; pair</li>
-<li>A： 使用likelihood 和 y 来度量输出的$&lt; , &gt; $质量好不好
-<ul>
-<li>有点像，有个人号称 他的理论知识渊博&lt;u，sigma&gt;(覆盖了y空间中所有的案例），现在要检验他的方法论对不对呢？只有一个实践案例----- 假设是对的，然后看是否适用该案例</li>
-</ul></li>
-<li>总结下：
-<ul>
-<li>模型输出&lt;u, sigma&gt;, 实际给的ground truth：y</li>
-<li>loss为：$- log Prob(，，y） $</li>
-</ul></li>
-</ul></li>
-<li>前提，先假设预测的数据服从的分布族，有几个待估参数
-<ul>
-<li>实值--假设是高斯分布</li>
-<li>整数--假设是一个二项分布</li>
-</ul></li>
-<li>设计网络的时候，需要某一层输出是 分布的参数（例如<span class="math inline">\(\mu\)</span> 和 <span class="math inline">\(\sigma\)</span>）,
-<ul>
-<li>训练的时候，将$&lt; , &gt; $ 带入pdf，计算pdf中 ground truth的概率，取negtive log，作为反馈信号（-log prob就是loss），这个值越大（loss越小）说明模型预测的越准。</li>
-<li>做推断的时候，将$&lt; , &gt; $ 带入pdf， 进行采样，得到预测值</li>
-</ul></li>
-</ul></li>
-<li>【重点】输出的概率分布，怎么评估模型效果？</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/13/reading_notes/sam-altman-idea-generation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -442,10 +251,97 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/12/investment/trading-strategies/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/12/investment/trading-strategies/" class="post-title-link" itemprop="url">交易的策略</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-12 12:00:14" itemprop="dateCreated datePublished" datetime="2021-04-12T12:00:14+08:00">2021-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-13 19:38:40" itemprop="dateModified" datetime="2021-04-13T19:38:40+08:00">2021-04-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="一些概念">一些概念</h2>
+<ul>
+<li><p>均值回归（mean reversion）：赌市场会回归理性。 <img src="img.png" alt="均值回归" /></p>
+<blockquote>
+<p>由于波动率最主要的特性是均值回归，故波动率的均值回归交易成为专业期权交易员最常见的一种交易方式</p>
+</blockquote></li>
+<li><p>动量策略（momentum）：赌市场会越来越疯狂</p></li>
+<li><p>方差溢价：指隐含波动率总是等于或者大于历史波动率</p></li>
+</ul>
+<h2 id="chiechies-reflection">chiechie's reflection</h2>
+<p>均值回归，动量策略（也叫惯性策略），都是识别出历史的模式后，假设模式在未来保持不变，然后构建策略。</p>
+<p>有一个问题，谁说过去的模式在未来就一定会保持了？还需要其他信息。</p>
+<p>对历史进行模式识别，没有意义，因为不能保证未来发生。 换句话说，历史的模式跟未来的模式没有因果关系。</p>
+<p>那么，具备哪些信息的时候，在外部的什么信息具备的时候，能很确定存在这个模式呢？这个算专家知识。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -511,7 +407,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -164,103 +164,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/05/meditation/about-problem-Definition-and-info-collection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/05/meditation/about-problem-Definition-and-info-collection/" class="post-title-link" itemprop="url">关于「问题的定义和搜集哪些数据」的一次实践</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-05 11:49:24" itemprop="dateCreated datePublished" datetime="2021-03-05T11:49:24+08:00">2021-03-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>问题粗粒度定义--&gt;信息搜集--&gt;问题再定义--&gt;信息再搜集--&gt;...</p>
-<p>阶段1：problem formulation--&gt; collect information---&gt;demo validation</p>
-<p>阶段2：【reflection】：阶段1的demo验证结果 + collect more information---&gt;problem reformulation--&gt; collect information---&gt;demo validation</p>
-<p>阶段3：重复</p>
-<p>阶段4：重复</p>
-<p>。。。</p>
-</blockquote>
-<h2 id="问题定义和信息搜集一个反复迭代同时要验证的过程">问题定义和信息搜集一个反复迭代同时要验证的过程</h2>
-<ul>
-<li>做项目的时候，关于「问题定义」（「需求定义」也类似）和 「数据搜集」往往是一个迭代往复的过程。</li>
-<li>【formulation + demo + validation】认知是从模糊到清晰的：先基于模糊的认知，确定一个粗粒度的问题，以及相应的解决方案，然后使用「概念验证」（思想泵）的方法去验证。</li>
-<li>【reflection】方案中发现有重大缺陷，然后搜集更多信息，比如别人是怎么解决问题的，以及定义问题的关键信息漏了哪些，方案有哪些是我们没有想到的。</li>
-<li>【reformulation + demo + validation】接下来，根据搜集到的信息，重新定义问题，以及梳理方案，这一次的问题和方案 因为有了更多的信息，业务上的和技术上的， 认识更清晰是肯定的，理论上梳理出来的问题和方案粒度更细致，我们也更有把握。 总结下，就是 问题定义和信息搜集一个反复迭代同时要验证的过程</li>
-</ul>
-<h2 id="一次实践">一次实践</h2>
-<ul>
-<li>先有一个模糊认知 ：要日志型的数据（完全非结构化的），告警数据（指标或者日志经过人工规则生成的），事件型数据（第三方的公告或者舆情告警），拓扑数据</li>
-<li>聚焦到问题-"根因定位"-的时候：发现不管是日志型数据，还是告警数据，还是拓扑数据，他们都是围绕着"故障事件定义"展开的。即需要定义到的故障事件的粒度</li>
-</ul>
-<p>最开始的时候， 我是这么定义事件的： 资源类型 + 事件描述</p>
-<p>后面发现这个粒度定义是不行滴，</p>
-<p>举个例子 机器1的mysql服务指标异常，机器2的mysql服务指标异常，使用 「资源类型 + 事件描述」这种定义的还，不就是一个事件了吗？ 但是考虑到应用场景-根因定位，到底是「机器1的mysql服务的指标异常」还是「机器2的mysql服务异常」，这是两个需要区分的cause metric，因为，对应着不同的操作。 更进一步，这两个事件对应的是根因图 上的不同的节点。</p>
-<p>总结下，事件定义的粒度越粗糙，定位到的根因就越粗糙，起到的作用就越少。 参考别人的定义： 2元组&lt;ip：服务名称&gt; 或者 3元组 &lt;ip: 端口：传输协议类型&gt;</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -373,10 +276,191 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/04/AIOps/logmine-notes/" class="post-title-link" itemprop="url">logmine论文笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-04 11:01:18" itemprop="dateCreated datePublished" datetime="2021-03-04T11:01:18+08:00">2021-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-23 12:06:20" itemprop="dateModified" datetime="2021-04-23T12:06:20+08:00">2021-04-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>logmine是一个日志分类的方法。将多来源的日志汇总分析，找出一定规律。将相似的日志归纳到一类，并且对这类输出概要描述。</p>
+<p>日志模式（pattern）就是对一堆日志的总结。一个模式会包含模糊的word（比如IP，date，...），和具体的word（1.0.0.5, ...），一个应用生成的日志是固定的几种格式。</p>
+</blockquote>
+<h2 id="问题描述">问题描述</h2>
+<p>日志模式有什么难点？有的日志格式很明确，但是不同来源的日志汇总到一起，格式就五花八门了。 本文就是用来解决这个问题的。</p>
+<figure>
+<img src="logmine_image-20210225214320632.png" alt="图1-层次化地提取日志模式" /><figcaption aria-hidden="true">图1-层次化地提取日志模式</figcaption>
+</figure>
+<figure>
+<img src="logmin-result.png" alt="图2-logmine-result" /><figcaption aria-hidden="true">图2-logmine-result</figcaption>
+</figure>
+<h2 id="解决方案">解决方案</h2>
+<h3 id="概述">概述</h3>
+<p>从high-level角度看整个流程是怎么运作的：</p>
+<ul>
+<li>第一次：原始日志 --&gt; 聚类 --&gt; leve1-clusters --&gt; Level1-pattern：每个cluster提取一个pattern</li>
+<li>第二次：Level1-pattern --&gt; 聚类 --&gt; leve2-clusters --&gt; Level2-pattern：每个cluster提取一个pattern</li>
+<li>第三次：Level2-pattern --&gt; 聚类 --&gt; leve2-clusters --&gt; Level3-pattern：每个cluster提取一个pattern</li>
+<li>...</li>
+</ul>
+<h3 id="衡量两条日志的相似性">衡量两条日志的相似性</h3>
+<p>衡量两条日志的相似性，使用的是距离函数：</p>
+<p><span class="math display">\[\operatorname{Dist}(P, Q)=1-\sum\limits_{i=1}^{\operatorname{Min}(\operatorname{len}(P), \operatorname{len}(Q))} \frac{\operatorname{Score}\left(P_{i}, Q_{i}\right)}{\operatorname{Max}(\operatorname{len}(P), \operatorname{len}(Q))}\]</span></p>
+<p><span class="math display">\[\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
+<ul>
+<li><span class="math inline">\(P_i\)</span>：日志P的第i个字段，</li>
+<li>len(P): 日志P的字段的个数</li>
+<li><span class="math inline">\(k_1\)</span>: 是一个可调的参数, 默认取1，表示两条日志有1个字段相同就得分</li>
+</ul>
+<h3 id="衡量两个pattern的相似性">衡量两个pattern的相似性</h3>
+<p>pattern 长什么样呢？ 每个pattern有三类字段：fixed value， Variable 和 Wildcard</p>
+<ul>
+<li>固定值（fixed value field ）：如www, httpd and INFO ，有明确含义的，固化的。</li>
+<li>可变字段（A variable field）：如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的额。</li>
+<li>Wildcards ：任意的字段，are matched with values of all types。</li>
+</ul>
+<p>所以，怎么衡量两个pattern之间的距离呢？</p>
+<p>跟日志一样，不同的是score不一样，要考虑 fixed value 和 变量字段，对相似性的权重不一样</p>
+<p><span class="math display">\[\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are fixed value } \\ k_{2} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are variable } \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
+<ul>
+<li><span class="math inline">\(k_1\)</span>: 表示两个fixed value字段，如果一样的话，相似度得分</li>
+<li><span class="math inline">\(k_2\)</span>: 表示两个变量字段，如果一样的话，相似度得分</li>
+</ul>
+<h3 id="找cluster">找cluster</h3>
+<ul>
+<li><p>先定义一个内部的参数，叫MaxDist， 表示一个cluster的半径。</p></li>
+<li><p>对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就创建一个新的类，并且以他为新的cluster中心。</p>
+<blockquote>
+<p>这里使用early abandon的策略，如果已对比的字段累计距离超过了半径，这句话的词还没遍历完，可以提前停止了，距离只会越来越大。</p>
+</blockquote></li>
+</ul>
+<h3 id="对于每个cluster抽取pattern">对于每个cluster，抽取pattern</h3>
+<figure>
+<img src="image-20210226000021042.png" alt="图2-日志分析流程" /><figcaption aria-hidden="true">图2-日志分析流程</figcaption>
+</figure>
+<ul>
+<li>step1. 分词：将原始日志进行分词，使用空格做分隔符</li>
+<li>step2. 对齐：将key进行排序</li>
+<li>step3. 字段检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date， 将192.168.10.15 替换成 IP. 这个替换规则可以让用户自己定义</li>
+</ul>
+<figure>
+<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<h2 id="怎么指定层次level">怎么指定层次（level）？</h2>
+<figure>
+<img src="cost_function.png" alt="图3-评价当前pattern的信息含量" /><figcaption aria-hidden="true">图3-评价当前pattern的信息含量</figcaption>
+</figure>
+<p>怎么调超参--level？ 怎么评估一个抽象层级，即该level对应的所有pattern的好坏？从包含的信息量来衡量，一般来说wildcard个数越多，这个模版越没有什么信息。 具体来说，可以定义一个量化的指标--cost function，取值越大，提取出来的n个模式的信息量越少：</p>
+<p><span class="math display">\[\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times\left(a_{1} W C_{i}+a_{2} V a r_{i}+a_{3} F V_{i}\right)\]</span></p>
+<ul>
+<li><span class="math inline">\({Size}_i\)</span>: 第i个cluster包含的日志个数，</li>
+<li><span class="math inline">\({WC}_i\)</span>: 第i个cluster中，wildcards个数</li>
+<li><span class="math inline">\({Var}_i\)</span>:第i个cluster中，可变字段的个数。</li>
+<li><span class="math inline">\({FV}_i\)</span>: 第i个cluster中，固定值字段的个数。</li>
+</ul>
+<p>默认，重点看wildcards个数，个数越多，信息量越少。 对应的超参数配置是:a1,a2, a3 = 1,0,0</p>
+<blockquote>
+<p>类似k-means聚类，对每个k，都可以计算cluster的松散度。 可以跨k进行对比。</p>
+</blockquote>
+<h2 id="怎么评估日志聚类的效果">怎么评估日志聚类的效果？</h2>
+<p>整个问题的评估可以拆分为两个小问题的评估:</p>
+<ul>
+<li>怎么评估聚类的准确率？</li>
+<li>怎么评估模式识别的准确率？</li>
+</ul>
+<p>因为没有标签，所以两个算法都是跟baseline算法对比。（都有了baseline，还要你这个算法干嘛？）</p>
+<p>怎么评估聚类的准确率？ 跟一个baseline算法，即OPTICS对比。提出了一个指标agreement score，即最大公共子集的比例。</p>
+<p>怎么评估模式识别的准确率？ 跟一个baseline算法，即UPGMA对比。</p>
+<ul>
+<li><p>UPGMA算法：对一大堆日志生成摘要，输入一个cluster的原始日志，输出一个patten，找到了最好的order。</p></li>
+<li><p>使用UPGMA的结果作为ground truth，来评估模式识别算法的准确率。</p></li>
+<li><p>先聚类，然后让UPGMA算法和本文的算法来给每个cluster生成摘要，</p></li>
+<li><p>然后比较两者是否一致：一个字段一个字段地比较。准确率，输出命中的字段的比率。</p></li>
+</ul>
+<p><span class="math inline">\(\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}\)</span></p>
+<h2 id="方法的局限性">方法的局限性？</h2>
+<p>对于复杂的，毫无规则的原始日志，无能为力。</p>
+<figure>
+<img src="badcase.png" alt="图5-在毫无规律的日志上也束手无策" /><figcaption aria-hidden="true">图5-在毫无规律的日志上也束手无策</figcaption>
+</figure>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf">logmine-paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://pypi.org/project/logmine/">logmine-pypi</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">apache_2k.log</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">chiechie-关于logmine的实践</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/49/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><span class="page-number current">50</span><a class="page-number" href="/page/51/">51</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><a class="extend next" rel="next" href="/page/51/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/49/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><span class="page-number current">50</span><a class="page-number" href="/page/51/">51</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/51/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -442,7 +526,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

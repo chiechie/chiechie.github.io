@@ -164,134 +164,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reinforcement_learning/wangshusen-rf2-value-based/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/reinforcement_learning/wangshusen-rf2-value-based/" class="post-title-link" itemprop="url">wangshusen-rf2-基于价值的强化学习方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-04-18 20:30:11 / 修改时间：21:18:32" itemprop="dateCreated datePublished" datetime="2021-04-18T20:30:11+08:00">2021-04-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="几个问题">几个问题：</h2>
-<ul>
-<li>价值 指的是什么？</li>
-<li>怎么使用深度学习技术来求解这个问题？难点在哪里？</li>
-<li>跟DQN并列的概念还有哪些？</li>
-<li>DQN网络的输入输出是什么？中间结构是什么？</li>
-<li>DQN怎么更新参数？</li>
-</ul>
-<h2 id="回答">回答</h2>
-<ul>
-<li>「价值」 指的是 <strong>最优动作价值函数</strong>，即如果后续action都遵循<strong>最优策略</strong>，那么当前的&lt;state，action&gt;的得分。</li>
-<li><strong>最优动作价值函数</strong> 相当于 一个 先知。</li>
-<li>回到强化学习要解决的问题本身（MDP）--agent的目标是 打赢游戏（最大化total reward），那么我们将这个目标拆解为两个步骤，
-<ul>
-<li><ol type="1">
-<li>找到最优动作价值函数</li>
-</ol></li>
-<li><ol start="2" type="1">
-<li>在最优价值函数的指引下作出最优决策</li>
-</ol></li>
-</ul></li>
-<li>DQN的想法就是，使用一个深度神经网络拟合 <strong>最优动作价值函数</strong></li>
-<li>难点在于，谁都不知道 先知（<strong>最优价值函数</strong>）长什么样子（少数情况，如玩游戏可能可以知道）</li>
-<li>DQN的输入是state，输出是所有action对应的分数
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FfsQADMgSRa.png?alt=media&amp;token=18bf844e-aa59-4016-85d6-8cdfc801a9ce" title="fig:" alt="价值网络" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&amp;token=71ba382a-432c-4c00-8759-692d84c03f3d" title="fig:" alt="策略网络" /></li>
-</ul></li>
-<li>怎么更新模型参数
-<ul>
-<li>可以把一整局游戏玩完，搜集到反馈信号（total reward）再去更新DQN的参数。</li>
-<li>也可以玩一步，更新一下参数，就是TD算法</li>
-</ul></li>
-</ul>
-<h2 id="时序差分算法td算法">时序差分算法（TD算法）</h2>
-<ul>
-<li>TD error: 对于上一步&lt;<span class="math inline">\(s_{t-1}, a_{t-1}\)</span>&gt;的reward， 模型估值-真实值
-<ul>
-<li>模型作出的估计（模型对上一个状态估计的价值 - 模型对当前状态估计的价值） - 真实 reward （来自 environment）</li>
-</ul></li>
-<li>TD target： 对于上一步&lt;<span class="math inline">\(s_{t-1}, a_{t-1}\)</span>&gt;的长期value，
-<ul>
-<li>真实reward（来自 environment） + 折扣* 模型对当前状态估计的价值</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FROMmZ-LTGx.png?alt=media&amp;token=dae7cba7-84e1-4e7f-8638-60eaa2b1c166" /></li>
-</ul></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FEuWKISitjj.png?alt=media&amp;token=0427aa38-bad9-46f3-98bd-a1eb051df5cd" title="fig:" alt="时序差分算法" /></li>
-</ul>
-<h2 id="没想清楚">没想清楚</h2>
-<ul>
-<li>更新模型参数时，如果 把一整局游戏玩完，搜集到反馈信号（total reward）再去更新DQN的参数，那么，中间的决策过程怎么放到训练样本里面来？玩多次么？怎么搜集「最优价值」的反馈信号？</li>
-<li>Q函数 和 reward 函数 是不是可以相互转化？--是这样把？
-<ul>
-<li>Q 函数 == reward （来自 environment）+ 策略（来自 agent）</li>
-<li>Q * 函数 == reward （来自 environment）+ 最优策略（来自 agent）</li>
-</ul></li>
-</ul>
-<h2 id="时序差分算法的其他资料">时序差分算法的其他资料</h2>
-<ol type="1">
-<li>Sutton and others: A convergent O(n) algorithm for off-policy temporal-difference learning with linear function approximation. In NIPS, 2008.</li>
-<li>Sutton and others: Fast gradient-descent methods for temporal-difference learning with linear function approximation. In ICML, 2009.</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reinforcement_learning/wangshusen-rf1-basic-concepts/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -434,10 +306,214 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reinforcement_learning/rf-markovprocess/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/reinforcement_learning/rf-markovprocess/" class="post-title-link" itemprop="url">强化学习2-马尔可夫过程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-18 20:18:20" itemprop="dateCreated datePublished" datetime="2021-04-18T20:18:20+08:00">2021-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-21 19:17:24" itemprop="dateModified" datetime="2021-04-21T19:17:24+08:00">2021-04-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>强化学习的基础是马尔可夫决策过程一个马尔可夫决策过程由状态空间，决策空间，状态转移，奖励函数组成。</li>
+<li>总结一下，强化学习就是一系列的决策过程，他试图找到一个长期收益最大的一系列的决策行为。</li>
+</ul>
+<h1 id="马尔可夫过程">马尔可夫过程</h1>
+<h2 id="基本概念">基本概念</h2>
+<ul>
+<li>状态转移矩阵P：<span class="math inline">\(p\left(s_{t+1}=s^{\prime} \mid s_{t}=s\right)\)</span>
+<ul>
+<li><span class="math inline">\(P=\left[\begin{array}{cccc}P\left(s_{1} \mid s_{1}\right) &amp; P\left(s_{2} \mid s_{1}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{1}\right) \\ P\left(s_{1} \mid s_{2}\right) &amp; P\left(s_{2} \mid s_{2}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{2}\right) \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ P\left(s_{1} \mid s_{N}\right) &amp; P\left(s_{2} \mid s_{N}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{N}\right)\end{array}\right]\)</span></li>
+</ul></li>
+<li>horizon：在每个episode中，最大时间步数</li>
+<li>episode：轨迹，从这个马尔可夫链 中采样得到的，每采样一轮就得到叫一个轨迹</li>
+<li>马尔可夫性质： future is independent of the past given the present
+<ul>
+<li>历史状态： <span class="math inline">\(h_{t}=\left\{s_{1}, s_{2}, s_{3}, \ldots, s_{t}\right\}\)</span></li>
+<li><span class="math inline">\(s_t\)</span>是符合马尔可夫性质的： <span class="math inline">\(\begin{aligned} p\left(s_{t+1} \mid s_{t}\right) &amp;=p\left(s_{t+1} \mid h_{t}\right) \\ p\left(s_{t+1} \mid s_{t}, a_{t}\right) &amp;=p\left(s_{t+1} \mid h_{t}, a_{t}\right) \end{aligned}\)</span></li>
+</ul></li>
+</ul>
+<h2 id="马尔可夫链mp">马尔可夫链（MP）</h2>
+<p>马尔可夫链 （MP， Markov Process）：<span class="math inline">\(\left(S, P^{\pi}\right)\)</span></p>
+<ul>
+<li>一个状态转移如果符合马尔可夫，即一个状态的下一个状态只取决于当前状态，而跟他当前状态之前的状态都没有关系</li>
+<li><span class="math inline">\(P=\left[\begin{array}{cccc}P\left(s_{1} \mid s_{1}\right) &amp; P\left(s_{2} \mid s_{1}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{1}\right) \\ P\left(s_{1} \mid s_{2}\right) &amp; P\left(s_{2} \mid s_{2}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{2}\right) \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ P\left(s_{1} \mid s_{N}\right) &amp; P\left(s_{2} \mid s_{N}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{N}\right)\end{array}\right]\)</span></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fsby0HtEUFa.png?alt=media&amp;token=1f6bf364-4cca-4535-9191-4b77bda51131" /></li>
+<li>从这个马尔可夫链 中采样，得到轨迹，每一轮叫一个episode
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FvZ2dIl6a_W.png?alt=media&amp;token=03dda99b-181a-4b48-aec2-03f0679ab1de" /></li>
+</ul></li>
+</ul>
+<h2 id="马尔可夫奖励过程mrp">马尔可夫奖励过程（MRP）</h2>
+<p>马尔可夫奖励过程（MRP， Markov Reward Process）：<span class="math inline">\(\left(S, P, R, \gamma\right)\)</span></p>
+<ul>
+<li>MRP = MP + reward</li>
+<li>R是奖励函数：<span class="math inline">\(R\left(s_{t}=s\right)=\mathbb{E}\left[r_{t} \mid s_{t}=s\right]\)</span>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fo3iwF_-fJr.png?alt=media&amp;token=0fd15a10-a6f0-4588-a019-1a258b22dc8d" />horizon：在每个episode中，最大时间步数</li>
+<li>Horion可以是无穷大，此外MRP又叫有限马尔可夫奖励过程</li>
+</ul></li>
+<li>状态价值函数（state value function）：代表当前state下，未来所有rewards的折现
+<ul>
+<li><span class="math inline">\(\begin{aligned} V_{t}(s) &amp;=\mathbb{E}\left[G_{t} \mid s_{t}=s\right] \\ &amp;=\mathbb{E}\left[R_{t+1}+\gamma R_{t+2}+\gamma^{2} R_{t+3}+\ldots+\gamma^{T-t-1} R_{T} \mid s_{t}=s\right] \end{aligned}\)</span></li>
+<li>折现因子是强化学习的一个超参，用来约束模型对长期收益的看重程度</li>
+</ul></li>
+<li>马尔可夫奖励过程的 bellman等式:<span class="math inline">\(V(s)=\underbrace{R(s)}_{\text {Immediate reward }}+\underbrace{\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s\right) V\left(s^{\prime}\right)}_{\text {Discounted sum of future reward }}\)</span></li>
+<li>马尔可夫奖励过程的bellman等式的矩阵形式：
+<ul>
+<li><span class="math inline">\(V=R+\gamma P V\)</span>
+<ul>
+<li><span class="math inline">\(\left[\begin{array}{c}V\left(s_{1}\right) \\ V\left(s_{2}\right) \\ \vdots \\ V\left(s_{N}\right)\end{array}\right]=\left[\begin{array}{c}R\left(s_{1}\right) \\ R\left(s_{2}\right) \\ \vdots \\ R\left(s_{N}\right)\end{array}\right]+\gamma\left[\begin{array}{cccc}P\left(s_{1} \mid s_{1}\right) &amp; P\left(s_{2} \mid s_{1}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{1}\right) \\ P\left(s_{1} \mid s_{2}\right) &amp; P\left(s_{2} \mid s_{2}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{2}\right) \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ P\left(s_{1} \mid s_{N}\right) &amp; P\left(s_{2} \mid s_{N}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{N}\right)\end{array}\right]\left[\begin{array}{c}V\left(s_{1}\right) \\ V\left(s_{2}\right) \\ \vdots \\ V\left(s_{N}\right)\end{array}\right]\)</span></li>
+</ul></li>
+</ul></li>
+<li>马尔可夫奖励过程的 状态价值函数（上面的矩阵V） 求解可采用2个方法
+<ol type="1">
+<li>解Bellman方程，根据算出来的解析解，硬算逆矩阵，和矩阵乘法
+<ul>
+<li><span class="math inline">\(V=(I-\gamma P)^{-1} R\)</span></li>
+<li>求解的复杂度n3，n表示state个数</li>
+</ul></li>
+<li>使用迭代的算法：对state个数较多的情况可行
+<ul>
+<li>动态规划<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMSB3EJXzsN.png?alt=media&amp;token=19f9a683-eec0-48f5-8296-2ac88a4ea3c1" /></li>
+<li>蒙特卡洛估计（采样）：需要完成一次<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F6s5BEi2xsO.png?alt=media&amp;token=1bc3ed8d-81f3-4439-b895-845770f1f651" /></li>
+<li>时间序列差分学习时间差分（TD）算法:TD（Temporal Difference）算法：</li>
+</ul></li>
+</ol></li>
+<li>bellman期望方程：
+<ul>
+<li><span class="math inline">\(v^{\pi}(s)=E_{\pi}\left[R_{t+1}+\gamma v^{\pi}\left(s_{t+1}\right) \mid s_{t}=s\right]\)</span></li>
+<li>【参考】<span class="math inline">\(V(s)=\underbrace{R(s)}_{\text {Immediate reward }}+\underbrace{\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s\right) V\left(s^{\prime}\right)}_{\text {Discounted sum of future reward }}\)</span></li>
+<li><span class="math inline">\(q^{\pi}(s, a)=E_{\pi}\left[R_{t+1}+\gamma q^{\pi}\left(s_{t+1}, A_{t+1}\right) \mid s_{t}=s, A_{t}=a\right]\)</span></li>
+</ul></li>
+<li>推导过程如下：
+<ul>
+<li><span class="math inline">\(\begin{aligned} v^{\pi}(s) &amp;=\sum_{a \in A} \pi(a \mid s) q^{\pi}(s, a) \\ q^{\pi}(s, a) &amp;=R_{s}^{a}+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) v^{\pi}\left(s^{\prime}\right) \end{aligned}\)</span></li>
+<li>相互替换得到
+<ul>
+<li><span class="math inline">\(v^{\pi}(s)=\sum_{a \in A} \pi(a \mid s)\left(R(s, a)+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) v^{\pi}\left(s^{\prime}\right)\right)\)</span></li>
+<li><span class="math inline">\(q^{\pi}(s, a)=R(s, a)+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) \sum_{a^{\prime} \in A} \pi\left(a^{\prime} \mid s^{\prime}\right) q^{\pi}\left(s^{\prime}, a^{\prime}\right)\)</span></li>
+</ul></li>
+</ul></li>
+<li>计算图
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FDt61DqVl6N.png?alt=media&amp;token=9736af0f-e3ef-457b-86d6-abae268af1a3" /><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FB2u5I82qnF.png?alt=media&amp;token=02a1de1d-4a08-4f43-983b-65eb815df328" /></li>
+</ul></li>
+</ul>
+<h2 id="马尔可夫决策过程-mdp">马尔可夫决策过程（ MDP）</h2>
+<p>马尔可夫决策过程（MDP， Markov Decision Process）： <span class="math inline">\(\operatorname{MDP}(S, A, P, R, \gamma)\)</span></p>
+<ul>
+<li>MDP能够对现实世界中很多问题建模，是研究强化学习的基础框架</li>
+<li>MDP要求环境变量是完全可观测，但是现实中部分可观测问题也可转化为MDP问题</li>
+<li>「马尔可夫决策过程」相对于「马尔可夫奖励过程」多了决策，所以需要建模的对象多了两个要素：action 和 概率转移<span class="math inline">\(P\left(s_{t+1}=s^{\prime} \mid s_{t}=s, a_{t}=a\right)\)</span>。 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbPx8H2l13W.png?alt=media&amp;token=6e62ffdf-8434-40b4-b312-5037d805f911" /></li>
+<li>马尔可夫决策过程中的策略函数（policy evaluation）</li>
+<li>马尔可夫决策过程中的控制：策略迭代和价值迭代</li>
+</ul>
+<p>什么是MDP中的预测和控制？</p>
+<ul>
+<li>预测问题：给定策略时，求某个状态的价值函数。（先知）</li>
+<li>控制问题：最优的策略，和对应的状态价值函数。（军师）</li>
+</ul>
+<h2 id="mpmrpmdp三者的关系">MP/MRP/MDP三者的关系</h2>
+<ul>
+<li>MP和MRP是MDP的简化版</li>
+<li>MP只有一个概率转移</li>
+<li>MRP是MP + Reward，但是还是随波逐流</li>
+<li>MDP + action，多了主观能动性</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FIuFRm5JvB6.png?alt=media&amp;token=1ad94ce8-0886-4329-8902-dbf859b8ef22" /></li>
+</ul>
+<h1 id="基于模型的方法">基于模型的方法</h1>
+<h2 id="课前--大大问号">课前--大大问号</h2>
+<ul>
+<li>model-based 是什么？对环境建模是什么意思？model-based是强化学习中一种技术，核心思想就是对环境建模，使用计算机构建仿真环境。</li>
+<li>提出该方法是为了解决什么问题？有哪些应用场景？model-based是为了解决样本获取成本高的问题。例如，无人驾驶/无人机，如果让机器在真实交通环境中行驶，并且通过于真实环境互动来获取数据，那必然以发生多次严重车祸作为获取样本的巨大代价。在机器人场景中应用较多。</li>
+<li>类似的流派或者同级别的 不同的流派 还有什么？跟model-based相对的概念是model-free，它直接通过跟环境交互来获取样本，假设现实中获取样本的成本几乎为0。现在的强化学习论文中，大部分是采用的这个方法。</li>
+<li>model-based方法是怎么实现的？对环境建模：输入&lt;state,action&gt;，输出下一个&lt;state,reward&gt; 。</li>
+<li>在多大程度上能解决背景中的问题。有没有引发新的问题？</li>
+<li>有没有理论支撑？</li>
+<li>不能做什么？
+<ul>
+<li>有理论支撑的话，理论上能证明解决不了什么问题？</li>
+<li>工程或者落地时的难点？</li>
+</ul></li>
+<li>我们的基于股票预测结果构造策略 可以reformulate 成强化学习中的 什么方法？</li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hV411d7Sg">周博磊课程-bilibili</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/318703290/answer/751123263">知乎：model-based和model-free模型优缺点</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/72642285">知乎：model-based方法介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/318703290/answer/751123263">知乎：model-based和model-free模型优缺点</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -503,7 +579,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

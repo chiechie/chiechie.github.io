@@ -74,15 +74,5 @@ def negative_normal_likelihood(self, F, y, mu, sigma):
 
 
 
-## deepAR实验v1
-
-- deepFactor vs deepAR效果对比： 网路流量检测中deepAR略胜一筹
-- lol整体预测
-- lol分商品预测 
-- pct预测
-- cpu使用率
-- 磁盘使用率
-
-
 ## 参考
 1. [code版本](https://github.com/zhykoties/TimeSeries)： pytorch版本

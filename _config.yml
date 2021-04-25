@@ -87,10 +87,7 @@ index_generator:
   per_page: 2
   order_by: -date
 
-feed:
-  type: atom
-  path: atom.xml
-  limit: 20
+
 
 # Category & Tag
 default_category: 

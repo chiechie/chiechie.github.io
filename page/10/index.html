@@ -164,6 +164,83 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/information-theory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/technology/information-theory/" class="post-title-link" itemprop="url">信息论</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-18 11:19:24 / 修改时间：11:55:36" itemprop="dateCreated datePublished" datetime="2021-04-18T11:19:24+08:00">2021-04-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="交叉熵">交叉熵</h2>
+<p>交叉熵表示，拥有信念Q的人，在观察到真实分布P后，他的惊讶程度。</p>
+<p>这个绝对惊讶程度 可以拆解为 一个baseline（真实分布P的熵） + 一个相对差距（P和Q的距离）</p>
+<figure>
+<img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#cross-entropy">交叉熵</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/meditation/about-bielief/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -232,108 +309,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/dl-framework/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/technology/dl-framework/" class="post-title-link" itemprop="url">模型推断的框架</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-04-18 08:53:17 / 修改时间：11:54:08" itemprop="dateCreated datePublished" datetime="2021-04-18T08:53:17+08:00">2021-04-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>解答了一直以来，关于模型部署的疑惑</p>
-</blockquote>
-<ul>
-<li>1 为什么说模型部署难？
-<ul>
-<li>因为部署的环境不一样，所以需要许多定制化的工作</li>
-</ul></li>
-<li><ol start="2" type="1">
-<li>tensorflow和pytorch这两个框架不能直接用于推理吗？</li>
-</ol>
-<ul>
-<li>可以，但是性能不佳。推理阶段相对训练阶段对模型服务的性能要求更高，比如模型稳定性，响应延迟等，。</li>
-<li>tensorflow和pytorch本身是训练框架，拿来兼做推理框架其实不可以。</li>
-<li>但是在推理阶段，如果业务要求模型服务 高可用，训练框架就显得过于臃肿了而不合时宜了，需要更轻量的框架，如pytorch，tensorRT等。 <img src="dl-framework/img.png" alt="img.png" /></li>
-</ul></li>
-<li><ol start="3" type="1">
-<li>DL框架产业现状？</li>
-</ol>
-<ul>
-<li>训练框架是标准品</li>
-<li>推理框架是定制品：这里提到了一点就是使用场景没有<strong>网络效应</strong>，我理解就是规模效应，客观环境决定了，“推理框架”相对于“训练框架” 而言，不是一个好摘的果子
-<ul>
-<li>客观环境（部署依赖整个生产链路的环境，包括硬件厂商，应用服务）导致了没有统一的条件</li>
-</ul></li>
-</ul></li>
-</ul>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li>file:///Users/stellazhao/Desktop/深度学习框架-2020-0630-Qlearning分享-Turbo-PPT.pdf</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -399,7 +378,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-count">125</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -412,7 +391,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">130</span>
+        <span class="site-state-item-count">133</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

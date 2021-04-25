@@ -30,14 +30,14 @@ categories:
 - 自己能不用tensorflow复现mxnet的效果？
     - 对比参数量，准确率，计算时间，内存消耗
 - 为什DeepAR和DeepFator的loss scale 差这么大? loss的含义都不一样
-```python
-# deepAR和deepFator
-def loss(self, x: Tensor) -> Tensor:
-	return -self.log_prob(x)
-# deepFator
-def negative_normal_likelihood(self, F, y, mu, sigma):
-    return (F.log(sigma) + 0.5 * math.log(2 * math.pi)+ 0.5 * F.square((y - mu) / sigma))
-```
+  ```python
+  # deepAR和deepFator
+  def loss(self, x: Tensor) -> Tensor:
+      return -self.log_prob(x)
+  # deepFator
+  def negative_normal_likelihood(self, F, y, mu, sigma):
+      return (F.log(sigma) + 0.5 * math.log(2 * math.pi)+ 0.5 * F.square((y - mu) / sigma))
+  ```
 - 对不同曲线预测的时候，为什么有的曲线效果很， 好有的曲线效果很差？
     - deepAR会针对不同曲线，给loss 赋予不同的权重：loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的。
   

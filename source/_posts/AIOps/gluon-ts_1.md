@@ -77,4 +77,4 @@ def negative_normal_likelihood(self, F, y, mu, sigma):
 
 ## 参考
 
-1. [pytorch版本](https://github.com/zhykoties/TimeSeries)：
+1. [pytorch版本](https://github.com/zhykoties/TimeSeries)

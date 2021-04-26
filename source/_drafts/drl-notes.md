@@ -29,13 +29,12 @@ categories: 技术类
 - 问题：
     - 基于策略学习 的大致思路是怎么样的？
         - 目的还是要让agent 实现最大的value，拆解为2步
-            - 1.  学习最优的策略（策略函数）
+            - 1. 学习最优的策略（策略函数）
             - 2. 根据最优策略作出决策
     -  难点在哪里？
         - state 太多，action 太多，
     - 深度学习技术是怎么帮助 实现策略学习的？
         - 构造一个神经网络来拟合策略函数，这个神经网络 叫做策略网络
-        - 
 - 策略网络：输入：state，输出：多个action 下的概率，最后一层的激活函数用softmax。
     - （input 和 output 的shape 和 DQ网络 一样）
     - ![策略网络](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&token=71ba382a-432c-4c00-8759-692d84c03f3d)

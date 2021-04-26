@@ -58,4 +58,4 @@ categories:
 
    
 ## 参考
-1. [投资，最重要的事](https://weread.qq.com/web/reader/e59329905e4245e59ebd7e1k3c5327902153c59dc0488e1)
+1. [投资，最重要的事-微信读书](https://weread.qq.com/web/reader/e59329905e4245e59ebd7e1k3c5327902153c59dc0488e1)

@@ -10,9 +10,6 @@ categories:
 - 技术
 ---
 
-
-
-
 ## re.compile 和 split
 
 re.compile: 将字符串的正则表达式，转换为pattern对象。
@@ -51,5 +48,7 @@ a,-b,,,-,c-d
 ```
 
 
-## re.strip
+## str.strip
+
+去除首字符 和 尾字符
 

@@ -7,6 +7,8 @@ categories:
 author: "chiechie"
 tags:
 - 技术指标
+- 投资
+
 ---
 
 ## 总结一下

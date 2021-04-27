@@ -1,5 +1,5 @@
 ---
-title: how to difi
+title: how to Defi
 author: chiechie
 mathjax: true
 date: 2021-04-26 23:09:36

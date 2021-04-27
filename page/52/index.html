@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/reading_notes/intuition_pumps_xiaorener/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/05/meditation/about-problem-Definition-and-info-collection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/04/reading_notes/intuition_pumps_xiaorener/" class="post-title-link" itemprop="url">认知科学中的概念--"小人儿委员会"</a>
+            <a href="/2021/03/05/meditation/about-problem-Definition-and-info-collection/" class="post-title-link" itemprop="url">关于「问题的定义和搜集哪些数据」的一次实践</a>
         </h2>
 
         <div class="post-meta">
@@ -188,14 +188,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-04 09:59:33" itemprop="dateCreated datePublished" datetime="2021-03-04T09:59:33+08:00">2021-03-04</time>
+              <time title="创建时间：2021-03-05 11:49:24" itemprop="dateCreated datePublished" datetime="2021-03-05T11:49:24+08:00">2021-03-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-25 09:01:00" itemprop="dateModified" datetime="2021-04-25T09:01:00+08:00">2021-04-25</time>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -218,25 +218,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="观点">观点</h2>
-<ol type="1">
-<li>「中心小人儿」和「小人儿式机械主义」的区别。「中心小人儿」假设大脑中有一个聪明绝顶的决策者，但是用归谬法会推导出，这个小人儿大脑中是不是也有一个中心小人儿，。。。然后陷入了无线倒推论。「小人儿机械主义」假设大脑中有一堆小人儿在做决策--决策委员会，他们不断地将服务任务拆解成原子的简单的任务。相对于「中心小人儿」理论的高明之处在于，他不会陷入“无线倒退论”的荒谬处境，而是有一个ending的。即，当拆解之后的操作变得简单乏味时，就可以终止了，让机器来了。</li>
-<li>老式人工智能采用自上而下的工作方式，有严格的等级分工，但是却是不必要的设计！ 这种自上而下的工作方式，有个特点，分配任务的层级规模非常庞大。在计算机发明的早期，这种组织形式所以有效，是因为执行层的能力很弱--单个计算机又小又慢。 因此顶层设计人员要将目标任务成功地分解成一组比较容易掌控的子任务，进而知道怎么编程实现每个小功能，以及将程序整合成一个可行的系统。顶层设计人员可以用「概念验证」的方法，有时候省时省力。</li>
-</ol>
-<blockquote>
-<p>关于「概念验证」（proof of concept， POC）：</p>
-<p>「概念验证」是一个有用但又危险的工程学术语：要设计出一个非常精致、非常复杂工具或者系统，你可以先解决一个“demo问题 ”（toy problem），即，先做一个简单的小玩意儿，让它按照简化的工作原理运行，这就是在“验证概念”。接下来让这个小东西的功能完善，只需投入更多时间和金钱。这个简单的小玩意儿可以让一个复杂的问题首先在概念上得以“解决”。有时候，“概念验证”就像宣传中那么有效。</p>
+          <blockquote>
+<p>问题粗粒度定义--&gt;信息搜集--&gt;问题再定义--&gt;信息再搜集--&gt;...</p>
+<p>阶段1：problem formulation--&gt; collect information---&gt;demo validation</p>
+<p>阶段2：【reflection】：阶段1的demo验证结果 + collect more information---&gt;problem reformulation--&gt; collect information---&gt;demo validation</p>
+<p>阶段3：重复</p>
+<p>阶段4：重复</p>
+<p>。。。</p>
 </blockquote>
-<ol start="3" type="1">
-<li><p>「小人儿机械主义」的理念设计出来的计算机，需求和工作几乎是完全独立的。各种程序按照一个队列有序进行，不会陷入你争我夺的厮杀，马克思说过的"从各展其能到各取所需"。计算机科学家埃里克称这种等级控制为"政治"。但是神经系统则不一样，人体的普通细胞和工蚁很像--没有私心，机械的工作，百依百顺的奴隶，赶着一成不变的活儿，没有竞争的环境中生存。但是大脑必须参与激烈的市场竞争。神经玩想要的是填饱肚子，活下去。每个神经细胞类似一个生物机器人，虽然没有意识。 但是，并不妨碍它们，在生死攸关的争斗中，成为极强战斗力的行动者。它们的竞争环境在大脑所要求的环境里。在这里，谁能更有效地建立连接网络，谁能在人类的欲望和冲动层面发挥更大的作用，谁就赢了。</p></li>
-<li><p>神经系统中的很多子系统都以敌对的方式存在，每个子系统都希望以自己的方式行事，彼此之间常常会陷入拉锯战。例如，我们的各种情感会为了取代对方而相互对抗，有时候它们也会结成联盟来阻挠劲敌行动。现在我渐渐明白，人类各种情感之间动态的对抗过程，以及情感对我们思想的影响，都是以神经化学系统为基础的。不像那些本质上自私的行动者，比如癌细胞，从一个更广阔的运作范畴来看，神经细胞还算是不错的团队成员.</p></li>
-<li><p>诺贝尔奖得主、生物学家弗朗索瓦·雅各布（François Jacob）说过，每个细胞都梦想着能完成分裂变成两个细胞，只有神经元不图繁殖，一心只想着要保持活力、有所作为。按照这种观点，对动物行为的智能控制是一种计算过程，就像在股票市场里完成一次交易那样。但正如神经科学家塞巴斯蒂安·承（SebastianSeung）所说，神经元也是自私的，它们总是会倾其所能，最大程度地吸纳能在我们的大脑中获得的所有酬劳，这些酬劳以不同的“货币形式”出现。那么神经元利用多巴胺、5-羟色胺还有催产素都买了些什么呢？它们购买的是更加强大的影响力，能让自己在所处的连接网络中变得更加可靠。骡子虽不能生育，但它们仍会努力地营生。同样，神经元也有自我保护的本能，本质上，这是从它们可繁殖的祖先那里遗传下来的。</p></li>
-<li><p>「自下而上的小人儿式机械主义」是指，神经系统是由哪些未成熟的小认为组成，每个小人儿都有感知，标记和记忆的能力。类似群体智慧。它们之间有竞争也有协作，从胚胎到承认的过程中，整个系统不断建构和修改。目前该理论可以很合理地解释人体复杂认知系统。</p></li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li>《直觉泵和其他思考工具》-丹尼尔·丹尼特</li>
-</ol>
+<h2 id="问题定义和信息搜集一个反复迭代同时要验证的过程">问题定义和信息搜集一个反复迭代同时要验证的过程</h2>
+<ul>
+<li>做项目的时候，关于「问题定义」（「需求定义」也类似）和 「数据搜集」往往是一个迭代往复的过程。</li>
+<li>【formulation + demo + validation】认知是从模糊到清晰的：先基于模糊的认知，确定一个粗粒度的问题，以及相应的解决方案，然后使用「概念验证」（思想泵）的方法去验证。</li>
+<li>【reflection】方案中发现有重大缺陷，然后搜集更多信息，比如别人是怎么解决问题的，以及定义问题的关键信息漏了哪些，方案有哪些是我们没有想到的。</li>
+<li>【reformulation + demo + validation】接下来，根据搜集到的信息，重新定义问题，以及梳理方案，这一次的问题和方案 因为有了更多的信息，业务上的和技术上的， 认识更清晰是肯定的，理论上梳理出来的问题和方案粒度更细致，我们也更有把握。 总结下，就是 问题定义和信息搜集一个反复迭代同时要验证的过程</li>
+</ul>
+<h2 id="一次实践">一次实践</h2>
+<ul>
+<li>先有一个模糊认知 ：要日志型的数据（完全非结构化的），告警数据（指标或者日志经过人工规则生成的），事件型数据（第三方的公告或者舆情告警），拓扑数据</li>
+<li>聚焦到问题-"根因定位"-的时候：发现不管是日志型数据，还是告警数据，还是拓扑数据，他们都是围绕着"故障事件定义"展开的。即需要定义到的故障事件的粒度</li>
+</ul>
+<p>最开始的时候， 我是这么定义事件的： 资源类型 + 事件描述</p>
+<p>后面发现这个粒度定义是不行滴，</p>
+<p>举个例子 机器1的mysql服务指标异常，机器2的mysql服务指标异常，使用 「资源类型 + 事件描述」这种定义的还，不就是一个事件了吗？ 但是考虑到应用场景-根因定位，到底是「机器1的mysql服务的指标异常」还是「机器2的mysql服务异常」，这是两个需要区分的cause metric，因为，对应着不同的操作。 更进一步，这两个事件对应的是根因图 上的不同的节点。</p>
+<p>总结下，事件定义的粒度越粗糙，定位到的根因就越粗糙，起到的作用就越少。 参考别人的定义： 2元组&lt;ip：服务名称&gt; 或者 3元组 &lt;ip: 端口：传输协议类型&gt;</p>
 
       
     </div>
@@ -256,7 +261,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/03/AIOps/causeinfer-notes2/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -270,7 +275,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/03/AIOps/causeinfer-notes2/" class="post-title-link" itemprop="url">CauseInfer论文笔记2-硬核版</a>
+            <a href="/2021/03/04/technology/cause-inference-learning/" class="post-title-link" itemprop="url">因果推断</a>
         </h2>
 
         <div class="post-meta">
@@ -280,14 +285,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-03 22:50:18" itemprop="dateCreated datePublished" datetime="2021-03-03T22:50:18+08:00">2021-03-03</time>
+              <time title="创建时间：2021-03-04 23:23:02" itemprop="dateCreated datePublished" datetime="2021-03-04T23:23:02+08:00">2021-03-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+                <time title="修改时间：2021-04-18 21:18:32" itemprop="dateModified" datetime="2021-04-18T21:18:32+08:00">2021-04-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -295,7 +300,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
                 </span>
             </span>
 
@@ -310,127 +315,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>本文是《CauseInfer论文笔记》的第二篇，<a href="https://chiechie.github.io/2021/03/02/technology/causeinfer-notes1/">《CauseInfer论文笔记1》</a>，从high-level的角度描述了causeinfer的工作流。这里要开始涉及到方案的具体的实现了，所以内容比较硬核</p>
-<p>不做方案实现的话，可以不用看这篇文章</p>
-</blockquote>
-<h1 id="因果建模">因果建模</h1>
-<h2 id="构建服务依赖图">构建服务依赖图</h2>
-<p>服务依赖图长什么样？一个DAG：</p>
+          <h1 id="因果推断和因果发现">因果推断和因果发现</h1>
+<p>因果问题分为两种</p>
 <ul>
-<li>节点（node）：一个服务。</li>
-<li>边（edge）：代表服务依赖关系。</li>
+<li>一种是因果推断（causal inf erence），比如给定两个变量 X、Y，希望找到一个衡量它们之间因果关系的参数 theta；</li>
+<li>另一种是因果发现（causal discovery），即给定一组变量，找到他们之间的因果关系，这个在统计上是不可能的。</li>
 </ul>
-<p>这块主要是工程性工作，需要数据采集。</p>
+<h1 id="两种数据产生途径">两种数据产生途径</h1>
+<p>数据有两种产生途径：</p>
 <ul>
-<li><p>服务依赖图是什么？以服务为节点，服务间的调用关系为边，构造出来的DAG。</p></li>
-<li><p>针对本方案的应用场景，有3个假设前提：</p>
-<ol type="a">
-<li>所有服务都是使用TCP作为传输层的协议，</li>
-<li>本文的方法依赖网络统计工具，和kprobe来探测系统调用（system call）。根据观察，大部分应用都是采用TCP协议来通信，如mysql，tomcat等；几乎所有主流的操作系统-如linux-都已经跟网络统计工具集成了，例如netstat，tcpdump 和 kprobe。</li>
-<li>利用流量延迟，来决定服务依赖图中的依赖的方向，而不是用分析结果来确定图的结构， 这一部分可以大大减少错误风险， 以及减少计算复杂度。</li>
-</ol></li>
-<li><p>本文用tuple来表示一个服务，即 (ip, service name)，chiechie： 为什么作者能抽象出来，我抽象不出来啊？为什么不像有的文章那样，用three-tuple表示(ip, port, proto)，因为考虑到一个服务可能占用多个端口。举一个例子，在一个三层的系统中，一个web server可以通过任意一个端口访问application server的。如果，使用端口作为唯一服务的属性，这个服务依赖图，就会变得非常之大，即使所有请求都是由同一个服务发起的。</p></li>
+<li>一种是通过有意控制、随机化的实验得到的:例如拨测,能够直接做因果推断</li>
+<li>一种是通过观测数据得到的: 需要另外知道一些先验知识，才能做因果推断。</li>
 </ul>
-<blockquote>
-<p>补充：</p>
-<p>在分布式系统中，IP表示一台唯一的主机，服务名称表示 运行在该主机上的 唯一的服务。</p>
-</blockquote>
+<h1 id="用数学语言表达因果模型">用数学语言表达因果模型</h1>
+<p>因果模型有三种表达方式： - 反事实（counterfactuals） - 因果图（causal graph） - 结构方程模型（structural equation models）</p>
+<p>一个简单的例子『睡眠超过 7 小时的人』（X）『生病少』（Y)，只是代表 X 和 Y 之间有关联性，并不代表如果强制一个人睡眠超过 7 小时，ta 就能够生病少。因为可能『身体好的人』容易『睡眠超过 7 小时』，同时 ta 也『生病少』；但是一个本来身体不好的人，强制 ta 睡眠多，ta 可能也生病不会少。</p>
+<p>因果关系可以从随机化的实验中得到；但是很难从观察到的数据中得到。</p>
+<h2 id="反事实counterfactuals">反事实（Counterfactuals）</h2>
+<p>考虑一个 treatment X，和一个 outcome Y。我们能观察到的是一些数据 <span class="math inline">\(\left\{\left(X_{i}, Y_{i}\right)\right\}\)</span> ，但是我们无法知道如果对于某一个数据点 <span class="math inline">\(\left(X_{i}, Y_{i}\right)\)</span> ，如果改变 X 的值，Y 会怎么变。这件事情就叫做反事实（counterfactual）。</p>
+<p>Notes 里面给了一个图（下图），从数据上看，X 和 Y 是正相关的，但其实对于每一个 样本来说，如果增大 X，会引起 Y 的减小。这一点最开始看的时候并不好理解。举一个例子。研究航空公司票价（X）对销量（Y）的影响，显然，对于某一个客户来说，增加票价（X 变大）会降低客户购买意愿，即使得销量将达（Y 变小）。但是实际中的情况是，在节假日人们出行意愿大导致销量高（Y 大），定价也会相应变高（X 大），从而从数据上看，形成左边图的情形。</p>
+<figure>
+<img src="dl-framework/img.png" alt="反事实举例" /><figcaption aria-hidden="true">反事实举例</figcaption>
+</figure>
+<h2 id="因果图causal-graph">因果图（causal graph）</h2>
+<p>因果图是一个DAG，表明各变量之间的联合概率分布。</p>
+<p><span class="math inline">\(p\left(y_{1}, \ldots, y_{k}\right)=\prod p\left(y_{j} \mid \operatorname{parents}\left(y_{j}\right)\right)\)</span></p>
+<p>下面举例说明，在给定一个因果图之后，如何做因果推断。 考虑下面一个因果图，目标是求<span class="math inline">\(p(y \mid \operatorname{set} X=x)\)</span></p>
 <ul>
-<li><p>服务依赖的定义：如果服务A需要服务B提供特定功能，来满足 客户端的请求。就说A-&gt;B. 箭头表示「依赖」的意思。举个例子，一个web service需要获取一些数据库的内容，就依赖db服务，就可以说web服务-&gt;db服务。本文只考虑client-server类型的应用（还有什么类型的应用?）</p></li>
-<li><p>怎么获取服务依赖图？</p>
-<ul>
-<li>第一步是搭架子：使用服务间的连接信息来构建 服务依赖图 的骨架（skeleton）。通过运行工具-netstat（有点像一个采集器，类似istatus，小米手环），在一个主机中，我们可以拿到关于一个网络连接的 一堆信息，包括协议，来源，目的地，连接状态。提取来源和目的地信息，每一个连接可以表示为这个形式：source_ip:port -&gt; desination_ip:port. 这一组信息叫一个channel。channel类似，服务依赖pair，除了一点：channel不包含服务名称，只包含port。</li>
-<li>第二步是端口映射：将第一步获取到的服务的端口映射为一个服务的名称。本地服务名称可以通过查询端口信息获取（netstats）。但是对于一个remote端口，需要传输一个查询请求给remote的主机，来获取。将端口映射为服务名之后，一个本地主机的服务依赖图的架子就搭好了。</li>
-<li>第三步是调整依赖方向：由于client和server是双向传递的，即，在不同的主机中观察时，我们可能拿到一个反向的服务依赖。举个例子：
-<ul>
-<li>当在192.168.1.117中观察时，可以获取一个连接：(192.168.1.117,httpd) → (192.168.1.115, tomcat)，即httpd调用了tomcat。</li>
-<li>但是在192.168.1.115中观察时，又能得到这个连接：(192.168.1.115,tomcat) → (192.168.1.117, httpd), 即tomcat调用了 httpd。</li>
-</ul></li>
+<li><p>首先，可以看出该 causal graph 提供的信息为 <span class="math inline">\(p(x, y, z)=p(z) p(x \mid z) p(y \mid x, z)\)</span></p></li>
+<li><p>接下来，由于考虑的是给定 X的影响，因此构建一个新图<span class="math inline">\(G_{*}\)</span>, 移除掉所有指向 X 的边，得到新的联合概率分布: <span class="math inline">\(p_{*}(y, z)=p(z) p(y \mid x, z)\)</span></p></li>
+<li><p>最后，该概率分布下的数值就是因果推断的结果: <span class="math inline">\(p(y \mid \text { set } X=x) \equiv p_{*}(y)=\int p_{*}(y, z) d z=\int p(z) p(y \mid x, z) d z\)</span></p></li>
 </ul>
-<p>为了解决这个问题，使用流量滞后关联的方法：</p>
-<p>X是服务A的出流量的，Y是服务B的出流量 衡量X和Y之间的滞后的相关性可以用这个指标，k</p></li>
-</ul>
-<p><span class="math display">\[
-\rho_{X Y}(k)=\frac{\sum_{t=0}^{N-1}\left(Y_{t}-\bar{Y}\right)\left(X_{t-k}-\bar{X}\right)}{\sqrt{\sum_{t=0}^{N-1}\left(X_{t}-\bar{X}\right)^{2} \sum_{t=0}^{N-1}\left(Y_{t}-\bar{Y}\right)^{2}}} k \in Z
-\]</span> k取什么值合适呢？平移后两个序列的相关性最大，如下，即为最优的<span class="math inline">\(k^{*}\)</span> <span class="math display">\[
-k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in[-30,30]\right\}
-\]</span></p>
-<p>如果<span class="math inline">\(k^{*}&gt;0\)</span>,则A是B的因（cause），A导致了B, 记为 <span class="math display">\[A \rightarrow B \]</span> 如果<span class="math inline">\(k^{*}&lt;0\)</span>,则B是A的因（cause），B导致了A，记为 <span class="math display">\[B \rightarrow A \]</span></p>
-<h2 id="构建指标因果图">构建指标因果图</h2>
-<p>如何指标因果图？需要用到「因果推断」技术，从数据得到因果关系。这里使用的是<a href="https://chiechie.github.io/2021/03/09/technology/PC-algo/">PC算法</a> &gt; pc算法是一种发现因果关系的算法，在满足一定的假设前提下，使用的基于统计的方法，推导出因果关系。</p>
+<h2 id="因果图-和-概率图-的区别">因果图 和 概率图 的区别</h2>
+<p>举例说明，比如下雨（Rain，R）和湿草坪（Wet Lawn，W）是不相互独立的 对于下两种 DAG，它们都是合理的 probability graph。即对于任意的联合概率分布 <span class="math inline">\(p(w, r)\)</span>，都可以写成 <span class="math inline">\(p(w) p(r \mid w)\)</span> 或者 <span class="math inline">\(p(r) p(w \mid r)\)</span>. 但显然下雨是因、草坪湿是果，只有左边的图才是正确的 causal graph。</p>
+<figure>
+<img src="right_causal_graph.png" alt="right_causal_graph" /><figcaption aria-hidden="true">right_causal_graph</figcaption>
+</figure>
+<h1 id="因果发现是不可能的">因果发现是不可能的</h1>
+<p>总存在一个 faithful 的分布使得在样本足够多的时候，产生足够大的 type I error。</p>
+<h1 id="参考">参考</h1>
 <ol type="1">
-<li>构建因果图的架子</li>
-<li>确定因果关系的方向</li>
-</ol>
-<p>基于PC算法，我们提出了两种方法：保守的 和 激进的。 激进的意思是不使用任何先验知识，来构建因果图。 保守的意思是，使用一些先验知识初始化。</p>
-<p>先验知识是什么呢？ 比如哪些变量没有父母--根因指标，哪些变量没有孩子--表象指标。 比如本地服务的网络延迟（TCP_LATENCY）指标就没有孩子，只是表象指标，因为网络延迟不会导致其他指标的变化。背后的原因可能是 工作负载（workload），配置错误，依赖服务的延迟。</p>
-<h3 id="激进派算法">激进派算法</h3>
-<p>如果一个服务（比如db服务）只会被别人调用，那么指标因果图就只会使用该服务的本地性能指标（服务依赖图依赖的数据一起采集了）。</p>
-<p>但是一个服务，会调用别人，如web service，这个因果图的构建，不仅仅需要本地的性能指标，还需要它调用的服务的TCP LATENCY指标。</p>
-<p>训练数据的长度取的是默认值200，然后使用PC算法，来构建因果图，可以得到一个DAG。</p>
-<p>激进派构建出来的因果图中，会有反直觉的因果关系和双向links；可能包含多个独立的子图，由于缺乏evidence，统计错误， 或者 压根儿就没有因果关系。</p>
-<p>举个例子，Figure 6 (a)(下图左边)的因果图是激进派算法构建的： - M5是一个孤立的服务 - M4 → M2 的因果关系是反直觉的 - M1 和 M4的因果关系是双向的。</p>
-<figure>
-<img src="inference.png" alt="图2-激进法构建出来的因果图" /><figcaption aria-hidden="true">图2-激进法构建出来的因果图</figcaption>
-</figure>
-<p>所以激进派构建出来的因果图需要进一步的加工：根据以下限制条件，从DAG中选择最大的子图</p>
-<ol type="a">
-<li>子图裁剪：TCP LATENCY指标是表象指标，他不可能是别的指标的cause了</li>
-<li>表象指标通过图中的每条路径都可以达到。</li>
-<li>预设的根因指标没有父母。</li>
-<li>对于一个双向的连接，随机选择一个方向。（这就是随机游走的意思？）</li>
-</ol>
-<h3 id="保守派算法">保守派算法</h3>
-<p>保守派算法，跟激进派很像。区别在于，使用PC算法之前，保守派会利用先验信息做初始化DAG。 和激进算法比，保守算法可以捕捉更多的因果关系，减少反直觉的因果关系。</p>
-<p>举个例子(下图右边)，M1 → SLO的因果关系，激进算法会丢失，但是保守算法会保留。同时 反直觉的因果关系，M4 → M2也被消除了</p>
-<figure>
-<img src="inference.png" alt="图3-保守派构建出来的因果图-右边" /><figcaption aria-hidden="true">图3-保守派构建出来的因果图-右边</figcaption>
-</figure>
-<h1 id="因果推断">因果推断</h1>
-<p>因果模型构建好了，接下来就需要根据这个因果图去做因果推断了。</p>
-<h2 id="整体思路">整体思路</h2>
-<p>当前端的服务可用性指标（SLO）出现异常，就会触发根因分析：</p>
-<ul>
-<li>首先找自己的问题：使用指标因果图 推断本地， 导致服务性能问题的根因指标。</li>
-<li>其次，如果问题是别人造成的，就去找别人的问题：如果根因指标是依赖服务的SLO（注意，用到了调用链关系），这个推断就会继续，传播到远程的依赖的服务。 一直追本溯源，一直到最底层的被调用方，即物理层。</li>
-</ul>
-<h2 id="指标因果图根因推断">指标因果图根因推断</h2>
-<p>指标因果图</p>
-<p>如何定位一个节点上哪个指标的是故障根因？</p>
-<ul>
-<li><p>使用了DFS算法--深度优先搜索，对指标因果图进行遍历。</p></li>
-<li><p>访问到一个节点，对它进行异常检测（cusum）：</p>
-<ul>
-<li>如果异常，继续访问他的后继（descendants）节点，</li>
-<li>如果正常，就去访问的邻居节点。</li>
-</ul></li>
-<li><p>如果一个异常节点没有后继节点，无法再溯源了，或者它的后继节点都正常时，他就是根因。</p></li>
-</ul>
-<figure>
-<img src="inference.png" alt="图3-推断.png" /><figcaption aria-hidden="true">图3-推断.png</figcaption>
-</figure>
-<p>如果SLO异常，从SLO节点开始推断，有两个推断路径</p>
-<ul>
-<li>路径1： 检测M1，如果M1正常的，就访问M1的邻居M2，如果M2异常，就是根因。</li>
-<li>路径2.：接下来M3如果异常，我们就去检测M2，因为M2是异常的，所以我们就输出根因M2。</li>
-</ul>
-<p>最后，我们只找到了一个根因M2，虽然M2和M3都是异常的。</p>
-<p>然而，在某些情况下，因为多个因果路径存在，可能得到一系列的潜在根因集合。 因此，必须把这些根因进行排序，然后输出概率最大的根因。</p>
-<p>如何去给根因进行排序呢？找异常程度最大的那个指标，也就是对异常贡献度最大的指标，就是根因。 这里基于z-score方法提出了一个指标，来衡量性能指标的异常程度，这个评估指标是</p>
-<p><span class="math display">\[\operatorname{violation}(X)=\frac{X(t)-\overline{X_{t-60, t-1}}}{\sigma_{t-60, t-1}+\varepsilon}, \varepsilon=0.001\]</span></p>
-<ul>
-<li><span class="math inline">\(\overline{X_{t-60, t-1}}\)</span> ：滑动窗口的均值</li>
-<li><span class="math inline">\(\sigma_{t-60, t-1}\)</span> ：滑动窗口的标准差</li>
-<li><span class="math inline">\(\varepsilon\)</span> : 扰动项</li>
-</ul>
-<h1 id="参考文献">参考文献</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf">2014-INFOCOM_CauseInfer</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
-<li><a target="_blank" rel="noopener" href="https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/">别人对CauseInfer论文的解读</a></li>
-<li><a href="https://chiechie.github.io/2021/03/09/technology/PC-algo/">chiechie对PC算法的总结</a></li>
-<li><a href="https://chiechie.github.io/2021/03/02/technology/causeinfer-notes1/">CauseInfer论文笔记1</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/88173582">zhihu-关于因果推断公开课翻译</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.stat.cmu.edu/~larry/=sml/Causation.pdf">英文原文</a></li>
 </ol>
 
       
@@ -450,7 +376,7 @@ k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/51/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><span class="page-number current">52</span><a class="page-number" href="/page/53/">53</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><a class="extend next" rel="next" href="/page/53/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/51/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><span class="page-number current">52</span><a class="page-number" href="/page/53/">53</a><span class="space">&hellip;</span><a class="page-number" href="/page/65/">65</a><a class="extend next" rel="next" href="/page/53/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -516,7 +442,7 @@ k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-count">129</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -529,7 +455,7 @@ k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">134</span>
+        <span class="site-state-item-count">136</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

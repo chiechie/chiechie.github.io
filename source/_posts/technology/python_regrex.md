@@ -14,6 +14,7 @@ categories:
 
 
 ## re.compile 和 split
+
 re.compile: 将字符串的正则表达式，转换为pattern对象。
 
 pattern对象，有点像re的中间数据对象，它有很多方法，like
@@ -39,7 +40,6 @@ pattern对象，有点像re的中间数据对象，它有很多方法，like
 
 ## re.sub
 
-
 re.sub：将某些固定的模式，替换为指定的格式。 比如 将连续空格转换为"-"
 
 
@@ -50,5 +50,6 @@ re.sub：将某些固定的模式，替换为指定的格式。 比如 将连续
 a,-b,,,-,c-d
 ```
 
-## re.split
-re.split
+
+## re.strip
+

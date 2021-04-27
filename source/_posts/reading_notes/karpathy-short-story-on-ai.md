@@ -42,3 +42,4 @@ karpathy的解释是， they（peple） optimize for frequency but expect correc
 
 ## 参考
 1. [karpathy-forward-pass](https://karpathy.github.io/2021/03/27/forward-pass/)
+2. [王川: 关于 GPT-3 的随想 （一）](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672247401&idx=1&sn=7e8661ce3aeb407f2af6e87963890606&chksm=85a124adb2d6adbb6f4d5b59dded3c2d5fe5376c7cf35104ab60df12f3fcb1a5a4d85b9ebaee&scene=21#wechat_redirect)

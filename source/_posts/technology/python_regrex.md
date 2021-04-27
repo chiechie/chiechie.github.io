@@ -12,6 +12,7 @@ categories:
 
 ## re.compile 和 split
 
+![img.png](img.png)
 re.compile: 将字符串的正则表达式，转换为pattern对象。
 
 pattern对象，有点像re的中间数据对象，它有很多方法，like

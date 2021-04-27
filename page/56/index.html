@@ -164,168 +164,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/01/AIOps/general-rca/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/01/AIOps/general-rca/" class="post-title-link" itemprop="url">对IT系统进行根因定位的一种方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-01 17:25:23" itemprop="dateCreated datePublished" datetime="2021-03-01T17:25:23+08:00">2021-03-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="问题分析-和-方案设计">问题分析 和 方案设计</h1>
-<p>一个IT系统包括机器，网络，应用。</p>
-<p>一个系统中任何一个组成部分都有可能出现故障，从而导致系统瘫痪。</p>
-<p>为了减少故障带来的损失，我们需要提前制定预案，即哪些表象对应这哪些故障，从而在故障发生时候，能快速地根据表现识别出故症结所在，进而进行故障处理。</p>
-<p>下面对这个解决方案进行说明。</p>
-<h2 id="因果图-故障传播图">因果图-故障传播图</h2>
-<p>从表象推断出故障症结，可以表达为一个因果推断的需求，即「由果推因」。</p>
-<p>从众多的监控指标，日志信息，事件信息，归纳出导致这些现象出现的原因。</p>
-<p>先分别看故障出现在这三层会出现什么表现（演绎），以及用什么方法去根据表象推断根因（归纳）</p>
-<ul>
-<li>应用之间在逻辑上存在调用关系，应用可能存在一台机器上，也可能是跨机器甚至跨网络。</li>
-<li>应用是部署在机器上的，应用之间的调用关系，实际上会映射为机器之间的网络连接关系。</li>
-<li>应用层故障：如果某个服务异常了，那么所有依赖它的服务的响应时长都会变长。举个例子，如果某个服务b 调用服务a，现在服务a异常了（比如某个操作系统死机了，或者mysql的请求堵塞了）， 就会表现出
-<ul>
-<li>b服务的响应时间变长；a服务的响应时间变长</li>
-<li>b服务的响应时间进行下钻分析，可以发现b服务依赖的其他服务的响应时间没有异常，只有依赖a服务的响应变长了。</li>
-<li>对a服务的响应进行下钻分析，发现a服务依赖的所有的服务响应时常都是正常的。</li>
-<li>如果服务c 要 调用服务b，然后这个调用并没有用到服务a，服务b的反应就是正常的。 总结一下，每一个服务的健康度是一个量化指标，被调用的成功率，如果成功率低，说明这个服务自身可能异常，也有是依赖服务异常导致。</li>
-</ul></li>
-<li>主机故障：如果某台机器故障，那么部署在这台机器上的所有应用都危险了，进而间接影响到，调用这些应用的调用方，即导致应用的点异常，以及间接导致边异常。</li>
-<li>网络故障：网络故障比如网络设备（网线，机房，交换机，路由器）故障，会导致数据在传输过程中丢失，进而影响到两个跨机器的应用之间的调用，即导致 边异常。</li>
-</ul>
-<p>画一个图表示一下</p>
-<figure>
-<img src="general-rca/shougap.png" alt="图1-应用/主机/网络三种故障导致的结果" /><figcaption aria-hidden="true">图1-应用/主机/网络三种故障导致的结果</figcaption>
-</figure>
-<h2 id="根因定位方案工作流图">根因定位方案&amp;工作流图</h2>
-<figure>
-<img src="./general-rca/workflow.png" alt="image-20210316150746837" /><figcaption aria-hidden="true">image-20210316150746837</figcaption>
-</figure>
-<p><a target="_blank" rel="noopener" href="https://docs.qq.com/flowchart/DVGJiQ0NXc2Z3dGVq">流程图-腾讯文档</a></p>
-<h2 id="关于事件的定义">关于事件的定义</h2>
-<p>事件的定义确定了rca的定位能力的颗粒度。 事件定义的粒度越粗糙，定位到的根因就越粗糙，起到的作用就越少。</p>
-<p>粗糙的事件描述只能定位到粗糙的根因。 事件详细到指标的描述，件可以定位到机器的指标根因。 事件详细到指标的描述，件可以定位到细粒度的根因，</p>
-<p>怎么定义一个事件？ 使用 [机器ip, 服务名称, 事件类型/指标名称]</p>
-<h2 id="要用到那些数据">要用到那些数据？</h2>
-<p>要用到的数据包括：日志，指标，事件以及拓扑数据</p>
-<p>但是每条日志/指标/事件，一定是跟一个实体绑定的（某个主机或者某个主机的某个应用）。</p>
-<p>先定位到有问题的实体，然后下钻分析，该实体的哪个指标为根因。</p>
-<p>如何确定一个实体是健康还是异常？两个思路：</p>
-<ul>
-<li>定义应用/中间件的通用的SLO指标，比如调用成功率，调用耗时。</li>
-<li>定义每个应用/中间件最适合的SLO指标，如db最关心锁个数，是否关闭监听。</li>
-</ul>
-<p>此外，还需要用到调用拓扑数据，即服务之间的相互调用关系，或者服务所部署的机器之间的关系，最终得到一个精确的方案。</p>
-<h2 id="构造因果图">构造因果图</h2>
-<p>先要确定这个因果图的skeleton，有哪些节点，什么方向。 构建因果图的skeleton：基于服务调用关系以及其他的先验，基于数据分析因果关系，提取最大子图。 因果图长什么样子： <img src="./general-rca/yinguotu.png" alt="因果图.png" /></p>
-<p>构建因果图（causality graph）是一个核心技术点。</p>
-<ul>
-<li><p>因果图是一个两层分层的图（two layered hierarchical causality graph）</p>
-<ul>
-<li>较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph），用于定位到服务级别的cause。</li>
-<li>较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph），用于定位到指标。</li>
-</ul></li>
-<li><p>构造「服务依赖图」分为两步（就是调用关系）：第一步通过采集器获取边是否存在；第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。</p></li>
-<li><p>构造「指标因果图」：使用人工经验+PC算法。</p>
-<blockquote>
-<p>pc算法是一种发现因果关系的算法，在满足一定的假设前提下，使用的基于统计的方法，推导出因果关系。</p>
-</blockquote></li>
-</ul>
-<h2 id="使用因果图进行推断">使用因果图进行推断</h2>
-<p>当前端的服务可用性指标（SLO）出现异常，就会触发根因分析</p>
-<p>一边定位调用链中的异常服务，一边下钻</p>
-<ul>
-<li>首先：找到异常的服务</li>
-<li>其次：找到服务所在的机器，搜集性能指标，对指标因果图进行深度优先搜索 ，推断本地是哪个指标导致服务性能问题。</li>
-<li>问题： 如果问题是别人造成的，就去找别人的问题：如果根因指标是依赖服务的SLO（注意，用到了调用链关系），这个推断就会继续，传播到远程的依赖的服务。 一直追本溯源，一直到最底层的被调用方，即物理层。</li>
-</ul>
-<p>先定位调用链中异常服务，最后下钻</p>
-<ul>
-<li>定位到有故障的服务</li>
-<li>再去下钻分析，指标层面的故障</li>
-</ul>
-<h1 id="验证方案的可行性">验证方案的可行性</h1>
-<h2 id="调用链路根因分析">1. 调用链路根因分析</h2>
-<figure>
-<img src="./general-rca/trace_rca.png" alt="调用链路做根因分析.png" /><figcaption aria-hidden="true">调用链路做根因分析.png</figcaption>
-</figure>
-<h2 id="aiops挑战赛">2 AIOps挑战赛</h2>
-<ol type="1">
-<li>AIOps挑战赛2020-获奖方案分案</li>
-<li>AIOps挑战赛2021-demo方案</li>
-</ol>
-<h1 id="参考资料">参考资料</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/88173582">知乎-关于因果推断</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.stat.cmu.edu/~larry/=sml/Causation.pdf">根因推断的英文原文</a></li>
-<li><a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=15&amp;flag=1">AIOps挑战赛2020-官网</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/28/reading_notes/youtube_science-in-buddhism/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -513,6 +351,104 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/28/technology/principle-of-computer-network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/28/technology/principle-of-computer-network/" class="post-title-link" itemprop="url">计算机网络基本原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-28 20:19:10" itemprop="dateCreated datePublished" datetime="2021-02-28T20:19:10+08:00">2021-02-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="怎么学习">怎么学习？</h2>
+<p>直接看理论，觉得太抽象了。</p>
+<p>引用一个同事说的吧，可能多从实践出发理解会更深刻。 IDC机器上tcpdump，本地机器wireshark都用起来，看网络包究竟是怎样的。 写个网络编程的demo比如echo server 用iptables模拟一些异常再抓包看看。 linux 网络相关系统调用的各个参数，比如listen的backlog。 内核里面关于网络的参数，比如/proc/sys/net/core/rmem_max之类的。 甚至还可以看看最近几年相对比较新的东西比如DPDK，RDMA之类的，有兴趣自然会提升学习的热情。</p>
+<h2 id="基本概念">基本概念</h2>
+<p>什么是协议（protocol）？ 一堆定义好的标准集合没，每台电脑都要遵守，才能够正常通信</p>
+<p>什么是计算机网络？ 覆盖所有相关事物：电脑之间如何通信 网络的作用是，保证每台电脑都能倾听到彼此，并且每台电脑说的话，其他电脑也能听得懂</p>
+<p>什么是TCP/IP模型？ <img src="img_1.png" alt="图1-TCP/IP网络模型" /> 是一个5层的模型 ，每一层都有自己的协议，除了TCP还有，其他的模型如OSI。</p>
+<p>为什么要分层？ 为了让职能分化（specialization）？让不同的人做不同的事？</p>
+<p>TCP/IP模型中包含哪些东西？ - 物理层：即一些物理设备，跟电脑相互联系的，是通过网线（cable）连接的。物理层的几个核心元素是：cable，connectors，发送信号</p>
+<p><img src="img_2.png" alt="图2-物理层-使用网线将物理设备连接起来" /> - 数据层：也叫网络接口层（networklayer），这里是第一次涉及到协议（才开始跟内容有关，物理层仅跟cable有关） 数据连接层，负责定义如何解读这些信号。这一步之后，两边才能交流（communicate，不然就是鸡同鸭讲）。数据连接层有很多协议，最出名的叫"以太网"，尽管现在无线技术越来越popular， 在物理层之上，以太网标准定义了一个协议，负责从同一个网络的一个节点获取数据，accross a single link。</p>
+<ul>
+<li><p>网络层，也叫internetwork层 允许不用的网络进行通信，当然，依靠的是路由器 这里涉及到一个的概念 internetwork ：一系列的网络，通过路由器，彼此相连接。 最有名的internetwork叫Internet。 这一层常用的协议叫：IP即 Internet Protocol IP是Internet和大部分更小的网络的核心，他的作用是将数据从一个节点传给另一个节点。 network software通常被分类为：client 和 server client应用初始化一个request， 并且通过netwrok发送给server应用 ， server将response通过network发送回来</p></li>
+<li><p>传输层，邮件的传输格式和网页的传输格式不一样，这个区别就是在这一层定义的。 会议一下， 网络层在两个node之间传输数据， 一个node，可以运行多个client应用或者server应用， 传输层sort out哪一个client和server 应该去获取数据。 第四层传输层用最常见的协议--TCP，Transmission Control Protocol。 虽然TCP和IP经常被放到一起说，但是要注意，TCP和IP网络模型的不同层的协议。 除了TCP，其他的传输层协议，也会利用IP先将数据送达， 例如UDP，user datagram protocol UDP和TCP的区别在于，TCP机制可确保数据安全被送达，但是UDP并不要求。</p>
+<p>TCP和UDP是用来确保数据被一个node上正确的程序所接受。 对比以下，IP只能保证数据传达到正确的node。 类似送快递，IP可以保证包括从武汉商店送到深圳的腾讯大厦， TCP可以保证包裹 送至 对应的员工手中。</p></li>
+<li><p>应用层，这一层的协议是跟具体的应用类型相关的 比如网页类型的应用要准手http协议 邮件类型的应用要准讯smtp协议。</p></li>
+</ul>
+<p>再用送快递打个比方 - 物理层，就是一个一运送快递的卡车和道路 - 数据连接层：卡车将包裹从一个 - 网络层：识别出 从A到B要走哪条路 - 传输层：告诉A中哪个程序来收包裹。 - 应用层：就是包裹的内容。</p>
+<figure>
+<img src="img_4.png" alt="图3-用送快递类比TCP/IP网络模型的运行机制" /><figcaption aria-hidden="true">图3-用送快递类比TCP/IP网络模型的运行机制</figcaption>
+</figure>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/computer-networking/home/welcome">The Bits and Bytes of Computer Networking</a></li>
+<li><a target="_blank" rel="noopener" href="https://open.163.com/newview/movie/free?pid=ME74DFHFC&amp;mid=ME74E6NLA">西安交通大学公开课-计算机网络原理</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -582,7 +518,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">130</span>
+          <span class="site-state-item-count">129</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -595,7 +531,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">138</span>
+        <span class="site-state-item-count">137</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

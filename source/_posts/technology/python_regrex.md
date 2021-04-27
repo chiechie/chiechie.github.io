@@ -10,8 +10,12 @@ categories:
 - 技术
 ---
 
+> 正则表达式一直都迷糊的很，现在要做日志聚类了，看看吧
+
+
 ## re.compile 和 split
 
+![img.png](img.png)
 re.compile: 将字符串的正则表达式，转换为pattern对象。
 
 pattern对象，有点像re的中间数据对象，它有很多方法，like
@@ -52,3 +56,6 @@ a,-b,,,-,c-d
 
 去除首字符 和 尾字符
 
+
+## 参考
+1. [怎么写正则表达式](https://www.programiz.com/python-programming/regex)

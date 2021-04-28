@@ -6,19 +6,26 @@ date: 2021-04-22 17:35:59
 tags: 
 - AIOps
 - 时间序列
+- DeepAR
 categories:
 - 技术
 ---
 
-## 背景
+> 看一下amazon官方对DeepAR的实现
 
-- [electricity数据集--Electricity dataset from UCI](https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014)： 
-- 参数
-    - input_size： window_size-stride_size，14
-    - stride
-    - window_size： 192 hour or 8天
-    - stride_size:  24 hour，滑窗步长
-  
+### 实验数据
+
+
+数据： [electricity数据集--Electricity dataset from UCI](https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014)： 
+, 2011 ~2014期间，370 个 家庭的用电量 ，频率为小时
+train/test：2014年9月第一周 作为test，之前的所有数据作为train:
+
+- 窗口长度(window_size)：192（8天），其中
+- conditioning range：168（前7天）
+- prediction range：24（第8天）
+- stride_size:  24 hour，滑窗步长
+- input_size： window_size-stride_size，14
+
 ## 问题
 
 - gluon-ts里面将输入做对数处理效果会不会好一点？

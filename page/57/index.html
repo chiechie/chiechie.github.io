@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/27/technology/principle-of-network/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/24/meditation/hire-requrirement/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/27/technology/principle-of-network/" class="post-title-link" itemprop="url">私网IP 和 公网IP</a>
+            <a href="/2021/02/24/meditation/hire-requrirement/" class="post-title-link" itemprop="url">招什么样的人？怎么招？</a>
         </h2>
 
         <div class="post-meta">
@@ -188,7 +188,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-27 17:38:13" itemprop="dateCreated datePublished" datetime="2021-02-27T17:38:13+08:00">2021-02-27</time>
+              <time title="创建时间：2021-02-24 08:52:37" itemprop="dateCreated datePublished" datetime="2021-02-24T08:52:37+08:00">2021-02-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -218,32 +218,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="私网ip-和-公网ip-分别是什么">私网IP 和 公网IP 分别是什么？</h2>
+          <h2 id="面试别人一般问什么问题">面试别人一般问什么问题？</h2>
 <ul>
-<li><p>私网IP，也叫private ip address，或者内网IP。是一个局域网内部，用于识别彼此身份的一个id。</p></li>
-<li><p>公网IP，也叫public ip address，或者外网IP。是在因特网中，用户识别设备身份的一个id。 &gt; 早期，当联网设备只有一台电脑时，将你的电脑连向一个modem，会被分配一个ip，就是public ip，这个ip就是你的电脑在整个互联网的一个id &gt; 随着家中联网设备变多（电视机，手机，平板），需要有一个路由的功能，加上上面的modem的功能，就是现在的路由器。他可以将public ip映射为家庭环境中的多个id，分配给多个设备。注意家庭中联网设备构成了一个局域网（LAN）。</p></li>
-<li><p>(https://ljvmiranda921.github.io/notebook/2018/01/31/running-a-jupyter-notebook/)https://ljvmiranda921.github.io/notebook/2018/01/31/running-a-jupyter-notebook/</p></li>
-</ul>
-<h2 id="modem-和-路由器-有什么区别">modem 和 路由器 有什么区别？</h2>
-<ul>
-<li>一台电脑如要跟其他电脑通信，需先hook up on 一个modem，然后modem给他分配一个IP，也就是外网ip。</li>
-<li>路由器是modem的升级版。 路由有两个作用：一个是连接家里的设备，另外一个是连接外面的世界。 家里的多个设备组成了一个局域网，即使不跟外面通信，他们之间是可以通信的，通信的过程中如何识别彼此呢？ 这就是路由器的第二个作用，给局域网中的每个设备分配一个IP--也就是内网IP，这个是局域网的成员才能读懂的代码。</li>
-</ul>
-<h2 id="端口转发是什么">端口转发是什么？</h2>
-<p>由于外网只知道内网设备的外网地址，如何能让外网访问内网某个设备的某个端口的服务呢？ 一个办法就是将局域网中的所有设备和服务，先注册到路由器中，路由器就可以根据外网的请求的端口号码，将之转移到内网提供相应服务的设备上。 这个就是端口转发做的事情。</p>
-<h2 id="网络中的三种设备-集线器交换机-和-路由器">网络中的三种设备-集线器，交换机 和 路由器</h2>
-<p>集线器和交换机是用来创建一个个小网络（局域网），路由器将这些小网络连接起来，变成因特网。</p>
-<ul>
-<li>集线器（hub）： 把内网中的网络设备连接起来，只能广播。</li>
-<li>交换机（switch）：维护一个交换机表，记录了连接的网络设备的mac地址，支持网络设备间p2p通信</li>
-<li>路由器（router）：网关（gateway），网络出入口</li>
-</ul>
-<h2 id="参考">参考</h2>
+<li>wzf:
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=92b-jjBURkw&amp;list=LL70j7MlBEzFqOk5aIHKzmxQ">私有ip和公共ip，以及端口forward</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=92b-jjBURkw&amp;list=LL70j7MlBEzFqOk5aIHKzmxQ">How to Enable SSH in Ubuntu---Install openssh-server？</a></li>
-<li><a target="_blank" rel="noopener" href="https://superuser.com/questions/104929/how-do-you-run-a-ssh-server-on-mac-os-x">how-do-you-run-a-ssh-server-on-mac-os-x</a></li>
-</ol>
+<li>做了什么项目？遇到什么问题？解决方案？</li>
+<li>让你再做一次，你怎么做？</li>
+</ol></li>
+<li>纯银：
+<ol type="1">
+<li>你做的部分，目的是什么?</li>
+<li>开工之前，需要搜集哪些关键信息？</li>
+<li>某个方案中，哪些是关键部分（应该是想说不能妥协的吧），哪些是权衡之下的折衷考虑，哪些是边界情况</li>
+<li>怎么用数据验证方案的效果，以及验证完之后效果如何?</li>
+</ol></li>
+<li>wangshusen：
+<ol type="1">
+<li>最擅长什么？做过什么？问最擅长的小的领域，看是否在滑水。</li>
+<li>介绍自己做的东西，考察对方的知识广度。</li>
+<li>深度学习问下基础的知识点--BP/attention/convolution。</li>
+</ol></li>
+<li>chiechie：
+<ol type="1">
+<li>为了保证模型效果，有什么策略？(太简单了吧)</li>
+</ol></li>
+<li>龙哥：
+<ol type="1">
+<li>怎么快速在新团队建立影响力?</li>
+<li>有没有做过推动团队效率的事情?</li>
+</ol></li>
+</ul>
 
       
     </div>
@@ -263,7 +267,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/26/technology/principle-of-zip/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/23/meditation/platform_design/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -277,7 +281,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/26/technology/principle-of-zip/" class="post-title-link" itemprop="url">文件压缩的原理是什么？</a>
+            <a href="/2021/02/23/meditation/platform_design/" class="post-title-link" itemprop="url">平台的商业价值？怎么设计平台？</a>
         </h2>
 
         <div class="post-meta">
@@ -287,14 +291,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-26 10:23:17" itemprop="dateCreated datePublished" datetime="2021-02-26T10:23:17+08:00">2021-02-26</time>
+              <time title="创建时间：2021-02-23 23:39:15" itemprop="dateCreated datePublished" datetime="2021-02-23T23:39:15+08:00">2021-02-23</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 11:54:08" itemprop="dateModified" datetime="2021-04-18T11:54:08+08:00">2021-04-18</time>
+                <time title="修改时间：2021-04-11 10:48:15" itemprop="dateModified" datetime="2021-04-11T10:48:15+08:00">2021-04-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -302,7 +306,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -317,23 +321,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>任何事务都可以分解为“一般性”和“特殊性”两部分。我们可以隐藏或者复用“一般性”，然后专家声明“特殊性”。我们也可以反过来，专家声明“一般性”，然后机器推导“特殊性”。</p>
-<p>最终的目的都是熵减，从复杂的现象中提取出规则的部分（regularity），减少信息编码表征的数据量</p>
-<p>和 zip 压缩文件，其实没啥区别</p>
+          <h2 id="平台存在的意义是什么">平台存在的意义是什么？</h2>
+<p>匹配或者撮合成交，提高资源配置效率。 提升数据资源复用，技术方案复用，工具复用。</p>
+<h2 id="平台的商业价值是什么">平台的商业价值是什么？</h2>
+<p>这个经济体的生产率提升:企业内部的生产者和消费者</p>
+<p>基于平台构建经济活动中分成:企业和企业&amp;企业和个人；</p>
+<h2 id="设计平台的原则是什么">设计平台的原则是什么？</h2>
+<blockquote>
+<p>理性人会对激励做出反应，所以让一件事发生的最有效的做法就是设计一个匹配的奖励和回报机制。</p>
 </blockquote>
-<p>几个G的文件用zip压缩之后，有时候可以变成十几兆，有时候又压缩不了多少，为什么呢？</p>
+<p>平台希望撮合交易，就需要定制一个奖惩机制--针对不同的角色设置</p>
 <ul>
-<li>压缩原理是 【通过寻找其中的规律，简化数字的排列】。
-<ul>
-<li>每个文件都由各种不同代码组成。比如01代码，这类文件只有数字0与1组合。那么：</li>
-<li>"00000110001111111111" 可以简化成 "5个0,2个1,3个0,10个1的排列"</li>
-<li>"100000000000"可以简化成数学的 "10^10"</li>
-</ul></li>
-<li>压缩的极限，就是这文件的「熵」，即本身的无序程度。 根据香农的信息理论，任何一个文件被无损压缩后的结果不可能小于其 熵 (信息论) 。</li>
+<li>角色：平台的使用者涉及哪些角色？各自职责是什么？怎么协作？</li>
+<li>需求：关键词是摒弃&amp;创造需求。需求是什么？需求就是artifacts的加工流程，不合理的需求摒弃，为了达到目的，帮用户挖掘更合理的新需求。</li>
+<li>规则&amp;工具：设计什么样的工具，让各角色在平台上能职责分明，协作完成输出。输出可能是一个软件。</li>
 </ul>
+<h2 id="做平台的最大收获是什么">做平台的最大收获是什么？</h2>
+<p>做事情的方式，从短平快，到习惯性地深思熟虑。 从平台的角度，习惯性地想到方案的高可用。给用户做方案，即使用户只想到了需求1，我会习惯性地去想后面还有哪些需求2，3，4。对个人成长来说是个好事。</p>
+<p>很多事情，只有深入思考，才有转机。 比如，某个事情别人都说难，但是你可以找到突破口； 比如，再做一遍，结合以前失败的经验，一定比之前更好。</p>
+<h2 id="做平台难受的地方是是什么">做平台难受的地方是是什么？</h2>
+<p>离业务远，没有素材去抽象。</p>
+<p>教员的矛盾论中提到的，事情发展的规律一定是，先见到一个个特殊的个体，才能总结共性，进而将结论应用到新生事物上。</p>
+<p>平台做的是第二步--得到共性，以及把共性产品化。但是,得到这个共性的前提是，我们已经解决了足够多的业务需求。</p>
+<p>而现在没有需求的情况，大部分时间都是唯心主义式地在创造需求，用演绎的方式推导需求。</p>
+<p>虽然说优秀的产品经理其实是会创造需求的，但是他们在提出需求之前，已经对用户有了很好的洞察。</p>
+<h2 id="离业务远怎么做平台">离业务远怎么做平台？</h2>
+<p>接着上面的，如何应对？我的想法是：先积累经验。</p>
+<p>一定要每个场景都深入地调研，至少要有一个落地，参加比赛或者想办法跟业务方合作，即使是无偿的。 我要的是沉淀出来的经验。经验是没法凭空想出来的。</p>
+<p>没有捷径可走。</p>
+<p>这个是做了快3年平台，踩了太多的坑，得到的教训。</p>
+<p>可靠的知识储备始终是来源实践的，唯心主义的方式获取得到都是不靠谱的知识。</p>
+<p>虽然侥幸能蒙对，但「似是而非」的知识没有意义。</p>
+<p>我要的是扎实的，有积累的成长。</p>
 <h2 id="参考">参考</h2>
-<p>https://www.zhihu.com/question/19925039</p>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/e5332f00811e2cc6cg015c02">geoffrey-parker-平台革命-微信读书</a></li>
+</ol>
 
       
     </div>
@@ -352,7 +375,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/56/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/56/">56</a><span class="page-number current">57</span><a class="page-number" href="/page/58/">58</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/58/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/56/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/56/">56</a><span class="page-number current">57</span><a class="page-number" href="/page/58/">58</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/58/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -418,7 +441,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

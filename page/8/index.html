@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reinforcement_learning/wangshusen-rf5-advanced-value-based/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/AIOps/DeepAR_practice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/reinforcement_learning/wangshusen-rf5-advanced-value-based/" class="post-title-link" itemprop="url">wangshusen-rf5-价值学习高级技巧1/3-经验回放</a>
+            <a href="/2021/04/18/AIOps/DeepAR_practice/" class="post-title-link" itemprop="url">从DeepAR谈论paper到工程落地</a>
         </h2>
 
         <div class="post-meta">
@@ -187,17 +187,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-04-18 20:40:17 / 修改时间：21:14:43" itemprop="dateCreated datePublished" datetime="2021-04-18T20:40:17+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 11:56:59" itemprop="dateCreated datePublished" datetime="2021-04-18T11:56:59+08:00">2021-04-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-28 10:04:01" itemprop="dateModified" datetime="2021-04-28T10:04:01+08:00">2021-04-28</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -212,24 +218,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ul>
-<li>经验回放(experience replay）： 就是把n条transition记录存下来(bufffer)，更新价值的时候，从里面抽样。好处是可以重复利用经验。</li>
-<li>技术发展路线
+          <h2 id="deepar探索">DeepAR探索</h2>
+<p>以DeepAR为例,最开始把DeepAR当黑盒用的时候，发现效果很神奇，不调参，换不同数据进去效果都还挺好，周期性和趋势性都还能学到。</p>
+<p>后面就觉得很奇怪，按照自己构建rnn的经验，调参就要反反复复好多次，最后效果还不一定好。使用gluon-TS的代码我没有调参的，并且默认的网络结构很简单 不太可能过拟合.</p>
+<p>看了源代码之后，有一个很大的感受就是，<strong>完成论文demo和完成一个业界可用方案，两者的工作量 ，可能是0到1再到100的距离。</strong></p>
+<p>按照paper所说，整个网络结构非常之简单，1层rnn + 1层 dense层（输出分布参数），构成2层rnn，大概十几行代码。 但是，<strong>真正大量的代码都在做预处理以及 模型训练的一些小trick。 这些小trick，对提升模型效果非常有帮助，但是paper里面是没有的，应该随是工程团队总结出的最佳实践</strong>。</p>
 <ul>
-<li>93年提出「经验回放」的想法</li>
-<li>15年的DQN使用到了「经验回放」</li>
-<li>之后各种模型训练都会用到该技巧</li>
-<li>「经验回放」演化成了强化学习里面的标准方法</li>
-</ul></li>
-<li>「经验回放」的变体
-<ul>
-<li>最优「经验回放」： 给予极端场景更高的权重
-<ul>
-<li>增加transition采样的权重</li>
-<li>减少使用transition更新价值网络时的 learning rate</li>
-</ul></li>
-</ul></li>
+<li>best practice1: 把每个样本（历史依赖）的scale 取对数，放入样本。 （因为所有的lags项在归一化之后已经丢失了scale信息，为了避免这个信息的丢失，还是把log scale 放入特征，用于区别不同的曲线的模式）</li>
+<li>best practice2: 在rnn中，每一层rnn后都接了一个residual和一个dropout。（原文没有提到）</li>
+<li>best practice3: 为了学习到数据的周期性模式，除了一定要有的context_length，代码还会跳着取lag , 类似空洞卷积。这些周期性的lag项，是被硬编码在代码里面的，比如年/月/日的周期性。</li>
 </ul>
+<p>（我甚至怀疑论文的作者都不知道，因为作者自己写了一个pytorch版本，没有见到相关的处理，并且训练时长是gluon-TS的100倍以上）</p>
+<h2 id="对于aiops建设的启发">对于AIOps建设的启发</h2>
+<p>对于根因分析，日志关联 等大部分场景，业界没有可参考的工具。只能求助学术界，那么可参考的只有论文 以及kaggle比赛等， 这些方案只是demo类型，没有在工业界的数据和真实需求上验证过，那从这个demo到落地可用还有大量的优化工作要做，所以需要预留一段时间， 来验证和优化。</p>
 
       
     </div>
@@ -249,7 +250,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reinforcement_learning/wangshusen-rf4-actor-critic/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/information-theory/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -263,7 +264,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/reinforcement_learning/wangshusen-rf4-actor-critic/" class="post-title-link" itemprop="url">wangshusen-rf4-混合方法</a>
+            <a href="/2021/04/18/technology/information-theory/" class="post-title-link" itemprop="url">信息论</a>
         </h2>
 
         <div class="post-meta">
@@ -274,7 +275,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-18 20:35:01 / 修改时间：21:39:37" itemprop="dateCreated datePublished" datetime="2021-04-18T20:35:01+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 11:19:24 / 修改时间：11:55:36" itemprop="dateCreated datePublished" datetime="2021-04-18T11:19:24+08:00">2021-04-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -297,7 +298,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>等待补充</p>
+          <h2 id="交叉熵">交叉熵</h2>
+<p>交叉熵表示，拥有信念Q的人，在观察到真实分布P后，他的惊讶程度。</p>
+<p>这个绝对惊讶程度 可以拆解为 一个baseline（真实分布P的熵） + 一个相对差距（P和Q的距离）</p>
+<figure>
+<img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#cross-entropy">交叉熵</a></li>
+</ol>
 
       
     </div>
@@ -316,7 +326,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -382,7 +392,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

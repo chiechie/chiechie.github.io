@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/01/technology/ad-and-prediction/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/27/technology/ABtest/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/01/technology/ad-and-prediction/" class="post-title-link" itemprop="url">预测和异常检测</a>
+            <a href="/2021/03/27/technology/ABtest/" class="post-title-link" itemprop="url">ABtest</a>
         </h2>
 
         <div class="post-meta">
@@ -188,24 +188,15 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-01 23:12:28" itemprop="dateCreated datePublished" datetime="2021-04-01T23:12:28+08:00">2021-04-01</time>
+              <time title="创建时间：2021-03-27 23:43:55" itemprop="dateCreated datePublished" datetime="2021-03-27T23:43:55+08:00">2021-03-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-28 09:44:23" itemprop="dateModified" datetime="2021-04-28T09:44:23+08:00">2021-04-28</time>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
 
           
 
@@ -219,73 +210,41 @@
 
       
           <blockquote>
-<p>一些reflection</p>
+<p>现在有很多平台都在做AB test，甚至还做成了一个变形金刚--实验平台，对于不同的推荐对象，给出不同的推荐方案</p>
+<p>正好目前在调研模型在线更新的流程和方案，似乎像是同一类需求。</p>
+<p>到底是不是同一类需求？是的话，实验平台的解决方案是什么？我们是否可以借鉴？</p>
+<p>下面来探讨一下</p>
 </blockquote>
-<h2 id="公理">公理</h2>
+<h2 id="为什么要做ab测试">为什么要做A/B测试？</h2>
+<p>A/B测试很好的避免了由于时间不同而引起的访客样本属性变化的问题，它能让两个版本面对属性相同或近似的访客群体，基于这种情况对所获得的数据才有可比性，分析结果才更加准确、可靠。</p>
+<p>A一般指实验组, B一般指 对照组，对照组一般指基线，一般都会有模型。</p>
 <ol type="1">
-<li>异常检测比预测更简单。异常检测只需自圆其说即可，时序预测需要拿现实数据来验证。</li>
-<li>异常检测分两步，先做模式识别，也就是找规律，然后判断当前数据是否符合规律，符合即正常，反之则为异常。</li>
+<li><p>treatment A 一般是重点考察对象，可以是最新版本的模型；treatment B是用来比对A的效果的，可以是上一个版本的模型/基线策略，</p></li>
+<li><p>为了排除用户群1和用户群2的群体差异，一般也会做BAtest。</p>
+<p>ABtest： treatment A 在用户群1测试，treatment B 在用户群2测试。</p>
+<p>BAtest：treatment B 在用户群1测试，treatment A 在用户群2测试。</p></li>
+<li><p>实际痛点：多数情况下流量不够，发现实验上线达不到预期（基线策略）直接下线。</p></li>
 </ol>
-<h2 id="推论">推论</h2>
+<h2 id="来自推荐一线的工程师">来自推荐一线的工程师</h2>
+<p>zhouwei: 做AB实验我总结需要重点考虑三个点：</p>
 <ol type="1">
-<li>异常检测只需要告知自己理解是啥；预测需要更进一步，考虑现实中的所有可能发生的情况。异常检测可以大胆地做，理论上没法证伪。预测是企业家的事情，需要一比高下。做异常检测是学术界的事情，选定一个视角，自己得出结论，不用跟别人一比高下。</li>
-<li>异常检测的原理是历史外延，没法证伪。如果预测和现实有偏差，碰巧能找到故障。如果找不到，也有可能是隐患，或者我们的视角有局限。没法证明是误判。</li>
-<li>一种异常检测器是一种视角，应该允许存在多个视角，并且可自由切换。</li>
-<li>什么样的告警结果用户可接受？符合他们认知的，比如同环比，上下界。</li>
+<li>置信度. 分配多少流量才能保证实验数据可信。</li>
+<li>流量分布. 如何保证实验流量和大盘流量的分布一致性。</li>
+<li>观察周期. 实验流量需要观察多久结论正确。</li>
 </ol>
-<h2 id="时间序列和iid样本">时间序列和iid样本</h2>
+<h2 id="来自chiechie-其他场景的算法工程师">来自chiechie-其他场景的算法工程师</h2>
+<p>推荐和一般场景的区别是，前者的流量是稀缺的。除此之外，两者本质都是在做线上模型对比</p>
 <ol type="1">
-<li><p>时间序列相对于iid样本，生成机制不一样。时间序列比如人在不同时刻的行为序列，是有延续的。iid的数据比如，体育彩票，每一期中奖号码跟上一期没有关系。</p></li>
-<li><p>iid的样本，符合大数定律和中心极限定理。时间序列分布就没有这么简单，样本之间的关系还粘粘乎乎的。</p></li>
-<li><p>简单粗暴地将大数定律套到时间序列上面行不行？即，如果新来的样本点不满足历史正态分布，就是异常。 不行，有两个反例：</p>
-<ul>
-<li>反例1：新来的样本不满足正态分布，但是正常--周期性凸起</li>
-<li>反例2：新来的样本满足正态分布，但是异常--局部拐点</li>
-</ul></li>
-<li><p>还是想补救一下，能不能认为，排除掉了周期性凸起和局部拐点之后，就满足大数定律了？或者切换到一个更简单清晰的视角，能不能不用大数定律，而是从时间序列的角度出发，找到时间序列模本身的一些规律？先提出几个假设</p>
+<li>推荐：用户群1在一个时间点只能接受1个treatment，要么是A要么是B, 测试次数是有限的资源。</li>
+<li>其他场景：比如异常检测，测试数据集1在一个时间点可接受多个treatment。可以无线测，反正是一个莫得感情的信息流。</li>
+</ol>
+<h2 id="总结下">总结下</h2>
+<p>大家要解决的问题是相同的</p>
 <ol type="1">
-<li>stl模式：假设时间序列是由周期性 + 趋势性 + 高斯噪声 三部分组成。在历史数据中分解出这3种模式。假设趋势性保持，周期性往复，高斯噪声依旧无规律，生成一个预测区间。然后拿新样本去对比。</li>
+<li>有不同的模型（解决方案）</li>
+<li>模型有持续更新的版本</li>
 </ol>
-<blockquote>
-<p>chiechie点评：这种方法很好，但是要验一下，周期性凸起能否避免，局部拐点能否告出。</p>
-<p>我猜测还是有那个问题，给的置信区间太大了，局部拐点告不出来。周期性凸起应该还是能避免的。</p>
-</blockquote>
-<ol start="2" type="1">
-<li>环比 + 同比：一个策略检测环比（检测突升突降），一个策略检测同比（屏蔽周期性告警）。</li>
-</ol></li>
-</ol>
-<h2 id="周期性凸起和局部拐点是不是两个不相容的问题">周期性凸起和局部拐点是不是两个不相容的问题？</h2>
-<ol type="1">
-<li>要不要拆分成两个子问题，做两个方案:环比 + 同比.一个策略检测环比（检测突升突降），一个策略检测同比（屏蔽周期性告警）。</li>
-<li>检测突升突降要考虑到时间上的秩序感，ma肯定没有ewma效果好。</li>
-<li>ewma局部 + 同比屏蔽周期告警 的组合 策略可以，验证过了。</li>
-</ol>
-<h2 id="需求还是方案">需求还是方案？</h2>
-<p>怎么给一个合适的阈值？怎么给一个合适的窗口？</p>
-<p>这个是一个需求？（用户定）还是一个解决方案？（我们可给出最佳实践）</p>
-<p>按照经验，怎么确定阈值？</p>
-<p>怎么确定异常？偏离正常的就是异常，不合群的 极少数 就是异常，like me</p>
-<ul>
-<li>如果这个群体就是一个五花八门的， 那么很难说哪个是异常，因为都很有个性。eg美国的拉美裔，女权团体。</li>
-<li>如果一个群体在整体上是有秩序的，只有少部分个体表现的不符合这个秩序，这些人就是异常。</li>
-</ul>
-<h2 id="怎么确定个体是不是某个群体的异类呢">怎么确定个体是不是某个群体的异类呢？</h2>
-<ol type="1">
-<li>先判断群体的属性，有没有秩序？有秩序的话，是什么类型的秩序？</li>
-<li>如果没有秩序，说明，单纯的数据挖掘，获取不到可信的知识。就像做图像分类，本来给的一堆动物世界中的动物做训练，然后测试的时候，给了一个孙悟空，模型就不认识了。这种任务就不应该交给算法，应该转交给更高级的人类去处理，他有领域知识，比机器聪明。</li>
-<li>如果有秩序，去对比。异常会涉及到进一步的异常细分。</li>
-</ol>
-<h2 id="自己作为方法">自己作为方法</h2>
-<ol type="1">
-<li>用预测的方法，去做曲线模式判断，用拟合程度来判断符合哪个模式，即找到最佳视角能够解释这个现象</li>
-<li>将1中的视角选中，采用历史外推的方式，估算出正常区间，</li>
-<li>更进一步的，正常区间之外，想要找出某个类型的异常，就再次配置出异常类型。</li>
-</ol>
-<h2 id="一些实践">一些实践</h2>
-<ol type="1">
-<li>使用邻近窗口的高斯检测器，要注意，这个方法忽略了时间序列的趋势性。</li>
-<li>使用ewma，或者曲线拟合出趋势，都可以弥补1的问题。</li>
-</ol>
+<p>需要根据线上情况选择性能最好的模型</p>
 
       
     </div>
@@ -305,7 +264,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/31/reading_notes/zhihu-ml-prediction-and-decision/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/26/meditation/how_to_wite_cv/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -319,7 +278,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/31/reading_notes/zhihu-ml-prediction-and-decision/" class="post-title-link" itemprop="url">机器学习在预测和决策场景中的应用</a>
+            <a href="/2021/03/26/meditation/how_to_wite_cv/" class="post-title-link" itemprop="url">怎么推销自己</a>
         </h2>
 
         <div class="post-meta">
@@ -329,14 +288,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-31 08:52:16" itemprop="dateCreated datePublished" datetime="2021-03-31T08:52:16+08:00">2021-03-31</time>
+              <time title="创建时间：2021-03-26 09:59:58" itemprop="dateCreated datePublished" datetime="2021-03-26T09:59:58+08:00">2021-03-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+                <time title="修改时间：2021-04-18 12:09:15" itemprop="dateModified" datetime="2021-04-18T12:09:15+08:00">2021-04-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -344,7 +303,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -359,17 +318,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="一些reflection">一些reflection</h2>
+          <blockquote>
+<p>简历的作用，是挑选出有意思的，值得一见的人。</p>
+</blockquote>
+<h2 id="自我介绍要点">自我介绍要点</h2>
+<p>好的自我介绍要包含的信息</p>
 <ol type="1">
-<li>机器学习的预测能力，实际上是一种归纳能力。也就是说当带预测数据完全来自已有训练样本的分布中时，才具备应用的可能性。</li>
-<li>强化学习中，决策的基础是基于对未来的长期的局势的预测。</li>
-<li>机器学习做预测，不适合的典型场景--股票预测，就是拿过去的股票数据去预测未来的股票数据。</li>
-<li>做预测是企业家的事情，是跟概率相关的，先不管它决策的对不对，多重空间的客观存在，推导出人是不可能给出一种确定的结果的。</li>
-<li>同时，在未来到来时，人的行为又可以改变后续的演化路径。人在未来的行与未来以及更未来的结局是纠缠态的。</li>
+<li>what do you value?</li>
+<li>how to deal with your mates?</li>
+<li>what's your taste?</li>
 </ol>
-<h2 id="参考">参考</h2>
+<blockquote>
+<p>you are what you consume 4. what's your passion about? 5. show your meditation?</p>
+</blockquote>
+<h2 id="实践建议">实践建议</h2>
 <ol type="1">
-<li>https://www.zhihu.com/question/437563654/answer/1729894854</li>
+<li>面试官可以这么问：你为了你喜欢做的事情，付出过怎样的代价？做出过怎样的妥协？</li>
+<li>展示自己的视野，能干点事儿，要知道最顶级的水平做到哪里了，要有国际化视野。</li>
+<li>介绍自己过去工作/项目经历的时候, 要着重讲那些你做的决定（以及你是基于怎样的分析做出的决定，以及结果）</li>
+<li>大多数人介绍的时候只做到简单直叙的 流水账：我们做了 A，然后做了 B，然后做了 C。</li>
+<li>这流水账缺失的是： who made the decision to do A? was it you? if it's not, then I as your interviewer don't care about it so much, because you were just following orders.</li>
+<li>如果你在之前的单位/公司中人微言轻，大的决定轮不到你做，没关系，讲讲那些你可以做的，哪怕很小的决定。</li>
+<li>为什么我作为面试官 care so much about YOUR decisions? because it's hard to tell anything about you when you are just following orders -- except maybe that you are good at following orders, which is a fine quality to have, but not enough for you to succeed at positions that require judgment, taste, ability to deal with uncertainty etc. on the other hand, decisions, even small ones, can tell so much.</li>
+</ol>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://podcasts.apple.com/cn/podcast/%E5%BE%97%E6%84%8F%E5%BF%98%E5%BD%A2%E6%92%AD%E5%AE%A2/id1200767928?i=1000424079668">得意忘形#49：请管好你的企鹅</a></li>
 </ol>
 
       
@@ -389,7 +363,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -455,7 +429,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

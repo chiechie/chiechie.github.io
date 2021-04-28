@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/technology/cause-inference-learning/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/28/technology/principle-of-computer-network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/04/technology/cause-inference-learning/" class="post-title-link" itemprop="url">因果推断</a>
+            <a href="/2021/02/28/technology/principle-of-computer-network/" class="post-title-link" itemprop="url">计算机网络基本原理</a>
         </h2>
 
         <div class="post-meta">
@@ -188,14 +188,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-04 23:23:02" itemprop="dateCreated datePublished" datetime="2021-03-04T23:23:02+08:00">2021-03-04</time>
+              <time title="创建时间：2021-02-28 20:19:10" itemprop="dateCreated datePublished" datetime="2021-02-28T20:19:10+08:00">2021-02-28</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 21:18:32" itemprop="dateModified" datetime="2021-04-18T21:18:32+08:00">2021-04-18</time>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
                 </span>
             </span>
 
@@ -218,48 +218,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="因果推断和因果发现">因果推断和因果发现</h1>
-<p>因果问题分为两种</p>
+          <h2 id="怎么学习">怎么学习？</h2>
+<p>直接看理论，觉得太抽象了。</p>
+<p>引用一个同事说的吧，可能多从实践出发理解会更深刻。 IDC机器上tcpdump，本地机器wireshark都用起来，看网络包究竟是怎样的。 写个网络编程的demo比如echo server 用iptables模拟一些异常再抓包看看。 linux 网络相关系统调用的各个参数，比如listen的backlog。 内核里面关于网络的参数，比如/proc/sys/net/core/rmem_max之类的。 甚至还可以看看最近几年相对比较新的东西比如DPDK，RDMA之类的，有兴趣自然会提升学习的热情。</p>
+<h2 id="基本概念">基本概念</h2>
+<p>什么是协议（protocol）？ 一堆定义好的标准集合没，每台电脑都要遵守，才能够正常通信</p>
+<p>什么是计算机网络？ 覆盖所有相关事物：电脑之间如何通信 网络的作用是，保证每台电脑都能倾听到彼此，并且每台电脑说的话，其他电脑也能听得懂</p>
+<p>什么是TCP/IP模型？ <img src="img_1.png" alt="图1-TCP/IP网络模型" /> 是一个5层的模型 ，每一层都有自己的协议，除了TCP还有，其他的模型如OSI。</p>
+<p>为什么要分层？ 为了让职能分化（specialization）？让不同的人做不同的事？</p>
+<p>TCP/IP模型中包含哪些东西？ - 物理层：即一些物理设备，跟电脑相互联系的，是通过网线（cable）连接的。物理层的几个核心元素是：cable，connectors，发送信号</p>
+<p><img src="img_2.png" alt="图2-物理层-使用网线将物理设备连接起来" /> - 数据层：也叫网络接口层（networklayer），这里是第一次涉及到协议（才开始跟内容有关，物理层仅跟cable有关） 数据连接层，负责定义如何解读这些信号。这一步之后，两边才能交流（communicate，不然就是鸡同鸭讲）。数据连接层有很多协议，最出名的叫"以太网"，尽管现在无线技术越来越popular， 在物理层之上，以太网标准定义了一个协议，负责从同一个网络的一个节点获取数据，accross a single link。</p>
 <ul>
-<li>一种是因果推断（causal inf erence），比如给定两个变量 X、Y，希望找到一个衡量它们之间因果关系的参数 theta；</li>
-<li>另一种是因果发现（causal discovery），即给定一组变量，找到他们之间的因果关系，这个在统计上是不可能的。</li>
+<li><p>网络层，也叫internetwork层 允许不用的网络进行通信，当然，依靠的是路由器 这里涉及到一个的概念 internetwork ：一系列的网络，通过路由器，彼此相连接。 最有名的internetwork叫Internet。 这一层常用的协议叫：IP即 Internet Protocol IP是Internet和大部分更小的网络的核心，他的作用是将数据从一个节点传给另一个节点。 network software通常被分类为：client 和 server client应用初始化一个request， 并且通过netwrok发送给server应用 ， server将response通过network发送回来</p></li>
+<li><p>传输层，邮件的传输格式和网页的传输格式不一样，这个区别就是在这一层定义的。 会议一下， 网络层在两个node之间传输数据， 一个node，可以运行多个client应用或者server应用， 传输层sort out哪一个client和server 应该去获取数据。 第四层传输层用最常见的协议--TCP，Transmission Control Protocol。 虽然TCP和IP经常被放到一起说，但是要注意，TCP和IP网络模型的不同层的协议。 除了TCP，其他的传输层协议，也会利用IP先将数据送达， 例如UDP，user datagram protocol UDP和TCP的区别在于，TCP机制可确保数据安全被送达，但是UDP并不要求。</p>
+<p>TCP和UDP是用来确保数据被一个node上正确的程序所接受。 对比以下，IP只能保证数据传达到正确的node。 类似送快递，IP可以保证包括从武汉商店送到深圳的腾讯大厦， TCP可以保证包裹 送至 对应的员工手中。</p></li>
+<li><p>应用层，这一层的协议是跟具体的应用类型相关的 比如网页类型的应用要准手http协议 邮件类型的应用要准讯smtp协议。</p></li>
 </ul>
-<h1 id="两种数据产生途径">两种数据产生途径</h1>
-<p>数据有两种产生途径：</p>
-<ul>
-<li>一种是通过有意控制、随机化的实验得到的:例如拨测,能够直接做因果推断</li>
-<li>一种是通过观测数据得到的: 需要另外知道一些先验知识，才能做因果推断。</li>
-</ul>
-<h1 id="用数学语言表达因果模型">用数学语言表达因果模型</h1>
-<p>因果模型有三种表达方式： - 反事实（counterfactuals） - 因果图（causal graph） - 结构方程模型（structural equation models）</p>
-<p>一个简单的例子『睡眠超过 7 小时的人』（X）『生病少』（Y)，只是代表 X 和 Y 之间有关联性，并不代表如果强制一个人睡眠超过 7 小时，ta 就能够生病少。因为可能『身体好的人』容易『睡眠超过 7 小时』，同时 ta 也『生病少』；但是一个本来身体不好的人，强制 ta 睡眠多，ta 可能也生病不会少。</p>
-<p>因果关系可以从随机化的实验中得到；但是很难从观察到的数据中得到。</p>
-<h2 id="反事实counterfactuals">反事实（Counterfactuals）</h2>
-<p>考虑一个 treatment X，和一个 outcome Y。我们能观察到的是一些数据 <span class="math inline">\(\left\{\left(X_{i}, Y_{i}\right)\right\}\)</span> ，但是我们无法知道如果对于某一个数据点 <span class="math inline">\(\left(X_{i}, Y_{i}\right)\)</span> ，如果改变 X 的值，Y 会怎么变。这件事情就叫做反事实（counterfactual）。</p>
-<p>Notes 里面给了一个图（下图），从数据上看，X 和 Y 是正相关的，但其实对于每一个 样本来说，如果增大 X，会引起 Y 的减小。这一点最开始看的时候并不好理解。举一个例子。研究航空公司票价（X）对销量（Y）的影响，显然，对于某一个客户来说，增加票价（X 变大）会降低客户购买意愿，即使得销量将达（Y 变小）。但是实际中的情况是，在节假日人们出行意愿大导致销量高（Y 大），定价也会相应变高（X 大），从而从数据上看，形成左边图的情形。</p>
+<p>再用送快递打个比方 - 物理层，就是一个一运送快递的卡车和道路 - 数据连接层：卡车将包裹从一个 - 网络层：识别出 从A到B要走哪条路 - 传输层：告诉A中哪个程序来收包裹。 - 应用层：就是包裹的内容。</p>
 <figure>
-<img src="dl-framework/img.png" alt="反事实举例" /><figcaption aria-hidden="true">反事实举例</figcaption>
+<img src="img_4.png" alt="图3-用送快递类比TCP/IP网络模型的运行机制" /><figcaption aria-hidden="true">图3-用送快递类比TCP/IP网络模型的运行机制</figcaption>
 </figure>
-<h2 id="因果图causal-graph">因果图（causal graph）</h2>
-<p>因果图是一个DAG，表明各变量之间的联合概率分布。</p>
-<p><span class="math inline">\(p\left(y_{1}, \ldots, y_{k}\right)=\prod p\left(y_{j} \mid \operatorname{parents}\left(y_{j}\right)\right)\)</span></p>
-<p>下面举例说明，在给定一个因果图之后，如何做因果推断。 考虑下面一个因果图，目标是求<span class="math inline">\(p(y \mid \operatorname{set} X=x)\)</span></p>
-<ul>
-<li><p>首先，可以看出该 causal graph 提供的信息为 <span class="math inline">\(p(x, y, z)=p(z) p(x \mid z) p(y \mid x, z)\)</span></p></li>
-<li><p>接下来，由于考虑的是给定 X的影响，因此构建一个新图<span class="math inline">\(G_{*}\)</span>, 移除掉所有指向 X 的边，得到新的联合概率分布: <span class="math inline">\(p_{*}(y, z)=p(z) p(y \mid x, z)\)</span></p></li>
-<li><p>最后，该概率分布下的数值就是因果推断的结果: <span class="math inline">\(p(y \mid \text { set } X=x) \equiv p_{*}(y)=\int p_{*}(y, z) d z=\int p(z) p(y \mid x, z) d z\)</span></p></li>
-</ul>
-<h2 id="因果图-和-概率图-的区别">因果图 和 概率图 的区别</h2>
-<p>举例说明，比如下雨（Rain，R）和湿草坪（Wet Lawn，W）是不相互独立的 对于下两种 DAG，它们都是合理的 probability graph。即对于任意的联合概率分布 <span class="math inline">\(p(w, r)\)</span>，都可以写成 <span class="math inline">\(p(w) p(r \mid w)\)</span> 或者 <span class="math inline">\(p(r) p(w \mid r)\)</span>. 但显然下雨是因、草坪湿是果，只有左边的图才是正确的 causal graph。</p>
-<figure>
-<img src="right_causal_graph.png" alt="right_causal_graph" /><figcaption aria-hidden="true">right_causal_graph</figcaption>
-</figure>
-<h1 id="因果发现是不可能的">因果发现是不可能的</h1>
-<p>总存在一个 faithful 的分布使得在样本足够多的时候，产生足够大的 type I error。</p>
-<h1 id="参考">参考</h1>
+<h2 id="参考资料">参考资料</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/88173582">zhihu-关于因果推断公开课翻译</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.stat.cmu.edu/~larry/=sml/Causation.pdf">英文原文</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/computer-networking/home/welcome">The Bits and Bytes of Computer Networking</a></li>
+<li><a target="_blank" rel="noopener" href="https://open.163.com/newview/movie/free?pid=ME74DFHFC&amp;mid=ME74E6NLA">西安交通大学公开课-计算机网络原理</a></li>
 </ol>
 
       
@@ -280,7 +262,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/28/reading_notes/intuition_pumps_right-way-to-judge-others/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -294,7 +276,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/04/AIOps/logmine-notes/" class="post-title-link" itemprop="url">logmine论文笔记</a>
+            <a href="/2021/02/28/reading_notes/intuition_pumps_right-way-to-judge-others/" class="post-title-link" itemprop="url">如何正确地批评别人？</a>
         </h2>
 
         <div class="post-meta">
@@ -304,14 +286,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-04 11:01:18" itemprop="dateCreated datePublished" datetime="2021-03-04T11:01:18+08:00">2021-03-04</time>
+              <time title="创建时间：2021-02-28 11:40:47" itemprop="dateCreated datePublished" datetime="2021-02-28T11:40:47+08:00">2021-02-28</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-27 12:49:25" itemprop="dateModified" datetime="2021-04-27T12:49:25+08:00">2021-04-27</time>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -319,7 +301,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -335,113 +317,48 @@
 
       
           <blockquote>
-<p>日志聚类做的事情，本质上也是在简洁性和信息丰富性之间做的trade-off。原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。</p>
+<p>工作中验收产品/算法方案，审视自己的方案，去别人就某个观点进行argue，都需要这个技能。</p>
+<p>《直觉泵和其他思考工具》对于如何正确地批评别人以及批评那些方面，提出了指引--拉波波特法则和史特金定律，</p>
+<p>拉波波特法则是对「归谬法」的一个补充，是一个更温和的，更让人容易接受的方式。</p>
+<p>史特金定律告诉我们每个领域闪闪发光的知识只有10%或者更少，我们不应该浪费时间，批量一些毫无亮点的东西</p>
 </blockquote>
-<h2 id="问题描述">问题描述</h2>
-<p>将多来源的海量日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。</p>
-<h2 id="解决方案">解决方案</h2>
-<p>logmine使用的是基于聚类的方法，做日志摘要生成。</p>
-<h3 id="概要">概要</h3>
-<figure>
-<img src="logmine_image-20210225214320632.png" alt="图1-层次化地提取日志模式" /><figcaption aria-hidden="true">图1-层次化地提取日志模式</figcaption>
-</figure>
-<figure>
-<img src="logmin-result.png" alt="图2-logmine-result" /><figcaption aria-hidden="true">图2-logmine-result</figcaption>
-</figure>
-<h3 id="概述">概述</h3>
-<p>从high-level角度看整个流程是怎么运作的：</p>
-<ul>
-<li>第一次：原始日志 --&gt; 聚类 --&gt; leve1-clusters --&gt; Level1-pattern：每个cluster提取一个pattern</li>
-<li>第二次：Level1-pattern --&gt; 聚类 --&gt; leve2-clusters --&gt; Level2-pattern：每个cluster提取一个pattern</li>
-<li>第三次：Level2-pattern --&gt; 聚类 --&gt; leve2-clusters --&gt; Level3-pattern：每个cluster提取一个pattern</li>
-<li>...</li>
-</ul>
-<h3 id="衡量两条日志的相似性">衡量两条日志的相似性</h3>
-<p>衡量两条日志的相似性，使用的是距离函数：</p>
-<p><span class="math display">\[\operatorname{Dist}(P, Q)=1-\sum\limits_{i=1}^{\operatorname{Min}(\operatorname{len}(P), \operatorname{len}(Q))} \frac{\operatorname{Score}\left(P_{i}, Q_{i}\right)}{\operatorname{Max}(\operatorname{len}(P), \operatorname{len}(Q))}\]</span></p>
-<p><span class="math display">\[\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
-<ul>
-<li><span class="math inline">\(P_i\)</span>：日志P的第i个字段，</li>
-<li>len(P): 日志P的字段的个数</li>
-<li><span class="math inline">\(k_1\)</span>: 是一个可调的参数, 默认取1，表示两条日志有1个字段相同就得分</li>
-</ul>
-<h3 id="衡量两个pattern的相似性">衡量两个pattern的相似性</h3>
-<p>pattern 长什么样呢？ 每个pattern有三类字段：fixed value， Variable 和 Wildcard</p>
-<ul>
-<li>固定值（fixed value field ）：如www, httpd and INFO ，有明确含义的，固化的。</li>
-<li>可变字段（A variable field）：如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的额。</li>
-<li>Wildcards ：任意的字段，are matched with values of all types。</li>
-</ul>
-<p>所以，怎么衡量两个pattern之间的距离呢？</p>
-<p>跟日志一样，不同的是score不一样，要考虑 fixed value 和 变量字段，对相似性的权重不一样</p>
-<p><span class="math display">\[\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are fixed value } \\ k_{2} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are variable } \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
-<ul>
-<li><span class="math inline">\(k_1\)</span>: 表示两个fixed value字段，如果一样的话，相似度得分</li>
-<li><span class="math inline">\(k_2\)</span>: 表示两个变量字段，如果一样的话，相似度得分</li>
-</ul>
-<h3 id="找cluster">找cluster</h3>
-<ul>
-<li><p>先定义一个内部的参数，叫MaxDist， 表示一个cluster的半径。</p></li>
-<li><p>对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就创建一个新的类，并且以他为新的cluster中心。</p>
-<blockquote>
-<p>这里使用early abandon的策略，如果已对比的字段累计距离超过了半径，这句话的词还没遍历完，可以提前停止了，距离只会越来越大。</p>
-</blockquote></li>
-</ul>
-<h3 id="对于每个cluster抽取pattern">对于每个cluster，抽取pattern</h3>
-<figure>
-<img src="image-20210226000021042.png" alt="图2-日志分析流程" /><figcaption aria-hidden="true">图2-日志分析流程</figcaption>
-</figure>
-<ul>
-<li>step1. 分词：将原始日志进行分词，使用空格做分隔符</li>
-<li>step2. 对齐：将key进行排序</li>
-<li>step3. 字段检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date， 将192.168.10.15 替换成 IP. 这个替换规则可以让用户自己定义</li>
-</ul>
-<figure>
-<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
-<h2 id="怎么指定层次level">怎么指定层次（level）？</h2>
-<figure>
-<img src="cost_function.png" alt="图3-评价当前pattern的信息含量" /><figcaption aria-hidden="true">图3-评价当前pattern的信息含量</figcaption>
-</figure>
-<p>怎么调超参--level？ 怎么评估一个抽象层级，即该level对应的所有pattern的好坏？从包含的信息量来衡量，一般来说wildcard个数越多，这个模版越没有什么信息。 具体来说，可以定义一个量化的指标--cost function，取值越大，提取出来的n个模式的信息量越少：</p>
-<p><span class="math display">\[\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times\left(a_{1} W C_{i}+a_{2} V a r_{i}+a_{3} F V_{i}\right)\]</span></p>
-<ul>
-<li><span class="math inline">\({Size}_i\)</span>: 第i个cluster包含的日志个数，</li>
-<li><span class="math inline">\({WC}_i\)</span>: 第i个cluster中，wildcards个数</li>
-<li><span class="math inline">\({Var}_i\)</span>:第i个cluster中，可变字段的个数。</li>
-<li><span class="math inline">\({FV}_i\)</span>: 第i个cluster中，固定值字段的个数。</li>
-</ul>
-<p>默认，重点看wildcards个数，个数越多，信息量越少。 对应的超参数配置是:a1,a2, a3 = 1,0,0</p>
-<blockquote>
-<p>类似k-means聚类，对每个k，都可以计算cluster的松散度。 可以跨k进行对比。</p>
-</blockquote>
-<h2 id="怎么评估日志聚类的效果">怎么评估日志聚类的效果？</h2>
-<p>整个问题的评估可以拆分为两个小问题的评估:</p>
-<ul>
-<li>怎么评估聚类的准确率？</li>
-<li>怎么评估模式识别的准确率？</li>
-</ul>
-<p>因为没有标签，所以两个算法都是跟baseline算法对比。（都有了baseline，还要你这个算法干嘛？）</p>
-<p>怎么评估聚类的准确率？ 跟一个baseline算法，即OPTICS对比。提出了一个指标agreement score，即最大公共子集的比例。</p>
-<p>怎么评估模式识别的准确率？ 跟一个baseline算法，即UPGMA对比。</p>
-<ul>
-<li><p>UPGMA算法：对一大堆日志生成摘要，输入一个cluster的原始日志，输出一个patten，找到了最好的order。</p></li>
-<li><p>使用UPGMA的结果作为ground truth，来评估模式识别算法的准确率。</p></li>
-<li><p>先聚类，然后让UPGMA算法和本文的算法来给每个cluster生成摘要，</p></li>
-<li><p>然后比较两者是否一致：一个字段一个字段地比较。准确率，输出命中的字段的比率。</p></li>
-</ul>
-<p><span class="math inline">\(\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}\)</span></p>
-<h2 id="方法的局限性">方法的局限性？</h2>
-<p>对于复杂的，毫无规则的原始日志，无能为力。</p>
-<figure>
-<img src="badcase.png" alt="图5-在毫无规律的日志上也束手无策" /><figcaption aria-hidden="true">图5-在毫无规律的日志上也束手无策</figcaption>
-</figure>
-<h2 id="参考资料">参考资料</h2>
+<h2 id="避免变成一个杠精">避免变成一个杠精！</h2>
+<p>我们在寻找对方说法中隐藏的矛盾时常常容易走过头，变成鸡蛋里挑骨头，变成彻头彻尾的嘲弄。这种认定对手的想法中一定藏有矛盾的冲动，给了你一个容易击中的靶子，怂恿你对别人的看法做出无情解读。</p>
+<p>然而，<strong>这个容易击中的靶子通常与我们真正关心的问题不是一回事儿</strong>，你只是在浪费大家的时间和耐心而已，最多是给支持你的观点的人提供了一点消遣。</p>
+<h2 id="拉波波特法则">拉波波特法则</h2>
+<p>拉波波特法则的内容如下：</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>如何撰写一篇成功的批评性评论?</td>
+</tr>
+<tr class="even">
+<td>① 你应该非常清楚、生动、不偏不倚地重述对手的想法，使得你的对手说：“谢谢你，我刚才要是像你这么表述就好了。”</td>
+</tr>
+<tr class="odd">
+<td>② 你应该把对方观点中你所同意的部分都列出来，尤其是那种并非被人们广泛接受了的观点。</td>
+</tr>
+<tr class="even">
+<td>③ 你应该提到那些从你对手那里学到的东西。</td>
+</tr>
+<tr class="odd">
+<td>④ 只有完成了以上三点，你才能说一句反驳或批评的话。</td>
+</tr>
+</tbody>
+</table>
+<p>遵循此法则的一个直接的好处就是，你的对手会因此乐于倾听你的批评。因为，他们看到你已站在他们的立场上，理解了他们的想法，同时你也展示出了良好的判断力，在一些重要的事情上和他们达成了共识，甚至在有些地方还被他们说服了。</p>
+<p>遵循拉波波特法则，有时内心会有挣扎，因为有些对手不值得我们如此尊重。但对于值得尊重的对手，当我们用了这个方法，总是能有意外之喜。</p>
+<h2 id="史特金定律">史特金定律</h2>
+<p>科幻作家泰德·史特金（Ted Sturgeon）这个评价科幻小说，"百分之九十的科幻小说确实很渣。但是，任何事物当中的百分之九十都是渣滓，而其中那不是渣滓的百分之十才是有意义的。我敢说，那百分之十的科幻小说可以与人类从古至今写就的任何作品相媲美。"</p>
+<p>对史特金定律更通俗的一种表达是：“任何事物当中的百分之九十都是垃圾（crap）。” 百分之九十的分子生物学实验、百分之九十的诗歌、百分之九十的哲学书、数学系里百分之九十的同行评议文章，等等，都是垃圾。</p>
+<h2 id="不要把时间浪费在无意义的事情上">不要把时间浪费在无意义的事情上</h2>
+<p>从史特金定律中我们应该学到：每个领域，每个人身上都有一大堆愚蠢、平庸、糟糕透顶的东西存在。最伟大的思想家经过些许巧妙扭曲之后，他们最好的学说、最精妙的分析也会显得又臭又长，变成彻头彻尾的蠢话。</p>
+<p>为了不浪费你的时间和大家的耐心，请确保你关注的是你能找到的该领域或者个人身上最好的东西，比如获奖之作、杰出成果、大家都赞不绝口的精品，而非糟粕。</p>
+<h2 id="怎么用知乎">怎么用知乎？</h2>
+<p>知乎对我而言最大的意义是，它上面质量前 10% 的内容价值是相当大的，远超其他主流中文互联网平台——至于剩下的，本来互联网上绝大部分内容都是垃圾，知乎也只是体现了世界的常态而已。这也提醒我对于那些有争议的领域，在噪音中找到真正有价值的东西，比带着偏见全盘否定要好上太多。 --张潇雨</p>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf">logmine-paper</a></li>
-<li><a target="_blank" rel="noopener" href="https://pypi.org/project/logmine/">logmine-pypi</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">apache_2k.log</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">chiechie-关于logmine的实践</a></li>
+<li>《直觉泵和其他思考工具》-丹尼尔·丹尼特</li>
 </ol>
 
       
@@ -461,7 +378,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/51/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><span class="page-number current">52</span><a class="page-number" href="/page/53/">53</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/53/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/51/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><span class="page-number current">52</span><a class="page-number" href="/page/53/">53</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/53/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -527,7 +444,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -637,59 +554,6 @@
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 

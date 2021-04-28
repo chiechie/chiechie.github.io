@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="why 可能可以超越人类。监督学习 只能模仿，不能超越 强化学习三要素  model： 状态转移，模拟计算reward2个收益: 长期和即时收益。这两个收益都是随机变量，怎么利用收益函数来 引导agent做出好的策略？对收益求期望，也就是价值函数 value：3个价值函数: 行动价值函数，最优行动价值函数，状态价值函数 policy：策略  公开课  zhoubolei：rf-intro  课程资">
+  <meta name="description" content="why rl? 可能可以超越人类。监督学习 只能模仿，不能超越 公开课  zhoubolei：rf-intro  课程资源  github-课程资料 ｜slide 视频  chiechie的笔记  rf-intro 1 基本概念 rf-intro 2 马尔可夫过程 rf-intro 7 model-based强化学习   wangshusen  课程资源：  baidu网盘:密码:x0wb 强化学">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强化学习资料汇总">
 <meta property="og:url" content="https://chiechie.github.io/2021/04/18/reinforcement_learning/rf_summary/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Cosmos">
-<meta property="og:description" content="why 可能可以超越人类。监督学习 只能模仿，不能超越 强化学习三要素  model： 状态转移，模拟计算reward2个收益: 长期和即时收益。这两个收益都是随机变量，怎么利用收益函数来 引导agent做出好的策略？对收益求期望，也就是价值函数 value：3个价值函数: 行动价值函数，最优行动价值函数，状态价值函数 policy：策略  公开课  zhoubolei：rf-intro  课程资">
+<meta property="og:description" content="why rl? 可能可以超越人类。监督学习 只能模仿，不能超越 公开课  zhoubolei：rf-intro  课程资源  github-课程资料 ｜slide 视频  chiechie的笔记  rf-intro 1 基本概念 rf-intro 2 马尔可夫过程 rf-intro 7 model-based强化学习   wangshusen  课程资源：  baidu网盘:密码:x0wb 强化学">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FSSywH-1RRf.png?alt=media&amp;token=6b811aba-b275-47f0-a6d3-2945b6fff817">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVhwFEvq-CN.png?alt=media&amp;token=de826d99-eaa2-4c92-8bec-520c7a04ee0b">
 <meta property="article:published_time" content="2021-04-18T12:16:31.000Z">
-<meta property="article:modified_time" content="2021-04-28T02:24:20.194Z">
+<meta property="article:modified_time" content="2021-04-28T02:28:19.796Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="强化学习">
 <meta property="article:tag" content="人工智能">
@@ -201,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-28 10:24:20" itemprop="dateModified" datetime="2021-04-28T10:24:20+08:00">2021-04-28</time>
+                <time title="修改时间：2021-04-28 10:28:19" itemprop="dateModified" datetime="2021-04-28T10:28:19+08:00">2021-04-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -224,14 +224,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="why">why</h2>
+        <h2 id="why-rl">why rl?</h2>
 <p>可能可以超越人类。监督学习 只能模仿，不能超越</p>
-<h2 id="强化学习三要素">强化学习三要素</h2>
-<ul>
-<li>model： 状态转移，模拟计算reward2个收益: 长期和即时收益。这两个收益都是随机变量，怎么利用收益函数来 引导agent做出好的策略？对收益求期望，也就是价值函数</li>
-<li>value：3个价值函数: 行动价值函数，最优行动价值函数，状态价值函数</li>
-<li>policy：策略</li>
-</ul>
 <h2 id="公开课">公开课</h2>
 <ul>
 <li>zhoubolei：rf-intro
@@ -394,8 +388,8 @@
       <i class="fa fa-chevron-left"></i> 黑天鹅
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/04/18/reinforcement_learning/rf-markovprocess/" rel="next" title="强化学习2-马尔可夫过程">
-      强化学习2-马尔可夫过程 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/04/20/meditation/about-management/" rel="next" title="跟聂老板学管理">
+      跟聂老板学管理 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -455,7 +449,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#why"><span class="nav-number">1.</span> <span class="nav-text">why</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="nav-number">2.</span> <span class="nav-text">强化学习三要素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AC%E5%BC%80%E8%AF%BE"><span class="nav-number">3.</span> <span class="nav-text">公开课</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E6%89%8B%E9%A1%B9%E7%9B%AE"><span class="nav-number">4.</span> <span class="nav-text">练手项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">强化学习的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">一些思考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%B7%E5%80%BC%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%E5%AD%A6%E4%B9%A0%E5%8A%A8%E4%BD%9C%E8%A3%81%E5%88%A4%E5%AD%A6%E4%B9%A0-%E8%BF%99%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95-%E5%AD%98%E5%9C%A8%E7%9A%84%E5%BF%85%E8%A6%81"><span class="nav-number">6.1.</span> <span class="nav-text">价值学习，策略学习，动作裁判学习 这三种方法 存在的必要？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-%E9%80%82%E5%90%88%E5%93%AA%E4%BA%9B%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB-%E9%80%82%E5%90%88%E7%94%A8%E5%90%97%E4%B8%BA%E4%BB%80%E4%B9%88-auto-ml%E9%80%82%E5%90%88%E7%94%A8"><span class="nav-number">6.2.</span> <span class="nav-text">强化学习 适合哪些应用场景？图像分类 适合用吗？为什么 auto-ml适合用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%BA%BF%E5%AD%A6%E4%B9%A0-%E5%92%8C-%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84-%E5%8C%BA%E5%88%AB"><span class="nav-number">6.3.</span> <span class="nav-text">在线学习 和 强化学习的 区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#on-policy-%E5%92%8C-off-policy-%E7%9A%84-%E5%8C%BA%E5%88%AB"><span class="nav-number">6.4.</span> <span class="nav-text">on-policy 和 off-policy 的 区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0-%E5%92%8C-%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">6.5.</span> <span class="nav-text">监督学习 和 强化学习的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">6.6.</span> <span class="nav-text">强化学习的特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#why-rl"><span class="nav-number">1.</span> <span class="nav-text">why rl?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AC%E5%BC%80%E8%AF%BE"><span class="nav-number">2.</span> <span class="nav-text">公开课</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E6%89%8B%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.</span> <span class="nav-text">练手项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">强化学习的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">一些思考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%B7%E5%80%BC%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5%E5%AD%A6%E4%B9%A0%E5%8A%A8%E4%BD%9C%E8%A3%81%E5%88%A4%E5%AD%A6%E4%B9%A0-%E8%BF%99%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95-%E5%AD%98%E5%9C%A8%E7%9A%84%E5%BF%85%E8%A6%81"><span class="nav-number">5.1.</span> <span class="nav-text">价值学习，策略学习，动作裁判学习 这三种方法 存在的必要？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-%E9%80%82%E5%90%88%E5%93%AA%E4%BA%9B%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB-%E9%80%82%E5%90%88%E7%94%A8%E5%90%97%E4%B8%BA%E4%BB%80%E4%B9%88-auto-ml%E9%80%82%E5%90%88%E7%94%A8"><span class="nav-number">5.2.</span> <span class="nav-text">强化学习 适合哪些应用场景？图像分类 适合用吗？为什么 auto-ml适合用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%BA%BF%E5%AD%A6%E4%B9%A0-%E5%92%8C-%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84-%E5%8C%BA%E5%88%AB"><span class="nav-number">5.3.</span> <span class="nav-text">在线学习 和 强化学习的 区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#on-policy-%E5%92%8C-off-policy-%E7%9A%84-%E5%8C%BA%E5%88%AB"><span class="nav-number">5.4.</span> <span class="nav-text">on-policy 和 off-policy 的 区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0-%E5%92%8C-%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.5.</span> <span class="nav-text">监督学习 和 强化学习的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">5.6.</span> <span class="nav-text">强化学习的特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -469,7 +463,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

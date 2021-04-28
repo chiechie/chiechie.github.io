@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reinforcement_learning/wangshusen-rf7-continous-action/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reinforcement_learning/rf_summary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/reinforcement_learning/wangshusen-rf7-continous-action/" class="post-title-link" itemprop="url">wangshusen-rf7-连续控制</a>
+            <a href="/2021/04/18/reinforcement_learning/rf_summary/" class="post-title-link" itemprop="url">强化学习资料汇总</a>
         </h2>
 
         <div class="post-meta">
@@ -188,14 +188,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-18 20:46:57" itemprop="dateCreated datePublished" datetime="2021-04-18T20:46:57+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 20:16:31" itemprop="dateCreated datePublished" datetime="2021-04-18T20:16:31+08:00">2021-04-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-21 16:58:47" itemprop="dateModified" datetime="2021-04-21T16:58:47+08:00">2021-04-21</time>
+                <time title="修改时间：2021-04-28 10:28:19" itemprop="dateModified" datetime="2021-04-28T10:28:19+08:00">2021-04-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -218,117 +218,146 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="离散控制与随机控制介绍">离散控制与随机控制介绍</h2>
+          <h2 id="why-rl">why rl?</h2>
+<p>可能可以超越人类。监督学习 只能模仿，不能超越</p>
+<h2 id="公开课">公开课</h2>
 <ul>
-<li>这节课讨论离散控制与连续控制的区别、连续控制的难点、以及连续动作空间的离散化。</li>
-<li>之前讲的强化学习方法 都是来 处理离散控制变量的场景的：策略梯度 和 DQN</li>
-<li>那么对连续控制变量这种场景如何处理呢？
-<ol type="1">
-<li>将连续空间网格化，套上离散控制变量的方法。但是输出向量的长度随着控制变量的个数呈指数增加。</li>
-<li>使用更适合连续控制变量的方法：
+<li>zhoubolei：rf-intro
 <ul>
-<li>确定的策略网络</li>
-<li>随机的策略网络</li>
+<li>课程资源
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/zhoubolei/introRL">github-课程资料</a> ｜<a target="_blank" rel="noopener" href="https://github.com/zhoubolei/introRL/blob/master/lecture1.pdf">slide</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1LE411G7Xj">视频</a></li>
 </ul></li>
-</ol></li>
+<li>chiechie的笔记
+<ul>
+<li><a href="https://chiechie.github.io/2021/04/18/technology/rf-intro1/">rf-intro 1 基本概念</a></li>
+<li><a href="https://chiechie.github.io/2021/04/18/technology/rf-intro2/">rf-intro 2 马尔可夫过程</a></li>
+<li><a href="https://chiechie.github.io/2021/04/18/technology/rf-intro7/">rf-intro 7 model-based强化学习</a></li>
+</ul></li>
+</ul></li>
+<li>wangshusen
+<ul>
+<li>课程资源：
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1XpTgny_Vr0LobBsuYF4KkA">baidu网盘</a>:密码:x0wb</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DRL/blob/master/Notes_CN/DRL.pdf">强化学习中文教材</a></li>
+<li><a target="_blank" rel="noopener" href="https://youtu.be/vmkRMvhCW5c">视频</a>|<a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">深度学习课件</a>|<a target="_blank" rel="noopener" href="https://github.com/wangshusen/DRL">深度强化学习课件</a></li>
+</ul></li>
+<li>chiechie的笔记
+<ul>
+<li>【基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf1-basic-concepts/">1. 强化学习的基本概念</a></li>
+<li>【基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf2-value-based/">2. 基于价值的强化学习-DQN 和 TD 算法</a>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FSSywH-1RRf.png?alt=media&amp;token=6b811aba-b275-47f0-a6d3-2945b6fff817" /></li>
+</ul></li>
+<li>【强化学习基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf3-policy-based/">3. 基于策略的强化学习</a>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVhwFEvq-CN.png?alt=media&amp;token=de826d99-eaa2-4c92-8bec-520c7a04ee0b" /></li>
+</ul></li>
+<li>【强化学习基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf4-actor-critic/">4. actor-critic 方法</a></li>
+<li>【专题】价值学习高级技巧
+<ul>
+<li><a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf5-advanced-value-based/">价值学习高级技巧1/3-经验回放</a>
+<ul>
+<li>对TD算法的改进</li>
+<li>对神经网络结构的改进</li>
+</ul></li>
+</ul></li>
+<li>【专题】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf6-baseline-in-policy-gradient/">策略梯度中的baseline</a>
+<ul>
+<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。Baseline 可以是任何不依赖于动作的函数。这节课我们做数学推导，得出带有 baseline 的策略梯度，并对它做蒙特卡洛近似。在后面的两节课中，我们把它用在 REINFORCE 和 A2C 方法中。</li>
+<li>策略梯度中的Baseline 1/4-数学推导</li>
+<li>策略梯度中的Baseline 2/4-REINFORCE with Baseline
+<ul>
+<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。这节课我们学习 REINFORCE with Baseline，它是一种策略梯度方法。它用价值网络近似 baseline 函数。它用带 baseline 的策略梯度学习策略网络，用价值网络去拟合观测到的回报。</li>
+</ul></li>
+<li>策略梯度中的Baseline 3/4-A2C 方法</li>
+<li>策略梯度中的Baseline 4/4-REINFORCE与A2C的异同</li>
+</ul></li>
+<li>【专题】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf7-continous-action/">连续控制</a>
+<ul>
+<li>连续控制1/3-离散控制与连续控制</li>
+<li>连续控制2/3-确定策略梯度DPG</li>
+<li>连续控制3/3-用随机策略做连续控制</li>
+</ul></li>
+</ul></li>
+</ul></li>
 </ul>
-<h2 id="确定策略梯度dpg">确定策略梯度DPG</h2>
+<h2 id="练手项目">练手项目</h2>
 <ul>
-<li>DPG是一种actor cirtic方法</li>
-<li>DPG的策略网络输出1个实数（机械手臂只有1个关节）或者1个向量（机械手臂又多个关节），但是输出是确定的没有随机性的</li>
-<li>流程：
+<li>https://stable-baselines.readthedocs.io/en/master/</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshub/RL-Stock">使用强化学习炒股</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267998242">强化学习应用于金融问题的文章</a></li>
+<li><a target="_blank" rel="noopener" href="https://gym.openai.com/">Gym</a> is a toolkit for developing and comparing reinforcement learning algorithms.</li>
+</ul>
+<h2 id="强化学习的应用">强化学习的应用</h2>
 <ul>
-<li>结构：</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFFnC_ZZDfS.png?alt=media&amp;token=b76bce5a-44cb-4967-8831-9ad7e3bac627" /></li>
-<li>更新价值网络</li>
-<li>更新策略网络
+<li>神经网络结构搜索</li>
+<li>自动生成SQL语句</li>
+<li>推荐系统</li>
+<li>网约车调度</li>
+</ul>
+<p>参考: <a href="https://chiechie.github.io/2021/04/21/reinforcement_learning/rf-application/">chiechie的笔记-关于强化学习的应用</a></p>
+<h2 id="一些思考">一些思考</h2>
+<h3 id="价值学习策略学习动作裁判学习-这三种方法-存在的必要">价值学习，策略学习，动作裁判学习 这三种方法 存在的必要？</h3>
 <ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F1lO0oHsg0f.png?alt=media&amp;token=4624994e-3a30-4a5d-9ea3-7ecc419516e1" /></li>
+<li>既然有了policy Function 或者 Q, 都可以告诉agent怎么操作。那有什么必要去做 actor-critic 算法呢？单独学两个神经网络不就可以了？</li>
+<li>问题就是不容易学呀！所以才会有Actor-Critic这种复杂的方法。</li>
+</ul>
+<h3 id="强化学习-适合哪些应用场景图像分类-适合用吗为什么-auto-ml适合用">强化学习 适合哪些应用场景？图像分类 适合用吗？为什么 auto-ml适合用？</h3>
+<ul>
+<li>适合 序列决策 问题， 图像分类没必要 用</li>
+<li>训练一个大的神经网络类似玩一局游戏 耗时很久，每一个迭代 类似 游戏里面的 一小步，可以拿到即时reward，这样就可以使用TD算法来学习 value-function。</li>
+</ul>
+<h3 id="在线学习-和-强化学习的-区别">在线学习 和 强化学习的 区别？</h3>
+<ul>
+<li>online learning 不假定模型输出会影响未来输入，只看单步损失</li>
+<li>reinforcement learning 中模型输出会影响未来输入，必须考虑输出的后果</li>
+</ul>
+<h3 id="on-policy-和-off-policy-的-区别">on-policy 和 off-policy 的 区别？</h3>
+<ul>
+<li>相同点：都是用来更新价值网络的学习算法</li>
+<li>不同点是：on-policy是按照当前的policy来估计q-value；off-policy是按照最优的policy来估计q-value</li>
+</ul>
+<h3 id="监督学习-和-强化学习的区别">监督学习 和 强化学习的区别</h3>
+<ul>
+<li>监督学习
+<ul>
+<li>要求数据 是独立同分布的</li>
+<li>学习过程需要被告知，labels是什么</li>
 </ul></li>
-</ul></li>
-<li>缺点，bootstrap带来的估计偏差（一开始TD target估高了，就会持续高估）
+<li>强化学习
 <ul>
-<li>bootstrap的解释：使用自己的更新至来更新自己</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FckUhWapL92.png?alt=media&amp;token=56166270-8cad-42fc-a94e-f88f329c6c41" /></li>
+<li>数据不用iid</li>
+<li>正确的action不能获取即时的正反馈</li>
 </ul></li>
-<li>改进方法-target networks：基本思路，使用别的网络来计算TD target
+<li>两者对比
 <ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F6lBqZiXi9f.png?alt=media&amp;token=17ff418c-0a8d-437f-8b82-7848a8cfa243" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FkSbwop1R3_.png?alt=media&amp;token=9dd29838-a62a-4a89-8717-7e1972f3da74" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FKrdc65AdRE.png?alt=media&amp;token=3d72f27f-a8be-468c-8910-df0ad025f5da" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FnLzNJ8bG14.png?alt=media&amp;token=fe8f8570-8304-4c5e-bd16-0649684ecaf7" /></li>
-</ul></li>
-<li>还有一些其他的DPG的改进方法：
-<ul>
-<li>target network</li>
-<li>经验回放（experience replace）</li>
-<li>multi-step TD target</li>
-</ul></li>
-<li>随机策略网络和确定策略网络对比
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FRDz29hZbP4.png?alt=media&amp;token=52f95ad5-5f13-4974-87f8-c52d8c734836" /></li>
+<li>强化学习需要序列数据作为输入（不是iid）</li>
+<li>强化学习本身不会被告知正确的action是什么，而是需要自己去试错，找到具长期reward最大的action。监督学习会直接被告知正确到案是什么。</li>
+<li>试错机制--在探索 和 利用中间寻找平衡</li>
+<li>强化学习没有一个导师（supervisor），只有一个奖励信号，并且还是有延迟的。</li>
 </ul></li>
 </ul>
-<h2 id="用随机策略做连续控制">用随机策略做连续控制</h2>
-<h3 id="基本概念">基本概念</h3>
+<h3 id="强化学习的特点">强化学习的特点</h3>
 <ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fza5rJJXnoe.png?alt=media&amp;token=48526a35-cc19-486c-b91b-3a0ef9df1edc" /></li>
-<li>策略梯度：--谁对谁的梯度？（状态价值函数 关于策略网络参数的梯度）
+<li>强化学习中随机性的两个来源：action可以是随机的，状态转移可以是随机的</li>
+<li>试错机制</li>
+<li>延迟reward</li>
+<li>时间会产生影响</li>
+<li>agent的行为会影响后续收到的数据（agent的action改变了环境）
 <ul>
-<li><span class="math inline">\(\frac{\partial V_{\pi}(s)}{\partial \boldsymbol{\theta}}=\mathbb{E}_{A \sim \pi}\left[\frac{\partial \ln \pi(A \mid s ; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(s, A)\right]\)</span></li>
-</ul></li>
-<li>随机策略梯度
-<ul>
-<li><span class="math inline">\(\mathbf{g}(a)=\frac{\partial \ln \pi(a \mid s ; \boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \cdot Q_{\pi}(s, a), \text { where } a \sim \pi(\cdot \mid s ; \boldsymbol{\theta})\)</span></li>
-</ul></li>
-</ul>
-<h3 id="连续控制问题-怎么设计方案">连续控制问题 怎么设计方案？</h3>
-<p>chiechie的思索：第一反应是 使用回归模型，即策略网络是将state 映射到一个确定的action（比如机械臂转动多少度），但是从贝叶斯角度来理解现实问题的话，刚刚的处理方式是明显不合理的， 因为永远 不存在唯一的正确答案。（贝叶斯认为正确答案 是一个随机变量，只不过在不同区间的概率分布不一样）。</p>
-<p>接下来看看wang给的方案：</p>
-<ul>
-<li>将连续的决策空间离散化为网格空间，但是会带来维树灾难</li>
-<li>使用确定性的梯度算法：上一节讲的内容，对于给定的状态，输出的action是唯一确定的。（这不就是我上面的想法吗？似乎不是，这个随机策略梯度更像是一种数值算法，类似sgd）</li>
-<li>使用随机策略网络，也就是本节要讲的内容</li>
-</ul>
-<p>【核心】构建一个输出pi的概率分布的策略网络：</p>
-<ul>
-<li>如何训练？ --使用随机策略梯度
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F-HeYISazuj.png?alt=media&amp;token=0d3ebe9c-6f04-4867-b2cb-553503e9a523" /></li>
-</ul></li>
-<li>策略梯度的第一个部分使用 辅助神经网络，第二部分使用 reinforce 或者 actor2critic来计算
-<ul>
-<li>step1- 辅助神经网络：就是算实际action的似然概率，以此作为反馈信号，往后传播策略网络参数的梯度。
-<ul>
-<li>往前传播
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FF3rR0gy8Su.png?alt=media&amp;token=32c8deac-e6ed-4c36-8490-682457bd96cf" /></li>
-</ul></li>
-<li>往后传播
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FqKuN1X6D_b.png?alt=media&amp;token=aa379ddd-eb64-4674-a1c9-136f77996250" /></li>
-</ul></li>
-</ul></li>
-<li>step2-计算Q value：然是在计算策略梯度的时候，又遇到了一个问题，就是如何计算Qvalue？又两种方法：
-<ul>
-<li>reinforce： 玩完一局，然后那观测到的ut去近似</li>
-<li>actior-critic：使用价值网络来近似Q，
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F1OdWlyBP_B.png?alt=media&amp;token=4e37f7bb-e85d-4e0b-afb3-bbf99f3bb628" /></li>
-</ul></li>
-<li>还有更高级的方法--策略梯度with baseline:
-<ul>
-<li>reinforce==&gt; [[策略梯度中的Baseline 2/4-REINFORCE with Baseline]]</li>
-<li>actor-critic==&gt; [[策略梯度中的Baseline 3/4-A2C 方法]]</li>
-</ul></li>
-</ul></li>
+<li>类似我们的模型自动更新，担心时间会对模型造成影响</li>
+<li>如果是增量学习，会造成影响</li>
 </ul></li>
 </ul>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>https://www.youtube.com/watch?v=rRIjgdxSvg8</li>
-<li>https://www.youtube.com/watch?v=cmWejKRWLA8</li>
-<li>https://www.youtube.com/watch?v=McqFyl_W5Wc</li>
+<li><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/questions/184657/what-is-the-difference-between-off-policy-and-on-policy-learning">on-policy和off-policy的区别-stackoverflow</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/290530992">深度强化学习 在实际应用中少吗？难点在那里？</a></li>
+<li><a target="_blank" rel="noopener" href="https://weibo.com/titaniumviii?refer_flag=0000015010_&amp;from=feed&amp;loc=nickname">宋一松SYS</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/64526936">强化学习和在线学习的区别-zhihu</a></li>
 </ol>
 
       
@@ -349,7 +378,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reinforcement_learning/wangshusen-rf6-baseline-in-policy-gradient/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reading_notes/taleb-blackswan/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -363,7 +392,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/reinforcement_learning/wangshusen-rf6-baseline-in-policy-gradient/" class="post-title-link" itemprop="url">wangshusen-rf6-策略梯度中的baseline</a>
+            <a href="/2021/04/18/reading_notes/taleb-blackswan/" class="post-title-link" itemprop="url">黑天鹅</a>
         </h2>
 
         <div class="post-meta">
@@ -372,23 +401,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-04-18 20:41:33" itemprop="dateCreated datePublished" datetime="2021-04-18T20:41:33+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 19:55:49 / 修改时间：19:57:23" itemprop="dateCreated datePublished" datetime="2021-04-18T19:55:49+08:00">2021-04-18</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-20 11:37:43" itemprop="dateModified" datetime="2021-04-20T11:37:43+08:00">2021-04-20</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -403,139 +426,57 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="策略梯度中的baseline-14-数学推导">策略梯度中的Baseline 1/4-数学推导</h2>
+          <h1 id="序言">序言</h1>
 <ul>
-<li>https://www.youtube.com/watch?v=yNEqbptitZs</li>
-<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。Baseline 可以是任何不依赖于动作的函数。这节课我们做数学推导，得出带有 baseline 的策略梯度，并对它做蒙特卡洛近似。在后面的两节课中，我们把它用在 REINFORCE 和 A2C 方法中。</li>
-<li>策略梯度中的数学推导</li>
-<li>将baseline 应用到reinforce算法中</li>
-<li>将baseline 应用到actor2critic方法中：
+<li>黑天鹅举例子
 <ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVfCPRKT8Wg.png?alt=media&amp;token=aa73c63c-f5f4-4b48-b626-a5c5262b71ca" /></li>
-<li>直观理解：
-<ul>
-<li>放到两军交战的场景，对于某一方来说
-<ul>
-<li>策略网络就像一个军师，对于每一种战况（state）给出行动建议（action）；</li>
-<li>价值网络就像一个先知，预测当前战况（state）的好坏（state value）。</li>
-<li>战斗是一个持续的过程，每次交锋（at）一次，根据即时的收益（rt）, 军队首领（agent）要反省得失，更新军师的策略：
-<ul>
-<li>根据先知对交锋前后的战况预测差异 ， 来评价刚刚行为（at）好坏（好坏用 td error来衡量，越大说明at越垃圾）， 并且用来指引接下来策略（梯度更新公式中出现的td error一项）</li>
-<li>此外，策略调整的方向 还有一个因子，就是 策略梯度，也就是 在st时，选择at的概率下降 的方向。是想让军师探索其他方向？？</li>
+<li>能带来收益的：风险投资，科技发现</li>
+<li>能带来损失的：金融危机，失业</li>
 </ul></li>
-<li>同时，也要更新先知的认知
+<li>关于学习，人性又一个弱点：习惯学习精确的东西，而不是从整体上把握
 <ul>
-<li>梯度表示想要td error减少</li>
+<li>【马其诺防线的故事】第一次世界大战之后，为了避免德国人再次入侵，法国人沿德国人曾经入侵的路线修建了一条防御工事，而希特勒（几乎）毫不费力地绕过了它。</li>
+<li>问题产生于我们的思维结构：我们不学习规律，而是学习事实，而且只学习事实。。我们似乎不太善于认识到我们的超规律（即我们倾向于不学习规律的规律）。我们蔑视抽象的东西——疯狂地蔑视。</li>
 </ul></li>
+<li>这个问题为什么很重要？
+<ul>
+<li>这种直觉的方法论，对于现代复杂且越来越具循环性的环境来说是非常不切实际的。</li>
 </ul></li>
+<li>我们的生物基因决定了，我们其实不擅长思考。
+<ul>
+<li>我们的头脑似乎不是用来思考和内省的，远古时期，我进行反常规内省和努力思考的祖先会被老虎吃掉，而他不爱思考但身体反应迅速的表亲早已跑开躲了起来。</li>
 </ul></li>
+<li>因为钟形曲线忽（高斯曲线）略大的离差，无法解释它们，但还要让我们相信不确定性是可以控制的，我在本书中戏称它为“智力大骗局”。</li>
+<li>【关于模型】模型和结构并不永远是错的，它们只错在一些具体的运用上。困难在于你不可能事前知道哪里会错（而只能事后知道），也不可能知道错误会导致严重后果。这些模型就像某些可能有效，但同时也可能具有非常严重的副作用的药品。</li>
+<li>教室中的人从没有面对过在不确定性条件下进行决策的真实情况，意识不到什么是重要的，什么是不重要的，即使他们是关于不确定性问题的学者。我所说的不确定性实践，可以是当海盗、做商品投机、职业赌博、在黑手党的某个分部效力，或者是简单的持续创业</li>
+</ul>
+<h1 id="第一部分-极端斯坦-与-黑天鹅现象">第一部分 极端斯坦 与 黑天鹅现象</h1>
+<h2 id="第一章-自我欺骗的人类">第一章 自我欺骗的人类</h2>
+<ul>
+<li>面对历史，人类的思想会犯三个毛病：
+<ul>
+<li>第一宠迷雾：我们以为我们生活的这个世界比他实际上更加可理解，可解释，可预测</li>
 </ul></li>
 </ul>
-<h2 id="策略梯度中的baseline-24-reinforce-with-baseline">策略梯度中的Baseline 2/4-REINFORCE with Baseline</h2>
+<h2 id="第三章-极端斯坦与平均斯坦">第三章 极端斯坦与平均斯坦</h2>
 <ul>
-<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。这节课我们学习 REINFORCE with Baseline，它是一种策略梯度方法。它用价值网络近似 baseline 函数。它用带 baseline 的策略梯度学习策略网络，用价值网络去拟合观测到的回报。</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMRYKuGAY2M.png?alt=media&amp;token=120372a3-7c92-4b48-be89-9bc99679e69c" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F2KjX--n5BX.png?alt=media&amp;token=5edb9a0b-aaec-4d99-addf-ff2898eccd99" /></li>
+<li>关于职业选择，有两类职业：
+<ul>
+<li>“一劳永逸型”：
+<ul>
+<li>录音师和电影演员也是一样：他们会让电影院的音效工程师调好播放器，而不必在每一次播放电影时都出现。</li>
+</ul></li>
+<li>“苦力活”
+<ul>
+<li>面包师必须为每一位新客户——烤出面包。</li>
+</ul></li>
+<li>假如我必须给出建议的话，我会建议选择一个收入不具有突破性的职业---面包师！收入具有突破性的职业只有在你成功的时候对你是有利的。这样的职业竞争更激烈，导致更大的不平均和不确定性，在努力和回报之间存在巨大差异，因为少数人获得蛋糕的大部分，其他人可能什么也得不到，而这怪不了别人</li>
+</ul></li>
+<li>可以这样陈述平均斯坦的最高法则：当你的样本量足够大时，任何个例都不会对整体产生重大影响。最大的观察值虽然令人吃惊，但对整体而言最终微不足道。</li>
 <li></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FWR1r0uRGvm.png?alt=media&amp;token=3bb38d00-ec27-4f8d-acf9-8aa0208cb791" /></li>
-<li>接下来用reinforce训练策略网络，用回归算法训练价值网络</li>
-<li>更新策略网络：
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fi95LEON8Wl.png?alt=media&amp;token=626bdff1-fccd-4c9f-b1cc-c288c2ee0977" /></li>
-</ul></li>
-<li>更新价值网络
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F55QYQnU8wS.png?alt=media&amp;token=b116aa54-22c2-49ae-9fe5-a8b124f78d56" /></li>
-</ul></li>
-<li>整体：</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Foc2FFolpEM.png?alt=media&amp;token=9f2955f5-98a1-4752-b475-094e41be8e6f" /></li>
 </ul>
-<h2 id="策略梯度中的baseline-34-a2c-方法">策略梯度中的Baseline 3/4-A2C 方法</h2>
-<p>https://www.youtube.com/watch?v=mtT4TSGSon8</p>
-<h2 id="策略梯度中的baseline-44-reinforce与a2c的异同">策略梯度中的Baseline 4/4-REINFORCE与A2C的异同</h2>
-<ul>
-<li>先看A2C： 单步td算法和 多步td 算法（多步用的多一些）
-<ul>
-<li>one -step ：
-<ul>
-<li>step1 观察1个transition数据
-<ul>
-<li><span class="math inline">\(\left(s_{t}, a_{t}, r_{t}, s_{t+1}\right)\)</span></li>
-</ul></li>
-<li>step2 计算TD Target
-<ul>
-<li><span class="math inline">\(y_{t}=r_{t}+\gamma \cdot v\left(s_{t+1} ; \mathbf{w}\right)\)</span></li>
-</ul></li>
-<li>step 3 计算TD eror
-<ul>
-<li><span class="math inline">\(\delta_{t}=v\left(s_{t} ; \mathbf{w}\right)-y_{t}\)</span></li>
-</ul></li>
-<li>step 4 更新策略网络
-<ul>
-<li><span class="math inline">\(\boldsymbol{\theta} \leftarrow \boldsymbol{\theta}-\beta \cdot \delta_{t} \cdot \frac{\partial \ln \pi\left(a_{t} \mid s_{t} ; \boldsymbol{\theta}\right)}{\partial \boldsymbol{\theta}}\)</span></li>
-</ul></li>
-<li>step5 更新价值网络
-<ul>
-<li><span class="math inline">\(\mathbf{w} \leftarrow \mathbf{w}-\alpha \cdot \delta_{t} \cdot \frac{\partial v\left(s_{t} ; \mathbf{w}\right)}{\partial \mathbf{w}}\)</span></li>
-</ul></li>
-</ul></li>
-<li>multi-step
-<ul>
-<li>step1: 观察m个transitions数据<span class="math inline">\(\left\{\left(S_{t+i}, a_{t+i}, r_{t+i}, S_{t+i+1}\right)\right\}_{i=0}^{m-1}\)</span></li>
-<li>step2: 计算TD target：
-<ul>
-<li><span class="math inline">\(y_{t}=\sum\limits_{i=0}^{m-1} \gamma^{i} \cdot r_{t+i}+\gamma^{m} \cdot v\left(s_{t+m} ; \mathbf{w}\right)\)</span></li>
-</ul></li>
-<li>step3: 计算 TD error：
-<ul>
-<li><span class="math inline">\(\delta_t = v(s_t;w) - y_t\)</span></li>
-</ul></li>
-<li>step4: 更新策略网络（actor）
-<ul>
-<li><span class="math inline">\(\boldsymbol{\theta} \leftarrow \boldsymbol{\theta}-\beta \cdot \delta_{t} \cdot \frac{\partial \ln \pi\left(a_{t} \mid s_{t} ; \boldsymbol{\theta}\right)}{\partial \boldsymbol{\theta}}\)</span></li>
-</ul></li>
-<li>step5: 更新价值网络（critic）
-<ul>
-<li><span class="math inline">\(\mathbf{w} \leftarrow \mathbf{w}-\alpha \cdot \delta_{t} \cdot \frac{\partial v\left(s_{t} ; \mathbf{w}\right)}{\partial \mathbf{w}}\)</span></li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li>再看看reinforce with baseline
-<ul>
-<li>step1 获取一整局游戏的transition 数据</li>
-<li>step2 使用观测到的奖励来计算回报
-<ul>
-<li><span class="math inline">\(u_{t}=\sum_{i=t}^{n} \gamma^{i-t} \cdot r_{i}\)</span></li>
-</ul></li>
-<li>step3 计算error：价值网络和回报的差
-<ul>
-<li><span class="math inline">\(\delta_{t}=v\left(s_{t} ; \mathbf{w}\right)-u_{t}\)</span></li>
-</ul></li>
-<li>step4 更新策略网络
-<ul>
-<li><span class="math inline">\(\boldsymbol{\theta} \leftarrow \boldsymbol{\theta}-\beta \cdot \delta_{t} \cdot \frac{\partial \ln \pi\left(a_{t} \mid s_{t} ; \boldsymbol{\theta}\right)}{\partial \boldsymbol{\theta}}\)</span></li>
-</ul></li>
-<li>step5 更新价值网络
-<ul>
-<li><span class="math inline">\(\mathbf{w} \leftarrow \mathbf{w}-\alpha \cdot \delta_{t} \cdot \frac{\partial v\left(s_{t} ; \mathbf{w}\right)}{\partial \mathbf{w}}\)</span></li>
-</ul></li>
-</ul></li>
-<li>两者的关系：A2C 和 Reinforce
-<ul>
-<li>Reinforce 是A2C的一种特例，用到了更多的观测数据，没有使用bootsrap（a2c的第二项）
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4cy4PbmERs.png?alt=media&amp;token=07f13dfc-b03b-43f5-a99e-82690b8b6a79" /></li>
-</ul></li>
-<li>one -step A2C 是 multi-step A2C 的一个特例，使用了最少的观测数据。multi-step的效果更好
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNV4Q90x0xU.png?alt=media&amp;token=eed6b59f-01e5-4803-9475-27a7f594bab9" /></li>
-</ul></li>
-</ul></li>
-</ul>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li>https://www.youtube.com/watch?v=hN9WMIMMeAI&amp;t=64s</li>
-</ol>
+<h1 id="第三部分-极端斯坦的灰天鹅">第三部分 极端斯坦的灰天鹅</h1>
+<h2 id="第十八章-骗子的不确定性">第十八章 骗子的不确定性</h2>
 
       
     </div>
@@ -554,7 +495,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -620,7 +561,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

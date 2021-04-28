@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/AIOps/DeepAR_practice/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/13/reading_notes/sam-altman-idea-generation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/AIOps/DeepAR_practice/" class="post-title-link" itemprop="url">从DeepAR谈论paper到工程落地</a>
+            <a href="/2021/04/13/reading_notes/sam-altman-idea-generation/" class="post-title-link" itemprop="url">创业点子</a>
         </h2>
 
         <div class="post-meta">
@@ -188,14 +188,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-18 11:56:59" itemprop="dateCreated datePublished" datetime="2021-04-18T11:56:59+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-13 08:22:53" itemprop="dateCreated datePublished" datetime="2021-04-13T08:22:53+08:00">2021-04-13</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-28 10:04:01" itemprop="dateModified" datetime="2021-04-28T10:04:01+08:00">2021-04-28</time>
+                <time title="修改时间：2021-04-21 12:50:08" itemprop="dateModified" datetime="2021-04-21T12:50:08+08:00">2021-04-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -218,19 +218,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="deepar探索">DeepAR探索</h2>
-<p>以DeepAR为例,最开始把DeepAR当黑盒用的时候，发现效果很神奇，不调参，换不同数据进去效果都还挺好，周期性和趋势性都还能学到。</p>
-<p>后面就觉得很奇怪，按照自己构建rnn的经验，调参就要反反复复好多次，最后效果还不一定好。使用gluon-TS的代码我没有调参的，并且默认的网络结构很简单 不太可能过拟合.</p>
-<p>看了源代码之后，有一个很大的感受就是，<strong>完成论文demo和完成一个业界可用方案，两者的工作量 ，可能是0到1再到100的距离。</strong></p>
-<p>按照paper所说，整个网络结构非常之简单，1层rnn + 1层 dense层（输出分布参数），构成2层rnn，大概十几行代码。 但是，<strong>真正大量的代码都在做预处理以及 模型训练的一些小trick。 这些小trick，对提升模型效果非常有帮助，但是paper里面是没有的，应该随是工程团队总结出的最佳实践</strong>。</p>
-<ul>
-<li>best practice1: 把每个样本（历史依赖）的scale 取对数，放入样本。 （因为所有的lags项在归一化之后已经丢失了scale信息，为了避免这个信息的丢失，还是把log scale 放入特征，用于区别不同的曲线的模式）</li>
-<li>best practice2: 在rnn中，每一层rnn后都接了一个residual和一个dropout。（原文没有提到）</li>
-<li>best practice3: 为了学习到数据的周期性模式，除了一定要有的context_length，代码还会跳着取lag , 类似空洞卷积。这些周期性的lag项，是被硬编码在代码里面的，比如年/月/日的周期性。</li>
-</ul>
-<p>（我甚至怀疑论文的作者都不知道，因为作者自己写了一个pytorch版本，没有见到相关的处理，并且训练时长是gluon-TS的100倍以上）</p>
-<h2 id="对于aiops建设的启发">对于AIOps建设的启发</h2>
-<p>对于根因分析，日志关联 等大部分场景，业界没有可参考的工具。只能求助学术界，那么可参考的只有论文 以及kaggle比赛等， 这些方案只是demo类型，没有在工业界的数据和真实需求上验证过，那从这个demo到落地可用还有大量的优化工作要做，所以需要预留一段时间， 来验证和优化。</p>
+          <h2 id="摘要">摘要</h2>
+<ol type="1">
+<li>选择合适的环境和合适的团队，团队成员乐观，smart in a creative way，不设置条条框框，不会嘲笑你的任何新奇的想法。</li>
+<li>远离厌世者 和 轻视你志向的人，要知道这个是世界的常态。他们活在过去，你活在未来.</li>
+<li>将自己映射到20年以后，然后往回看，专注做这个事情。</li>
+<li>想一想当前，社会发生的最重要的变革是什么？例如，最近一次的大变革是2008-2012年移动设备大爆发。</li>
+<li>世界变化的如此之快，巨头通常被敏捷和专注的创业公司打败。（或者共存，阿里vs拼多多）</li>
+<li>区分真正的趋势和虚假的趋势：前者例如小部分用户高频使用，后者例如很多用户低频使用。</li>
+<li>有哪些事情是今年才发生，而去年不可能的，关注这些突变事件。这可能是一个伟大的创业火苗，拖到明年就晚了。</li>
+<li>"我很确定这个会发生，但是不确定是不是由我们来完成"，这是一个好的思路。uber是一个例子，我第一次坐车之后，很确定，我们此后不久，就不会用出租车了，但是我不是很确定，是不是就是Uber最终会赢下这个市场。</li>
+<li>尽可能早地问自己"如果这个想法是对的，这个生意可以做大吗？"，世界上有很多想法，但是极少想法能让一个创业公司持续取得成功，也就是连续地获得优势。当扩大规模时，大部分业务都没有累积优势（例如滴滴，P2P，我们现在做的这个️）。越早想通这个越好，最显著的例子是Facebook or Airbnb。</li>
+<li>找到你适合做什么也很重要，这个很难通过单纯自省得到，你可以问下mentor，或者一些人，跟你在你擅长的领域一起合作的人。我坚信，创始人匹配公司 和 产品匹配市场 同等重要。</li>
+<li>可以通过一个测试来验证你的想法：如果你可以清晰地表述，为什么大部分人都认为这是一个坏的想法，而你能理解你它好在哪里。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://blog.samaltman.com/idea-generation">idea-generation</a></li>
+</ol>
 
       
     </div>
@@ -250,7 +255,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/technology/information-theory/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/12/investment/trading-strategies/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -264,7 +269,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/technology/information-theory/" class="post-title-link" itemprop="url">信息论</a>
+            <a href="/2021/04/12/investment/trading-strategies/" class="post-title-link" itemprop="url">交易的策略</a>
         </h2>
 
         <div class="post-meta">
@@ -273,17 +278,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-04-18 11:19:24 / 修改时间：11:55:36" itemprop="dateCreated datePublished" datetime="2021-04-18T11:19:24+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-12 12:00:14" itemprop="dateCreated datePublished" datetime="2021-04-12T12:00:14+08:00">2021-04-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-27 09:22:51" itemprop="dateModified" datetime="2021-04-27T09:22:51+08:00">2021-04-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
                 </span>
             </span>
 
@@ -298,16 +309,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="交叉熵">交叉熵</h2>
-<p>交叉熵表示，拥有信念Q的人，在观察到真实分布P后，他的惊讶程度。</p>
-<p>这个绝对惊讶程度 可以拆解为 一个baseline（真实分布P的熵） + 一个相对差距（P和Q的距离）</p>
-<figure>
-<img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
-</figure>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#cross-entropy">交叉熵</a></li>
-</ol>
+          <h2 id="一些概念">一些概念</h2>
+<ul>
+<li>均值回归（mean reversion）：赌市场会回归理性。 &gt; 由于波动率最主要的特性是均值回归，故波动率的均值回归交易成为专业期权交易员最常见的一种交易方式</li>
+<li>动量策略（momentum）：赌市场会越来越疯狂</li>
+<li>方差溢价：指隐含波动率总是等于或者大于历史波动率</li>
+</ul>
+<h2 id="chiechies-reflection">chiechie's reflection</h2>
+<p>均值回归，动量策略（也叫惯性策略），都是识别出历史的模式后，假设模式在未来保持不变，然后构建策略。</p>
+<p>有一个问题，谁说过去的模式在未来就一定会保持了？还需要其他信息。</p>
+<p>对历史进行模式识别，没有意义，因为不能保证未来发生。 换句话说，历史的模式跟未来的模式没有因果关系。</p>
+<p>那么，具备哪些信息的时候，在外部的什么信息具备的时候，能很确定存在这个模式呢？这个算专家知识。</p>
 
       
     </div>
@@ -326,7 +338,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -392,7 +404,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

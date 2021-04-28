@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="https:&#x2F;&#x2F;datascience.stackexchange.com&#x2F;questions&#x2F;17341&#x2F;forecasting-non-negative-sparse-time-series-data 问题描述：  我有一个time-series dataset (daily frequency) ，代表某个顾客购买某个商品的数量，如下:  [0,0,0,0,24,0,0,0,0,0,0,0">
+  <meta name="description" content="背景和问题描述  我有一个time-series dataset (daily frequency) ，代表某个顾客购买某个商品的数量，如下:  [0,0,0,0,24,0,0,0,0,0,0,0,4,0,0,0,0,17,0,0,0,0,9,0,...]  每个数据表示 某一天商品的销量 已有的算法如arima，holtwinter只能对连续型 和 光滑型数据做预测，不适合现在的稀疏数据。 总结">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对稀疏序列进行预测">
 <meta property="og:url" content="https://chiechie.github.io/2021/04/28/technology/pred-sparse-ts/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Cosmos">
-<meta property="og:description" content="https:&#x2F;&#x2F;datascience.stackexchange.com&#x2F;questions&#x2F;17341&#x2F;forecasting-non-negative-sparse-time-series-data 问题描述：  我有一个time-series dataset (daily frequency) ，代表某个顾客购买某个商品的数量，如下:  [0,0,0,0,24,0,0,0,0,0,0,0">
+<meta property="og:description" content="背景和问题描述  我有一个time-series dataset (daily frequency) ，代表某个顾客购买某个商品的数量，如下:  [0,0,0,0,24,0,0,0,0,0,0,0,4,0,0,0,0,17,0,0,0,0,9,0,...]  每个数据表示 某一天商品的销量 已有的算法如arima，holtwinter只能对连续型 和 光滑型数据做预测，不适合现在的稀疏数据。 总结">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbO8qrMgQNa.png?alt=media&amp;token=4078557f-5b4f-4b43-8fed-1eed975a0d80">
 <meta property="article:published_time" content="2021-04-28T01:33:02.000Z">
-<meta property="article:modified_time" content="2021-04-28T01:52:06.399Z">
+<meta property="article:modified_time" content="2021-04-28T02:07:51.827Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="时间序列">
 <meta name="twitter:card" content="summary">
@@ -193,7 +193,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-28 09:33:02 / 修改时间：09:52:06" itemprop="dateCreated datePublished" datetime="2021-04-28T09:33:02+08:00">2021-04-28</time>
+              <time title="创建时间：2021-04-28 09:33:02 / 修改时间：10:07:51" itemprop="dateCreated datePublished" datetime="2021-04-28T09:33:02+08:00">2021-04-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -216,9 +216,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ul>
-<li>https://datascience.stackexchange.com/questions/17341/forecasting-non-negative-sparse-time-series-data</li>
-<li>问题描述：
+        <h2 id="背景和问题描述">背景和问题描述</h2>
 <ul>
 <li>我有一个time-series dataset (daily frequency) ，代表某个顾客购买某个商品的数量，如下:
 <ul>
@@ -226,48 +224,27 @@
 </ul></li>
 <li>每个数据表示 某一天商品的销量</li>
 <li>已有的算法如arima，holtwinter只能对连续型 和 光滑型数据做预测，不适合现在的稀疏数据。</li>
-<li>现在的场景是：
-<ul>
-<li>1， 非负值</li>
-<li><ol start="2" type="1">
-<li>稀疏数据/非连续数据</li>
-</ol></li>
-</ul></li>
-<li>有什么技术吗？</li>
-</ul></li>
-<li>方案1:将天的数据聚合成周：
-<ul>
-<li>if you don't need daily resolution in your predictions, perhaps by aggregating to weekly you will have an easier time series to forecast.</li>
-</ul></li>
-<li>方案2:对两个事件的时间间隔 和 数值 进行建模
-<ul>
-<li>假设数据是由两个随机过程驱动生成
-<ul>
-<li>1 a distribution over time intervals, （poisson？）</li>
-<li>2 a distribution over purchase amounts. （gaussian？）</li>
-</ul></li>
-</ul></li>
-<li>方案3:对用户的库存建模
-<ul>
-<li>假设用户的库存是随事件衰减的，到达某个阈值就开始考虑购入，那么可以用手头的购买数据来拟合已经有的曲线（注意 消耗速率和threshold都有可能随时间变化）</li>
-</ul></li>
-<li>方案4-建模成一个state-space模型，state是时间间隔，space是取值
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbO8qrMgQNa.png?alt=media&amp;token=4078557f-5b4f-4b43-8fed-1eed975a0d80" /></li>
-</ul></li>
-<li>突然想到，事件序列可以和 时间序列 重新定义到 一个框架下建模：
-<ul>
-<li>事件序列 相当于 是中间有缺失值 或者 零值的 时间序列，</li>
-<li>一种建模方式是，按照滑动事件窗口的方式，将最近w个事件放入一个样本，特征除了event的值，还有相邻两个event的时间间隔</li>
-<li>还有一种建模方式，缺失时刻补0，然后重新聚合，然后取时间窗口，</li>
-<li>两种方式都是把序列数据 转换为 表数据。</li>
-</ul></li>
-<li>先转换--&gt;cusum, 不仅适合sparse信号，还适合固定值的信号：
+<li>总结下，target 非负&amp;稀疏&amp;整数，有什么技术可以做预测吗？</li>
+</ul>
+<h2 id="方案1将天的数据聚合成周">方案1:将天的数据聚合成周：</h2>
+<p>if you don't need daily resolution in your predictions, perhaps by aggregating to weekly you will have an easier time series to forecast.</p>
+<h2 id="方案2对两个事件的时间间隔-和-数值-进行建模">方案2:对两个事件的时间间隔 和 数值 进行建模</h2>
+<pre><code>- 假设数据是由两个随机过程驱动生成
+    - 1  a distribution over time intervals, （poisson？）
+    - 2 a distribution over purchase amounts. （gaussian？）</code></pre>
+<h2 id="方案3对用户的库存建模">方案3:对用户的库存建模</h2>
+<p>假设用户的库存是随事件衰减的，到达某个阈值就开始考虑购入，那么可以用手头的购买数据来拟合已经有的曲线（注意 消耗速率和threshold都有可能随时间变化）</p>
+<h2 id="方案4-建模成一个state-space模型state是时间间隔space是取值">方案4-建模成一个state-space模型，state是时间间隔，space是取值</h2>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbO8qrMgQNa.png?alt=media&amp;token=4078557f-5b4f-4b43-8fed-1eed975a0d80" /></p>
+<h2 id="chiechies-refomulation">chiechie's refomulation</h2>
+<p>突然想到，事件序列可以和 时间序列 重新定义到 一个框架下建模： - 事件序列 相当于 是中间有缺失值 或者 零值的 时间序列， - 一种建模方式是，按照滑动事件窗口的方式，将最近w个事件放入一个样本，特征除了event的值，还有相邻两个event的时间间隔 - 还有一种建模方式，缺失时刻补0，然后重新聚合，然后取时间窗口， - 两种方式都是把序列数据 转换为 表数据。</p>
+<h2 id="先转换--cusum-不仅适合sparse信号还适合固定值的信号">先转换--&gt;cusum, 不仅适合sparse信号，还适合固定值的信号：</h2>
 <ul>
 <li>You might be getting caught up on the sparsity characteristic... If you take a cumulative sum then it's just a plain old monotonic time series!</li>
 <li>https://www.reddit.com/r/datascience/comments/a63aq9/sparse_time_series_prediction/</li>
-</ul></li>
 </ul>
+<h2 id="参考">参考</h2>
+<p>1.<a target="_blank" rel="noopener" href="https://datascience.stackexchange.com/questions/17341/forecasting-non-negative-sparse-time-series-data">ts_prediction-stackexchange</a></p>
 
     </div>
 
@@ -348,6 +325,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E5%92%8C%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">背景和问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%881%E5%B0%86%E5%A4%A9%E7%9A%84%E6%95%B0%E6%8D%AE%E8%81%9A%E5%90%88%E6%88%90%E5%91%A8"><span class="nav-number">2.</span> <span class="nav-text">方案1:将天的数据聚合成周：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%882%E5%AF%B9%E4%B8%A4%E4%B8%AA%E4%BA%8B%E4%BB%B6%E7%9A%84%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94-%E5%92%8C-%E6%95%B0%E5%80%BC-%E8%BF%9B%E8%A1%8C%E5%BB%BA%E6%A8%A1"><span class="nav-number">3.</span> <span class="nav-text">方案2:对两个事件的时间间隔 和 数值 进行建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%883%E5%AF%B9%E7%94%A8%E6%88%B7%E7%9A%84%E5%BA%93%E5%AD%98%E5%BB%BA%E6%A8%A1"><span class="nav-number">4.</span> <span class="nav-text">方案3:对用户的库存建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%884-%E5%BB%BA%E6%A8%A1%E6%88%90%E4%B8%80%E4%B8%AAstate-space%E6%A8%A1%E5%9E%8Bstate%E6%98%AF%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94space%E6%98%AF%E5%8F%96%E5%80%BC"><span class="nav-number">5.</span> <span class="nav-text">方案4-建模成一个state-space模型，state是时间间隔，space是取值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chiechies-refomulation"><span class="nav-number">6.</span> <span class="nav-text">chiechie&#39;s refomulation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E8%BD%AC%E6%8D%A2--cusum-%E4%B8%8D%E4%BB%85%E9%80%82%E5%90%88sparse%E4%BF%A1%E5%8F%B7%E8%BF%98%E9%80%82%E5%90%88%E5%9B%BA%E5%AE%9A%E5%80%BC%E7%9A%84%E4%BF%A1%E5%8F%B7"><span class="nav-number">7.</span> <span class="nav-text">先转换--&gt;cusum, 不仅适合sparse信号，还适合固定值的信号：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

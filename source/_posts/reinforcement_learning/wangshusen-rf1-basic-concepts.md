@@ -18,6 +18,12 @@ categories:
 
 ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FrPEtw3BcPJ.png?alt=media&token=33034dcc-3fc1-456e-8c76-171e67ad7cfd)
 
+## 强化学习三要素
+
+- model： 状态转移，模拟计算reward2个收益: 长期和即时收益。这两个收益都是随机变量，怎么利用收益函数来 引导agent做出好的策略？对收益求期望，也就是价值函数
+- value：3个价值函数: 行动价值函数，最优行动价值函数，状态价值函数
+- policy：策略
+
 
 ## 强化学习的三个方向
 

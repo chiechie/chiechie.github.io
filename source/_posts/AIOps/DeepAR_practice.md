@@ -8,7 +8,7 @@ tags:
 - AIOps
 - 知识分子
 categories:
-- 技术
+- AIOps
 ---
 
 ## DeepAR探索

@@ -10,7 +10,7 @@ tags:
 - 神经网络
 - DeepAR
 categories:
-- 技术
+- AIOps
 ---
 
 

@@ -31,12 +31,6 @@ categories:
         - [rf-intro 1 基本概念](https://chiechie.github.io/2021/04/18/technology/rf-intro1/)
         - [rf-intro 2 马尔可夫过程](https://chiechie.github.io/2021/04/18/technology/rf-intro2/)
         - [rf-intro 7 model-based强化学习](https://chiechie.github.io/2021/04/18/technology/rf-intro7/)
-- 实践
-    - https://stable-baselines.readthedocs.io/en/master/
-    - [使用强化学习炒股](https://github.com/wangshub/RL-Stock)
-    - [强化学习应用于金融问题的文章](https://zhuanlan.zhihu.com/p/267998242)
-    - 实战网站：https://gym.openai.com/
-      - • Gym is a toolkit for developing and comparing reinforcement learning algorithms.
     
 - wangshusen
     - 课程资源：
@@ -66,6 +60,14 @@ categories:
             - 连续控制2/3-确定策略梯度DPG
             - 连续控制3/3-用随机策略做连续控制
 
+## 练手项目
+
+- https://stable-baselines.readthedocs.io/en/master/
+- [使用强化学习炒股](https://github.com/wangshub/RL-Stock)
+- [强化学习应用于金融问题的文章](https://zhuanlan.zhihu.com/p/267998242)
+- [Gym](https://gym.openai.com/) is a toolkit for developing and comparing reinforcement learning algorithms.
+
+
 ## 强化学习的应用
 
 - 神经网络结构搜索
@@ -73,7 +75,7 @@ categories:
 - 推荐系统
 - 网约车调度
 
-参考: [chiechie的笔记-关于强化学习的应用场景](https://chiechie.github.io/2021/04/21/reinforcement_learning/rf-application/)
+参考: [chiechie的笔记-关于强化学习的应用](https://chiechie.github.io/2021/04/21/reinforcement_learning/rf-application/)
 
 ## 一些思考
 
@@ -123,11 +125,6 @@ categories:
     - 类似我们的模型自动更新，担心时间会对模型造成影响
     - 如果是增量学习，会造成影响
     
-## 工业界应用
-
-- 现在facebook--可能也有很多的其他的公司--在内容推荐技术的很多细分场景上开始应用强化学习，eg消息推送时，以用户的长期活跃为目标，而不是短期打开率为目标。
-- 增强学习的好处是解决了短期反馈和长期活跃之前的换算问题，把两万名算法工程师和他们的实习生们从一部分痛苦的调参工作中解放出来，也让分发策略从长期上达到更高的价值创造。
-- 但一个更加追求用户长期活跃的社交平台就会是环境更健康的么？我对此深表怀疑。（不健康的社交平台，比如很多喷子，反人性的言论）
 
 ## 参考
 1. [on-policy和off-policy的区别-stackoverflow](https://stats.stackexchange.com/questions/184657/what-is-the-difference-between-off-policy-and-on-policy-learning)

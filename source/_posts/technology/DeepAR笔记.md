@@ -48,6 +48,7 @@ categories:
     - 预测概率分布
 
 ## 总结
+
 - deepAR是一种时间序列预测算法.
 - deepAR不做点估计，而是估计概率分布
 - 由于deepAR输出的是概率分布，所以对未来一段时间的预测，需要采样递归生成，但是采样只是1个路径，如果希望得到期望，需要重复采样
@@ -83,19 +84,115 @@ categories:
         - Q 如何得到概率分布呢？
         - A ：分两步走
             - 先拍一个概率分布的形式（函数族），eg高斯分布
-            - 使用量化指标$< \mu, \sigma> $进一步确定这个分布
+            - 使用指标< $\mu, \sigma$> 进一步确定这个分布
         - Q  剩下的问题（不确定的因素）为，如何确定量化指标？
-        - A ：构建一个神经网络，输入x，输出 $< \mu, \sigma> $
+        - A ：构建一个神经网络，输入x，输出< $\mu, \sigma$> 
         - Q 那么nn怎么知道输出的u，sigma对不对呢，又没有监督信号 来指引，只有<x, y> pair
-        - A： 使用likelihood 和 y 来度量输出的$< \mu, \sigma> $质量好不好
-            - 有点像，有个人号称 他的理论知识渊博<u，sigma>(覆盖了y空间中所有的案例），现在要检验他的方法论对不对呢？只有一个实践案例----- 假设是对的，然后看是否适用该案例
+        - A： 使用likelihood 和 y 来度量输出的<$\mu, \sigma$> 质量好不好
+            - 有点像，有个人号称 他的理论知识渊博<$\mu, \sigma$> (覆盖了y空间中所有的案例），现在要检验他的方法论对不对呢？只有一个实践案例----- 假设是对的，然后看是否适用该案例
         - 总结下：
-            - 模型输出<u, sigma>, 实际给的ground truth：y
-            - loss为：$- log Prob(\mu，\sigma，y） $
+            - 模型输出<$\mu, \sigma$> , 实际给的ground truth：y
+            - loss为：$-log Prob(\mu,\sigma,y)$
     - 前提，先假设预测的数据服从的分布族，有几个待估参数
         - 实值--假设是高斯分布
         - 整数--假设是一个二项分布
     - 设计网络的时候，需要某一层输出是 分布的参数（例如$\mu$ 和 $\sigma$）,
-        - 训练的时候，将$< \mu, \sigma> $ 带入pdf，计算pdf中 ground truth的概率，取negtive log，作为反馈信号（-log prob就是loss），这个值越大（loss越小）说明模型预测的越准。
-        - 做推断的时候，将$< \mu, \sigma> $ 带入pdf， 进行采样，得到预测值
+        - 训练的时候，将<$\mu, \sigma$> 带入pdf，计算pdf中 ground truth的概率，取negtive log，作为反馈信号（-log prob就是loss），这个值越大（loss越小）说明模型预测的越准。
+        - 做推断的时候，将<$\mu, \sigma$>  带入pdf， 进行采样，得到预测值
 - 【重点】输出的概率分布，怎么评估模型效果？
+
+
+
+
+deepAR是一种时间序列预测算法.
+deepAR不做点估计，而是估计概率分布
+deepAR（号称）可以解决冷启动
+deepAR原理
+符号说明：
+$z_{i,t}$ :  第i个时间序列在t时刻的值
+$P\left(\mathbf{z}_{i, t_{0}: T} \mid \mathbf{z}_{i, 1: t_{0}-1}, \mathbf{x}_{i, 1: T}\right) $: 模型输出
+conditioning range：  t_0 表示历史依赖长度
+prediction range：预测区间
+$z_{i, t_{0}: T} $: 预测区间内，Z的取值
+模型架构
+训练过程（左边）和 预测过程（右边）：
+
+学习目标
+最大化likelyhood，即是最小化下面的neg-loglikelihood
+\mathcal{L}=-\sum\limits_{i=1}^{N} \sum\limits_{t=t_{0}}^{T} \log \ell\left(z_{i, t} \mid \theta\left(\mathbf{h}_{i, t}\right)\right) 
+【重点】deepAR是怎么得到概率分布的？
+前提，先假设预测的数据服从的分布族，有几个待估参数
+实值--假设服从高斯分布 
+整数--假设服从1个什么鬼分布（详细看paper）
+设计网络的时候，需要某一层输出是 分布的参数（例如 \mu  和  \sigma ）,
+做训练的时候，将这两个参数 带入pdf，计算观测值在 pdf下的对数似然，作为反馈信号（loss= - log prob），使用 梯度上升 更新参数。
+做推断的时候，将参数（u，sigma） 带入pdf， 然后采样得到预测值
+deepAR实验
+code： pytorch版本
+数据：​ electricity数据集, 2011 ~2014期间，370 个 家庭的用电量 ，频率为小时
+train/test：2014年9月第一周 作为test，之前的所有数据作为train。
+窗口长度：192（8天），其中
+conditioning range：168（前7天）
+prediction range：24（第8天）
+总结
+由于deepAR输出的是概率分布，所以对未来一段时间的预测，需要采样递归生成，但是采样只是1个路径，如果希望得到期望，需要重复采样
+适用于噪声较大的数据：相较于点估计能提供更有用的信息，如方差，在金融领域这个值代表风险，有价值。
+一些疑惑
+模型的输入是来自多个序列（btw，有点点像 横向联邦学习）：
+为了保证模型不会灾难性遗忘掉先学到的模式，需要把来自不同的曲线的样本打散？
+如果说序列之间的模式本身就不一致，会不会导致模型学习到一个混乱的模式？
+要不要求序列本身就是相似的？
+在交易上的启发：
+构建基于波动率的策略，风险大的情况下不交易，会不会更好盈利？
+接下来，做实验验证下。
+update
+关于DeepAR 的冷启动
+DeepAR号称能解决冷启动的问题，然而在实验设置中，如果没有给出item 的特征数据，是不可能在冷启动item上得到靠谱结果的：
+因为 压根没又数据可以 学item之间的相关性。
+之前在想会不会因为不同曲线丢到1个模型训练，学习到混乱的模式，放到这里可以将问题进一步明确：
+会不会导致 在曲线A上利用曲线B学到的模式进行预测？（然而A和B相差很大）
+为了避免这个现象，需要满足：
+目标1-训练阶段，模型能区别A和B两种模式
+目标2-推断阶段，新样本匹配到它真正的模式（A或者B）
+那么怎么做呢？----除了原来的x，还要加入item元信息，具体来说有两种方法：
+方法1: 在训练阶段加入item的index信息（item元数据）
+方法2:在训练阶段加入item的特征信息（更general的item元数据）
+方法1和方法2都能达到目标1，但是对于目标2，方法2更接近一些：
+方法1只能对 index出现在训练阶段的item 做预测
+放啊2 可以对index没有出现在训练阶段的item做预测，真正 有可能 解决冷启动问题。（也是有边界的，比如item 元数据是某个类别变量，那么类别只有在训练阶段出现过的item才能被预测，eg 训练集中 包含 衣服 和 书籍两种 商品类型，推断阶段 就只能预测 这两种类型的 新商品，）
+update 10月26 日--曲线的混乱模式
+之前比较担心，喂入不同曲线，会让模型学习到 或者 匹配到 混乱模式。
+现在想了一下，即使学到了 混合的模式，未必是件坏事，要分两个层面看：
+1。 混合是个好事：比如冷启动的商品或者缺失值过多的商品，如果能借鉴 模式相近（学出来的）的数据质量很好的其他商品 ，是比单独自己学 的效果好的。
+2。 混合是个坏事：比如数据质量本身就很好，不用参考别人的学习资料（可能还会拖后腿）
+所以，如果希望用一个global 模型一劳永逸对所有商品 建模，我觉得至少要考虑到 ，单个商品的  local模型 和 global 模型 要择优录取。
+update 10月26 日--源码解析
+重新理解Estimator，GluonEstimator，DeepAREstimator三者的关系：
+本质 是 通过定义抽象类  以及  规范 来 实现 应用时候 的 可扩展性。
+Estimator 是各种Estimator的最本质的功能的抽象 定义成的类，即”训练“（train方法），拿到训练数据和验证数据（optional），返回Predictor。
+GluonEstimator 和 DeepAREstimator 都是在这个 框架下，功能的 细化 和 扩展。
+Estimator的 直属子类有 DummyEstimator 和 GluonEstimator，DummyEstimator 的功能就是在训练的时候 直接返回一个预先构造好的Predictor 。
+Estimator的另外一个直属子类 GluonEstimator 的定义就规范多了，是一个标准的完整的算法类，参考：
+父类（gluonts.model.GluonEstimator）：
+create_transformation: 抽象方法
+create_training_network：抽象方法
+create_predictor：抽象方法
+train_model： 执行训练，返回TrainOutput, 依次调用：
+self.create_transformation()： 返回
+self.create_training_network()：返回
+self.trainer()
+python trainer = Trainer(epochs=epochs, batch_size=batch_size
+self.create_predictor(): 输入和 ， 返回
+python self.create_predictor(transformation, trained_net)
+train：执行训练，返回TrainOutput.predictor
+self.train_model()： 
+为什么要定义这两层 抽象类呢（Estimator 和 GluonEstimator 都是抽象类，实际执行的是的DeepAREstimator）？
+我的猜测是，很多组件 是 对 某一组对象生效的，这两层的抽象 实际上是在 定义“组”，以及 对 每一组成员的行为 制定规范（通过抽象方法）。
+设想一个场景，现在要实现一个逻辑，调用10个实际类的fit方法（DeepAREstimator和 它的同伴们），注意！ 在执行之前，我是不知道具体要调用哪个类的fit的：
+不抽象的话 需要写 10次处理逻辑：遍历10个类，写10 个if else来 调用某个方法。（后面增加到11类，这个if else又要改）
+抽象的话 就只需要写1次处理逻辑： 调用抽象类，以及抽象类的方法。
+而如果这个逻辑 要实现N次，按照不抽象的写法，就要写10 * N 次  if else。
+参考资料 
+段易通：概率自回归预测——DeepAR模型浅析
+GluonTS - Probabilistic Time Series Modeling
+Probabilistic Demand Forecasting at Scale

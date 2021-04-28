@@ -298,7 +298,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/14/technology/DeepAR%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/14/AIOps/DeepAR%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -312,7 +312,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/14/technology/DeepAR%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">DeepAR笔记</a>
+            <a href="/2021/04/14/AIOps/DeepAR%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">DeepAR笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -329,7 +329,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 21:18:32" itemprop="dateModified" datetime="2021-04-18T21:18:32+08:00">2021-04-18</time>
+                <time title="修改时间：2021-04-28 09:59:13" itemprop="dateModified" datetime="2021-04-28T09:59:13+08:00">2021-04-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -361,13 +361,12 @@
 <li>如果说序列之间的模式本身就不一致，会不会导致模型学习到一个混乱的模式？</li>
 <li>要不要求序列本身就是相似的？</li>
 <li>不同scale的曲线如何share一个模型 ？</li>
-<li>1个deepAR 模型可以容纳的最大的曲线条数是多少？每个曲线的样本个数是多少？</li>
+<li>1个DeepAR模型可以容纳的最大的曲线条数是多少？每个曲线的样本个数是多少？</li>
 </ul></li>
 <li>deepAR不适用的场景有哪些？</li>
 <li>encoder和decoder的权重是共享的么？</li>
 <li>预测target为count类型或者为正的数值类型，模型是怎么做的？</li>
 </ul>
-<h2 id="论文重点结论">论文重点结论</h2>
 <h2 id="相关技术综述">相关技术综述</h2>
 <ul>
 <li>classic时序预测： arima/state space/exponential smoothing
@@ -390,20 +389,20 @@
 </ul></li>
 <li>技术难点：
 <ul>
-<li>现实中需要对多个曲线建模，分别建模人工成本高</li>
+<li>现实中需要对多条曲线建模，分别建模人工成本高</li>
 <li>不同曲线scale不一样，但是学习一个global model对nn来说挑战很大（nn擅长局部建模）</li>
 <li>预测概率分布</li>
 </ul></li>
 </ul>
 <h2 id="总结">总结</h2>
 <ul>
-<li>deepAR是一种时间序列预测算法.</li>
-<li>deepAR不做点估计，而是估计概率分布</li>
+<li>DeepAR是一种时间序列预测算法.</li>
+<li>DeepAR不做点估计，而是估计概率分布</li>
 <li>由于deepAR输出的是概率分布，所以对未来一段时间的预测，需要采样递归生成，但是采样只是1个路径，如果希望得到期望，需要重复采样</li>
 <li>适用于噪声较大的数据：相较于点估计能提供更有用的信息，如方差，在金融领域这个值代表风险，价值的(比如var用于计算准备金)。</li>
 <li>在交易上的启发：构建基于波动率的策略，风险大的情况下不交易。</li>
 </ul>
-<h2 id="deepar原理">deepAR原理</h2>
+<h2 id="deepar原理">DeepAR原理</h2>
 <p>基本概念&amp;符号说明：</p>
 <ul>
 <li><span class="math inline">\(z_{i,t}\)</span>: 第i个时间序列在t时刻的值</li>
@@ -411,29 +410,25 @@
 <li>conditioning range： <span class="math inline">\(t_0\)</span>表示历史依赖长度</li>
 <li>prediction range：预测区间</li>
 <li><span class="math inline">\(\mathbf{Z}_{i, t_{0}: T}\)</span>: 预测区间内，Z的取值</li>
-<li>model distribution:</li>
-<li>likelihood factors:</li>
-<li>自回归循环神经网络</li>
-<li>ancestral</li>
-<li>模型架构：训练过程（左边）和 预测过程（右边）： <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjTfoJccA7q.png?alt=media&amp;token=6850c357-b303-4053-81b8-2756678deb58" /></li>
-<li>学习目标： 最大化likelyhood: <span class="math inline">\(\mathcal{L}=-\sum\limits_{i=1}^{N} \sum\limits_{t=t_{0}}^{T} \log \ell\left(z_{i, t} \mid \theta\left(\mathbf{h}_{i, t}\right)\right)\)</span></li>
-<li>【重点】对不同scale曲线怎么处理的？
-<ul>
-<li><ol type="1">
-<li>不同曲线怎么做归一化和逆归一化？缺失值多&amp;方差变化大</li>
-</ol>
+</ul>
+<h3 id="模型架构">模型架构：</h3>
+<p>训练过程（左边）和 预测过程（右边）： <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjTfoJccA7q.png?alt=media&amp;token=6850c357-b303-4053-81b8-2756678deb58" /></p>
+<h3 id="学习目标">学习目标</h3>
+<p>最大化likelyhood:</p>
+<p><span class="math inline">\(\mathcal{L}=-\sum\limits_{i=1}^{N} \sum\limits_{t=t_{0}}^{T} \log \ell\left(z_{i, t} \mid \theta\left(\mathbf{h}_{i, t}\right)\right)\)</span></p>
+<h3 id="重点对不同scale曲线怎么处理的">【重点】对不同scale曲线怎么处理的？</h3>
+<ol type="1">
+<li>不同曲线怎么做归一化和逆归一化？缺失值多&amp;方差变化大
 <ul>
 <li>context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。</li>
 <li>相当于在第一层做了layer Normalization</li>
 </ul></li>
-<li><ol start="2" type="1">
-<li>不同曲线的长度和重要性不一样，如果是按照曲线id来均匀采样，会导致重要的曲线学的不够（underfit）</li>
-</ol>
+<li>不同曲线的长度和重要性不一样，如果是按照曲线id来均匀采样，会导致重要的曲线学的不够（underfit）
 <ul>
 <li>不做均匀采样，而是做加权采样--使用1里面计算得到的scale作为权重</li>
 </ul></li>
-</ul></li>
-<li>【重点】deepAR是怎么得到概率分布的？
+</ol>
+<h3 id="重点deepar是怎么得到概率分布的">【重点】deepAR是怎么得到概率分布的？</h3>
 <ul>
 <li>比较intutive的推导--updata0926
 <ul>
@@ -442,19 +437,19 @@
 <li>A ：分两步走
 <ul>
 <li>先拍一个概率分布的形式（函数族），eg高斯分布</li>
-<li>使用量化指标$&lt; , &gt; $进一步确定这个分布</li>
+<li>使用指标&lt; <span class="math inline">\(\mu, \sigma\)</span>&gt; 进一步确定这个分布</li>
 </ul></li>
 <li>Q 剩下的问题（不确定的因素）为，如何确定量化指标？</li>
-<li>A ：构建一个神经网络，输入x，输出 $&lt; , &gt; $</li>
+<li>A ：构建一个神经网络，输入x，输出&lt; <span class="math inline">\(\mu, \sigma\)</span>&gt;</li>
 <li>Q 那么nn怎么知道输出的u，sigma对不对呢，又没有监督信号 来指引，只有&lt;x, y&gt; pair</li>
-<li>A： 使用likelihood 和 y 来度量输出的$&lt; , &gt; $质量好不好
+<li>A： 使用likelihood 和 y 来度量输出的&lt;<span class="math inline">\(\mu, \sigma\)</span>&gt; 质量好不好
 <ul>
-<li>有点像，有个人号称 他的理论知识渊博&lt;u，sigma&gt;(覆盖了y空间中所有的案例），现在要检验他的方法论对不对呢？只有一个实践案例----- 假设是对的，然后看是否适用该案例</li>
+<li>有点像，有个人号称 他的理论知识渊博&lt;<span class="math inline">\(\mu, \sigma\)</span>&gt; (覆盖了y空间中所有的案例），现在要检验他的方法论对不对呢？只有一个实践案例----- 假设是对的，然后看是否适用该案例</li>
 </ul></li>
 <li>总结下：
 <ul>
-<li>模型输出&lt;u, sigma&gt;, 实际给的ground truth：y</li>
-<li>loss为：$- log Prob(，，y） $</li>
+<li>模型输出&lt;<span class="math inline">\(\mu, \sigma\)</span>&gt; , 实际给的ground truth：y</li>
+<li>loss为：<span class="math inline">\(-log Prob(\mu,\sigma,y)\)</span></li>
 </ul></li>
 </ul></li>
 <li>前提，先假设预测的数据服从的分布族，有几个待估参数
@@ -464,12 +459,22 @@
 </ul></li>
 <li>设计网络的时候，需要某一层输出是 分布的参数（例如<span class="math inline">\(\mu\)</span> 和 <span class="math inline">\(\sigma\)</span>）,
 <ul>
-<li>训练的时候，将$&lt; , &gt; $ 带入pdf，计算pdf中 ground truth的概率，取negtive log，作为反馈信号（-log prob就是loss），这个值越大（loss越小）说明模型预测的越准。</li>
-<li>做推断的时候，将$&lt; , &gt; $ 带入pdf， 进行采样，得到预测值</li>
+<li>训练的时候，将&lt;<span class="math inline">\(\mu, \sigma\)</span>&gt; 带入pdf，计算pdf中 ground truth的概率，取negtive log，作为反馈信号（-log prob就是loss），这个值越大（loss越小）说明模型预测的越准。</li>
+<li>做推断的时候，将&lt;<span class="math inline">\(\mu, \sigma\)</span>&gt; 带入pdf， 进行采样，得到预测值</li>
 </ul></li>
-</ul></li>
-<li>【重点】输出的概率分布，怎么评估模型效果？</li>
 </ul>
+<p>【重点】输出的概率分布，怎么评估模型效果？</p>
+<p>总结 由于deepAR输出的是概率分布，所以对未来一段时间的预测，需要采样递归生成，但是采样只是1个路径，如果希望得到期望，需要重复采样 适用于噪声较大的数据：相较于点估计能提供更有用的信息，如方差，在金融领域这个值代表风险，有价值。 一些疑惑 模型的输入是来自多个序列（btw，有点点像 横向联邦学习）： 为了保证模型不会灾难性遗忘掉先学到的模式，需要把来自不同的曲线的样本打散？ 如果说序列之间的模式本身就不一致，会不会导致模型学习到一个混乱的模式？ 要不要求序列本身就是相似的？ 在交易上的启发： 构建基于波动率的策略，风险大的情况下不交易，会不会更好盈利？</p>
+<h3 id="关于deepar-的冷启动">关于DeepAR 的冷启动</h3>
+<p>DeepAR号称能解决冷启动的问题，然而在实验设置中，如果没有给出item 的特征数据，是不可能在冷启动item上得到靠谱结果的： 因为 压根没又数据可以 学item之间的相关性。 之前在想会不会因为不同曲线丢到1个模型训练，学习到混乱的模式，放到这里可以将问题进一步明确： 会不会导致 在曲线A上利用曲线B学到的模式进行预测？（然而A和B相差很大） 为了避免这个现象，需要满足： 目标1-训练阶段，模型能区别A和B两种模式 目标2-推断阶段，新样本匹配到它真正的模式（A或者B） 那么怎么做呢？----除了原来的x，还要加入item元信息，具体来说有两种方法： 方法1: 在训练阶段加入item的index信息（item元数据） 方法2:在训练阶段加入item的特征信息（更general的item元数据） 方法1和方法2都能达到目标1，但是对于目标2，方法2更接近一些： 方法1只能对 index出现在训练阶段的item 做预测 方法2可以对index没有出现在训练阶段的item做预测，真正 有可能 解决冷启动问题。（也是有边界的，比如item 元数据是某个类别变量，那么类别只有在训练阶段出现过的item才能被预测，eg 训练集中 包含 衣服 和 书籍两种 商品类型，推断阶段 就只能预测 这两种类型的 新商品，）</p>
+<h3 id="关于曲线的混乱模式">关于曲线的混乱模式</h3>
+<p>之前比较担心，喂入不同曲线，会让模型学习到 或者 匹配到 混乱模式。 现在想了一下，即使学到了 混合的模式，未必是件坏事，要分两个层面看：</p>
+<ol type="1">
+<li>混合是个好事：比如冷启动的商品或者缺失值过多的商品，如果能借鉴 模式相近（学出来的）的数据质量很好的其他商品 ，是比单独自己学 的效果好的。</li>
+<li>混合是个坏事：比如数据质量本身就很好，不用参考别人的学习资料（可能还会拖后腿） 所以，如果希望用一个global 模型一劳永逸对所有商品 建模，我觉得至少要考虑到 ，单个商品的 local模型 和 global 模型 要择优录取。</li>
+</ol>
+<h3 id="参考资料">参考资料</h3>
+<p>段易通：概率自回归预测——DeepAR模型浅析 GluonTS - Probabilistic Time Series Modeling Probabilistic Demand Forecasting at Scale</p>
 
       
     </div>
@@ -488,7 +493,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/65/">65</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -554,7 +559,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-count">128</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -567,7 +572,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">137</span>
+        <span class="site-state-item-count">136</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

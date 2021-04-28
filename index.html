@@ -164,6 +164,125 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/28/technology/pred-sparse-ts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/28/technology/pred-sparse-ts/" class="post-title-link" itemprop="url">对稀疏序列进行预测</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-28 09:33:02 / 修改时间：09:52:06" itemprop="dateCreated datePublished" datetime="2021-04-28T09:33:02+08:00">2021-04-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>https://datascience.stackexchange.com/questions/17341/forecasting-non-negative-sparse-time-series-data</li>
+<li>问题描述：
+<ul>
+<li>我有一个time-series dataset (daily frequency) ，代表某个顾客购买某个商品的数量，如下:
+<ul>
+<li>[0,0,0,0,24,0,0,0,0,0,0,0,4,0,0,0,0,17,0,0,0,0,9,0,...]</li>
+</ul></li>
+<li>每个数据表示 某一天商品的销量</li>
+<li>已有的算法如arima，holtwinter只能对连续型 和 光滑型数据做预测，不适合现在的稀疏数据。</li>
+<li>现在的场景是：
+<ul>
+<li>1， 非负值</li>
+<li><ol start="2" type="1">
+<li>稀疏数据/非连续数据</li>
+</ol></li>
+</ul></li>
+<li>有什么技术吗？</li>
+</ul></li>
+<li>方案1:将天的数据聚合成周：
+<ul>
+<li>if you don't need daily resolution in your predictions, perhaps by aggregating to weekly you will have an easier time series to forecast.</li>
+</ul></li>
+<li>方案2:对两个事件的时间间隔 和 数值 进行建模
+<ul>
+<li>假设数据是由两个随机过程驱动生成
+<ul>
+<li>1 a distribution over time intervals, （poisson？）</li>
+<li>2 a distribution over purchase amounts. （gaussian？）</li>
+</ul></li>
+</ul></li>
+<li>方案3:对用户的库存建模
+<ul>
+<li>假设用户的库存是随事件衰减的，到达某个阈值就开始考虑购入，那么可以用手头的购买数据来拟合已经有的曲线（注意 消耗速率和threshold都有可能随时间变化）</li>
+</ul></li>
+<li>方案4-建模成一个state-space模型，state是时间间隔，space是取值
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbO8qrMgQNa.png?alt=media&amp;token=4078557f-5b4f-4b43-8fed-1eed975a0d80" /></li>
+</ul></li>
+<li>突然想到，事件序列可以和 时间序列 重新定义到 一个框架下建模：
+<ul>
+<li>事件序列 相当于 是中间有缺失值 或者 零值的 时间序列，</li>
+<li>一种建模方式是，按照滑动事件窗口的方式，将最近w个事件放入一个样本，特征除了event的值，还有相邻两个event的时间间隔</li>
+<li>还有一种建模方式，缺失时刻补0，然后重新聚合，然后取时间窗口，</li>
+<li>两种方式都是把序列数据 转换为 表数据。</li>
+</ul></li>
+<li>先转换--&gt;cusum, 不仅适合sparse信号，还适合固定值的信号：
+<ul>
+<li>You might be getting caught up on the sparsity characteristic... If you take a cumulative sum then it's just a plain old monotonic time series!</li>
+<li>https://www.reddit.com/r/datascience/comments/a63aq9/sparse_time_series_prediction/</li>
+</ul></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/27/technology/python_regrex/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -248,78 +367,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/27/investment/about-medical/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/27/investment/about-medical/" class="post-title-link" itemprop="url">医疗器械在未来10年会爆发吗？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-04-27 08:57:28 / 修改时间：09:22:51" itemprop="dateCreated datePublished" datetime="2021-04-27T08:57:28+08:00">2021-04-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/65/">65</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -385,7 +436,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-count">128</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -398,7 +449,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">137</span>
+        <span class="site-state-item-count">136</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

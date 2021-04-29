@@ -91,3 +91,4 @@ class Solution(object):
 ## 参考
 1. [求两个字符串的连续最大公共子串-leetcode地址](https://leetcode-cn.com/problems/longest-common-subsequence/)
 2. [求两个字符串的非连续最大公共子串-youtube](https://www.youtube.com/watch?v=LhpGz5--isw)
+3. [smith-waterman-wiki](https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm)

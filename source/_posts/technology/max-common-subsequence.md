@@ -6,6 +6,7 @@ date: 2021-03-16 23:46:13
 tags:
 - 编程
 - 数据结构
+- leet code
 categories: 
 - 技术
 ---
@@ -16,8 +17,31 @@ categories:
 
 > 序列对齐有两种：全局对齐和局部对齐。全局对齐like Needleman–Wunsch algorithm，局部对齐like Smith–Waterman algorithm。
 
-![img.png](./img.png)
+两个字符串"GCATGCU"，"GATTAC"
+如何将两个字符串进行拉伸或者对齐的方法，从而使得长度一致，并且距离最小
 
+有三种对齐的方法
+```
+Sequences    Best alignments
+---------    ----------------------
+GCATGCU      GCATG-CU      GCA-TGCU      GCAT-GCU
+GATTACA      G-ATTACA      G-ATTACA      G-ATTACA
+```
+每个对齐的方法都可以通过两个字符串的距离矩阵表达，如下
+
+![Needleman–Wunsch](./img.png)
+
+- 横的箭头表示，第2个字符串（"GATTAC"）当前要hold一下，加个"-"
+- 竖的箭头表示，第1个字符串（"GCATGCU"）当前要hold一下，加个"-"
+
+每个格子的分数， 表示截至目前为止，
+累计的相似度得分+当前横着和竖着单个元素的相似度得分。
+
+当前横着和竖着单个元素的相似度得分的计算方法：
+
+- 字符完全匹配得1分
+- 不匹配得-1分
+- 其中一个为gap得-1分
 
 
 ## 求两个字符串的连续的最大公共子串

@@ -17,22 +17,12 @@ tags:
 即哪些日志其实是在说一个事情，可归为一类；
 哪些日志是新奇的，没有出现过的。
 
-有点像什么呢？就是给了一堆用户的数据，想对这些用户去做一个分群，本质是一个探索式的需求。
-但是，有一些该场景特有的约束，和用户的画像维度一样，日志的画像维度也是其细分场景特有的，
-比如，日志我们通常关注的是 时间，日志级别， 不关注的是具体的ip，网站，数量。
-或者说，我们最先关注的不是这些微观的信息，而是最泛化的信息。
+有点类似给用户分群，本质是一个EDA。
 
-如果是顶层有异常就需要下钻到更细分的维度，即研究更细致的原因，是哪个ip，或者网站，数量导致的。这一步可以使用多维度根因定位的方法。
-
-可以出一个这种方案：日志模版提取 + 多维度根因定位。
-其中，日志模版提取，要运维去定义规则。
+跟用户分群相比，日志分析有一些特殊的需求，比如，我们通常先关注的是在发生什么事情，而不是具体的细节。前者like 时间，日志级别等。后者like具体ip，网站，数量。
 
 
 ## 看看别人怎么做的
-
-1. [关于logmine的实践--chiechie](https://github.com/chiechie/LogRobot)
-
-2. log3C
 
 ### log3C
 
@@ -44,9 +34,21 @@ tags:
 - 跟日志异常检测相比，本文的应用更加的end2end。
 
 
+### logmine
+
+## 一些思考
+
+1. 要不要用一些文本模型，比如word2vec，doc2vec，transformer，bert？
+
+在当前日志的场景下，意义不大。
+这些深度模型的本质是想将语义上的相似性通过embedding vector表达。
+日志场景下，日志都是同一个print语句打出来的，可以看成是机器的语言，比较少有语言歧义（真的有这种近义词的，肯定不是一个组件打出来的日志），所以没必要去寻找语意上的相似性。
+分词完之后，当成charactor就可以解决问题了。
+
+
 ## 参考资料
-1. [logmine-paper](https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf)
-2. [logmine-pypi](https://pypi.org/project/logmine/)
-3. [apache_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)
-4. [硕士论文-模式识别在海量日志分析中的应用研究  "施佳奇"](https://www.ixueshu.com/h5/document/814a23b6b51168d40153bcb23ef479f1318947a18e7f9386.html)
-5. [关于logmine的实践--chiechie-](https://github.com/chiechie/LogRobot)
+
+1. [apache_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)
+2. [硕士论文-模式识别在海量日志分析中的应用研究  "施佳奇"](https://www.ixueshu.com/h5/document/814a23b6b51168d40153bcb23ef479f1318947a18e7f9386.html)
+3. [关于logmine的实践--chiechie's github](https://github.com/chiechie/LogRobot)
+4. [关于logmine的实践--chiechie's blog](https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/)

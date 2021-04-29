@@ -86,5 +86,7 @@ class Solution(object):
 ```
 ![img.png](dl-framework/img.png)
 
+
 ## 参考
-1. [leetcode地址](https://leetcode-cn.com/problems/longest-common-subsequence/)
+1. [求两个字符串的连续最大公共子串-leetcode地址](https://leetcode-cn.com/problems/longest-common-subsequence/)
+2. [求两个字符串的非连续最大公共子串-youtube](https://www.youtube.com/watch?v=LhpGz5--isw)

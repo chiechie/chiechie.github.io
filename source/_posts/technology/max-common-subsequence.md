@@ -10,7 +10,18 @@ categories:
 - 技术
 ---
 
-## 题目和思路
+## 求两个字符串的非连续的最大的公共子串
+
+这个可以转化为序列对齐的问题（sequence_alignment）, 解决这个问题比较常用的方法
+
+> 序列对齐有两种：全局对齐和局部对齐。全局对齐like Needleman–Wunsch algorithm，局部对齐like Smith–Waterman algorithm。
+
+![img.png](/img.png)
+
+
+
+## 求两个字符串的连续的最大公共子串
+
 题目：求两个字符串的最大公共子串。
 这个公共子串可以是连续的也可以是不连续的，区别不大，下面只看连续的情况。
 
@@ -85,7 +96,6 @@ class Solution(object):
         return compare_matrix[i+1][j+1]
 ```
 
-![img.png](dl-framework/img.png)
 
 
 ## 参考

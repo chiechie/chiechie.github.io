@@ -12,11 +12,11 @@ categories:
 
 ## 求两个字符串的非连续的最大的公共子串
 
-这个可以转化为序列对齐的问题（sequence_alignment）, 解决这个问题比较常用的方法
+这个可以转化为序列对齐的问题（sequence_alignment）, 下面介绍这个问题的其中一个解法--Needleman–Wunsch
 
 > 序列对齐有两种：全局对齐和局部对齐。全局对齐like Needleman–Wunsch algorithm，局部对齐like Smith–Waterman algorithm。
 
-![img.png](/img.png)
+![img.png](./img.png)
 
 
 

@@ -66,7 +66,8 @@ categories:
 ### 模型架构：
 
 训练过程（左边）和 预测过程（右边）：
-	![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjTfoJccA7q.png?alt=media&token=6850c357-b303-4053-81b8-2756678deb58)
+
+![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjTfoJccA7q.png?alt=media&token=6850c357-b303-4053-81b8-2756678deb58)
 
 ### 学习目标
 
@@ -76,7 +77,7 @@ $\mathcal{L}=-\sum\limits_{i=1}^{N} \sum\limits_{t=t_{0}}^{T} \log \ell\left(z_{
 
 ### 【重点】对不同scale曲线怎么处理的？
 
-1.  不同曲线怎么做归一化和逆归一化？缺失值多&方差变化大
+1. 不同曲线怎么做归一化和逆归一化？缺失值多&方差变化大
     - context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。
     - 相当于在第一层做了layer Normalization
 2. 不同曲线的长度和重要性不一样，如果是按照曲线id来均匀采样，会导致重要的曲线学的不够（underfit）
@@ -98,10 +99,13 @@ $\mathcal{L}=-\sum\limits_{i=1}^{N} \sum\limits_{t=t_{0}}^{T} \log \ell\left(z_{
     - 总结下：
         - 模型输出<$\mu, \sigma$> , 实际给的ground truth：y
         - loss为：$-log Prob(\mu,\sigma,y)$
+    
 - 前提，先假设预测的数据服从的分布族，有几个待估参数
+  
     - 实值--假设是高斯分布
     - 整数--假设是一个二项分布
 - 设计网络的时候，需要某一层输出是 分布的参数（例如$\mu$ 和 $\sigma$）,
+  
     - 训练的时候，将<$\mu, \sigma$> 带入pdf，计算pdf中 ground truth的概率，取negtive log，作为反馈信号（-log prob就是loss），这个值越大（loss越小）说明模型预测的越准。
     - 做推断的时候，将<$\mu, \sigma$>  带入pdf， 进行采样，得到预测值
 
@@ -109,10 +113,13 @@ $\mathcal{L}=-\sum\limits_{i=1}^{N} \sum\limits_{t=t_{0}}^{T} \log \ell\left(z_{
 
 
 
-总结
+### 总结
+
 由于DeepAR输出的是概率分布，所以对未来一段时间的预测，需要采样递归生成，但是采样只是1个路径，如果希望得到期望，需要重复采样
 适用于噪声较大的数据：相较于点估计能提供更有用的信息，如方差，在金融领域这个值代表风险，有价值。
-一些疑惑
+
+### 一些疑惑
+
 模型的输入是来自多个序列（btw，有点点像 横向联邦学习）：
 为了保证模型不会灾难性遗忘掉先学到的模式，需要把来自不同的曲线的样本打散？
 如果说序列之间的模式本身就不一致，会不会导致模型学习到一个混乱的模式？
@@ -127,12 +134,16 @@ DeepAR号称能解决冷启动的问题，然而在实验设置中，如果没�
 因为 压根没又数据可以 学item之间的相关性。
 之前在想会不会因为不同曲线丢到1个模型训练，学习到混乱的模式，放到这里可以将问题进一步明确：
 会不会导致 在曲线A上利用曲线B学到的模式进行预测？（然而A和B相差很大）
+
 为了避免这个现象，需要满足：
-目标1-训练阶段，模型能区别A和B两种模式
-目标2-推断阶段，新样本匹配到它真正的模式（A或者B）
-那么怎么做呢？----除了原来的x，还要加入item元信息，具体来说有两种方法：
-方法1: 在训练阶段加入item的index信息（item元数据）
-方法2:在训练阶段加入item的特征信息（更general的item元数据）
+- 目标1-训练阶段，模型能区别A和B两种模式
+- 目标2-推断阶段，新样本匹配到它真正的模式（A或者B）
+
+有两种方法：
+
+- 方法1: 在训练阶段加入item的index信息（item元数据）
+- 方法2:在训练阶段加入item的特征信息（更general的item元数据）
+
 方法1和方法2都能达到目标1，但是对于目标2，方法2更接近一些：
 方法1只能对 index出现在训练阶段的item 做预测
 方法2可以对index没有出现在训练阶段的item做预测，真正 有可能 解决冷启动问题。（也是有边界的，比如item 元数据是某个类别变量，那么类别只有在训练阶段出现过的item才能被预测，eg 训练集中 包含 衣服 和 书籍两种 商品类型，推断阶段 就只能预测 这两种类型的 新商品，）
@@ -147,6 +158,7 @@ DeepAR号称能解决冷启动的问题，然而在实验设置中，如果没�
 所以，如果希望用一个global 模型一劳永逸对所有商品 建模，我觉得至少要考虑到 ，单个商品的  local模型 和 global 模型 要择优录取。
 
 ### 参考资料 
+
 段易通：概率自回归预测——DeepAR模型浅析
 GluonTS - Probabilistic Time Series Modeling
 Probabilistic Demand Forecasting at Scale

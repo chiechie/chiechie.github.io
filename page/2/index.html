@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/27/investment/about-cryptocurrency/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/28/technology/pred-sparse-ts/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/27/investment/about-cryptocurrency/" class="post-title-link" itemprop="url">关于加密货币</a>
+            <a href="/2021/04/28/technology/pred-sparse-ts/" class="post-title-link" itemprop="url">对稀疏序列进行预测</a>
         </h2>
 
         <div class="post-meta">
@@ -187,23 +187,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-04-27 08:47:47" itemprop="dateCreated datePublished" datetime="2021-04-27T08:47:47+08:00">2021-04-27</time>
+              <time title="创建时间：2021-04-28 09:33:02 / 修改时间：10:07:51" itemprop="dateCreated datePublished" datetime="2021-04-28T09:33:02+08:00">2021-04-28</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-28 09:59:13" itemprop="dateModified" datetime="2021-04-28T09:59:13+08:00">2021-04-28</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
                 </span>
             </span>
 
@@ -218,24 +212,35 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ol type="1">
-<li>我的理解是，数字货币跟央行发行货币的本质差异是，前者限制了政府权利。</li>
-</ol>
+          <h2 id="背景和问题描述">背景和问题描述</h2>
+<ul>
+<li>我有一个time-series dataset (daily frequency) ，代表某个顾客购买某个商品的数量，如下:
+<ul>
+<li>[0,0,0,0,24,0,0,0,0,0,0,0,4,0,0,0,0,17,0,0,0,0,9,0,...]</li>
+</ul></li>
+<li>每个数据表示 某一天商品的销量</li>
+<li>已有的算法如arima，holtwinter只能对连续型 和 光滑型数据做预测，不适合现在的稀疏数据。</li>
+<li>总结下，target 非负&amp;稀疏&amp;整数，有什么技术可以做预测吗？</li>
+</ul>
+<h2 id="方案1将天的数据聚合成周">方案1:将天的数据聚合成周：</h2>
+<p>if you don't need daily resolution in your predictions, perhaps by aggregating to weekly you will have an easier time series to forecast.</p>
+<h2 id="方案2对两个事件的时间间隔-和-数值-进行建模">方案2:对两个事件的时间间隔 和 数值 进行建模</h2>
+<pre><code>- 假设数据是由两个随机过程驱动生成
+    - 1  a distribution over time intervals, （poisson？）
+    - 2 a distribution over purchase amounts. （gaussian？）</code></pre>
+<h2 id="方案3对用户的库存建模">方案3:对用户的库存建模</h2>
+<p>假设用户的库存是随事件衰减的，到达某个阈值就开始考虑购入，那么可以用手头的购买数据来拟合已经有的曲线（注意 消耗速率和threshold都有可能随时间变化）</p>
+<h2 id="方案4-建模成一个state-space模型state是时间间隔space是取值">方案4-建模成一个state-space模型，state是时间间隔，space是取值</h2>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbO8qrMgQNa.png?alt=media&amp;token=4078557f-5b4f-4b43-8fed-1eed975a0d80" /></p>
+<h2 id="chiechies-refomulation">chiechie's refomulation</h2>
+<p>突然想到，事件序列可以和 时间序列 重新定义到 一个框架下建模： - 事件序列 相当于 是中间有缺失值 或者 零值的 时间序列， - 一种建模方式是，按照滑动事件窗口的方式，将最近w个事件放入一个样本，特征除了event的值，还有相邻两个event的时间间隔 - 还有一种建模方式，缺失时刻补0，然后重新聚合，然后取时间窗口， - 两种方式都是把序列数据 转换为 表数据。</p>
+<h2 id="先转换--cusum-不仅适合sparse信号还适合固定值的信号">先转换--&gt;cusum, 不仅适合sparse信号，还适合固定值的信号：</h2>
+<ul>
+<li>You might be getting caught up on the sparsity characteristic... If you take a cumulative sum then it's just a plain old monotonic time series!</li>
+<li>https://www.reddit.com/r/datascience/comments/a63aq9/sparse_time_series_prediction/</li>
+</ul>
 <h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.chainnews.com/articles/503060403039.htm">对话 DODO 雷达熊：DeFi 有太多反逻辑，应创造无需许可的产品并发挥价值</a></li>
-<li><a target="_blank" rel="noopener" href="https://assets.coingecko.com/books/how-to-defi/How_to_DeFi_Chinese.pdf">How_to_DeFi-中文</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hGh0cwRR8DkuWe2NpKkH6A">王川: 入门以太坊</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672247422&amp;idx=1&amp;sn=28ac3ca342cc6e0454a710b6c32d28b4&amp;chksm=85a124bab2d6adac3fee8c3569b91485c5e796dbea4cf35b9443a7fbcf911e7621dc25e4bf3d&amp;scene=21#wechat_redirect">王川：以太坊的费用，为什么这么高</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JTwjtUM1qaoifqJlHNxCtw">王川: 公众号-历史文章</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672247421&amp;idx=1&amp;sn=d817389613f098feca94bd93b869f081&amp;chksm=85a124b9b2d6adaf64132760465d7d9a4976a3c0ede83dbc3a65c8af0f560bc13f05cfe2f9fb&amp;scene=21#wechat_redirect">王川: 关于比特币的rtfm</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246704&amp;idx=1&amp;sn=c38edcdc74282d13771f78b047cd802e&amp;chksm=85a15974b2d6d0620230b7a5145a8dfc33e8419e3a3a3111469adf21ba568dea94cfd505b2ad&amp;scene=21#wechat_redirect">王川: naval的区块链断言</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246708&amp;idx=1&amp;sn=7558d34e23d5713cf59f069698a8f7d6&amp;chksm=85a15970b2d6d066c7c654017b697566ef0ed23a3308728e79b6b019b66738638ad3f297347c&amp;scene=21#wechat_redirect">王川: 关于区块链随想</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246779&amp;idx=1&amp;sn=3eb31aba31da622e598063f84ed28c3d&amp;chksm=85a1593fb2d6d0298ec62e1f733997970030001fea90e0ff22a271b4970dda0033f7e3e41a35&amp;scene=21#wechat_redirect">王川: 区块链技术的终局是什么</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246948&amp;idx=1&amp;sn=6c7b36184fabeabd095bd649342f0598&amp;chksm=85a12660b2d6af76fe53bcc7feb656550858be7b99ce9094a67d65db8a27f454dc50cb04328b&amp;scene=21#wechat_redirect">王川：关于区块链投资的七个猜测</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672247406&amp;idx=1&amp;sn=55316a2d422c033ca214ad843fd25a02&amp;chksm=85a124aab2d6adbc02041db1ba3d0e8b4e1b813578035dbeecb48fb1b3021c74dacfb752692c&amp;scene=21#wechat_redirect">王川：去中心化的流动性黑洞, 和区块链第一法则</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246775&amp;idx=1&amp;sn=206bf28f6091d4e2c06a0b2a5c3eb1b7&amp;chksm=85a15933b2d6d025d33e12e76fb12c8f6c563e0f1f3ffaf477335e8dec1c60eb65de8fdde0a9&amp;scene=21#wechat_redirect">王川: 比特币的支付费用为什么这么高</a></li>
-</ol>
+<p>1.<a target="_blank" rel="noopener" href="https://datascience.stackexchange.com/questions/17341/forecasting-non-negative-sparse-time-series-data">ts_prediction-stackexchange</a></p>
 
       
     </div>
@@ -255,7 +260,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/26/investment/how-to-difi/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/27/technology/python_regrex/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -269,7 +274,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/26/investment/how-to-difi/" class="post-title-link" itemprop="url">how to Defi</a>
+            <a href="/2021/04/27/technology/python_regrex/" class="post-title-link" itemprop="url">使用python进行正则操作</a>
         </h2>
 
         <div class="post-meta">
@@ -279,14 +284,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-26 23:09:36" itemprop="dateCreated datePublished" datetime="2021-04-26T23:09:36+08:00">2021-04-26</time>
+              <time title="创建时间：2021-04-27 10:51:56" itemprop="dateCreated datePublished" datetime="2021-04-27T10:51:56+08:00">2021-04-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-27 09:22:51" itemprop="dateModified" datetime="2021-04-27T09:22:51+08:00">2021-04-27</time>
+                <time title="修改时间：2021-04-30 08:43:13" itemprop="dateModified" datetime="2021-04-30T08:43:13+08:00">2021-04-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -294,7 +299,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
                 </span>
             </span>
 
@@ -309,26 +314,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="第3章-去中心化层-以太坊">第3章 去中心化层-以太坊</h2>
-<ul>
-<li>为了在以太坊上执行智能合约，你 需要用以太币来支付被称为Gas的费用。 &gt; 付钱给谁了呀？</li>
-</ul>
-<h2 id="第4章">第4章</h2>
-<figure>
-<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
-<h2 id="第5章-去中心化的稳定币">第5章 去中心化的稳定币</h2>
-<ul>
-<li>大部分稳定币采用了法币抵押型系统来维持对美元的锚定。</li>
-<li>Tether是一种中心化的，法币 抵押型稳定币。</li>
-<li>DAI是一种去中心化，加密货币作抵押的稳定币。</li>
-</ul>
-<blockquote>
-<p>现在各大央行也在开始发行稳定币了，比如英国的英镑币。</p>
+          <blockquote>
+<p>正则表达式一直都迷糊的很，现在要做日志聚类了，看看吧</p>
 </blockquote>
-<figure>
-<img src="img1.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
+<h2 id="re.compile-和-split">re.compile 和 split</h2>
+<p><img src="max-common-subsequence/img.png" alt="img.png" /> re.compile: 将字符串的正则表达式，转换为pattern对象。</p>
+<p>pattern对象，有点像re的中间数据对象，它有很多方法，like</p>
+<ul>
+<li>Object.split</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; some_text &#x3D; &#39;a,b,,,,c d&#39;</span><br><span class="line">&gt;&gt;&gt; reObj &#x3D; re.compile(&#39;[, ]+&#39;)</span><br><span class="line">&gt;&gt;&gt; reObj.split(some_text)</span><br><span class="line">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;]</span><br></pre></td></tr></table></figure>
+<p>也可以不用先转换为pattern对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import re</span><br><span class="line">&gt;&gt;&gt; some_text &#x3D; &#39;a,b,,,,c d&#39;</span><br><span class="line">&gt;&gt;&gt; re.split(&#39;[, ]+&#39;,some_text)</span><br><span class="line">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;]</span><br></pre></td></tr></table></figure>
+<h2 id="re.sub">re.sub</h2>
+<p>re.sub：将某些固定的模式，替换为指定的格式。 比如 将连续空格转换为"-"</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import re</span><br><span class="line">&gt;&gt;&gt; some_text &#x3D; &#39;a,  b,,,  ,c    d&#39;</span><br><span class="line">&gt;&gt;&gt; re.sub(r&#39;\s+&#39;, &quot;-&quot;, some_text)</span><br><span class="line">a,-b,,,-,c-d</span><br></pre></td></tr></table></figure>
+<h2 id="str.strip">str.strip</h2>
+<p>去除首字符 和 尾字符</p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.programiz.com/python-programming/regex">怎么写正则表达式</a></li>
+</ol>
 
       
     </div>
@@ -347,7 +353,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -413,7 +419,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-count">122</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/AIOps/aiops2021-demo/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/10/technology/tcp-Handshake/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/09/AIOps/aiops2021-demo/" class="post-title-link" itemprop="url">AIOps挑战赛2021-demo方案</a>
+            <a href="/2021/03/10/technology/tcp-Handshake/" class="post-title-link" itemprop="url">tcp3次握手和4次挥手</a>
         </h2>
 
         <div class="post-meta">
@@ -188,7 +188,95 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-09 22:04:42" itemprop="dateCreated datePublished" datetime="2021-03-09T22:04:42+08:00">2021-03-09</time>
+              <time title="创建时间：2021-03-10 13:12:08" itemprop="dateCreated datePublished" datetime="2021-03-10T13:12:08+08:00">2021-03-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-18 11:54:08" itemprop="dateModified" datetime="2021-04-18T11:54:08+08:00">2021-04-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>看一下原理介绍</p>
+<ul>
+<li>TCP-FIN-WAIT1-客户端视角： 「客户端」 发出关闭指令后， 到服务器响应，间隔的时间。</li>
+<li>TCP-CLOSE-WAIT-服务端视角：「服务端」从接受”关闭指令“，到执行完成，间隔的时间。</li>
+<li>TCP-FIN-WAIT2-客户端视角： 「服务器」从 响应命令 到 完成命令，间隔的时间。</li>
+</ul>
+</blockquote>
+<figure>
+<img src="dl-framework/img.png" alt="图1-握手原理" /><figcaption aria-hidden="true">图1-握手原理</figcaption>
+</figure>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xy010902100449/article/details/48274635">TCP 握手和挥手图解（有限状态机）-CSDN博客</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/10/AIOps/aiops2020-solution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/10/AIOps/aiops2020-solution/" class="post-title-link" itemprop="url">AIOps挑战赛2020-获奖方案分享</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-10 13:08:27" itemprop="dateCreated datePublished" datetime="2021-03-10T13:08:27+08:00">2021-03-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -218,231 +306,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="数据解析">数据解析</h2>
-<p>比赛数据包括： 部署拓扑，指标数据，日志数据，调用链数据，故障标签</p>
-<h3 id="部署数据">部署数据</h3>
+          <h2 id="亚信的方案">亚信的方案</h2>
+<blockquote>
+<p>对于调用链根因节点定位的模型实现，我们考虑过两种方案，一种是有监督的方法，即把一定时间切片内的调用链数据作特征提取，转化为一个多分类问题或者二分类问题，但这种方法泛化能力较差，严格依赖于当前系统的数据特征，不利于实际生产环境的迁移，另一方面，我们考虑到复赛数据特征可能与预赛数据不尽相同，因此我们选择了泛化性能更强的方法，也就是无监督的方法。 我们对每条调用链沿着调用关系进行动态搜索，使之构成一个节点间的依赖图，并在这个依赖图上定义了两种不同类型的故障模式，</p>
+<p>第一种定义为非疑似节点，指子节点延时除以父节点延时大于等于51%的节点,主要用于衡量子节点占用的父节点的资源。 第二种定义为疑似异常节点，指父节点耗时-子节点耗时，除以父节点耗时大于等于51%的子节点，衡量的是父节点自己占用的资源。</p>
+<p>第二种异常模式可能不太容易理解，其实它可以来源于生活中一个十分直观的观察，例如我们从商店订购了一份外卖，2个小时后才收到，这时候我们应该认为是商店备餐慢，还是骑手送货慢呢，想要知道答案，只需要看一看同一时间，点了相同外卖的其他人，是否也出现了收货慢的情况。</p>
+</blockquote>
+<p>文章说的很绕，原理很简单，总结下: 先从业务指标异常触发定位，然后从调用链中异常的服务，然后服务对应的机器，定位根因指标。</p>
 <figure>
-<img src="./aiops2021-demo/bushu.png" alt="部署数据" /><figcaption aria-hidden="true">部署数据</figcaption>
+<img src="./aiops2020-solution/framework.png" alt="根因定位框架" /><figcaption aria-hidden="true">根因定位框架</figcaption>
 </figure>
-<h3 id="指标数据">指标数据</h3>
-<p>指标数据包括业务指标 和 性能指标。 业务指标用于触发根因分析，性能指标用于局部的根因定位</p>
-<p>每个指标数据，都需要附带的信息有：归属物理设备id，以及相应用id，（这样才能做机器的指标依赖的额故障定位）</p>
-<h4 id="业务指标">业务指标</h4>
-<p>kpi_0304.csv</p>
-<ul>
-<li>rr：单位%，系统响应率</li>
-<li>sr：单位%，业务成功率</li>
-<li>cnt：单位条，交易量</li>
-<li>mrt：单位ms，平均响应时间</li>
-<li>tc：交易码, 有11种应用, 'ServiceTest1', 'ServiceTest10', 'ServiceTest11', 'ServiceTest2', 'ServiceTest3', 'ServiceTest4', 'ServiceTest5', 'ServiceTest6', 'ServiceTest7', 'ServiceTest8', 'ServiceTest9'</li>
-</ul>
 <figure>
-<img src="./aiops2021-demo/yewu.png" alt="业务指标" /><figcaption aria-hidden="true">业务指标</figcaption>
-</figure>
-<h4 id="性能指标">性能指标</h4>
-<p>每个应用的指标, 每个kpi会有一个对应的机器id（即cmdb_id）</p>
-<ul>
-<li>cmdb_id: 指标归属的物理设备, 每个物理设备上收集到的指标一般来说包括两种，「操作系统」性能指标以及「服务」性能指标。</li>
-<li>kpi_name: 指标归属的服务类型，比如归属于操作系统/java虚拟机/Redis/Tomcat/Mysql等</li>
-</ul>
-<figure>
-<img src="./aiops2021-demo/xingneng.png" alt="性能指标" /><figcaption aria-hidden="true">性能指标</figcaption>
-</figure>
-<h3 id="日志数据">日志数据</h3>
-<p>日志数据有3个重要字段：</p>
-<ul>
-<li>cmdb_id： 日志是从哪台物理机器上产生</li>
-<li>log_name: 日志对应的组件名和日志类别, 相当于4个采集器，eg catalina/gc/localhost/localhost_access_log</li>
-<li>value: 日志内容, 里面的信息包括，日志级别，egINFO/WARNING/SEVERE，具体报错信息</li>
-</ul>
-<p>目前只有Tomcat4台服务器有日志数据；并且根据采集的不同的组件，收集的日志。</p>
-<h3 id="调用链数据">调用链数据</h3>
-<p>调用链路数据来自：trace/trace_0304.csv</p>
-<p>重要的字段有：</p>
-<ul>
-<li>cmdb_id: 即对应的服务是部署在哪个机器上的, 一次全局的trace_id 可能跨越几个设备</li>
-<li>parent_id：子调用的上一次调用</li>
-<li>trace_id：一次trace对应的全局id，一个trace包括多次子调用</li>
-<li>span_id： 本流程的Span ID，</li>
-</ul>
-<figure>
-<img src="./aiops2021-demo/trace.png" alt="调用链" /><figcaption aria-hidden="true">调用链</figcaption>
-</figure>
-<h3 id="故障标签">故障标签</h3>
-<p>故障类型可分为--'应用故障', '网络故障', '资源故障'</p>
-<ul>
-<li>应用故障可分为2类：'JVM CPU负载高', 'JVM OOM Heap'</li>
-<li>网络故障可分为两类：'网络延迟', '网络隔离'</li>
-<li>资源故障可分为三类：CPU使用率爬升，内存使用率过高，磁盘IO写使用率过高</li>
-</ul>
-<h2 id="demo方案">demo方案</h2>
-<p>流程：</p>
-<ol type="1">
-<li>对「业务指标」进行异常检测，异常则触发下面的诊断。</li>
-<li>调用链异常检测和根因定位:「业务」指标异常了，定位是哪个中间件或者服务出现了异常，以及根因的那个服务。</li>
-<li>对应机器的指标进行根因定位：定位到了调用链中的根因服务，然后对该服务所在的机器进行下钻分析，进行更细粒度的根因指标定位，使用到了机器和中间件的「性能指标」。</li>
-</ol>
-<h3 id="业务指标异常检测略">业务指标异常检测(略)</h3>
-<p>找出第一个故障发生时刻：</p>
-<ul>
-<li>2021-03-04 08:39:00 - 2021-03-04 08:44:00</li>
-</ul>
-<h3 id="调用链异常检测和根因定位">调用链异常检测和根因定位</h3>
-<ol type="1">
-<li>找出异常调用路径--trace_id</li>
-<li>找出对应的根因的子调用--span_id</li>
-<li>找到span_id的机器</li>
-</ol>
-<figure>
-<img src="./aiops2021-demo/trace_rca.png" alt="调用链异常检测和根因定位" /><figcaption aria-hidden="true">调用链异常检测和根因定位</figcaption>
-</figure>
-<h3 id="对定位到的机器进行指标根因分析">对定位到的机器进行指标根因分析</h3>
-<ol type="1">
-<li>搜集该机器的所有性能指标，进行异常检测</li>
-<li>对于异常的指标，根据历史数据中学习到的因果图，进行根因推断。</li>
-</ol>
-<figure>
-<img src="./aiops2021-demo/metric_rca.png" alt="指标根因分析" /><figcaption aria-hidden="true">指标根因分析</figcaption>
-</figure>
-<h3 id="对下-分析结果-和-标准答案">对下 分析结果 和 标准答案</h3>
-<figure>
-<img src="./aiops2021-demo/evaluate.png" alt="对比" /><figcaption aria-hidden="true">对比</figcaption>
+<img src="./aiops2020-solution/rca.png" alt="调用链路的异常检测和根因定位" /><figcaption aria-hidden="true">调用链路的异常检测和根因定位</figcaption>
 </figure>
 <h2 id="参考资料">参考资料</h2>
-<p>1.<a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=17&amp;flag=1">aiops挑战赛2021-官网</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/technology/PC-algo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/09/technology/PC-algo/" class="post-title-link" itemprop="url">PC算法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-09 10:06:00" itemprop="dateCreated datePublished" datetime="2021-03-09T10:06:00+08:00">2021-03-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 21:18:32" itemprop="dateModified" datetime="2021-04-18T21:18:32+08:00">2021-04-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="基本概念">基本概念</h1>
-<ul>
-<li><p>因果图（cause graph）：因果模型的一种表达方式，因果图是一个DAG， G=（V，E），对于每一个节点v，给定了他的双亲pa（v），v跟所有非后代都是独立的。</p></li>
-<li><p>冲撞点（collider）：一种V型结构的因果图，</p></li>
-<li><p>PC算法的两个假设：马尔可夫条件和faithfulness。</p></li>
-<li><p>马尔科夫条件：可用来区分因果关系和相关关系，被用于生成依赖关系集合，构造因果图框架。</p></li>
-<li><p>faithfulness假设：可以用来保证，V中的所有变量的独立关系，都可以通过D-seperation表达。</p></li>
-</ul>
-<h2 id="d-分离">D-分离</h2>
-<p>D分离（D-Separation）定义很复杂，拿出来单独说。</p>
-<p>定义: 设 X，Y，Z 是 DAG 中不相交的节点集合， <span class="math inline">\(\pi\)</span> 为一条连接 X 中某节点到 Y 中某节点的路径 （不管方向）。 如果路径 <span class="math inline">\(\pi\)</span> 上某节点满足如下的条件：</p>
 <ol type="1">
-<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 V结构 , 即<span class="math inline">\(X \rightarrow w \leftarrow Y\)</span>，且 w 及其后代不在 Z中；(因为collider关系，w不可观测时,X,Y 相互独立)</li>
-<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 非V结构 ，且w在Z中 。</li>
-</ol>
-<p>则称Z阻断了路径<span class="math inline">\(\pi\)</span>。</p>
-<p>如果Z阻断了所有的X到Y的路径，就说Z集合D分离了X和Y，记作<span class="math inline">\((X \perp Y \mid Z)_{G}\)</span>.</p>
-<p>D分离这个性质有什么用呢？</p>
-<p>D分离是一种用来判断变量是否条件独立的图形化方法，相比于非图形化方法，更加直观，且计算简单。 对于一个DAG(有向无环图)，D-Separation方法可以快速的判断出两个节点之间是否是条件独立的。</p>
-<h1 id="pc算法-概览">PC算法-概览</h1>
-<p>PC算法是一种发现因果关系的算法，在满足一定的假设的前提下（基于马尔科夫条件 和 D-separation），使用基于统计的方法（显著性检验-<span class="math inline">\(G^2\)</span>），推导出因果关系（代表因果关系的DAG）。实现流程包括三步:</p>
-<ol type="1">
-<li>确定因果图的框架，有哪些点，有哪些边</li>
-<li>确定边的方向</li>
-<li>传播方向</li>
-</ol>
-<figure>
-<img src="pc-overview.png" alt="图1-PC算法" /><figcaption aria-hidden="true">图1-PC算法</figcaption>
-</figure>
-<h1 id="确定因果图框架">确定因果图框架</h1>
-<p>从全连接图开始，移走条件独立的边</p>
-<figure>
-<img src="pc1.png" alt="图2-确定框架" /><figcaption aria-hidden="true">图2-确定框架</figcaption>
-</figure>
-<p>Z从空集开始，不断增加</p>
-<p>具体来说，可以用指标<span class="math inline">\(G^2\)</span>（条件交叉熵）来检验给定Z时，X和Y的独立性，这里X，Y，Z是互斥的。</p>
-<p><span class="math inline">\(G^{2}=2 m C E(X, Y \mid Z)\)</span></p>
-<ul>
-<li>m：样本大小</li>
-<li>$ C E(X, Y Z)$:给定Z时，X和Y的条件交叉熵，</li>
-</ul>
-<blockquote>
-<p>显著性低于0.05，就说明条件分布和联合分布没有显著性差异，有因果关系 显著性超过0.05， 就说明条件分布和联合分布没有显著性差异，没有因果关系，是独立的。</p>
-</blockquote>
-<p>如果<span class="math inline">\(G^2\)</span>超过一个预先设定的显著性，比如0.05， 那么X和Y是条件独立的。</p>
-<p>PC算法使用一个全连接的无向图，然后使用<span class="math inline">\(G^2\)</span>描述条件独立性。</p>
-<h1 id="确定方向">确定方向</h1>
-<p>当DAG的架子搭起来了， 接下来的工作就是决定因果关系的方向了。这里使用到了D-seperation的方法。</p>
-<figure>
-<img src="pc2.png" alt="图3-确定方向" /><figcaption aria-hidden="true">图3-确定方向</figcaption>
-</figure>
-<h1 id="传播方向">传播方向</h1>
-<figure>
-<img src="pc3.png" alt="图4-传播方向" /><figcaption aria-hidden="true">图4-传播方向</figcaption>
-</figure>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=o2A61bJ0UCw">pc算法-youtube</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">因果图的基本概念-知乎</a></li>
+<li><a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=15&amp;flag=1">AIOps挑战赛2020-官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hYiXUMveSprkIiOy8mCmCg">2020AIOps挑战赛亚军亚信科技团队方案分享</a></li>
 </ol>
 
       
@@ -462,7 +342,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/43/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><span class="page-number current">44</span><a class="page-number" href="/page/45/">45</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/45/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/43/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><span class="page-number current">44</span><a class="page-number" href="/page/45/">45</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/45/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -528,7 +408,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-count">122</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

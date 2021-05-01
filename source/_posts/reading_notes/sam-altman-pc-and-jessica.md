@@ -18,7 +18,7 @@ categories:
 > 
 > PG（Paul Graham）和 Jessica是YC的Founder之一
 > 
-> 看了半天，我还以为pg是宝洁，强行翻译, 有点好笑
+> 看了半天，我还以为pg是宝洁，有点好笑
 
 
 ## 摘要

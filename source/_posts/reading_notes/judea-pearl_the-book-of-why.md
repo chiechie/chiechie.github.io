@@ -70,13 +70,11 @@ categories:
    > 
    > 决策树生成算法，挑选节点的时候，有异曲同工之妙啊。
    
-   ![决策树中的概率提高思想](img.png)
+   ![决策树中的概率提高思想](qiantan-ai/img.png)
    
 2. 
 
 ## 参考
 
 1. [the book of why-微信读书-引言](http://bayes.cs.ucla.edu/WHY/why-intro.pdf)
-1. [the book of why-微信读书-引言](http://bayes.cs.ucla.edu/WHY/why-intro.pdf)
-
 2. [知乎-反事实和干预](https://zhuanlan.zhihu.com/p/269625734)

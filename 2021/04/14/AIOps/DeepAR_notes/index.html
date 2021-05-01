@@ -29,8 +29,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjTfoJccA7q.png?alt=media&amp;token=6850c357-b303-4053-81b8-2756678deb58">
 <meta property="article:published_time" content="2021-04-14T09:21:19.000Z">
-<meta property="article:modified_time" content="2021-04-30T00:43:13.678Z">
+<meta property="article:modified_time" content="2021-05-01T02:22:07.294Z">
 <meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="AIOps">
 <meta property="article:tag" content="时间序列">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="预测">
@@ -203,7 +204,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-30 08:43:13" itemprop="dateModified" datetime="2021-04-30T08:43:13+08:00">2021-04-30</time>
+                <time title="修改时间：2021-05-01 10:22:07" itemprop="dateModified" datetime="2021-05-01T10:22:07+08:00">2021-05-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -342,7 +343,8 @@
 <h3 id="总结-1">总结</h3>
 <p>由于DeepAR输出的是概率分布，所以对未来一段时间的预测，需要采样递归生成，但是采样只是1个路径，如果希望得到期望，需要重复采样 适用于噪声较大的数据：相较于点估计能提供更有用的信息，如方差，在金融领域这个值代表风险，有价值。</p>
 <h3 id="一些疑惑-1">一些疑惑</h3>
-<p>模型的输入是来自多个序列（btw，有点点像 横向联邦学习）： 为了保证模型不会灾难性遗忘掉先学到的模式，需要把来自不同的曲线的样本打散？ 如果说序列之间的模式本身就不一致，会不会导致模型学习到一个混乱的模式？ 要不要求序列本身就是相似的？ 在交易上的启发： 构建基于波动率的策略，风险大的情况下不交易，会不会更好盈利？</p>
+<p>模型的输入是来自多个序列（btw，有点点像 横向联邦学习）： 为了保证模型不会灾难性遗忘掉先学到的模式，需要把来自不同的曲线的样本打散？ 如果序列之间的模式差异很大，会不会导致学习到一个混乱的模式？</p>
+<p>要不要求序列本身就是相似的？ 在交易上的启发： 构建基于波动率的策略，风险大的情况下不交易，会不会更好盈利？</p>
 <h3 id="关于deepar-的冷启动">关于DeepAR 的冷启动</h3>
 <p>DeepAR号称能解决冷启动的问题，然而在实验设置中，如果没有给出item 的特征数据，是不可能在冷启动item上得到靠谱结果的： 因为 压根没又数据可以 学item之间的相关性。 之前在想会不会因为不同曲线丢到1个模型训练，学习到混乱的模式，放到这里可以将问题进一步明确： 会不会导致 在曲线A上利用曲线B学到的模式进行预测？（然而A和B相差很大）</p>
 <p>为了避免这个现象，需要满足： - 目标1-训练阶段，模型能区别A和B两种模式 - 目标2-推断阶段，新样本匹配到它真正的模式（A或者B）</p>
@@ -369,6 +371,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/AIOps/" rel="tag"># AIOps</a>
               <a href="/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/" rel="tag"># 时间序列</a>
               <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
               <a href="/tags/%E9%A2%84%E6%B5%8B/" rel="tag"># 预测</a>

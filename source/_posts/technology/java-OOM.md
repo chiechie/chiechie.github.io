@@ -11,6 +11,7 @@ categories:
 - 计算机原理
 ---
 
+
 ## 背景
 
 ![JVM运行时的数据区](./img.png)
@@ -28,4 +29,5 @@ categories:
 Java虚拟机中，很多区域的问题，都会导致内存溢出(OOM)的异常
 
 ## 参考
+
 1. [深入理解JVM-微信读书](https://weread.qq.com/web/reader/9b832f305933f09b86bd2a9)

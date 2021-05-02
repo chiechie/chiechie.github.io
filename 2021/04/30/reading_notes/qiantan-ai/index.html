@@ -34,8 +34,11 @@
 <meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qiantan-ai/img_3.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qiantan-ai/img_5.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qiantan-ai/img_6.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qiantan-ai/img_7.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qiantan-ai/img_8.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qiantan-ai/img_9.png">
 <meta property="article:published_time" content="2021-04-30T00:44:52.000Z">
-<meta property="article:modified_time" content="2021-05-01T13:19:38.780Z">
+<meta property="article:modified_time" content="2021-05-02T13:54:02.079Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="NLP">
@@ -215,7 +218,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-01 21:19:38" itemprop="dateModified" datetime="2021-05-01T21:19:38+08:00">2021-05-01</time>
+                <time title="修改时间：2021-05-02 21:54:02" itemprop="dateModified" datetime="2021-05-02T21:54:02+08:00">2021-05-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -348,12 +351,65 @@
 <li>STC-AOG 就是知识的总体表达，而我们看到的眼前每一个例子是由 STC- AOG 导出来的时空因果解译图 STC-PG。计算机视觉，语言，认知，机器人都用它，就是一个统一的表达。</li>
 </ul></li>
 </ol>
-<h2 id="学科四博弈论--获取共享人类的价值观">学科四：博弈论--获取，共享人类的价值观</h2>
+<h2 id="学科四博弈伦理获取共享人类的价值观">学科四：博弈伦理:获取、共享人类的价值观</h2>
 <ol type="1">
-<li>所谓“人往高处走、水往低处流”说的是社会和物理的两个不同现象，本质完 全一致。就是人和水都在按照各自的势能函数在运动!那么驱动人的势能函数是什 么呢?</li>
+<li><p>机器人要跟人交流，就必须理解人的价值观。因为一个理性的人，他的行为和决策总是在追求自己的利益最大化。同时，也可以根据一个人的行为推测这个人的价值观是什么。</p></li>
+<li><p>在人工智能学科中，通常把价值观表达为效用函数Utility function，这个函数包含两个部分-收益（loss 或者 reward）和成本（cost）</p></li>
+<li><p>我们每做一件事获得的收益，是定义在流态（fluents）空间里面的，每次行动，通过改变某些fluents，从而在U定义的空间中向上走。U对流态F求微分，就得到一个场。</p></li>
+<li><p>所谓“人往高处走、水往低处流”说的是社会和物理的两个不同现象，本质完 全一致。就是人和水都在按照各自的势能函数在运动!那么驱动人的势能函数是什 么呢?</p></li>
+<li><p>机器人下棋, 一个关键就是学习价值函数,就是每一个可能的棋局，它要有一个正确的价值判断。各种游戏和强化学习也比较火热。但这些研究都是在简单的符号空间里面玩。</p></li>
+<li><p>有了价值函数，在一个多人环境中，就有了竞争与合作，形成社会规范、伦理道德，会达成暂时的「准平衡态」</p></li>
+<li><p>归纳学习（Inductivelearning）和演绎学习（Deductivelearning）：</p>
+<ul>
+<li>归纳学习（Inductivelearning）：通过观察大量数据样本，得到一个时空因果的概率模型（STC-AOG，每个时空的动作是一个 STC-PG）。数据样本就是对某个时期、某个地域、某个人群达成的准平衡态的观察，也是千年文化的形成和传承。</li>
+<li>演绎学习 Deductivelearning：从价值函数和物理因果出发，直接推导出准平衡态，要求对研究的对象有深刻的、生成式的模型和理解。</li>
+</ul></li>
+<li><p>人的学习往往是两者的结合。年轻的时候，归纳学习用得多一些，演绎学习往 往是一种不成熟冲动，交点学费，但也可能发现了新天地。到了“五十而不惑”的时候，价值观成型了，价值观覆盖的空间也基本齐全了，那么基本上就用演绎学习。</p></li>
 </ol>
 <h2 id="学科五机器人学构建大任务平台">学科五：机器人学：构建大任务平台</h2>
+<ol type="1">
+<li>机器人是一个大任务平台，它不仅要调度视觉识别，语言交流，认知推理，还要执行大量的行动去改变环境，其实就是在改变环境的流态。</li>
+<li>流态分为两类：物理流态度，社会流态。前者如刷漆、烧开水、拖地板、 切菜。后者如边，吃、喝、 追逐、搀，是改变 自己内部生物状态、或者是与别人的关系。</li>
+<li>当机器人重建了三维场景后, 就带着功利和任务的眼光来看这个场景, 比如哪个地方可以站/坐/倒水。在机器人规划中， 会先构建Affordance Map，即这个场景可以给你提供什么? <img src="img_7.png" alt="Affordance Map" /></li>
+<li>有了上面的单个基本任务的地图，机器人就可以做任务的规划，当然做的过程中还要考虑因果、场景中别人的反应。考虑的东西越多，它就越成熟，做事就得体、不莽莽撞撞。</li>
+</ol>
 <h2 id="学科六机器学习学习的极限和停机问题">学科六：机器学习：学习的极限和"停机问题"</h2>
+<ol type="1">
+<li><p>计算机视觉，自然语言理解，认知推理，博弈伦理，机器人，这五个学科都是具体的"问题领域"（domain），而机器学习，是研究"方法领域"（methods），研究如何去拟合，如何去得到那些知识。前面五个学科想五个钉子，机器学习就是锤子，研究的是如何把那些钉子捶进去。深度学习就像一把比较好用的锤子。五大领域里面的人 也发明了很多锤子。只不过最近这几年深度学习这把锤子比较流行。</p></li>
+<li><p>停机问题：在什么条件下，学习过程会终止呢?当学习过程终止了，系统也就达到了极限。比如，有的 人早早就决定不学习了。</p>
+<blockquote>
+<p>问问我自己，当学习一门新领域的时候，什么时候就可以停止学习了？我似乎也给不出答案，就只是在盲目的学习</p>
+</blockquote></li>
+<li><p>什么是学习？</p></li>
+<li><p>当前的机器学习是怎么学习的？包含三步:</p>
+<ol type="1">
+<li>你定义一个损失函数 loss function 记作 u，代表一个小任务，比如人脸识别，对了就奖励1，错了就是-1。</li>
+<li>你选择一个模型，比如一个10-层的神经网络，它带有几亿个参数 <span class="math inline">\(\theta\)</span>， 需要通过数据来拟合。</li>
+<li>你拿到大量数据，这里假设有人给你准备了标注的数据，然后就开始拟合 参数了。</li>
+</ol></li>
+<li><p>机器学习在学习的这个过程没有因果，没有机器人行动，是纯粹的、<strong>被动</strong>的统计学习。目前那些 做视觉识别和语音识别都是这一类。</p></li>
+<li><p>机器学习的 学习方式是一种狭义的学习，是一种题海战术，填鸭式的训练。真正的学习是一个交互的过程，学生可以问老师，老师问学生，共同思考，是一种平等交流。 <img src="img_8.png" alt="img_8.png" /></p></li>
+<li><p>这个学习过程是简历在认知构架之上的，是一种广义的学习，也叫通讯学习（Communicative Learning） <img src="img_9.png" alt="img_9.png" /></p></li>
+<li><p>这个图里面是两个人 A 与 B 的交流，一个是老师，一个是学生，完全是对等的 结构，体现了教与学是一个平等的互动过程。每个椭圆代表一个脑袋 mind，它包含 了三大块: 知识<span class="math inline">\(\theta\)</span>、决策函数<span class="math inline">\(\pi\)</span>、价值函数<span class="math inline">\(\mu\)</span>。最底下的那个椭圆代表物理 世界，也就是“上帝”脑袋里面知道的东西。上面中间的那个椭圆代表双方达成的 共识。</p></li>
+<li><p>这个通讯学习的构架里面，就包含了大量的学习模式，包括以下七种学习模式 (每种学习模式其实对应与图中的某个或者几个箭头)，这里面还有很多模式可以 开发出来。</p>
+<ol type="1">
+<li>被动统计学习 passive statistical learning:上面刚刚谈到的、当前最流行的 学习模式，用大数据拟合模型;</li>
+<li>主动学习 active learning:学生可以问老师主动要数据，这个在机器学习里面 也流行过;</li>
+<li>算法教学 algorithmic teaching:老师主动跟踪学生的进展和能力，然后，设计例子来帮你学。这是成本比较高的、理想的优秀教师的教学方式; (四 4. 演示学习 learning from demonstration:这是机器人学科里面常用的，就是手把手叫机器人做动作。一个变种是模仿学习 immitation learning;<br />
+</li>
+<li>感知因果学习 perceptual causality:这是我发明的一种，就是通过观察别人 行为的因果，而不需要去做实验验证，学习出来的因果模型，这在人类认知中十分普遍;</li>
+<li>因果学习causal learning:通过动手实验， 控制其它变量， 而得到更可靠的因果模型， 科学实验往往属于这一类;</li>
+<li>强化学习reinforcement learning:就是去学习决策函数与价值函数的一种方法</li>
+</ol></li>
+<li><p>我们学习谈话的构成，就是信息在两个椭圆之间流动的过程，影响流动的因素很多，列举4个：</p>
+<ul>
+<li>教与学的动机：老师要教一个知识，决策，价值，首先他要明确自己知道而学习不知道。同理，学生问老师，学生要明确自己不知道而老师知道。关键一点是，双方对自己和对方有准确的估计。</li>
+<li>教与学的方法：老师知道学生的进度，就可以准确提供新知识，而不是重复。</li>
+<li>智商问题：如何测量一个机器的智商，对很多动物，有些概念是教不会的</li>
+<li>价值函数：价值观不一致的人无法交流，更别说相互学习了。社会上也有这种分化的趋势。</li>
+</ul></li>
+<li><p>停机问题，就是说在多个人动态的学习过程中，所达到的平衡态。</p></li>
+</ol>
 <h2 id="智能科学--牛顿与达尔文的统一">智能科学--牛顿与达尔文的统一</h2>
 <blockquote>
 <p>古希腊伟大的唯物主义者坚持主张，一起物质时间都应当归结为一系列的有规律的原子运动，不允许把任何生物的意志作为独立的原因。笛卡尔无疑曾按他自己的方式重新探索过这一问题，但是在当时只是一个大胆的奢望，一个哲学学派问题的理想而已。在牛顿之前，没有实际结果来支持信念--认为物理因果关系有完整链条。 --爱因斯坦</p>
@@ -472,7 +528,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E7%8A%B6%E6%AD%A3%E8%A7%86%E7%8E%B0%E5%AE%9E"><span class="nav-number">1.</span> <span class="nav-text">现状：正视现实</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AA%E6%9D%A5%E4%B8%80%E5%8F%AA%E4%B9%8C%E9%B8%A6%E7%9A%84%E5%90%AF%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">未来：一只乌鸦的启示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ai%E7%9A%84%E5%8E%86%E5%8F%B2"><span class="nav-number">3.</span> <span class="nav-text">AI的历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%A0%94%E7%A9%B6%E7%9A%84%E8%AE%A4%E7%9F%A5%E6%9E%84%E6%9E%B6%E5%B0%8F%E6%95%B0%E6%8D%AE%E5%A4%A7%E4%BB%BB%E5%8A%A1%E8%8C%83%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">统一：人工智能研究的认知构架:小数据、大任务范式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E7%A7%91%E4%B8%80-%E8%AE%A1%E7%AE%97%E8%A7%86%E8%A7%89--%E4%BB%8E%E6%B7%B1%E5%88%B0%E6%9A%97"><span class="nav-number">5.</span> <span class="nav-text">学科一： 计算视觉--从&quot;深&quot;到&quot;暗&quot;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E7%A7%91%E4%BA%8C-%E8%AE%A4%E7%9F%A5%E6%8E%A8%E7%90%86--%E8%B5%B0%E8%BF%9B%E5%86%85%E5%BF%83%E4%B8%96%E7%95%8C"><span class="nav-number">6.</span> <span class="nav-text">学科二： 认知推理--走进内心世界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E7%A7%91%E4%B8%89-%E8%AF%AD%E8%A8%80%E9%80%9A%E8%AE%AF--%E5%85%B1%E5%90%8C%E7%9A%84%E8%AE%A4%E7%9F%A5%E5%9F%BA%E7%A1%80"><span class="nav-number">7.</span> <span class="nav-text">学科三： 语言通讯--共同的认知基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E7%A7%91%E5%9B%9B%E5%8D%9A%E5%BC%88%E8%AE%BA--%E8%8E%B7%E5%8F%96%E5%85%B1%E4%BA%AB%E4%BA%BA%E7%B1%BB%E7%9A%84%E4%BB%B7%E5%80%BC%E8%A7%82"><span class="nav-number">8.</span> <span class="nav-text">学科四：博弈论--获取，共享人类的价值观</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E7%A7%91%E4%BA%94%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E6%9E%84%E5%BB%BA%E5%A4%A7%E4%BB%BB%E5%8A%A1%E5%B9%B3%E5%8F%B0"><span class="nav-number">9.</span> <span class="nav-text">学科五：机器人学：构建大任务平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E7%A7%91%E5%85%AD%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%9E%81%E9%99%90%E5%92%8C%E5%81%9C%E6%9C%BA%E9%97%AE%E9%A2%98"><span class="nav-number">10.</span> <span class="nav-text">学科六：机器学习：学习的极限和&quot;停机问题&quot;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E7%A7%91%E5%AD%A6--%E7%89%9B%E9%A1%BF%E4%B8%8E%E8%BE%BE%E5%B0%94%E6%96%87%E7%9A%84%E7%BB%9F%E4%B8%80"><span class="nav-number">11.</span> <span class="nav-text">智能科学--牛顿与达尔文的统一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">12.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E7%8A%B6%E6%AD%A3%E8%A7%86%E7%8E%B0%E5%AE%9E"><span class="nav-number">1.</span> <span class="nav-text">现状：正视现实</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AA%E6%9D%A5%E4%B8%80%E5%8F%AA%E4%B9%8C%E9%B8%A6%E7%9A%84%E5%90%AF%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">未来：一只乌鸦的启示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ai%E7%9A%84%E5%8E%86%E5%8F%B2"><span class="nav-number">3.</span> <span class="nav-text">AI的历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%A0%94%E7%A9%B6%E7%9A%84%E8%AE%A4%E7%9F%A5%E6%9E%84%E6%9E%B6%E5%B0%8F%E6%95%B0%E6%8D%AE%E5%A4%A7%E4%BB%BB%E5%8A%A1%E8%8C%83%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">统一：人工智能研究的认知构架:小数据、大任务范式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E7%A7%91%E4%B8%80-%E8%AE%A1%E7%AE%97%E8%A7%86%E8%A7%89--%E4%BB%8E%E6%B7%B1%E5%88%B0%E6%9A%97"><span class="nav-number">5.</span> <span class="nav-text">学科一： 计算视觉--从&quot;深&quot;到&quot;暗&quot;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E7%A7%91%E4%BA%8C-%E8%AE%A4%E7%9F%A5%E6%8E%A8%E7%90%86--%E8%B5%B0%E8%BF%9B%E5%86%85%E5%BF%83%E4%B8%96%E7%95%8C"><span class="nav-number">6.</span> <span class="nav-text">学科二： 认知推理--走进内心世界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E7%A7%91%E4%B8%89-%E8%AF%AD%E8%A8%80%E9%80%9A%E8%AE%AF--%E5%85%B1%E5%90%8C%E7%9A%84%E8%AE%A4%E7%9F%A5%E5%9F%BA%E7%A1%80"><span class="nav-number">7.</span> <span class="nav-text">学科三： 语言通讯--共同的认知基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E7%A7%91%E5%9B%9B%E5%8D%9A%E5%BC%88%E4%BC%A6%E7%90%86%E8%8E%B7%E5%8F%96%E5%85%B1%E4%BA%AB%E4%BA%BA%E7%B1%BB%E7%9A%84%E4%BB%B7%E5%80%BC%E8%A7%82"><span class="nav-number">8.</span> <span class="nav-text">学科四：博弈伦理:获取、共享人类的价值观</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E7%A7%91%E4%BA%94%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E6%9E%84%E5%BB%BA%E5%A4%A7%E4%BB%BB%E5%8A%A1%E5%B9%B3%E5%8F%B0"><span class="nav-number">9.</span> <span class="nav-text">学科五：机器人学：构建大任务平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E7%A7%91%E5%85%AD%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%9E%81%E9%99%90%E5%92%8C%E5%81%9C%E6%9C%BA%E9%97%AE%E9%A2%98"><span class="nav-number">10.</span> <span class="nav-text">学科六：机器学习：学习的极限和&quot;停机问题&quot;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E7%A7%91%E5%AD%A6--%E7%89%9B%E9%A1%BF%E4%B8%8E%E8%BE%BE%E5%B0%94%E6%96%87%E7%9A%84%E7%BB%9F%E4%B8%80"><span class="nav-number">11.</span> <span class="nav-text">智能科学--牛顿与达尔文的统一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">12.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -499,7 +555,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">145</span>
+        <span class="site-state-item-count">146</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

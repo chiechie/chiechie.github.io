@@ -32,8 +32,13 @@
 <meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qukuailian/img_2.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qukuailian/img_3.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qukuailian/img_4.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qukuailian/jiaoyisuodingshijian.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qukuailian/img_5.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qukuailian/img_6.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qukuailian/img_7.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/30/reading_notes/qukuailian/img_8.png">
 <meta property="article:published_time" content="2021-04-30T00:50:28.000Z">
-<meta property="article:modified_time" content="2021-05-01T13:19:38.795Z">
+<meta property="article:modified_time" content="2021-05-02T04:49:35.981Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="数字货币">
 <meta property="article:tag" content="区块链">
@@ -205,7 +210,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-01 21:19:38" itemprop="dateModified" datetime="2021-05-01T21:19:38+08:00">2021-05-01</time>
+                <time title="修改时间：2021-05-02 12:49:35" itemprop="dateModified" datetime="2021-05-02T12:49:35+08:00">2021-05-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -358,7 +363,62 @@
 <h2 id="第3章-比特币客户端略">第3章 比特币客户端（略）</h2>
 <h2 id="第4章-密钥地址钱包略">第4章 密钥，地址，钱包（略）</h2>
 <h2 id="第5章-交易">第5章 交易</h2>
-<p>6</p>
+<h3 id="交易的生命周期">交易的生命周期</h3>
+<ol type="1">
+<li>创建交易</li>
+<li>将交易广播到比特币网络</li>
+<li>交易在比特币网络中传播</li>
+<li>直到被一个矿工include到公开账本（区块链）中.</li>
+</ol>
+<h3 id="交易结构">交易结构</h3>
+<ol type="1">
+<li>比特币中一个交易，包含以下信息</li>
+</ol>
+<figure>
+<img src="jiaoyisuodingshijian.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<blockquote>
+<p>锁定时间，定义的是一个比特币交易 加入公共账本的最早时间。默认取值为0，大于0时，类似支票的延期支付。</p>
+</blockquote>
+<h3 id="交易输出和输入">交易输出和输入</h3>
+<ol type="1">
+<li>比特币交易的基本单位为「未花费输出」，即UTXO。</li>
+<li>一笔UTXO锁定一个特定的持有者；一个用户的所有未花费输出可能被记录在多个区块上。实际上，比特币系统中没有地方会去记录一个账户目前的余额。钱包软件属于上层应用，可以去计算余额。</li>
+<li>输出输入链中又一个特殊的交易，叫做铸币交易（"coinbase"），它是每个新建block的第一笔交易，是比特币系统对矿工挖到新的block的奖励，相当于矿空在发币。这种交易不需要输入，但是产生输出。</li>
+<li>每个完全客户端都会维护全网的UTXO数据，并且将这个信息放入一个专门的数据库，叫做UTXO池/UTXO集合。</li>
+<li>交易费用不是必需的，没有费用的交易最终可能也会被处理；但是附加一定费用会提高处理的优先级</li>
+</ol>
+<h3 id="交易链条和孤儿交易">交易链条和孤儿交易</h3>
+<ol type="1">
+<li>当子交易先于父交易到达网络时，节点不会直接拒绝子交易，而是将它放入一个临时的交易池--孤儿交易池（orphan transaction pool），等待它的父交易到来；同时也会在哇昂罗中广播这笔子交易</li>
+</ol>
+<h3 id="交易脚本和脚本语言">交易脚本和脚本语言</h3>
+<ol type="1">
+<li><p>比特币客户端通过执行脚本，来验证交易</p></li>
+<li><p>验证一笔交易需要执行锁定和解锁脚本, 步骤如下</p>
+<ol type="1">
+<li>首先运行解锁脚本，执行结果为True时，复制主栈脚本</li>
+<li>执行锁定脚本：上一步的主栈脚本为输入，锁定脚本的执行结果为True</li>
+</ol></li>
+<li><p>上面的组合脚本如果存在任何非真的结果，则输入是无效的，因为它无法满足设置在UTXO上的花费条件。</p></li>
+<li><p>只有一笔有效的、能正确满足UTXO使用条件的交易，才会导致这笔UTXO被标注为“已花费”，并从可用（未花费）UTXO集合中被移除。 <img src="img_5.png" alt="img_5.png" /></p></li>
+<li><p>比特币的交易脚本语言，是一种非常简单的语言，但是很适合在可编程货币的场景，因为很安全</p></li>
+<li><p>比特币的脚本语言基于堆栈，例如，</p>
+<ul>
+<li>OP_ADD从栈中移出两个项目，把它们相加，然后将求和结果压入栈中。</li>
+</ul></li>
+<li><p>条件操作符（OP_EQUAL）评估一个条件，产生一个真（TRUE）或假（FALSE）的布尔结果</p>
+<ul>
+<li>OP_EQUAL从堆栈中移出两个项目，如果两个项目相等，则把TRUE（TRUE以数字1代表）压入栈中，如果不相等，则压入FALSE（用数字0表示）</li>
+</ul></li>
+<li><p>以下是一个稍微复杂的脚本，用于计算2+7-3+1。注意，当脚本在一行中包含多个操作符时，堆栈允许一个操作符的结果被下一个操作符使用。 <img src="img_6.png" alt="img_6.png" /></p></li>
+</ol>
+<p><img src="img_7.png" alt="img_7.png" /> 9. 验证脚本的执行过程， <img src="img_8.png" alt="img_8.png" /> 9. 比特币交易脚本语言没有循环，也没有复杂的流程控制能力，使得其图灵不完备，从而复杂性有限，执行时间也可以预测。 10. 比特币交易脚本语言是无状态的，一个有效的交易，对任何人都同样有效，这使得可预测性成为比特币系统的一个重要特点。</p>
+<h3 id="标准交易">标准交易</h3>
+<ol type="1">
+<li>5个标准类型的交易脚本包括：支付到公钥哈希（P2PKH）、公钥、多重签名（限定最多15个密钥）、支付到脚本哈希（P2SH），以及数据输出（OP_RETURN）</li>
+<li>支付到公钥哈希（P2PKH）:</li>
+</ol>
 <h2 id="第6章-比特币网络">第6章 比特币网络</h2>
 <p>11</p>
 <h2 id="第7章-区块链">第7章 区块链</h2>
@@ -456,7 +516,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0-%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%AF%94%E7%89%B9%E5%B8%81%E7%9A%84%E4%B8%96%E7%95%8C"><span class="nav-number">2.</span> <span class="nav-text">第1章 欢迎来到比特币的世界</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%AF%94%E7%89%B9%E5%B8%81"><span class="nav-number">2.1.</span> <span class="nav-text">什么是比特币</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E4%B9%8B%E5%89%8D%E7%9A%84%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81"><span class="nav-number">2.2.</span> <span class="nav-text">比特币之前的数字货币</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E7%9A%84%E5%8E%86%E5%8F%B2"><span class="nav-number">2.3.</span> <span class="nav-text">比特币的历史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E7%9A%84%E4%BD%BF%E7%94%A8%E7%94%A8%E6%88%B7%E4%BB%A5%E5%8F%8A%E4%BB%96%E4%BB%AC%E7%9A%84%E6%95%85%E4%BA%8B"><span class="nav-number">2.4.</span> <span class="nav-text">比特币的使用，用户，以及他们的故事</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0-%E6%AF%94%E7%89%B9%E5%B8%81%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84"><span class="nav-number">3.</span> <span class="nav-text">第2章 比特币是如何工作的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E5%8C%BA%E5%9D%97%E6%8C%96%E7%9F%BF%E5%92%8C%E5%8C%BA%E5%9D%97%E9%93%BE"><span class="nav-number">3.1.</span> <span class="nav-text">交易，区块，挖矿和区块链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%BA%A4%E6%98%93"><span class="nav-number">3.2.</span> <span class="nav-text">创建交易</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E6%8C%96%E7%9F%BF"><span class="nav-number">3.3.</span> <span class="nav-text">比特币挖矿</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E5%8C%BA%E5%9D%97%E6%8C%96%E7%9F%BF"><span class="nav-number">3.4.</span> <span class="nav-text">交易区块挖矿</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%B1%E8%B4%B9%E4%BA%A4%E6%98%93"><span class="nav-number">3.5.</span> <span class="nav-text">花费交易</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC3%E7%AB%A0-%E6%AF%94%E7%89%B9%E5%B8%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%95%A5"><span class="nav-number">4.</span> <span class="nav-text">第3章 比特币客户端（略）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC4%E7%AB%A0-%E5%AF%86%E9%92%A5%E5%9C%B0%E5%9D%80%E9%92%B1%E5%8C%85%E7%95%A5"><span class="nav-number">5.</span> <span class="nav-text">第4章 密钥，地址，钱包（略）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC5%E7%AB%A0-%E4%BA%A4%E6%98%93"><span class="nav-number">6.</span> <span class="nav-text">第5章 交易</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC6%E7%AB%A0-%E6%AF%94%E7%89%B9%E5%B8%81%E7%BD%91%E7%BB%9C"><span class="nav-number">7.</span> <span class="nav-text">第6章 比特币网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC7%E7%AB%A0-%E5%8C%BA%E5%9D%97%E9%93%BE"><span class="nav-number">8.</span> <span class="nav-text">第7章 区块链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC8%E7%AB%A0-%E6%8C%96%E7%9F%BF%E4%B8%8E%E5%85%B1%E8%AF%86"><span class="nav-number">9.</span> <span class="nav-text">第8章 挖矿与共识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC9%E7%AB%A0-%E6%9B%BF%E4%BB%A3%E9%93%BE%E6%9B%BF%E4%BB%A3%E5%B8%81-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="nav-number">10.</span> <span class="nav-text">第9章 替代链，替代币 应用程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC10%E7%AB%A0-%E6%AF%94%E7%89%B9%E5%B8%81%E5%AE%89%E5%85%A8"><span class="nav-number">11.</span> <span class="nav-text">第10章 比特币安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">12.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0-%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%AF%94%E7%89%B9%E5%B8%81%E7%9A%84%E4%B8%96%E7%95%8C"><span class="nav-number">2.</span> <span class="nav-text">第1章 欢迎来到比特币的世界</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%AF%94%E7%89%B9%E5%B8%81"><span class="nav-number">2.1.</span> <span class="nav-text">什么是比特币</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E4%B9%8B%E5%89%8D%E7%9A%84%E6%95%B0%E5%AD%97%E8%B4%A7%E5%B8%81"><span class="nav-number">2.2.</span> <span class="nav-text">比特币之前的数字货币</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E7%9A%84%E5%8E%86%E5%8F%B2"><span class="nav-number">2.3.</span> <span class="nav-text">比特币的历史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E7%9A%84%E4%BD%BF%E7%94%A8%E7%94%A8%E6%88%B7%E4%BB%A5%E5%8F%8A%E4%BB%96%E4%BB%AC%E7%9A%84%E6%95%85%E4%BA%8B"><span class="nav-number">2.4.</span> <span class="nav-text">比特币的使用，用户，以及他们的故事</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0-%E6%AF%94%E7%89%B9%E5%B8%81%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84"><span class="nav-number">3.</span> <span class="nav-text">第2章 比特币是如何工作的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E5%8C%BA%E5%9D%97%E6%8C%96%E7%9F%BF%E5%92%8C%E5%8C%BA%E5%9D%97%E9%93%BE"><span class="nav-number">3.1.</span> <span class="nav-text">交易，区块，挖矿和区块链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%BA%A4%E6%98%93"><span class="nav-number">3.2.</span> <span class="nav-text">创建交易</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E7%89%B9%E5%B8%81%E6%8C%96%E7%9F%BF"><span class="nav-number">3.3.</span> <span class="nav-text">比特币挖矿</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E5%8C%BA%E5%9D%97%E6%8C%96%E7%9F%BF"><span class="nav-number">3.4.</span> <span class="nav-text">交易区块挖矿</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%B1%E8%B4%B9%E4%BA%A4%E6%98%93"><span class="nav-number">3.5.</span> <span class="nav-text">花费交易</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC3%E7%AB%A0-%E6%AF%94%E7%89%B9%E5%B8%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%95%A5"><span class="nav-number">4.</span> <span class="nav-text">第3章 比特币客户端（略）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC4%E7%AB%A0-%E5%AF%86%E9%92%A5%E5%9C%B0%E5%9D%80%E9%92%B1%E5%8C%85%E7%95%A5"><span class="nav-number">5.</span> <span class="nav-text">第4章 密钥，地址，钱包（略）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC5%E7%AB%A0-%E4%BA%A4%E6%98%93"><span class="nav-number">6.</span> <span class="nav-text">第5章 交易</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">6.1.</span> <span class="nav-text">交易的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E7%BB%93%E6%9E%84"><span class="nav-number">6.2.</span> <span class="nav-text">交易结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E8%BE%93%E5%87%BA%E5%92%8C%E8%BE%93%E5%85%A5"><span class="nav-number">6.3.</span> <span class="nav-text">交易输出和输入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E9%93%BE%E6%9D%A1%E5%92%8C%E5%AD%A4%E5%84%BF%E4%BA%A4%E6%98%93"><span class="nav-number">6.4.</span> <span class="nav-text">交易链条和孤儿交易</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E8%84%9A%E6%9C%AC%E5%92%8C%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80"><span class="nav-number">6.5.</span> <span class="nav-text">交易脚本和脚本语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E4%BA%A4%E6%98%93"><span class="nav-number">6.6.</span> <span class="nav-text">标准交易</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC6%E7%AB%A0-%E6%AF%94%E7%89%B9%E5%B8%81%E7%BD%91%E7%BB%9C"><span class="nav-number">7.</span> <span class="nav-text">第6章 比特币网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC7%E7%AB%A0-%E5%8C%BA%E5%9D%97%E9%93%BE"><span class="nav-number">8.</span> <span class="nav-text">第7章 区块链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC8%E7%AB%A0-%E6%8C%96%E7%9F%BF%E4%B8%8E%E5%85%B1%E8%AF%86"><span class="nav-number">9.</span> <span class="nav-text">第8章 挖矿与共识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC9%E7%AB%A0-%E6%9B%BF%E4%BB%A3%E9%93%BE%E6%9B%BF%E4%BB%A3%E5%B8%81-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="nav-number">10.</span> <span class="nav-text">第9章 替代链，替代币 应用程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC10%E7%AB%A0-%E6%AF%94%E7%89%B9%E5%B8%81%E5%AE%89%E5%85%A8"><span class="nav-number">11.</span> <span class="nav-text">第10章 比特币安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">12.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -483,7 +543,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">145</span>
+        <span class="site-state-item-count">146</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -18,7 +18,9 @@ a reader & thinker。
 
 目标是输出体系化，直达本质的东西，或者退而，反映自己reflection的一些东西。
 
-trying to work out what's going on,and what happens next.Working on new thins
+trying to work out what's going on, and what happens next. 
+
+Working on new things
 
 目前居住在深圳，日常出没于[微博](https://weibo.com/chiechie/home?wvr=5)、[知乎](https://www.zhihu.com/people/chiechie8)、[Twitter](https://twitter.com/stellazhao9)、[Github](https://github.com/chiechie)。
 

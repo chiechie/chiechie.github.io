@@ -3,8 +3,12 @@ title: 老子和孔子
 author: chiechie
 mathjax: true
 date: 2021-05-05 09:10:56
-tags:
-categories:
+tags: 
+- 哲学
+- 儒家
+- 道家
+categories: 
+- 阅读
 ---
 
 
@@ -12,3 +16,10 @@ categories:
 
 能力太强的人，其能久乎？
 
+
+
+## 参考
+
+1. [中国哲学史全奖-杨立华](https://www.bilibili.com/video/BV1U5411V7yf?p=23&t=7327)
+2. 老子道德经注校释-王弼
+3. 帛书老子校注-高明

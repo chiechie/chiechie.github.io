@@ -1,5 +1,5 @@
 ---
-title: 怎么推销自己
+title: 怎么介绍自己？
 author: chiechie
 mathjax: true
 date: 2021-03-26 09:59:58
@@ -15,29 +15,28 @@ categories:
 > 简历的作用，是挑选出有意思的，值得一见的人。
 
 
-## 自我介绍要点
+## 要点
 
-好的自我介绍要包含的信息
+自我介绍要包含的信息
 
 1. what do you value?
 2. how to deal with your mates?
 3. what's your taste?
 
->  you are what you consume
+    >  you are what you consume
 4. what's your passion about?
 5. show your meditation?
 
 
 ## 实践建议
 
-1. 面试官可以这么问：你为了你喜欢做的事情，付出过怎样的代价？做出过怎样的妥协？
-2. 展示自己的视野，能干点事儿，要知道最顶级的水平做到哪里了，要有国际化视野。
-3. 介绍自己过去工作/项目经历的时候, 要着重讲那些你做的决定（以及你是基于怎样的分析做出的决定，以及结果）
-4. 大多数人介绍的时候只做到简单直叙的 流水账：我们做了 A，然后做了 B，然后做了 C。
-5. 这流水账缺失的是： who made the decision to do A? was it you? if it's not, then I as your interviewer don't care about it so much, because you were just following orders. 
-6. 如果你在之前的单位/公司中人微言轻，大的决定轮不到你做，没关系，讲讲那些你可以做的，哪怕很小的决定。
-7. 为什么我作为面试官 care so much about YOUR decisions? because it's hard to tell anything about you when you are just following orders -- except maybe that you are good at following orders, which is a fine quality to have, but not enough for you to succeed at positions that require judgment, taste, ability to deal with uncertainty etc. on the other hand, decisions, even small ones, can tell so much.
 
+1. 展示你的passion：为了喜欢做的事情，付出过怎样的代价？做出过怎样的妥协？
+2. 展示自己的视野：对于自己专精的领域，，国内国外最顶级的水平做到哪里了？
+3. 展示你的决策能力：介绍自己过去工作/项目经历的时候, 要着重讲那些你做的决定，大的小的决定都可以，以及你是基于怎样的分析做出的决定，以及结果。目的是展示你的judgment，taste，ability to deal with uncertainty。
+4. 不要记流水账，eg 先做了A，然后做了B，然后做了C。
+
+    > 这样最多只能展示你是一个很好的执行者，那招一个应届生不就好了么，为什么非得是你呢？
 
 ## 参考资料
 

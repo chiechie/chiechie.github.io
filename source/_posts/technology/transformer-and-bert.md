@@ -26,59 +26,58 @@ categories:
 
 ##  High-Level ideas
 
-首先把模型看作一个黑盒。 在机器翻译（eg英译德）任务中，它会将一个句子（例如英文）翻译成一种语言（机器语言），然后再将其翻译成另一种语言（例如德文）。
+首先把模型看作一个黑盒。 在机器翻译（eg德译英）任务中，它会将一个句子（例如德文）翻译成一种语言（机器语言），然后再将其翻译成另一种语言（例如英文）。
 
 打开Transformer的黑盒，我们看到一个encoders组件，一个decoders组件，以及它们之间的数据流。
 
-![img](./transformer_encoders_decoders.png)
+![](./transformer_encoders_decoders.png)
 
 encoders内部stacked encoders(论文堆了六个)，decoders内部也是stacked decoders(论文堆了六个)。
 
-每一个encoder/decoder叫一个block。
+一个encoder或一个decoder叫做一个block。
 
-![img](./transformer_encoder_decoder_stack.png)
+![](./transformer_encoder_decoder_stack.png)
 
-encoder组件的6个block，在结构上都是相同的(但是它们没有共享权重)。
+encoders包含的6个block，结构相同，但是不共享权重。
 
-每个block包含2层:
+每个encoder block包含2层:
 
 - self-attention层，参数不共享
 - ffnn层，参数共享
 
-![img](./Transformer_encoder.png)
+![](./Transformer_encoder.png)
 
-decoder除了这两层，还有一个encoder-decoder attention层，用来关注encoder的输出，作用类似于  [seq2seq models](https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/) 中的attention。
+每个decoder block除了这两层，还有一个encoder-decoder attention层，用来关注encoder的输出，作用类似于  [seq2seq models](https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/) 中的attention。
 
-![img](./Transformer_decoder.png)
+![](./Transformer_decoder.png)
 
 ## 输入tensor
 
 上面介绍了Transformer的主要组件，现在看一下组件之间的数据流向。
 
-和一般的 NLP任务一样，Transformer首先使用[embedding algorithm](https://medium.com/deeper-learning/glossary-of-deep-learning-word-embedding-f90c3cec34ca)将每个输入单词转换成一个向量。
+和一般的NLP任务一样，Transformer首先使用[embedding algorithm](https://medium.com/deeper-learning/glossary-of-deep-learning-word-embedding-f90c3cec34ca)将每个输入单词转换成一个向量。
 
 
-![img](./transformer_embeddings.png) 
+![](./transformer_embeddings.png) 
+
 如上图，每个单词都被embedded为大小为512的向量（上面的x1，x2，x3）。 
 
 接下来，这个512的向量会流入self-attention和ffnn层。
 
-![img](./transformer_encoder_with_tensors.png)
-
-
+![](./transformer_encoder_with_tensors.png)
 
 接下来，我们以一个短句为例，看一下Transfomer内部细节。
 
 ## Encoder
 
-前面提到，encoder的输入是多个向量构成的list--[x1，x,2]。
+前面提到，encoder的输入是多个向量构成的list：[x1，x2]。
 
 接下来它是怎么处理这个list的呢？
 
 1. 将这些向量传递到一个"self-attention’"层，输出z1，z2
-2. 然后将z1，z2 丢入一个前馈神经网络，输出r1，r2 。注意这一层的dense layer的参数对所有的z1，z2，是共享的。
+2. 然后将z1，z2 丢入一个前馈神经网络，输出r1，r2。注意这一层的dense layer的参数对所有的z1，z2，是共享的。
 
-然后将r1，r2 传递给下一个编码器encoder2作为输入，encoder1的输入x1,x2和r1，r2的维度是一模一样的。
+然后将r1，r2 传递给下一个编码器encoder2作为输入，encoder1的输入（x1,x2）和输出（r1，r2）的维度是一样的。
 
 ![img](./transformer_encoder_with_tensors_2.png)
 
@@ -124,14 +123,8 @@ RNN通过hidden state策略，使得 它将 当前词  与 上下文（准确来
 
 这么设计的目的是，保证在加入了multi-head self- attention之后，encoder的输出和输入维度（512）还能保持一致。
 
-
-
 ![img](./transformer_self_attention_vectors.png) 
 这三个向量如何解读？为何有用？
-
-请听下文分解
-
-
 
 #### 第二步 计算权重分数
 
@@ -158,10 +151,7 @@ $<q_1, k_1>, <q_1, k_2>, ... < q1, k_m>$
 最终的向量，表示每个单词应该被当前单词关注的程度，值越大越应该被关注。。
 
 
-
 ![img](./transformer_self-attention_softmax.png) 
-
-
 
 
 
@@ -175,13 +165,13 @@ $<q_1, k_1>, <q_1, k_2>, ... < q1, k_m>$
 
 #### 使用矩阵运算对self-attention整个过程总结
 
-我们把刚刚的过程再加入一个维度，也就是从一个单词 变成 多个单词，计算他们各自的self- attention表示，
+把刚刚的过程再加入一个维度，也就是从一个单词 变成 多个单词，计算他们各自的self-attention表示，
 
 下面用矩阵表达：
 
 第一步是计算 Query、 Key 和 Value 矩阵：
 
-- 我们将embeddings塞到一个矩阵 x ：行数表示单词个数，列表示embedding的长度
+- 我们将embeddings塞到一个矩阵x：行数表示单词个数，列表示embedding的长度
 
 - 权重矩阵(WQ、 WK、 WV）：行代表embedding向量的长度，列分别代表query空间，key空间，value空间的维度
 - X分别和这几个矩阵相乘
@@ -189,16 +179,16 @@ $<q_1, k_1>, <q_1, k_2>, ... < q1, k_m>$
 ![img](./transformer_self-attention-matrix-calculation.png) 
 
 
-第二步，利用第一步的结果来计算attention的输出，用一个矩阵计算来 表达，简洁优雅
+第二步，利用第一步的结果来计算attention的输出，用一个矩阵计算来表达，简洁优雅
 
 ![img](./transformer_self-attention-matrix-calculation-2.png) 
 
 
 ### 多头怪兽
 
-论文通过增加"多头"注意机制进一步细化 self-attention layer。 这在两个方面改善了self-attention层的表现:
+论文通过增加"多头"注意机制进一步细化self-attention layer。 这在两个方面改善了self-attention层的表现:
 
-1. 它扩展了模型关注不同位置的能力。 单头机制虽然会注意到其他单词，但是注意力还是 很有可能完全被当前自己的状态牵制。多头的话，相当于多审视几遍 这个注意力，减少完全 关注自己 情况发生的可能性。
+1. 它扩展了模型关注不同位置的能力。单头机制虽然会注意到其他单词，但是注意力还是 很有可能完全被当前自己的状态牵制。多头的话，相当于多审视几遍 这个注意力，减少完全 关注自己 情况发生的可能性。
 
 2. 它给予attention层多个"表示子空间"。 正如我们接下来将看到的，通过多头，我们不仅有一组，而且有多组 query / key / value 权重矩阵(Transformer 使用八个头，因此我们最终为每个encoders / decoders设置了八组)。 这些集合中的每一个都是随机初始化的。 
 
@@ -211,7 +201,6 @@ $<q_1, k_1>, <q_1, k_2>, ... < q1, k_m>$
 ![img](./transformer_attention_heads_z.png)
 
 
-
 后面怎么跟dense层进行衔接呢？
 
 1. 将这8个z矩阵进行列拼接（concat）
@@ -222,9 +211,7 @@ $<q_1, k_1>, <q_1, k_2>, ... < q1, k_m>$
 这几乎就是multi-headed self-attention的全部内容。把整个过程放在一个图中描述：
 
 
-
 ![img](./transformer_multi-headed_self-attention-recap.png)
-
 
 
 回顾一下之前的例子，当我们对"it"进行encoding时，8个注意力头分别关注什么？
@@ -355,31 +342,10 @@ dense层是一个简单的全连接神经网络，它将stack of decoders的输�
 目标概率分布：
 
 ![img](./output_target_probability_distributions.png)
+
 模型输出：
 
 ![img](./transformer_output_trained_model_probability_distributions.png)
-
-
-## Go Forth And Transform
-
-还想更深度的了解transform可以查阅以下资料
-
-- [Attention Is All You Need ](https://arxiv.org/abs/1706.03762) paper, the Transformer blog post ( ([Transformer: A Novel Neural Network Architecture for Language Understanding ](https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html)), and the ) ，[Tensor2Tensor announcement](https://ai.googleblog.com/2017/06/accelerating-deep-learning-research.html).
-- Watch [Łukasz Kaiser’s talk  ](https://www.youtube.com/watch?v=rBCqOTEfxvg) walking through the model and its details 
-- Play with the [Jupyter Notebook provided as part of the Tensor2Tensor repo ](https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb)
-- Explore the [Tensor2Tensor repo](https://github.com/tensorflow/tensor2tensor).
-
-Follow-up works:
-
-- [Depthwise Separable Convolutions for Neural Machine Translation ](https://arxiv.org/abs/1706.03059)
-- [One Model To Learn Them All ](https://arxiv.org/abs/1706.05137)
-- [Discrete Autoencoders for Sequence Models ](https://arxiv.org/abs/1801.09797)
-- [Generating Wikipedia by Summarizing Long Sequences ](https://arxiv.org/abs/1801.10198)
-- [Image Transformer ](https://arxiv.org/abs/1802.05751)
-- [Training Tips for the Transformer Model ](https://arxiv.org/abs/1804.00247)
-- [Self-Attention with Relative Position Representations ](https://arxiv.org/abs/1803.02155)
-- [Fast Decoding in Sequence Models using Discrete Latent Variables ](https://arxiv.org/abs/1803.03382)
-- [Adafactor: Adaptive Learning Rates with Sublinear Memory Cost ](https://arxiv.org/abs/1804.04235)
 
 
 
@@ -387,3 +353,18 @@ Follow-up works:
 ![bert模型可视化](https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&rect=0%2C0%2C2668%2C3126&w=1980&h=2320)
 
 
+## 参考
+
+1. [Attention Is All You Need ](https://arxiv.org/abs/1706.03762) paper, the Transformer blog post ( ([Transformer: A Novel Neural Network Architecture for Language Understanding ](https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html)), and the ) ，[Tensor2Tensor announcement](https://ai.googleblog.com/2017/06/accelerating-deep-learning-research.html).
+2. Watch [Łukasz Kaiser’s talk  ](https://www.youtube.com/watch?v=rBCqOTEfxvg) walking through the model and its details 
+3. Play with the [Jupyter Notebook provided as part of the Tensor2Tensor repo ](https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb)
+4. Explore the [Tensor2Tensor repo](https://github.com/tensorflow/tensor2tensor).
+5. [Depthwise Separable Convolutions for Neural Machine Translation ](https://arxiv.org/abs/1706.03059)
+6. [One Model To Learn Them All ](https://arxiv.org/abs/1706.05137)
+7. [Discrete Autoencoders for Sequence Models ](https://arxiv.org/abs/1801.09797)
+8. [Generating Wikipedia by Summarizing Long Sequences ](https://arxiv.org/abs/1801.10198)
+9. [Image Transformer ](https://arxiv.org/abs/1802.05751)
+10. [Training Tips for the Transformer Model ](https://arxiv.org/abs/1804.00247)
+11. [Self-Attention with Relative Position Representations ](https://arxiv.org/abs/1803.02155)
+12. [Fast Decoding in Sequence Models using Discrete Latent Variables ](https://arxiv.org/abs/1803.03382)
+13. [Adafactor: Adaptive Learning Rates with Sublinear Memory Cost ](https://arxiv.org/abs/1804.04235)

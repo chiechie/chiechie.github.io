@@ -56,3 +56,26 @@ categories:
     - 应用的使用率下降，价格失灵（glitch），或者是市场营销策略失灵（glitch）
     - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F2_lB1mb-YB.png?alt=media&token=4eef9a64-f227-4cc2-974c-20d33bf9cf5e)
 - https://www.youtube.com/watch?v=pXGqDiE4N0I
+
+
+## 用户在使用过程中的疑问
+
+### 模型开发者
+
+模型开发者关心的是：
+
+- 为什么会告警？告警时，知道特征有什么变化，在模型输出的时候，把特征也带上
+- 屏蔽周期性的告警
+
+### 模型应用者
+
+模型服务的使用者关心的是
+
+- 应用时的阈值的修改记录在哪看？
+- 当前模型是不是最新版本？
+- 为什么要给我告警？ 
+  - 模型开发者需要在输出中加入告警描述字段
+  - 可视化saas，对告警的决策逻辑进行解释，eg上下界
+- 这么多模型，我该选择哪一个？
+- 业务相关的需求：
+  - 屏蔽周期性的告警。

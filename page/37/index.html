@@ -164,7 +164,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/18/meditation/chiechie-principle/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/15/AIOps/trace-preprocess/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/18/meditation/chiechie-principle/" class="post-title-link" itemprop="url">我的信念</a>
+            <a href="/2021/03/15/AIOps/trace-preprocess/" class="post-title-link" itemprop="url">调用链数据的预处理</a>
         </h2>
 
         <div class="post-meta">
@@ -188,14 +188,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-18 09:24:00" itemprop="dateCreated datePublished" datetime="2021-03-18T09:24:00+08:00">2021-03-18</time>
+              <time title="创建时间：2021-03-15 16:49:19" itemprop="dateCreated datePublished" datetime="2021-03-15T16:49:19+08:00">2021-03-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-30 08:59:20" itemprop="dateModified" datetime="2021-04-30T08:59:20+08:00">2021-04-30</time>
+                <time title="修改时间：2021-04-25 08:23:35" itemprop="dateModified" datetime="2021-04-25T08:23:35+08:00">2021-04-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -218,103 +218,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>设计产品的工作，以及跟人沟通产品的工作，让我感到痛苦，我不知道正确的决策路径是什么？以及背后的指导原则是什么？</p>
-<p>除了工作，还有生活，与人沟通，指导原则又是什么？</p>
-<p>进一步，如何理解这个世界？我想成为什么样的人？</p>
-<p>我正在探索的路上，想到什么就记下来，姑且称之为「我的信念」吧（对，参考的Ray Dalio的《Principles》）。</p>
-<p>信念有几个来源途径：通过自己的经验总结；看书；观察别人的行为；跟朋友交流。</p>
-</blockquote>
-<h2 id="basic">Basic</h2>
+          <h2 id="调用链的数据格式">调用链的数据格式</h2>
+<figure>
+<img src="../../_drafts/gluon-ts_2/img_1.png" alt="RPC框架下采集的调用链原始数据&amp;AIOps比赛的子调用数据" /><figcaption aria-hidden="true">RPC框架下采集的调用链原始数据&amp;AIOps比赛的子调用数据</figcaption>
+</figure>
+<ul>
+<li>最顶上的表格中是最原始的数据，中间表格和下面的表格是处理后的数据</li>
+<li>中间表格的是做调用链路分析（TraceAnomaly）用到的数据，用到了耗时，以及调用链的结构信息。</li>
+<li>最下面表格是2021AIOps比赛的调用链的数据，每个span_id表示一次子调用，即一次trace中，从触发该trace，开始的调用路径中，途径当前服务的那次子调用，对应表2中的一个call path。但是耗时是只包括当前服务从接受到call，到完成处理，开始response的时间间隔。</li>
+<li>【补充】这里的表格信息量很少，它不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。</li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
 <ol type="1">
-<li><p>找到最重要的问题，关注最重要的事情。</p></li>
-<li><p>对一个人的认知水平起决定性因素的，是信息的摄入质量。</p>
-<blockquote>
-<p>you are what you consume</p>
-</blockquote></li>
-<li><p>人总是看高自己，看轻别人。</p></li>
-<li><p>你觉得是常识的东西，对别人来说可能是知识盲区，或者非常有价值的信息；反过来亦如此。</p></li>
-<li><p>如果目标有多个，要区分他们是否「相容」，不「相容」的目标分阶段完成，不要企图一步到位。</p>
-<blockquote>
-<p>想找一份钱多事少受人尊敬有成就感的工作，不现实。可以分阶段实现。</p>
-<p>找设计一个低门槛又灵活度高的工具，不现实。可以拆成两个产品做。</p>
-</blockquote></li>
-<li><p>想获取对某个领域/topic的认知，关注对象的重要性：</p>
-<p>facts &gt; 人品和专业度过硬的专家opinion &gt; 普通人的opinion（短期可忽略，长期的要关注) &gt;&gt; 伪专家（包括咨询公司,like gartner）</p></li>
-<li><p>存量市场也是有机会的，很大程度上取决于你能在多大程度上和第一名做出差异化。</p></li>
-<li><p>知识并不必然增加智慧。（认知属于智慧的一种）</p></li>
-</ol>
-<h2 id="实践-自我成长">实践-自我成长</h2>
-<ol type="1">
-<li><p>只关注有价值的事物：每个领域的大部分内容都是垃圾，身边的大部分人都是平庸之辈, 我大部分时候做的事都索然无味，"乌合之众"本是世间常态，不要在这些事情上浪费时间。</p>
-<blockquote>
-<p>Set your course by the stars, not by the lights of passing ships.</p>
-</blockquote></li>
-<li><p>不要担心自己的形象，只关心如何实现目标。</p></li>
-<li><p>在众多矛盾中找主要矛盾，解决一个其他就顺带消失的那种；确定目标时，按照相对重要性，找最重要的，区分哪些是顺带的结果。</p></li>
-<li><p>掌握足够多的信息时，自己可以勾勒出「势」。信息不充分时，follow这个领域专家。</p></li>
-<li><p>怎么选公司？先分析战略，再分析战术。</p>
-<blockquote>
-<p>我现在最痛苦的地方是，我不看好目前的大方向，所以没有动力，去想怎么拆解，一步步地实现。</p>
-</blockquote></li>
-<li><p>保证生存的前提下，坚持长期主义。</p></li>
-<li><p>focus on价值链，而不是鄙视链。</p></li>
-<li><p>对新的知识有兴趣，而不是对自己掌握优势有兴趣。</p>
-<blockquote>
-<p>stay hungry，stay foolish。</p>
-</blockquote></li>
-<li><p>诚实是一种最高级的沟通技巧。</p></li>
-<li><p>一个领域总结的经验不能照搬到另外一个应用领域。</p></li>
-</ol>
-<blockquote>
-<p>比如ai模型并不能迁移；比如一个领域的专家可能是另外一个领域的白痴</p>
-</blockquote>
-<ol start="11" type="1">
-<li>补齐短板之后，更重要的是，要发挥自己的优势。</li>
-</ol>
-<blockquote>
-<p>我们本身更擅长发挥自己的优势而不是克服自己的缺点。</p>
-</blockquote>
-<ol start="12" type="1">
-<li>认识到自己的局限和知识盲区，尽可能获取更多的信息，从而更接近答案。</li>
-</ol>
-<blockquote>
-<p>乌合之众认为厉害的人知道所有答案，没有任何缺点。因为对这一点深信不疑，所以乌合之众通常在没有答案时，也企图证明自己的答案。</p>
-</blockquote>
-<h2 id="实践-与人交往">实践-与人交往</h2>
-<ol type="1">
-<li><p>多认识人，每个领域,每个阶层的人, 跟他们聊。</p></li>
-<li><p>你对他人的评价都必须是可以放在任何场合被公开的。</p></li>
-<li><p>不要跟身边的人比，跟比你强10倍的人比。</p></li>
-<li><p>任何一个人，当他把你全盘否定的时候，要么他是情绪上头，要么就是一个自大狂，乌合之众就是如此。不要放在心上。</p></li>
-<li><p>沟通的时候，对方可能会觉得你无知而轻视你。不要急着辩解，想想沟通的目的是什么。</p>
-<blockquote>
-<p>别人鄙视你的无知，peace, 承认自己无知,赞美别人</p>
-<p>对方不懂我的专业领域，给他科普，peace。</p>
-</blockquote></li>
-</ol>
-<h2 id="实践-职业规划">实践-职业规划</h2>
-<ol type="1">
-<li><p>向内求，忠于自我，找到热爱的事情，和尊敬的人一起工作，不断增加内在价值，外在价值自然显现。</p></li>
-<li><p>没有严格意义上的赢家通吃市场，总有新公司能从新角度提供更好的服务。</p></li>
-<li><p>所有伟大的需求都一定会用错误的方法或在错误的时间点试过很多次。</p>
-<blockquote>
-<p>所以那些正确的认知不是一开始就在某个人脑子里，而是在这个过程中，不同的人，抓住了不同的闪光点，最后有人把所有的闪光点聚合起来，形成了一个集大成的产品，这个认知是所有创业者社区的共有知识产权。</p>
-</blockquote></li>
-</ol>
-<h2 id="实践-情绪管理">实践-情绪管理</h2>
-<ol type="1">
-<li><p>Feelings are just visitors. Let them come and go.</p></li>
-<li><p>一个人要像一个军队, 有纪律有组织，言出必行。</p>
-<blockquote>
-<p>巴菲特：要想在一生中获得投资的成功，需要的是一个稳妥的知识体系作为决策的基础，并且有能力控制自己的情绪，使其不会对这种体系造成侵蚀。</p>
-</blockquote></li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/848324405e0fe08483ab6a4kc7432af0210c74d97b01b1c">Ray Dalio的原则</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/173952845">有知有行</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Gn9PmhPqbeH4zPIf-XRbwQ">高手如何做决策</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA">清华微众AIOps新作:基于深度学习的调用轨迹异常检测算法 -微信公众号</a></li>
+<li><a href="https://chiechie.github.io/2021/03/09/AIOps/aiops2021-demo/">AIOps挑战赛2020-demo方案-chiechie</a></li>
 </ol>
 
       
@@ -335,7 +252,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/16/technology/max-common-subsequence/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/15/reading_notes/ray-dalio_coperation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -349,7 +266,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/16/technology/max-common-subsequence/" class="post-title-link" itemprop="url">提取两个字符串的最大公共子串</a>
+            <a href="/2021/03/15/reading_notes/ray-dalio_coperation/" class="post-title-link" itemprop="url">原则-如何协作？</a>
         </h2>
 
         <div class="post-meta">
@@ -359,14 +276,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-16 23:46:13" itemprop="dateCreated datePublished" datetime="2021-03-16T23:46:13+08:00">2021-03-16</time>
+              <time title="创建时间：2021-03-15 11:44:59" itemprop="dateCreated datePublished" datetime="2021-03-15T11:44:59+08:00">2021-03-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-30 08:43:13" itemprop="dateModified" datetime="2021-04-30T08:43:13+08:00">2021-04-30</time>
+                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -374,7 +291,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -389,42 +306,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="求两个字符串的非连续的最大的公共子串">求两个字符串的非连续的最大的公共子串</h2>
-<p>这个可以转化为序列对齐的问题（sequence_alignment）, 下面介绍这个问题的其中一个解法--Needleman–Wunsch</p>
-<blockquote>
-<p>序列对齐有两种：全局对齐和局部对齐。全局对齐like Needleman–Wunsch algorithm，局部对齐like Smith–Waterman algorithm。</p>
+          <blockquote>
+<p>好无聊啊，为什么要把时间浪费在这些技巧上面</p>
 </blockquote>
-<p>两个字符串"GCATGCU"，"GATTAC" 如何将两个字符串进行拉伸或者对齐的方法，从而使得长度一致，并且距离最小</p>
-<p>有三种对齐的方法 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Sequences    Best alignments</span><br><span class="line">---------    ----------------------</span><br><span class="line">GCATGCU      GCATG-CU      GCA-TGCU      GCAT-GCU</span><br><span class="line">GATTACA      G-ATTACA      G-ATTACA      G-ATTACA</span><br></pre></td></tr></table></figure> 每个对齐的方法都可以通过两个字符串的距离矩阵表达，如下</p>
-<figure>
-<img src="./img.png" alt="Needleman–Wunsch" /><figcaption aria-hidden="true">Needleman–Wunsch</figcaption>
-</figure>
-<ul>
-<li>横的箭头表示，第2个字符串（"GATTAC"）当前要hold一下，加个"-"</li>
-<li>竖的箭头表示，第1个字符串（"GCATGCU"）当前要hold一下，加个"-"</li>
-</ul>
-<p>每个格子的分数， 表示截至目前为止， 累计的相似度得分+当前横着和竖着单个元素的相似度得分。</p>
-<p>当前横着和竖着单个元素的相似度得分的计算方法：</p>
-<ul>
-<li>字符完全匹配得1分</li>
-<li>不匹配得-1分</li>
-<li>其中一个为gap得-1分</li>
-</ul>
-<h2 id="求两个字符串的连续的最大公共子串">求两个字符串的连续的最大公共子串</h2>
-<p>题目：求两个字符串的最大公共子串。 这个公共子串可以是连续的也可以是不连续的，区别不大，下面只看连续的情况。</p>
-<p>思路是，构造一个矩阵，行为字符串A的每个字符，列为字符串B的每个字符 矩阵中元素默认为0， 第i行第j列的元素表示，A的子串（index从0到i）和B的子串(index葱从0到j)的最大公共子串的长度，并且这个公共子串在A的index为 ✨ 到i，在B的index为✨到j。</p>
-<p>例如 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：text1 &#x3D; &quot;abcde&quot;, text2 &#x3D; &quot;ace&quot; </span><br><span class="line">输出：3  </span><br><span class="line">解释：最长公共子序列是 &quot;ace&quot; ，它的长度为 3 。</span><br></pre></td></tr></table></figure> 酱紫</p>
-<h3 id="最简单的实现">最简单的实现</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment">## 不连续子串的版本</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestCommonSubsequence</span>(<span class="params">self, text1, text2</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :type text1: str</span></span><br><span class="line"><span class="string">        :type text2: str</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        compare_matrix = np.zeros((<span class="built_in">len</span>(text1) + <span class="number">1</span>, <span class="built_in">len</span>(text2) + <span class="number">1</span>))</span><br><span class="line">        <span class="keyword">for</span> i, s1 <span class="keyword">in</span> <span class="built_in">enumerate</span>(text1):</span><br><span class="line">            <span class="keyword">for</span> j, s2 <span class="keyword">in</span> <span class="built_in">enumerate</span>(text2):</span><br><span class="line">                <span class="keyword">if</span> s1 == s2:</span><br><span class="line">                    compare_matrix[i + <span class="number">1</span>, j + <span class="number">1</span>] = compare_matrix[:(i+<span class="number">1</span>), :(j+<span class="number">1</span>)].<span class="built_in">max</span>() + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">int</span>(compare_matrix.<span class="built_in">max</span>())</span><br><span class="line"><span class="comment">## 连续子串的版本</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestCommonSubsequence</span>(<span class="params">self, text1, text2</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :type text1: str</span></span><br><span class="line"><span class="string">        :type text2: str</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        compare_matrix = np.zeros((<span class="built_in">len</span>(text1) + <span class="number">1</span>, <span class="built_in">len</span>(text2) + <span class="number">1</span>))</span><br><span class="line">        <span class="keyword">for</span> i, s1 <span class="keyword">in</span> <span class="built_in">enumerate</span>(text1):</span><br><span class="line">            <span class="keyword">for</span> j, s2 <span class="keyword">in</span> <span class="built_in">enumerate</span>(text2):</span><br><span class="line">                <span class="keyword">if</span> s1 == s2:</span><br><span class="line">                    compare_matrix[i + <span class="number">1</span>, j + <span class="number">1</span>] = compare_matrix[i, j] + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">int</span>(compare_matrix.<span class="built_in">max</span>())</span><br></pre></td></tr></table></figure>
-<p>虽然结果对了，但是耗时太久，消耗内存大。</p>
-<h3 id="优化了一下运行时间">优化了一下运行时间</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestCommonSubsequence</span>(<span class="params">self, text1, text2</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :type text1: str</span></span><br><span class="line"><span class="string">        :type text2: str</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        l1 , l2 = <span class="built_in">len</span>(text1)  , <span class="built_in">len</span>(text2)</span><br><span class="line">        compare_matrix = [[<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(l2 + <span class="number">1</span>)] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(l1 + <span class="number">1</span>)]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(l1):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(l2):</span><br><span class="line">                <span class="keyword">if</span> text1[i] == text2[j]:</span><br><span class="line">                    compare_matrix[i + <span class="number">1</span>][j + <span class="number">1</span>] = compare_matrix[i][j] + <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    connitues = <span class="number">0</span></span><br><span class="line">                    compare_matrix[i + <span class="number">1</span>][j + <span class="number">1</span>] = <span class="built_in">max</span>(compare_matrix[i+<span class="number">1</span>][j], compare_matrix[i][j+<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span> compare_matrix[i+<span class="number">1</span>][j+<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="向上管理">向上管理</h2>
+<p>老板既不是组织结构图上的一个头衔，也不是一个“职能”。他们是有个性的人，他们有权以自己最得心应手的方式来工作。与他们共事的人有责任观察他们，了解他们的工作方式，并做出相应的自我调整，去适应老板最有效的工作方式。</p>
+<h2 id="跟同级的人沟通">跟同级的人沟通</h2>
+<ol type="1">
+<li><p>每个人都有他自己的做事方法，也有权按照自己的方式来工作，而不是按你的方法来工作。重要的是，<strong>他们能否有所作为以及他们持有什么样的价值观</strong>。</p></li>
+<li><p>每个人的工作方式不一样。提高效率的第一步是了解跟你合作的人，以利用他们的长处、工作方式和价值观。工作关系当以工作为基础，也以人为基础。</p></li>
+<li><p>人际关系责任的第二部分内容是沟通责任。人跟人之间的大部分冲突是因为：不知道别人在做什么，采取怎样的工作方式，想要做出什么样的贡献以及期望得到怎样的结果。不了解的原因是他们没去问。这种不去问明情况的做法，与其说是反映了人类的愚蠢，倒不如说是历史使然。在以前，人们没必要把这些情况告诉任何人。</p>
+<blockquote>
+<p>比如在中世纪的城市，一个区的每一个人从事的行业都一样。在乡村，土地刚一解冻，山谷里的每一个人就开始播种同一种农作物。即使有少数人做的事情和大家不一样，他们也是单独工作，因此不需要告诉任何人他们在做什么。</p>
+</blockquote></li>
+</ol>
+<h2 id="关于团队分工">关于团队分工</h2>
+<p>桥水使用一种称为“团队倾向简表”的测试来合理安排工作。“团队倾向简表”识别的5种类型是创造者、推进者、改进者、贯彻者和变通者。· 创造者提出新想法、新概念。他们喜欢非结构化、抽象的活动，喜欢创新和不走寻常路。· 推进者传递这些新想法并推进。他们喜欢感觉和人际关系，管理各种人的因素。他们非常善于激发工作热情。· 改进者挑战想法。他们分析计划以寻找缺陷，然后以很客观、符合逻辑的方式改进计划。他们喜欢事实和理论，以系统性的方式工作。· 贯彻者也可以叫作执行者。他们确保重要的工作得到执行，目标被实现。他们关注细节和结果。· 变通者是以上4种类型的结合。他们能根据特定需求调整自身，并能从各种各样的视角看待问题。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-common-subsequence/">求两个字符串的连续最大公共子串-leetcode地址</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=LhpGz5--isw">求两个字符串的非连续最大公共子串-youtube</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm">smith-waterman-wiki</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/alevchuk/pairwise-alignment-in-python/blob/master/alignment.py">alignment-smith-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?src=11&amp;timestamp=1615476352&amp;ver=2940&amp;signature=2sRvaRpQinI2YVCYYfi3Amq*2KJv2UTfXyQWq-uML68g4DuwxKNaulHbkixJc91hNrDn2MHZUVgTr8T4RSCLVRZa3pGGRXm921lm*wgATyH*Azwj-rBslwjClDhLx*eL&amp;new=1">你事业的上限究竟在哪里？-公众号文章</a></li>
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/848324405e0fe08483ab6a4kc7432af0210c74d97b01b1c">RayDalio的原则</a></li>
 </ol>
 
       
@@ -444,7 +345,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -510,7 +411,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -523,7 +424,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">147</span>
+        <span class="site-state-item-count">144</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

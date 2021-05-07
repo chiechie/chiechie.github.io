@@ -16,9 +16,7 @@ tags:
 最近要做一个nlp的项目，需求就是从一堆杂乱无章的日志中，发现一些规律。
 看看哪些日志其实是在说一个事情，可归为一类；哪些日志暗示着新的事情在发生，就告警。
 
-有点类似给用户分群，本质是一个EDA。
-
-跟用户分群相比，日志分析有一些特殊的需求，比如，我们通常先关注目前在发生什么事情严不严重，然后再才是事情的细节。前者典型的字段包括时间，日志级别等。后者典型的字段包括具体ip，网站，数量。
+本质是一个EDA,有点类似给用户分群。跟用户分群相比，日志分析有一些特殊的需求，比如，我们通常先关注目前发生的事情严不严重，然后才关注细节。描述前者的典型字段包括时间，日志级别，其他关键词。描述后者的典型字段包括具体ip，网站，端口号等等。
 
 
 ## 看看别人怎么做的
@@ -32,8 +30,12 @@ tags:
 - 跟指标异常检测的思路不一样，这个不看日志中提取出来的数值指标，看的是日志间的序列关系，出现的先后顺序，更适合用来做辅助 系统的故障定位（复杂的网状调用调用链路），而前者更适合做系统的性能监控，需要人工定义感兴趣的测量方式（人工指定特征）。
 - 跟日志异常检测相比，本文的应用更加的end2end。
 
+可以了解，实际中先不考虑这个方案，复杂且黑盒，不好调效果。
+
 
 ### logmine
+1. 
+
 
 ## 一些思考
 
@@ -49,5 +51,5 @@ tags:
 
 1. [apache_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)
 2. [硕士论文-模式识别在海量日志分析中的应用研究  "施佳奇"](https://www.ixueshu.com/h5/document/814a23b6b51168d40153bcb23ef479f1318947a18e7f9386.html)
-3. [关于logmine的实践--chiechie's github](https://github.com/chiechie/LogRobot)
+3. [关于logmine的改进版--chiechie's github](https://github.com/chiechie/LogRobot)
 4. [关于logmine的实践--chiechie's blog](https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/)

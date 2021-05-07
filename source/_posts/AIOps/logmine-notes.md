@@ -35,17 +35,17 @@ logmine使用的是基于聚类的方法，做日志摘要生成。
 
 ### 对于每个cluster，提取pattern
 
-![图2-日志分析流程](image-20210226000021042.png)
+![图2-日志分析流程](logmine-notes/image-20210226000021042.png)
 
 - step1. 字段类型检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date。这个模式和正则表达式可以让用户定义。
 - step2. 分词，每条日志都得到一个word vector.
 - step3. 一边聚类 一边提取pattern
 
-![](./img.png)
+![](../img.png)
 
-## 怎么设置level？
+### 怎么设置level？
 
-![图3-评价当前pattern的信息含量](cost_function.png)
+![图3-评价当前pattern的信息含量](logmine-notes/cost_function.png)
 
 怎么设置level？看每个level的信息损失程度，这里用cost function表示，值越大，表示丢失的信息越多
 
@@ -59,9 +59,9 @@ $$\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times
 
 
 提取层次化模式，参考下图
-![图1-层次化地提取日志模式](logmine_image-20210225214320632.png)
+![图1-层次化地提取日志模式](logmine-notes/logmine_image-20210225214320632.png)
 
-![图2-logmine-result](logmin-result.png)
+![图2-logmine-result](logmine-notes/logmin-result.png)
 
 
 ### 衡量两条日志的相似性
@@ -90,33 +90,49 @@ $$\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathrm{x}=
 - $k_1$: 如果两个fixed value字段一样，得$k_1$分，默认值为1
 - $k_2$: 如果两个变量字段一样，得$k_2$分，默认值为2
 
-## 怎么评估日志聚类的效果？
+### 怎么评估效果？
 
 整个问题的评估可以拆分为两个小评估:
 
 - 评估聚类的准确率？
 - 评估模式的准确率？
 
-因为没有标签，所以两个算法都是跟baseline算法对比。（都有了baseline，还要你这个算法干嘛？）
+因为没有标签，所以聚类和评估都是跟baseline比
 
-- 聚类效果跟baseline--OPTICS对比: 使用greement score这个指标，即最大公共子集的比例。
-- 模式效果跟baseline--UPGMA比：UPGMA的结果作为ground truth，比较两者的pattern是否一致：一个字段一个字段地比较recall 和 precision.
+> 都有了baseline，还要你这个算法干嘛？可能logmine的性能有优势？
+
+- 聚类效果跟baseline--OPTICS对比: 看最大公共子集的比例（原文中的agreement score）。
+- 模式效果跟baseline--UPGMA比：UPGMA的结果作为ground truth，比较recall和precision.
   	
 	> UPGMA算法的输入一批原始日志，输出是一个patten
 
 $\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}$
 
+## chiechie's对logmine的总结
 
+论文看完了，代码也跑了一遍，发现有几个问题：
 
-### 落地时遇到的问题？
+1. 所谓的不需要人工干预，没有做到。很重要的一个功能就是从原始文本中提取variable类型的字段（field），需要人制定variable的name以及正则匹配规则。否则代码是不会主动帮你探测的。
+![](./c2.png)
+2. 不同的cluster的pattern可能存在如下的父子关系
+	```markdown
+	pattern36 : datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp *** *** from *** to ***
+	pattern50:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp *** *** from *** to ***
+	pattern53:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp 1c7c49d5 11024333 from *** to ***
+	pattern64:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp *** *** from *** to ***
+	```
+ 	
+	> 每个cluster的中心是第一个进入到该cluster的日志的log-signature。
+	> 能归到这个cluster的日志都跟中心的距离在maxdist以内。这有一个问题，有一些日志虽然跟该cluster的中心相距较远，但是提取出的pattern可能又很接近.
 
+3. 2的解决方案：
+	1. 对于每个cluster提取pattern时，只保留最抽象的一层
+	2. 所有的cluster构建完之后，将存在父子pattern的cluster合并。
 
-1. 原文对于复杂的，毫无规则的原始日志，无能为力
-![](badcase.png)
 
 ## 参考资料
 
 1. [logmine-paper](https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf)
-2. [logmine-pypi](https://pypi.org/project/logmine/)
+2. [logmine-github](https://github.com/trungdq88/logmine/tree/master/src)
 3. [apache_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)
 4. [chiechie-关于logmine的实践](https://github.com/chiechie/LogRobot)

@@ -24,7 +24,7 @@ tags:
 
 logmine使用的是基于聚类的方法，做日志摘要生成。
 
-主要思路是，一遍构建cluster，一边提取pattern
+主要思路是，一边构建cluster，一边提取pattern
 
 ### 找cluster
 
@@ -80,8 +80,8 @@ $$\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathr
 pattern 长什么样呢？ 每个pattern有三类字段：fixed value， Variable 和 Wildcard
 
 - 固定值（fixed value field ）：如www, httpd, INFO ，有明确含义的，固化的。
-- 可变字段（A variable field）：如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的额。
-- Wildcards ：任意的字段，are matched with values of all types。
+- 可变字段（A variable field）：如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的，需要用户定义name和regex。
+- Wildcards ：任意的字段,就是**。
 
 衡量两个pattern相似性的函数（不同类型的word给的权重不一样）：
 
@@ -112,7 +112,7 @@ $\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c 
 
 论文看完了，代码也跑了一遍，发现有几个问题：
 
-1. 所谓的不需要人工干预，没有做到。很重要的一个功能就是从原始文本中提取variable类型的字段（field），需要人制定variable的name以及正则匹配规则。否则代码是不会主动帮你探测的。
+1. 所谓的不需要人工干预，没有做到。很重要的一个功能就是从原始文本中提取variable类型的字段（field），需要人指定variable的name以及正则匹配规则。否则代码是不会主动帮你探测的。
 ![](./c2.png)
 2. 不同的cluster的pattern可能存在如下的父子关系
 	```markdown

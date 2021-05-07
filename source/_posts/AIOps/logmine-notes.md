@@ -29,23 +29,23 @@ logmine使用的是基于聚类的方法，做日志摘要生成。
 ### 找cluster
 
 - 先定义一个参数MaxDist， 表示cluster的半径
-- 对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就创建一个新的cluster，并且以他为中心。
+- 对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就以他为中心创建一个新的cluster。
   
-	> 为了提升效率，判断是否属于某个cluster时使用early abandon的策略，如果已对比的字段累计距离超过了半径，这句话的词还没遍历完，可以提前停止了，距离只会越来越大。
+	> 为了提升效率，判断是否属于某个cluster时使用early abandon的策略，如果已对比的字段累计距离超过了半径，就可以提前停止了，因为距离只会越来越大。
 
 ### 对于每个cluster，提取pattern
 
-![图2-日志分析流程](logmine-notes/image-20210226000021042.png)
+![图2-日志分析流程](./image-20210226000021042.png)
 
 - step1. 字段类型检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date。这个模式和正则表达式可以让用户定义。
 - step2. 分词，每条日志都得到一个word vector.
 - step3. 一边聚类 一边提取pattern
 
-![](../img.png)
+![](./img.png)
 
 ### 怎么设置level？
 
-![图3-评价当前pattern的信息含量](logmine-notes/cost_function.png)
+![图3-评价当前pattern的信息含量](./cost_function.png)
 
 怎么设置level？看每个level的信息损失程度，这里用cost function表示，值越大，表示丢失的信息越多
 
@@ -59,9 +59,10 @@ $$\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times
 
 
 提取层次化模式，参考下图
-![图1-层次化地提取日志模式](logmine-notes/logmine_image-20210225214320632.png)
 
-![图2-logmine-result](logmine-notes/logmin-result.png)
+![图1-层次化地提取日志模式](./logmine_image-20210225214320632.png)
+
+![图2-logmine-result](./logmin-result.png)
 
 
 ### 衡量两条日志的相似性
@@ -113,7 +114,8 @@ $\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c 
 论文看完了，代码也跑了一遍，发现有几个问题：
 
 1. 所谓的不需要人工干预，没有做到。很重要的一个功能就是从原始文本中提取variable类型的字段（field），需要人指定variable的name以及正则匹配规则。否则代码是不会主动帮你探测的。
-![](./c2.png)
+	![](./c2.png)
+   
 2. 不同的cluster的pattern可能存在如下的父子关系
 	```markdown
 	pattern36 : datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp *** *** from *** to ***

@@ -203,7 +203,7 @@ BCP效果更好，更适合分析长序列，但是不适合在线模式，
 ## 在线推断
 在实时阶段，使用因果图（causality graph）来做根因推断，得到可能的原因列表。
 
-![图1-根因分析框架](img.png)
+![图1-根因分析框架](anomalies-classification/img.png)
 
 ## 评估
 

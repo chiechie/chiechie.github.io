@@ -87,7 +87,7 @@ $$\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathrm{x}=
 - step3. 字段检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date，
 将192.168.10.15 替换成 IP. 这个替换规则可以让用户自己定义
 
-![img.png](img.png)
+![img.png](anomalies-classification/img.png)
 
 ## 怎么指定层次（level）？
 

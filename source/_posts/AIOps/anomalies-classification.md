@@ -34,28 +34,29 @@ categories:
 
 ### 全局异常
 
-![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fe5xvWaFd-5.png?alt=media&token=5336310f-89cd-4473-9bb1-143a9d13b18c)
 - 全局异常点有点像黑天鹅事件，是过去从未发生过的。
+
 ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FCKVQOb5SfY.png?alt=media&token=865c7106-259f-4a80-815c-760fb90ec667)
 
-### 条件异常contextual or conditional 异常：
+### 条件异常
 
-举个例子，我们身边出现了一个穿西装打领带的人，跟我们格格不入，但是放到另外一个context中，比如房屋中介行业很正常
--  value deviates quite a lot from the rest of the data points
-- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FnXawC0HqOy.png?alt=media&token=5c7342d6-3a64-4419-94ff-15bdd88caddb)
-- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F6Xu6OyOp_1.png?alt=media&token=4183f749-bf21-4ab6-8eb1-af5ae7ddbc26)
-- 凌晨销量突然升高
+条件异常(contextual or conditional anomalies)：value deviates quite a lot from the rest of the data points
+举2个例子，
+1. 办公室出现了一个穿西装打领带的人，跟我们格格不入，但是放到另外一个context中，比如房屋中介行业很正常
+2. 凌晨销量突然升高
   
+![](./img.png)
+
 
 ### 联合异常
 
-每一个点不是异常的（既非 contextual 也非 global），但是一起出现就异常了，
-- eg，一个小区中，有人去医院很正常，但是整个小区的人同时去医院就不正常了。
-- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FXpW2etejqZ.png?alt=media&token=e9c193ea-612e-42ce-9664-136d41a89297)
-- 投放广告时，预算增加，曝光和点击同时上升是很正常的。但是如下，曝光增加，点击却下降就 意味着 产生了某个issuse，有可能是 广告中心 设置了 一个空的广告位， 或者 将广告曝光给了错误的用户。
-    - 应用的使用率下降，价格失灵（glitch），或者是市场营销策略失灵（glitch）
-    - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F2_lB1mb-YB.png?alt=media&token=4eef9a64-f227-4cc2-974c-20d33bf9cf5e)
-- https://www.youtube.com/watch?v=pXGqDiE4N0I
+![img.png](./img78.png)
+
+
+每一个点不是异常的（既非 contextual 也非 global），但是一起出现就异常了，例如
+1. 一个小区中，有人去医院很正常，但是整个小区的人同时去医院就不正常了。
+2. 投放广告时，预算增加，曝光和点击同时上升是很正常的。但是曝光增加，点击却下降（市场营销策略失灵--glitch）就意味着有问题，可能是广告中心设置了一个空的广告位，或者将广告曝光给了错误的用户。
+   ![img.png](./img0890.png)
 
 
 ## 用户在使用过程中的疑问
@@ -79,3 +80,8 @@ categories:
 - 这么多模型，我该选择哪一个？
 - 业务相关的需求：
   - 屏蔽周期性的告警。
+
+
+
+## 参考资料
+1. https://www.youtube.com/watch?v=pXGqDiE4N0I

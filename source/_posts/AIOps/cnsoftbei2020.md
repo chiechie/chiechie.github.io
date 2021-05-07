@@ -27,7 +27,7 @@ categories: AIOps
   
 ![corr](corr.png)
 
-![节点个数](img.png)
+![节点个数](anomalies-classification/img.png)
 
 对应的 因果图巨大无比，如下：
 

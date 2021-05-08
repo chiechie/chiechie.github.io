@@ -100,7 +100,7 @@ $$\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathrm{x}=
 
 因为没有标签，所以聚类和评估都是跟baseline比
 
-> 都有了baseline，还要你这个算法干嘛？可能logmine的性能有优势？
+> 都有了baseline，还要logmine的必要性在于：可能logmine有性能优势？
 
 - 聚类效果跟baseline--OPTICS对比: 看最大公共子集的比例（原文中的agreement score）。
 - 模式效果跟baseline--UPGMA比：UPGMA的结果作为ground truth，比较recall和precision.

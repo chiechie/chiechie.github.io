@@ -123,13 +123,13 @@ $\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c 
 	pattern53:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp 1c7c49d5 11024333 from *** to ***
 	pattern64:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp *** *** from *** to ***
 	```
- 	
-	> 每个cluster的中心是第一个进入到该cluster的日志的log-signature。
-	> 能归到这个cluster的日志都跟中心的距离在maxdist以内。这有一个问题，有一些日志虽然跟该cluster的中心相距较远，但是提取出的pattern可能又很接近.
+ 
+ 	> 聚类时，比的是原始日志log_signature和类中心log_signature的距离， 	
+	> 这有一个问题，有一些日志虽然跟该cluster的中心相距较远，但是提取出的pattern可能又很接近.
 
 3. 2的解决方案：
 	1. 对于每个cluster提取pattern时，只保留最抽象的一层
-	2. 所有的cluster构建完之后，将存在父子pattern的cluster合并。
+	2. 所有的cluster构建完之后，将存在父子pattern的cluster手动合并。
 
 
 ## 参考资料

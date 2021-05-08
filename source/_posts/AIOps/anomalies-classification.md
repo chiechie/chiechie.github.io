@@ -40,8 +40,8 @@ categories:
 
 ### 条件异常
 
-条件异常(contextual or conditional anomalies)：value deviates quite a lot from the rest of the data points
-举2个例子，
+条件异常(contextual or conditional anomalies)：value deviates quite a lot from the rest of the data points，举2个例子，
+
 1. 办公室出现了一个穿西装打领带的人，跟我们格格不入，但是放到另外一个context中，比如房屋中介行业很正常
 2. 凌晨销量突然升高
   
@@ -54,6 +54,7 @@ categories:
 
 
 每一个点不是异常的（既非 contextual 也非 global），但是一起出现就异常了，例如
+
 1. 一个小区中，有人去医院很正常，但是整个小区的人同时去医院就不正常了。
 2. 投放广告时，预算增加，曝光和点击同时上升是很正常的。但是曝光增加，点击却下降（市场营销策略失灵--glitch）就意味着有问题，可能是广告中心设置了一个空的广告位，或者将广告曝光给了错误的用户。
    ![img.png](./img0890.png)

@@ -78,11 +78,11 @@ $$\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathr
 
 ### 衡量两个pattern的相似性
 
-pattern 长什么样呢？ 每个pattern有三类字段：fixed value， Variable 和 Wildcard
+pattern包含三类字段：fixed value， Variable 和 Wildcard
 
-- 固定值（fixed value field ）：如www, httpd, INFO ，有明确含义的，固化的。
-- 可变字段（A variable field）：如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的，需要用户定义name和regex。
-- Wildcards ：任意的字段,就是**。
+- 固定值（fixed value field ）：如www, httpd, INFO，固化的。
+- 可变字段（A variable field）：需要用户定义name和regex，如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的，
+- Wildcards ：就是**。
 
 衡量两个pattern相似性的函数（不同类型的word给的权重不一样）：
 

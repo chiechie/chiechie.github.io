@@ -20,28 +20,28 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="日志聚类做的事情，本质上也是在简洁性和信息丰富性之间做的trade-off。原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。  问题描述 将多来源的海量日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。 解决方案 logmine使用的是基于聚类的方法，做日志摘要生成。 概要  图1-层次化地提取日志模式   图2-logmine-re">
+  <meta name="description" content="日志聚类本质上是在简洁性和信息丰富性之间trade-off。 原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。  问题描述 将不同来源的日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。 解决方案 logmine使用的是基于聚类的方法，做日志摘要生成。 主要思路是，一边构建cluster，一边提取pattern 找cluster  先">
 <meta property="og:type" content="article">
-<meta property="og:title" content="logmine论文笔记">
+<meta property="og:title" content="使用logmine加强版做日志聚类">
 <meta property="og:url" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Cosmos">
-<meta property="og:description" content="日志聚类做的事情，本质上也是在简洁性和信息丰富性之间做的trade-off。原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。  问题描述 将多来源的海量日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。 解决方案 logmine使用的是基于聚类的方法，做日志摘要生成。 概要  图1-层次化地提取日志模式   图2-logmine-re">
+<meta property="og:description" content="日志聚类本质上是在简洁性和信息丰富性之间trade-off。 原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。  问题描述 将不同来源的日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。 解决方案 logmine使用的是基于聚类的方法，做日志摘要生成。 主要思路是，一边构建cluster，一边提取pattern 找cluster  先">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/logmine_image-20210225214320632.png">
-<meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/logmin-result.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/image-20210226000021042.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/img.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/cost_function.png">
-<meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/badcase.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/logmine_image-20210225214320632.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/logmin-result.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/c2.png">
 <meta property="article:published_time" content="2021-03-04T03:01:18.000Z">
-<meta property="article:modified_time" content="2021-04-27T04:49:25.391Z">
+<meta property="article:modified_time" content="2021-05-10T00:46:25.514Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="AIOps">
 <meta property="article:tag" content="论文笔记">
 <meta property="article:tag" content="NLP">
 <meta property="article:tag" content="日志分析">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/logmine_image-20210225214320632.png">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/image-20210226000021042.png">
 
 <link rel="canonical" href="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/">
 
@@ -56,7 +56,7 @@
   };
 </script>
 
-  <title>logmine论文笔记 | Chiechie's Cosmos</title>
+  <title>使用logmine加强版做日志聚类 | Chiechie's Cosmos</title>
   
 
 
@@ -190,7 +190,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          logmine论文笔记<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AIOps/logmine-notes.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          使用logmine加强版做日志聚类<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AIOps/logmine-notes.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -207,7 +207,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-27 12:49:25" itemprop="dateModified" datetime="2021-04-27T12:49:25+08:00">2021-04-27</time>
+                <time title="修改时间：2021-05-10 08:46:25" itemprop="dateModified" datetime="2021-05-10T08:46:25+08:00">2021-05-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -231,111 +231,109 @@
 
       
         <blockquote>
-<p>日志聚类做的事情，本质上也是在简洁性和信息丰富性之间做的trade-off。原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。</p>
+<p>日志聚类本质上是在简洁性和信息丰富性之间trade-off。</p>
+<p>原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。</p>
 </blockquote>
 <h2 id="问题描述">问题描述</h2>
-<p>将多来源的海量日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。</p>
+<p>将不同来源的日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。</p>
 <h2 id="解决方案">解决方案</h2>
 <p>logmine使用的是基于聚类的方法，做日志摘要生成。</p>
-<h3 id="概要">概要</h3>
-<figure>
-<img src="logmine_image-20210225214320632.png" alt="图1-层次化地提取日志模式" /><figcaption aria-hidden="true">图1-层次化地提取日志模式</figcaption>
-</figure>
-<figure>
-<img src="logmin-result.png" alt="图2-logmine-result" /><figcaption aria-hidden="true">图2-logmine-result</figcaption>
-</figure>
-<h3 id="概述">概述</h3>
-<p>从high-level角度看整个流程是怎么运作的：</p>
+<p>主要思路是，一边构建cluster，一边提取pattern</p>
+<h3 id="找cluster">找cluster</h3>
 <ul>
-<li>第一次：原始日志 --&gt; 聚类 --&gt; leve1-clusters --&gt; Level1-pattern：每个cluster提取一个pattern</li>
-<li>第二次：Level1-pattern --&gt; 聚类 --&gt; leve2-clusters --&gt; Level2-pattern：每个cluster提取一个pattern</li>
-<li>第三次：Level2-pattern --&gt; 聚类 --&gt; leve2-clusters --&gt; Level3-pattern：每个cluster提取一个pattern</li>
-<li>...</li>
+<li><p>先定义一个参数MaxDist， 表示cluster的半径</p></li>
+<li><p>对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就以他为中心创建一个新的cluster。</p>
+<blockquote>
+<p>为了提升效率，判断是否属于某个cluster时使用early abandon的策略，如果已对比的字段累计距离超过了半径，就可以提前停止了，因为距离只会越来越大。</p>
+</blockquote></li>
 </ul>
+<h3 id="对于每个cluster提取pattern">对于每个cluster，提取pattern</h3>
+<figure>
+<img src="./image-20210226000021042.png" alt="图2-日志分析流程" /><figcaption aria-hidden="true">图2-日志分析流程</figcaption>
+</figure>
+<ul>
+<li>step1. 字段类型检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date。这个模式和正则表达式可以让用户定义。</li>
+<li>step2. 分词，每条日志都得到一个word vector.</li>
+<li>step3. 一边聚类 一边提取pattern</li>
+</ul>
+<p><img src="./img.png" /></p>
+<h3 id="怎么设置level">怎么设置level？</h3>
+<figure>
+<img src="./cost_function.png" alt="图3-评价当前pattern的信息含量" /><figcaption aria-hidden="true">图3-评价当前pattern的信息含量</figcaption>
+</figure>
+<p>怎么设置level？看每个level的信息损失程度，这里用cost function表示，值越大，表示丢失的信息越多</p>
+<p><span class="math display">\[\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times\left(a_{1} W C_{i}+a_{2} V a r_{i}+a_{3} F V_{i}\right)\]</span></p>
+<ul>
+<li><span class="math inline">\({Size}_i\)</span>: 第i个pattern包含的日志个数，</li>
+<li><span class="math inline">\({WC}_i\)</span>: 第i个pattern，**的个数，对应权重a1，默认取1</li>
+<li><span class="math inline">\({Var}_i\)</span>:第i个pattern，变量的个数，对应权重a2，默认取0</li>
+<li><span class="math inline">\({FV}_i\)</span>: 第i个pattern，固定值的个数，对应权重a3，默认取0</li>
+</ul>
+<p>提取层次化模式，参考下图</p>
+<figure>
+<img src="./logmine_image-20210225214320632.png" alt="图1-层次化地提取日志模式" /><figcaption aria-hidden="true">图1-层次化地提取日志模式</figcaption>
+</figure>
+<figure>
+<img src="./logmin-result.png" alt="图2-logmine-result" /><figcaption aria-hidden="true">图2-logmine-result</figcaption>
+</figure>
 <h3 id="衡量两条日志的相似性">衡量两条日志的相似性</h3>
-<p>衡量两条日志的相似性，使用的是距离函数：</p>
+<p>衡量两条日志相似性的函数：</p>
 <p><span class="math display">\[\operatorname{Dist}(P, Q)=1-\sum\limits_{i=1}^{\operatorname{Min}(\operatorname{len}(P), \operatorname{len}(Q))} \frac{\operatorname{Score}\left(P_{i}, Q_{i}\right)}{\operatorname{Max}(\operatorname{len}(P), \operatorname{len}(Q))}\]</span></p>
 <p><span class="math display">\[\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
 <ul>
-<li><span class="math inline">\(P_i\)</span>：日志P的第i个字段，</li>
-<li>len(P): 日志P的字段的个数</li>
-<li><span class="math inline">\(k_1\)</span>: 是一个可调的参数, 默认取1，表示两条日志有1个字段相同就得分</li>
+<li><span class="math inline">\(P_i\)</span>：日志P的第i个字段，len(P): 日志P的字段的个数。</li>
+<li><span class="math inline">\(k_1\)</span>: 如果两个字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1。</li>
 </ul>
 <h3 id="衡量两个pattern的相似性">衡量两个pattern的相似性</h3>
-<p>pattern 长什么样呢？ 每个pattern有三类字段：fixed value， Variable 和 Wildcard</p>
+<p>pattern包含三类字段：fixed value， Variable 和 Wildcard</p>
 <ul>
-<li>固定值（fixed value field ）：如www, httpd and INFO ，有明确含义的，固化的。</li>
-<li>可变字段（A variable field）：如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的额。</li>
-<li>Wildcards ：任意的字段，are matched with values of all types。</li>
+<li>固定值（fixed value field ）：如www, httpd, INFO，固化的。</li>
+<li>可变字段（A variable field）：需要用户定义name和regex，如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的，</li>
+<li>Wildcards ：就是**。</li>
 </ul>
-<p>所以，怎么衡量两个pattern之间的距离呢？</p>
-<p>跟日志一样，不同的是score不一样，要考虑 fixed value 和 变量字段，对相似性的权重不一样</p>
+<p>衡量两个pattern相似性的函数（不同类型的word给的权重不一样）：</p>
 <p><span class="math display">\[\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are fixed value } \\ k_{2} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are variable } \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
 <ul>
-<li><span class="math inline">\(k_1\)</span>: 表示两个fixed value字段，如果一样的话，相似度得分</li>
-<li><span class="math inline">\(k_2\)</span>: 表示两个变量字段，如果一样的话，相似度得分</li>
+<li><span class="math inline">\(k_1\)</span>: 如果两个fixed value字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1</li>
+<li><span class="math inline">\(k_2\)</span>: 如果两个变量字段一样，得<span class="math inline">\(k_2\)</span>分，默认值为2</li>
 </ul>
-<h3 id="找cluster">找cluster</h3>
+<h3 id="怎么评估效果">怎么评估效果？</h3>
+<p>整个问题的评估可以拆分为两个小评估:</p>
 <ul>
-<li><p>先定义一个内部的参数，叫MaxDist， 表示一个cluster的半径。</p></li>
-<li><p>对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就创建一个新的类，并且以他为新的cluster中心。</p>
+<li>评估聚类的准确率？</li>
+<li>评估模式的准确率？</li>
+</ul>
+<p>因为没有标签，所以聚类和评估都是跟baseline比</p>
 <blockquote>
-<p>这里使用early abandon的策略，如果已对比的字段累计距离超过了半径，这句话的词还没遍历完，可以提前停止了，距离只会越来越大。</p>
+<p>都有了baseline，还要logmine的必要性在于：可能logmine有性能优势？</p>
+</blockquote>
+<ul>
+<li><p>聚类效果跟baseline--OPTICS对比: 看最大公共子集的比例（原文中的agreement score）。</p></li>
+<li><p>模式效果跟baseline--UPGMA比：UPGMA的结果作为ground truth，比较recall和precision.</p>
+<blockquote>
+<p>UPGMA算法的输入一批原始日志，输出是一个patten</p>
 </blockquote></li>
 </ul>
-<h3 id="对于每个cluster抽取pattern">对于每个cluster，抽取pattern</h3>
-<figure>
-<img src="image-20210226000021042.png" alt="图2-日志分析流程" /><figcaption aria-hidden="true">图2-日志分析流程</figcaption>
-</figure>
-<ul>
-<li>step1. 分词：将原始日志进行分词，使用空格做分隔符</li>
-<li>step2. 对齐：将key进行排序</li>
-<li>step3. 字段检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date， 将192.168.10.15 替换成 IP. 这个替换规则可以让用户自己定义</li>
-</ul>
-<figure>
-<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
-<h2 id="怎么指定层次level">怎么指定层次（level）？</h2>
-<figure>
-<img src="cost_function.png" alt="图3-评价当前pattern的信息含量" /><figcaption aria-hidden="true">图3-评价当前pattern的信息含量</figcaption>
-</figure>
-<p>怎么调超参--level？ 怎么评估一个抽象层级，即该level对应的所有pattern的好坏？从包含的信息量来衡量，一般来说wildcard个数越多，这个模版越没有什么信息。 具体来说，可以定义一个量化的指标--cost function，取值越大，提取出来的n个模式的信息量越少：</p>
-<p><span class="math display">\[\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times\left(a_{1} W C_{i}+a_{2} V a r_{i}+a_{3} F V_{i}\right)\]</span></p>
-<ul>
-<li><span class="math inline">\({Size}_i\)</span>: 第i个cluster包含的日志个数，</li>
-<li><span class="math inline">\({WC}_i\)</span>: 第i个cluster中，wildcards个数</li>
-<li><span class="math inline">\({Var}_i\)</span>:第i个cluster中，可变字段的个数。</li>
-<li><span class="math inline">\({FV}_i\)</span>: 第i个cluster中，固定值字段的个数。</li>
-</ul>
-<p>默认，重点看wildcards个数，个数越多，信息量越少。 对应的超参数配置是:a1,a2, a3 = 1,0,0</p>
-<blockquote>
-<p>类似k-means聚类，对每个k，都可以计算cluster的松散度。 可以跨k进行对比。</p>
-</blockquote>
-<h2 id="怎么评估日志聚类的效果">怎么评估日志聚类的效果？</h2>
-<p>整个问题的评估可以拆分为两个小问题的评估:</p>
-<ul>
-<li>怎么评估聚类的准确率？</li>
-<li>怎么评估模式识别的准确率？</li>
-</ul>
-<p>因为没有标签，所以两个算法都是跟baseline算法对比。（都有了baseline，还要你这个算法干嘛？）</p>
-<p>怎么评估聚类的准确率？ 跟一个baseline算法，即OPTICS对比。提出了一个指标agreement score，即最大公共子集的比例。</p>
-<p>怎么评估模式识别的准确率？ 跟一个baseline算法，即UPGMA对比。</p>
-<ul>
-<li><p>UPGMA算法：对一大堆日志生成摘要，输入一个cluster的原始日志，输出一个patten，找到了最好的order。</p></li>
-<li><p>使用UPGMA的结果作为ground truth，来评估模式识别算法的准确率。</p></li>
-<li><p>先聚类，然后让UPGMA算法和本文的算法来给每个cluster生成摘要，</p></li>
-<li><p>然后比较两者是否一致：一个字段一个字段地比较。准确率，输出命中的字段的比率。</p></li>
-</ul>
 <p><span class="math inline">\(\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}\)</span></p>
-<h2 id="方法的局限性">方法的局限性？</h2>
-<p>对于复杂的，毫无规则的原始日志，无能为力。</p>
-<figure>
-<img src="badcase.png" alt="图5-在毫无规律的日志上也束手无策" /><figcaption aria-hidden="true">图5-在毫无规律的日志上也束手无策</figcaption>
-</figure>
+<h2 id="chiechies对logmine的总结">chiechie's对logmine的总结</h2>
+<p>论文看完了，代码也跑了一遍，发现有几个问题：</p>
+<ol type="1">
+<li><p>所谓的不需要人工干预，没有做到。很重要的一个功能就是从原始文本中提取variable类型的字段（field），需要人指定variable的name以及正则匹配规则。否则代码是不会主动帮你探测的。 <img src="./c2.png" /></p></li>
+<li><p>不同的cluster的pattern可能存在如下的父子关系 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pattern36 : datetime dms<span class="emphasis">_frontend_</span>mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern50:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern53:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp 1c7c49d5 11024333 from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern64:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>聚类时，比的是原始日志log_signature和类中心log_signature的距离，<br />
+这有一个问题，有一些日志虽然跟该cluster的中心相距较远，但是提取出的pattern可能又很接近.</p>
+</blockquote></li>
+<li><p>2的解决方案：</p>
+<ol type="1">
+<li>对于每个cluster提取pattern时，只保留最抽象的一层</li>
+<li>所有的cluster构建完之后，将存在父子pattern的cluster手动合并。</li>
+</ol></li>
+</ol>
 <h2 id="参考资料">参考资料</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf">logmine-paper</a></li>
-<li><a target="_blank" rel="noopener" href="https://pypi.org/project/logmine/">logmine-pypi</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/trungdq88/logmine/tree/master/src">logmine-github</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">apache_2k.log</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">chiechie-关于logmine的实践</a></li>
 </ol>
@@ -425,7 +423,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%A6%81"><span class="nav-number">2.1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">2.2.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A1%E9%87%8F%E4%B8%A4%E6%9D%A1%E6%97%A5%E5%BF%97%E7%9A%84%E7%9B%B8%E4%BC%BC%E6%80%A7"><span class="nav-number">2.3.</span> <span class="nav-text">衡量两条日志的相似性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A1%E9%87%8F%E4%B8%A4%E4%B8%AApattern%E7%9A%84%E7%9B%B8%E4%BC%BC%E6%80%A7"><span class="nav-number">2.4.</span> <span class="nav-text">衡量两个pattern的相似性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%BEcluster"><span class="nav-number">2.5.</span> <span class="nav-text">找cluster</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E6%AF%8F%E4%B8%AAcluster%E6%8A%BD%E5%8F%96pattern"><span class="nav-number">2.6.</span> <span class="nav-text">对于每个cluster，抽取pattern</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E6%8C%87%E5%AE%9A%E5%B1%82%E6%AC%A1level"><span class="nav-number">3.</span> <span class="nav-text">怎么指定层次（level）？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0%E6%97%A5%E5%BF%97%E8%81%9A%E7%B1%BB%E7%9A%84%E6%95%88%E6%9E%9C"><span class="nav-number">4.</span> <span class="nav-text">怎么评估日志聚类的效果？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">5.</span> <span class="nav-text">方法的局限性？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%BEcluster"><span class="nav-number">2.1.</span> <span class="nav-text">找cluster</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E6%AF%8F%E4%B8%AAcluster%E6%8F%90%E5%8F%96pattern"><span class="nav-number">2.2.</span> <span class="nav-text">对于每个cluster，提取pattern</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AElevel"><span class="nav-number">2.3.</span> <span class="nav-text">怎么设置level？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A1%E9%87%8F%E4%B8%A4%E6%9D%A1%E6%97%A5%E5%BF%97%E7%9A%84%E7%9B%B8%E4%BC%BC%E6%80%A7"><span class="nav-number">2.4.</span> <span class="nav-text">衡量两条日志的相似性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A1%E9%87%8F%E4%B8%A4%E4%B8%AApattern%E7%9A%84%E7%9B%B8%E4%BC%BC%E6%80%A7"><span class="nav-number">2.5.</span> <span class="nav-text">衡量两个pattern的相似性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0%E6%95%88%E6%9E%9C"><span class="nav-number">2.6.</span> <span class="nav-text">怎么评估效果？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chiechies%E5%AF%B9logmine%E7%9A%84%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">chiechie&#39;s对logmine的总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -439,7 +437,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-count">123</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -452,7 +450,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">144</span>
+        <span class="site-state-item-count">148</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

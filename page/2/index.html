@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-08 11:13:16" itemprop="dateModified" datetime="2021-05-08T11:13:16+08:00">2021-05-08</time>
+                <time title="修改时间：2021-05-10 19:40:28" itemprop="dateModified" datetime="2021-05-10T19:40:28+08:00">2021-05-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -220,21 +220,20 @@
 
       
           <h2 id="异常检测的难点">异常检测的难点</h2>
-<h3 id="很多业务都有的共性">很多业务都有的共性</h3>
+<h3 id="业务共性">业务共性</h3>
 <ul>
 <li>历史数据有中断—使用正常数据填充</li>
-<li>不同波动程度曲线对告警的敏感度不一样</li>
-<li>新接进来业务没有历史数据太少</li>
-<li>新接业务没有标记数据</li>
+<li>不同业务曲线对告警的敏感度不一样</li>
+<li>新接进来业务，历史数据太少</li>
+<li>新接业务没有故障</li>
 </ul>
 <h3 id="某些业务特有">某些业务特有</h3>
 <ul>
-<li>整体趋势变化：比如游戏在线人数进入开学季之后会持续走低，一般算法都要告警的，但是对业务来说很正常，不要告警。</li>
-<li>定时任务日志数：周期性凸起，业务说不要告，但是一般的算法都会告</li>
-<li>合理范围的突变异常</li>
-<li>无规律指标的异常识别：常见于刚上线的大区，既不稳定。</li>
-<li>周期性毛刺点并且间隔不固定：数据质量问题</li>
-<li>周期性跌零数据：比如成交数据，商品只在某个固定时间段上架。</li>
+<li>整体趋势变化：比如游戏在线人数进入开学季之后会持续走低，业务觉得很正常，不要告警（一般算法都要告警）。</li>
+<li>定时任务日志数：周期性凸起，业务说不要告（但是一般的算法都会告）</li>
+<li>无规律指标的异常识别：常见于刚上线的大区，不稳定。</li>
+<li>周期性毛刺点并且间隔不固定：数据质量问题。</li>
+<li>稀疏数据：比如成交数据，商品只在某个固定时间上架。</li>
 </ul>
 <h2 id="异常分类">异常分类</h2>
 <h3 id="全局异常">全局异常</h3>
@@ -243,7 +242,7 @@
 </ul>
 <p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FCKVQOb5SfY.png?alt=media&amp;token=865c7106-259f-4a80-815c-760fb90ec667" /></p>
 <h3 id="条件异常">条件异常</h3>
-<p>条件异常(contextual or conditional anomalies)：value deviates quite a lot from the rest of the data points，举2个例子，</p>
+<p>条件异常(contextual or conditional anomalies)：value deviates quite a lot from the rest of the data points，举2个例子：</p>
 <ol type="1">
 <li>办公室出现了一个穿西装打领带的人，跟我们格格不入，但是放到另外一个context中，比如房屋中介行业很正常</li>
 <li>凌晨销量突然升高</li>
@@ -260,9 +259,12 @@
 </ol>
 <h2 id="用户在使用过程中的疑问">用户在使用过程中的疑问</h2>
 <h3 id="模型开发者">模型开发者</h3>
-<p>模型开发者关心的是：</p>
+<p>模型开发者关心的是</p>
 <ul>
-<li>为什么会告警？告警时，知道特征有什么变化，在模型输出的时候，把特征也带上</li>
+<li>为什么告警？
+<ul>
+<li>告警时，知道特征有什么变化，在模型输出的时候，把特征也带上</li>
+</ul></li>
 <li>屏蔽周期性的告警</li>
 </ul>
 <h3 id="模型应用者">模型应用者</h3>
@@ -270,7 +272,7 @@
 <ul>
 <li>应用时的阈值的修改记录在哪看？</li>
 <li>当前模型是不是最新版本？</li>
-<li>为什么要给我告警？
+<li>为什么告警？
 <ul>
 <li>模型开发者需要在输出中加入告警描述字段</li>
 <li>可视化saas，对告警的决策逻辑进行解释，eg上下界</li>

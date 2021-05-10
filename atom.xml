@@ -210,6 +210,8 @@
     
     <category term="信念" scheme="https://chiechie.github.io/tags/%E4%BF%A1%E5%BF%B5/"/>
     
+    <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
     <category term="认知科学" scheme="https://chiechie.github.io/tags/%E8%AE%A4%E7%9F%A5%E7%A7%91%E5%AD%A6/"/>
     
     <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
@@ -217,8 +219,6 @@
     <category term="计算机视觉" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
     
     <category term="机器学习" scheme="https://chiechie.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     <category term="进化论" scheme="https://chiechie.github.io/tags/%E8%BF%9B%E5%8C%96%E8%AE%BA/"/>
     
@@ -403,13 +403,13 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
+    <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
+    
     <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
     
     <category term="统计学" scheme="https://chiechie.github.io/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
     
     <category term="概率" scheme="https://chiechie.github.io/tags/%E6%A6%82%E7%8E%87/"/>
-    
-    <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
     
     <category term="频率派" scheme="https://chiechie.github.io/tags/%E9%A2%91%E7%8E%87%E6%B4%BE/"/>
     

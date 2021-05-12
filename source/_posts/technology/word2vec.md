@@ -18,17 +18,22 @@ categories:
 
 ## 总结
 
-- 词的索引为i，
-- 中心词向量为：$\boldsymbol{v}_{i} \in \mathbb{R}^{d}$
-- 背景词向量为：$\boldsymbol{u}_{i} \in \mathbb{R}^{d}$
-我对wod2vec的理解: 本质对一个word的one-hot code降维。
-跟传统的降维方法如PCA比，区别在于，目标不一样。
-PCA： 经过编码-解码之后，信息丢失尽可能少。
-word2vec： 经过编码-解码之后，背景词可以映射为中心词，或者中心词可以映射为背景词，
-![img.png](dl-framework/img.png)
-将背景词映射为中心词叫Continuous Bag-of-Words (CBOW)
-将中心词映射为背景词叫Skip-gram model (SG)
-下面重点说一下Skip-gram model的原理。
+我对wod2vec的理解: 本质上，是对一个word的one-hot vector降维的过程。
+
+跟传统的降维方法如PCA比，区别在于，目标不一样：
+
+- PCA： 经过编码-解码之后，信息丢失尽可能少。
+- word2vec： 经过编码-解码之后，背景词可以映射为中心词（Continuous Bag-of-Words，CBOW），或者中心词映射为背景词（Skip-gram model，SG）
+
+![img.png](./img.png)
+
+
+下面重点说一下Skip-gram model的原理
+
+### 为何不用one-hot vector表示一个word？
+
+one-hot vector没法表达word在语义上的相似性，为什么呢？
+一般用
 
 
 
@@ -36,13 +41,17 @@ word2vec： 经过编码-解码之后，背景词可以映射为中心词，或�
 
 每个词被表示成2个d维向量，
 
-
 - 词典索引集： $\mathcal{V} =\{0,1, \ldots,|\mathcal{V}|-1\}$
+- 词的索引为i，
+- 中心词向量为：$\boldsymbol{v}_{i} \in \mathbb{R}^{d}$
+- 背景词向量为：$\boldsymbol{u}_{i} \in \mathbb{R}^{d}$
 - 模型的输出是：条件概率
-- 学习的目标： 最大化 所有观测值的条件概率，即
-    $\max \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)$
-    等价于   $\max \sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)$
-    进一步，logP就是   $\log P\left(w_{o} \mid w_{c}\right)=\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}-\log \left(\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)\right)$
+- 目标函数：MLE
+    $$ \max \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)$$
+    等价于   
+    $$\max \sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)$$
+    进一步，logP就是
+    $$\log P\left(w_{o} \mid w_{c}\right)=\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}-\log \left(\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)\right)$$
 
 直接照着最大化条件概率的目标学习可以吗？
 

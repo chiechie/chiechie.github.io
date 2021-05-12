@@ -23,7 +23,7 @@ categories:
 跟传统的降维方法如PCA比，区别在于，目标不一样：
 
 - PCA： 经过编码-解码之后，信息丢失尽可能少。
-- word2vec： 经过编码-解码之后，背景词可以映射为中心词（Continuous Bag-of-Words，CBOW），或者中心词映射为背景词（Skip-gram model，SG）
+- word2vec： 经过编码-解码之后，背景词映射为中心词（Continuous Bag-of-Words，CBOW），或者中心词映射为背景词（Skip-gram model，SG）
 
 ![img.png](./img.png)
 
@@ -39,15 +39,17 @@ one-hot vector没法表达word在语义上的相似性，为什么呢？
 
 ### 跳字模型（skip gram）
 
-每个词被表示成2个d维向量，
+
 
 - 词典索引集： $\mathcal{V} =\{0,1, \ldots,|\mathcal{V}|-1\}$
 - 词的索引为i，
-- 中心词向量为：$\boldsymbol{v}_{i} \in \mathbb{R}^{d}$
-- 背景词向量为：$\boldsymbol{u}_{i} \in \mathbb{R}^{d}$
+- 每个词被表示成2个d维向量:
+    - 中心词向量：$\boldsymbol{v}_{i} \in \mathbb{R}^{d}$
+    - 背景词向量：$\boldsymbol{u}_{i} \in \mathbb{R}^{d}$
 - 模型的输出是：条件概率
-- 目标函数：MLE
-    $$ \max \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)$$
+- 参数估计方法：MLE
+
+目标函数：$$ \max \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)$$
     等价于   
     $$\max \sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)$$
     进一步，logP就是

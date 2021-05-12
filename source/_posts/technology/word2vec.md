@@ -6,15 +6,14 @@ date: 2021-04-10 22:23:20
 tags:
 - NLP
 - word2vec
+- 人工智能
 categories:
 - 技术
 ---
 
-> 灵魂拷问！
-> 
-> 如果把word2vec用neural nets来实现，神经网络的框架如何reformulate这个问题？模型参数是什么，词向量属于网络中的哪部分？
-> 
-> 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个表示呢？怎么用呢？
+> 词向量是用来表示词的向量。把词映射为实数域向量的技术也叫词嵌入。
+> word2vec包含跳字模型和连续词袋模型。跳字模型假设基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。
+> 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），下游节点用的是哪个呢？
 
 ## 总结
 
@@ -23,43 +22,72 @@ categories:
 跟传统的降维方法如PCA比，区别在于，目标不一样：
 
 - PCA： 经过编码-解码之后，信息丢失尽可能少。
-- word2vec： 经过编码-解码之后，背景词映射为中心词（Continuous Bag-of-Words，CBOW），或者中心词映射为背景词（Skip-gram model，SG）
+- word2vec： 经过编码-解码之后，背景词映射为中心词，或者中心词映射为背景词（Skip-gram model，SG）
 
+前者是连续词袋模型（Continuous Bag-of-Words，CBOW），后者是跳字模型。
 ![img.png](./img.png)
 
 
-下面重点说一下Skip-gram model的原理
 
-### 为何不用one-hot vector表示一个word？
 
-one-hot vector没法表达word在语义上的相似性，为什么呢？
-一般用
+## 为何不用one-hot vector表示一个word？
+
+one-hot vector没法表达word在语义上的相似性。
+举个例子，假如使用常用的余弦函数来描述word之间的相似度，
+那么one-hot的表达方式，就会使所有的不同的word之间的相似度为0。
 
 
 
 ### 跳字模型（skip gram）
 
+跳字模型就是将一个中心词映射成多个背景词
 
+![](./img1.png)
 
 - 词典索引集： $\mathcal{V} =\{0,1, \ldots,|\mathcal{V}|-1\}$
-- 词的索引为i，
-- 每个词被表示成2个d维向量:
+- 假设某个词在词典中的索引为i，这个词被表示成2个d维向量:
     - 中心词向量：$\boldsymbol{v}_{i} \in \mathbb{R}^{d}$
     - 背景词向量：$\boldsymbol{u}_{i} \in \mathbb{R}^{d}$
-- 模型的输出是：条件概率
-- 参数估计方法：MLE
+- 模型的输出是条件概率，假设中心词$w_c$在词典中的索引为c，背景词$w_o$在词典中的索引为o，那么给定中心词生成背景词的条件概率为
+    
+  $$P\left(w_{o} \mid w_{c}\right)=\frac{\exp \left(\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}\right)}{\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)}$$
+- 假设给定一个长度为 T 的文本序列，设时间步 t 的词为 w(t) 。假设给定中心词的情况下背景词的生成相互独立，当背景窗口大小为 m 时，跳字模型的似然函数即给定任一中心词生成所有背景词的概率
+    $$P\left(w_{o} \mid w_{c}\right)=\frac{\exp \left(\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}\right)}{\sum_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)}$$
+这里小于1或大于 T 的时间步可以被忽略。
 
-目标函数：$$ \max \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)$$
-    等价于   
-    $$\max \sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)$$
-    进一步，logP就是
+
+- 参数估计方法：MLE, 即最大化如下似然函数来估计参数
+    
+    $$  \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)$$
+    等价于最小化如下 损失函数
+    $$ -\sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)$$
+    根据定义
     $$\log P\left(w_{o} \mid w_{c}\right)=\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}-\log \left(\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)\right)$$
+    
+    按照梯度上升的思路，先求损失函数其中一项相对于$v_c$的梯度
+    $$\begin{aligned} \frac{\partial \log P\left(w_{o} \mid w_{c}\right)}{\partial \boldsymbol{v}_{c}} &=\boldsymbol{u}_{o}-\frac{\sum_{j \in \mathcal{V}} \exp \left(\boldsymbol{u}_{j}^{\top} \boldsymbol{v}_{c}\right) \boldsymbol{u}_{j}}{\sum_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)} \\ &=\boldsymbol{u}_{o}-\sum_{j \in \mathcal{V}}\left(\frac{\exp \left(\boldsymbol{u}_{j}^{\top} \boldsymbol{v}_{c}\right)}{\sum_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)}\right) \boldsymbol{u}_{j} \\ &=\boldsymbol{u}_{o}-\sum_{j \in \mathcal{V}} P\left(w_{j} \mid w_{c}\right) \boldsymbol{u}_{j} \end{aligned}$$
+    
+训练结束后，对于词典中的任一索引为 i 的词，我们均得到该词作为中心词和背景词的两组词向量 $v_i$ 和 $u_i$ 。在自然语言处理应用中，一般使用跳字模型的中心词向量作为词的表征向量。
 
-直接照着最大化条件概率的目标学习可以吗？
+### 连续词袋模型（continous bag of words）
 
-不行，可以看到上式的复杂度为|V|, 为了提高计算效率，有两个近似训练方案：负采样 和 层次化softmax
+连续词袋模型与跳字模型类似。与跳字模型最大的不同在于，连续词袋模型假设基于某中心词在文本序列前后的背景词来生成该中心词。在同样的文本序列“the”“man”“loves”“his”“son”里，以“loves”作为中心词，且背景窗口大小为2时，连续词袋模型关心的是，给定背景词“the”“man”“his”“son”生成中心词“loves”的条件概率（如图10.2所示），也就是
 
-## 近似的学习方法-负采样
+![](img2.png)
+
+
+一般使用连续词袋模型的背景词向量作为词的表征向量。
+
+
+
+
+
+
+## 优化版
+
+梯度上式的复杂度为|V|, 为了提高计算效率，有两个近似训练方案：负采样 和 层次化softmax
+
+### 近似的学习方法-负采样
 
 负采样的想法是，最后一层不用softmax，而是sigmoid,目标函数是 交叉熵：观测值就是正样本，未出现的就是负样本（通过对词典采样K次得到）
 
@@ -70,6 +98,8 @@ $P\left(w^{(t+j)} \mid w^{(t)}\right)=P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right) 
 $\begin{aligned}-\log P\left(w^{(t+j)} \mid w^{(t)}\right) &=-\log P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log P\left(D=0 \mid w^{(t)}, w_{k}\right) \\ &=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \left(1-\sigma\left(\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right)\right) \\ &=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \sigma\left(-\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right) \end{aligned}$
 
 好处是：计算 梯度的 复杂度 从N 减少到 K
+
+
 
 ## 将word2vec重定义为一个nn问题
 
@@ -103,4 +133,5 @@ google提供了 测试数据 和 测试脚本
 
 
 ## 参考
-1.[word2vec开源实现](https://github.com/tmikolov/word2vec)
+1. [word2vec开源实现](https://github.com/tmikolov/word2vec)
+2. [dive into deep learning] (https://zh.d2l.ai/chapter_natural-language-processing/word2vec.html#%E8%BF%9E%E7%BB%AD%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B)

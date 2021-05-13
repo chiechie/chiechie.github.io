@@ -64,7 +64,8 @@ categories:
 $$ t_{s c o r e}=\frac{\mu_{\Gamma^{f r o n t}}-\mu_{\Gamma^{r e a r}}}{\sqrt{\frac{\sigma_{\Gamma^{f} r o n t}^{2}+\sigma_{\Gamma^{r e a r}}^{2}}{n}}} $$
    
 2. 判断单调性：
-  - 如果$t_{score} > \alpha$, 得到负的单调性，即![img.png](anomalies-classification/img.png)
+  - 如果$t_{score} > \alpha$, 得到负的单调性，即
+    ![](./img.png)
   - 如果$t_{score} < -\alpha$, 得到正的单调性。 
        
       这里P=0.025对应$\alpha=1.96$，P=0.001对应$\alpha=2.58$
@@ -81,4 +82,4 @@ $$ t_{s c o r e}=\frac{\mu_{\Gamma^{f r o n t}}-\mu_{\Gamma^{r e a r}}}{\sqrt{\f
 1. [微软-指标与事件的关联分析paper](http://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/SIGKDD-2014-Correlating-Events-with-Time-Series-for-Incident-Diagnosis.pdf)
 2. [关联分析code](https://github.com/jixinpu/aiopstools/tree/master/aiopstools/association_analysis):
 3. [智能运维前沿-微软AIOps工作：时序数据与事件的关联分析](https://mp.weixin.qq.com/s/-NMwaCD4Kzkt4BTnr5JKDQ)
-4. H. B. Mann and D. R. Whitney. On a test of whether one of two random variables is stochastically larger than the other. The annals of mathematical statistics,  1947.
+4. H. B. Mann， On a test of whether one of two random variables is stochastically larger than the other. The annals of mathematical statistics,  1947.

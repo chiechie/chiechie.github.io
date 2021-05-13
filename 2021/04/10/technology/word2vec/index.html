@@ -20,23 +20,26 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="灵魂拷问！ 如果把word2vec用neural nets来实现，神经网络的框架如何reformulate这个问题？模型参数是什么，词向量属于网络中的哪部分？ 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个表示呢？怎么用呢？  总结  词的索引为i， 中心词向量为：\(\boldsymbol{v}_{i} \in \mathbb{R}^{d}\) 背景词">
+  <meta name="description" content="词向量是用来表示词的向量。把词映射为实数域向量的技术也叫词嵌入。 word2vec包含跳字模型和连续词袋模型。跳字模型假设基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），下游节点用的是哪个呢？  why word2vec？ 直接one-hot不行吗？ one-hot vector没法表达word在语义上的相似性。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="word2vec的原理">
 <meta property="og:url" content="https://chiechie.github.io/2021/04/10/technology/word2vec/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Cosmos">
-<meta property="og:description" content="灵魂拷问！ 如果把word2vec用neural nets来实现，神经网络的框架如何reformulate这个问题？模型参数是什么，词向量属于网络中的哪部分？ 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个表示呢？怎么用呢？  总结  词的索引为i， 中心词向量为：\(\boldsymbol{v}_{i} \in \mathbb{R}^{d}\) 背景词">
+<meta property="og:description" content="词向量是用来表示词的向量。把词映射为实数域向量的技术也叫词嵌入。 word2vec包含跳字模型和连续词袋模型。跳字模型假设基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），下游节点用的是哪个呢？  why word2vec？ 直接one-hot不行吗？ one-hot vector没法表达word在语义上的相似性。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chiechie.github.io/2021/04/10/technology/word2vec/dl-framework/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/10/technology/word2vec/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/10/technology/word2vec/img1.png">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjpuHAmzTik.png?alt=media&amp;token=47e0004c-bc7c-4fc5-af22-d227532a7548">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FsFuwRdSRxR.png?alt=media&amp;token=03f6ea4c-aee0-4e11-993f-468505022f8d">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/10/technology/word2vec/img2.png">
 <meta property="article:published_time" content="2021-04-10T14:23:20.000Z">
-<meta property="article:modified_time" content="2021-04-21T07:53:29.555Z">
+<meta property="article:modified_time" content="2021-05-13T00:59:41.520Z">
 <meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="NLP">
 <meta property="article:tag" content="word2vec">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chiechie.github.io/2021/04/10/technology/word2vec/dl-framework/img.png">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/04/10/technology/word2vec/img.png">
 
 <link rel="canonical" href="https://chiechie.github.io/2021/04/10/technology/word2vec/">
 
@@ -203,7 +206,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-21 15:53:29" itemprop="dateModified" datetime="2021-04-21T15:53:29+08:00">2021-04-21</time>
+                <time title="修改时间：2021-05-13 08:59:41" itemprop="dateModified" datetime="2021-05-13T08:59:41+08:00">2021-05-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,32 +237,54 @@
 
       
         <blockquote>
-<p>灵魂拷问！</p>
-<p>如果把word2vec用neural nets来实现，神经网络的框架如何reformulate这个问题？模型参数是什么，词向量属于网络中的哪部分？</p>
-<p>既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），那么 下游节点用的是哪个表示呢？怎么用呢？</p>
+<p>词向量是用来表示词的向量。把词映射为实数域向量的技术也叫词嵌入。</p>
+<p>word2vec包含跳字模型和连续词袋模型。跳字模型假设基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。</p>
+<p>既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），下游节点用的是哪个呢？</p>
 </blockquote>
-<h2 id="总结">总结</h2>
+<h2 id="why-word2vec">why word2vec？</h2>
+<p>直接one-hot不行吗？</p>
+<p>one-hot vector没法表达word在语义上的相似性。 举个例子，假如用余弦函数来描述word之间的相似度， 那么one-hot的表达方式，就会使所有word之间的相似度为0。</p>
+<p>那么需要一种词的表示方法，能表达语义上的相关性，word2vec就应运而生了。</p>
+<h2 id="what-is-word2vec">what is word2vec？</h2>
+<p>我对wod2vec的理解: 本质上，是对一个word的one-hot vector降维。</p>
+<p>跟传统的降维方法如PCA比，区别在于：</p>
 <ul>
-<li>词的索引为i，</li>
-<li>中心词向量为：<span class="math inline">\(\boldsymbol{v}_{i} \in \mathbb{R}^{d}\)</span></li>
-<li>背景词向量为：<span class="math inline">\(\boldsymbol{u}_{i} \in \mathbb{R}^{d}\)</span> 我对wod2vec的理解: 本质对一个word的one-hot code降维。 跟传统的降维方法如PCA比，区别在于，目标不一样。 PCA： 经过编码-解码之后，信息丢失尽可能少。 word2vec： 经过编码-解码之后，背景词可以映射为中心词，或者中心词可以映射为背景词， <img src="dl-framework/img.png" alt="img.png" /> 将背景词映射为中心词叫Continuous Bag-of-Words (CBOW) 将中心词映射为背景词叫Skip-gram model (SG) 下面重点说一下Skip-gram model的原理。</li>
+<li>PCA： 经过编码-解码之后，信息丢失尽可能少。想重构回原来空间。</li>
+<li>word2vec： 经过编码-解码之后，中心词映射为背景词，或者，背景词映射为中心词。想预测另外一个东西。 其中，前者是（Skip-gram model，SG），后者是连续词袋模型（Continuous Bag-of-Words，CBOW）。</li>
 </ul>
+<figure>
+<img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<p>先看跳字模型</p>
 <h3 id="跳字模型skip-gram">跳字模型（skip gram）</h3>
-<p>每个词被表示成2个d维向量，</p>
+<h4 id="high-level">high-level</h4>
+<p>跳字模型就是将一个中心词映射成多个背景词，大概思路，</p>
+<p><img src="./img1.png" /></p>
+<ol type="1">
+<li>对词典中每个词，构建2个向量表示，这个是待估参数。</li>
+<li>类似多分类问题，构造一个映射函数，输入中心词的one-hot（长度为<span class="math inline">\(\mathcal{V}\)</span>），输出背景词的概率分布（长度为<span class="math inline">\(\mathcal{V}\)</span>）</li>
+<li>类似逻辑回归的参数估计，使用交叉熵作为损失函数。</li>
+</ol>
+<p>总体来说，从low-level，跳字模型，就很像是一个多分类的逻辑回归，跳字模型保留的是参数，而逻辑回归需要用的是输出的概率。</p>
+<p>下面是一些细节可以跳过</p>
+<h4 id="细节">细节</h4>
 <ul>
-<li>词典索引集： <span class="math inline">\(\mathcal{V} =\{0,1, \ldots,|\mathcal{V}|-1\}\)</span></li>
-<li>模型的输出是：条件概率</li>
-<li>学习的目标： 最大化 所有观测值的条件概率，即 <span class="math inline">\(\max \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)\)</span> 等价于 <span class="math inline">\(\max \sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)\)</span> 进一步，logP就是 <span class="math inline">\(\log P\left(w_{o} \mid w_{c}\right)=\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}-\log \left(\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)\right)\)</span></li>
+<li><p>词典索引集： <span class="math inline">\(\mathcal{V} =\{0,1, \ldots,|\mathcal{V}|-1\}\)</span></p></li>
+<li><p>假设某个词在词典中的索引为i，这个词被表示成2个d维向量:</p>
+<ul>
+<li>中心词向量：<span class="math inline">\(\boldsymbol{v}_{i} \in \mathbb{R}^{d}\)</span></li>
+<li>背景词向量：<span class="math inline">\(\boldsymbol{u}_{i} \in \mathbb{R}^{d}\)</span></li>
+</ul></li>
+<li><p>模型的输出是条件概率，假设中心词<span class="math inline">\(w_c\)</span>在词典中的索引为c，背景词<span class="math inline">\(w_o\)</span>在词典中的索引为o，那么给定中心词生成背景词的条件概率为</p>
+<p><span class="math display">\[P\left(w_{o} \mid w_{c}\right)=\frac{\exp \left(\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}\right)}{\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)}\]</span></p></li>
+<li><p>假设给定一个长度为 T 的文本序列，设时间步 t 的词为 w(t) 。假设给定中心词的情况下背景词的生成相互独立，当背景窗口大小为 m 时，跳字模型的似然函数即给定任一中心词生成所有背景词的概率 <span class="math display">\[P\left(w_{o} \mid w_{c}\right)=\frac{\exp \left(\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}\right)}{\sum_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)}\]</span> 这里小于1或大于 T 的时间步可以被忽略。</p></li>
+<li><p>参数估计方法：MLE, 即最大化如下对数似然函数来估计参数，等价于最小化交叉熵（用来计算两个函数或者概率之间的距离）</p>
+<p><span class="math display">\[  \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)\]</span> 等价于最小化如下 损失函数 <span class="math display">\[ -\sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)\]</span> 根据定义 <span class="math display">\[\log P\left(w_{o} \mid w_{c}\right)=\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}-\log \left(\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)\right)\]</span></p>
+<p>按照梯度上升的思路，先求损失函数其中一项相对于<span class="math inline">\(v_c\)</span>的梯度 <span class="math display">\[\begin{aligned} \frac{\partial \log P\left(w_{o} \mid w_{c}\right)}{\partial \boldsymbol{v}_{c}} &amp;=\boldsymbol{u}_{o}-\frac{\sum_{j \in \mathcal{V}} \exp \left(\boldsymbol{u}_{j}^{\top} \boldsymbol{v}_{c}\right) \boldsymbol{u}_{j}}{\sum_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)} \\ &amp;=\boldsymbol{u}_{o}-\sum_{j \in \mathcal{V}}\left(\frac{\exp \left(\boldsymbol{u}_{j}^{\top} \boldsymbol{v}_{c}\right)}{\sum_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)}\right) \boldsymbol{u}_{j} \\ &amp;=\boldsymbol{u}_{o}-\sum_{j \in \mathcal{V}} P\left(w_{j} \mid w_{c}\right) \boldsymbol{u}_{j} \end{aligned}\]</span></p></li>
 </ul>
-<p>直接照着最大化条件概率的目标学习可以吗？</p>
-<p>不行，可以看到上式的复杂度为|V|, 为了提高计算效率，有两个近似训练方案：负采样 和 层次化softmax</p>
-<h2 id="近似的学习方法-负采样">近似的学习方法-负采样</h2>
-<p>负采样的想法是，最后一层不用softmax，而是sigmoid,目标函数是 交叉熵：观测值就是正样本，未出现的就是负样本（通过对词典采样K次得到）</p>
-<p><span class="math inline">\(P\left(w^{(t+j)} \mid w^{(t)}\right)=P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right) \prod\limits_{k=1, w_{k} \sim P(w)}^{K} P\left(D=0 \mid w^{(t)}, w_{k}\right)\)</span></p>
-<p>取对数就是</p>
-<p><span class="math inline">\(\begin{aligned}-\log P\left(w^{(t+j)} \mid w^{(t)}\right) &amp;=-\log P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log P\left(D=0 \mid w^{(t)}, w_{k}\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \left(1-\sigma\left(\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right)\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \sigma\left(-\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right) \end{aligned}\)</span></p>
-<p>好处是：计算 梯度的 复杂度 从N 减少到 K</p>
-<h2 id="将word2vec重定义为一个nn问题">将word2vec重定义为一个nn问题</h2>
+<p>训练结束后，对于词典中的任一索引为i的词，我们均得到该词作为中心词和背景词的两组词向量 <span class="math inline">\(v_i\)</span> 和 <span class="math inline">\(u_i\)</span> 。在自然语言处理应用中，一般使用跳字模型的中心词向量作为词的表征向量。</p>
+<h3 id="使用tensorflow实现一个跳字模型">使用tensorflow实现一个跳字模型</h3>
+<h4 id="建模">建模</h4>
 <p>word2vec将每个词表示成一个定长的向量，并使得这些向量能较好地表达不同词之间的相似和类比关系</p>
 <ul>
 <li>第一步：获取训练样本
@@ -277,14 +302,16 @@
 <li>网络 第二层有10000（词典大小）个单元，权重向量的形状是（词向量长度，词典大小），表示 每个词的背景词向量</li>
 </ul></li>
 </ul></li>
-<li>影响词向量质量的三个元素：
+</ul>
+<h4 id="评估">评估</h4>
+<ul>
+<li>影响词向量质量的三个因素：
 <ul>
 <li>训练数据的数量和质量</li>
 <li>词向量的大小</li>
 <li>训练算法</li>
 </ul></li>
 </ul>
-<h2 id="怎么评估词向量的质量">怎么评估词向量的质量？</h2>
 <p>google提供了 测试数据 和 测试脚本</p>
 <ul>
 <li>chiechie：先人工定义一些 近义词组，反义词组，不相关词组，计算这些词组的 余弦距离，看是否跟之前定义的语义距离 一致。</li>
@@ -295,8 +322,23 @@
 </ul></li>
 <li>最好的结果：准确率 70% + 覆盖率 100%.</li>
 </ul>
+<h3 id="连续词袋模型continous-bag-of-words">连续词袋模型（continous bag of words）</h3>
+<p>连续词袋模型与跳字模型类似。与跳字模型最大的不同在于，连续词袋模型假设基于某中心词在文本序列前后的背景词来生成该中心词。在同样的文本序列“the”“man”“loves”“his”“son”里，以“loves”作为中心词，且背景窗口大小为2时，连续词袋模型关心的是，给定背景词“the”“man”“his”“son”生成中心词“loves”的条件概率（如图10.2所示），也就是</p>
+<p><img src="img2.png" /></p>
+<p>一般使用连续词袋模型的背景词向量作为词的表征向量。</p>
+<h2 id="优化版">优化版</h2>
+<p>梯度上式的复杂度为|V|, 为了提高计算效率，有两个近似训练方案：负采样 和 层次化softmax</p>
+<h3 id="近似的学习方法-负采样">近似的学习方法-负采样</h3>
+<p>负采样的想法是，最后一层不用softmax，而是sigmoid,目标函数是 交叉熵：观测值就是正样本，未出现的就是负样本（通过对词典采样K次得到）</p>
+<p><span class="math inline">\(P\left(w^{(t+j)} \mid w^{(t)}\right)=P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right) \prod\limits_{k=1, w_{k} \sim P(w)}^{K} P\left(D=0 \mid w^{(t)}, w_{k}\right)\)</span></p>
+<p>取对数就是</p>
+<p><span class="math inline">\(\begin{aligned}-\log P\left(w^{(t+j)} \mid w^{(t)}\right) &amp;=-\log P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log P\left(D=0 \mid w^{(t)}, w_{k}\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \left(1-\sigma\left(\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right)\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \sigma\left(-\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right) \end{aligned}\)</span></p>
+<p>好处是：计算 梯度的 复杂度 从N 减少到 K</p>
 <h2 id="参考">参考</h2>
-<p>1.<a target="_blank" rel="noopener" href="https://github.com/tmikolov/word2vec">word2vec开源实现</a></p>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/tmikolov/word2vec">word2vec开源实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_natural-language-processing/word2vec.html#%E8%BF%9E%E7%BB%AD%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B">dive into deep learning</a></li>
+</ol>
 
     </div>
 
@@ -306,6 +348,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
               <a href="/tags/NLP/" rel="tag"># NLP</a>
               <a href="/tags/word2vec/" rel="tag"># word2vec</a>
           </div>
@@ -381,7 +424,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E5%AD%97%E6%A8%A1%E5%9E%8Bskip-gram"><span class="nav-number">1.1.</span> <span class="nav-text">跳字模型（skip gram）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%91%E4%BC%BC%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95-%E8%B4%9F%E9%87%87%E6%A0%B7"><span class="nav-number">2.</span> <span class="nav-text">近似的学习方法-负采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86word2vec%E9%87%8D%E5%AE%9A%E4%B9%89%E4%B8%BA%E4%B8%80%E4%B8%AAnn%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">将word2vec重定义为一个nn问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0%E8%AF%8D%E5%90%91%E9%87%8F%E7%9A%84%E8%B4%A8%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">怎么评估词向量的质量？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#why-word2vec"><span class="nav-number">1.</span> <span class="nav-text">why word2vec？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what-is-word2vec"><span class="nav-number">2.</span> <span class="nav-text">what is word2vec？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E5%AD%97%E6%A8%A1%E5%9E%8Bskip-gram"><span class="nav-number">2.1.</span> <span class="nav-text">跳字模型（skip gram）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#high-level"><span class="nav-number">2.1.1.</span> <span class="nav-text">high-level</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%86%E8%8A%82"><span class="nav-number">2.1.2.</span> <span class="nav-text">细节</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8tensorflow%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E8%B7%B3%E5%AD%97%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">使用tensorflow实现一个跳字模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BB%BA%E6%A8%A1"><span class="nav-number">2.2.1.</span> <span class="nav-text">建模</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0"><span class="nav-number">2.2.2.</span> <span class="nav-text">评估</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8Bcontinous-bag-of-words"><span class="nav-number">2.3.</span> <span class="nav-text">连续词袋模型（continous bag of words）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E7%89%88"><span class="nav-number">3.</span> <span class="nav-text">优化版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%91%E4%BC%BC%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95-%E8%B4%9F%E9%87%87%E6%A0%B7"><span class="nav-number">3.1.</span> <span class="nav-text">近似的学习方法-负采样</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -38,9 +38,10 @@ one-hot vector没法表达word在语义上的相似性。
 
 ![img.png](./img.png)
 
-先看跳字模型
 
 ## how ?
+
+先看跳字模型
 
 ### 跳字模型（skip gram）
 

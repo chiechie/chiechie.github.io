@@ -190,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-05-13 09:26:41 / 修改时间：19:18:10" itemprop="dateCreated datePublished" datetime="2021-05-13T09:26:41+08:00">2021-05-13</time>
+              <time title="创建时间：2021-05-13 09:26:41 / 修改时间：19:20:07" itemprop="dateCreated datePublished" datetime="2021-05-13T09:26:41+08:00">2021-05-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,7 +219,7 @@
 </blockquote>
 <h1 id="high-level的理解">high-level的理解</h1>
 <h2 id="rnn">RNN</h2>
-<p>RNN可以看成一个带状态的函数，最原子的操作（对应的主体取名叫单元rnn）是输入m个特征（注意 都是一个时间点）输出num_cell个实数，同时更新自己的状态（也就是num_cell个参数），拓展到多个时间点，就把单元rnn连续运行seq_len次（seq2seq中encoder序列长度）。</p>
+<p>RNN可以看成一个带状态的函数，原子操作：输入m个特征（注意 都是一个时间点），输出num_cell个state和num_cell个prediction。同时更新自己的状态（也就是num_cell个参数），拓展到多个时间点，就把单元rnn连续运行seq_len次（seq2seq中encoder序列长度）。</p>
 <p>RNN在学习过程中面临一个问题--学不到长期的依赖关系（Long term dependency problem）。梯度要么爆炸要么消失，而梯度是调整权重的指明灯，灯坏了，权重就不知道该怎么调整了。所以实际上，只能学到短期的依赖关系（离输出层最近的梯度还是没毛病的）。</p>
 <p>怎么解决长期依赖问题呢？从梯度下手，找到避免梯度爆照/梯度消失的方法。</p>
 <ol type="1">

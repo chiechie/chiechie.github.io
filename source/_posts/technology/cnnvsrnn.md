@@ -18,7 +18,7 @@ categories:
 
 # high-level的理解
 
-### RNN
+## RNN
 
 RNN可以看成一个带状态的函数，最原子的操作（对应的主体取名叫单元rnn）是输入m个特征（注意 都是一个时间点）输出num_cell个实数，同时更新自己的状态（也就是num_cell个参数），拓展到多个时间点，就把单元rnn连续运行seq_len次（seq2seq中encoder序列长度）。
 
@@ -39,7 +39,7 @@ RNN在学习过程中面临一个问题--学不到长期的依赖关系（Long t
 解决容量问题的方法：选择性遗忘，同时选择性更新。主要通过引入门控来达到这个目的，这一类网络也叫基于门控的循环神经网络（Gated RNN）。主要是LSTM和GRU
  
 
-### LSTM
+## LSTM
 
 ![](lstm.png)
 
@@ -51,6 +51,8 @@ lstm有3个门，分别为输入门，输出门，遗忘门
 - 输出门：控制当前内部状态有多少信息要输出给外部状态
 - 遗忘门：表示上一个时刻的内部状态需要遗忘多少信息
 
+# 几个网络结构的可视化
+
 ## cnn 和 rnn视觉对比
 
 有两个图还蛮有意思的，
@@ -60,7 +62,7 @@ lstm有3个门，分别为输入门，输出门，遗忘门
 ![rnn](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FoIsH5iVKwV.png?alt=media&token=05e8189e-dd5f-4781-910c-a46bb9fa4eaf)
 
 
-## cnn/rnn/attention
+## cnn vs rnn vs attention
 
  ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_n2z_XQqI2.png?alt=media&token=facfccac-e8ac-4895-a84c-7add43cd165a)
 

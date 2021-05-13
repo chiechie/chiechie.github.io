@@ -190,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-05-13 09:26:41 / 修改时间：19:20:07" itemprop="dateCreated datePublished" datetime="2021-05-13T09:26:41+08:00">2021-05-13</time>
+              <time title="创建时间：2021-05-13 09:26:41 / 修改时间：19:40:37" itemprop="dateCreated datePublished" datetime="2021-05-13T09:26:41+08:00">2021-05-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,9 +238,9 @@
 <p>LSTM引入新的内部状态专门进行先行的循环信息传递，同时将非线性加工后的信息给隐藏层的外部状态/</p>
 <p>lstm有3个门，分别为输入门，输出门，遗忘门</p>
 <ul>
-<li>输入门：控制当前时刻的候选状态有多少信息要保留</li>
-<li>输出门：控制当前内部状态有多少信息要输出给外部状态</li>
-<li>遗忘门：表示上一个时刻的内部状态需要遗忘多少信息</li>
+<li>输入门：控制当前时刻的候选状态<span class="math inline">\(\(\mathbf{C}_{t}\)\)</span>有多少信息要保留</li>
+<li>输出门：控制当前内部状态<span class="math inline">\(\tilde{\mathbf{c}}_{t}\)</span>有多少信息要输出给外部状态</li>
+<li>遗忘门：表示上一个时刻的内部状态<span class="math inline">\(\mathbf{c}_{t-1}\)</span>需要遗忘多少信息</li>
 </ul>
 <h1 id="几个网络结构的可视化">几个网络结构的可视化</h1>
 <h2 id="cnn-和-rnn视觉对比">cnn 和 rnn视觉对比</h2>

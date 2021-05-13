@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-13 08:59:41" itemprop="dateModified" datetime="2021-05-13T08:59:41+08:00">2021-05-13</time>
+                <time title="修改时间：2021-05-13 09:10:52" itemprop="dateModified" datetime="2021-05-13T09:10:52+08:00">2021-05-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -224,11 +224,11 @@
 <p>word2vec包含跳字模型和连续词袋模型。跳字模型假设基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。</p>
 <p>既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），下游节点用的是哪个呢？</p>
 </blockquote>
-<h2 id="why-word2vec">why word2vec？</h2>
+<h2 id="why">why</h2>
 <p>直接one-hot不行吗？</p>
 <p>one-hot vector没法表达word在语义上的相似性。 举个例子，假如用余弦函数来描述word之间的相似度， 那么one-hot的表达方式，就会使所有word之间的相似度为0。</p>
 <p>那么需要一种词的表示方法，能表达语义上的相关性，word2vec就应运而生了。</p>
-<h2 id="what-is-word2vec">what is word2vec？</h2>
+<h2 id="what">what</h2>
 <p>我对wod2vec的理解: 本质上，是对一个word的one-hot vector降维。</p>
 <p>跟传统的降维方法如PCA比，区别在于：</p>
 <ul>
@@ -239,6 +239,7 @@
 <img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
 </figure>
 <p>先看跳字模型</p>
+<h2 id="how">how ?</h2>
 <h3 id="跳字模型skip-gram">跳字模型（skip gram）</h3>
 <h4 id="high-level">high-level</h4>
 <p>跳字模型就是将一个中心词映射成多个背景词，大概思路，</p>
@@ -266,8 +267,8 @@
 <p>按照梯度上升的思路，先求损失函数其中一项相对于<span class="math inline">\(v_c\)</span>的梯度 <span class="math display">\[\begin{aligned} \frac{\partial \log P\left(w_{o} \mid w_{c}\right)}{\partial \boldsymbol{v}_{c}} &amp;=\boldsymbol{u}_{o}-\frac{\sum_{j \in \mathcal{V}} \exp \left(\boldsymbol{u}_{j}^{\top} \boldsymbol{v}_{c}\right) \boldsymbol{u}_{j}}{\sum_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)} \\ &amp;=\boldsymbol{u}_{o}-\sum_{j \in \mathcal{V}}\left(\frac{\exp \left(\boldsymbol{u}_{j}^{\top} \boldsymbol{v}_{c}\right)}{\sum_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)}\right) \boldsymbol{u}_{j} \\ &amp;=\boldsymbol{u}_{o}-\sum_{j \in \mathcal{V}} P\left(w_{j} \mid w_{c}\right) \boldsymbol{u}_{j} \end{aligned}\]</span></p></li>
 </ul>
 <p>训练结束后，对于词典中的任一索引为i的词，我们均得到该词作为中心词和背景词的两组词向量 <span class="math inline">\(v_i\)</span> 和 <span class="math inline">\(u_i\)</span> 。在自然语言处理应用中，一般使用跳字模型的中心词向量作为词的表征向量。</p>
-<h3 id="使用tensorflow实现一个跳字模型">使用tensorflow实现一个跳字模型</h3>
-<h4 id="建模">建模</h4>
+<h4 id="使用tensorflow实现一个跳字模型">使用tensorflow实现一个跳字模型</h4>
+<h5 id="建模">建模</h5>
 <p>word2vec将每个词表示成一个定长的向量，并使得这些向量能较好地表达不同词之间的相似和类比关系</p>
 <ul>
 <li>第一步：获取训练样本
@@ -286,7 +287,7 @@
 </ul></li>
 </ul></li>
 </ul>
-<h4 id="评估">评估</h4>
+<h5 id="评估">评估</h5>
 <ul>
 <li>影响词向量质量的三个因素：
 <ul>
@@ -312,7 +313,7 @@
 <h2 id="优化版">优化版</h2>
 <p>梯度上式的复杂度为|V|, 为了提高计算效率，有两个近似训练方案：负采样 和 层次化softmax</p>
 <h3 id="近似的学习方法-负采样">近似的学习方法-负采样</h3>
-<p>负采样的想法是，最后一层不用softmax，而是sigmoid,目标函数是 交叉熵：观测值就是正样本，未出现的就是负样本（通过对词典采样K次得到）</p>
+<p>负采样的想法是，最后一层不用softmax，而是sigmoid,损失函数交叉熵：观测到就是正样本，没观测到就是负样本（通过对词典采样K次得到） （类似异常检测）</p>
 <p><span class="math inline">\(P\left(w^{(t+j)} \mid w^{(t)}\right)=P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right) \prod\limits_{k=1, w_{k} \sim P(w)}^{K} P\left(D=0 \mid w^{(t)}, w_{k}\right)\)</span></p>
 <p>取对数就是</p>
 <p><span class="math inline">\(\begin{aligned}-\log P\left(w^{(t+j)} \mid w^{(t)}\right) &amp;=-\log P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log P\left(D=0 \mid w^{(t)}, w_{k}\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \left(1-\sigma\left(\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right)\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \sigma\left(-\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right) \end{aligned}\)</span></p>

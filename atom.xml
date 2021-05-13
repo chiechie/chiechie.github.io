@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-05-13T02:48:25.598Z</updated>
+  <updated>2021-05-13T08:47:41.969Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -21,20 +21,20 @@
     <link href="https://chiechie.github.io/2021/05/13/technology/cnnvsrnn/"/>
     <id>https://chiechie.github.io/2021/05/13/technology/cnnvsrnn/</id>
     <published>2021-05-13T01:26:41.000Z</published>
-    <updated>2021-05-13T02:48:25.598Z</updated>
+    <updated>2021-05-13T08:47:41.969Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>都忘了</p><p>最近要面试，遂把这些玩意儿拿来复习下</p></blockquote><h1 id="high-level的理解">high-level的理解</h1><h3 id="rnn">RNN</h3><p>RNN可以看成一个带状态的函数，最原子的操作（对应的主体取名叫单元rnn）是输入m个特征（注意 都是一个时间点）输出num_cell个实数，同时更新自己的状态（也就是num_cell个参数），拓展到多个时间点，就把单元rnn连续运行seq_len次（seq2seq中encoder序列长度）。</p><p>RNN在学习过程中面临长期依赖的问题（Long term dependency problem），也就是说学不到长期的依赖关系。要么提督的爆照要么梯度消失，而梯度是调整权重的之路明灯，灯坏了，权重就不知道下一步该怎么调整了。</p><p>由于这个问题的存在，实际上只能学到，短期的依赖关系（离输出层最近的梯度还是没有问题的）。</p><p>怎么解决长期依赖问题呢？从梯度下手，找到避免梯度爆照/梯度消失的方法。</p><ol type="1"><li><p>调参，同时使用非饱和的激活函数，保证<span class="math inline">\(\operatorname{diag}\left(f^{\prime}\left(\mathbf{z}_{i}\right)\right) U^{\mathrm{T}} \approx 1\)</span></p></li><li><p>改进模型或者优化方法,</p><ul><li><p>梯度爆炸：梯度阶段或者权重衰减</p></li><li><p>梯度消失：改模型，like this</p><p><span class="math display">\[ \mathbf{h}_{t}=\mathbf{h}_{t-1}+g\left(\mathbf{x}_{t}, \mathbf{h}_{t-1} ; \theta\right) \]</span></p></li></ul></li></ol><p>酱紫，连续的两个状态之间既有线性关系，也有非线性关系，在一定程度可以缓解梯度消失。但依然有一个问题--记忆容量，随着<span class="math inline">\(h_t\)</span>不断累积存储输入信息，会发生饱和现象，也就是说状态<span class="math inline">\(h_t\)</span>可以存储的信息是有限的，记忆单元存储的内容越来越多，丢失的信息也越来越多。</p><p>解决容量问题的方法：选择性遗忘，同时选择性更新。主要通过引入门控来达到这个目的，这一类网络也叫基于门控的循环神经网络（Gated RNN）。主要是LSTM和GRU</p><h3 id="lstm">LSTM</h3><p><img src="lstm.png" /></p><p>LSTM引入新的内部状态专门进行先行的循环信息传递，同时将非线性加工后的信息给隐藏层的外部状态/</p><p>lstm有3个门，分别为输入门，输出门，遗忘门</p><ul><li>输入门：控制当前时刻的候选状态有多少信息要保留</li><li>输出门：控制当前内部状态有多少信息要输出给外部状态</li><li>遗忘门：表示上一个时刻的内部状态需要遗忘多少信息</li></ul><h2 id="cnn-和-rnn视觉对比">cnn 和 rnn视觉对比</h2><p>有两个图还蛮有意思的，</p><figure><img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" alt="cnn" /><figcaption aria-hidden="true">cnn</figcaption></figure><figure><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FoIsH5iVKwV.png?alt=media&amp;token=05e8189e-dd5f-4781-910c-a46bb9fa4eaf" alt="rnn" /><figcaption aria-hidden="true">rnn</figcaption></figure><h2 id="cnnrnnattention">cnn/rnn/attention</h2><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_n2z_XQqI2.png?alt=media&amp;token=facfccac-e8ac-4895-a84c-7add43cd165a" /></p><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://towardsdatascience.com/a-comparison-of-dnn-cnn-and-lstm-using-tf-keras-2191f8c77bbe">a-comparison-of-dnn-cnn-and-lstm-using-tf-keras</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>都忘了</p><p>最近要面试，遂把这些破玩意儿拿来复习下</p></blockquote><h1 id="high-level的理解">high-level的理解</h1><h3 id="rnn">RNN</h3><p>RNN可以看成一个带状态的函数，最原子的操作（对应的主体取名叫单元rnn）是输入m个特征（注意 都是一个时间点）输出num_cell个实数，同时更新自己的状态（也就是num_cell个参数），拓展到多个时间点，就把单元rnn连续运行seq_len次（seq2seq中encoder序列长度）。</p><p>RNN在学习过程中面临一个问题--学不到长期的依赖关系（Long term dependency problem）。梯度要么爆炸要么消失，而梯度是调整权重的之指明灯，灯坏了，权重就不知道下一步该怎么调整了。所以实际上只能学到，短期的依赖关系（离输出层最近的梯度还是没毛病的）。</p><p>怎么解决长期依赖问题呢？从梯度下手，找到避免梯度爆照/梯度消失的方法。</p><ol type="1"><li><p>调参，同时使用非饱和的激活函数，保证<span class="math inline">\(\operatorname{diag}\left(f^{\prime}\left(\mathbf{z}_{i}\right)\right) U^{\mathrm{T}} \approx 1\)</span></p></li><li><p>改进模型或者优化方法,</p><ul><li><p>梯度爆炸：梯度截断或者权重衰减</p></li><li><p>梯度消失：改模型，like this</p><p><span class="math display">\[ \mathbf{h}_{t}=\mathbf{h}_{t-1}+g\left(\mathbf{x}_{t}, \mathbf{h}_{t-1} ; \theta\right) \]</span></p></li></ul></li></ol><p>酱紫，连续的两个状态之间既有线性关系，也有非线性关系，在一定程度可以缓解梯度消失。但依然有一个问题--记忆容量，随着<span class="math inline">\(h_t\)</span>不断累积存储输入信息，会发生饱和现象，也就是说状态<span class="math inline">\(h_t\)</span>可以存储的信息是有限的，记忆单元存储的内容越来越多，丢失的信息也越来越多。</p><p>解决容量问题的方法：选择性遗忘，同时选择性更新。主要通过引入门控来达到这个目的，这一类网络也叫基于门控的循环神经网络（Gated RNN）。主要是LSTM和GRU</p><h3 id="lstm">LSTM</h3><p><img src="lstm.png" /></p><p>LSTM引入新的内部状态专门进行先行的循环信息传递，同时将非线性加工后的信息给隐藏层的外部状态/</p><p>lstm有3个门，分别为输入门，输出门，遗忘门</p><ul><li>输入门：控制当前时刻的候选状态有多少信息要保留</li><li>输出门：控制当前内部状态有多少信息要输出给外部状态</li><li>遗忘门：表示上一个时刻的内部状态需要遗忘多少信息</li></ul><h2 id="cnn-和-rnn视觉对比">cnn 和 rnn视觉对比</h2><p>有两个图还蛮有意思的，</p><figure><img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" alt="cnn" /><figcaption aria-hidden="true">cnn</figcaption></figure><figure><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FoIsH5iVKwV.png?alt=media&amp;token=05e8189e-dd5f-4781-910c-a46bb9fa4eaf" alt="rnn" /><figcaption aria-hidden="true">rnn</figcaption></figure><h2 id="cnnrnnattention">cnn/rnn/attention</h2><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_n2z_XQqI2.png?alt=media&amp;token=facfccac-e8ac-4895-a84c-7add43cd165a" /></p><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://towardsdatascience.com/a-comparison-of-dnn-cnn-and-lstm-using-tf-keras-2191f8c77bbe">a-comparison-of-dnn-cnn-and-lstm-using-tf-keras</a></li></ol>]]></content>
     
     
       
       
     <summary type="html">&lt;blockquote&gt;
 &lt;p&gt;都忘了&lt;/p&gt;
-&lt;p&gt;最近要面试，遂把这些玩意儿拿来复习下&lt;/p&gt;
+&lt;p&gt;最近要面试，遂把这些破玩意儿拿来复习下&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1 id=&quot;high-level的理解&quot;&gt;high-level的理解&lt;/h1&gt;
 &lt;h3 id=&quot;rnn&quot;&gt;RNN&lt;/h3&gt;
-&lt;p&gt;RNN可以看成一个</summary>
+&lt;p&gt;RNN可以看成一</summary>
       
     
     

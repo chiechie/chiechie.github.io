@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="都忘了 最近要面试，遂把这些玩意儿拿来复习下  high-level的理解 RNN RNN可以看成一个带状态的函数，最原子的操作（对应的主体取名叫单元rnn）是输入m个特征（注意 都是一个时间点）输出num_cell个实数，同时更新自己的状态（也就是num_cell个参数），拓展到多个时间点，就把单元rnn连续运行seq_len次（seq2seq中encoder序列长度）。 RNN在学习过程中面">
+  <meta name="description" content="都忘了 最近要面试，遂把这些破玩意儿拿来复习下  high-level的理解 RNN RNN可以看成一个带状态的函数，最原子的操作（对应的主体取名叫单元rnn）是输入m个特征（注意 都是一个时间点）输出num_cell个实数，同时更新自己的状态（也就是num_cell个参数），拓展到多个时间点，就把单元rnn连续运行seq_len次（seq2seq中encoder序列长度）。 RNN在学习过程中">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RNN的结构">
 <meta property="og:url" content="https://chiechie.github.io/2021/05/13/technology/cnnvsrnn/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Cosmos">
-<meta property="og:description" content="都忘了 最近要面试，遂把这些玩意儿拿来复习下  high-level的理解 RNN RNN可以看成一个带状态的函数，最原子的操作（对应的主体取名叫单元rnn）是输入m个特征（注意 都是一个时间点）输出num_cell个实数，同时更新自己的状态（也就是num_cell个参数），拓展到多个时间点，就把单元rnn连续运行seq_len次（seq2seq中encoder序列长度）。 RNN在学习过程中面">
+<meta property="og:description" content="都忘了 最近要面试，遂把这些破玩意儿拿来复习下  high-level的理解 RNN RNN可以看成一个带状态的函数，最原子的操作（对应的主体取名叫单元rnn）是输入m个特征（注意 都是一个时间点）输出num_cell个实数，同时更新自己的状态（也就是num_cell个参数），拓展到多个时间点，就把单元rnn连续运行seq_len次（seq2seq中encoder序列长度）。 RNN在学习过程中">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chiechie.github.io/2021/05/13/technology/cnnvsrnn/lstm.png">
 <meta property="og:image" content="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FoIsH5iVKwV.png?alt=media&amp;token=05e8189e-dd5f-4781-910c-a46bb9fa4eaf">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_n2z_XQqI2.png?alt=media&amp;token=facfccac-e8ac-4895-a84c-7add43cd165a">
 <meta property="article:published_time" content="2021-05-13T01:26:41.000Z">
-<meta property="article:modified_time" content="2021-05-13T02:48:25.598Z">
+<meta property="article:modified_time" content="2021-05-13T08:47:41.969Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="神经网络">
@@ -199,7 +199,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-05-13 09:26:41 / 修改时间：10:48:25" itemprop="dateCreated datePublished" datetime="2021-05-13T09:26:41+08:00">2021-05-13</time>
+              <time title="创建时间：2021-05-13 09:26:41 / 修改时间：16:47:41" itemprop="dateCreated datePublished" datetime="2021-05-13T09:26:41+08:00">2021-05-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -231,19 +231,18 @@
       
         <blockquote>
 <p>都忘了</p>
-<p>最近要面试，遂把这些玩意儿拿来复习下</p>
+<p>最近要面试，遂把这些破玩意儿拿来复习下</p>
 </blockquote>
 <h1 id="high-level的理解">high-level的理解</h1>
 <h3 id="rnn">RNN</h3>
 <p>RNN可以看成一个带状态的函数，最原子的操作（对应的主体取名叫单元rnn）是输入m个特征（注意 都是一个时间点）输出num_cell个实数，同时更新自己的状态（也就是num_cell个参数），拓展到多个时间点，就把单元rnn连续运行seq_len次（seq2seq中encoder序列长度）。</p>
-<p>RNN在学习过程中面临长期依赖的问题（Long term dependency problem），也就是说学不到长期的依赖关系。要么提督的爆照要么梯度消失，而梯度是调整权重的之路明灯，灯坏了，权重就不知道下一步该怎么调整了。</p>
-<p>由于这个问题的存在，实际上只能学到，短期的依赖关系（离输出层最近的梯度还是没有问题的）。</p>
+<p>RNN在学习过程中面临一个问题--学不到长期的依赖关系（Long term dependency problem）。梯度要么爆炸要么消失，而梯度是调整权重的之指明灯，灯坏了，权重就不知道下一步该怎么调整了。所以实际上只能学到，短期的依赖关系（离输出层最近的梯度还是没毛病的）。</p>
 <p>怎么解决长期依赖问题呢？从梯度下手，找到避免梯度爆照/梯度消失的方法。</p>
 <ol type="1">
 <li><p>调参，同时使用非饱和的激活函数，保证<span class="math inline">\(\operatorname{diag}\left(f^{\prime}\left(\mathbf{z}_{i}\right)\right) U^{\mathrm{T}} \approx 1\)</span></p></li>
 <li><p>改进模型或者优化方法,</p>
 <ul>
-<li><p>梯度爆炸：梯度阶段或者权重衰减</p></li>
+<li><p>梯度爆炸：梯度截断或者权重衰减</p></li>
 <li><p>梯度消失：改模型，like this</p>
 <p><span class="math display">\[ \mathbf{h}_{t}=\mathbf{h}_{t-1}+g\left(\mathbf{x}_{t}, \mathbf{h}_{t-1} ; \theta\right) \]</span></p></li>
 </ul></li>

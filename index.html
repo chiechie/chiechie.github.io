@@ -188,10 +188,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-05-13 09:26:41 / 修改时间：19:40:37" itemprop="dateCreated datePublished" datetime="2021-05-13T09:26:41+08:00">2021-05-13</time>
+              <time title="创建时间：2021-05-13 09:26:41" itemprop="dateCreated datePublished" datetime="2021-05-13T09:26:41+08:00">2021-05-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-14 08:25:02" itemprop="dateModified" datetime="2021-05-14T08:25:02+08:00">2021-05-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -219,8 +225,7 @@
 </blockquote>
 <h1 id="high-level的理解">high-level的理解</h1>
 <h2 id="rnn">RNN</h2>
-<p>RNN可以看成一个带状态的函数，原子操作：输入m个特征（注意 都是一个时间点），输出num_cell个state和num_cell个prediction。同时更新自己的状态（也就是num_cell个参数），拓展到多个时间点，就把单元rnn连续运行seq_len次（seq2seq中encoder序列长度）。</p>
-<p>RNN在学习过程中面临一个问题--学不到长期的依赖关系（Long term dependency problem）。梯度要么爆炸要么消失，而梯度是调整权重的指明灯，灯坏了，权重就不知道该怎么调整了。所以实际上，只能学到短期的依赖关系（离输出层最近的梯度还是没毛病的）。</p>
+<p>RNN可以看成一个带状态的函数，原子操作：输入m个特征（注意 都是一个时间点），输出1个h维hidden state和1个h维的记忆单元。 拓展到多个时间点，就把单元rnn连续运行seq_len次，每次都接受上一次的hidden state和记忆单元。 RNN在学习过程中面临一个问题--学不到长期的依赖关系（Long term dependency problem）。梯度要么爆炸要么消失，而梯度是调整权重的指路灯，灯坏了，权重就不知道该怎么调了。所以实际上，simple RNN只能学到短期的依赖关系（离输出层最近的梯度还是没毛病的）。</p>
 <p>怎么解决长期依赖问题呢？从梯度下手，找到避免梯度爆照/梯度消失的方法。</p>
 <ol type="1">
 <li><p>调参，同时使用非饱和的激活函数，保证<span class="math inline">\(\operatorname{diag}\left(f^{\prime}\left(\mathbf{z}_{i}\right)\right) U^{\mathrm{T}} \approx 1\)</span></p></li>
@@ -256,6 +261,7 @@
 <h2 id="参考资料">参考资料</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/a-comparison-of-dnn-cnn-and-lstm-using-tf-keras-2191f8c77bbe">a-comparison-of-dnn-cnn-and-lstm-using-tf-keras</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_recurrent-neural-networks/lstm.html">dive into deep learning-lstm</a></li>
 </ol>
 
       

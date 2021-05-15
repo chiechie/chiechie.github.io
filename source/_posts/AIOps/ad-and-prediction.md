@@ -9,7 +9,7 @@ tags:
 - 趋势回归
 - 视角主义
 categories:
-- 技术
+- AI
 ---
 
 > 一些reflection

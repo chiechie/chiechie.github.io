@@ -1,4 +1,3 @@
----
 title: 模型推断的框架
 author: chiechie
 mathjax: true
@@ -8,7 +7,7 @@ tags:
 - 人工智能
 - 模型部署
 categories:
-- 机器学习
+- AI
 ---
 
 > 解答了一直以来，关于模型部署的疑惑

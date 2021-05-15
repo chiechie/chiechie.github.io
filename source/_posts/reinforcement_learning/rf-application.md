@@ -1,5 +1,5 @@
 ---
-title: 强化学习的应用
+title: 强化学习2_应用
 author: chiechie
 mathjax: true
 date: 2021-04-21 08:22:04
@@ -9,7 +9,7 @@ tags:
 - auto ml
 - NAS
 categories:
-- 技术
+- AI
 ---
 
 ## 应用场景

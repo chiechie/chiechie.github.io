@@ -11,7 +11,7 @@ tags:
 - DeepAR
 - AIOps
 categories:
-- AIOps
+- AI
 ---
 
 

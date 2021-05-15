@@ -8,7 +8,7 @@ tags:
 - 异常检测
 - 异常分类
 categories: 
-- AIOps
+- AI
 ---
 
 ## 异常检测的难点

@@ -3,7 +3,9 @@ title: CauseInfer论文笔记1-白话版
 author: chiechie
 date: 2021-03-02 14:41:39
 mathjax: true
-categories: AIOps
+categories: 
+- AI
+
 tags:
 - AIOps
 - 根因分析

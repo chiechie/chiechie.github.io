@@ -8,7 +8,7 @@ tags:
 - 时间序列
 - DeepAR
 categories:
-- AIOps
+- AI
 ---
 
 > 看一下amazon官方对DeepAR的实现

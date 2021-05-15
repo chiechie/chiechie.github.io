@@ -5,7 +5,9 @@ mathjax: true
 date: 2021-03-09 22:04:42
 tags:
 - AIOps
-categories: AIOps
+categories: 
+- AI
+
 ---
 
 

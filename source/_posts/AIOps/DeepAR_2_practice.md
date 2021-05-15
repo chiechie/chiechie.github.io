@@ -10,7 +10,7 @@ tags:
 - RNN
 - 时间序列
 categories:
-- AIOps
+- AI
 ---
 
 ## DeepAR探索

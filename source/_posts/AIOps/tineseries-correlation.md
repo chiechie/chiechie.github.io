@@ -9,7 +9,7 @@ tags:
 - 预测
 - 论文笔记
 categories:
-- AIOps
+- AI
 ---
 
 > performance counter： 性能监视器

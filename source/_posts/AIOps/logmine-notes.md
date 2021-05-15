@@ -2,7 +2,8 @@
 title: 使用logmine加强版做日志聚类
 author: chiechie
 date: 2021-03-04 11:01:18
-categories: AIOps
+categories: 
+- AI
 mathjax: true
 tags:
   - NLP

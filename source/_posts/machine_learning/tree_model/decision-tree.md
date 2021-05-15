@@ -1,27 +1,42 @@
 ---
-title: 常用树模型介绍
+title: 决策树是二叉树还是多叉树？
 author: chiechie
 mathjax: true
-date: 2021-05-15 14:59:29
-tags:
+date: 2021-04-07 20:56:02
+tags: 
 - 人工智能
-- 树模型
+- 决策树
 categories:
 - 技术
 ---
 
-## 1.总览
+> 今天被问到决策树是不是都是二叉树，我给问懵逼了。这触及到了我的知识盲区。
+> 
+> 仔细一调研，发现决策树算法早先的版本，是可以构造多叉树的。
 
-最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。
+# 总结
 
-但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。
+决策树的 实现算法有三类：id3，c4.5和cart。前两者可以构造多叉树，cart只能构造二叉树。
+因为cart效果最好，现在通常就用它。例如sklean的决策树默认用cart
 
-回一下机器学习的三个要素：
-1. 假设函数的空间： 
-2. 学习策略or目标函数
-3. 优化算法
+> 都说到这里了，就复习下决策树的基础知识吧
+
+# 基本概念
+
+- 信息增益: 衡量的是给定了一个属性之后，类别列上获得的秩序的提升（也叫熵减）。
+
+${\displaystyle IG(T,a)=\mathrm {H} {(T)}-\mathrm {H} {(T|a)},}$
 
 
+# 决策树算法-id3
+Python Implementation of ID3
+
+https://github.com/dozercodes/DecisionTree
+https://github.com/SebastianMantey/Decision-Tree-from-Scratch/blob/master/notebooks/decision_tree_functions.py
+
+# 决策树算法-c4.5
+
+# 决策树算法-cart
 ## 2. cart
 
 1. 决策树的原理？ 将predictor space划分为J个distinct and non-overlapping regions,$R_1,\dots,R_J$
@@ -44,6 +59,7 @@ $$\min\ SSE = \sum\limits_{j=1}^J \sum\limits_{i\in R_j}(y_i - \hat y_{R_j})^2$$
   > 如果response var是imbalance, 全部预测为label占比更多的类，怎么办？
 
 5. 为何要剪枝(pruning)?
+
 如果分支过多(bushy)，造成over fitting。
 a smaller tree with fewer splits might lead to lower variance and better interpretation at the cost of a little bias.
 总的来说,a very bushy tree has got high variances,i e ,over fitting the data
@@ -74,24 +90,10 @@ $d = - \sum\limits_k \hat p_{mk}\log\hat p_{mk} $
 形状跟gini index差不多，优势在于处理分类变量时不需要转化为dummy variable。
 
 
-  
-## random forest
 
 
-- bootstrap是统计学中一种抽样的方法，为了获得样本方差或者均值，采取多次有放回的抽样，获得统计量。
-- bagging是利用bootstrap的思想，但是不是为了获得统计量，而是通过多次实验获得多个regression tree或者classification tree，对每一个input，会产生多个输出，regression tree的输出是K个树的输出取average。classification tree是采用投票的方法，大多数相同的那一类就是输出的那一类 。
 
-
-random forest是bagging tree的加强版本，因为他考虑到了tree之间的de correlates，使得组合后结果的variance更小。
-
-构造树：
-consider 每一个split的时候，会从p个predictors中**随机**的挑$m = \sqrt p$（不一定要这么多）个作为split candidate，
-
-
-##  xgboost
-
-xgboost是一种boosting tree的一种，其他的还是有gbdt，catboost
-
-## 参考资料
-1. [youtube-gbdt](https://www.youtube.com/watch?v=2xudPOBz-vs)
-2. [xgboost](https://arxiv.org/pdf/1603.02754.pdf)
+# 参考
+1. [wiki-Information_gain_in_decision_trees](https://en.wikipedia.org/wiki/Information_gain_in_decision_trees)
+1. [sklearn-decisiontree](https://scikit-learn.org/stable/auto_examples/tree/plot_unveil_tree_structure.html#sphx-glr-auto-examples-tree-plot-unveil-tree-structure-py)
+2. [quora-ID3-C4-5-and-CART的区别？](https://www.quora.com/What-are-the-differences-between-ID3-C4-5-and-CART)

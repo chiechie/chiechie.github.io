@@ -10,7 +10,7 @@ tags:
 - Transformer
 - Bert
 categories:
-- 技术
+- 机器学习
 ---
 
 # Transformer

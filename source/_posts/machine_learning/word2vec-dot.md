@@ -8,7 +8,7 @@ tags:
 - NLP
 - 人工智能
 categories:
-- 技术
+- 机器学习
 ---
 
 

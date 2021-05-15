@@ -1,5 +1,5 @@
 ---
-title: 常用树模型介绍
+title: 树模型1_常用树模型介绍
 author: chiechie
 mathjax: true
 date: 2021-05-15 14:59:29
@@ -10,10 +10,9 @@ categories:
 - 技术
 ---
 
-## 1.总览
+## 树模型
 
 最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。
-
 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。
 
 回一下机器学习的三个要素：
@@ -21,8 +20,8 @@ categories:
 2. 学习策略or目标函数
 3. 优化算法
 
+## 决策树
 
-  
 ## random forest
 
 

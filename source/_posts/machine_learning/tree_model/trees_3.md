@@ -1,5 +1,5 @@
 ---
-title: 几种树模型
+title: 树模型3_GBDT介绍
 author: chiechie
 mathjax: true
 date: 2021-05-15 10:39:45
@@ -11,6 +11,7 @@ categories:
 - 技术
 ---
 
+> boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost
 
 ## high-level理解
 
@@ -19,22 +20,19 @@ categories:
 
 
 ### Adaboost, GBDT 与 XGBoost
+
 1. Adaboost是GBDT的一个特例
 2. XGB在GBDT的基础上引入了二阶导数，并且在loss中加入了正则项。
 
 
-
 ## detail
 
-![adboost](img.png)
+![adaboost](./img.png)
 
 ### 公式推导
 
 
 ### 代码实现
-
-
-
 
 
 ## 参考资料

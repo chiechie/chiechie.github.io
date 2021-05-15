@@ -1,5 +1,5 @@
 ---
-title: xgboost
+title: 树模型4_xgboost介绍
 author: chiechie
 mathjax: true
 date: 2021-05-15 14:59:29
@@ -10,14 +10,13 @@ categories:
 - 技术
 ---
 
-
 ## xgboost
 
-boosting tree的代表是gbdt，以及一系列变形:xgboost,catboost,下面重点介绍一下xgboost
+boosting tree的另外一个代表是xgboost,下面重点介绍一下xgboost
 
 ### 损失函数定义
 
-最自然地，我们将ensemble树模型的损失函数定义为：
+先看看，xgboost怎么定义ensemble tree的 损失函数：
 
 $$\begin{array}{l}{\mathcal{L}(\phi)=\sum\limits_{i} l\left(\hat{y}_{i}, y_{i}\right)+\sum\limits_{k} \Omega\left(f_{k}\right)}\end{array}$$
 $$ \\{\Omega(f)=\gamma T+\frac{1}{2} \lambda\|w\|^{2}} $$
@@ -87,15 +86,6 @@ $\tilde{\mathcal{L}}^{(t)}(q)=-\frac{1}{2} \sum_{j=1}^{T} \frac{\left(\sum_{i \i
 number of trees:太大会造成过拟合，一般用cross validation去挑最好的参数
 shrinkage  parameter:迭代步长，通常取0.01或者0.001，较小的lambda会需要很大的B来取得较好的效果。
 number  of  split d:通常d=1效果就比较好了。d表示的interation depth，就是交叉项的深度。
-
-
-
-
-
-
-
-
-
 
 ## 参考资料
 2. [xgboost](https://arxiv.org/pdf/1603.02754.pdf)

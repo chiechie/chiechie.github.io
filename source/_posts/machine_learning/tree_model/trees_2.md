@@ -1,5 +1,5 @@
 ---
-title: 决策树是二叉树还是多叉树？
+title: 树模型2_决策树介绍
 author: chiechie
 mathjax: true
 date: 2021-04-07 20:56:02

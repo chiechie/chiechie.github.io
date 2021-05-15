@@ -8,7 +8,7 @@ tags:
 - word2vec
 - 人工智能
 categories:
-- 技术
+- 机器学习
 ---
 
 > 词向量是用来表示词的向量。把词映射为实数域向量的技术也叫词嵌入。
@@ -36,7 +36,7 @@ one-hot vector没法表达word在语义上的相似性。
 - PCA： 经过编码-解码之后，信息丢失尽可能少。想重构回原来空间。
 - word2vec： 经过编码-解码之后，中心词映射为背景词，或者，背景词映射为中心词。想预测另外一个东西。 其中，前者是（Skip-gram model，SG），后者是连续词袋模型（Continuous Bag-of-Words，CBOW）。
 
-![img.png](./img.png)
+![img.png](bootstrap/img.png)
 
 
 ## how ?

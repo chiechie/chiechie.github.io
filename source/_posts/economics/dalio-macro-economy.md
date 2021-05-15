@@ -14,26 +14,25 @@ categories:
 
 ## 公理
  
-- A transaction consists of the buyer giving money (or credit) to a seller and the seller giving a good, a service or a financial asset to the buyer in exchange.
+- A transaction consists of the buyer giving money (or credit) to a seller and the seller giving a good, a service, or a financial asset to the buyer in exchange.
 - A market consists of all the buyers and sellers making exchanges for the same things 
 - An economy consists of all of the transactions in all of its markets.
 
-So, while seemingly complex, aneconomy is reallyjustazillion simple things working together, which makes it look more complex than it really is.
+So, while seemingly complex, an economy is really just a zillion simple things working together, which makes it look more complex than it really is.
 
 
 ## 经济运行框架
 ### 三大驱动力（The three big force）
 
-我认为经济运行驱动力主要来自：
+经济运行驱动力主要来自：
 
-1）生产率的趋势性增长 
-2）长期债务周期 
-3）短期债务周期（商业周期）。
+1. 生产率的趋势性增长 
+2. 长期债务周期 
+3. 短期债务周期（商业周期）
 
 如下图所示：
 
-![img.png](img.png)
-
+![img_2.png](./img_2.png)
 
 ## 经济体系的运行（How the system works）
 

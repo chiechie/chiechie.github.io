@@ -1,5 +1,5 @@
 ---
-title: word2vec的原理
+title: NLP_1_word2vec的原理
 author: chiechie
 mathjax: true
 date: 2021-04-10 22:23:20
@@ -8,7 +8,7 @@ tags:
 - word2vec
 - 人工智能
 categories:
-- 机器学习
+- AI
 ---
 
 > 词向量是用来表示词的向量。把词映射为实数域向量的技术也叫词嵌入。

@@ -1,5 +1,5 @@
 ---
-title: Transformer
+title: NLP_2_Transformer的原理
 author: chiechie
 mathjax: true
 date: 2021-04-18 00:04:13
@@ -10,7 +10,7 @@ tags:
 - Transformer
 - Bert
 categories:
-- 机器学习
+- AI
 ---
 
 # Transformer

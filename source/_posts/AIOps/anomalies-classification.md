@@ -31,11 +31,13 @@ categories:
 
 ## 异常分类
 
+有几类异常：全局异常，条件异常
+
 ### 全局异常
 
-- 全局异常点有点像黑天鹅事件，是过去从未发生过的。
+- 全局异常点有点像黑天鹅事件，过去没发生过的。
 
-![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FCKVQOb5SfY.png?alt=media&token=865c7106-259f-4a80-815c-760fb90ec667)
+![](./global_anomalie.png)
 
 ### 条件异常
 

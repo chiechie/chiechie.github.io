@@ -15,7 +15,7 @@ categories:
 > 
 > word2vec包含跳字模型和连续词袋模型。跳字模型假设基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。
 > 
-> 既然模型学习到了一个词的两个表示（背景词向量 和 中心词向量），下游节点用的是哪个呢？
+> 既然模型学习到了一个词的两个表示（背景词向量和中心词向量），下游节点用的是哪个呢？
 
 ## why
 
@@ -142,6 +142,32 @@ $P\left(w^{(t+j)} \mid w^{(t)}\right)=P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right) 
 $\begin{aligned}-\log P\left(w^{(t+j)} \mid w^{(t)}\right) &=-\log P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log P\left(D=0 \mid w^{(t)}, w_{k}\right) \\ &=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \left(1-\sigma\left(\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right)\right) \\ &=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \sigma\left(-\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right) \end{aligned}$
 
 好处是：计算 梯度的 复杂度 从N 减少到 K
+
+
+
+
+## 点积or余弦
+
+> word2vec中的优化目标是点积，但实际使用的却是使用向量夹角的余弦？
+
+
+1. 点积和余弦, 差了一个量岗，即向量模长。
+2. 如果是在一个空间中找近义词，肯定是要用带归一化的距离函数--余弦；
+3. 在训练的时候，为了迁就损失函数-sigmod，才将量岗还原。
+
+## detail
+
+- 训练时，优化的是input/output vector的点积，预测时使用的是夹角余弦.
+- 训练的时候之所以不用cos相似度，而用点积，是因为如果先做cos，会将神经网络的输出限制到[-1, 1]，使网络的表达能力（p=σ(w*c)）受限，performance下降很多。w, c来自不同的空间， w为input vector，c为output vector。
+- 如果效仿word2vec设计(user, item)这类点击率预估模型，二者的不同之处：
+    - word2vec使用的是input vector，点击率预估模型使用的是最后参与点积运算的user vector, item vector；
+    - word2vec预测时是求word的knn word（word2vec的源码文件distance.c，用的是余弦距离），
+    - 点击率预估模型求的是user的knn item
+
+## 参考
+1. https://mk.woa.com/q/267975?strict=true&ADTAG=daily
+2. Distributed Representations of Words and Phrases and their Compositionality, Section 2
+
 
 
 ## 参考

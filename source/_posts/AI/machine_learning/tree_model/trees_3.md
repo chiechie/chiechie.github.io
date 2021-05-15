@@ -8,7 +8,7 @@ tags:
 - 树模型
 - 人工智能
 categories:
-- 技术
+- AI
 ---
 
 > boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost

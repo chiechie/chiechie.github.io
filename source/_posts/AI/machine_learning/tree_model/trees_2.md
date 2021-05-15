@@ -7,12 +7,11 @@ tags:
 - 人工智能
 - 决策树
 categories:
-- 技术
+- AI
 ---
 
-> 今天被问到决策树是不是都是二叉树，我给问懵逼了。这触及到了我的知识盲区。
-> 
-> 仔细一调研，发现决策树算法早先的版本，是可以构造多叉树的。
+> 决策树不一定是二叉树，早先的版本，是可以构造多叉树的。
+
 
 # 总结
 
@@ -31,8 +30,6 @@ ${\displaystyle IG(T,a)=\mathrm {H} {(T)}-\mathrm {H} {(T|a)},}$
 # 决策树算法-id3
 Python Implementation of ID3
 
-https://github.com/dozercodes/DecisionTree
-https://github.com/SebastianMantey/Decision-Tree-from-Scratch/blob/master/notebooks/decision_tree_functions.py
 
 # 决策树算法-c4.5
 
@@ -91,9 +88,9 @@ $d = - \sum\limits_k \hat p_{mk}\log\hat p_{mk} $
 
 
 
-
-
-# 参考
-1. [wiki-Information_gain_in_decision_trees](https://en.wikipedia.org/wiki/Information_gain_in_decision_trees)
-1. [sklearn-decisiontree](https://scikit-learn.org/stable/auto_examples/tree/plot_unveil_tree_structure.html#sphx-glr-auto-examples-tree-plot-unveil-tree-structure-py)
-2. [quora-ID3-C4-5-and-CART的区别？](https://www.quora.com/What-are-the-differences-between-ID3-C4-5-and-CART)
+## 参考
+1. [github-id3的实现](https://github.com/dozercodes/DecisionTree)
+2. [github-id3的实现](https://github.com/SebastianMantey/Decision-Tree-from-Scratch/blob/master/notebooks/decision_tree_functions.py)
+3. [wiki-Information_gain_in_decision_trees](https://en.wikipedia.org/wiki/Information_gain_in_decision_trees)
+4. [sklearn-decisiontree](https://scikit-learn.org/stable/auto_examples/tree/plot_unveil_tree_structure.html#sphx-glr-auto-examples-tree-plot-unveil-tree-structure-py)
+5. [quora-ID3-C4-5-and-CART的区别？](https://www.quora.com/What-are-the-differences-between-ID3-C4-5-and-CART)

@@ -1,5 +1,5 @@
 ---
-title: 强化学习资料汇总
+title: 强化学习1_资料汇总
 author: chiechie
 mathjax: true
 date: 2021-04-18 20:16:31
@@ -7,7 +7,7 @@ tags:
 - 强化学习
 - 人工智能
 categories:
-- 技术
+- AI
 ---
 
 

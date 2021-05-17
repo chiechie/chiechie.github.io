@@ -29,9 +29,11 @@ $$ \\{\Omega(f)=\gamma T+\frac{1}{2} \lambda\|w\|^{2}} $$
 - $f_k$表示第k棵树的预测函数，
 - q代表的书的结构，w代表叶子节点的权重
 - $\Omega(f_k)$表示第k棵树的复杂度
+
+
 ### reformulate目标函数
 
-上面的模型没法使用传统的优化算法求解，我们reformulate这个模型
+上面的优化问题的解，近似求一系列优化问题的解，如下
 
 $\mathcal{L}^{(t)}=\sum\limits_{i=1}^{n} l\left(y_{i}, \hat{y}_{i}^{(t-1)}+f_{t}\left(\mathbf{x}_{i}\right)\right)+\Omega\left(f_{t}\right)$
 
@@ -83,7 +85,7 @@ $\tilde{\mathcal{L}}^{(t)}(q)=-\frac{1}{2} \sum_{j=1}^{T} \frac{\left(\sum_{i \i
 
 目前大部分单机的机器学习库都是采用的这种算法。
 
-![image-20200107161207967](../_image/image-20200107161207967.png)
+![image-20200107161207967](./image-20200107161207967.png)
 
 
 ## 最佳实践

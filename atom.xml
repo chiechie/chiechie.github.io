@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-05-14T00:25:02.781Z</updated>
+  <updated>2021-05-17T00:44:09.023Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -17,13 +17,193 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>RNN的结构</title>
-    <link href="https://chiechie.github.io/2021/05/13/technology/cnnvsrnn/"/>
-    <id>https://chiechie.github.io/2021/05/13/technology/cnnvsrnn/</id>
-    <published>2021-05-13T01:26:41.000Z</published>
-    <updated>2021-05-14T00:25:02.781Z</updated>
+    <title>韩非子-说林</title>
+    <link href="https://chiechie.github.io/2021/05/15/reading_notes/hanfeizi/"/>
+    <id>https://chiechie.github.io/2021/05/15/reading_notes/hanfeizi/</id>
+    <published>2021-05-15T14:46:04.000Z</published>
+    <updated>2021-05-17T00:44:09.023Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>都忘了</p><p>最近要面试，遂把这些破玩意儿拿来复习下</p></blockquote><h1 id="high-level的理解">high-level的理解</h1><h2 id="rnn">RNN</h2><p>RNN可以看成一个带状态的函数，原子操作：输入m个特征（注意 都是一个时间点），输出1个h维hidden state和1个h维的记忆单元。 拓展到多个时间点，就把单元rnn连续运行seq_len次，每次都接受上一次的hidden state和记忆单元。 RNN在学习过程中面临一个问题--学不到长期的依赖关系（Long term dependency problem）。梯度要么爆炸要么消失，而梯度是调整权重的指路灯，灯坏了，权重就不知道该怎么调了。所以实际上，simple RNN只能学到短期的依赖关系（离输出层最近的梯度还是没毛病的）。</p><p>怎么解决长期依赖问题呢？从梯度下手，找到避免梯度爆照/梯度消失的方法。</p><ol type="1"><li><p>调参，同时使用非饱和的激活函数，保证<span class="math inline">\(\operatorname{diag}\left(f^{\prime}\left(\mathbf{z}_{i}\right)\right) U^{\mathrm{T}} \approx 1\)</span></p></li><li><p>改进模型或者优化方法,</p><ul><li><p>梯度爆炸：梯度截断或者权重衰减</p></li><li><p>梯度消失：改模型，like this</p><p><span class="math display">\[ \mathbf{h}_{t}=\mathbf{h}_{t-1}+g\left(\mathbf{x}_{t}, \mathbf{h}_{t-1} ; \theta\right) \]</span></p></li></ul></li></ol><p>酱紫，连续的两个状态之间既有线性关系，也有非线性关系，在一定程度可以缓解梯度消失。但依然有一个问题--记忆容量，随着<span class="math inline">\(h_t\)</span>不断累积存储输入信息，会发生饱和现象，也就是说状态<span class="math inline">\(h_t\)</span>可以存储的信息是有限的，记忆单元存储的内容越来越多，丢失的信息也越来越多。</p><p>解决容量问题的方法：选择性遗忘，同时选择性更新。主要通过引入门控来达到这个目的，这一类网络也叫基于门控的循环神经网络（Gated RNN）。主要是LSTM和GRU</p><h2 id="lstm">LSTM</h2><p><img src="lstm.png" /></p><p>LSTM引入新的内部状态专门进行先行的循环信息传递，同时将非线性加工后的信息给隐藏层的外部状态/</p><p>lstm有3个门，分别为输入门，输出门，遗忘门</p><ul><li>输入门：控制当前时刻的候选状态<span class="math inline">\(\(\mathbf{C}_{t}\)\)</span>有多少信息要保留</li><li>输出门：控制当前内部状态<span class="math inline">\(\tilde{\mathbf{c}}_{t}\)</span>有多少信息要输出给外部状态</li><li>遗忘门：表示上一个时刻的内部状态<span class="math inline">\(\mathbf{c}_{t-1}\)</span>需要遗忘多少信息</li></ul><h1 id="几个网络结构的可视化">几个网络结构的可视化</h1><h2 id="cnn-和-rnn视觉对比">cnn 和 rnn视觉对比</h2><p>有两个图还蛮有意思的，</p><figure><img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" alt="cnn" /><figcaption aria-hidden="true">cnn</figcaption></figure><figure><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FoIsH5iVKwV.png?alt=media&amp;token=05e8189e-dd5f-4781-910c-a46bb9fa4eaf" alt="rnn" /><figcaption aria-hidden="true">rnn</figcaption></figure><h2 id="cnn-vs-rnn-vs-attention">cnn vs rnn vs attention</h2><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_n2z_XQqI2.png?alt=media&amp;token=facfccac-e8ac-4895-a84c-7add43cd165a" /></p><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://towardsdatascience.com/a-comparison-of-dnn-cnn-and-lstm-using-tf-keras-2191f8c77bbe">a-comparison-of-dnn-cnn-and-lstm-using-tf-keras</a></li><li><a href="https://zh.d2l.ai/chapter_recurrent-neural-networks/lstm.html">dive into deep learning-lstm</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>《说林》分上下两篇，共七十一则传说故事，这些故事应为韩非子为其论文写作而准备的材料。</p></blockquote><h1 id="上">上</h1><h2 id="二">二</h2><p>晋人伐邢，齐桓公将救之。鲍叔[1]曰：“太蚤。邢不亡，晋不敝；晋不敝，齐不重。且夫持危之功，不如存亡之德大。君不如晚救之以敝晋，齐实利。待邢亡而复存之，其名实美。”桓公乃弗救</p><h2 id="三">三</h2><p>智伯索地于魏宣子，魏宣子弗予。任章曰：“何故不予？”宣子曰：“无故请地，故弗予。”任章曰：“无故索地，邻国必恐。彼重欲无厌，天下必惧。君予之地，智伯必骄而轻敌，邻邦必惧而相亲。以相亲之兵待轻敌之国，则智伯之命不长矣。《周书》[1]曰：‘将欲败之，必姑辅之；将欲取之，必姑予之。’君不如予之以骄智伯。且君何释以天下图智氏，而独以吾国为智氏质乎？”君曰：“善。”乃与之万户之邑。智伯大悦，因索地于赵，弗与，因围晋阳。韩、魏反之外，赵氏应之内，智氏以亡。</p><h1 id="下">下</h1><h2 id="一">一</h2><p>桓赫曰：“刻削[1]之道，鼻莫如大，目莫如小。鼻大可小，小不可大也；目小可大，大不可小也。”举事亦然。为其后可复者也，则事寡败矣。</p><p>[1]刻削：雕刻。</p><p>做事情跟雕刻一样要留有余地，就不容易失败。</p><hr /><p>崇侯、恶来知不适纣之诛也，而不见武王之灭之也。比干、子胥知其君之必亡也，而不知身之死也。故曰：“崇候、恶来知心而不知事，比干、子胥知事而不知心。”圣人其备矣。</p><p>最明智的人，眼观六路，耳听八方。</p><blockquote><p>六路：指上、下、四方；八方：指东、南、西、北、东南、西南、西北、东北。形容人机智灵活，遇事能多方观察分析。</p></blockquote><hr /><p>宋太宰贵而主断。季子将见宋君，梁子闻之曰：“语必可与太宰三坐乎，不然，将不免。”季子因说以贵主而轻国。</p><p>宋国太宰地位尊贵但处事独断。季子想求见宋国国君，梁子听到后说：“你和宋国国君说话时，一定要像与国君、太宰坐在一起时那样，否则，你可能难逃杀身之祸。”季子因此进言了一些尊重君主而少问国事的话。</p><p>言论可被公开。</p><h2 id="二-1">二</h2><p>杨朱之弟杨布衣素衣而出。天雨，解素衣，衣缁衣[1]而反，其狗不知而吠之。杨布怒，将击之。杨朱曰：“子勿击也，子亦犹是。曩[2]者使女狗白而往，黑而来，子岂能毋怪哉？”</p><p>[1]缁衣：黑衣服。</p><p>[2]曩（nǎng）：以往，从前。</p><hr /><p>惠子曰：“羿执决[3]持扞[4]，操弓关[5]机，越人争为持的。弱子扞弓，慈母入室闭户。”故曰：“可必，则越人不疑羿；不可必，则慈母逃弱子。”</p><p>[3]决：古代射箭的人戴在右手大拇指上用以拉弦的工具。</p><p>[4]扞（hàn）：古代射箭的人往左手臂上戴的一种袖套，多为皮制。[5]关：牵引。</p><p>事关自身生存的时候，还是会考虑用能力胜任的人，而不是用关系亲近的人。</p><hr /><p>桓公问管仲：“富有涯乎？”答曰：“水之以涯，其无水者也；富之以涯，其富已足者也。人不能自止于足，而亡其富之涯乎！”</p><p>人的欲望是没有尽头的，什么时候都不会认为自己已经足够成功，或者足够赋予了，所以富裕也是没有尽头的。</p><h2 id="三-1">三</h2><p>宋之富贾有监止子者，与人争买百金之璞玉，因佯失而毁之，负其百金，而理其毁瑕，得千溢[1]焉。事有举之而有败，而贤其毋举之者，负之时也。</p><p>[1]溢：同“镒”。一镒相当于二十两。一说为二十四两。</p><p>就好像创业，创业肯定有一定概率成功或者失败，但是很多人因为害怕失败，就不去做这个事情，是因为只看到了负面的效应。</p><hr /><p>有欲以御见荆王者，众驺[2]妒之。因曰：“臣能撽[3]鹿。”见王。王为御，不及鹿；自御，及之。王善其御也，乃言众驺妒之。</p><p>[2]驺（zōu）：马夫。 [3]撽（qiào）：打，击。</p><p>先得证明自己的实力？</p><hr /><p>荆令公子将伐陈。丈人送之曰：“晋强，不可不慎也。”公子曰：“丈人奚忧？吾为丈人破晋。”丈人曰：“可。吾方庐陈南门之外。”公子曰：“是何也？”曰：“我笑勾践也。为人之如是其易也，己独何为密密十年难乎？”</p><p>年轻人容易把问题看的太容易</p><h2 id="四">四</h2><p>公子纠将为乱，桓公使使者视之。使者报曰：“笑不乐，视不见，必为乱。”乃使鲁人杀之。</p><hr /><p>公孔弘断发而为越王骑，公孔喜使人绝[1]之，曰：“吾不与子为昆弟矣。”公孙弘曰：“我断发，子断颈而为人用兵，我将谓子何？”周南之战，公孙喜死焉。</p><p>[1]绝：断绝关系。</p><hr /><p>有与悍者邻，欲卖宅而避之。人曰：“是其贯将满矣，子姑待之。”答曰：“吾恐其以我满贯也。”遂去之。故曰：“物之几者，非所靡也。”</p><hr /><p>孔子谓弟子曰：“孰能导子西之钓名也？”子贡曰：“赐也能。”乃导之，不复疑也。孔子曰：“宽哉，不被于利！洁哉，民性有恒！曲为曲，直为直。”孔子曰：“子西不免。”白公之难，子西死焉。故曰：“直于行者曲于欲。”</p><h2 id="五">五</h2><table style="width:8%;"><colgroup><col style="width: 8%" /></colgroup><tbody><tr class="odd"><td>靖郭君将城薛，客多以谏者。靖郭君谓谒者曰：“毋为客通。”齐人有请见者曰：“臣请三言而已。过三言，臣请烹。”靖郭君因见之。客趋进曰：“海大鱼。”因反走。靖郭君曰：“请闻其说。”客曰：“臣不敢以死为戏。”靖郭君曰：“原为寡人言之。”答曰：“君闻大鱼乎？网不能止，缴[2]不能□[3]也，荡而失水，蝼蚁得意焉。今夫齐亦君之海也。君长有齐，奚以薛为？君失齐，虽隆薛城至于天，犹无益也。”靖郭君曰：“善。”乃辍，不城薛。</td></tr><tr class="even"><td>## 六</td></tr><tr class="odd"><td>荆王弟在秦，秦不出也。中射之士[1]曰：“资臣百金，臣能出之。”因载百金之晋，见叔向，曰：“荆王弟在秦，秦不出也。请以百金委叔向。”叔向受金，而以见之晋平公曰：“可以城壶丘矣。”平公曰：“何也？”对曰：“荆王弟在秦，秦不出也，是秦恶荆也，必不敢禁我城壶丘。若禁之，我曰：‘为我出荆王之弟，吾不城也。’彼如出之，可以德荆；彼不出，是卒恶也，必不敢禁我城壶丘矣。”公曰：“善。”乃城壶丘。谓秦公曰：“为我出荆王之弟，吾不城也。”秦因出之。荆王大说，以链金百镒遗晋。</td></tr><tr class="even"><td>叔向收了楚国臣子的金子，并没有告诉晋平公，而是顺着晋国的角度，帮君主分析如何在秦国和楚国之间周旋，获得利益，得到的结论 也跟自己的利益相符合。</td></tr></tbody></table><p>阖庐攻郢，战三胜，问子胥曰：“可以退乎？”子胥对曰：“溺人者一饮而止，则无遂者，以其休也。不如乘之以沈[2]之。”</p><hr /><p>郑人有一子，将宦，谓其家曰：“必筑坏墙，是不善，人将窃。”其巷人亦云。不时筑，而人果窃之。以其子为智，以巷人告者为盗。</p><p>人本能会甩锅给关系疏远的人，而把功劳归给关系亲近的人。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;《说林》分上下两篇，共七十一则传说故事，这些故事应为韩非子为其论文写作而准备的材料。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;上&quot;&gt;上&lt;/h1&gt;
+&lt;h2 id=&quot;二&quot;&gt;二&lt;/h2&gt;
+&lt;p&gt;晋人伐邢，齐桓公将救之。鲍叔[1]曰：“太蚤。邢</summary>
+      
+    
+    
+    
+    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="道家" scheme="https://chiechie.github.io/tags/%E9%81%93%E5%AE%B6/"/>
+    
+    <category term="韩非子" scheme="https://chiechie.github.io/tags/%E9%9F%A9%E9%9D%9E%E5%AD%90/"/>
+    
+    <category term="发家" scheme="https://chiechie.github.io/tags/%E5%8F%91%E5%AE%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一种重采样方法-resampling</title>
+    <link href="https://chiechie.github.io/2021/05/15/AI/machine_learning/bootstrap/"/>
+    <id>https://chiechie.github.io/2021/05/15/AI/machine_learning/bootstrap/</id>
+    <published>2021-05-15T08:29:28.000Z</published>
+    <updated>2021-05-17T00:42:41.571Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="bootstrap的假设">bootstrap的假设</h2><ul><li>当前的数据资料是最能反映population信息的一批资料</li><li>绝大部分样本跟population中的个体很相似</li></ul><figure><img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><h2 id="为什么bootstrap比一般的参数估计方法更有效">为什么bootstrap比一般的参数估计方法更有效？</h2><figure><img src="./img_1.png" alt="bootstrap比一般的参数估计方法更有效" /><figcaption aria-hidden="true">bootstrap比一般的参数估计方法更有效</figcaption></figure><p>bootstrap本质上是一种外推法（extrapolating to the population），更有想象力，当让也更有出错的可能</p><figure><img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=gcPIyeqymOU">Resampling methods-bootstrapping--youtube</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;bootstrap的假设&quot;&gt;bootstrap的假设&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;当前的数据资料是最能反映population信息的一批资料&lt;/li&gt;
+&lt;li&gt;绝大部分样本跟population中的个体很相似&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;
+&lt;img sr</summary>
+      
+    
+    
+    
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
+    
+    
+    <category term="统计学" scheme="https://chiechie.github.io/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树模型1_常用树模型介绍</title>
+    <link href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/"/>
+    <id>https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/</id>
+    <published>2021-05-15T06:59:29.000Z</published>
+    <updated>2021-05-17T00:42:41.584Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="树模型">树模型</h2><p>最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</p><p>回一下机器学习的三个要素： 1. 假设函数的空间： 2. 学习策略or目标函数 3. 优化算法</p><h2 id="决策树">决策树</h2><h2 id="random-forest">random forest</h2><ul><li>bootstrap是统计学中一种抽样的方法，为了获得样本方差或者均值，采取多次有放回的抽样，获得统计量。</li><li>bagging是利用bootstrap的思想，但是不是为了获得统计量，而是通过多次实验获得多个regression tree或者classification tree，对每一个input，会产生多个输出，regression tree的输出是K个树的输出取average。classification tree是采用投票的方法，大多数相同的那一类就是输出的那一类 。</li></ul><p>random forest是bagging tree的加强版本，因为他考虑到了tree之间的de correlates，使得组合后结果的variance更小。</p><p>构造树： consider 每一个split的时候，会从p个predictors中<strong>随机</strong>的挑<span class="math inline">\(m = \sqrt p\)</span>（不一定要这么多）个作为split candidate，</p><h2 id="xgboost">xgboost</h2><p>xgboost是一种boosting tree的一种，其他的还是有gbdt，catboost</p><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li><li><a href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;树模型&quot;&gt;树模型&lt;/h2&gt;
+&lt;p&gt;最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</summary>
+      
+    
+    
+    
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="树模型" scheme="https://chiechie.github.io/tags/%E6%A0%91%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树模型4_xgboost介绍</title>
+    <link href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_4/"/>
+    <id>https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_4/</id>
+    <published>2021-05-15T06:59:29.000Z</published>
+    <updated>2021-05-17T00:42:41.588Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="xgboost">xgboost</h2><p>boosting tree的另外一个代表是xgboost,下面重点介绍一下xgboost</p><h3 id="损失函数定义">损失函数定义</h3><p>先看看，xgboost怎么定义ensemble tree的 损失函数：</p><p><span class="math display">\[\begin{array}{l}{\mathcal{L}(\phi)=\sum\limits_{i} l\left(\hat{y}_{i}, y_{i}\right)+\sum\limits_{k} \Omega\left(f_{k}\right)}\end{array}\]</span> <span class="math display">\[ \\{\Omega(f)=\gamma T+\frac{1}{2} \lambda\|w\|^{2}} \]</span></p><ul><li>k表示第k棵树</li><li>i表示第i个样本</li></ul><h3 id="reformulate目标函数">reformulate目标函数</h3><p>上面的模型没法使用传统的优化算法求解，我们reformulate这个模型</p><p><span class="math inline">\(\mathcal{L}^{(t)}=\sum\limits_{i=1}^{n} l\left(y_{i}, \hat{y}_{i}^{(t-1)}+f_{t}\left(\mathbf{x}_{i}\right)\right)+\Omega\left(f_{t}\right)\)</span></p><p><span class="math inline">\(\mathcal{L}^{(t)}\)</span>表示第t棵树的训练目标，也就是通过依次求解最优的树来逼近最开始的损失函数。</p><h3 id="损失函数-二阶展开">损失函数-二阶展开</h3><p>而为了方便计算，上面的损失函数还可以进一步简化（利用二阶展开）</p><p><span class="math inline">\(\mathcal{L}^{(t)} \simeq\sum\limits_{i=1}^{n}\left[l\left(y_{i}, \hat{y}^{(t-1)}\right)+g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p><p>这里：</p><p><span class="math inline">\(g_{i}=\partial_{\hat{y}^{(t-1) }}l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span></p><p><span class="math inline">\(h_{i}=\partial_{\hat y^{(t-1)}}^{2} l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span></p><p>进一步，我们remove常数项，得到</p><p><span class="math inline">\(\tilde{\mathcal{L}}^{(t)}=\sum\limits_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p><h3 id="基于样本集重新定义损失函数">基于样本集重新定义损失函数</h3><p>更进一步，我们将<span class="math inline">\(I_{j}=\left\{i | q\left(\mathbf{x}_{i}\right)=j\right\}\)</span>定义为落入叶子j的样本集, 那么可以更进一步formulate模型为</p><p><span class="math inline">\(\begin{aligned} \tilde{\mathcal{L}}^{(t)} &amp;=\sum_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\gamma T+\frac{1}{2} \lambda \sum_{j=1}^{T} w_{j}^{2} \\ &amp;=\sum_{j=1}^{T}\left[\left(\sum_{i \in I_{j}} g_{i}\right) w_{j}+\frac{1}{2}\left(\sum_{i \in I_{j}} h_{i}+\lambda\right) w_{j}^{2}\right]+\gamma T \end{aligned}\)</span></p><p>对于一个固定的结构q(x),我们可以算出叶子j的最佳权重为</p><p><span class="math inline">\(w_{j}^{*}=-\frac{\sum\limits_{i \in I_{j}} g_{i}}{\sum\limits_{i \in I_{j}} h_{i}+\lambda}\)</span> 以及最优函数值为:</p><p><span class="math inline">\(\tilde{\mathcal{L}}^{(t)}(q)=-\frac{1}{2} \sum_{j=1}^{T} \frac{\left(\sum_{i \in I_{j}} g_{i}\right)^{2}}{\sum_{i \in I_{j}} h_{i}+\lambda}+\gamma T\)</span> （6）</p><p>公式（6）可以用来衡量树结构q的质量，类似决策树中的impurity得分。</p><p>枚举所有的树结构不现实，best practice是使用一个贪婪算法：</p><ul><li><p>从1个叶子结点出发</p></li><li><p>迭代式的添加branch</p><p>令<span class="math inline">\(I=I_{L} \cup I_{R}\)</span>, 可以使用下面的公式（7）去评估切分后带来的损失下降</p><p><span class="math inline">\(\mathcal{L}_{s p l i t}=\frac{1}{2}\left[\frac{\left(\sum_{i \in I_{L}} g_{i}\right)^{2}}{\sum_{i \in I_{L}} h_{i}+\lambda}+\frac{\left(\sum_{i \in I_{R}} g_{i}\right)^{2}}{\sum_{i \in I_{R}} h_{i}+\lambda}-\frac{\left(\sum_{i \in I} g_{i}\right)^{2}}{\sum_{i \in I} h_{i}+\lambda}\right]-\gamma\)</span> (7)</p></li></ul><h3 id="切分点查找算法">切分点查找算法</h3><p>最朴素的算法，遍历所有特征的所有的切分值，找出最佳的。</p><p>目前大部分单机的机器学习库都是采用的这种算法。</p><figure><img src="../_image/image-20200107161207967.png" alt="image-20200107161207967" /><figcaption aria-hidden="true">image-20200107161207967</figcaption></figure><h2 id="最佳实践">最佳实践</h2><p>number of trees:太大会造成过拟合，一般用cross validation去挑最好的参数 shrinkage parameter:迭代步长，通常取0.01或者0.001，较小的lambda会需要很大的B来取得较好的效果。 number of split d:通常d=1效果就比较好了。d表示的interation depth，就是交叉项的深度。</p><h2 id="参考资料">参考资料</h2><ol start="2" type="1"><li><a href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;xgboost&quot;&gt;xgboost&lt;/h2&gt;
+&lt;p&gt;boosting tree的另外一个代表是xgboost,下面重点介绍一下xgboost&lt;/p&gt;
+&lt;h3 id=&quot;损失函数定义&quot;&gt;损失函数定义&lt;/h3&gt;
+&lt;p&gt;先看看，xgboost怎么定义ensemble tre</summary>
+      
+    
+    
+    
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="树模型" scheme="https://chiechie.github.io/tags/%E6%A0%91%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树模型3_GBDT介绍</title>
+    <link href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_3/"/>
+    <id>https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_3/</id>
+    <published>2021-05-15T02:39:45.000Z</published>
+    <updated>2021-05-17T00:42:41.584Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost</p></blockquote><h2 id="high-level理解">high-level理解</h2><ol type="1"><li>GBDT是一种data-driven的预测方法。</li><li>GBDT的预测逻辑，分两个层次，第一层，保证每一个样本的准确率；第二层，构造决策路径，即希望通过特征来达到第一层的准确率。实现第一层目的的方法是基于梯度确定阶段性目标；实现第二层的目的的方法通过特征去拟合阶段性目标（残差），也就是cart。</li></ol><h3 id="adaboost-gbdt-与-xgboost">Adaboost, GBDT 与 XGBoost</h3><ol type="1"><li>Adaboost是GBDT的一个特例</li><li>XGB在GBDT的基础上引入了二阶导数，并且在loss中加入了正则项。</li></ol><h2 id="detail">detail</h2><figure><img src="./img.png" alt="adaboost" /><figcaption aria-hidden="true">adaboost</figcaption></figure><h3 id="公式推导">公式推导</h3><h3 id="代码实现">代码实现</h3><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li><li><a href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;high-level理解&quot;&gt;high-level理解&lt;/h2&gt;
+&lt;ol </summary>
+      
+    
+    
+    
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="机器学习" scheme="https://chiechie.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="树模型" scheme="https://chiechie.github.io/tags/%E6%A0%91%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于理财教育</title>
+    <link href="https://chiechie.github.io/2021/05/14/investment/about-invement-education/"/>
+    <id>https://chiechie.github.io/2021/05/14/investment/about-invement-education/</id>
+    <published>2021-05-14T00:28:15.000Z</published>
+    <updated>2021-05-17T00:42:41.617Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="市场分析">市场分析</h2><ol type="1"><li>国内中产阶级人群增长红利，带动“理财”需求增长。</li><li>“理财”在国内过去的教育体系，并没有太多涉及，想要获得较优的“理财判断与决策能力”，市场上的“理财教育”应运而生。近年新兴的需求已支撑起国内“营收过亿”、“融资过亿”的理财教育公司。</li><li>“理财教育”市场有两个正在发生的变化：<ul><li>过去“鱼龙混杂”、“推销理财产品”为主的“教育”公司，正被新一代具有专业知识的教育公司取代。</li><li>用户大众化。“理财”教育≠“如何选购理财产品”，它更多是“理财”认知、管理与决策能力的提高。它的受众不仅是越来越多有“财产”富余的成年人，还有k12这些更低龄阶段的“财商”教育普及。</li></ul></li><li>国内APP数据服务商Questmobile在今年初的报告，呈现了“越来越广泛受众使用理财APP”的数据变化。综合月活跃用户同比去年增长29%，平均使用时长也同比增加26%。</li></ol><h2 id="理财教育是个啥">理财教育是个啥？</h2><h3 id="理财范畴">理财范畴</h3><ol type="1"><li>供给端和需求端两端推进，理财行业兴起。对于个人理财，主看供给端的产品：比如股票、基金、债券、保险、黄金等资产，住房贷款、消费信贷等负债产品。</li><li>当下，国内也在供给端与需求端双向促进，推动理财市场发展的进程。</li></ol><h3 id="理财教育教什么">理财教育教什么</h3><h4 id="理财教育-理财产品推荐与售卖">理财教育 ≠ 理财产品推荐与售卖</h4><ol type="1"><li><p>理财覆盖个人财务的所有范畴，从流程来看，包括：</p><ul><li>评估个人财务总体情况，资产与负债；</li><li>制定理财的长短期目标；</li><li>做出理财计划、落实计划；</li><li>以及后续的跟进与重新评估。</li></ul></li><li><p>从管理标的来看，涵盖：收入、支出、资产、负债、投资、保险等等。</p></li><li><p>与之对应的是，“理财教育”：覆盖“理财流程”以及管理目标，目标是提升每个环节的认知、管理与决策能力。</p></li><li><p>“购买理财产品”仅是理财的一部分行为。“如何选购理财产品”因而也只是“理财教育”时可能存在的一部分。而且，这里强调的是如何选购的原则“知识传输”，而不是“理财产品”的推销。</p></li></ol><h4 id="财商">财商</h4><ol type="1"><li>财商(Financial Quotient)是“驾驭”操作行为的能力（包括认知、投资理财行为与管理）。 &gt; “财商”首次在1990s年《富爸爸，穷爸爸》被提出，即要懂得如何管理财富、使财富增值，而不只是“埋头兢兢业业稳定工作以维生”。</li><li>在接受“理财”相关教育的时候，最主要的目的是：提高“财商”、具备作出越来越优的“理财”决策能力。然后进行“理财”行为下，获得预期更优收益。</li></ol><h3 id="当下理财教育如何">当下理财教育如何？</h3><ol type="1"><li>2015年，美国50个州中有17个要求高中生在毕业前学习个人理财，目前仅剩5个州没有覆盖理财教育（美国有50个州+1个特区）。这是美国政府、学术界与协会共同推进的成果。</li><li>国内的校内“理财”教育暂没有如此普及，市场上“理财教育”服务商已经发展起来了，比如“长投学堂、小帮规划、简七理财、十倍学堂、亿学”等等，他们中有用户数“快速增长”、营收过亿，也有在一级市场完成亿元级别融资。某此前处于平稳发展的早期理财教育公司，疫情期间及至今，营收“仍在快速增长、扩招员工”。经济相对“下行”的时期，人们提高了“理财增值”的意识与需求，也推动了“理财”学习的消费。</li><li>产品服务模式有：线上录播课、线下训练营等，客单价多在在99元至千元区间。</li><li>教学的内容，一种是上面提到的“财商”本身，理解个人财务、资产负债，教授理财与投资的基本知识观念。另一种是相对单价较高，且侧重于某一类“投资产品”，比如股票、基金、保险品类的“进阶”体系内容。</li></ol><h3 id="未来市场展望">未来市场展望</h3><p>有两个基本趋势，一是用户低龄化，二是服务专业化。 1. 目标用户低龄化：美国针对K12阶段设计的金融理财课程；广州也推出了面向k12学生的财商教育试点计划。 &gt; &gt; “K－12”是指从幼儿园到12年级的教育. <img src="./img.png" alt="img.png" /> 2. 服务专业化：上一代鱼龙混杂的“理财教育”市场，数万家“理财工作室”，不乏动机不良、“纯粹钓鱼”者。并因此“误导”了入门“理财教育”的个人。当下，新一代以“知识、技能”为导向的教育产品，正成为新的选择。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="http://www.woshipm.com/it/4199514.html">知乎上数百万人关注，理财与它的教育大众化</a></li><li><a href="https://youzhiyouxing.cn/">有知有行</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;市场分析&quot;&gt;市场分析&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;国内中产阶级人群增长红利，带动“理财”需求增长。&lt;/li&gt;
+&lt;li&gt;“理财”在国内过去的教育体系，并没有太多涉及，想要获得较优的“理财判断与决策能力”，市场上的“理财教育”应运而生。近年新兴的需求</summary>
+      
+    
+    
+    
+    <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
+    
+    
+    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
+    
+    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RNN的结构</title>
+    <link href="https://chiechie.github.io/2021/05/13/AI/machine_learning/deeplearning/cnnvsrnn/"/>
+    <id>https://chiechie.github.io/2021/05/13/AI/machine_learning/deeplearning/cnnvsrnn/</id>
+    <published>2021-05-13T01:26:41.000Z</published>
+    <updated>2021-05-17T00:42:41.578Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>都忘了</p><p>最近要面试，遂把这些破玩意儿拿来复习下</p></blockquote><h1 id="high-level的理解">high-level的理解</h1><h2 id="rnn">RNN</h2><p>RNN可以看成一个带状态的函数，原子操作：输入m个特征（注意都是一个时间点），输出1个h维hidden state和1个h维的记忆单元。 拓展到多个时间点，就把单元rnn连续运行seq_len次，每次都接受上一次的hidden state和记忆单元。</p><p>RNN在学习过程中面临一个问题--学不到长期的依赖关系（Long term dependency problem）。梯度要么爆炸要么消失，而梯度是调整权重的指路灯，灯坏了，权重就不知道该怎么调了。所以实际上，simple RNN只能学到短期的依赖关系（离输出层最近的梯度还是没毛病的）。</p><p>怎么解决长期依赖问题呢？从梯度下手，找到避免梯度爆照/梯度消失的方法。</p><ol type="1"><li>调参，同时使用非饱和的激活函数，保证<span class="math inline">\(\operatorname{diag}\left(f^{\prime}\left(\mathbf{z}_{i}\right)\right) U^{\mathrm{T}} \approx 1\)</span></li><li>改进模型或者优化方法,<ul><li><p>梯度爆炸：梯度截断或者权重衰减</p></li><li><p>梯度消失：改模型，like this</p><p><span class="math display">\[ \mathbf{h}_{t}=\mathbf{h}_{t-1}+g\left(\mathbf{x}_{t}, \mathbf{h}_{t-1} ; \theta\right) \]</span></p></li></ul></li></ol><p>酱紫，连续的两个状态之间既有线性关系，也有非线性关系，在一定程度可以缓解梯度消失。但依然有一个问题--记忆容量，<span class="math inline">\(h_t\)</span>可以存储的信息是有限的，随着t增加，丢失的信息也越来越多。</p><p>解决容量问题的方法：选择性遗忘，同时选择性更新。</p><p>主要通过引入门控来达到这个目的，这一类网络也叫基于门控的循环神经网络（Gated RNN）。主要是LSTM和GRU.</p><p>先看 lstm</p><h2 id="lstm">LSTM</h2><p><img src="lstm.png" /></p><p>LSTM引入新的内部状态专门进行先行的循环信息传递，同时将非线性加工后的信息给隐藏层的外部状态</p><p>lstm有3个门，分别为输入门，输出门，遗忘门</p><ul><li>输入门：控制当前时刻的候选状态<span class="math inline">\(\(\mathbf{C}_{t}\)\)</span>有多少信息要保留</li><li>输出门：控制当前内部状态<span class="math inline">\(\tilde{\mathbf{c}}_{t}\)</span>有多少信息要输出给外部状态</li><li>遗忘门：表示上一个时刻的内部状态<span class="math inline">\(\mathbf{c}_{t-1}\)</span>需要遗忘多少信息</li></ul><h1 id="几个网络结构的可视化">几个网络结构的可视化</h1><h2 id="cnn-和-rnn视觉对比">cnn 和 rnn视觉对比</h2><p>有两个图还蛮有意思的，</p><figure><img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" alt="cnn" /><figcaption aria-hidden="true">cnn</figcaption></figure><figure><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FoIsH5iVKwV.png?alt=media&amp;token=05e8189e-dd5f-4781-910c-a46bb9fa4eaf" alt="rnn" /><figcaption aria-hidden="true">rnn</figcaption></figure><h2 id="cnn-vs-rnn-vs-attention">cnn vs rnn vs attention</h2><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_n2z_XQqI2.png?alt=media&amp;token=facfccac-e8ac-4895-a84c-7add43cd165a" /></p><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://towardsdatascience.com/a-comparison-of-dnn-cnn-and-lstm-using-tf-keras-2191f8c77bbe">a-comparison-of-dnn-cnn-and-lstm-using-tf-keras</a></li><li><a href="https://zh.d2l.ai/chapter_recurrent-neural-networks/lstm.html">dive into deep learning-lstm</a></li></ol>]]></content>
     
     
       
@@ -39,14 +219,14 @@
     
     
     
-    <category term="技术" scheme="https://chiechie.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
     
     
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
-    <category term="神经网络" scheme="https://chiechie.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
-    
     <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="神经网络" scheme="https://chiechie.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
@@ -90,12 +270,12 @@
   
   <entry>
     <title>异常检测相关问题和技术的综述</title>
-    <link href="https://chiechie.github.io/2021/05/06/AIOps/anomalies-classification/"/>
-    <id>https://chiechie.github.io/2021/05/06/AIOps/anomalies-classification/</id>
+    <link href="https://chiechie.github.io/2021/05/06/AI/AIOps/anomalies-classification/"/>
+    <id>https://chiechie.github.io/2021/05/06/AI/AIOps/anomalies-classification/</id>
     <published>2021-05-06T08:37:13.000Z</published>
-    <updated>2021-05-10T11:40:28.240Z</updated>
+    <updated>2021-05-17T00:42:41.297Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="异常检测的难点">异常检测的难点</h2><h3 id="业务共性">业务共性</h3><ul><li>历史数据有中断—使用正常数据填充</li><li>不同业务曲线对告警的敏感度不一样</li><li>新接进来业务，历史数据太少</li><li>新接业务没有故障</li></ul><h3 id="某些业务特有">某些业务特有</h3><ul><li>整体趋势变化：比如游戏在线人数进入开学季之后会持续走低，业务觉得很正常，不要告警（一般算法都要告警）。</li><li>定时任务日志数：周期性凸起，业务说不要告（但是一般的算法都会告）</li><li>无规律指标的异常识别：常见于刚上线的大区，不稳定。</li><li>周期性毛刺点并且间隔不固定：数据质量问题。</li><li>稀疏数据：比如成交数据，商品只在某个固定时间上架。</li></ul><h2 id="异常分类">异常分类</h2><h3 id="全局异常">全局异常</h3><ul><li>全局异常点有点像黑天鹅事件，是过去从未发生过的。</li></ul><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FCKVQOb5SfY.png?alt=media&amp;token=865c7106-259f-4a80-815c-760fb90ec667" /></p><h3 id="条件异常">条件异常</h3><p>条件异常(contextual or conditional anomalies)：value deviates quite a lot from the rest of the data points，举2个例子：</p><ol type="1"><li>办公室出现了一个穿西装打领带的人，跟我们格格不入，但是放到另外一个context中，比如房屋中介行业很正常</li><li>凌晨销量突然升高</li></ol><p><img src="./img.png" /></p><h3 id="联合异常">联合异常</h3><figure><img src="./img78.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><p>每一个点不是异常的（既非 contextual 也非 global），但是一起出现就异常了，例如</p><ol type="1"><li>一个小区中，有人去医院很正常，但是整个小区的人同时去医院就不正常了。</li><li>投放广告时，预算增加，曝光和点击同时上升是很正常的。但是曝光增加，点击却下降（市场营销策略失灵--glitch）就意味着有问题，可能是广告中心设置了一个空的广告位，或者将广告曝光给了错误的用户。 <img src="./img0890.png" alt="img.png" /></li></ol><h2 id="用户在使用过程中的疑问">用户在使用过程中的疑问</h2><h3 id="模型开发者">模型开发者</h3><p>模型开发者关心的是</p><ul><li>为什么告警？<ul><li>告警时，知道特征有什么变化，在模型输出的时候，把特征也带上</li></ul></li><li>屏蔽周期性的告警</li></ul><h3 id="模型应用者">模型应用者</h3><p>模型服务的使用者关心的是</p><ul><li>应用时的阈值的修改记录在哪看？</li><li>当前模型是不是最新版本？</li><li>为什么告警？<ul><li>模型开发者需要在输出中加入告警描述字段</li><li>可视化saas，对告警的决策逻辑进行解释，eg上下界</li></ul></li><li>这么多模型，我该选择哪一个？</li><li>业务相关的需求：<ul><li>屏蔽周期性的告警。</li></ul></li></ul><h2 id="参考资料">参考资料</h2><ol type="1"><li>https://www.youtube.com/watch?v=pXGqDiE4N0I</li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="异常检测的难点">异常检测的难点</h2><h3 id="业务共性">业务共性</h3><ul><li>历史数据有中断—使用正常数据填充</li><li>不同业务曲线对告警的敏感度不一样</li><li>新接进来业务，历史数据太少</li><li>新接业务没有故障</li></ul><h3 id="某些业务特有">某些业务特有</h3><ul><li>整体趋势变化：比如游戏在线人数进入开学季之后会持续走低，业务觉得很正常，不要告警（一般算法都要告警）。</li><li>定时任务日志数：周期性凸起，业务说不要告（但是一般的算法都会告）</li><li>无规律指标的异常识别：常见于刚上线的大区，不稳定。</li><li>周期性毛刺点并且间隔不固定：数据质量问题。</li><li>稀疏数据：比如成交数据，商品只在某个固定时间上架。</li></ul><h2 id="异常分类">异常分类</h2><p>有几类异常：全局异常，条件异常</p><h3 id="全局异常">全局异常</h3><ul><li>全局异常点有点像黑天鹅事件，过去没发生过的。</li></ul><p><img src="./global_anomalie.png" /></p><h3 id="条件异常">条件异常</h3><p>条件异常(contextual or conditional anomalies)：value deviates quite a lot from the rest of the data points，举2个例子：</p><ol type="1"><li>办公室出现了一个穿西装打领带的人，跟我们格格不入，但是放到另外一个context中，比如房屋中介行业很正常</li><li>凌晨销量突然升高</li></ol><p><img src="./img.png" /></p><h3 id="联合异常">联合异常</h3><figure><img src="./img78.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><p>每一个点不是异常的（既非 contextual 也非 global），但是一起出现就异常了，例如</p><ol type="1"><li>一个小区中，有人去医院很正常，但是整个小区的人同时去医院就不正常了。</li><li>投放广告时，预算增加，曝光和点击同时上升是很正常的。但是曝光增加，点击却下降（市场营销策略失灵--glitch）就意味着有问题，可能是广告中心设置了一个空的广告位，或者将广告曝光给了错误的用户。 <img src="./img0890.png" alt="img.png" /></li></ol><h2 id="用户在使用过程中的疑问">用户在使用过程中的疑问</h2><h3 id="模型开发者">模型开发者</h3><p>模型开发者关心的是</p><ul><li>为什么告警？<ul><li>告警时，知道特征有什么变化，在模型输出的时候，把特征也带上</li></ul></li><li>屏蔽周期性的告警</li></ul><h3 id="模型应用者">模型应用者</h3><p>模型服务的使用者关心的是</p><ul><li>应用时的阈值的修改记录在哪看？</li><li>当前模型是不是最新版本？</li><li>为什么告警？<ul><li>模型开发者需要在输出中加入告警描述字段</li><li>可视化saas，对告警的决策逻辑进行解释，eg上下界</li></ul></li><li>这么多模型，我该选择哪一个？</li><li>业务相关的需求：<ul><li>屏蔽周期性的告警。</li></ul></li></ul><h2 id="参考资料">参考资料</h2><ol type="1"><li>https://www.youtube.com/watch?v=pXGqDiE4N0I</li></ol>]]></content>
     
     
       
@@ -111,7 +291,7 @@
     
     
     
-    <category term="AIOps" scheme="https://chiechie.github.io/categories/AIOps/"/>
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
     
     
     <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
@@ -186,21 +366,21 @@
   
   <entry>
     <title>《人工智能的现状，任务，架构和统一》from 朱松纯</title>
-    <link href="https://chiechie.github.io/2021/04/30/reading_notes/qiantan-ai/"/>
-    <id>https://chiechie.github.io/2021/04/30/reading_notes/qiantan-ai/</id>
+    <link href="https://chiechie.github.io/2021/04/30/AI/qiantan-ai/"/>
+    <id>https://chiechie.github.io/2021/04/30/AI/qiantan-ai/</id>
     <published>2021-04-30T00:44:52.000Z</published>
-    <updated>2021-05-10T11:29:53.289Z</updated>
+    <updated>2021-05-17T00:42:41.589Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>特别喜欢看这种高屋建瓴的文章，了解ai现状和未来，深度学习的局限，未来可能的发展方向</p><p>这种预测科技趋势的文章，只能领域专家，咨询公司基本都是扯淡（对，说的就是gartner）</p></blockquote><h2 id="现状-正视现实-vs-未来一只乌鸦的启示">现状-正视现实 vs 未来：一只乌鸦的启示</h2><ol type="1"><li>人工智能的6大领域：计算机视觉、自然语言理解、认知科学、机器学习、机器人学, 博弈和伦理。 <img src="./img.png" alt="img.png" /></li><li>人工智能当前算不能算一门science，只是一个工程实践。</li><li>人脸识别只是计算机视觉的一个很小的领域；深度学习是机器学习这个学科的一个当空的学派</li><li>人工智能研究，简单来说，就是要通过智能的机器，延伸和增强人类在改造自然治理社会的能力和效率，最终实现人鱼机器和谐共生共存的状态。</li><li>智能机器跟传统工具的区别在于，前者有自主的感知，认知，决策。学习，执行和社会协作能力，符合人类情感伦理和道德观念。</li></ol><h2 id="ai的历史">AI的历史</h2><blockquote><p>回顾人工智能过去65年的发展历史，经历了几起几落(boom and bust) <img src="./img_1.png" alt="img_1.png" /></p></blockquote><ol type="1"><li>从表面看，人工智能发展史可以分为3个阶段：<ol type="1"><li>第一次兴起是1956-1974，以命题逻辑、谓词逻辑等知识表达、启发式搜 索算法为代表。</li><li>1980年代初兴起了第二次热潮，一批吹牛的教授、研究人员登场了了，做专家系统、知识工程、医疗诊断等，基本还是以符号为主的推理，离现实世界很远，在80年代末有个短暂的神经网络的研究热潮，随后，人工智能就跌入了近 30年的寒冬。</li><li>第三次热潮就是2012年开始兴起的深度学习推动的。有了以前的教训，一开始学者们都很谨慎，出来警告说我们做的是特定任务，不是通用人工智能，大家不要炒作。但是拦不住公司要做宣传，然后，大家开始加码宣传。这就像踩踏事件， 处在前面的人是清醒的，他们叫停，可是后面大量闻信赶来的人不知情，拼命往里面挤。 <img src="./img_2.png" alt="img_2.png" /></li></ol></li><li>从更深层的理论看，人工智能的发展史可以分为2个阶段<ol type="1"><li>前30年以数理逻辑的表达与推理为主</li><li>后30年以概率统计的建模、学习和计算为主：这个时期，计算机视觉、自然语言理解、认知科学、机器学习、机器人学五大学科独立发展。在发展壮大的过程中，这些学科都发现了一个新模式，就是概率建模和随机计算。</li></ol></li></ol><blockquote><p>现在，学科之间开始出现兼并状态。所以，我跟那些计算机视觉的研究生和年轻人说，你们不要单纯在视觉这里做， 你赶紧出去“抢地盘”，单独做视觉，已经没有多少新东西可做的了，性能调不过公司的人是一方面;更麻烦的是，别的领域的人打进来，把你的地盘给占了。这是必然发生的事情，现在正在发生的事情。</p><p>chiechie: 工业界不也一样吗？硬要在机器学习一个领域做，别人还结合业务做分析，结合专家经验，怎么拼得过人家呢？</p></blockquote><p>下一章讲，用一个什么样的构架把这些领域和问题统一起来。</p><h2 id="统一人工智能研究的认知构架小数据大任务范式">统一：人工智能研究的认知构架:小数据、大任务范式</h2><ol type="1"><li>有了物理环境的因果链和智能生物的任务与价值链，一切都可推导。</li><li>要构造一个智能系统，如机器人或者游戏中的虚拟的人物，我们先给他们定义好身体的基本行动的功能，再定一个模型的空间。其实，生物的基因也就给了每个智能体这两点.</li><li>模型的空间通过价值函数、决策函数、感知、认知、任务计划等来表达。通俗来说，一个脑模型就是世界观、人生观、价值观的一个数学的表达。这个空间的复杂度决定了个体的智商和成就.</li><li>是什么驱动了模型在空间中的运动，也就是学习的过程？外来的数据和内在的任务.</li><li>内在的任务：有内在价值函数驱动的行为，以期望达到某种目的。</li><li>机器人的脑袋和人的脑袋，都可以看成一个模型。任何一个模型都是由数据与任务来共同塑造的。</li><li>当前的很多深度学习方法，属于一个"大数据，小任务范式"。针对某个特定的任务，如人脸识别和物体识别，设计一个简单的价值函数Loss function，用大量数据训练特定的模型。这种方法在某些问题上也很有效。但是，造成的结果是，这个模型不能泛化和解释。所谓泛化就是把模型用到其它任务，解释其实也是一种复杂的任务。这是必然的结果：你种的是瓜，怎么希望得豆呢？</li><li>人工智能的发展，需要进入一个“小数据、大任务范式（small data for big tasks）”，要用大量任务、而不是大量数据来塑造智能系统和模型.</li><li>人这个智能系统的习得包括3个阶段：<ul><li>亿万年的进化，被达尔文理论的一个客观的适者生存的pheontype landscape 驱动；</li><li>千年的文化形成与传承；</li><li>几十年个体的学习与适应。</li></ul></li></ol><p>而人工智能研究通常只考虑第三个阶段。</p><h2 id="学科一-计算视觉--从深到暗">学科一： 计算视觉--从"深"到"暗"</h2><p>cv领域被主流研究员忽略的几个重大问题：</p><ol type="1"><li><p>几何常识推理与三维场景构建：以前计算机视觉的研究，需要通过多张图 像(多视角)之间特征点的对应关系，去计算这些点在三维世界坐标系的位置(SfM、 SLAM)。其实人只需要一张图像就可以把三维几何估算出来。在我们的人造环境中，有很多几何常识和规律:比如， 你坐的椅子高度就是你小腿的长度约 16 英寸，桌子约 30 英寸，案台约 35 英寸， 门高约 80 英寸，这些都是按照人的身体尺寸和动作来设计的。另外，人造环境中有很 多重复的东西，比如几个窗户一样，大小一致，建筑设计和城市规划都有规则，这些就是 geometric common sense，你根据这些几何的约束就可以定位很多点的 三维位置，同时估计相机位置和光轴。见下图所示，在这个三维场景中，我们的理解就可以表达成为一个层次分解 (compositional)的时空因果的解译图(Spatial，Temporal and Causal Parse Graph),简称 STC-PG。 <img src="./img_4.png" alt="img_4.png" /></p></li><li><p>场景识别的本质是功能推理：做场景的分类和分割都是用一 些图像特征，用大量的图片例子和手工标注的结果去训练神经网络模型，这是典 型的“鹦鹉”模式。一个场景定义本质上就是功能。STC-PG 解译图，每个场景底下其实就分解成为一些动作和功 能 (见 STC-PG 图中的绿色方片节点)。由计算机想象、推理的各种功能决定对场 景的分类。想象功能就是把人的各种姿态放到三维场景中去拟合(见厨房解译图中 人体线画)。这是完全不同于当前的深度学习方法用的分类方法。</p></li><li><p>物理稳定性与关系的推理：我们的生活空间除了满足人类的各种需求(功 能、任务)之外， 另一个基本约束就是物理。我们对图像的解释和理解被表达成为 一个解译图，这个解译图必须满足物理规律，否则就是错误的。</p><blockquote><p>物理关系是需要建模的，类似因果图。</p></blockquote></li><li><p>意向、注意和预测: 厨房那张图有一个人和一只狗，我们可以进一步识别 其动作、眼睛注视的地方，由此推导其动机和意向</p></li><li><p>任务驱动的因果推理与学习:</p><ol type="1"><li>我们的知识是根据我们的任务来组织的。那么什么叫做任务呢？如何表达成数学描述呢？每个任务其实是在改变场景中的某些物体的状态.人类和动物忙忙碌碌，都是在改变各种流态，以提高我们的价值函数（利益）。要理解理解图像中的三维场景和人的动作，这就是因果关系的推理。因果就是:人的动作导致了某种流态的改。如何发现因果呢？这依赖图像之外的东西--“暗物质”(Dark Matter)。物理学家认为我们可观察的物质和能量只是占宇宙总体的5%，剩下的95%是观察不到的暗物质和暗能量。视觉与此十分相似：感知的图像往往只占5%, 而后面的95%，包括功能、物理、因果、动机等等是要靠人的想象和推理过程来完成的。</li><li>学习的本质不是会解题，“学而不思则罔，思而不学则殆”的思，应该是推理。对社会现象，行为和任务，形成一个符合规律的自洽的解释。也就是一个自己构建一个客观世界的因果模型，以及自己决策链。</li><li>推理计算的过程中，大量的运算属于“top-down”自顶向下的计算过程。也就是用脑皮层里面学习到的大量的知识来解释你看到的“蛛丝马迹”，形成一个合理的解释。</li></ol></li><li><p>计算机视觉历史</p><p><img src="./img_3.png" /></p><ol type="1"><li>前面25年的主流是做集合，以形状和物体为中心（Geometry-Based and Object-Centered），</li><li>最近 25 年是从图像视角通过提取丰富的图像特征 描述物体的外观来做识别、分类: Appearance-Based and View-Centered</li></ol></li><li><p>计算机视觉要继续发展，必须发掘“dark matter”。把图像中想象的95%的暗物质与图像中可见的5%的蛛丝马迹，结合起来思考，才能到达真正的理解。现在大家都喜欢在自己工作前面加一个 Deep，以为这样就算深刻了，但其实还是非常肤浅的。不管你多深，不管你卷积神经网络多少层，它只是处理可见的图像表观特征、语音特征，没有跳出那5%。</p><blockquote><p>跟认知科学和自然语言接轨。</p></blockquote></li></ol><h2 id="学科二-认知推理--走进内心世界">学科二： 认知推理--走进内心世界</h2><ol type="1"><li><p>一般一岁多的小孩能知道给你开门，小孩很乐意、主动去帮忙。小孩很早就知道跟人进行配合，这就是人机交互。你把这个小孩看成一个机器人的话，你要设计一个机器人，就是希望它知道看你想干什么，这是人工智能的一个核心表现</p></li><li><p>如果要做人机交互，首先要站在计算机的视角，去观察人的行为和内心世界，下面是一种尝试，用一个 STC-AOG 和 STC-PG 来表达的，见下 图，大致包含四部分：</p><p><img src="./img_5.png" /></p><ul><li>时空因果的概率图，即这个人的总知识</li><li>当前的situation</li><li>意向和动作规划，预判他接下来还会做什么</li><li>当前的注意力，描述他正在关注什么？</li></ul></li><li><p>整个解译图放一块，代表着过去现在未来的短暂时间内的状态。</p><figure><img src="./img_6.png" alt="两个agends博弈过程进行建模" /><figcaption aria-hidden="true">两个agends博弈过程进行建模</figcaption></figure></li><li><p>每个 mind 除了上面谈到的知识 STC-AOG 和状态 STC-PG，还包含了价值函 数，就是价值观，和决策函数。价值观驱动动作，然后根据感知、行动去改变世界， 这样因果就出来了</p></li><li><p>上面只是一个简单的一阶推理。在复杂、对抗的环境中，人们不得不用多阶 的表达。当年司马懿和诸葛亮在祁山对峙时，诸葛亮比司马懿总是要多算一阶。所 谓兵不厌诈，就是有时候我故意把一个错误信息传给你。</p></li></ol><p>那么如何达成共识呢?语言就是必要的形成共识的工具了。</p><h2 id="学科三-语言通讯--共同的认知基础">学科三： 语言通讯--共同的认知基础</h2><ol type="1"><li><p>语言产生的 基础是人要寻求合作。</p></li><li><p>人比动物更高级，是因为脑袋里有很多通信的认知构架(就像多层网络通讯协议)在大脑皮层里面，没有这些认知构架就没法通信</p></li><li><p>与代数拓扑的联系：</p><ul><li>拓扑学就是说图象空间，是一个全集。我们的每个概念往往是它的一个子集。以图像为例，所有的图象是一个集合，一百万个象素就是一百万维空间，每张图像就是这百万维空间的一个点人脸是个概念，所有的人脸就是这一百万维空间的一个子集</li><li>子集和子集存在关系，叫拓扑关系，对应计算机的"语法"。比如头和脖子在 肩膀上是合规的，这个空间结构就是语法。</li><li>语法可以导出语言，语言就是符合语法的所有句子的集合。</li><li>STC-AOG 就是知识的总体表达，而我们看到的眼前每一个例子是由 STC- AOG 导出来的时空因果解译图 STC-PG。计算机视觉，语言，认知，机器人都用它，就是一个统一的表达。</li></ul></li></ol><h2 id="学科四博弈伦理获取共享人类的价值观">学科四：博弈伦理:获取、共享人类的价值观</h2><ol type="1"><li><p>机器人要跟人交流，就必须理解人的价值观。因为一个理性的人，他的行为和决策总是在追求自己的利益最大化。同时，也可以根据一个人的行为推测这个人的价值观是什么。</p></li><li><p>在人工智能学科中，通常把价值观表达为效用函数Utility function，这个函数包含两个部分-收益（loss 或者 reward）和成本（cost）</p></li><li><p>我们每做一件事获得的收益，是定义在流态（fluents）空间里面的，每次行动，通过改变某些fluents，从而在U定义的空间中向上走。U对流态F求微分，就得到一个场。</p></li><li><p>所谓“人往高处走、水往低处流”说的是社会和物理的两个不同现象，本质完全一致。就是人和水都在按照各自的势能函数在运动。那么驱动人的势能函数是什 么呢?</p></li><li><p>机器人下棋, 一个关键就是学习价值函数,就是每一个可能的棋局，它要有一个正确的价值判断。各种游戏和强化学习也比较火热。但这些研究都是在简单的符号空间里面玩。</p></li><li><p>有了价值函数，在一个多人环境中，就有了竞争与合作，形成社会规范、伦理道德，会达成暂时的「准平衡态」</p></li><li><p>归纳学习（Inductivelearning）和演绎学习（Deductivelearning）：</p><ul><li>归纳学习（Inductivelearning）：通过观察大量数据样本，得到一个时空因果的概率模型（STC-AOG，每个时空的动作是一个 STC-PG）。数据样本就是对某个时期、某个地域、某个人群达成的准平衡态的观察，也是千年文化的形成和传承。</li><li>演绎学习 Deductivelearning：从价值函数和物理因果出发，直接推导出准平衡态，要求对研究的对象有深刻的、生成式的模型和理解。</li></ul></li><li><p>人的学习往往是两者的结合。年轻的时候，归纳学习用得多一些，演绎学习往 往是一种不成熟冲动，交点学费，但也可能发现了新天地。到了“五十而不惑”的时候，价值观成型了，价值观覆盖的空间也基本齐全了，那么基本上就用演绎学习。</p></li></ol><h2 id="学科五机器人学构建大任务平台">学科五：机器人学：构建大任务平台</h2><ol type="1"><li>机器人是一个大任务平台，它不仅要调度视觉识别，语言交流，认知推理，还要执行大量的行动去改变环境，其实就是在改变环境的流态。</li><li>流态分为两类：物理流态度，社会流态。前者如刷漆、烧开水、拖地板、 切菜。后者如边，吃、喝、 追逐、搀，是改变 自己内部生物状态、或者是与别人的关系。</li><li>当机器人重建了三维场景后, 就带着功利和任务的眼光来看这个场景, 比如哪个地方可以站/坐/倒水。在机器人规划中， 会先构建Affordance Map，即这个场景可以给你提供什么? <img src="img_7.png" alt="Affordance Map" /></li><li>有了上面的单个基本任务的地图，机器人就可以做任务的规划，当然做的过程中还要考虑因果、场景中别人的反应。考虑的东西越多，它就越成熟，做事就得体、不莽莽撞撞。</li></ol><h2 id="学科六机器学习学习的极限和停机问题">学科六：机器学习：学习的极限和"停机问题"</h2><ol type="1"><li><p>计算机视觉，自然语言理解，认知推理，博弈伦理，机器人，这五个学科都是具体的"问题领域"（domain），而机器学习，是研究"方法领域"（methods），研究如何去拟合，如何去得到那些知识。前面五个学科想五个钉子，机器学习就是锤子，研究的是如何把那些钉子捶进去。深度学习就像一把比较好用的锤子。五大领域里面的人 也发明了很多锤子。只不过最近这几年深度学习这把锤子比较流行。</p></li><li><p>停机问题：在什么条件下，学习过程会终止呢?当学习过程终止了，系统也就达到了极限。比如，有的 人早早就决定不学习了。</p><blockquote><p>问问我自己，当学习一门新领域的时候，什么时候就可以停止学习了？我似乎也给不出答案，就只是在盲目的学习</p></blockquote></li><li><p>当前的机器学习是怎么学习的？包含三步:</p><ol type="1"><li>定义一个损失函数loss function 记作 u，代表一个小任务，比如人脸识别，对了就奖励1，错了就是-1。</li><li>你选择一个模型，比如一个10-层的神经网络，它带有几亿个参数 <span class="math inline">\(\theta\)</span>， 需要通过数据来拟合。</li><li>你拿到大量数据，这里假设有人给你准备了标注的数据，然后就开始拟合 参数了。</li></ol></li><li><p>机器学习在学习的这个过程没有因果，没有机器人行动，是纯粹的、<strong>被动</strong>的统计学习。目前那些 做视觉识别和语音识别都是这一类。</p></li><li><p>机器学习的 学习方式是一种狭义的学习，是一种题海战术，填鸭式的训练。真正的学习是一个交互的过程，学生可以问老师，老师问学生，共同思考，是一种平等交流。 <img src="img_8.png" alt="img_8.png" /></p></li><li><p>这个学习过程是建立在认知构架之上的，是一种广义的学习，也叫通讯学习（Communicative Learning） <img src="img_9.png" alt="img_9.png" /></p></li><li><p>这个图里面是两个人 A 与 B 的交流，一个是老师，一个是学生，完全是对等的 结构，体现了教与学是一个平等的互动过程。每个椭圆代表一个脑袋 mind，它包含 了三大块: 知识<span class="math inline">\(\theta\)</span>、决策函数<span class="math inline">\(\pi\)</span>、价值函数<span class="math inline">\(\mu\)</span>。最底下的那个椭圆代表物理 世界，也就是“上帝”脑袋里面知道的东西。上面中间的那个椭圆代表双方达成的 共识。</p></li><li><p>这个通讯学习的构架里面，就包含了大量的学习模式，包括以下七种学习模式 (每种学习模式其实对应与图中的某个或者几个箭头)，这里面还有很多模式可以 开发出来。</p><ol type="1"><li>被动统计学习 passive statistical learning:上面刚刚谈到的、当前最流行的 学习模式，用大数据拟合模型;</li><li>主动学习 active learning:学生可以问老师主动要数据，这个在机器学习里面 也流行过;</li><li>算法教学 algorithmic teaching:老师主动跟踪学生的进展和能力，然后，设计例子来帮你学。这是成本比较高的、理想的优秀教师的教学方式;</li><li>演示学习 learning from demonstration:这是机器人学科里面常用的，就是手把手叫机器人做动作。一个变种是模仿学习 immitation learning;<br /></li><li>感知因果学习 perceptual causality:这是我发明的一种，就是通过观察别人 行为的因果，而不需要去做实验验证，学习出来的因果模型，这在人类认知中十分普遍;</li><li>因果学习causal learning:通过动手实验， 控制其它变量， 而得到更可靠的因果模型， 科学实验往往属于这一类;</li><li>强化学习reinforcement learning:就是去学习决策函数与价值函数的一种方法</li></ol></li><li><p>我们学习谈话的构成，就是信息在两个椭圆之间流动的过程，影响流动的因素很多，列举4个：</p><ul><li>教与学的动机：老师要教一个知识，决策，价值，首先他要明确自己知道而学习不知道。同理，学生问老师，学生要明确自己不知道而老师知道。关键一点是，双方对自己和对方有准确的估计。</li><li>教与学的方法：老师知道学生的进度，就可以准确提供新知识，而不是重复。</li><li>智商问题：如何测量一个机器的智商，对很多动物，有些概念是教不会的</li><li>价值函数：价值观不一致的人无法交流，更别说相互学习了。社会上也有这种分化的趋势。</li></ul></li><li><p>停机问题，就是说在多个人动态的学习过程中，所达到的平衡态。</p></li></ol><h2 id="智能科学--牛顿与达尔文的统一">智能科学--牛顿与达尔文的统一</h2><blockquote><p>古希腊伟大的唯物主义者坚持主张，一起物质事件都应当归结为一系列的有规律的原子运动，不允许把任何生物的意志作为独立的原因。笛卡尔无疑曾按他自己的方式重新探索过这一问题，但是在当时只是一个大胆的奢望，一个哲学学派问题的理想而已。在牛顿之前，没有实际结果来支持信念--认为物理因果关系有完整链条。 --爱因斯坦</p></blockquote><ol type="1"><li>物理学依赖于一种基本的信念，物理世界存在这完整的因果链条，即自然界是统一的，牛顿力学则是证明这种信念的第一个成功范例。</li><li>物理学的责任就是寻找支配自然各种现象的统一的力。这是一个信念，你相信这个东西，就不要唧唧歪歪，就为此努力！</li><li>而对ai的研究，大家的看法还是肤浅和短视的，不追求统一的解释，只有一些工程法则。</li><li>物理学把生物的意志排除在研究之外，智能科学则要研究物理和生物混合的复杂系统。</li><li>智能科学比物理复杂的地方在于：<ul><li>物理学面对的是一个客观的世界，档当客观世界映射到人脑中，形成一个主观与客观融合的世界（贝叶斯学派），这个模型又被映射到别人的脑袋中，每个脑中包含上百个他人的模型的估计，这些模型来驱动人的运动和行为</li><li>物理学可以把各种现象隔离出来研究，但是智能科学研究的是人和环境的交互的问题，本身就很复杂，很难隔离开。</li></ul></li><li>ai要变成智能科学，本质上会是达尔文和牛顿理论的统一<ol type="1"><li>智能物种与生俱来的任务与价值链条：这是生物进化的刚需，动物的行为都是被各种任务驱动的，任务由价值函数决定的，价值函数是进化论中的phenotype landscape。基因突变其实就是物种在这个进化的大时间尺度上的价值函数中的行动action。</li><li>物理环境客观的现实和因果链条：自然尺度下的物理世界与因果链条，即牛顿力学。</li></ol></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="http://www.stat.ucla.edu/~sczhu/Blog_articles/%E6%B5%85%E8%B0%88%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD.pdf">浅谈人工智能-朱松纯pdf</a></li><li><a href="https://docs.qq.com/mind/DVGJoc1hqZkRrRmJw">人工智能概要-脑图-腾讯文档</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>看这种高屋建瓴的文章，了解ai现状和未来--深度学习的局限，未来可能的发展方向</p><p>这种预测科技趋势的文章，只能领域专家，咨询公司基本都是扯淡（对，说的就是gartner）</p></blockquote><h2 id="现状-正视现实-vs-未来">现状-正视现实 vs 未来</h2><ol type="1"><li>人工智能的6大领域：计算机视觉、自然语言理解、认知科学、机器学习、机器人学, 博弈和伦理。 <img src="./img.png" alt="img.png" /></li><li>人工智能当前算不能算一门science，只是一个工程实践。</li><li>人脸识别只是计算机视觉的一个很小的领域；深度学习是机器学习这个学科下的一个当红学派</li><li>人工智能研究，简单来说，就是要通过智能的机器，延伸和增强人类在改造自然治理社会的能力和效率，最终实现人与机器和谐共生共存的状态。</li><li>智能机器跟传统工具的区别在于，前者有自主的感知，认知，决策。学习，执行和社会协作能力，符合人类情感伦理和道德观念。</li></ol><h2 id="ai的历史">AI的历史</h2><blockquote><p>回顾人工智能过去65年的发展历史，经历了几起几落(boom and bust) <img src="./img_1.png" alt="img_1.png" /></p></blockquote><ol type="1"><li>从表面看，人工智能发展史可以分为3个阶段：<ol type="1"><li>第一次兴起是1956-1974，以命题逻辑、谓词逻辑等知识表达、启发式搜 索算法为代表。</li><li>第二次兴起是1980～1989，一批吹牛的教授、研究人员登场了，做专家系统、知识工程、医疗诊断等，基本还是以符号为主的推理，离现实世界很远，80年代末有个短暂的神经网络的研究热潮。随后，人工智能就跌入了近30年的寒冬。</li><li>第三次兴起时2012年到现在，是由深度学习推动的。有了以前的教训，一开始学者们都很谨慎，出来警告说这次做的是特定任务，不是通用人工智能，大家不要炒作。但是拦不住公司要做宣传，然后，大家开始加码宣传。就像踩踏事件， 处在前面的人是清醒的，他们叫停，可是后面大量闻信赶来的人不知情，拼命往里面挤。 <img src="./img_2.png" alt="img_2.png" /></li></ol></li><li>从更深层的理论看，人工智能的发展史可以分为2个阶段<ol type="1"><li>前30年以数理逻辑的表达与推理为主。</li><li>后30年以概率统计的建模、学习和计算为主，这个时期，计算机视觉、自然语言理解、认知科学、机器学习、机器人学五大学科独立发展。在发展壮大的过程中，这些学科都发现了一个新模式，就是概率建模和随机计算。</li></ol></li></ol><blockquote><p>现在，学科之间开始出现兼并状态。所以，我跟那些计算机视觉的研究生和年轻人说，你们不要单纯在视觉这里做， 你赶紧出去“抢地盘”，单独做视觉，已经没有多少新东西可做的了，性能调不过公司的人是一方面;更麻烦的是，别的领域的人打进来，把你的地盘给占了。这是必然发生的事情，现在正在发生的事情。</p><p>chiechie: 工业界不也一样吗？硬要在机器学习一个领域做，别人还结合业务做分析，结合专家经验，怎么拼得过人家呢？</p></blockquote><p>下一章讲，用一个什么样的构架把这些领域和问题统一起来。</p><h2 id="统一人工智能研究的认知构架小数据大任务范式">统一：人工智能研究的认知构架:小数据、大任务范式</h2><ol type="1"><li>有了物理环境的因果链和智能生物的任务与价值链，一切都可推导。</li><li>要构造一个智能系统，如机器人或者游戏中的虚拟的人物，我们先给他们定义好身体的基本行动的功能，再定一个模型的空间。其实，生物的基因也就给了每个智能体这两点.</li><li>模型的空间通过价值函数、决策函数、感知、认知、任务计划等来表达。通俗来说，一个脑模型就是世界观、人生观、价值观的一个数学的表达。这个空间的复杂度决定了个体的智商和成就.</li><li>是什么驱动了模型在空间中的运动，也就是学习的过程？外来的数据和内在的任务.</li><li>内在的任务：有内在价值函数驱动的行为，以期望达到某种目的。</li><li>机器人的脑袋和人的脑袋，都可以看成一个模型。任何一个模型都是由数据与任务来共同塑造的。</li><li>当前的很多深度学习方法，属于一个"大数据，小任务范式"。针对某个特定的任务，如人脸识别和物体识别，设计一个简单的价值函数Loss function，用大量数据训练特定的模型。这种方法在某些问题上也很有效。但是，造成的结果是，这个模型不能泛化和解释。所谓泛化就是把模型用到其它任务，解释其实也是一种复杂的任务。这是必然的结果：你种的是瓜，怎么希望得豆呢？</li><li>人工智能的发展，需要进入一个“小数据、大任务范式（small data for big tasks）”，要用大量任务、而不是大量数据来塑造智能系统和模型.</li><li>人这个智能系统的习得包括3个阶段：<ul><li>亿万年的进化，被达尔文理论的一个客观的适者生存的pheontype landscape 驱动；</li><li>千年的文化形成与传承；</li><li>几十年个体的学习与适应。</li></ul></li></ol><p>而人工智能研究通常只考虑第三个阶段。</p><h2 id="学科一-计算视觉--从深到暗">学科一： 计算视觉--从"深"到"暗"</h2><p>cv领域被主流研究员忽略的几个重大问题：</p><ol type="1"><li><p>几何常识推理与三维场景构建：以前计算机视觉的研究，需要通过多张图 像(多视角)之间特征点的对应关系，去计算这些点在三维世界坐标系的位置(SfM、 SLAM)。其实人只需要一张图像就可以把三维几何估算出来。在我们的人造环境中，有很多几何常识和规律:比如， 你坐的椅子高度就是你小腿的长度约 16 英寸，桌子约 30 英寸，案台约 35 英寸， 门高约 80 英寸，这些都是按照人的身体尺寸和动作来设计的。另外，人造环境中有很 多重复的东西，比如几个窗户一样，大小一致，建筑设计和城市规划都有规则，这些就是 geometric common sense，你根据这些几何的约束就可以定位很多点的 三维位置，同时估计相机位置和光轴。见下图所示，在这个三维场景中，我们的理解就可以表达成为一个层次分解 (compositional)的时空因果的解译图(Spatial，Temporal and Causal Parse Graph),简称 STC-PG。 <img src="./img_4.png" alt="img_4.png" /></p></li><li><p>场景识别的本质是功能推理：做场景的分类和分割都是用一 些图像特征，用大量的图片例子和手工标注的结果去训练神经网络模型，这是典 型的“鹦鹉”模式。一个场景定义本质上就是功能。STC-PG 解译图，每个场景底下其实就分解成为一些动作和功 能 (见 STC-PG 图中的绿色方片节点)。由计算机想象、推理的各种功能决定对场 景的分类。想象功能就是把人的各种姿态放到三维场景中去拟合(见厨房解译图中 人体线画)。这是完全不同于当前的深度学习方法用的分类方法。</p></li><li><p>物理稳定性与关系的推理：我们的生活空间除了满足人类的各种需求(功 能、任务)之外， 另一个基本约束就是物理。我们对图像的解释和理解被表达成为 一个解译图，这个解译图必须满足物理规律，否则就是错误的。</p><blockquote><p>物理关系是需要建模的，类似因果图。</p></blockquote></li><li><p>意向、注意和预测: 厨房那张图有一个人和一只狗，我们可以进一步识别 其动作、眼睛注视的地方，由此推导其动机和意向</p></li><li><p>任务驱动的因果推理与学习:</p><ol type="1"><li>我们的知识是根据我们的任务来组织的。那么什么叫做任务呢？如何表达成数学描述呢？每个任务其实是在改变场景中的某些物体的状态.人类和动物忙忙碌碌，都是在改变各种流态，以提高我们的价值函数（利益）。要理解理解图像中的三维场景和人的动作，这就是因果关系的推理。因果就是:人的动作导致了某种流态的改。如何发现因果呢？这依赖图像之外的东西--“暗物质”(Dark Matter)。物理学家认为我们可观察的物质和能量只是占宇宙总体的5%，剩下的95%是观察不到的暗物质和暗能量。视觉与此十分相似：感知的图像往往只占5%, 而后面的95%，包括功能、物理、因果、动机等等是要靠人的想象和推理过程来完成的。</li><li>学习的本质不是会解题，“学而不思则罔，思而不学则殆”的思，应该是推理。对社会现象，行为和任务，形成一个符合规律的自洽的解释。也就是一个自己构建一个客观世界的因果模型，以及自己决策链。</li><li>推理计算的过程中，大量的运算属于“top-down”自顶向下的计算过程。也就是用脑皮层里面学习到的大量的知识来解释你看到的“蛛丝马迹”，形成一个合理的解释。</li></ol></li><li><p>计算机视觉历史</p><p><img src="./img_3.png" /></p><ol type="1"><li>前面25年的主流是做集合，以形状和物体为中心（Geometry-Based and Object-Centered），</li><li>最近 25 年是从图像视角通过提取丰富的图像特征 描述物体的外观来做识别、分类: Appearance-Based and View-Centered</li></ol></li><li><p>计算机视觉要继续发展，必须发掘“dark matter”。把图像中想象的95%的暗物质与图像中可见的5%的蛛丝马迹，结合起来思考，才能到达真正的理解。现在大家都喜欢在自己工作前面加一个 Deep，以为这样就算深刻了，但其实还是非常肤浅的。不管你多深，不管你卷积神经网络多少层，它只是处理可见的图像表观特征、语音特征，没有跳出那5%。</p><blockquote><p>跟认知科学和自然语言接轨。</p></blockquote></li></ol><h2 id="学科二-认知推理--走进内心世界">学科二： 认知推理--走进内心世界</h2><ol type="1"><li><p>一般一岁多的小孩能知道给你开门，小孩很乐意、主动去帮忙。小孩很早就知道跟人进行配合，这就是人机交互。你把这个小孩看成一个机器人的话，你要设计一个机器人，就是希望它知道看你想干什么，这是人工智能的一个核心表现</p></li><li><p>如果要做人机交互，首先要站在计算机的视角，去观察人的行为和内心世界，下面是一种尝试，用一个 STC-AOG 和 STC-PG 来表达的，见下 图，大致包含四部分：</p><p><img src="./img_5.png" /></p><ul><li>时空因果的概率图，即这个人的总知识</li><li>当前的situation</li><li>意向和动作规划，预判他接下来还会做什么</li><li>当前的注意力，描述他正在关注什么？</li></ul></li><li><p>整个解译图放一块，代表着过去现在未来的短暂时间内的状态。</p><figure><img src="./img_6.png" alt="两个agends博弈过程进行建模" /><figcaption aria-hidden="true">两个agends博弈过程进行建模</figcaption></figure></li><li><p>每个 mind 除了上面谈到的知识 STC-AOG 和状态 STC-PG，还包含了价值函 数，就是价值观，和决策函数。价值观驱动动作，然后根据感知、行动去改变世界， 这样因果就出来了</p></li><li><p>上面只是一个简单的一阶推理。在复杂、对抗的环境中，人们不得不用多阶 的表达。当年司马懿和诸葛亮在祁山对峙时，诸葛亮比司马懿总是要多算一阶。所 谓兵不厌诈，就是有时候我故意把一个错误信息传给你。</p></li></ol><p>那么如何达成共识呢?语言就是必要的形成共识的工具了。</p><h2 id="学科三-语言通讯--共同的认知基础">学科三： 语言通讯--共同的认知基础</h2><ol type="1"><li><p>语言产生的 基础是人要寻求合作。</p></li><li><p>人比动物更高级，是因为脑袋里有很多通信的认知构架(就像多层网络通讯协议)在大脑皮层里面，没有这些认知构架就没法通信</p></li><li><p>与代数拓扑的联系：</p><ul><li>拓扑学就是说图象空间，是一个全集。我们的每个概念往往是它的一个子集。以图像为例，所有的图象是一个集合，一百万个象素就是一百万维空间，每张图像就是这百万维空间的一个点人脸是个概念，所有的人脸就是这一百万维空间的一个子集</li><li>子集和子集存在关系，叫拓扑关系，对应计算机的"语法"。比如头和脖子在 肩膀上是合规的，这个空间结构就是语法。</li><li>语法可以导出语言，语言就是符合语法的所有句子的集合。</li><li>STC-AOG 就是知识的总体表达，而我们看到的眼前每一个例子是由 STC- AOG 导出来的时空因果解译图 STC-PG。计算机视觉，语言，认知，机器人都用它，就是一个统一的表达。</li></ul></li></ol><h2 id="学科四博弈伦理获取共享人类的价值观">学科四：博弈伦理:获取、共享人类的价值观</h2><ol type="1"><li><p>机器人要跟人交流，就必须理解人的价值观。因为一个理性的人，他的行为和决策总是在追求自己的利益最大化。同时，也可以根据一个人的行为推测这个人的价值观是什么。</p></li><li><p>在人工智能学科中，通常把价值观表达为效用函数Utility function，这个函数包含两个部分-收益（loss 或者 reward）和成本（cost）</p></li><li><p>我们每做一件事获得的收益，是定义在流态（fluents）空间里面的，每次行动，通过改变某些fluents，从而在U定义的空间中向上走。U对流态F求微分，就得到一个场。</p></li><li><p>所谓“人往高处走、水往低处流”说的是社会和物理的两个不同现象，本质完全一致。就是人和水都在按照各自的势能函数在运动。那么驱动人的势能函数是什 么呢?</p></li><li><p>机器人下棋, 一个关键就是学习价值函数,就是每一个可能的棋局，它要有一个正确的价值判断。各种游戏和强化学习也比较火热。但这些研究都是在简单的符号空间里面玩。</p></li><li><p>有了价值函数，在一个多人环境中，就有了竞争与合作，形成社会规范、伦理道德，会达成暂时的「准平衡态」</p></li><li><p>归纳学习（Inductivelearning）和演绎学习（Deductivelearning）：</p><ul><li>归纳学习（Inductivelearning）：通过观察大量数据样本，得到一个时空因果的概率模型（STC-AOG，每个时空的动作是一个 STC-PG）。数据样本就是对某个时期、某个地域、某个人群达成的准平衡态的观察，也是千年文化的形成和传承。</li><li>演绎学习 Deductivelearning：从价值函数和物理因果出发，直接推导出准平衡态，要求对研究的对象有深刻的、生成式的模型和理解。</li></ul></li><li><p>人的学习往往是两者的结合。年轻的时候，归纳学习用得多一些，演绎学习往 往是一种不成熟冲动，交点学费，但也可能发现了新天地。到了“五十而不惑”的时候，价值观成型了，价值观覆盖的空间也基本齐全了，那么基本上就用演绎学习。</p></li></ol><h2 id="学科五机器人学--构建大任务平台">学科五：机器人学--构建大任务平台</h2><ol type="1"><li>机器人是一个大任务平台，它不仅要调度视觉识别，语言交流，认知推理，还要执行大量的行动去改变环境，其实就是在改变环境的流态。</li><li>流态分为两类：物理流态度，社会流态。前者如刷漆、烧开水、拖地板、切菜。后者如边，吃、喝、 追逐、搀，是改变 自己内部生物状态、或者是与别人的关系。</li><li>当机器人重建了三维场景后, 就带着功利和任务的眼光来看这个场景, 比如哪个地方可以站/坐/倒水。在机器人规划中， 会先构建Affordance Map，即这个场景可以给你提供什么? <img src="img_7.png" alt="Affordance Map" /></li><li>有了上面的单个基本任务的地图，机器人就可以做任务的规划，当然做的过程中还要考虑因果、场景中别人的反应。考虑的东西越多，它就越成熟，做事就得体、不莽莽撞撞。</li></ol><h2 id="学科六机器学习--学习的极限和停机问题">学科六：机器学习--学习的极限和"停机问题"</h2><ol type="1"><li><p>计算机视觉，自然语言理解，认知推理，博弈伦理，机器人，这五个学科都是具体的"问题领域"（domain），而机器学习，是研究"方法领域"（methods），研究如何去拟合，如何去得到那些知识。前面五个学科像五个钉子，机器学习就是锤子，研究的是如何把那些钉子捶进去。深度学习就像一把比较好用的锤子。五大领域里面的人也发明了很多锤子，只不过最近这几年深度学习这把锤子比较流行。</p></li><li><p>停机问题：在什么条件下，学习过程会终止呢?当学习过程终止了，系统也就达到了极限。比如，有的 人早早就决定不学习了。</p><blockquote><p>问问我自己，当学习一门新领域的时候，什么时候就可以停止学习了？我似乎也给不出答案，就只是在盲目的学习</p></blockquote></li><li><p>当前的机器学习是怎么学习的？包含三步:</p><ol type="1"><li>定义一个损失函数loss function 记作 u，代表一个小任务，比如人脸识别，对了就奖励1，错了就是-1。</li><li>你选择一个模型，比如一个10-层的神经网络，它带有几亿个参数 <span class="math inline">\(\theta\)</span>， 需要通过数据来拟合。</li><li>你拿到大量数据，这里假设有人给你准备了标注的数据，然后就开始拟合 参数了。</li></ol></li><li><p>机器学习在学习的这个过程没有因果，没有机器人行动，是纯粹的、<strong>被动</strong>的统计学习。目前那些 做视觉识别和语音识别都是这一类。</p></li><li><p>机器学习的 学习方式是一种狭义的学习，是一种题海战术，填鸭式的训练。真正的学习是一个交互的过程，学生可以问老师，老师问学生，共同思考，是一种平等交流。 <img src="img_8.png" alt="img_8.png" /></p></li><li><p>这个学习过程是建立在认知构架之上的，是一种广义的学习，也叫通讯学习（Communicative Learning） <img src="img_9.png" alt="img_9.png" /></p></li><li><p>这个图里面是两个人 A 与 B 的交流，一个是老师，一个是学生，完全是对等的结构，体现了教与学是一个平等的互动过程。每个椭圆代表一个脑袋 mind，它包含 了三大块: 知识<span class="math inline">\(\theta\)</span>、决策函数<span class="math inline">\(\pi\)</span>、价值函数<span class="math inline">\(\mu\)</span>。最底下的那个椭圆代表物理 世界，也就是“上帝”脑袋里面知道的东西。上面中间的那个椭圆代表双方达成的 共识。</p></li><li><p>这个通讯学习的构架里面，就包含了大量的学习模式，包括以下七种学习模式 (每种学习模式其实对应与图中的某个或者几个箭头)，这里面还有很多模式可以 开发出来。</p><ol type="1"><li>被动统计学习 passive statistical learning:上面刚刚谈到的、当前最流行的 学习模式，用大数据拟合模型;</li><li>主动学习 active learning:学生可以问老师主动要数据，这个在机器学习里面 也流行过;</li><li>算法教学 algorithmic teaching:老师主动跟踪学生的进展和能力，然后，设计例子来帮你学。这是成本比较高的、理想的优秀教师的教学方式;</li><li>演示学习 learning from demonstration:这是机器人学科里面常用的，就是手把手叫机器人做动作。一个变种是模仿学习 immitation learning;<br /></li><li>感知因果学习perceptual causality:这是我发明的一种，就是通过观察别人 行为的因果，而不需要去做实验验证，学习出来的因果模型，这在人类认知中十分普遍;</li><li>因果学习causal learning:通过动手实验，控制其它变量，而得到更可靠的因果模型，科学实验往往属于这一类;</li><li>强化学习reinforcement learning:就是去学习决策函数与价值函数的一种方法</li></ol></li><li><p>我们学习谈话的构成，就是信息在两个椭圆之间流动的过程，影响流动的因素很多，列举4个：</p><ul><li>教与学的动机：老师要教一个知识，决策，价值，首先他要明确自己知道而学习不知道。同理，学生问老师，学生要明确自己不知道而老师知道。关键一点是，双方对自己和对方有准确的估计。</li><li>教与学的方法：老师知道学生的进度，就可以准确提供新知识，而不是重复。</li><li>智商问题：如何测量一个机器的智商，对很多动物，有些概念是教不会的</li><li>价值函数：价值观不一致的人无法交流，更别说相互学习了。社会上也有这种分化的趋势。</li></ul></li><li><p>停机问题，就是说在多个人动态的学习过程中，所达到的平衡态。</p></li></ol><h2 id="智能科学--牛顿与达尔文的统一">智能科学--牛顿与达尔文的统一</h2><blockquote><p>古希腊伟大的唯物主义者坚持主张，一起物质事件都应当归结为一系列的有规律的原子运动，不允许把任何生物的意志作为独立的原因。笛卡尔无疑曾按他自己的方式重新探索过这一问题，但是在当时只是一个大胆的奢望，一个哲学学派问题的理想而已。在牛顿之前，没有实际结果来支持信念--认为物理因果关系有完整链条。 --爱因斯坦</p></blockquote><ol type="1"><li>物理学依赖于一种基本的信念，物理世界存在这完整的因果链条，即自然界是统一的，牛顿力学则是证明这种信念的第一个成功范例。</li><li>物理学的责任就是寻找支配自然各种现象的统一的力。这是一个信念，你相信这个东西，就不要唧唧歪歪，就为此努力！</li><li>而对ai的研究，大家的看法还是肤浅和短视的，不追求统一的解释，只有一些工程法则。</li><li>物理学把生物的意志排除在研究之外，智能科学则要研究物理和生物混合的复杂系统。</li><li>智能科学比物理复杂的地方在于：<ul><li>物理学面对的是一个客观的世界，档当客观世界映射到人脑中，形成一个主观与客观融合的世界（贝叶斯学派），这个模型又被映射到别人的脑袋中，每个脑中包含上百个他人的模型的估计，这些模型来驱动人的运动和行为</li><li>物理学可以把各种现象隔离出来研究，但是智能科学研究的是人和环境的交互的问题，本身就很复杂，很难隔离开。</li></ul></li><li>ai要变成智能科学，本质上会是达尔文和牛顿理论的统一<ol type="1"><li>智能物种与生俱来的任务与价值链条：这是生物进化的刚需，动物的行为都是被各种任务驱动的，任务由价值函数决定的，价值函数是进化论中的phenotype landscape。基因突变其实就是物种在这个进化的大时间尺度上的价值函数中的行动action。</li><li>物理环境客观的现实和因果链条：自然尺度下的物理世界与因果链条，即牛顿力学。</li></ol></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="http://www.stat.ucla.edu/~sczhu/Blog_articles/%E6%B5%85%E8%B0%88%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD.pdf">浅谈人工智能-朱松纯pdf</a></li><li><a href="https://docs.qq.com/mind/DVGJoc1hqZkRrRmJw">人工智能概要-脑图-腾讯文档</a></li></ol>]]></content>
     
     
       
       
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;特别喜欢看这种高屋建瓴的文章，了解ai现状和未来，深度学习的局限，未来可能的发展方向&lt;/p&gt;
+&lt;p&gt;看这种高屋建瓴的文章，了解ai现状和未来--深度学习的局限，未来可能的发展方向&lt;/p&gt;
 &lt;p&gt;这种预测科技趋势的文章，只能领域专家，咨询公司基本都是扯淡（对，说的就是gartner）&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&quot;现状-</summary>
+&lt;h2 id=&quot;现状-正视现</summary>
       
     
     
@@ -210,17 +390,17 @@
     
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
-    <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
+    <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
     
     <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
     <category term="信念" scheme="https://chiechie.github.io/tags/%E4%BF%A1%E5%BF%B5/"/>
     
+    <category term="计算机视觉" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
+    
     <category term="认知科学" scheme="https://chiechie.github.io/tags/%E8%AE%A4%E7%9F%A5%E7%A7%91%E5%AD%A6/"/>
     
-    <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
-    
-    <category term="计算机视觉" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
+    <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
     
     <category term="机器学习" scheme="https://chiechie.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
@@ -394,16 +574,15 @@
     <link href="https://chiechie.github.io/2021/04/24/reading_notes/bayes_zhexue/"/>
     <id>https://chiechie.github.io/2021/04/24/reading_notes/bayes_zhexue/</id>
     <published>2021-04-24T01:03:28.000Z</published>
-    <updated>2021-04-25T06:43:21.881Z</updated>
+    <updated>2021-05-17T00:42:41.621Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="基本概念">基本概念</h2><blockquote><p>自然法则（a law of nature）：根据简单性（simplicity）和信息量（informativeness）的平衡，我们从众多不同的科学理论的系统中选出最好的一套系统；如果一个自然规律（regularity）是这套系统内的定律，那么这个规律就是自然法则。 有些自然法则是确定性的（deterministic）--比如说牛顿定律，而有些则是概率的（probabilistic）--比如说量子力学中的玻恩定则（Born Rule）。</p></blockquote><ol type="1"><li>概率有两种：主观概率和客观概率。主观概率的代表是贝叶斯学派，客观概率的代表有：原始派（Primitivism），频率派（Frequentism）。</li><li>主观概率派认为，概率不是关于物理系统的，而是关于物理系统和我们之间的关系。他们并且用信念的强度（degrees of partial belief）来定义概率。</li><li>客观概率派认为，概率是关于客观世界的，关于物理系统的，独立于人们对世界的信念。客观概率的代表有：原始派（Primitivism），频率派（Frequentism）。</li><li>原始派认为：概率是单个物体或者系统的原始的属性，既可能是确定性的，，也可能是概率性的，这个是由事物本身决定的。为什么天体运动轨迹很好预测，微观粒子 就很不好预测，在做布朗运动。</li><li>频率派：频率派直接将概率和频率化作等号。 频率派下最被看好的一个分支：最好的系统（The Best-System View）/休谟式解释（the Humean Account）。</li><li>最好的系统, 将概率和自然法则联系起来。对系统派来说，概率性的系统和确定性的系统没有区别，没有更深层次的属性可以来解释（原始派认为有，就是事物本身的属性）。系统派认为，概率法则和确定性法则，只不过是我们描述，归纳的不同方式罢了，都是在寻求简洁性和信息的一种trade-off.</li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/26895086/answer/175050065">概率（Probability）的本质是什么？-知乎</a></li><li><a href="https://www.zhihu.com/question/20318246/answer/22309277">因果关系是否存在？</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>自然法则（a law of nature）：根据简单性（simplicity）和信息量（informativeness）的平衡，我们从众多不同的科学理论的系统中选出最好的一套系统；如果一个自然规律（regularity）是这套系统内的定律，那么这个规律就是自然法则。 有些自然法则是确定性的（deterministic）--比如说牛顿定律，而有些则是概率的（probabilistic）--比如说量子力学中的玻恩定理（Born Rule）。</p></blockquote><h2 id="两种概率学派">两种概率学派</h2><ol type="1"><li>概率有两种：主观概率和客观概率。主观概率的代表是贝叶斯学派，客观概率的代表有：原始派（Primitivism），频率派（Frequentism）。</li><li>主观概率派认为，概率不是关于物理系统的，而是关于物理系统和我们之间的关系。他们并且用信念的强度（degrees of partial belief）来定义概率。</li><li>客观概率派认为，概率是关于客观世界的，关于物理系统的，独立于人们对世界的信念。客观概率的代表有：原始派（Primitivism），频率派（Frequentism）。</li><li>原始派认为：概率是单个物体或者系统的原始的属性，既可能是确定的，也可能是随机的，但是不管如何，都是由事物本身决定的。天体运动规律非常确定，符合牛顿定律，微观粒子做布朗运动。</li><li>频率派：频率派直接将概率和频率化作等号。频率派下最被看好的一个分支：系统派（The Best-System View）/休谟式解释（the Humean Account）。</li><li>系统派将概率和自然法则联系起来。对系统派来说，概率性的系统和确定性的系统没有区别，没有更深层次的属性可以来解释（原始派认为有，就是事物本身的属性）。系统派认为，概率法则和确定性法则，只不过是我们描述，归纳的不同方式罢了，本质都是在寻求简洁性和信息量的trade-off.</li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/26895086/answer/175050065">概率（Probability）的本质是什么？-知乎</a></li><li><a href="https://www.zhihu.com/question/20318246/answer/22309277">因果关系是否存在？</a></li></ol>]]></content>
     
     
       
       
-    <summary type="html">&lt;h2 id=&quot;基本概念&quot;&gt;基本概念&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;自然法则（a law of nature）：根据简单性（simplicity）和信息量（informativeness）的平衡，我们从众多不同的科学理论的系统中选出最好的一套系统；如果一个自然规律（r</summary>
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;自然法则（a law of nature）：根据简单性（simplicity）和信息量（informativeness）的平衡，我们从众多不同的科学理论的系统中选出最好的一套系统；如果一个自然规律（regularity）是这套系统内的定律，那么这个</summary>
       
     
     
@@ -411,13 +590,13 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
+    <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
+    
     <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
     
     <category term="统计学" scheme="https://chiechie.github.io/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
     
     <category term="概率" scheme="https://chiechie.github.io/tags/%E6%A6%82%E7%8E%87/"/>
-    
-    <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
     
     <category term="频率派" scheme="https://chiechie.github.io/tags/%E9%A2%91%E7%8E%87%E6%B4%BE/"/>
     
@@ -425,10 +604,10 @@
   
   <entry>
     <title>使用gluon-ts做时序预测(1)</title>
-    <link href="https://chiechie.github.io/2021/04/22/AIOps/gluon-ts_1/"/>
-    <id>https://chiechie.github.io/2021/04/22/AIOps/gluon-ts_1/</id>
+    <link href="https://chiechie.github.io/2021/04/22/AI/AIOps/gluon-ts_1/"/>
+    <id>https://chiechie.github.io/2021/04/22/AI/AIOps/gluon-ts_1/</id>
     <published>2021-04-22T09:35:59.000Z</published>
-    <updated>2021-04-28T02:04:01.584Z</updated>
+    <updated>2021-05-17T00:42:41.378Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>看一下amazon官方对DeepAR的实现</p></blockquote><h3 id="实验数据">实验数据</h3><p>数据： <a href="https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014">electricity数据集--Electricity dataset from UCI</a>： , 2011 ~2014期间，370 个 家庭的用电量 ，频率为小时 train/test：2014年9月第一周 作为test，之前的所有数据作为train:</p><ul><li>窗口长度(window_size)：192（8天），其中</li><li>conditioning range：168（前7天）</li><li>prediction range：24（第8天）</li><li>stride_size: 24 hour，滑窗步长</li><li>input_size： window_size-stride_size，14</li></ul><h2 id="问题">问题</h2><ul><li>gluon-ts里面将输入做对数处理效果会不会好一点？<ul><li>不用，mxnet已经做了， 并且额外做预处理，可能还会带来负面影响，<ul><li>loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，</li></ul></li><li>参考论文--context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。</li></ul></li><li>为什么pytorch的训练要7个小时？mxnet训练只要10min？<ul><li>主要在样本采样这块</li></ul></li><li>自己能不用tensorflow复现mxnet的效果？<ul><li>对比参数量，准确率，计算时间，内存消耗</li></ul></li><li>为什DeepAR和DeepFator的loss scale 差这么大? loss的含义都不一样</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># deepAR</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss</span>(<span class="params">self, x: Tensor</span>) -&gt; Tensor:</span></span><br><span class="line"><span class="keyword">return</span> -self.log_prob(x)</span><br><span class="line"><span class="comment"># deepFator</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">negative_normal_likelihood</span>(<span class="params">self, F, y, mu, sigma</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (F.log(sigma) + <span class="number">0.5</span> * math.log(<span class="number">2</span> * math.pi)+ <span class="number">0.5</span> * F.square((y - mu) / sigma))</span><br></pre></td></tr></table></figure><ul><li>对不同曲线预测的时候，为什么有的曲线效果很， 好有的曲线效果很差？<ul><li>deepAR会针对不同曲线，给loss 赋予不同的权重：loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的。</li></ul></li></ul><h2 id="算法前期调研中的一些小插曲">算法前期调研中的一些小插曲</h2><p>网上找到了pytorch版本的deepAR版，但是很慢</p><ul><li>Student： 训练过程很慢 要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？</li><li>Teacher： 看了amazon已经将deepAR做了产品化，按照算法开发的流程肯定经历了效率优化的，并且deepAR的文章发于2017年4月，到目前为止amazon应该做了多次迭代的，所以去查一下近3年的amazon deepAR 相关的资料，看有没有开源的稳定的算法代码。</li><li>Student：找到了--基于MXNET的gluon-ts（于2019年6月发表），mxnet在electricty上的训练和预测时间大概是10min左右</li><li>Teacher：很好，接下来可以考虑更多的产品化方面的事情了，结合运维场景；另外注意到CNN-QR的训练效率也很不错，把这几个算法的准确率对比看一下</li><li>Student：整体上准确率 CNN-QR略逊于DeepAR，但是考虑到计算效率，两者还是不相上下。<ul><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUD6-nafIsi.png?alt=media&amp;token=a359d00d-bde2-41b2-bb96-d9222cb4514c" /></li></ul></li><li>Teacher：下一步，试着CNN-QR的拓展,DeepAR用于异常检测 的效果也测试下</li><li>Student：使用数据平台的两台主机的cpu指标测试，发现cpu的效果还不错，体现在 不同类型的曲线，他们的方差趋势都预测的很准。<ul><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FxofMTtcgaV.png?alt=media&amp;token=26cd83f2-717e-4c9c-8a93-da589dcfe63d" /></li></ul></li><li>Teacher：使用有异常标注的数据测试具体的指标，两种都测下--批量预测 和 实时预测</li><li>Student：在获取数据阶段踩了一些坑，因为维度太多，全部数据维度都要 会导致拉数据接口快挂了</li><li>Teacher：找出其中最重要的维度（重要度 即记录的条数 或者 指标求和）</li><li>Student：从5w个维度过滤出来了100个维度，剩下的大部分维度怎么弄呢？</li><li>Teacher：先管好这个100个维度，跑一跑模型，剩下的数据质量差可以暂时不监控。</li><li>Student：这批数据有个特点--不同曲线形态模式很不一样，我怀疑1个模型很容易学混，接下来就证实了这一点（100个曲线上面的图，待补充）<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHF_Qc1aO1g.png?alt=media&amp;token=3591cf24-bfdf-44b7-894b-ba03652522f1" /></li><li>Teacher：尝试加入feat_static_cat特征，来区分不同曲线。</li><li>Student：有些许变化，但是改进还不太明显。另外在做实验过程中，发现几个优化的方向<ul><li><strong>epoch</strong>： 从 5 到 50，带来了大量的提升</li><li><strong>lstm</strong>的网络结构参数：layers从2到1，units从40到20，准确率有部分提升</li></ul></li><li>Teacher：因为样本较少（3k个训练样本）更适合用简单的模型</li><li>Student：除了直接使用deepar的默认scale以及概率分布的参数，还尝试了另外一个方法： 因为cpu使用率本身是0～1，将数据预处理（除以100）到0～1 之间后跑，但是直接跑模型会报错， 做了以下设置才能跑：<ul><li>scale设置为False</li><li>value 为边界点（0或者1）时，加入扰动项</li><li>输出的概率分布设置为beta分布 输出的上下界，非常符合比率型设定（上界不会超过1，下界不会低于0），但是就是准确率不高，一看就是学混了（移花接木，局部的模式 太弱了）</li></ul></li><li>出bug了，排查问题</li></ul><h2 id="参考">参考</h2><ol type="1"><li><a href="https://github.com/zhykoties/TimeSeries">pytorch版本</a></li></ol>]]></content>
     
@@ -444,7 +623,7 @@
     
     
     
-    <category term="AIOps" scheme="https://chiechie.github.io/categories/AIOps/"/>
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
     
     
     <category term="时间序列" scheme="https://chiechie.github.io/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/"/>
@@ -486,192 +665,6 @@
     <category term="行业分析" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E5%88%86%E6%9E%90/"/>
     
     <category term="网约车" scheme="https://chiechie.github.io/tags/%E7%BD%91%E7%BA%A6%E8%BD%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>投资最重要的事</title>
-    <link href="https://chiechie.github.io/2021/04/21/reading_notes/something-about-investment/"/>
-    <id>https://chiechie.github.io/2021/04/21/reading_notes/something-about-investment/</id>
-    <published>2021-04-21T01:04:33.000Z</published>
-    <updated>2021-04-28T01:44:23.784Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="第1章-序言">第1章 序言</h2><ol type="1"><li>宏观未来很难预测, 大部分人都不具备这个知识优势</li><li>"知可知"：对于个别公司和股票，了解的细节越多，越<strong>有可能</strong>获得知识优势，但是对于整个市场的认知做到这一点就很难。</li><li>弄清自己在周期和钟摆中所处的阶段</li><li>找到某个细分的领域，某个公司，通过努力花时间，调研信息。</li></ol><h2 id="第2章-理解市场的有效性以及局限性">第2章 理解市场的有效性以及局限性</h2><ol type="1"><li>有效市场假说可以优化为：市场可以迅速快捷地整合信息。</li><li>资产价格能够迅速反映出人们对于信息含义的共识，但是这个共识不一定是对的。</li><li>影响共识的两个因素：心理因素和基本面。前者有时候更重要。</li></ol><h2 id="第10章-抵御消极影响">第10章 抵御消极影响</h2><ol type="1"><li>基本观点被转化为高价泡沫的例子--科技股热潮：最开始是有一个有客观吸引力的资产，随着重视程度提高，大家都想要持有这项资产，继而资本流入，价格上涨，资产更加具有吸引力，从而更多人买进，于是上涨进入爆发期。如果这种情况持续的时间足够长、积聚的力量足够大，投资就会变成泡沫。泡沫为善于思考的投资者提供了许多<strong>卖空</strong>的机会。 &gt; 很像平台运营的方式啊。</li></ol><h2 id="第12章-寻找便宜货">第12章 寻找便宜货</h2><ol type="1"><li><p>人们通常不愿意挖掘最佳机会。</p></li><li><p>构建投资组合的准备工作：</p><ul><li>潜在投资清单：满足最低的<strong>绝对标准</strong>的股票。</li><li>内在价值估计：要把未来多久的收益考虑进去呢？</li><li>有多少价值price in到价格中了</li><li>每个投资的风险，以及对整体组合的影响。</li></ul></li><li><p>最低标准之一是风险可接受，包括超出投资者专业知识范围导致的不可预测（例如我跟风买比亚迪），以及行业不稳定或者公司财务的不透明导致无法预测。这两点风险都跟价格无关。</p></li><li><p>价值股：高质量，高市值，eg腾讯，茅台，平安。</p></li><li><p>找便宜货：潜在收益/风险 最高的股票，这个是一个<strong>相对标准</strong></p></li><li><p>投资的过程是缜密和经过严格训练的。投资是相对的：不管价格低迷还是高涨，从现存的可能性中选择最好的。这就是相对决策。</p></li><li><p>投资误区：不能区分好在产与好交易，误将客观优点当作投资机会。</p></li><li><p>便宜股为什么收到冷落？</p><ul><li>客观上公司表现不好：资产类别可能存在缺陷；在业内较为落后（公司规模？）；资产负债表可能被过度杠杆化（没有能力没有钱）</li><li>投资者非理性或者片面理解这个公司：没有透过表象全面了解资产，或未能克服某些不以价值为基础的传统、偏见或束缚。</li><li>进一步下跌：大多数投资者会根据以往业绩而不是更可靠的均值回归来预测未来趋势。第一层次思维者倾向于将过去的价格疲软视为负担，而不是资产更为廉价的标志。</li></ul></li><li><p>怎么区分便宜货和垃圾？思索下，牛肉是不是一个被低估的赛道。</p></li></ol><h2 id="第20章-最重要的事情">第20章 最重要的事情</h2><ol type="1"><li>怎么给一个公司估值？四个方面：账面现金&amp;有形资产价值，产生现金流能力，以及增值潜力。概括一下就是，现在有多少钱，现在能挣多少钱，以及未来可能挣多少钱。</li><li>买入机会存在的原因：极少数人对便宜货有敏锐的洞察力，大部分人认知低下。</li><li>优先级： 买便宜股 &gt; 成长股 &gt; 热门动量股</li><li>韭菜心理学：<ul><li>市场处于周期之中，但是大多数人相信惯性和动量。</li><li>投资者的群体心理也呈现有规律的钟摆式波动——从乐观到悲观，从轻信到怀疑，从唯恐错失良机到害怕遭受损失，从急于买进到迫切卖出。</li></ul></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://weread.qq.com/web/reader/e59329905e4245e59ebd7e1k3c5327902153c59dc0488e1">投资，最重要的事-微信读书</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;第1章-序言&quot;&gt;第1章 序言&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;宏观未来很难预测, 大部分人都不具备这个知识优势&lt;/li&gt;
-&lt;li&gt;&quot;知可知&quot;：对于个别公司和股票，了解的细节越多，越&lt;strong&gt;有可能&lt;/strong&gt;获得知识优势，但是对于整个市场</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>强化学习的应用</title>
-    <link href="https://chiechie.github.io/2021/04/21/reinforcement_learning/rf-application/"/>
-    <id>https://chiechie.github.io/2021/04/21/reinforcement_learning/rf-application/</id>
-    <published>2021-04-21T00:22:04.000Z</published>
-    <updated>2021-04-28T02:27:37.483Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="应用场景">应用场景</h2><ol type="1"><li><p>商品推荐: 每个用户的信息作为state，推荐的商品是action，长期看用户的点击率/浏览时长/消费额reward</p></li><li><p>网约车调度：&lt;地址，时间&gt;为state为，每个地址在每个时间的冷门程度是value。</p></li><li><p>自动生成SQL语句：</p></li><li><p>神经网络结构搜索(NAS)：</p><blockquote><p>NAS is closely related to hyperparameter optimization and is a subfield of automated machine learning (AutoML)</p></blockquote></li></ol><h3 id="商品推荐">商品推荐</h3><p>强化学习可以讲一个很美好的故事：数据驱动的自动化运营。 但是我更好奇的是在实际落地时，强化学习的效果如何？</p><p>去问了一位在推荐领域做强化学习的朋友，得到的答案比较让人难过： 强化学习很难调，实际效果没有监督学习好。</p><p>系统太复杂又是个黑盒，人hold不住。</p><blockquote><p>facebook的一个工程师 现在facebook--可能也有很多的其他的公司--在内容推荐技术的很多细分场景上开始应用强化学习，eg消息推送时，以用户的长期活跃为目标，而不是短期打开率为目标。 增强学习的好处是解决了短期反馈和长期活跃之前的换算问题，把两万名算法工程师和他们的实习生们从一部分痛苦的调参工作中解放出来，也让分发策略从长期上达到更高的价值创造。 但一个更加追求用户长期活跃的社交平台就会是环境更健康的么？我对此深表怀疑。（不健康的社交平台，比如很多喷子，反人性的言论）</p></blockquote><h3 id="网约车调度">网约车调度</h3><p>didi的paper是这么写的，不知道生产系统是不是这么用的。</p><h3 id="神经网络结构搜索nas">神经网络结构搜索（NAS）</h3><p>就好像下一盘棋一样，一局玩完可能要很久，所以每走一步，都可以，判断当前这步棋走的水平如何。</p><p>但是只有当一盘都下完了，我们才真的知道具体的reward。</p><p>NAS是auto-ml的子领域，为了让机器去设计神经网络。 2017年谷歌发了一篇paper，使用基于强化学习的思路，去设计网络结构。 具体思路是这样的，假设要设计一个20层的CNN，超参个数为20*3，即每一层卷积，需要设置：</p><ul><li>卷积核数量</li><li>卷积核大小</li><li>步长大小</li></ul><p>怎么定义为强化学习的问题呢？</p><ul><li>state：截至目前，已经确定的超参。</li><li>action：超参取值</li><li>policy value function：选择某组超参，长期收益，也就是验证集上的准确率。</li><li>策略网络：一个RNN。</li></ul><p>输入向量 <span class="math inline">\(x_t\)</span> 是对上一个超参数 <span class="math inline">\(a_{t−1}\)</span> 做 Embedding 得到的</p><p>策略函数为什么不用监督算法拟合（like 贝叶斯优化里面的的高斯过程回归）？ 因为超参有可能是离散的，也就是说，损失和奖励对于策略网络参数<span class="math inline">\(\theta\)</span>不可微。(btw,贝叶斯优化本身也处理不了离散的超参。)</p><p>应用强化学习的代价？需要大量的训练样本，至少上万个奖励，即从初始化开始训练几万个CNN，计算量非常大。</p><p>后面学术界提出了更优秀的NAS方法--DARTS 及其变体。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://github.com/wangshusen/DRL/tree/master/Notes_CN">DRL-wangshusen中文教材</a></li><li><a href="https://lilianweng.github.io/lil-log/2020/08/06/neural-architecture-search.html">NAS-介绍</a></li><li><a href="https://en.wikipedia.org/wiki/Neural_architecture_search">NAS-wiki</a></li><li><a href="https://arxiv.org/abs/1806.09055">DARTS: Differentiable Architecture Search-paper</a></li><li><a href="https://chiechie.github.io/2021/03/24/technology/bayes-optimization//">chiechie: 贝叶斯优化</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;应用场景&quot;&gt;应用场景&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;&lt;p&gt;商品推荐: 每个用户的信息作为state，推荐的商品是action，长期看用户的点击率/浏览时长/消费额reward&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;网约车调度：&amp;lt;地址，时间&amp;gt;为</summary>
-      
-    
-    
-    
-    <category term="技术" scheme="https://chiechie.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="强化学习" scheme="https://chiechie.github.io/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="auto ml" scheme="https://chiechie.github.io/tags/auto-ml/"/>
-    
-    <category term="NAS" scheme="https://chiechie.github.io/tags/NAS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>怎么做决策？</title>
-    <link href="https://chiechie.github.io/2021/04/20/meditation/how-to-make-decision/"/>
-    <id>https://chiechie.github.io/2021/04/20/meditation/how-to-make-decision/</id>
-    <published>2021-04-20T02:18:15.000Z</published>
-    <updated>2021-04-21T00:21:38.434Z</updated>
-    
-    <content type="html"><![CDATA[<ul><li>列出可选项，对比相对价值<ul><li>举个例子，有意义的工作和人际关系比金钱更重要，所以应该是主要目标，赚钱只是其附带结果。</li></ul></li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;列出可选项，对比相对价值
-&lt;ul&gt;
-&lt;li&gt;举个例子，有意义的工作和人际关系比金钱更重要，所以应该是主要目标，赚钱只是其附带结果。&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>强化学习资料汇总</title>
-    <link href="https://chiechie.github.io/2021/04/18/reinforcement_learning/rf_summary/"/>
-    <id>https://chiechie.github.io/2021/04/18/reinforcement_learning/rf_summary/</id>
-    <published>2021-04-18T12:16:31.000Z</published>
-    <updated>2021-04-29T11:42:51.854Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="why-rl">why rl?</h2><p>可能可以超越人类。监督学习 只能模仿，不能超越</p><h2 id="公开课">公开课</h2><h3 id="zhouboleirf-intro">zhoubolei：rf-intro</h3><ul><li>课程资源<ul><li><a href="https://github.com/zhoubolei/introRL">github-课程资料</a> ｜<a href="https://github.com/zhoubolei/introRL/blob/master/lecture1.pdf">slide</a></li><li><a href="https://www.bilibili.com/video/BV1LE411G7Xj">视频</a></li></ul></li><li>chiechie的笔记<ul><li><a href="https://chiechie.github.io/2021/04/18/technology/rf-intro1/">rf-intro 1 基本概念</a></li><li><a href="https://chiechie.github.io/2021/04/18/technology/rf-intro2/">rf-intro 2 马尔可夫过程</a></li><li><a href="https://chiechie.github.io/2021/04/18/technology/rf-intro7/">rf-intro 7 model-based强化学习</a></li></ul></li></ul><h3 id="wangshusen">wangshusen</h3><ul><li>课程资源：<ul><li><a href="https://pan.baidu.com/s/1XpTgny_Vr0LobBsuYF4KkA">baidu网盘</a>:密码:x0wb</li><li><a href="https://github.com/wangshusen/DRL/blob/master/Notes_CN/DRL.pdf">强化学习中文教材</a></li><li><a href="https://youtu.be/vmkRMvhCW5c">视频</a>|<a href="https://github.com/wangshusen/DeepLearning">深度学习课件</a>|<a href="https://github.com/wangshusen/DRL">深度强化学习课件</a></li></ul></li><li>chiechie的笔记<ul><li>【基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf1-basic-concepts/">1. 强化学习的基本概念</a></li><li>【基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf2-value-based/">2. 基于价值的强化学习-DQN 和 TD 算法</a><ul><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FSSywH-1RRf.png?alt=media&amp;token=6b811aba-b275-47f0-a6d3-2945b6fff817" /></li></ul></li><li>【强化学习基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf3-policy-based/">3. 基于策略的强化学习</a><ul><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVhwFEvq-CN.png?alt=media&amp;token=de826d99-eaa2-4c92-8bec-520c7a04ee0b" /></li></ul></li><li>【强化学习基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf4-actor-critic/">4. actor-critic 方法</a></li><li>【专题】价值学习高级技巧<ul><li><a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf5-advanced-value-based/">价值学习高级技巧1/3-经验回放</a><ul><li>对TD算法的改进</li><li>对神经网络结构的改进</li></ul></li></ul></li><li>【专题】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf6-baseline-in-policy-gradient/">策略梯度中的baseline</a><ul><li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。Baseline 可以是任何不依赖于动作的函数。这节课我们做数学推导，得出带有 baseline 的策略梯度，并对它做蒙特卡洛近似。在后面的两节课中，我们把它用在 REINFORCE 和 A2C 方法中。</li><li>策略梯度中的Baseline 1/4-数学推导</li><li>策略梯度中的Baseline 2/4-REINFORCE with Baseline<ul><li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。这节课我们学习 REINFORCE with Baseline，它是一种策略梯度方法。它用价值网络近似 baseline 函数。它用带 baseline 的策略梯度学习策略网络，用价值网络去拟合观测到的回报。</li></ul></li><li>策略梯度中的Baseline 3/4-A2C 方法</li><li>策略梯度中的Baseline 4/4-REINFORCE与A2C的异同</li></ul></li><li>【专题】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf7-continous-action/">连续控制</a><ul><li>连续控制1/3-离散控制与连续控制</li><li>连续控制2/3-确定策略梯度DPG</li><li>连续控制3/3-用随机策略做连续控制</li></ul></li></ul></li></ul><h2 id="练手项目">练手项目</h2><ul><li>https://stable-baselines.readthedocs.io/en/master/</li><li><a href="https://github.com/wangshub/RL-Stock">使用强化学习炒股</a></li><li><a href="https://zhuanlan.zhihu.com/p/267998242">强化学习应用于金融问题的文章</a></li><li><a href="https://gym.openai.com/">Gym</a> is a toolkit for developing and comparing reinforcement learning algorithms.</li></ul><h2 id="强化学习的应用">强化学习的应用</h2><ul><li>神经网络结构搜索</li><li>自动生成SQL语句</li><li>推荐系统</li><li>网约车调度</li></ul><p><a href="https://chiechie.github.io/2021/04/21/reinforcement_learning/rf-application/">chiechie的笔记-关于强化学习的应用</a></p><h2 id="一些思考">一些思考</h2><h3 id="价值学习策略学习动作裁判学习-这三种方法-存在的必要">价值学习，策略学习，动作裁判学习 这三种方法 存在的必要？</h3><ul><li>既然有了policy Function 或者 Q, 都可以告诉agent怎么操作。那有什么必要去做 actor-critic 算法呢？单独学两个神经网络不就可以了？</li><li>问题就是不容易学呀！所以才会有Actor-Critic这种复杂的方法。</li></ul><h3 id="强化学习-适合哪些应用场景图像分类-适合用吗为什么-auto-ml适合用">强化学习 适合哪些应用场景？图像分类 适合用吗？为什么 auto-ml适合用？</h3><ul><li>适合 序列决策 问题， 图像分类没必要 用</li><li>训练一个大的神经网络类似玩一局游戏 耗时很久，每一个迭代 类似 游戏里面的 一小步，可以拿到即时reward，这样就可以使用TD算法来学习 value-function。</li></ul><h3 id="在线学习-和-强化学习的-区别">在线学习 和 强化学习的 区别？</h3><ul><li>online learning 不假定模型输出会影响未来输入，只看单步损失</li><li>reinforcement learning 中模型输出会影响未来输入，必须考虑输出的后果</li></ul><h3 id="on-policy-和-off-policy-的-区别">on-policy 和 off-policy 的 区别？</h3><ul><li>相同点：都是用来更新价值网络的学习算法</li><li>不同点是：on-policy是按照当前的policy来估计q-value；off-policy是按照最优的policy来估计q-value</li></ul><h3 id="监督学习-和-强化学习的区别">监督学习 和 强化学习的区别</h3><ul><li>监督学习<ul><li>要求数据 是独立同分布的</li><li>学习过程需要被告知，labels是什么</li></ul></li><li>强化学习<ul><li>数据不用iid</li><li>正确的action不能获取即时的正反馈</li></ul></li><li>两者对比<ul><li>强化学习需要序列数据作为输入（不是iid）</li><li>强化学习本身不会被告知正确的action是什么，而是需要自己去试错，找到具长期reward最大的action。监督学习会直接被告知正确到案是什么。</li><li>试错机制--在探索 和 利用中间寻找平衡</li><li>强化学习没有一个导师（supervisor），只有一个奖励信号，并且还是有延迟的。</li></ul></li></ul><h3 id="强化学习的特点">强化学习的特点</h3><ul><li>强化学习中随机性的两个来源：action可以是随机的，状态转移可以是随机的</li><li>试错机制</li><li>延迟reward</li><li>时间会产生影响</li><li>agent的行为会影响后续收到的数据（agent的action改变了环境）<ul><li>类似我们的模型自动更新，担心时间会对模型造成影响。比如模型推荐了商品a，我们也只能收到关于商品a的反馈。</li></ul></li></ul><h2 id="参考">参考</h2><ol type="1"><li><a href="https://stats.stackexchange.com/questions/184657/what-is-the-difference-between-off-policy-and-on-policy-learning">on-policy和off-policy的区别-stackoverflow</a></li><li><a href="https://www.zhihu.com/question/290530992">深度强化学习 在实际应用中少吗？难点在那里？</a></li><li><a href="https://weibo.com/titaniumviii?refer_flag=0000015010_&amp;from=feed&amp;loc=nickname">宋一松SYS</a></li><li><a href="https://www.zhihu.com/question/64526936">强化学习和在线学习的区别-zhihu</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;why-rl&quot;&gt;why rl?&lt;/h2&gt;
-&lt;p&gt;可能可以超越人类。监督学习 只能模仿，不能超越&lt;/p&gt;
-&lt;h2 id=&quot;公开课&quot;&gt;公开课&lt;/h2&gt;
-&lt;h3 id=&quot;zhouboleirf-intro&quot;&gt;zhoubolei：rf-intro&lt;/h3&gt;
-&lt;ul&gt;
-&lt;l</summary>
-      
-    
-    
-    
-    <category term="技术" scheme="https://chiechie.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="强化学习" scheme="https://chiechie.github.io/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>黑天鹅</title>
-    <link href="https://chiechie.github.io/2021/04/18/reading_notes/taleb-blackswan/"/>
-    <id>https://chiechie.github.io/2021/04/18/reading_notes/taleb-blackswan/</id>
-    <published>2021-04-18T11:55:49.000Z</published>
-    <updated>2021-04-18T11:57:23.395Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="序言">序言</h1><ul><li>黑天鹅举例子<ul><li>能带来收益的：风险投资，科技发现</li><li>能带来损失的：金融危机，失业</li></ul></li><li>关于学习，人性又一个弱点：习惯学习精确的东西，而不是从整体上把握<ul><li>【马其诺防线的故事】第一次世界大战之后，为了避免德国人再次入侵，法国人沿德国人曾经入侵的路线修建了一条防御工事，而希特勒（几乎）毫不费力地绕过了它。</li><li>问题产生于我们的思维结构：我们不学习规律，而是学习事实，而且只学习事实。。我们似乎不太善于认识到我们的超规律（即我们倾向于不学习规律的规律）。我们蔑视抽象的东西——疯狂地蔑视。</li></ul></li><li>这个问题为什么很重要？<ul><li>这种直觉的方法论，对于现代复杂且越来越具循环性的环境来说是非常不切实际的。</li></ul></li><li>我们的生物基因决定了，我们其实不擅长思考。<ul><li>我们的头脑似乎不是用来思考和内省的，远古时期，我进行反常规内省和努力思考的祖先会被老虎吃掉，而他不爱思考但身体反应迅速的表亲早已跑开躲了起来。</li></ul></li><li>因为钟形曲线忽（高斯曲线）略大的离差，无法解释它们，但还要让我们相信不确定性是可以控制的，我在本书中戏称它为“智力大骗局”。</li><li>【关于模型】模型和结构并不永远是错的，它们只错在一些具体的运用上。困难在于你不可能事前知道哪里会错（而只能事后知道），也不可能知道错误会导致严重后果。这些模型就像某些可能有效，但同时也可能具有非常严重的副作用的药品。</li><li>教室中的人从没有面对过在不确定性条件下进行决策的真实情况，意识不到什么是重要的，什么是不重要的，即使他们是关于不确定性问题的学者。我所说的不确定性实践，可以是当海盗、做商品投机、职业赌博、在黑手党的某个分部效力，或者是简单的持续创业</li></ul><h1 id="第一部分-极端斯坦-与-黑天鹅现象">第一部分 极端斯坦 与 黑天鹅现象</h1><h2 id="第一章-自我欺骗的人类">第一章 自我欺骗的人类</h2><ul><li>面对历史，人类的思想会犯三个毛病：<ul><li>第一宠迷雾：我们以为我们生活的这个世界比他实际上更加可理解，可解释，可预测</li></ul></li></ul><h2 id="第三章-极端斯坦与平均斯坦">第三章 极端斯坦与平均斯坦</h2><ul><li>关于职业选择，有两类职业：<ul><li>“一劳永逸型”：<ul><li>录音师和电影演员也是一样：他们会让电影院的音效工程师调好播放器，而不必在每一次播放电影时都出现。</li></ul></li><li>“苦力活”<ul><li>面包师必须为每一位新客户——烤出面包。</li></ul></li><li>假如我必须给出建议的话，我会建议选择一个收入不具有突破性的职业---面包师！收入具有突破性的职业只有在你成功的时候对你是有利的。这样的职业竞争更激烈，导致更大的不平均和不确定性，在努力和回报之间存在巨大差异，因为少数人获得蛋糕的大部分，其他人可能什么也得不到，而这怪不了别人</li></ul></li><li>可以这样陈述平均斯坦的最高法则：当你的样本量足够大时，任何个例都不会对整体产生重大影响。最大的观察值虽然令人吃惊，但对整体而言最终微不足道。</li><li></li></ul><h1 id="第三部分-极端斯坦的灰天鹅">第三部分 极端斯坦的灰天鹅</h1><h2 id="第十八章-骗子的不确定性">第十八章 骗子的不确定性</h2>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;序言&quot;&gt;序言&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;黑天鹅举例子
-&lt;ul&gt;
-&lt;li&gt;能带来收益的：风险投资，科技发现&lt;/li&gt;
-&lt;li&gt;能带来损失的：金融危机，失业&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;关于学习，人性又一个弱点：习惯学习精确的东西，而不是从整体上把握
-&lt;</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="人生哲学" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E7%94%9F%E5%93%B2%E5%AD%A6/"/>
-    
-    <category term="taleb" scheme="https://chiechie.github.io/tags/taleb/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>从DeepAR谈论paper到工程化的距离</title>
-    <link href="https://chiechie.github.io/2021/04/18/AIOps/DeepAR_practice/"/>
-    <id>https://chiechie.github.io/2021/04/18/AIOps/DeepAR_practice/</id>
-    <published>2021-04-18T03:56:59.000Z</published>
-    <updated>2021-05-06T08:52:17.150Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="deepar探索">DeepAR探索</h2><p>以DeepAR为例，回忆下我们从探索到落地的过程：</p><ul><li>Student： 网上找到了pytorch版本的deepAR版（发于2017年4月），训练过程很慢要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？</li><li>Teacher： 生产环境，这种性能实在不能接受。既然amazon将DeepAR作为时序预测场景的主推算法方案，这种性能肯定拿不出手，后续肯定做了的优化，去查一下近3年的amazon关于DeepAR相关的资料，重点看看有没有更优秀的实现方案。</li><li>Student：找到了--基于MXNET的gluon-ts（于2019年6月发表），mxnet在electricty上的训练和预测时间大概是10min左右。</li><li>Teacher： nice！</li></ul><p>最开始把gluon-ts实现的DeepAR算法当黑盒用的时候，发现效果很神奇，不调参，换不同数据进去效果都还挺好，周期性和趋势性都还能学到。</p><p>但是就觉得很奇怪，按照自己构建RNN的经验，调参就要反反复复好多次，最后效果还不一定好。使用gluon-TS的代码我没有调参的，并且默认的网络结构很简单 不太可能过拟合.</p><p>看了源代码之后，有一个很大的感受就是，<strong>完成论文demo和完成一个业界可用方案，两者的工作量 ，可能是0到1再到100的距离。</strong></p><p>按照paper所说，整个网络结构非常之简单，1层rnn + 1层 dense层（输出分布参数），构成2层rnn，大概十几行代码。 但是，<strong>真正大量的代码都在做预处理以及 模型训练的一些小trick。 这些小trick，对提升模型效果非常有帮助，但是paper里面是没有的，应该随是工程团队总结出的最佳实践</strong>。</p><ul><li>best practice1: 把每个样本（历史依赖）的scale 取对数，放入样本。 （因为所有的lags项在归一化之后已经丢失了scale信息，为了避免这个信息的丢失，还是把log scale 放入特征，用于区别不同的曲线的模式）</li><li>best practice2: 在rnn中，每一层rnn后都接了一个residual和一个dropout。（原文没有提到）</li><li>best practice3: 为了学习到数据的周期性模式，除了一定要有的context_length，代码还会跳着取lag , 类似空洞卷积。这些周期性的lag项，是被硬编码在代码里面的，比如年/月/日的周期性。</li></ul><p>（我甚至怀疑论文的作者都不知道，因为作者自己写了一个pytorch版本，没有见到相关的处理，并且训练时长是gluon-TS的100倍以上）</p><h2 id="对于aiops建设的启发">对于AIOps建设的启发</h2><p>对于根因分析，日志关联等大部分场景，业界没有可参考的工具，转而求助学术界，可参考论文以及kaggle比赛等。</p><p>但是要注意，这些方案只是demo，没有在工业界的数据和真实需求上验证过，实际上真实业务环境会比做实验要复杂得多。</p><p>从调研demo到完成一个业务上高可用的方案，有大量的优化工作。评估时间的时候，需要预留buffer，来验证和调优，可能需要迭代多轮，有不确定性。</p><h2 id="从paper到工程落地的距离">从paper到工程落地的距离？</h2><ul><li>实验室方案不能直接搬到 真实业务的 几个原因：<ul><li>样本数据不一致：<ul><li>实验室的数据有一些 标记质量差，以及标记的标准不一致。</li><li>实验室的数据模式单一，很多是模拟生成的，没法模拟出真实业务上复杂的模式</li><li>真实环境中数据质量差：历史数据不够，缺失值多，有用特征缺失。</li><li>实验室数据格式 千奇百怪，要适当预处理才能给 业务使用</li></ul></li><li>评估指标不一致<ul><li>实验室只能基于已有的封闭数据集，业务上的指标是开放式的跟业务运营相关的</li></ul></li><li>效果不一致<ul><li>实验 中效果好的方案 到真实环境中 效果不好</li></ul></li><li>性能要求不一致：<ul><li>实验室方案运行效率到不到真实环境的标准</li><li>eg，kaggle比赛常用模型ensenmble方案，在工业界就很少会用，计算效率的问题å</li></ul></li></ul></li><li>正常的开发流程是：<ul><li>理解论文原理</li><li>复现论文：开发demo，</li><li>初步上线（beta）： demo性能优化，覆盖现实中可能的异常</li><li>稳定上线（正式）： 在真实环境上测试一段时间。</li><li>产品化：给其他无背景的人用</li></ul></li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;deepar探索&quot;&gt;DeepAR探索&lt;/h2&gt;
-&lt;p&gt;以DeepAR为例，回忆下我们从探索到落地的过程：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Student： 网上找到了pytorch版本的deepAR版（发于2017年4月），训练过程很慢要7个小时，虽然paper里面也号</summary>
-      
-    
-    
-    
-    <category term="AIOps" scheme="https://chiechie.github.io/categories/AIOps/"/>
-    
-    
-    <category term="时间序列" scheme="https://chiechie.github.io/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/"/>
-    
-    <category term="DeepAR" scheme="https://chiechie.github.io/tags/DeepAR/"/>
-    
-    <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
-    
-    <category term="知识分子" scheme="https://chiechie.github.io/tags/%E7%9F%A5%E8%AF%86%E5%88%86%E5%AD%90/"/>
-    
-    <category term="RNN" scheme="https://chiechie.github.io/tags/RNN/"/>
     
   </entry>
   

@@ -21,16 +21,21 @@ boosting tree的另外一个代表是xgboost,下面重点介绍一下xgboost
 $$\begin{array}{l}{\mathcal{L}(\phi)=\sum\limits_{i} l\left(\hat{y}_{i}, y_{i}\right)+\sum\limits_{k} \Omega\left(f_{k}\right)}\end{array}$$
 $$ \\{\Omega(f)=\gamma T+\frac{1}{2} \lambda\|w\|^{2}} $$
 
+- $\hat{y}_{i}=\phi\left(\mathbf{x}_{i}\right)=\sum^{K} f_{k}\left(\mathbf{x}_{i}\right), \quad f_{k} \in \mathcal{F}$
+- l是一个可谓的图函数
 - k表示第k棵树
 - i表示第i个样本
-
+- T is the number of leaves in the tree.
+- $f_k$表示第k棵树的预测函数，
+- q代表的书的结构，w代表叶子节点的权重
+- $\Omega(f_k)$表示第k棵树的复杂度
 ### reformulate目标函数
 
 上面的模型没法使用传统的优化算法求解，我们reformulate这个模型
 
 $\mathcal{L}^{(t)}=\sum\limits_{i=1}^{n} l\left(y_{i}, \hat{y}_{i}^{(t-1)}+f_{t}\left(\mathbf{x}_{i}\right)\right)+\Omega\left(f_{t}\right)$
 
-$\mathcal{L}^{(t)}$表示第t棵树的训练目标，也就是通过依次求解最优的树来逼近最开始的损失函数。
+- $\mathcal{L}^{(t)}$表示第t棵树的训练目标，也就是通过依次求解最优的树来逼近最开始的损失函数。
 
 ### 损失函数-二阶展开
 

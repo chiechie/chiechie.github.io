@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-05-17T02:06:34.376Z</updated>
+  <updated>2021-05-17T07:18:44.086Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>《how_to_Defi》读书笔记</title>
+    <title>《how to Defi》读书笔记</title>
     <link href="https://chiechie.github.io/2021/05/17/reading_notes/how-to-Defi/"/>
     <id>https://chiechie.github.io/2021/05/17/reading_notes/how-to-Defi/</id>
     <published>2021-05-17T01:20:02.000Z</published>
-    <updated>2021-05-17T02:06:34.376Z</updated>
+    <updated>2021-05-17T07:18:44.086Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>区块链技术的第一代应用是以比特币为全球支付货币，第二代应用是以太坊完成智能合约，第三代应用是defi和nft完成金融体系重构</p><p>how to defi 讲的就是区块链技术的第三代应用之一--去中心化金融(DeFI)</p></blockquote><h2 id="why-defi">why defi</h2><ol type="1"><li>传统金融体系容易遭受与人相关的风险，比如腐败。defi试图通过创建一个更好的金融环境，来弥补现有金融系统的漏洞，主要对银行系统的三个关键部分进行了优化：支付&amp;清算系统；可获取性；中心化&amp;透明度。</li><li>DeFi的最大优势在于能够消除中 介机构并在零审查的环境下运行。</li></ol><h2 id="what">what</h2><ol type="1"><li><p>DeFi生态中有哪些应用？</p><ul><li>稳定币：比如泰达币（Tether，USDT) ，稳定币作为稳定的价值存储手段使得DeFi应用对大众来说更加可用。</li><li>借贷服务：传统金融体系要求用户有银行账户，良好的信用评分，以及足够的抵押品；去中心化借贷允许任何人抵押其数字资产，然后利用抵押资产获得贷款。</li><li>交易所：中心化交易所egconbase，huobi，binance，存在被黑客攻击的危险；去中心化交易所更安全，不依赖交易所的偿付能力。</li><li>衍生品：衍生品合约主要在中心化平台上进行交易。目前，许多DeFi平 台正开始构建去中心化衍生品市场。</li><li>基金管理：基金管理主要有主动型和被动型两种，主动型基金管理会有一个管理团队负责投资 决策。被动型基金管理没有管理团队，而被设计为尽可能接近 某一特定基准的表现。</li><li>彩票：结合DeFi的彩票可将资金池的托管转移到以太坊智能合约上。</li><li>支付：通过将支付重置为流模式而非我们熟悉的交易来改变我们处理支付的方式。（比如云服务商，按照使用的流量收费）</li><li>保险：智能合约的漏洞容易被黑客攻击，从而影响智能合约中锁定的代币。当用户在Defi上处理大量资金的时候，购买保险是必要的。</li></ul></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://news.huoxing24.com/20200817195548945458.html">how to difi中文版</a></li></ol>]]></content>
     
@@ -221,9 +221,9 @@
     <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
     
     
-    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
-    
     <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
+    
+    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
     
   </entry>
   
@@ -287,11 +287,11 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="宏观经济学" scheme="https://chiechie.github.io/tags/%E5%AE%8F%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
+    <category term="区块链" scheme="https://chiechie.github.io/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
     <category term="经济学" scheme="https://chiechie.github.io/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
     
-    <category term="区块链" scheme="https://chiechie.github.io/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    <category term="宏观经济学" scheme="https://chiechie.github.io/tags/%E5%AE%8F%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
     
     <category term="市场经济" scheme="https://chiechie.github.io/tags/%E5%B8%82%E5%9C%BA%E7%BB%8F%E6%B5%8E/"/>
     
@@ -419,11 +419,11 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
-    
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
+    
+    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
     <category term="信念" scheme="https://chiechie.github.io/tags/%E4%BF%A1%E5%BF%B5/"/>
     

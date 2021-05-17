@@ -28,9 +28,10 @@
 <meta property="og:description" content="决策树不一定是二叉树，早先的版本，是可以构造多叉树的。  总结 决策树的 实现算法有三类：id3，c4.5和cart。前两者可以构造多叉树，cart只能构造二叉树。 因为cart效果最好，现在通常就用它。例如sklean的决策树默认用cart  都说到这里了，就复习下决策树的基础知识吧  基本概念  信息增益: 衡量的是给定了一个属性之后，类别列上获得的秩序的提升（也叫熵减）。  \({\dis">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-07T12:56:02.000Z">
-<meta property="article:modified_time" content="2021-05-17T00:42:41.584Z">
+<meta property="article:modified_time" content="2021-05-17T07:31:37.151Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="树模型">
 <meta property="article:tag" content="决策树">
 <meta name="twitter:card" content="summary">
 
@@ -199,7 +200,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
+                <time title="修改时间：2021-05-17 15:31:37" itemprop="dateModified" datetime="2021-05-17T15:31:37+08:00">2021-05-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,40 +247,47 @@
 <p>Python Implementation of ID3</p>
 <h1 id="决策树算法-c4.5">决策树算法-c4.5</h1>
 <h1 id="决策树算法-cart">决策树算法-cart</h1>
-<h2 id="cart">2. cart</h2>
-<ol type="1">
-<li><p>决策树的原理？ 将predictor space划分为J个distinct and non-overlapping regions,<span class="math inline">\(R_1,\dots,R_J\)</span></p></li>
-<li><p>怎样构造这些region呢？ 对predictor space进行一个切割，切成boxes</p>
-<blockquote>
-<p>思考？为什么不是切成一个球？没法填充整个redictor space</p>
-</blockquote></li>
-<li><p>落入每个区间的response variable的值怎么确定？</p></li>
-</ol>
+<h2 id="原理">原理</h2>
+<p>将predictor space划分为J个distinct and non-overlapping regions,<span class="math inline">\(R_1,\dots,R_J\)</span></p>
+<h2 id="每个region的response-variable是什么">每个region的response variable是什么？</h2>
+<p>落入每个region的response variable是什么？</p>
 <ul>
 <li>如果是连续变量，求该region上训练集的response均值，以后赋值给新落入该区间的predictor的response，</li>
 <li>如果是离散变量，求众数。</li>
 </ul>
-<p>4.怎样表示成一个优化问题? the goal is to find boxes<span class="math inline">\(R_1,\dots,R_j\)</span> that minimize the SSE，即为了获得最小组内方差(within variance)。</p>
+<h2 id="怎么找最佳的region-partition">怎么找最佳的region partition ？</h2>
+<p>怎样构造这些region呢？ 对predictor space进行一个切割，切成boxes</p>
+<blockquote>
+<p>思考？为什么不是切成一个球？没法填充整个redictor space</p>
+</blockquote>
+<p>定义为最优化问题：the goal is to find boxes<span class="math inline">\(R_1,\dots,R_j\)</span> that minimize the SSE，即为了获得最小组内方差(within variance)。</p>
 <p><span class="math display">\[\min\ SSE = \sum\limits_{j=1}^J \sum\limits_{i\in R_j}(y_i - \hat y_{R_j})^2\]</span></p>
+<ul>
+<li>i是第i个样本</li>
+<li>R_j表示第j个partition</li>
+</ul>
 <p>怎么找到最佳的一个partition？如果考虑每一个partition of predictor space，那计算量太大了。</p>
-<p>自然而然的，用greedy的方法。</p>
+<p>自然，用greedy的方法。</p>
 <blockquote>
 <p>如果response var是imbalance, 全部预测为label占比更多的类，怎么办？</p>
 </blockquote>
-<ol start="5" type="1">
-<li>为何要剪枝(pruning)?</li>
-</ol>
-<p>如果分支过多(bushy)，造成over fitting。 a smaller tree with fewer splits might lead to lower variance and better interpretation at the cost of a little bias. 总的来说,a very bushy tree has got high variances,i e ,over fitting the data cart的原理就是，构造一颗大树<span class="math inline">\(T_0\)</span>，然后去剪枝， 这种方法叫做cost complexity pruning/the weakest link pruning, 下面以regression tree 和 classification tree举例说明：</p>
-<h3 id="regression-tree">2.1 regression tree</h3>
+<p>cart的原理就是，构造一颗大树<span class="math inline">\(T_0\)</span>，然后去剪枝，这种方法叫做cost complexity pruning/the weakest link pruning, 下面以regression tree 和 classification tree举例说明：</p>
+<h2 id="regression-tree">regression tree</h2>
 <p><span class="math display">\[\min\limits_{T\in T_0} \sum\limits_{m=1}^{|T|}\sum\limits_{x_i\in R_m}(y_i - \hat y_{R_m})^2+\alpha|T|\]</span></p>
-<p><span class="math inline">\(|T|\)</span>是叶子节点的个数。</p>
+<ul>
+<li><span class="math inline">\(|T|\)</span>是叶子节点的个数。</li>
+</ul>
 <p>构造一颗树时，stop rules是叶子节点的node个数少于阈值。</p>
-<h3 id="classification-tree">2.2 classification tree</h3>
+<h2 id="classification-tree">classification tree</h2>
 <p>regression tree的cost function 是rss，而classification tree的cost是可以是 - <strong>classification error</strong> <span class="math display">\[1-\max\limits_k(\hat p_{mk})\]</span> 也就是每一个region中不属于主要类的样本点的比例，classification error可以看成衡量的是样本的一个众数,也叫做node purity。但是用该策略来决定split方式，会有点jump ，我们需要一个smooth tree-growing process，于是提出了优化的指标gini index：</p>
 <ul>
 <li><p><strong>gini index</strong> 相对于classification error,这个是一个关于<span class="math inline">\(k\)</span>更加soft的函数 <span class="math inline">\(G = \sum\limits_k \hat p_{mk}(1-\hat p_{mk})\)</span>。 他衡量的是K类的一个总的方差,也就是K个变量的协方差矩阵的迹，越小越纯粹。</p></li>
 <li><p><strong>cross-entropy</strong> $d = - <em>k p</em>{mk}p_{mk} $ 形状跟gini index差不多，优势在于处理分类变量时不需要转化为dummy variable。</p></li>
 </ul>
+<h2 id="为何要剪枝">为何要剪枝?</h2>
+<p>为何要剪枝(pruning)? 如果分支过多(bushy)，造成over fitting。</p>
+<p>a smaller tree with fewer splits might lead to lower variance and better interpretation at the cost of a little bias.</p>
+<p>总的来说,a very bushy tree has got high variances,i e ,over fitting the data</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://github.com/dozercodes/DecisionTree">github-id3的实现</a></li>
@@ -298,6 +306,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
+              <a href="/tags/%E6%A0%91%E6%A8%A1%E5%9E%8B/" rel="tag"># 树模型</a>
               <a href="/tags/%E5%86%B3%E7%AD%96%E6%A0%91/" rel="tag"># 决策树</a>
           </div>
 
@@ -372,7 +381,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-id3"><span class="nav-number">3.</span> <span class="nav-text">决策树算法-id3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-c4.5"><span class="nav-number">4.</span> <span class="nav-text">决策树算法-c4.5</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-cart"><span class="nav-number">5.</span> <span class="nav-text">决策树算法-cart</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cart"><span class="nav-number">5.1.</span> <span class="nav-text">2. cart</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#regression-tree"><span class="nav-number">5.1.1.</span> <span class="nav-text">2.1 regression tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#classification-tree"><span class="nav-number">5.1.2.</span> <span class="nav-text">2.2 classification tree</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.2.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-id3"><span class="nav-number">3.</span> <span class="nav-text">决策树算法-id3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-c4.5"><span class="nav-number">4.</span> <span class="nav-text">决策树算法-c4.5</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95-cart"><span class="nav-number">5.</span> <span class="nav-text">决策树算法-cart</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">5.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%8F%E4%B8%AAregion%E7%9A%84response-variable%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">5.2.</span> <span class="nav-text">每个region的response variable是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E6%89%BE%E6%9C%80%E4%BD%B3%E7%9A%84region-partition"><span class="nav-number">5.3.</span> <span class="nav-text">怎么找最佳的region partition ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#regression-tree"><span class="nav-number">5.4.</span> <span class="nav-text">regression tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#classification-tree"><span class="nav-number">5.5.</span> <span class="nav-text">classification tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E8%A6%81%E5%89%AA%E6%9E%9D"><span class="nav-number">5.6.</span> <span class="nav-text">为何要剪枝?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.7.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

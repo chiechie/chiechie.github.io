@@ -5,6 +5,7 @@ mathjax: true
 date: 2021-04-07 20:56:02
 tags: 
 - 人工智能
+- 树模型
 - 决策树
 categories:
 - AI
@@ -34,43 +35,52 @@ Python Implementation of ID3
 # 决策树算法-c4.5
 
 # 决策树算法-cart
-## 2. cart
 
-1. 决策树的原理？ 将predictor space划分为J个distinct and non-overlapping regions,$R_1,\dots,R_J$
-2. 怎样构造这些region呢？ 对predictor space进行一个切割，切成boxes
-   
-   > 思考？为什么不是切成一个球？没法填充整个redictor space
-3. 落入每个区间的response variable的值怎么确定？
+## 原理
+
+将predictor space划分为J个distinct and non-overlapping regions,$R_1,\dots,R_J$
+
+
+## 每个region的response variable是什么？
+
+落入每个region的response variable是什么？
+
   - 如果是连续变量，求该region上训练集的response均值，以后赋值给新落入该区间的predictor的response，
   - 如果是离散变量，求众数。
 
-4.怎样表示成一个优化问题?
-  the goal is to find boxes$R_1,\dots,R_j$ that minimize the SSE，即为了获得最小组内方差(within variance)。
+## 怎么找最佳的region partition ？
+
+怎样构造这些region呢？ 对predictor space进行一个切割，切成boxes
+   
+   > 思考？为什么不是切成一个球？没法填充整个redictor space
+
+
+定义为最优化问题：the goal is to find boxes$R_1,\dots,R_j$ that minimize the SSE，即为了获得最小组内方差(within variance)。
 
 $$\min\ SSE = \sum\limits_{j=1}^J \sum\limits_{i\in R_j}(y_i - \hat y_{R_j})^2$$
 
+- i是第i个样本
+- R_j表示第j个partition
+
 怎么找到最佳的一个partition？如果考虑每一个partition of predictor space，那计算量太大了。
 
-自然而然的，用greedy的方法。
+自然，用greedy的方法。
 
   > 如果response var是imbalance, 全部预测为label占比更多的类，怎么办？
 
-5. 为何要剪枝(pruning)?
+cart的原理就是，构造一颗大树$T_0$，然后去剪枝，这种方法叫做cost complexity pruning/the weakest link pruning, 下面以regression tree 和 classification tree举例说明：
 
-如果分支过多(bushy)，造成over fitting。
-a smaller tree with fewer splits might lead to lower variance and better interpretation at the cost of a little bias.
-总的来说,a very bushy tree has got high variances,i e ,over fitting the data
-cart的原理就是，构造一颗大树$T_0$，然后去剪枝， 这种方法叫做cost complexity pruning/the weakest link pruning, 下面以regression tree 和  classification tree举例说明：
 
-###  2.1 regression tree
+## regression tree
 
 $$\min\limits_{T\in T_0} \sum\limits_{m=1}^{|T|}\sum\limits_{x_i\in R_m}(y_i - \hat y_{R_m})^2+\alpha|T|$$
 
-$|T|$是叶子节点的个数。
+- $|T|$是叶子节点的个数。
+
 
 构造一颗树时，stop rules是叶子节点的node个数少于阈值。
 
-### 2.2 classification tree
+## classification tree
 
 regression tree的cost function 是rss，而classification tree的cost是可以是
 - **classification error**
@@ -86,6 +96,14 @@ $G = \sum\limits_k \hat p_{mk}(1-\hat p_{mk})$。
 $d = - \sum\limits_k \hat p_{mk}\log\hat p_{mk} $
 形状跟gini index差不多，优势在于处理分类变量时不需要转化为dummy variable。
 
+## 为何要剪枝?
+
+为何要剪枝(pruning)?
+如果分支过多(bushy)，造成over fitting。
+
+a smaller tree with fewer splits might lead to lower variance and better interpretation at the cost of a little bias.
+
+总的来说,a very bushy tree has got high variances,i e ,over fitting the data
 
 
 ## 参考

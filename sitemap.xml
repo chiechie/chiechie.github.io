@@ -261,14 +261,14 @@
   </url>
   
   <url>
-    <loc>https://chiechie.github.io/2021/04/18/AI/AIOps/DeepAR_2_practice/</loc>
+    <loc>https://chiechie.github.io/2021/04/01/AI/AIOps/ad-and-prediction/</loc>
     
     <lastmod>2021-05-17</lastmod>
     
   </url>
   
   <url>
-    <loc>https://chiechie.github.io/2021/04/01/AI/AIOps/ad-and-prediction/</loc>
+    <loc>https://chiechie.github.io/2021/04/18/AI/AIOps/DeepAR_2_practice/</loc>
     
     <lastmod>2021-05-17</lastmod>
     
@@ -331,14 +331,14 @@
   </url>
   
   <url>
-    <loc>https://chiechie.github.io/2021/02/24/economics/priniciples-of-economics-1/</loc>
+    <loc>https://chiechie.github.io/2021/02/19/economics/priniciples_of_economics_19/</loc>
     
     <lastmod>2021-05-10</lastmod>
     
   </url>
   
   <url>
-    <loc>https://chiechie.github.io/2021/02/19/economics/priniciples_of_economics_19/</loc>
+    <loc>https://chiechie.github.io/2021/02/24/economics/priniciples-of-economics-1/</loc>
     
     <lastmod>2021-05-10</lastmod>
     
@@ -1838,20 +1838,6 @@
   </url>
   
   <url>
-    <loc>https://chiechie.github.io/tags/%E7%9F%A5%E8%AF%86%E5%88%86%E5%AD%90/</loc>
-    <lastmod>2021-05-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://chiechie.github.io/tags/RNN/</loc>
-    <lastmod>2021-05-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://chiechie.github.io/tags/%E4%B8%8D%E7%9B%B8%E5%AE%B9%E9%9C%80%E6%B1%82/</loc>
     <lastmod>2021-05-17</lastmod>
     <changefreq>daily</changefreq>
@@ -1867,6 +1853,20 @@
   
   <url>
     <loc>https://chiechie.github.io/tags/%E8%A7%86%E8%A7%92%E4%B8%BB%E4%B9%89/</loc>
+    <lastmod>2021-05-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://chiechie.github.io/tags/%E7%9F%A5%E8%AF%86%E5%88%86%E5%AD%90/</loc>
+    <lastmod>2021-05-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://chiechie.github.io/tags/RNN/</loc>
     <lastmod>2021-05-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

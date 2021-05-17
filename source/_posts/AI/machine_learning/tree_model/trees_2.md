@@ -14,9 +14,15 @@ categories:
 
 # 总结
 
-1. 决策树通过将特征空间划分为多个distinct and non-overlapping regions,$R_1,\dots,R_J$，并且对每个region定义一个response variable，作为该region的值。
-2. 决策树的 实现算法有三类：id3，c4.5和cart。前两者可以构造多叉树，cart只能构造二叉树。 因为cart效果最好，现在通常就用它。例如sklean的决策树默认用cart
-   
+1. 决策树做预测的流程可以分为两步：第一步，将特征空间划分为多个distinct and non-overlapping regions,$R_1,\dots,R_J$；第二步，对每个region定义一个response variable，作为该region的值。
+2. 怎么得到这些region呢？决策树的实现算法有三类：ID3，C4.5和cart。前两者可以构造多叉树，cart只能构造二叉树。 
+因为cart效果最好，现在通常就用它（例如sklean）。
+3. 三类算法的大致思路一样，分为两步：第一步是将feature space切成多个boxes。为什么不是切成多个球？因为球没法填充整个feature space.
+第二步是找到最优的切割boxes的方式，如果去遍历每一组partition of feature space，计算量太大了，通常采用greedy的方法。
+4. 落入每个region的response variable是什么？
+
+  - 如果是连续变量，求该region上训练集的response均值，以后赋值给新落入该区间的predictor的response，
+  - 如果是离散变量，求众数。
 
 # 基本概念
 
@@ -32,9 +38,9 @@ IG = information before splitting (parent) — information after splitting (chil
     - entropy（熵）：$$I_{H}=-\sum_{j=1}^{c} p_{j} \log _{2}\left(p_{j}\right)$$
         - $p_j$: 落入该节点的样本中，第j类样本的占比
         - 如果所有样本都属于某一类c，熵最小，为0。
-    
 
-# 决策树算法-id3
+
+# 决策树算法-ID3
 
 ID3,  was the first of three Decision Tree implementations developed by Ross Quinlan
 
@@ -60,11 +66,11 @@ Disadvantages
 - Over fitting happens when model picks up data with uncommon features value, especially when data is noisy.
 
 
-# 决策树算法-cart
+# 决策树算法-CART
 
 ID3 和 C4.5是使用基于Entropy-最大信息增益的特征作为节点。
 
-CART代表分类树和回归树。
+CART代表分类树和回归树，使用基于entropy和ginix index计算信息增益。
 
 Disadvantages
 
@@ -72,71 +78,36 @@ Disadvantages
 - Trees formed may be unstable
 
 
-## 原理
+cart的原理就是，构造一颗大树$T_0$，然后去剪枝（也叫做cost complexity pruning/the weakest link pruning）, 下面以regression tree 和 classification tree举例说明
 
-
-## 每个region的response variable是什么？
-
-落入每个region的response variable是什么？
-
-  - 如果是连续变量，求该region上训练集的response均值，以后赋值给新落入该区间的predictor的response，
-  - 如果是离散变量，求众数。
-
-## 怎么找最佳的region partition ？
-
-怎样构造这些region呢？ 分两步
-
-1. 对feature space进行一个切割，切成boxes
-   
-   > 思考？为什么不是切成一个球？没法填充整个predictor space
-2. 找到最优的一系列的boxes，即最优化问题：the goal is to find boxes$R_1,\dots,R_j$ that minimize the SSE，即为了获得最小组内方差(within variance)。
-
-$$\min\ SSE = \sum\limits_{j=1}^J \sum\limits_{i\in R_j}(y_i - \hat y_{R_j})^2$$
-
-- i是第i个样本
-- R_j表示第j个partition
-
-怎么找到最佳的一个partition？如果考虑每一个partition of predictor space，那计算量太大了。
-
-自然，用greedy的方法。
-
-  > 如果response var是imbalance, 全部预测为label占比更多的类，怎么办？
-
-cart的原理就是，构造一颗大树$T_0$，然后去剪枝，这种方法叫做cost complexity pruning/the weakest link pruning, 下面以regression tree 和 classification tree举例说明：
-
+> 如果response var是imbalance, 全部预测为label占比更多的类，怎么办？
 
 ## regression tree
 
-regression tree的cost function 是RSS
+regression tree的cost function 是RSS加上正则项
 
 $$\min\limits_{T\in T_0} \sum\limits_{m=1}^{|T|}\sum\limits_{x_i\in R_m}(y_i - \hat y_{R_m})^2+\alpha|T|$$
 
 - $|T|$是叶子节点的个数。
 - m表示第m个叶子
+- $R_m$表示第m个partition region 
+- $y_i$表示第i个样本的真实值
+- $y_{R_m}$表示第m个partition region的预测值
 
+构造一颗树的流程如下：
 
-构造一颗树时，stop rules是叶子节点的node个数少于阈值。
+![regression tree 构造流程](./img.png)
 
 ## classification tree
 
-classification tree的cost是可以是
+classification tree切分节点时，参考信息增益，其他流程和构建回归树是一样的
 
-- **classification error**
-    $$1-\max\limits_k(\hat p_{mk})$$
-    也就是每一个region中不属于主要类的样本点的比例，classification error可以看成衡量的是样本的一个众数,也叫做node purity。但是用该策略来决定split方式，会有点jump ，我们需要一个smooth tree-growing process，于是提出了优化的指标gini index：
-
-- **cross-entropy** 
-    $$d = - \sum\limits_k \hat p_{mk}\log\hat p_{mk} $$
-    形状跟gini index差不多，优势在于处理分类变量时不需要转化为dummy variable。
 
 ## 为何要剪枝?
 
 为何要剪枝(pruning)?
-如果分支过多(bushy)，造成over fitting。
+a very bushy tree has got high variances,ie, over-fitting the data
 
-a smaller tree with fewer splits might lead to lower variance and better interpretation at the cost of a little bias.
-
-总的来说,a very bushy tree has got high variances,i e ,over fitting the data
 
 
 ## 参考
@@ -146,3 +117,4 @@ a smaller tree with fewer splits might lead to lower variance and better interpr
 4. [sklearn-decisiontree](https://scikit-learn.org/stable/auto_examples/tree/plot_unveil_tree_structure.html#sphx-glr-auto-examples-tree-plot-unveil-tree-structure-py)
 5. [quora-ID3-C4-5-and-CART的区别？](https://www.quora.com/What-are-the-differences-between-ID3-C4-5-and-CART)
 6. [Why-is-entropy-used-instead-of-the-Gini-index](https://www.quora.com/Why-is-entropy-used-instead-of-the-Gini-index)
+7. [An Introduction to Statistical Learning](https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/6062a083acbfe82c7195b27d/1617076404560/ISLR%2BSeventh%2BPrinting.pdf)

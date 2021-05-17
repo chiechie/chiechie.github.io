@@ -25,9 +25,14 @@ categories:
 2. XGB在GBDT的基础上引入了二阶导数，并且在loss中加入了正则项。
 
 
-## detail
+## 算法细节
 
-![adaboost](./img.png)
+![adaboost](trees_1/img.png)
+
+boosting中有三个重要的参数：
+- 树的棵树
+- $\lambda$: 学习速率
+- 每一棵树的最大splits个数
 
 ### 公式推导
 
@@ -38,3 +43,4 @@ categories:
 ## 参考资料
 1. [youtube-gbdt](https://www.youtube.com/watch?v=2xudPOBz-vs)
 2. [xgboost](https://arxiv.org/pdf/1603.02754.pdf)
+3. [An Introduction to Statistical Learning](https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/6062a083acbfe82c7195b27d/1617076404560/ISLR%2BSeventh%2BPrinting.pdf)

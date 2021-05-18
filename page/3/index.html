@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
+                <time title="修改时间：2021-05-18 08:24:23" itemprop="dateModified" datetime="2021-05-18T08:24:23+08:00">2021-05-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -225,13 +225,21 @@
 <p>先看看，xgboost怎么定义ensemble tree的 损失函数：</p>
 <p><span class="math display">\[\begin{array}{l}{\mathcal{L}(\phi)=\sum\limits_{i} l\left(\hat{y}_{i}, y_{i}\right)+\sum\limits_{k} \Omega\left(f_{k}\right)}\end{array}\]</span> <span class="math display">\[ \\{\Omega(f)=\gamma T+\frac{1}{2} \lambda\|w\|^{2}} \]</span></p>
 <ul>
+<li><span class="math inline">\(\hat{y}_{i}=\phi\left(\mathbf{x}_{i}\right)=\sum^{K} f_{k}\left(\mathbf{x}_{i}\right), \quad f_{k} \in \mathcal{F}\)</span></li>
+<li>l是一个可谓的图函数</li>
 <li>k表示第k棵树</li>
 <li>i表示第i个样本</li>
+<li>T is the number of leaves in the tree.</li>
+<li><span class="math inline">\(f_k\)</span>表示第k棵树的预测函数，</li>
+<li>q代表的书的结构，w代表叶子节点的权重</li>
+<li><span class="math inline">\(\Omega(f_k)\)</span>表示第k棵树的复杂度</li>
 </ul>
 <h3 id="reformulate目标函数">reformulate目标函数</h3>
-<p>上面的模型没法使用传统的优化算法求解，我们reformulate这个模型</p>
+<p>上面的优化问题的解，近似求一系列优化问题的解，如下</p>
 <p><span class="math inline">\(\mathcal{L}^{(t)}=\sum\limits_{i=1}^{n} l\left(y_{i}, \hat{y}_{i}^{(t-1)}+f_{t}\left(\mathbf{x}_{i}\right)\right)+\Omega\left(f_{t}\right)\)</span></p>
-<p><span class="math inline">\(\mathcal{L}^{(t)}\)</span>表示第t棵树的训练目标，也就是通过依次求解最优的树来逼近最开始的损失函数。</p>
+<ul>
+<li><span class="math inline">\(\mathcal{L}^{(t)}\)</span>表示第t棵树的训练目标，也就是通过依次求解最优的树来逼近最开始的损失函数。</li>
+</ul>
 <h3 id="损失函数-二阶展开">损失函数-二阶展开</h3>
 <p>而为了方便计算，上面的损失函数还可以进一步简化（利用二阶展开）</p>
 <p><span class="math inline">\(\mathcal{L}^{(t)} \simeq\sum\limits_{i=1}^{n}\left[l\left(y_{i}, \hat{y}^{(t-1)}\right)+g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
@@ -258,7 +266,7 @@
 <p>最朴素的算法，遍历所有特征的所有的切分值，找出最佳的。</p>
 <p>目前大部分单机的机器学习库都是采用的这种算法。</p>
 <figure>
-<img src="../_image/image-20200107161207967.png" alt="image-20200107161207967" /><figcaption aria-hidden="true">image-20200107161207967</figcaption>
+<img src="./image-20200107161207967.png" alt="image-20200107161207967" /><figcaption aria-hidden="true">image-20200107161207967</figcaption>
 </figure>
 <h2 id="最佳实践">最佳实践</h2>
 <p>number of trees:太大会造成过拟合，一般用cross validation去挑最好的参数 shrinkage parameter:迭代步长，通常取0.01或者0.001，较小的lambda会需要很大的B来取得较好的效果。 number of split d:通常d=1效果就比较好了。d表示的interation depth，就是交叉项的深度。</p>
@@ -316,7 +324,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
+                <time title="修改时间：2021-05-18 08:24:23" itemprop="dateModified" datetime="2021-05-18T08:24:23+08:00">2021-05-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -352,16 +360,18 @@
 <li>Adaboost是GBDT的一个特例</li>
 <li>XGB在GBDT的基础上引入了二阶导数，并且在loss中加入了正则项。</li>
 </ol>
-<h2 id="detail">detail</h2>
+<h2 id="算法细节">算法细节</h2>
 <figure>
-<img src="./img.png" alt="adaboost" /><figcaption aria-hidden="true">adaboost</figcaption>
+<img src="trees_1/img.png" alt="adaboost" /><figcaption aria-hidden="true">adaboost</figcaption>
 </figure>
+<p>boosting中有三个重要的参数： - 树的棵树 - <span class="math inline">\(\lambda\)</span>: 学习速率 - 每一棵树的最大splits个数</p>
 <h3 id="公式推导">公式推导</h3>
 <h3 id="代码实现">代码实现</h3>
 <h2 id="参考资料">参考资料</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
+<li><a target="_blank" rel="noopener" href="https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/6062a083acbfe82c7195b27d/1617076404560/ISLR%2BSeventh%2BPrinting.pdf">An Introduction to Statistical Learning</a></li>
 </ol>
 
       

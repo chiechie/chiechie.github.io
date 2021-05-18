@@ -601,7 +601,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-17 20:53:33" itemprop="dateModified" datetime="2021-05-17T20:53:33+08:00">2021-05-17</time>
+                <time title="修改时间：2021-05-18 08:25:04" itemprop="dateModified" datetime="2021-05-18T08:25:04+08:00">2021-05-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -626,9 +626,15 @@
       
           <h1 id="总结">总结</h1>
 <ol type="1">
-<li>决策树通过将特征空间划分为多个distinct and non-overlapping regions,<span class="math inline">\(R_1,\dots,R_J\)</span>，并且对每个region定义一个response variable，作为该region的值。</li>
-<li>决策树的 实现算法有三类：id3，c4.5和cart。前两者可以构造多叉树，cart只能构造二叉树。 因为cart效果最好，现在通常就用它。例如sklean的决策树默认用cart</li>
+<li>决策树做预测的流程可以分为两步：第一步，将特征空间划分为多个distinct and non-overlapping regions,<span class="math inline">\(R_1,\dots,R_J\)</span>；第二步，对每个region定义一个response variable，作为该region的值。</li>
+<li>怎么得到这些region呢？决策树的实现算法有三类：ID3，C4.5和cart。前两者可以构造多叉树，cart只能构造二叉树。 因为cart效果最好，现在通常就用它（例如sklean）。</li>
+<li>三类算法的大致思路一样，分为两步：第一步是将feature space切成多个boxes。为什么不是切成多个球？因为球没法填充整个feature space. 第二步是找到最优的切割boxes的方式，如果去遍历每一组partition of feature space，计算量太大了，通常采用greedy的方法。</li>
+<li>落入每个region的response variable是什么？</li>
 </ol>
+<ul>
+<li>如果是连续变量，求该region上训练集的response均值，以后赋值给新落入该区间的predictor的response，</li>
+<li>如果是离散变量，求众数。</li>
+</ul>
 <h1 id="基本概念">基本概念</h1>
 <ul>
 <li>信息增益: 衡量切分前后，样本的秩序的提升or混乱程度的下降。</li>
@@ -649,7 +655,7 @@
 </ul></li>
 </ul></li>
 </ul>
-<h1 id="决策树算法-id3">决策树算法-id3</h1>
+<h1 id="决策树算法-id3">决策树算法-ID3</h1>
 <p>ID3, was the first of three Decision Tree implementations developed by Ross Quinlan</p>
 <p>It builds a decision tree for the given data in a top-down fashion. each node of the tree, one feature is tested based on 最大熵降, and the results are used to split the sample set. This process is recursively done until the set in a given sub-tree is homogeneous (i.e. it contains samples belonging to the same category). The ID3 algorithm uses a greedy search.</p>
 <p>Disadvantages:</p>
@@ -678,67 +684,45 @@
 <ul>
 <li>Over fitting happens when model picks up data with uncommon features value, especially when data is noisy.</li>
 </ul>
-<h1 id="决策树算法-cart">决策树算法-cart</h1>
+<h1 id="决策树算法-cart">决策树算法-CART</h1>
 <p>ID3 和 C4.5是使用基于Entropy-最大信息增益的特征作为节点。</p>
-<p>CART代表分类树和回归树。</p>
+<p>CART代表分类树和回归树，使用基于entropy和ginix index计算信息增益。</p>
 <p>Disadvantages</p>
 <ul>
 <li>It can split on only one variable</li>
 <li>Trees formed may be unstable</li>
 </ul>
-<h2 id="原理">原理</h2>
-<h2 id="每个region的response-variable是什么">每个region的response variable是什么？</h2>
-<p>落入每个region的response variable是什么？</p>
-<ul>
-<li>如果是连续变量，求该region上训练集的response均值，以后赋值给新落入该区间的predictor的response，</li>
-<li>如果是离散变量，求众数。</li>
-</ul>
-<h2 id="怎么找最佳的region-partition">怎么找最佳的region partition ？</h2>
-<p>怎样构造这些region呢？ 分两步</p>
-<ol type="1">
-<li><p>对feature space进行一个切割，切成boxes</p>
-<blockquote>
-<p>思考？为什么不是切成一个球？没法填充整个predictor space</p>
-</blockquote></li>
-<li><p>找到最优的一系列的boxes，即最优化问题：the goal is to find boxes<span class="math inline">\(R_1,\dots,R_j\)</span> that minimize the SSE，即为了获得最小组内方差(within variance)。</p></li>
-</ol>
-<p><span class="math display">\[\min\ SSE = \sum\limits_{j=1}^J \sum\limits_{i\in R_j}(y_i - \hat y_{R_j})^2\]</span></p>
-<ul>
-<li>i是第i个样本</li>
-<li>R_j表示第j个partition</li>
-</ul>
-<p>怎么找到最佳的一个partition？如果考虑每一个partition of predictor space，那计算量太大了。</p>
-<p>自然，用greedy的方法。</p>
+<p>cart的原理就是，构造一颗大树<span class="math inline">\(T_0\)</span>，然后去剪枝（也叫做cost complexity pruning/the weakest link pruning）, 下面以regression tree 和 classification tree举例说明</p>
 <blockquote>
 <p>如果response var是imbalance, 全部预测为label占比更多的类，怎么办？</p>
 </blockquote>
-<p>cart的原理就是，构造一颗大树<span class="math inline">\(T_0\)</span>，然后去剪枝，这种方法叫做cost complexity pruning/the weakest link pruning, 下面以regression tree 和 classification tree举例说明：</p>
 <h2 id="regression-tree">regression tree</h2>
-<p>regression tree的cost function 是RSS</p>
+<p>regression tree的cost function 是RSS加上正则项</p>
 <p><span class="math display">\[\min\limits_{T\in T_0} \sum\limits_{m=1}^{|T|}\sum\limits_{x_i\in R_m}(y_i - \hat y_{R_m})^2+\alpha|T|\]</span></p>
 <ul>
 <li><span class="math inline">\(|T|\)</span>是叶子节点的个数。</li>
 <li>m表示第m个叶子</li>
+<li><span class="math inline">\(R_m\)</span>表示第m个partition region</li>
+<li><span class="math inline">\(y_i\)</span>表示第i个样本的真实值</li>
+<li><span class="math inline">\(y_{R_m}\)</span>表示第m个partition region的预测值</li>
 </ul>
-<p>构造一颗树时，stop rules是叶子节点的node个数少于阈值。</p>
+<p>构造一颗树的流程如下：</p>
+<figure>
+<img src="./img.png" alt="regression tree 构造流程" /><figcaption aria-hidden="true">regression tree 构造流程</figcaption>
+</figure>
 <h2 id="classification-tree">classification tree</h2>
-<p>classification tree的cost是可以是</p>
-<ul>
-<li><p><strong>classification error</strong> <span class="math display">\[1-\max\limits_k(\hat p_{mk})\]</span> 也就是每一个region中不属于主要类的样本点的比例，classification error可以看成衡量的是样本的一个众数,也叫做node purity。但是用该策略来决定split方式，会有点jump ，我们需要一个smooth tree-growing process，于是提出了优化的指标gini index：</p></li>
-<li><p><strong>cross-entropy</strong> <span class="math display">\[d = - \sum\limits_k \hat p_{mk}\log\hat p_{mk} \]</span> 形状跟gini index差不多，优势在于处理分类变量时不需要转化为dummy variable。</p></li>
-</ul>
+<p>classification tree切分节点时，参考信息增益，其他流程和构建回归树是一样的</p>
 <h2 id="为何要剪枝">为何要剪枝?</h2>
-<p>为何要剪枝(pruning)? 如果分支过多(bushy)，造成over fitting。</p>
-<p>a smaller tree with fewer splits might lead to lower variance and better interpretation at the cost of a little bias.</p>
-<p>总的来说,a very bushy tree has got high variances,i e ,over fitting the data</p>
+<p>为何要剪枝(pruning)? a very bushy tree has got high variances,ie, over-fitting the data</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/dozercodes/DecisionTree">github-id3的实现</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/SebastianMantey/Decision-Tree-from-Scratch/blob/master/notebooks/decision_tree_functions.py">github-id3的实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/6062a083acbfe82c7195b27d/1617076404560/ISLR%2BSeventh%2BPrinting.pdf">An Introduction to Statistical Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.quora.com/Why-is-entropy-used-instead-of-the-Gini-index">Why-is-entropy-used-instead-of-the-Gini-index</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dozercodes/DecisionTree">github-id3的实现1</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/SebastianMantey/Decision-Tree-from-Scratch/blob/master/notebooks/decision_tree_functions.py">github-id3的实现2</a></li>
 <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Information_gain_in_decision_trees">wiki-Information_gain_in_decision_trees</a></li>
 <li><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/tree/plot_unveil_tree_structure.html#sphx-glr-auto-examples-tree-plot-unveil-tree-structure-py">sklearn-decisiontree</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.quora.com/What-are-the-differences-between-ID3-C4-5-and-CART">quora-ID3-C4-5-and-CART的区别？</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.quora.com/Why-is-entropy-used-instead-of-the-Gini-index">Why-is-entropy-used-instead-of-the-Gini-index</a></li>
 </ol>
 
       

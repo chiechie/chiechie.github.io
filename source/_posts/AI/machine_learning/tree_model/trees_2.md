@@ -109,7 +109,6 @@ classification tree切分节点时，参考信息增益，其他流程和构建�
 a very bushy tree has got high variances,ie, over-fitting the data
 
 
-
 ## 参考
 1. [github-id3的实现](https://github.com/dozercodes/DecisionTree)
 2. [github-id3的实现](https://github.com/SebastianMantey/Decision-Tree-from-Scratch/blob/master/notebooks/decision_tree_functions.py)

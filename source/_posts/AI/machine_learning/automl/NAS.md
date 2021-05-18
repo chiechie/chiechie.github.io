@@ -17,4 +17,4 @@ categories:
 
 ## 参考
 1. [wangshusen-slide-github](https://github.com/wangshusen/DeepLearning)
-2. 
+2. [Differentiable Neural Architecture Search-youtube](https://www.youtube.com/watch?v=D9m9-CXw_HY)

@@ -286,6 +286,108 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/19/AI/AIOps/log_analizer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/19/AI/AIOps/log_analizer/" class="post-title-link" itemprop="url">日志监控怎么做？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-19 20:05:20" itemprop="dateCreated datePublished" datetime="2021-02-19T20:05:20+08:00">2021-02-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="做项目之前的分析">做项目之前的分析</h2>
+<p>最近要做一个nlp的项目，需求就是从一堆杂乱无章的日志中，发现一些规律。 看看哪些日志其实是在说一个事情，可归为一类；哪些日志暗示着新的事情在发生，就告警。</p>
+<p>本质是一个EDA,有点类似给用户分群。跟用户分群相比，日志分析有一些特殊的需求，比如，我们通常先关注目前发生的事情严不严重，然后才关注细节。描述前者的典型字段包括时间，日志级别，其他关键词。描述后者的典型字段包括具体ip，网站，端口号等等。</p>
+<h2 id="看看别人怎么做的">看看别人怎么做的</h2>
+<h3 id="log3c">log3C</h3>
+<p>《identifies service system problems from system logs》-log3C》【chiechie-high-level的总结】：</p>
+<ul>
+<li>讲了通过数据挖掘-对纯文本进行分析的一种思路：原始日志--&gt;提取事件模版--&gt; 聚合成 时间戳 + session id的日志序列计数向量---&gt;聚类得到典型日志序列技术向量模式---&gt; 日志序列模式 和 系统状态（核心KPI 之间的关系）相关性分析</li>
+<li>将相关性分析 应用到了 具有 物理依赖关系的 数据上面，可以得到 因果关系。</li>
+<li>跟指标异常检测的思路不一样，这个不看日志中提取出来的数值指标，看的是日志间的序列关系，出现的先后顺序，更适合用来做辅助 系统的故障定位（复杂的网状调用调用链路），而前者更适合做系统的性能监控，需要人工定义感兴趣的测量方式（人工指定特征）。</li>
+<li>跟日志异常检测相比，本文的应用更加的end2end。</li>
+</ul>
+<p>可以了解，实际中先不考虑这个方案，复杂且黑盒，不好调效果。</p>
+<h3 id="logmine">logmine</h3>
+<ol type="1">
+<li></li>
+</ol>
+<h2 id="一些思考">一些思考</h2>
+<ol type="1">
+<li>要不要用一些文本模型，比如word2vec，doc2vec，transformer，bert？</li>
+</ol>
+<p>在当前日志的场景下，意义不大。 这些深度模型的本质是想将语义上的相似性通过embedding vector表达。 日志场景下，日志都是同一个print语句打出来的，可以看成是机器的语言，比较少有语言歧义（真的有这种近义词的，肯定不是一个组件打出来的日志），所以没必要去寻找语意上的相似性。 分词完之后，当成charactor就可以解决问题了。</p>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">apache_2k.log</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ixueshu.com/h5/document/814a23b6b51168d40153bcb23ef479f1318947a18e7f9386.html">硕士论文-模式识别在海量日志分析中的应用研究 "施佳奇"</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">关于logmine的改进版--chiechie's github</a></li>
+<li><a href="https://chiechie.github.io/2021/03/04/AIOps/logmine-notes/">关于logmine的实践--chiechie's blog</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -355,7 +457,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-count">128</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -488,6 +590,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

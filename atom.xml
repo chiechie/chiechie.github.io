@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-05-19T02:44:56.395Z</updated>
+  <updated>2021-05-19T09:30:07.111Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -17,13 +17,84 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>循环神经网络2-长短期记忆网络（LSTM）</title>
+    <link href="https://chiechie.github.io/2021/05/19/AI/machine_learning/deeplearning/rnn-1-lstm/rnn-1-lstm/"/>
+    <id>https://chiechie.github.io/2021/05/19/AI/machine_learning/deeplearning/rnn-1-lstm/rnn-1-lstm/</id>
+    <published>2021-05-19T02:48:04.000Z</published>
+    <updated>2021-05-19T09:30:07.111Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="总结">总结</h2><ol type="1"><li>LSTM是一种RNN模型，是对Simple RNN的一种改进，为了避免长期的梯度消失问题。</li><li>LSTM也可以看成一个带状态的函数，输入当前词的embedding向量（维度为m）和上一个时刻的状态向量（h维）和上一个时刻的记忆单元向量（h维），输出当前时刻的状态向量（h维）和当前时刻的记忆单元向量（h维）。</li><li>LSTM通过引入一个传输带（conveyor belt）来缓解梯度消失的问题。 过去的信息通过传输带到达下一个时刻，不会发生很大变化。</li></ol><h2 id="lstm">LSTM</h2><p><img src="./lstm.png" /></p><p>LSTM引入新的内部状态专门进行先行的循环信息传递，同时将非线性加工后的信息给隐藏层的外部状态</p><p>lstm有3个门，分别为输入门，输出门，遗忘门，也是三个权重向量</p><ul><li>输入门：一个权重向量，控制当前时刻的候选状态<span class="math inline">\(\(\mathbf{C}_{t}\)\)</span>有多少信息要保留</li><li>输出门：控制当前内部状态<span class="math inline">\(\tilde{\mathbf{c}}_{t}\)</span>有多少信息要输出给外部状态</li><li>遗忘门：一个权重向量表示上一个时刻的内部状态<span class="math inline">\(\mathbf{c}_{t-1}\)</span>需要遗忘多少信息</li></ul><figure><img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><p>更新当前记忆 <img src="img_1.png" alt="img_1.png" /></p><p>更新当前时刻的state</p><figure><img src="img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption></figure><p>lstm的参数个数：</p><p>三个门参数 + 记忆单元参数: (dim(x) + dim(h)) ✖ dim(h) ✖4</p><h2 id="lstm应用-情感判断">LSTM应用-情感判断</h2><figure><img src="img_3.png" alt="img_3.png" /><figcaption aria-hidden="true">img_3.png</figcaption></figure><h2 id="cnn-和-rnn视觉对比">cnn 和 rnn视觉对比</h2><p>有两个图还蛮有意思的，</p><figure><img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" alt="cnn" /><figcaption aria-hidden="true">cnn</figcaption></figure><figure><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FoIsH5iVKwV.png?alt=media&amp;token=05e8189e-dd5f-4781-910c-a46bb9fa4eaf" alt="rnn" /><figcaption aria-hidden="true">rnn</figcaption></figure><h2 id="cnn-vs-rnn-vs-attention">cnn vs rnn vs attention</h2><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_n2z_XQqI2.png?alt=media&amp;token=facfccac-e8ac-4895-a84c-7add43cd165a" /></p><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://towardsdatascience.com/a-comparison-of-dnn-cnn-and-lstm-using-tf-keras-2191f8c77bbe">a-comparison-of-dnn-cnn-and-lstm-using-tf-keras</a></li><li><a href="https://zh.d2l.ai/chapter_recurrent-neural-networks/lstm.html">dive into deep learning-lstm</a></li><li><a href="https://www.youtube.com/watch?v=Cc4ENs6BHQw&amp;list=PLvOO0btloRnuTUGN4XqO85eKPeFSZsEqK&amp;index=3">wangshusen-RNN-youtube</a></li><li><a href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li><li><a href="https://nndl.github.io/nndl-book.pdf">神经网络与深度学习</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;LSTM是一种RNN模型，是对Simple RNN的一种改进，为了避免长期的梯度消失问题。&lt;/li&gt;
+&lt;li&gt;LSTM也可以看成一个带状态的函数，输入当前词的embedding向量（维度为m）和上一个时刻</summary>
+      
+    
+    
+    
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
+    
+    <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="神经网络" scheme="https://chiechie.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="RNN" scheme="https://chiechie.github.io/tags/RNN/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>循环神经网络1-simple RNN</title>
+    <link href="https://chiechie.github.io/2021/05/19/AI/machine_learning/deeplearning/rnn-0-simpleRNN/"/>
+    <id>https://chiechie.github.io/2021/05/19/AI/machine_learning/deeplearning/rnn-0-simpleRNN/</id>
+    <published>2021-05-19T02:47:27.000Z</published>
+    <updated>2021-05-19T09:28:53.589Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="总结">总结</h2><ul><li>在自然语言处理的问题中，数据量足够的情况下，更常用transformer。但是在小数据量上，RNN还是很有效的。</li><li>序列数据（sequential data）包括文本，语音，时时间序列等。</li><li>全连接神经网络（FC Nets）和卷积神经网络（Conv Nets）处理样本的方式是one to one，即输入一张图片，输出该图片的类别。同时输入样本的大小和输出的大小是固定的。</li><li>序列数据面对的问题是，many to one 或者many to many，即输入很长一篇文章，输出该文章所属的类别。同时输入样本的大小不是固定的，一篇文章可长可短，翻译的输出也是可变的。RNN很适合。</li><li>RNN运行原理，类似人脑处理信息的过程：阅读一篇长文章时，是逐句阅读，渐渐积累信息，然后再阅读下一个词。</li><li>RNN接受最新时刻word的embedding向量，通过内部单元权重将embedding向量和上一个时刻的隐藏状态映射为最新的隐藏状态。</li><li>RNN也可以看成一个带状态的函数，输入当前词的embedding向量（维度为m）和上一个时刻的状态向量（h维）输出当前时刻的状态向量（h维）。</li><li>最后一个状态向量<span class="math inline">\(h_t\)</span>，积累整句话的所有信息，所以可以只保留这个state，将更老时刻的state都丢掉。</li><li><span class="math inline">\(h_t\)</span>也可以作为整个序列的特征，提供给下游使用。</li><li>simple rnn有一个Long term dependency problem，即不擅长对长时间建模，因为梯度消失了，最老的state的梯度要么爆炸要么消失，而梯度是调整权重的指路灯，灯坏了，权重就不知道该怎么调了。</li><li>simple rnn很擅长对短间隔依赖关系建模，离输出层最近的梯度还是没毛病的</li><li>怎么解决Long term dependency problem？主要通过引入门控来达到这个目的，这一类网络也叫基于门控的循环神经网络（Gated RNN）,主要是LSTM和GRU。</li></ul><h2 id="simeple-rnn">simeple RNN</h2><ul><li><p>待估参数：权重矩阵A，行数为：dim(h)，列数为：dim(h) + dimm(x) <img src="img.png" alt="img.png" /></p></li><li><p>激活函数：双曲正切函数</p><p>为什么要使用双曲正切作为激活函数？使用别的方法（比如relu），隐藏状态的值传着传着就爆炸了或者没了。， 如果A的特征根大于1，向前传播时，状态值呈指数增长，时间足够长，状态向量取值会爆炸 如果A的特征根小于1，向前传播时，状态值呈0指数衰减，时间足够长，状态向量取值会接近0</p><p>双曲正切作为激活函数的好处是，将每个rnn内部线性映射之后的结果scale到-1到1之间。所以向前传播时，不会出现指数爆炸或者衰减。</p></li><li><p>simple RNN的参数个数：即矩阵A的大小 + intercept, dim(h) ✖ [dim(h) + dimm(x)] + dim(h)</p><blockquote><p>keras在实现RNN默认使用intercept，所以还有一个intercept参数，大小是dim(h)</p></blockquote></li></ul><h2 id="simple-rnn应用-情感判断">simple-RNN应用-情感判断</h2><p>判断电影评价是正面还是负面,</p><figure><img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=Cc4ENs6BHQw&amp;list=PLvOO0btloRnuTUGN4XqO85eKPeFSZsEqK&amp;index=3">wangshusen-RNN-youtube</a></li><li><a href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li><li><a href="https://nndl.github.io/nndl-book.pdf">神经网络与深度学习</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;在自然语言处理的问题中，数据量足够的情况下，更常用transformer。但是在小数据量上，RNN还是很有效的。&lt;/li&gt;
+&lt;li&gt;序列数据（sequential data）包括文本，语音，时时间序列等。&lt;/li&gt;
+&lt;li</summary>
+      
+    
+    
+    
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
+    
+    <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="神经网络" scheme="https://chiechie.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="RNN" scheme="https://chiechie.github.io/tags/RNN/"/>
+    
+  </entry>
+  
+  <entry>
     <title>可微的NAS方法</title>
     <link href="https://chiechie.github.io/2021/05/18/AI/machine_learning/automl/NAS/"/>
     <id>https://chiechie.github.io/2021/05/18/AI/machine_learning/automl/NAS/</id>
     <published>2021-05-18T00:32:24.000Z</published>
-    <updated>2021-05-19T02:44:56.395Z</updated>
+    <updated>2021-05-19T02:55:05.706Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>NAS是auto-ml的一个子领域，相关的技术有随机搜索，强化学习，基于微分的方法，如DARTS 和 FBNet。</p><p>DARTS 和 FBNet是目前做NAS的the state of arts方法</p><p>下面简单介绍FBNet的思路</p></blockquote><h2 id="fbnet的基本idea">FBNet的基本idea</h2><ol type="1"><li>定义候选block, eg10个</li><li>定义神经网络的层数,eg20，神经网络的每一层都是从9个候选block中选一个，搜索空间9^20</li><li>构建一个很大的神经网络--supernet，每一层由9个候选block并联而成。supernet的待估参数包括9个候选block✖️20层，以及长度为9的权重向量✖️20。 &gt; 人工调参，可以看成是，指定supernet中的一条路径，然后灌入数据，来估计路径上20个blcock的参数。使用FBNet就不用人为指定其中某条路径，而是这个大网络supernet从训练数据中，学习出9个block✖️20（层）个参数，以及9✖️20（层）个权重。训练完之后，选择每一层权重最大的block并且连成一条路径，就是机器选定的20层的网络结构。</li><li>模型要落地，还要考虑计算效率。具体的做法，事先算好候选block各自的latency(做一次推断平均耗时多久，block的权重随机给，跑多组数据求平均时延），然后将latency信息加入损失函数中，作为错误率之外的另外的一个惩罚项。</li></ol><h2 id="chiechies-reflection">chiechie's reflection</h2><p>联想到之前构建的通用异常检测模型，整体流程大概是这样：定义多个检测器，曲线特征，并用一个随机森林去做集成。希望随机森林可以将不同的曲线路由到适合的检测器上去。</p><p>FBNet的思路跟上面的流程有点像，都是数据驱动去选择适配的组件。不同的地方在于，FBNet最终会减枝，即从9✖️20个可能的路径中，裁剪成一条路径。</p><p>FBNet要解决的任务更简单，给一个小任务找到适配的解决方案；通用异常检测更难，要给n个小任务找解决方案，并且用一套复合的解决方案。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li><li><a href="https://www.youtube.com/watch?v=D9m9-CXw_HY">Differentiable Neural Architecture Search-youtube</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>NAS是auto-ml的一个子领域，相关的技术有随机搜索，强化学习，基于微分的方法，如DARTS 和 FBNet。</p><p>DARTS 和 FBNet是目前做NAS的the state of arts方法</p><p>下面简单介绍FBNet的思路</p></blockquote><h2 id="fbnet的基本idea">FBNet的基本idea</h2><ol type="1"><li><p>定义候选block, eg10个</p></li><li><p>定义神经网络的层数,eg20，神经网络的每一层都是从9个候选block中选一个，搜索空间9^20</p></li><li><p>构建一个很大的神经网络--supernet，每一层由9个候选block并联而成。supernet的待估参数包括9个候选block✖️20层，以及长度为9的权重向量✖️20。</p><blockquote><p>人工调参，可以看成是，指定supernet中的一条路径，然后灌入数据，来估计路径上20个blcock的参数。使用FBNet就不用人为指定其中某条路径，而是这个大网络supernet从训练数据中，学习出9个block✖️20（层）个参数，以及9✖️20（层）个权重。训练完之后，选择每一层权重最大的block并且连成一条路径，就是机器选定的20层的网络结构。</p></blockquote></li><li><p>模型要落地，还要考虑计算效率。具体的做法，事先算好候选block各自的latency(做一次推断平均耗时多久，block的权重随机给，跑多组数据求平均时延），然后将latency信息加入损失函数中，作为错误率之外的另外的一个惩罚项。</p></li></ol><h2 id="chiechies-reflection">chiechie's reflection</h2><p>联想到之前构建的通用异常检测模型，整体流程大概是这样：定义多个检测器，曲线特征，并用一个随机森林去做集成。希望随机森林可以将不同的曲线路由到适合的检测器上去。</p><p>FBNet的思路跟上面的流程有点像，都是数据驱动去选择适配的组件。不同的地方在于，FBNet最终会减枝，即从9✖️20个可能的路径中，裁剪成一条路径。</p><p>FBNet要解决的任务更简单，给一个小任务找到适配的解决方案；通用异常检测更难，要给n个小任务找解决方案，并且用一套复合的解决方案。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li><li><a href="https://www.youtube.com/watch?v=D9m9-CXw_HY">Differentiable Neural Architecture Search-youtube</a></li></ol>]]></content>
     
     
       
@@ -140,6 +211,33 @@
   </entry>
   
   <entry>
+    <title>树模型1_常用树模型介绍</title>
+    <link href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/"/>
+    <id>https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/</id>
+    <published>2021-05-15T06:59:29.000Z</published>
+    <updated>2021-05-18T00:24:23.624Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="树模型">树模型</h2><p>最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</p><p>回一下机器学习的三个要素： 1. 假设函数的空间： 2. 学习策略or目标函数 3. 优化算法</p><p>bootstrap是统计学中一种抽样的方法，为了获得样本方差或者均值，采取多次有放回的抽样，获得统计量。 针对单个决策树方差过大的问题。 bagging trees 利用bootstrap的思想，提取B份独立的样本集，分别估计出预测值<span class="math inline">\(\hat{f}^{1}(x), \hat{f}^{2}(x), \ldots, \hat{f}^{B}(x)\)</span> ，然后将结果取平均，就可以得到一个方差更小的预测模型，通过多次实验获得多个regression tree或者classification tree，对每一个input，会产生多个输出，regression tree的输出是K个树的输出取average。classification tree是采用投票的方法，大多数相同的那一类就是输出的那一类 。 bagging involves creating multiple copies of the original training data set using the bootstrap, fitting a separate decision tree to each copy, and then combining all of the trees in order to create a single predictive model.</p><p>random forest是bagging tree的加强版本，因为他考虑到了tree之间的de correlates，使得组合后结果的variance更小。构造树过程如下：consider 每一个split的时候，会从p个predictors中<strong>随机</strong>的挑<span class="math inline">\(m = \sqrt p\)</span>）个作为split candidate，</p><p>boosting是另外一种提升决策树效果的方法，Boosting works in a similar way,也是杨原始样本复制n份，然后构建n个模型，跟bagging tree不一样的地方在于，trees are grown sequentially: each tree is grown using information from previously grown trees. Boosting does not involve bootstrap sampling; instead each tree is fit on a modified version of the original data set.</p><p><img src="trees_1/img.png" alt="img.png" /> xgboost是一种boosting tree的一种，其他的还是有gbdt，catboost</p><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li><li><a href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;树模型&quot;&gt;树模型&lt;/h2&gt;
+&lt;p&gt;最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</summary>
+      
+    
+    
+    
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="树模型" scheme="https://chiechie.github.io/tags/%E6%A0%91%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>树模型4_xgboost介绍</title>
     <link href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_4/"/>
     <id>https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_4/</id>
@@ -155,33 +253,6 @@
 &lt;p&gt;boosting tree的另外一个代表是xgboost,下面重点介绍一下xgboost&lt;/p&gt;
 &lt;h3 id=&quot;损失函数定义&quot;&gt;损失函数定义&lt;/h3&gt;
 &lt;p&gt;先看看，xgboost怎么定义ensemble tre</summary>
-      
-    
-    
-    
-    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
-    
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="树模型" scheme="https://chiechie.github.io/tags/%E6%A0%91%E6%A8%A1%E5%9E%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>树模型1_常用树模型介绍</title>
-    <link href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/"/>
-    <id>https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/</id>
-    <published>2021-05-15T06:59:29.000Z</published>
-    <updated>2021-05-18T00:24:23.624Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="树模型">树模型</h2><p>最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</p><p>回一下机器学习的三个要素： 1. 假设函数的空间： 2. 学习策略or目标函数 3. 优化算法</p><p>bootstrap是统计学中一种抽样的方法，为了获得样本方差或者均值，采取多次有放回的抽样，获得统计量。 针对单个决策树方差过大的问题。 bagging trees 利用bootstrap的思想，提取B份独立的样本集，分别估计出预测值<span class="math inline">\(\hat{f}^{1}(x), \hat{f}^{2}(x), \ldots, \hat{f}^{B}(x)\)</span> ，然后将结果取平均，就可以得到一个方差更小的预测模型，通过多次实验获得多个regression tree或者classification tree，对每一个input，会产生多个输出，regression tree的输出是K个树的输出取average。classification tree是采用投票的方法，大多数相同的那一类就是输出的那一类 。 bagging involves creating multiple copies of the original training data set using the bootstrap, fitting a separate decision tree to each copy, and then combining all of the trees in order to create a single predictive model.</p><p>random forest是bagging tree的加强版本，因为他考虑到了tree之间的de correlates，使得组合后结果的variance更小。构造树过程如下：consider 每一个split的时候，会从p个predictors中<strong>随机</strong>的挑<span class="math inline">\(m = \sqrt p\)</span>）个作为split candidate，</p><p>boosting是另外一种提升决策树效果的方法，Boosting works in a similar way,也是杨原始样本复制n份，然后构建n个模型，跟bagging tree不一样的地方在于，trees are grown sequentially: each tree is grown using information from previously grown trees. Boosting does not involve bootstrap sampling; instead each tree is fit on a modified version of the original data set.</p><p><img src="trees_1/img.png" alt="img.png" /> xgboost是一种boosting tree的一种，其他的还是有gbdt，catboost</p><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li><li><a href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;树模型&quot;&gt;树模型&lt;/h2&gt;
-&lt;p&gt;最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</summary>
       
     
     
@@ -221,9 +292,9 @@
     
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
-    <category term="树模型" scheme="https://chiechie.github.io/tags/%E6%A0%91%E6%A8%A1%E5%9E%8B/"/>
-    
     <category term="机器学习" scheme="https://chiechie.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="树模型" scheme="https://chiechie.github.io/tags/%E6%A0%91%E6%A8%A1%E5%9E%8B/"/>
     
   </entry>
   
@@ -250,43 +321,9 @@
     <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
     
     
-    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
-    
     <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
-  </entry>
-  
-  <entry>
-    <title>RNN的结构</title>
-    <link href="https://chiechie.github.io/2021/05/13/AI/machine_learning/deeplearning/cnnvsrnn/"/>
-    <id>https://chiechie.github.io/2021/05/13/AI/machine_learning/deeplearning/cnnvsrnn/</id>
-    <published>2021-05-13T01:26:41.000Z</published>
-    <updated>2021-05-17T00:42:41.578Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>都忘了</p><p>最近要面试，遂把这些破玩意儿拿来复习下</p></blockquote><h1 id="high-level的理解">high-level的理解</h1><h2 id="rnn">RNN</h2><p>RNN可以看成一个带状态的函数，原子操作：输入m个特征（注意都是一个时间点），输出1个h维hidden state和1个h维的记忆单元。 拓展到多个时间点，就把单元rnn连续运行seq_len次，每次都接受上一次的hidden state和记忆单元。</p><p>RNN在学习过程中面临一个问题--学不到长期的依赖关系（Long term dependency problem）。梯度要么爆炸要么消失，而梯度是调整权重的指路灯，灯坏了，权重就不知道该怎么调了。所以实际上，simple RNN只能学到短期的依赖关系（离输出层最近的梯度还是没毛病的）。</p><p>怎么解决长期依赖问题呢？从梯度下手，找到避免梯度爆照/梯度消失的方法。</p><ol type="1"><li>调参，同时使用非饱和的激活函数，保证<span class="math inline">\(\operatorname{diag}\left(f^{\prime}\left(\mathbf{z}_{i}\right)\right) U^{\mathrm{T}} \approx 1\)</span></li><li>改进模型或者优化方法,<ul><li><p>梯度爆炸：梯度截断或者权重衰减</p></li><li><p>梯度消失：改模型，like this</p><p><span class="math display">\[ \mathbf{h}_{t}=\mathbf{h}_{t-1}+g\left(\mathbf{x}_{t}, \mathbf{h}_{t-1} ; \theta\right) \]</span></p></li></ul></li></ol><p>酱紫，连续的两个状态之间既有线性关系，也有非线性关系，在一定程度可以缓解梯度消失。但依然有一个问题--记忆容量，<span class="math inline">\(h_t\)</span>可以存储的信息是有限的，随着t增加，丢失的信息也越来越多。</p><p>解决容量问题的方法：选择性遗忘，同时选择性更新。</p><p>主要通过引入门控来达到这个目的，这一类网络也叫基于门控的循环神经网络（Gated RNN）。主要是LSTM和GRU.</p><p>先看 lstm</p><h2 id="lstm">LSTM</h2><p><img src="lstm.png" /></p><p>LSTM引入新的内部状态专门进行先行的循环信息传递，同时将非线性加工后的信息给隐藏层的外部状态</p><p>lstm有3个门，分别为输入门，输出门，遗忘门</p><ul><li>输入门：控制当前时刻的候选状态<span class="math inline">\(\(\mathbf{C}_{t}\)\)</span>有多少信息要保留</li><li>输出门：控制当前内部状态<span class="math inline">\(\tilde{\mathbf{c}}_{t}\)</span>有多少信息要输出给外部状态</li><li>遗忘门：表示上一个时刻的内部状态<span class="math inline">\(\mathbf{c}_{t-1}\)</span>需要遗忘多少信息</li></ul><h1 id="几个网络结构的可视化">几个网络结构的可视化</h1><h2 id="cnn-和-rnn视觉对比">cnn 和 rnn视觉对比</h2><p>有两个图还蛮有意思的，</p><figure><img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" alt="cnn" /><figcaption aria-hidden="true">cnn</figcaption></figure><figure><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FoIsH5iVKwV.png?alt=media&amp;token=05e8189e-dd5f-4781-910c-a46bb9fa4eaf" alt="rnn" /><figcaption aria-hidden="true">rnn</figcaption></figure><h2 id="cnn-vs-rnn-vs-attention">cnn vs rnn vs attention</h2><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_n2z_XQqI2.png?alt=media&amp;token=facfccac-e8ac-4895-a84c-7add43cd165a" /></p><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://towardsdatascience.com/a-comparison-of-dnn-cnn-and-lstm-using-tf-keras-2191f8c77bbe">a-comparison-of-dnn-cnn-and-lstm-using-tf-keras</a></li><li><a href="https://zh.d2l.ai/chapter_recurrent-neural-networks/lstm.html">dive into deep learning-lstm</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;都忘了&lt;/p&gt;
-&lt;p&gt;最近要面试，遂把这些破玩意儿拿来复习下&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;high-level的理解&quot;&gt;high-level的理解&lt;/h1&gt;
-&lt;h2 id=&quot;rnn&quot;&gt;RNN&lt;/h2&gt;
-&lt;p&gt;RNN可以看成一</summary>
-      
-    
-    
-    
-    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
-    
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="神经网络" scheme="https://chiechie.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
-    
-    <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
     
   </entry>
   
@@ -316,13 +353,13 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="宏观经济学" scheme="https://chiechie.github.io/tags/%E5%AE%8F%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
-    
-    <category term="经济学" scheme="https://chiechie.github.io/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
-    
     <category term="区块链" scheme="https://chiechie.github.io/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
     <category term="市场经济" scheme="https://chiechie.github.io/tags/%E5%B8%82%E5%9C%BA%E7%BB%8F%E6%B5%8E/"/>
+    
+    <category term="经济学" scheme="https://chiechie.github.io/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
+    
+    <category term="宏观经济学" scheme="https://chiechie.github.io/tags/%E5%AE%8F%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
     
     <category term="哈耶克" scheme="https://chiechie.github.io/tags/%E5%93%88%E8%80%B6%E5%85%8B/"/>
     
@@ -448,23 +485,23 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
+    
     <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
     <category term="信念" scheme="https://chiechie.github.io/tags/%E4%BF%A1%E5%BF%B5/"/>
     
+    <category term="计算机视觉" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
+    
     <category term="认知科学" scheme="https://chiechie.github.io/tags/%E8%AE%A4%E7%9F%A5%E7%A7%91%E5%AD%A6/"/>
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
     <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
-    
-    <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
     
     <category term="机器学习" scheme="https://chiechie.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="计算机视觉" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
     
     <category term="进化论" scheme="https://chiechie.github.io/tags/%E8%BF%9B%E5%8C%96%E8%AE%BA/"/>
     
@@ -626,39 +663,6 @@
     <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
     
     <category term="行业分析" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E5%88%86%E6%9E%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>谈一谈概率哲学的贝叶斯模型</title>
-    <link href="https://chiechie.github.io/2021/04/24/reading_notes/bayes_zhexue/"/>
-    <id>https://chiechie.github.io/2021/04/24/reading_notes/bayes_zhexue/</id>
-    <published>2021-04-24T01:03:28.000Z</published>
-    <updated>2021-05-17T00:42:41.621Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>自然法则（a law of nature）：根据简单性（simplicity）和信息量（informativeness）的平衡，我们从众多不同的科学理论的系统中选出最好的一套系统；如果一个自然规律（regularity）是这套系统内的定律，那么这个规律就是自然法则。 有些自然法则是确定性的（deterministic）--比如说牛顿定律，而有些则是概率的（probabilistic）--比如说量子力学中的玻恩定理（Born Rule）。</p></blockquote><h2 id="两种概率学派">两种概率学派</h2><ol type="1"><li>概率有两种：主观概率和客观概率。主观概率的代表是贝叶斯学派，客观概率的代表有：原始派（Primitivism），频率派（Frequentism）。</li><li>主观概率派认为，概率不是关于物理系统的，而是关于物理系统和我们之间的关系。他们并且用信念的强度（degrees of partial belief）来定义概率。</li><li>客观概率派认为，概率是关于客观世界的，关于物理系统的，独立于人们对世界的信念。客观概率的代表有：原始派（Primitivism），频率派（Frequentism）。</li><li>原始派认为：概率是单个物体或者系统的原始的属性，既可能是确定的，也可能是随机的，但是不管如何，都是由事物本身决定的。天体运动规律非常确定，符合牛顿定律，微观粒子做布朗运动。</li><li>频率派：频率派直接将概率和频率化作等号。频率派下最被看好的一个分支：系统派（The Best-System View）/休谟式解释（the Humean Account）。</li><li>系统派将概率和自然法则联系起来。对系统派来说，概率性的系统和确定性的系统没有区别，没有更深层次的属性可以来解释（原始派认为有，就是事物本身的属性）。系统派认为，概率法则和确定性法则，只不过是我们描述，归纳的不同方式罢了，本质都是在寻求简洁性和信息量的trade-off.</li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/26895086/answer/175050065">概率（Probability）的本质是什么？-知乎</a></li><li><a href="https://www.zhihu.com/question/20318246/answer/22309277">因果关系是否存在？</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;自然法则（a law of nature）：根据简单性（simplicity）和信息量（informativeness）的平衡，我们从众多不同的科学理论的系统中选出最好的一套系统；如果一个自然规律（regularity）是这套系统内的定律，那么这个</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
-    
-    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
-    
-    <category term="统计学" scheme="https://chiechie.github.io/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
-    
-    <category term="概率" scheme="https://chiechie.github.io/tags/%E6%A6%82%E7%8E%87/"/>
-    
-    <category term="频率派" scheme="https://chiechie.github.io/tags/%E9%A2%91%E7%8E%87%E6%B4%BE/"/>
     
   </entry>
   

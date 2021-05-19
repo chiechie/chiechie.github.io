@@ -28,7 +28,7 @@
 <meta property="og:description" content="NAS是auto-ml的一个子领域，相关的技术有随机搜索，强化学习，基于微分的方法，如DARTS 和 FBNet。 DARTS 和 FBNet是目前做NAS的the state of arts方法 下面简单介绍FBNet的思路  FBNet的基本idea  定义候选block, eg10个 定义神经网络的层数,eg20，神经网络的每一层都是从9个候选block中选一个，搜索空间9^20 构建一个">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-18T00:32:24.000Z">
-<meta property="article:modified_time" content="2021-05-19T02:44:56.395Z">
+<meta property="article:modified_time" content="2021-05-19T02:55:05.706Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="auto ml">
@@ -199,7 +199,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-19 10:44:56" itemprop="dateModified" datetime="2021-05-19T10:44:56+08:00">2021-05-19</time>
+                <time title="修改时间：2021-05-19 10:55:05" itemprop="dateModified" datetime="2021-05-19T10:55:05+08:00">2021-05-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,10 +236,13 @@
 </blockquote>
 <h2 id="fbnet的基本idea">FBNet的基本idea</h2>
 <ol type="1">
-<li>定义候选block, eg10个</li>
-<li>定义神经网络的层数,eg20，神经网络的每一层都是从9个候选block中选一个，搜索空间9^20</li>
-<li>构建一个很大的神经网络--supernet，每一层由9个候选block并联而成。supernet的待估参数包括9个候选block✖️20层，以及长度为9的权重向量✖️20。 &gt; 人工调参，可以看成是，指定supernet中的一条路径，然后灌入数据，来估计路径上20个blcock的参数。使用FBNet就不用人为指定其中某条路径，而是这个大网络supernet从训练数据中，学习出9个block✖️20（层）个参数，以及9✖️20（层）个权重。训练完之后，选择每一层权重最大的block并且连成一条路径，就是机器选定的20层的网络结构。</li>
-<li>模型要落地，还要考虑计算效率。具体的做法，事先算好候选block各自的latency(做一次推断平均耗时多久，block的权重随机给，跑多组数据求平均时延），然后将latency信息加入损失函数中，作为错误率之外的另外的一个惩罚项。</li>
+<li><p>定义候选block, eg10个</p></li>
+<li><p>定义神经网络的层数,eg20，神经网络的每一层都是从9个候选block中选一个，搜索空间9^20</p></li>
+<li><p>构建一个很大的神经网络--supernet，每一层由9个候选block并联而成。supernet的待估参数包括9个候选block✖️20层，以及长度为9的权重向量✖️20。</p>
+<blockquote>
+<p>人工调参，可以看成是，指定supernet中的一条路径，然后灌入数据，来估计路径上20个blcock的参数。使用FBNet就不用人为指定其中某条路径，而是这个大网络supernet从训练数据中，学习出9个block✖️20（层）个参数，以及9✖️20（层）个权重。训练完之后，选择每一层权重最大的block并且连成一条路径，就是机器选定的20层的网络结构。</p>
+</blockquote></li>
+<li><p>模型要落地，还要考虑计算效率。具体的做法，事先算好候选block各自的latency(做一次推断平均耗时多久，block的权重随机给，跑多组数据求平均时延），然后将latency信息加入损失函数中，作为错误率之外的另外的一个惩罚项。</p></li>
 </ol>
 <h2 id="chiechies-reflection">chiechie's reflection</h2>
 <p>联想到之前构建的通用异常检测模型，整体流程大概是这样：定义多个检测器，曲线特征，并用一个随机森林去做集成。希望随机森林可以将不同的曲线路由到适合的检测器上去。</p>
@@ -272,7 +275,10 @@
     <a href="/2021/05/17/reading_notes/how-to-Defi/" rel="prev" title="《how to Defi》读书笔记">
       <i class="fa fa-chevron-left"></i> 《how to Defi》读书笔记
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/19/AI/machine_learning/deeplearning/rnn-0-simpleRNN/" rel="next" title="循环神经网络1-simple RNN">
+      循环神经网络1-simple RNN <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -345,7 +351,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-count">128</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

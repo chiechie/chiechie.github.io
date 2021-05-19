@@ -1,5 +1,5 @@
 ---
-title: 交易的策略
+title: 交易策略
 author: chiechie
 mathjax: true
 date: 2021-04-12 12:00:14
@@ -9,7 +9,6 @@ tags:
 - 技术派的局限
 - 专家模型
 - 投资
-
 categories:
 - 投资
 ---

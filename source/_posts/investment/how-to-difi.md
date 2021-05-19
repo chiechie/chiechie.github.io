@@ -21,7 +21,7 @@ categories:
 
 ## 第4章
 
-![img.png](img.png)
+![img.png](metauniverse/img.png)
 
 ## 第5章 去中心化的稳定币
 

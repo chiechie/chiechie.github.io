@@ -140,7 +140,7 @@ categories:
 
 慧择的流量主要来自外部推广，如一些网红，第三方合作伙伴（深蓝保）
 
-![img.png](img.png)
+![img.png](metauniverse/img.png)
 
 
 ### 风险1-渠道对净利润的影响

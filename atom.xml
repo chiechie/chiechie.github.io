@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-05-20T01:28:06.677Z</updated>
+  <updated>2021-05-20T02:19:40.819Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -17,13 +17,35 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>intro_to_tther</title>
+    <link href="https://chiechie.github.io/2021/05/20/reading_notes/intro-to-ether/"/>
+    <id>https://chiechie.github.io/2021/05/20/reading_notes/intro-to-ether/</id>
+    <published>2021-05-20T02:14:40.000Z</published>
+    <updated>2021-05-20T02:19:40.819Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前面">前面</h2><p>Patrick对Justin的访谈，Justin是以太坊组织的一个研究人员， 访谈内容包括： - 以太坊和比特币的区别 - 以太坊平台孵化的项目数量日益增长 - 共识算法从工作量证明到权益证明的转变，对以太坊的意义</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.joincolossus.com/episodes/14242194/drake-ethereum-into-the-ether?tab=blocks">Justin Drake - Ethereum: Into the Ether</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前面&quot;&gt;前面&lt;/h2&gt;
+&lt;p&gt;Patrick对Justin的访谈，Justin是以太坊组织的一个研究人员， 访谈内容包括： - 以太坊和比特币的区别 - 以太坊平台孵化的项目数量日益增长 - 共识算法从工作量证明到权益证明的转变，对以太坊的意义&lt;/p&gt;
+&lt;h2 i</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>关于未来的一点模糊的认知</title>
     <link href="https://chiechie.github.io/2021/05/20/meditation/about-future/"/>
     <id>https://chiechie.github.io/2021/05/20/meditation/about-future/</id>
     <published>2021-05-19T23:13:07.000Z</published>
-    <updated>2021-05-20T01:28:06.677Z</updated>
+    <updated>2021-05-20T02:10:47.584Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="未来趋势">未来趋势</h2><blockquote><p>大部分是最近接触的一些信息，又比较符合我的直觉。会持续更新</p><p>总结一下就是，从实到虚，以及去中心化</p></blockquote><ol type="1"><li>虚拟世界vs物理世界，前者将吞噬掉人类更多的注意力和时间, 终极形态类似「元世界」。</li><li>强AI技术首先在游戏领域突破，然后拓展到整个虚拟世界。目前最promising的技术方向是强化学习。</li><li>人对精神层次追求的提升，相关产业包括心理咨询，冥想，正念，哲学教育等</li><li>智能合约孵化的应用普及：去中心化金融，NFT。</li><li>医疗健康产业未来10年有很大市场，包括健康饮食，制药，医疗器械。</li><li>理财教育低龄化，终身化。</li><li>老龄化已成为现实</li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="未来趋势">未来趋势</h2><blockquote><p>大部分是最近接触的一些信息，又比较符合我的直觉。会持续更新</p><p>总结一下就是，从实到虚，以及去中心化</p></blockquote><ol type="1"><li>虚拟世界vs物理世界，前者将吞噬掉人类更多的注意力和时间, 终极形态类似「元世界」。</li><li>强AI技术首先在游戏领域突破，然后拓展到整个虚拟世界。目前最promising的技术方向是强化学习。</li><li>人对精神层次追求的提升，相关产业包括心理咨询，冥想，正念，哲学教育等</li><li>智能合约孵化的应用普及：去中心化金融，NFT。</li><li>医疗健康产业未来10年有很大市场，包括健康饮食，制药，医疗器械。</li><li>理财教育低龄化，终身化。</li><li>老龄化已成为现实</li><li>量子计算机是趋势？</li></ol>]]></content>
     
     
       
@@ -99,9 +121,9 @@
     <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
     
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
     <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
@@ -135,9 +157,9 @@
     <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
     
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
     <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
@@ -381,9 +403,9 @@
     <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
     
     
-    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
-    
     <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
+    
+    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
   </entry>
   
@@ -413,13 +435,13 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="宏观经济学" scheme="https://chiechie.github.io/tags/%E5%AE%8F%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
-    
-    <category term="经济学" scheme="https://chiechie.github.io/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
-    
     <category term="区块链" scheme="https://chiechie.github.io/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
     <category term="市场经济" scheme="https://chiechie.github.io/tags/%E5%B8%82%E5%9C%BA%E7%BB%8F%E6%B5%8E/"/>
+    
+    <category term="经济学" scheme="https://chiechie.github.io/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
+    
+    <category term="宏观经济学" scheme="https://chiechie.github.io/tags/%E5%AE%8F%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
     
     <category term="哈耶克" scheme="https://chiechie.github.io/tags/%E5%93%88%E8%80%B6%E5%85%8B/"/>
     
@@ -545,19 +567,19 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
-    
     <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
     <category term="信念" scheme="https://chiechie.github.io/tags/%E4%BF%A1%E5%BF%B5/"/>
     
-    <category term="计算机视觉" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
+    <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="认知科学" scheme="https://chiechie.github.io/tags/%E8%AE%A4%E7%9F%A5%E7%A7%91%E5%AD%A6/"/>
     
-    <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
+    <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
+    
+    <category term="计算机视觉" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
     
     <category term="机器学习" scheme="https://chiechie.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
@@ -624,41 +646,6 @@
     <category term="python" scheme="https://chiechie.github.io/tags/python/"/>
     
     <category term="数据处理" scheme="https://chiechie.github.io/tags/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于区块链和数字货币的看法</title>
-    <link href="https://chiechie.github.io/2021/04/27/investment/about-cryptocurrency/"/>
-    <id>https://chiechie.github.io/2021/04/27/investment/about-cryptocurrency/</id>
-    <published>2021-04-27T00:47:47.000Z</published>
-    <updated>2021-05-18T01:40:14.339Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>chiechie的粗浅见解先抛出来，过一段时间再来验一验</p></blockquote><h2 id="区块链">区块链</h2><ol type="1"><li>区块链的本质是一个分布式账本，这个账本是去中心化的。基于这个基础设施可以孵化很多应用</li><li>第一代区块链应用是加密货币，代表是比特币，想变成国际支付货币。</li><li>第二代区块链应用是智能合约，代表是以太坊。</li><li>第三代区块链应用是去中心化金融，代表是DeFI和NFT，可能重塑金融行业。</li></ol><h2 id="第一代应用-去中心化数字货币">第一代应用-去中心化数字货币</h2><h2 id="黄金相对于货币的优势">黄金相对于货币的优势？</h2><p>黄金作为价值载体的价格，主要靠自由市场来决定，政府不能凭空创造黄金。</p><blockquote><p>全世界当前黄金还有20%没有被开采，政府们纷纷放弃金本位，不是因为担心黄金不够造成的通货紧缩（早得很），是迫不及待想扩大手中的权利。</p><p>比如发债券，可以像庞氏骗局一样，到期了就续期。</p></blockquote><p>但是政府可以凭空创造货币，比如发国债，让下一任的政府来还，本质来说，就是在发行货币（央行和财政部唱双簧，央行用发的货币来购买了财政部发的国债）</p><h2 id="区块链相对于黄金的优势">区块链相对于黄金的优势？</h2><p>政府可以控制黄金在市场上流通，因为黄金太个头太大了，很容易被监控到。</p><p>政府没法控制区块链，首先，区块链是虚拟资产，第二，公共账本被全世界的节点在维护着 第三，资产的匿名性，公共账本虽然会记录交易双方比特币账户的地址，但是账户在真实世界的身份是不得而知的。这三点都会导致政府的监管成本极高。</p><h3 id="数字货币">数字货币</h3><ol type="1"><li>比特币是价值存储的载体之一。 价值就是财富，类似数据，水，食物等其他资源，暂时用不完，希望存起来，后面有需要的时候再用，但是存储财富的载体，经常会被政府操纵，比如人们把财富藏于房产中，股票中，货币中，政府可以操控房子的价格，股票的价格，货币的数量。有点像，政府可以不费吹灰之力，凭空创造财富，财富==钞票；打工人可以增加财富的绝对数字，但it is in vain，政府下一步就可以控制财富分配的比例。</li><li>什么时候比特币的价格能不受网红影响而大幅度波动，才算是稳定的把</li><li>去中心化数字货币跟央行发行的中心化货币的本质差异是，前者限制了政府权利。</li><li>区块链是理想主义geek对抗现实世界不公正的产物。（然而，理想丰满，现实还是困难重重的）</li><li>区块链跟政府权利存在竞争关系，政府不乐意将印钱权利拱手送人。但是如果要制衡美元，世界上其他国家还是🈶️可能联合起来借助区块链的力量。但是之后呢？竞争仍然存在.</li><li>以比特币代表的加密货币太不牢靠了，机构做空，政府监管，都会导致币存储的财富缩水。</li><li>政府监管比特币的手段？粗略想到了，制定法律吓退交易者（流动性消失，成为currency无望），制裁交易所，大资金买断或者做空比特币（毕竟市值很小）。</li><li>现实世界的资产大概有几类：<ul><li>有抵押或者信用担保的债务，如国债（政府背书），公司债券（企业自己背书），股票</li><li>有使用价值的资产：住房</li><li>收藏品类的资产：茅台，钻石，泡沫时期的荷兰郁金香，重点是稀缺性</li></ul>比特币短期和长期都具备收藏品的属性。</li><li>成为currency的前提是，大家达成共识，都认为这个currency代表的财富不会缩水。迄今为止，只有黄金和美元能保持这种地位。美元是基于美国的政治经济军事各方面实力。比特币代表的加密货币除了信徒们的情怀，还有什么能支持长期的市值？</li><li>收藏品是一个小圈子的共识和信仰，比特币完美符合。</li><li>小圈子内的currency：这个有可能，类似QQ币。</li></ol><h2 id="第二代应用-智能合约">第二代应用-智能合约</h2><h2 id="第三代应用-defi和nft">第三代应用-DeFi和NFT</h2><h2 id="chiechie的猜测">chiechie的猜测</h2><ol type="1"><li>全世界范围内，政府（除美国）短期不会打压数字货币，甚至还会推动数字货币的发展，直到世界格局改变。</li><li>各种去中心化数字货币成为国际流通货币的可能性很小，但是，不要失望，有较大可能演变成一个收藏品，比特币会成为其中的顶级收藏品。</li></ol><p>先就这些吧，想到再补</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.chainnews.com/articles/503060403039.htm">对话 DODO 雷达熊：DeFi 有太多反逻辑，应创造无需许可的产品并发挥价值</a></li><li><a href="https://assets.coingecko.com/books/how-to-defi/How_to_DeFi_Chinese.pdf">How_to_DeFi-中文</a></li><li><a href="https://mp.weixin.qq.com/s/hGh0cwRR8DkuWe2NpKkH6A">王川: 入门以太坊</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672247422&amp;idx=1&amp;sn=28ac3ca342cc6e0454a710b6c32d28b4&amp;chksm=85a124bab2d6adac3fee8c3569b91485c5e796dbea4cf35b9443a7fbcf911e7621dc25e4bf3d&amp;scene=21#wechat_redirect">王川：以太坊的费用，为什么这么高</a></li><li><a href="https://mp.weixin.qq.com/s/JTwjtUM1qaoifqJlHNxCtw">王川: 公众号-历史文章</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672247421&amp;idx=1&amp;sn=d817389613f098feca94bd93b869f081&amp;chksm=85a124b9b2d6adaf64132760465d7d9a4976a3c0ede83dbc3a65c8af0f560bc13f05cfe2f9fb&amp;scene=21#wechat_redirect">王川: 关于比特币的rtfm</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246704&amp;idx=1&amp;sn=c38edcdc74282d13771f78b047cd802e&amp;chksm=85a15974b2d6d0620230b7a5145a8dfc33e8419e3a3a3111469adf21ba568dea94cfd505b2ad&amp;scene=21#wechat_redirect">王川: naval的区块链断言</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246708&amp;idx=1&amp;sn=7558d34e23d5713cf59f069698a8f7d6&amp;chksm=85a15970b2d6d066c7c654017b697566ef0ed23a3308728e79b6b019b66738638ad3f297347c&amp;scene=21#wechat_redirect">王川: 关于区块链随想</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246779&amp;idx=1&amp;sn=3eb31aba31da622e598063f84ed28c3d&amp;chksm=85a1593fb2d6d0298ec62e1f733997970030001fea90e0ff22a271b4970dda0033f7e3e41a35&amp;scene=21#wechat_redirect">王川: 区块链技术的终局是什么</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246948&amp;idx=1&amp;sn=6c7b36184fabeabd095bd649342f0598&amp;chksm=85a12660b2d6af76fe53bcc7feb656550858be7b99ce9094a67d65db8a27f454dc50cb04328b&amp;scene=21#wechat_redirect">王川：关于区块链投资的七个猜测</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672247406&amp;idx=1&amp;sn=55316a2d422c033ca214ad843fd25a02&amp;chksm=85a124aab2d6adbc02041db1ba3d0e8b4e1b813578035dbeecb48fb1b3021c74dacfb752692c&amp;scene=21#wechat_redirect">王川：去中心化的流动性黑洞, 和区块链第一法则</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246775&amp;idx=1&amp;sn=206bf28f6091d4e2c06a0b2a5c3eb1b7&amp;chksm=85a15933b2d6d025d33e12e76fb12c8f6c563e0f1f3ffaf477335e8dec1c60eb65de8fdde0a9&amp;scene=21#wechat_redirect">王川: 比特币的支付费用为什么这么高</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;chiechie的粗浅见解先抛出来，过一段时间再来验一验&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;区块链&quot;&gt;区块链&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;区块链的本质是一个分布式账本，这个账本是去中心化的。基于这个基础设施可以孵</summary>
-      
-    
-    
-    
-    <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
-    
-    
-    <category term="加密货币" scheme="https://chiechie.github.io/tags/%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/"/>
-    
-    <category term="未来趋势" scheme="https://chiechie.github.io/tags/%E6%9C%AA%E6%9D%A5%E8%B6%8B%E5%8A%BF/"/>
-    
-    <category term="区块链" scheme="https://chiechie.github.io/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
     
   </entry>
   

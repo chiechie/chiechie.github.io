@@ -43,20 +43,20 @@
     <link href="https://chiechie.github.io/2021/05/20/meditation/about-future/"/>
     <id>https://chiechie.github.io/2021/05/20/meditation/about-future/</id>
     <published>2021-05-19T23:13:07.000Z</published>
-    <updated>2021-05-20T02:40:44.442Z</updated>
+    <updated>2021-05-20T03:01:32.226Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="未来趋势">未来趋势</h2><blockquote><p>大部分是最近接触的一些信息，又比较符合我的直觉。会持续更新</p><p>总结一下就是，从实到虚，以及去中心化</p></blockquote><ol type="1"><li>虚拟世界vs物理世界，前者将吞噬掉人类更多的注意力和时间, 终极形态类似「元宇宙」。</li><li>强AI技术首先在游戏领域突破，然后拓展到整个虚拟世界。目前最promising的技术方向是强化学习。</li><li>人对精神层次追求的提升，相关产业包括心理咨询，冥想，正念，哲学教育等</li><li>智能合约孵化的应用普及：去中心化金融，NFT。</li><li>医疗健康产业未来10年有很大市场，包括健康饮食，制药，医疗器械。</li><li>理财教育低龄化，终身化。</li><li>老龄化已成为现实</li><li>量子计算机是趋势？</li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="未来趋势">未来趋势</h2><blockquote><p>大部分是别人说的，只是比较接近我的认知，有待观察验证。后面会持续更新</p><p>总结一下就是，从实到虚，以及去中心化</p></blockquote><ol type="1"><li>虚拟世界vs物理世界，前者将吞噬掉人类更多的注意力和时间, 终极形态类似「元宇宙」。</li><li>强AI技术首先在游戏领域突破，然后拓展到整个虚拟世界。目前最promising的技术方向是强化学习。</li><li>人对精神层次追求的提升，相关产业包括心理咨询，冥想，正念，哲学教育等</li><li>智能合约孵化的应用普及：去中心化金融，NFT。</li><li>医疗健康产业未来10年有很大市场，包括健康饮食，制药，医疗器械。</li><li>理财教育低龄化，终身化。</li><li>老龄化已成为现实</li><li>量子计算机是趋势？</li></ol>]]></content>
     
     
       
       
     <summary type="html">&lt;h2 id=&quot;未来趋势&quot;&gt;未来趋势&lt;/h2&gt;
 &lt;blockquote&gt;
-&lt;p&gt;大部分是最近接触的一些信息，又比较符合我的直觉。会持续更新&lt;/p&gt;
+&lt;p&gt;大部分是别人说的，只是比较接近我的认知，有待观察验证。后面会持续更新&lt;/p&gt;
 &lt;p&gt;总结一下就是，从实到虚，以及去中心化&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;虚拟世界vs物理</summary>
+&lt;li&gt;虚拟世</summary>
       
     
     
@@ -129,11 +129,11 @@
     
     <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
     
-    <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
     <category term="神经网络" scheme="https://chiechie.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     
     <category term="RNN" scheme="https://chiechie.github.io/tags/RNN/"/>
+    
+    <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
@@ -165,11 +165,11 @@
     
     <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
     
-    <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
     <category term="神经网络" scheme="https://chiechie.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     
     <category term="RNN" scheme="https://chiechie.github.io/tags/RNN/"/>
+    
+    <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
@@ -297,33 +297,6 @@
   </entry>
   
   <entry>
-    <title>树模型1_常用树模型介绍</title>
-    <link href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/"/>
-    <id>https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/</id>
-    <published>2021-05-15T06:59:29.000Z</published>
-    <updated>2021-05-18T00:24:23.624Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="树模型">树模型</h2><p>最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</p><p>回一下机器学习的三个要素： 1. 假设函数的空间： 2. 学习策略or目标函数 3. 优化算法</p><p>bootstrap是统计学中一种抽样的方法，为了获得样本方差或者均值，采取多次有放回的抽样，获得统计量。 针对单个决策树方差过大的问题。 bagging trees 利用bootstrap的思想，提取B份独立的样本集，分别估计出预测值<span class="math inline">\(\hat{f}^{1}(x), \hat{f}^{2}(x), \ldots, \hat{f}^{B}(x)\)</span> ，然后将结果取平均，就可以得到一个方差更小的预测模型，通过多次实验获得多个regression tree或者classification tree，对每一个input，会产生多个输出，regression tree的输出是K个树的输出取average。classification tree是采用投票的方法，大多数相同的那一类就是输出的那一类 。 bagging involves creating multiple copies of the original training data set using the bootstrap, fitting a separate decision tree to each copy, and then combining all of the trees in order to create a single predictive model.</p><p>random forest是bagging tree的加强版本，因为他考虑到了tree之间的de correlates，使得组合后结果的variance更小。构造树过程如下：consider 每一个split的时候，会从p个predictors中<strong>随机</strong>的挑<span class="math inline">\(m = \sqrt p\)</span>）个作为split candidate，</p><p>boosting是另外一种提升决策树效果的方法，Boosting works in a similar way,也是杨原始样本复制n份，然后构建n个模型，跟bagging tree不一样的地方在于，trees are grown sequentially: each tree is grown using information from previously grown trees. Boosting does not involve bootstrap sampling; instead each tree is fit on a modified version of the original data set.</p><p><img src="trees_1/img.png" alt="img.png" /> xgboost是一种boosting tree的一种，其他的还是有gbdt，catboost</p><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li><li><a href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;树模型&quot;&gt;树模型&lt;/h2&gt;
-&lt;p&gt;最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</summary>
-      
-    
-    
-    
-    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
-    
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="树模型" scheme="https://chiechie.github.io/tags/%E6%A0%91%E6%A8%A1%E5%9E%8B/"/>
-    
-  </entry>
-  
-  <entry>
     <title>树模型4_xgboost介绍</title>
     <link href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_4/"/>
     <id>https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_4/</id>
@@ -339,6 +312,33 @@
 &lt;p&gt;boosting tree的另外一个代表是xgboost,下面重点介绍一下xgboost&lt;/p&gt;
 &lt;h3 id=&quot;损失函数定义&quot;&gt;损失函数定义&lt;/h3&gt;
 &lt;p&gt;先看看，xgboost怎么定义ensemble tre</summary>
+      
+    
+    
+    
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="树模型" scheme="https://chiechie.github.io/tags/%E6%A0%91%E6%A8%A1%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树模型1_常用树模型介绍</title>
+    <link href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/"/>
+    <id>https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/</id>
+    <published>2021-05-15T06:59:29.000Z</published>
+    <updated>2021-05-18T00:24:23.624Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="树模型">树模型</h2><p>最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</p><p>回一下机器学习的三个要素： 1. 假设函数的空间： 2. 学习策略or目标函数 3. 优化算法</p><p>bootstrap是统计学中一种抽样的方法，为了获得样本方差或者均值，采取多次有放回的抽样，获得统计量。 针对单个决策树方差过大的问题。 bagging trees 利用bootstrap的思想，提取B份独立的样本集，分别估计出预测值<span class="math inline">\(\hat{f}^{1}(x), \hat{f}^{2}(x), \ldots, \hat{f}^{B}(x)\)</span> ，然后将结果取平均，就可以得到一个方差更小的预测模型，通过多次实验获得多个regression tree或者classification tree，对每一个input，会产生多个输出，regression tree的输出是K个树的输出取average。classification tree是采用投票的方法，大多数相同的那一类就是输出的那一类 。 bagging involves creating multiple copies of the original training data set using the bootstrap, fitting a separate decision tree to each copy, and then combining all of the trees in order to create a single predictive model.</p><p>random forest是bagging tree的加强版本，因为他考虑到了tree之间的de correlates，使得组合后结果的variance更小。构造树过程如下：consider 每一个split的时候，会从p个predictors中<strong>随机</strong>的挑<span class="math inline">\(m = \sqrt p\)</span>）个作为split candidate，</p><p>boosting是另外一种提升决策树效果的方法，Boosting works in a similar way,也是杨原始样本复制n份，然后构建n个模型，跟bagging tree不一样的地方在于，trees are grown sequentially: each tree is grown using information from previously grown trees. Boosting does not involve bootstrap sampling; instead each tree is fit on a modified version of the original data set.</p><p><img src="trees_1/img.png" alt="img.png" /> xgboost是一种boosting tree的一种，其他的还是有gbdt，catboost</p><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li><li><a href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;树模型&quot;&gt;树模型&lt;/h2&gt;
+&lt;p&gt;最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</summary>
       
     
     
@@ -378,9 +378,9 @@
     
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
-    <category term="机器学习" scheme="https://chiechie.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
     <category term="树模型" scheme="https://chiechie.github.io/tags/%E6%A0%91%E6%A8%A1%E5%9E%8B/"/>
+    
+    <category term="机器学习" scheme="https://chiechie.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
@@ -407,9 +407,9 @@
     <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
     
     
-    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
-    
     <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
+    
+    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
   </entry>
   
@@ -571,23 +571,23 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
-    
     <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
     <category term="信念" scheme="https://chiechie.github.io/tags/%E4%BF%A1%E5%BF%B5/"/>
     
-    <category term="计算机视觉" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
-    
     <category term="认知科学" scheme="https://chiechie.github.io/tags/%E8%AE%A4%E7%9F%A5%E7%A7%91%E5%AD%A6/"/>
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
     
-    <category term="机器学习" scheme="https://chiechie.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
     
     <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="机器学习" scheme="https://chiechie.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="计算机视觉" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"/>
     
     <category term="进化论" scheme="https://chiechie.github.io/tags/%E8%BF%9B%E5%8C%96%E8%AE%BA/"/>
     

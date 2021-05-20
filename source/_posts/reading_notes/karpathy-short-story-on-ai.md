@@ -9,6 +9,7 @@ tags:
 - sam altman
 - 人工智能
 - 人工智障
+- GPT-3
 categories: 
 - 阅读
 ---

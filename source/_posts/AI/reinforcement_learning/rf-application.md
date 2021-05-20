@@ -20,7 +20,7 @@ categories:
 4. 神经网络结构搜索(NAS)：
    
     > NAS is closely related to hyperparameter optimization and is a subfield of automated machine learning (AutoML)
-
+5. 游戏：生成NPC
 
 ### 商品推荐
 
@@ -76,7 +76,7 @@ NAS是auto-ml的子领域，为了让机器去设计神经网络。
 
 
 ## 参考
-
+6. [rct的混沌球算法](https://rct.ai/zh-hans/blog/the-key-technology-behind-morpheus-engine)
 1. [DRL-wangshusen中文教材](https://github.com/wangshusen/DRL/tree/master/Notes_CN)
 2. [NAS-介绍](https://lilianweng.github.io/lil-log/2020/08/06/neural-architecture-search.html)
 3. [NAS-wiki](https://en.wikipedia.org/wiki/Neural_architecture_search)

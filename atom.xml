@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-05-20T00:32:22.108Z</updated>
+  <updated>2021-05-20T00:35:54.170Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -21,19 +21,20 @@
     <link href="https://chiechie.github.io/2021/05/20/meditation/about-future/"/>
     <id>https://chiechie.github.io/2021/05/20/meditation/about-future/</id>
     <published>2021-05-19T23:13:07.000Z</published>
-    <updated>2021-05-20T00:32:22.108Z</updated>
+    <updated>2021-05-20T00:35:54.170Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>大部分是最近接触的一些信息，又比较符合我的直觉，会持续更新</p></blockquote><ol type="1"><li>强AI技术首先在游戏领域突破，目前看最promising的方向是强化学习。</li><li>老龄化已成为现实</li><li>虚拟世界vs物理世界，前者将吞噬掉人类更多的注意力和时间</li><li>元世界</li><li>人对精神层次追求的提升，相关产业包括心理咨询，冥想，正念，哲学教育等</li><li>智能合约孵化的应用：去中心化金融，NFT。</li><li>医疗健康产业未来10年有很大市场，包括健康饮食，制药，医疗器械。</li><li>理财教育低龄化，终身化。</li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="未来趋势">未来趋势</h2><blockquote><p>大部分是最近接触的一些信息，又比较符合我的直觉，会持续更新</p><p>总结一下就是，从实到虚，以及去中心化</p></blockquote><ol start="3" type="1"><li>虚拟世界vs物理世界，前者将吞噬掉人类更多的注意力和时间</li><li>元世界</li><li>强AI技术首先在游戏领域突破，然后拓展到虚拟世界的其他方向。目前最promising的方向是强化学习。</li><li>人对精神层次追求的提升，相关产业包括心理咨询，冥想，正念，哲学教育等</li><li>智能合约孵化的应用：去中心化金融，NFT。</li><li>医疗健康产业未来10年有很大市场，包括健康饮食，制药，医疗器械。</li><li>理财教育低龄化，终身化。</li><li>老龄化已成为现实</li></ol>]]></content>
     
     
       
       
-    <summary type="html">&lt;blockquote&gt;
+    <summary type="html">&lt;h2 id=&quot;未来趋势&quot;&gt;未来趋势&lt;/h2&gt;
+&lt;blockquote&gt;
 &lt;p&gt;大部分是最近接触的一些信息，又比较符合我的直觉，会持续更新&lt;/p&gt;
+&lt;p&gt;总结一下就是，从实到虚，以及去中心化&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;强AI技术首先在游戏领域突破，目前看最promising的方向是强化学习。&lt;/li&gt;
-&lt;li&gt;老龄化已成为现实&lt;/l</summary>
+&lt;ol start=&quot;3&quot; type=&quot;1&quot;&gt;
+&lt;l</summary>
       
     
     
@@ -414,9 +415,9 @@
     
     <category term="宏观经济学" scheme="https://chiechie.github.io/tags/%E5%AE%8F%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
     
-    <category term="经济学" scheme="https://chiechie.github.io/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
-    
     <category term="区块链" scheme="https://chiechie.github.io/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    <category term="经济学" scheme="https://chiechie.github.io/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
     
     <category term="市场经济" scheme="https://chiechie.github.io/tags/%E5%B8%82%E5%9C%BA%E7%BB%8F%E6%B5%8E/"/>
     

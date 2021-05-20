@@ -165,6 +165,110 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/19/AI/machine_learning/deeplearning/rnn-0-simpleRNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/19/AI/machine_learning/deeplearning/rnn-0-simpleRNN/" class="post-title-link" itemprop="url">循环神经网络1-simple RNN</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-19 10:47:27 / 修改时间：17:28:53" itemprop="dateCreated datePublished" datetime="2021-05-19T10:47:27+08:00">2021-05-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="总结">总结</h2>
+<ul>
+<li>在自然语言处理的问题中，数据量足够的情况下，更常用transformer。但是在小数据量上，RNN还是很有效的。</li>
+<li>序列数据（sequential data）包括文本，语音，时时间序列等。</li>
+<li>全连接神经网络（FC Nets）和卷积神经网络（Conv Nets）处理样本的方式是one to one，即输入一张图片，输出该图片的类别。同时输入样本的大小和输出的大小是固定的。</li>
+<li>序列数据面对的问题是，many to one 或者many to many，即输入很长一篇文章，输出该文章所属的类别。同时输入样本的大小不是固定的，一篇文章可长可短，翻译的输出也是可变的。RNN很适合。</li>
+<li>RNN运行原理，类似人脑处理信息的过程：阅读一篇长文章时，是逐句阅读，渐渐积累信息，然后再阅读下一个词。</li>
+<li>RNN接受最新时刻word的embedding向量，通过内部单元权重将embedding向量和上一个时刻的隐藏状态映射为最新的隐藏状态。</li>
+<li>RNN也可以看成一个带状态的函数，输入当前词的embedding向量（维度为m）和上一个时刻的状态向量（h维）输出当前时刻的状态向量（h维）。</li>
+<li>最后一个状态向量<span class="math inline">\(h_t\)</span>，积累整句话的所有信息，所以可以只保留这个state，将更老时刻的state都丢掉。</li>
+<li><span class="math inline">\(h_t\)</span>也可以作为整个序列的特征，提供给下游使用。</li>
+<li>simple rnn有一个Long term dependency problem，即不擅长对长时间建模，因为梯度消失了，最老的state的梯度要么爆炸要么消失，而梯度是调整权重的指路灯，灯坏了，权重就不知道该怎么调了。</li>
+<li>simple rnn很擅长对短间隔依赖关系建模，离输出层最近的梯度还是没毛病的</li>
+<li>怎么解决Long term dependency problem？主要通过引入门控来达到这个目的，这一类网络也叫基于门控的循环神经网络（Gated RNN）,主要是LSTM和GRU。</li>
+</ul>
+<h2 id="simeple-rnn">simeple RNN</h2>
+<ul>
+<li><p>待估参数：权重矩阵A，行数为：dim(h)，列数为：dim(h) + dimm(x) <img src="img.png" alt="img.png" /></p></li>
+<li><p>激活函数：双曲正切函数</p>
+<p>为什么要使用双曲正切作为激活函数？使用别的方法（比如relu），隐藏状态的值传着传着就爆炸了或者没了。， 如果A的特征根大于1，向前传播时，状态值呈指数增长，时间足够长，状态向量取值会爆炸 如果A的特征根小于1，向前传播时，状态值呈0指数衰减，时间足够长，状态向量取值会接近0</p>
+<p>双曲正切作为激活函数的好处是，将每个rnn内部线性映射之后的结果scale到-1到1之间。所以向前传播时，不会出现指数爆炸或者衰减。</p></li>
+<li><p>simple RNN的参数个数：即矩阵A的大小 + intercept, dim(h) ✖ [dim(h) + dimm(x)] + dim(h)</p>
+<blockquote>
+<p>keras在实现RNN默认使用intercept，所以还有一个intercept参数，大小是dim(h)</p>
+</blockquote></li>
+</ul>
+<h2 id="simple-rnn应用-情感判断">simple-RNN应用-情感判断</h2>
+<p>判断电影评价是正面还是负面,</p>
+<figure>
+<img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Cc4ENs6BHQw&amp;list=PLvOO0btloRnuTUGN4XqO85eKPeFSZsEqK&amp;index=3">wangshusen-RNN-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://nndl.github.io/nndl-book.pdf">神经网络与深度学习</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/18/AI/machine_learning/automl/NAS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -258,104 +362,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/17/reading_notes/how-to-Defi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/17/reading_notes/how-to-Defi/" class="post-title-link" itemprop="url">《how to Defi》读书笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-05-17 09:20:02 / 修改时间：15:18:44" itemprop="dateCreated datePublished" datetime="2021-05-17T09:20:02+08:00">2021-05-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>区块链技术的第一代应用是以比特币为全球支付货币，第二代应用是以太坊完成智能合约，第三代应用是defi和nft完成金融体系重构</p>
-<p>how to defi 讲的就是区块链技术的第三代应用之一--去中心化金融(DeFI)</p>
-</blockquote>
-<h2 id="why-defi">why defi</h2>
-<ol type="1">
-<li>传统金融体系容易遭受与人相关的风险，比如腐败。defi试图通过创建一个更好的金融环境，来弥补现有金融系统的漏洞，主要对银行系统的三个关键部分进行了优化：支付&amp;清算系统；可获取性；中心化&amp;透明度。</li>
-<li>DeFi的最大优势在于能够消除中 介机构并在零审查的环境下运行。</li>
-</ol>
-<h2 id="what">what</h2>
-<ol type="1">
-<li><p>DeFi生态中有哪些应用？</p>
-<ul>
-<li>稳定币：比如泰达币（Tether，USDT) ，稳定币作为稳定的价值存储手段使得DeFi应用对大众来说更加可用。</li>
-<li>借贷服务：传统金融体系要求用户有银行账户，良好的信用评分，以及足够的抵押品；去中心化借贷允许任何人抵押其数字资产，然后利用抵押资产获得贷款。</li>
-<li>交易所：中心化交易所egconbase，huobi，binance，存在被黑客攻击的危险；去中心化交易所更安全，不依赖交易所的偿付能力。</li>
-<li>衍生品：衍生品合约主要在中心化平台上进行交易。目前，许多DeFi平 台正开始构建去中心化衍生品市场。</li>
-<li>基金管理：基金管理主要有主动型和被动型两种，主动型基金管理会有一个管理团队负责投资 决策。被动型基金管理没有管理团队，而被设计为尽可能接近 某一特定基准的表现。</li>
-<li>彩票：结合DeFi的彩票可将资金池的托管转移到以太坊智能合约上。</li>
-<li>支付：通过将支付重置为流模式而非我们熟悉的交易来改变我们处理支付的方式。（比如云服务商，按照使用的流量收费）</li>
-<li>保险：智能合约的漏洞容易被黑客攻击，从而影响智能合约中锁定的代币。当用户在Defi上处理大量资金的时候，购买保险是必要的。</li>
-</ul></li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://news.huoxing24.com/20200817195548945458.html">how to difi中文版</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/65/">65</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -421,7 +431,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">129</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

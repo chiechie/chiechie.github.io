@@ -165,6 +165,205 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/02/AI/AIOps/causeinfer-notes1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/02/AI/AIOps/causeinfer-notes1/" class="post-title-link" itemprop="url">CauseInfer论文笔记1-白话版</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-02 14:41:39" itemprop="dateCreated datePublished" datetime="2021-03-02T14:41:39+08:00">2021-03-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>CauseInfer是一个解决故障定位的通用方案，原理是通过在历史数据中学习因果图，进而在发生故障时，推断出故障根因。</p>
+<p>这篇文章对我说太难啃了，主要是因为涉及大量专业领域知识，比如计算机网络，微服务架构等，对这块不熟悉，需要补很多功课。</p>
+<p>输出的文章分成两篇: CauseInfer论文笔记1，即本文，讲背景知识和概要设计，以及直觉型的描述问题和解题思路，都是粗粒度的；<a href="https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/">CauseInfer论文笔记2</a>，讲核心技术点，方案的实现逻辑，涉及到数学公式。</p>
+<p>原则上，第一篇不用技术背景也能看明白，问题是啥，解题思路是啥。第二篇就是给算法人员看的，要出方案了，所以要越详细越好。</p>
+</blockquote>
+<h1 id="名词解释">名词解释</h1>
+<p>来，补充业务知识</p>
+<ul>
+<li>QPS：Queries Per Second，每秒查询次数</li>
+<li>SLA （service level agreement）:服务等级协议。指的是整个协议，协议的内容包含了SLI，SLO以及恢复的方式和时间等等一系列所构成的协议。</li>
+<li>SLI（service level indicator）:服务等级对象。指的是对象，例如：qps，响应时间，准确性等</li>
+<li>SLO（service level objective）:服务等级目标。指的是目标，例如：qps 99.99% ，响应时间10ms等。</li>
+</ul>
+<h1 id="几个问题">几个问题</h1>
+<p>看完第一遍之后，还有几个问题</p>
+<ul>
+<li><p>因果图是什么？</p>
+<p>因果图是一个两层分层的图。（two layered hierarchical causality graph） 较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph）。 较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph）</p></li>
+<li><p>指标因果图和服务依赖图是什么关系？</p>
+<p>指标因果图 和 服务依赖图可以看成是因果图的两个视图。</p>
+<p>因果图 = 指标因果图（刻画局部的依赖关系） + 服务依赖图（刻画整个信息设备的依赖关系）。</p>
+<p>指标因果图是细粒度的视图，表达的是一台机器上，一个服务的指标和多个机器之间的故障传播关系。</p>
+<p>服务依赖图是粗粒度的视图，表达的是不同机器的不同服务之间的故障传播关系。</p></li>
+<li><p>因果图是怎么构建？</p>
+<p>两种方式结合：采集调用链构建拓扑 + 数据分析得到因果关系</p></li>
+<li><p>因果图构建好了，如果做因果推断？</p>
+<p>深度优先遍历，找有故障的父母亲，直到找到根结点，或者正常的上游。</p></li>
+<li><p>一个主机上的服务，构建一个因果图？</p>
+<p>对的，每个主机上的每个服务都有一个自己的指标因果图。 然后跨主机的服务调用，就靠服务依赖图表示。</p></li>
+<li><p>因果图中不同的机器IP是否是不同的节点？ 是的，服务依赖图的粒度更细，是一个机器上的一个服务是一个节点。</p></li>
+<li><p>一个服务的SLO指标是怎么定义的？有什么规则？其他指标是怎么选取的？ 一般来说是需要对每一个应用去定制化定义的，但是这里可以用一个统一的指标，即服务相应时长。</p></li>
+<li><p>根因推断的时候，多个因导致的结果怎么推断出来？ 这种复杂的问题解决不了.</p></li>
+<li><p>根因推断的时候，多个根因怎么打分？ 找最异常的那个指标。</p></li>
+</ul>
+<h1 id="paper">paper</h1>
+<h2 id="摘要">摘要</h2>
+<p>关于性能诊断领域，之前大部分工作都很粗糙，只涉及定位异常，但是我们觉得还应该包括根因推断，使得软件维护更高效，并且提供更有用的信息给软件bug。</p>
+<p>解决所有的性能诊断问题，没有银弹（silver bullet）。本文也只是诊断性能问题的一个子集。</p>
+<p>当review完一些开源软件的bugs之后，我们观察到，很多bugs都可能导致性能问题。</p>
+<p>这里，我们仅仅考虑那些造成资源异常的bugs，例如 物理资源消耗异常（eg CPU） 或者 逻辑资源异常（eg 锁）。</p>
+<p>为什么要选择这些bugs？ 不需要关注源代码，就可以搜集资源消耗指标；软件中存在太多这种bugs了。 我们的目的是，找到导致这些指标异常（cpu消耗过多，db被锁）的原因，我们不直接识别软件bug，我们提供一些提示。 举个例子，如果我们定位到根因是，锁的个数异常，则可能是系统中有一个并发bug。</p>
+<h2 id="引言">引言</h2>
+<p>CauseInfer的思路是这样的，构建一个因果图，来捕捉因果（cause-effect ）关系，然后沿着因果路径推断出根因（root cause）。 为了完成这个任务，CauseInfer自动化地构建了额一个两层的分层的因果图。</p>
+<p>一旦服务级别目标（SLO）异常了，就触发因果推断。 首先将性能异常定位到某个服务（eg，tomcat），通过检测该SLO指标是否异常。 然后通过检测同一台机器上的其他性能指标是否异常，找到根因， 更进一步为了保证效果的稳定，提出了突变点检测方法，基于贝叶斯理论--这个方法比传统的检测方法如cusum要好。 通过在两组benchmark（Olio 和 TPC-W,）做实验评估，发现本方法可以定位出根因，准召分别是80%和85%。 本文的贡献</p>
+<ul>
+<li>提出了一个新的BCP突变点检测方法，比cusum更稳定，在长期的数据序列上</li>
+<li>提出了一个轻量的服务依赖方式的 发现方法，通过分析两个服务的流量延迟，很快定位到服务级别的性能异常，</li>
+<li>提供了一个基于原始PC-算法的因果图构建方法，使用这个因果图，我们肯呢个很准确定位到性能指标级别的性能问题的根因。</li>
+<li>设计和实现了CauseInfer，可以推断性能问题的根因，可以以较小的代价，较高的准确率找到性能问题的真正根因。</li>
+</ul>
+<h2 id="系统概览">系统概览</h2>
+<p>先描述CauseInfer的框架，并且通过一个简单的例子来描述这个系统的工作流</p>
+<h3 id="causeinfer的框架">CauseInfer的框架</h3>
+<p>看图说话--CauseInfer的框架</p>
+<p>对于每个节点-机器，都存在一个本地的因果图， 因果推断的流程 在前端的SLO异常时被触发，然后迭代往复地 沿着服务依赖图的路径，跑到后端服务， 如果在某个服务节点检测到SLO异常，那么就可以进行更精细的推断，--在指标依赖图上。 【图1-根因分析框架】展示了基本结构和workflow，</p>
+<ul>
+<li>底层是一个业务系统的物理拓扑</li>
+<li>顶部是这个业务系统对应的因果图 <img src="causeinfer_framework.jpeg" alt="图1-根因分析框架" /></li>
+<li>大虚线圆圈表示服务</li>
+<li>红色节点表示根本原因，</li>
+<li>黑色节点表示性能指标，</li>
+<li>绿色节点表示 SLO 指标，</li>
+<li>箭头表示方向 故障传播。</li>
+<li>图中的有向边代表的意思是，因果关系</li>
+</ul>
+<h3 id="举个演示工作流">举个🌰演示工作流</h3>
+<p>假设服务II节点中的指标 E 是根因</p>
+<ul>
+<li>当检测到服务 I 的 SLO 异常时，触发原因推断</li>
+<li>对服务 I 节点进行根因分析，定位根因是指标A，A就是服务II的SLO指标</li>
+<li>因此，服务II中的根因分析被触发，在服务II在的机器中，加载出相应的服务指标依赖图，服务I中的指标A异常可能是服务II的SLO异常导致。</li>
+<li>因此会继续在服务II中触发因果推断，这里用到该机器的指标因果图。</li>
+<li>总结：最后我们找到了根因--指标E， 推断路径为：SLO（service II ） → A（service II ） → D（service II） → E（service II） <img src="eample1.png" alt="图2example" /></li>
+</ul>
+<p>另外，需要注意的是，推断结果包含多个根因，因此需要一个排序的步骤选择最可能的根因， 来降低误告。</p>
+<h2 id="系统细节">系统细节</h2>
+<p>CauseInfer包含两个步骤：离线和在线。</p>
+<p>在线阶段包括两个模块，数据收集和因果推断。</p>
+<ul>
+<li>数据收集模块，收集了运行的性能指标--多个数据源。</li>
+<li>因果推断模块，负责因果图遍历和对根因进行排序。</li>
+</ul>
+<p>离线阶段包括两个模块--变点检测和因果图构建</p>
+<ul>
+<li>变点检测：将指标转化为0/1的二值序列，使用的是贝叶斯变点检测。</li>
+<li>因果图构建：使用二值指标来构建一个2层的层次化的因果图。</li>
+</ul>
+<h3 id="a数据收集">A：数据收集</h3>
+<p>数据收集模块，收集高维度运行信息，从多个数据源，横跨多个不同的软件栈，包括应用，进程 和 操作系统。</p>
+<p>在因果图构建阶段，我们需要一个应用的SLO指标。然而，并不是所有的应用都显示地提供SLO指标（例如mysql，hadoop）， 并且，不同应用中SLO对应不同指标。因此我们提出了一个新的统一的SLO指标--tcp请求延迟，简称为TCP LATENCY。 TCP LATENCY 衡量的是某个端口， 最后一个入站包（请求）和第一次出站包（响应）的时间间隔。 大部分应用都是用TCP作为传输协议，例如 Mysql, Httpd等，因此TCP延迟，可以作为大部分应用的SLO指标。</p>
+<h3 id="b-变点检测">B: 变点检测</h3>
+<p>根据Pearl的因果（cause-effect）[7]概念，如果有两个变量有因果关系，一个变量的变化将导致另一个变化。因此，在构建因果图之前，我们首先确定时间序列中的变化。一般采用CUSUM [4]来检测突变点， 但是由于对噪声的高敏感性，CUSUM很难检测出长期的变化，导致离线分析的高误警。因此我们引入了更有效的方法，贝叶斯变点检测（缩写为BCP）[8]</p>
+<p>BCP的基本思想是找到一个underlying 参数序列，将时间序列划分为连续的blocks，每个blocks的参数一样 突变点的位置，就是每个block的边缘。 。给定一个观察序列：X =（x1，x2，···，xn），目的是 找到一个分区：ρ=（P1，P2，P3，···，Pn-1）， 其中Pi = 1 表示在位置i + 1处发生了变化，否则Pi = 0。 关于BCP的详细理论分析参考论文[8]。与CUSUM方法相比，BCP不需要设置突变点个数，以及原始序列中group个数。</p>
+<p>BCP效果更好，更适合分析长序列，但是不适合在线模式， 所以我们仍采用CUSUM作为在线的变点检测方法。</p>
+<h3 id="c-因果图构建">C: 因果图构建</h3>
+<p>在本节中，我们将描述两层的分层因果图（即服务依赖图和 性能指标因果图）构建过程。 在collective变量中，如果Y的所有父母已经固定的，Y的分布将是固定的，并且不受其他变量影响。在这种因果关系中， 不允许两个变量互为因果。所以因果关系可以由DAG进行编码。</p>
+<p>详细的服务依赖图 和 性能依赖图 的构建，参考<a href="https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/">CauseInfer论文笔记2</a></p>
+<h2 id="总结一下离线和在线的流程">总结一下离线和在线的流程</h2>
+<h2 id="离线分析">离线分析</h2>
+<p>在离线阶段，构建因果图（causality graph），这个是本文的核心技术点。</p>
+<ul>
+<li>因果图是一个两层分层的图（two layered hierarchical causality graph）
+<ul>
+<li>较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph），用于定位到服务级别的cause。</li>
+<li>较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph），用于定位到性能异常的真正的元凶。</li>
+</ul></li>
+<li>构造服务依赖图分为两步：第一步通过采集器获取边是否存在；第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。</li>
+<li>服务依赖图中的实体是怎么定义的呢？二元组 (ip, service name)，有的文章用3元组（three-tuple）表示--(ip, port, proto)，proto是传输协议的类型，比如TCP或者UDP，因为考虑到一个服务可能占用多个端口。举一个例子，在一个三层的系统中，一个web server可以通过任意一个端口访问application server的。如果，使用端口作为唯一服务的属性，这个服务依赖图，就会变得非常之大，即使所有请求都是由同一个服务发起的。</li>
+</ul>
+<h2 id="在线推断">在线推断</h2>
+<p>在实时阶段，使用因果图（causality graph）来做根因推断，得到可能的原因列表。</p>
+<figure>
+<img src="anomalies-classification/img.png" alt="图1-根因分析框架" /><figcaption aria-hidden="true">图1-根因分析框架</figcaption>
+</figure>
+<h2 id="评估">评估</h2>
+<p>我们解决的是一个因果推断的问题，因此常用的统计学的设计实验的思路在这里行不通。</p>
+<h1 id="参考文献">参考文献</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf">2014-INFOCOM_CauseInfer</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/">别人对CauseInfer论文的解读</a></li>
+<li><a href="https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/">CauseInfer论文笔记2</a></li>
+<li>J. Pearl, Causality: models, reasoning and inference. Cambridge Univ Press, 2000, vol. 29.</li>
+<li>D. Barry, “A bayesian analysis for change point problems,” Journal of the American Statistical Association, vol. 88, no. 421, pp. 309–319, 1993.</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/01/AI/AIOps/general-rca/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -323,197 +522,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/28/reading_notes/youtube_science-in-buddhism/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/28/reading_notes/youtube_science-in-buddhism/" class="post-title-link" itemprop="url">论佛教的科学性</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-28 22:36:32" itemprop="dateCreated datePublished" datetime="2021-02-28T22:36:32+08:00">2021-02-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-01 21:19:38" itemprop="dateModified" datetime="2021-05-01T21:19:38+08:00">2021-05-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>曹興誠 論佛教的科學性 於靜思書軒心靈講座</p>
-</blockquote>
-<h2 id="二十个字谈佛法">二十个字谈佛法</h2>
-<p>二十字是“闻、思、修；体、相、用；缘起性空、真空妙有；禅修、平等、慈悲”。</p>
-<ol type="1">
-<li>科学和技术怎么看待因果？科学是由果推因，技术是依因求果。 (王德峰说的由实际 得到 真际 就是科学，在真际中推演，就是希腊人的数学，--毕达哥拉斯学派)</li>
-</ol>
-<figure>
-<img src="1yinguo.png" alt="图1-因果" /><figcaption aria-hidden="true">图1-因果</figcaption>
-</figure>
-<ol start="2" type="1">
-<li>空性---缘起性空</li>
-</ol>
-<p>什么是空？就是变，不是没有的意思</p>
-<p>幻是什么？无常 「无执着」是什么？有弹性 「无自性」：不由自主</p>
-<figure>
-<img src="kongqi.png" alt="图2-缘起性空" /><figcaption aria-hidden="true">图2-缘起性空</figcaption>
-</figure>
-<ol start="3" type="1">
-<li>八不中道</li>
-</ol>
-<ul>
-<li>不生不灭：没有东西，能不经缘而生/灭。</li>
-<li>不断不常：不是突变（宇宙大爆炸就是突然的吧），没有恒定不变。</li>
-<li>不一不异</li>
-<li>不来不去</li>
-</ul>
-<figure>
-<img src="qiantan-ai/img_1.png" alt="图3-八不中道" /><figcaption aria-hidden="true">图3-八不中道</figcaption>
-</figure>
-<ol start="4" type="1">
-<li>宇宙只有能量和规律，此外空无一物 所有物质都是靠能量（缘）的聚集。</li>
-</ol>
-<figure>
-<img src="qiantan-ai/img_2.png" alt="图4-能与规律" /><figcaption aria-hidden="true">图4-能与规律</figcaption>
-</figure>
-<ol start="5" type="1">
-<li>人是能量的转换器； 万事万物都在变化；--有为法 只有规律是不变的。--无为法</li>
-</ol>
-<figure>
-<img src="qiantan-ai/img_3.png" alt="图5-有为法和无为法" /><figcaption aria-hidden="true">图5-有为法和无为法</figcaption>
-</figure>
-<ol start="6" type="1">
-<li>金刚经中说圣贤跟一般人的区别，对无为法的认识</li>
-</ol>
-<figure>
-<img src="qiantan-ai/img_4.png" alt="图6-圣贤认识无为法" /><figcaption aria-hidden="true">图6-圣贤认识无为法</figcaption>
-</figure>
-<ol start="7" type="1">
-<li><p>佛教也是一种塑造认知的工具 <img src="qiantan-ai/img_5.png" alt="图7-掌握无为法" /></p></li>
-<li><p>小乘佛教 的离苦得乐的方法： <img src="img_6.png" alt="图8-小乘佛教" /></p></li>
-<li><p>真空妙有 真就是"很"的意思 <img src="img_7.png" alt="img_7" /> <img src="img_8.png" alt="img_8" /> <img src="img_9.png" alt="img_9" /></p></li>
-</ol>
-<p>弹钢琴：遵循一定的乐理规律，音符千变万化</p>
-<ol start="10" type="1">
-<li>大乘佛教是入世的；小乘佛教是避世的</li>
-</ol>
-<p>小乘时代著重空性（变化），觉得追求会落空，不如回去禅修，‘小乘就是让大家从社会撤退，出家才能静下心来，小乘时代是遁世。’</p>
-<p>反之，大乘时代认为‘空’不错，真空则妙有，火是空性的，空性才有用，否则烧起来不熄（不变化），那就糟了，‘会变化才有用，弹性愈大愈有用。大乘认为加善缘以提升，人变成佛，开始强调人人具有佛性、人人可以成佛，用真空妙有积极地入世。’</p>
-<figure>
-<img src="img_10.png" alt="大乘和小乘" /><figcaption aria-hidden="true">大乘和小乘</figcaption>
-</figure>
-<ol start="11" type="1">
-<li>万法唯识论： 改变看事物的角度，你的了解也会变，感觉和心情也会变化。 心 跟 物 是有关联的</li>
-</ol>
-<figure>
-<img src="img_11.png" alt="万法唯识" /><figcaption aria-hidden="true">万法唯识</figcaption>
-</figure>
-<ol start="12" type="1">
-<li><p>霍金：心里面形成很多观念, 也就是内部构建model。（换个角度，构建的模型不一样）</p>
-<p>波尔：物理学不是用来发现这个世界长什么样，物理学家关心的是怎么解释他。</p></li>
-</ol>
-<p>（科学家的model和普通人的model是一个东西么？不是。科学是一个观察世界的角度么？是。）</p>
-<figure>
-<img src="img_12.png" alt="科学家们看精神世界和物质世界" /><figcaption aria-hidden="true">科学家们看精神世界和物质世界</figcaption>
-</figure>
-<ol start="13" type="1">
-<li>意识是什么？</li>
-</ol>
-<ul>
-<li>心智是什么？蚊子躲你, 蚊子是有心智的</li>
-<li>清醒：打麻药就不清醒</li>
-<li>核心自我：脑干以下的部分，具有稳定性，接近无为法，不生烦恼</li>
-<li>自传体自我：大脑皮层的活动，不断修正的过程，充满烦恼。</li>
-</ul>
-<p>《意識究竟從何而來？》 <img src="img_13.png" alt="意识包括心智清醒核心自我和自传体自我" /></p>
-<ol start="14" type="1">
-<li>区分核心自我和自传体自我 净心/真心/心真入门：核心自我 染心/妄心/心生灭门：自传体自我</li>
-</ol>
-<figure>
-<img src="img_14.png" alt="核心自我和自传体自我" /><figcaption aria-hidden="true">核心自我和自传体自我</figcaption>
-</figure>
-<ol start="15" type="1">
-<li>禅修的原理</li>
-</ol>
-<figure>
-<img src="img_15.png" alt="不二之性即是佛性" /><figcaption aria-hidden="true">不二之性即是佛性</figcaption>
-</figure>
-<p>五个毒素怎么混入自传体自我？社会的风气，社会传导的价值观，让二元对立</p>
-<p>人生来是无知，愚蠢（贪嗔痴）是后天的教育的结果---罗素</p>
-<p>「不二之性就是佛性」，不要去区分高低好坏得失。</p>
-<p>禅修就是要关注核心自我，比如数呼吸，转移注意力，停止妄念。 <img src="img_16.png" alt="禅修的要义-止和观" /></p>
-<p>觉性：打开五官，感受这个世界 走路就可以禅修，注意自己的脚步</p>
-<ol start="16" type="1">
-<li>佛教需要思考和修正</li>
-</ol>
-<p>一个事物：体（心），相（外表），用（途）。</p>
-<p>‘体相用’是指万物皆有一体三面，本质是体，外面是相，每种相有其用途；而人的本体是心、外表是相，以相出现在社会上，相是虚妄的，各有其用途。</p>
-<figure>
-<img src="img_17.png" alt="佛教反对教条" /><figcaption aria-hidden="true">佛教反对教条</figcaption>
-</figure>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=9yCa6Iyo41A">曹興誠 論佛教的科學性 於靜思書軒心靈講座</a></li>
-<li>《世界上最快乐的人》</li>
-<li>《禅悦在当下》</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -583,7 +591,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">132</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -716,6 +724,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

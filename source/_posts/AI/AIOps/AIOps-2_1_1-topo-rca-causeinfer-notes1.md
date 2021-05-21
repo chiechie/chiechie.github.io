@@ -3,12 +3,12 @@ title: chapter2.1.1 基于拓扑的根因定位CauseInfer
 author: chiechie
 date: 2021-03-02 14:41:39
 mathjax: true
-categories: 
-- AIOps
-tags:
 - AIOps
 - 根因分析
-- 论文笔记
+- 微服务
+- 图数据
+categories: 
+- AIOps
 ---
 
 > CauseInfer是一个解决故障定位的通用方案，原理是通过在历史数据中学习因果图，进而在发生故障时，推断出故障根因。

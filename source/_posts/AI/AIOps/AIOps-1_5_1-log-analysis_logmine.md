@@ -1,15 +1,15 @@
 ---
-title: 使用logmine加强版做日志聚类
+title: chapter1.5.1 使用logmine加强版做日志聚类
 author: chiechie
 date: 2021-03-04 11:01:18
 categories: 
-- AI
+- AIOps
 mathjax: true
 tags:
-  - NLP
-  - AIOps
-  - 日志分析
-  - 论文笔记 
+- NLP
+- AIOps
+- 日志分析
+- 论文笔记 
 ---
 
 > 日志聚类本质上是在简洁性和信息丰富性之间trade-off。

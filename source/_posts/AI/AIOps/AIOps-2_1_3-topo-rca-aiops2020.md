@@ -1,12 +1,12 @@
 ---
-title: AIOps挑战赛2020-获奖方案分享
+title: chapter2.1.3 基于拓扑的根因定位-AIOps挑战赛2020-获奖方案分享
 author: chiechie
 mathjax: true
 date: 2021-03-10 13:08:27
 tags:
 - AIOps
 categories: 
-- AI
+- AIOps
 
 comments: true
 

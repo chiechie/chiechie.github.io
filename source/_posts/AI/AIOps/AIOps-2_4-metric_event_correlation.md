@@ -1,5 +1,5 @@
 ---
-title: 时间序列关联性分析
+title: chapter2.4 时间序列关联性分析
 author: chiechie
 mathjax: true
 date: 2021-04-14 17:27:26
@@ -9,7 +9,7 @@ tags:
 - 预测
 - 论文笔记
 categories:
-- AI
+- AIOps
 ---
 
 > performance counter： 性能监视器

@@ -1,5 +1,5 @@
 ---
-title: 异常检测相关问题和技术的综述
+title: chapter1.1 单指标异常检测
 author: chiechie
 mathjax: true
 date: 2021-05-06 16:37:13
@@ -8,8 +8,11 @@ tags:
 - 异常检测
 - 异常分类
 categories: 
-- AI
+- AIOps
 ---
+
+
+异常检测相关问题和技术的综述
 
 ## 异常检测的难点
 

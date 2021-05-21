@@ -1,9 +1,8 @@
 ---
-title: CauseInfer论文笔记2-硬核版
+title: chapter2.1.2 基于拓扑的根因定位-CauseInfer论文笔记2
 author: chiechie
 categories: 
-- AI
-
+- AIOps
 mathjax: true
 date: 2021-03-03 22:50:18
 tags:
@@ -12,6 +11,7 @@ tags:
 - 论文笔记
 
 ---
+
 > 本文是《CauseInfer论文笔记》的第二篇，[《CauseInfer论文笔记1》](https://chiechie.github.io/2021/03/02/technology/causeinfer-notes1/)，从high-level的角度描述了causeinfer的工作流。这里要开始涉及到方案的具体的实现了，所以内容比较硬核
 >
 > 不做方案实现的话，可以不用看这篇文章

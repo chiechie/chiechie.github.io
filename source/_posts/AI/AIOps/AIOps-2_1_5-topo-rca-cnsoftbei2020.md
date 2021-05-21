@@ -1,5 +1,5 @@
 ---
-title: CN-Softbei2020比赛
+title: chapter2.1.5 基于拓扑的根因定位-CN-Softbei2020比赛
 author: chiechie
 mathjax: true
 date: 2021-03-10 14:37:13
@@ -7,7 +7,7 @@ tags:
 - AIOps
 - 根因分析
 categories: 
-- AI
+- AIOps
 
 ---
 

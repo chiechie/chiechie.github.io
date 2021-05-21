@@ -1,15 +1,16 @@
 ---
-title:  日志监控怎么做？
+title:  chapter1.5 日志监控怎么做？
 author: "chiechie"
 header-style: text
 categories: 
-- AI
+- AIOps
 date: 2021-02-19 20:05:20
 mathjax: true
 tags:
 - NLP
 - 日志分析
 ---
+
 
 ## 做项目之前的分析
 

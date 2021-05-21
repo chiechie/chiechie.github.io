@@ -1,4 +1,5 @@
 ---
+top: true
 title: chapter0 AIOps概览
 author: chiechie
 mathjax: true
@@ -12,15 +13,13 @@ categories:
 ---
 
 
-
-
 ## 目录
 
 - [chapter0 概览](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/)
 - [chapter1 故障发现](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate.md/)
 	- [chapter1.1 单指标异常检测](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/)
 	- [chapter1.5 日志聚类](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5-log-analysis/)
-	- [chapter1.5.1 使用logmine加强版做日志聚类](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/)
+		- [chapter1.5.1 使用logmine加强版做日志聚类](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/)
 
 - [chapter2 故障定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/)
 	- [chapter2.1 基于拓扑数据的根因定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/)
@@ -32,3 +31,8 @@ categories:
 	- [chapter2.2 多维下钻根因定位 ](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/)
 	- [chapter2.3 调用链数据的预处理](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_3-trace_rca/)
 	- [chapter2.4 时间序列关联性分析](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_4-metric_event_correlation/)
+
+
+## 检查
+1. 
+

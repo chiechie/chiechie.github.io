@@ -66,12 +66,18 @@ categories:
 ## 第二代应用-智能合约
 
 ## 第三代应用-DeFi和NFT
+1. 
+NFT 的概念其实很早就出现了，就是腾讯的Q币，只是中心化的。现在不管是名人、宣传还是NFT都是在为市场扩圈，币圈与非币圈之间也已经没有明显的界限了，而 NFT会把这个现象推向更高的高潮。
+
 
 
 ## chiechie的猜测
 
 1. 全世界范围内，政府（除美国）短期不会打压数字货币，甚至还会推动数字货币的发展，直到世界格局改变。
 2. 各种去中心化数字货币成为国际流通货币的可能性很小，但是，不要失望，有较大可能演变成一个收藏品，比特币会成为其中的顶级收藏品。
+3. 动物币、狗狗币?我认为这些东西的出现对币市是有好处的，特别是狗狗币给市场带来了很多外部的资产。不论是动物币、狗狗币还是shib，都成功用娱乐的形式把外面的客户引流进来。如果只是一本正经地推广比特币，人们可能会觉得没有意思，到那时一提到狗币，shib 大家都很感兴趣。马克斯也为币圈带来了一些热度，我们可以把这个价值等同于娱乐圈的IP 价值，是对人们生活的调剂。
+
+
 
 先就这些吧，想到再补
 
@@ -92,3 +98,4 @@ categories:
 ](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672246948&idx=1&sn=6c7b36184fabeabd095bd649342f0598&chksm=85a12660b2d6af76fe53bcc7feb656550858be7b99ce9094a67d65db8a27f454dc50cb04328b&scene=21#wechat_redirect)
 9. [王川：去中心化的流动性黑洞, 和区块链第一法则](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672247406&idx=1&sn=55316a2d422c033ca214ad843fd25a02&chksm=85a124aab2d6adbc02041db1ba3d0e8b4e1b813578035dbeecb48fb1b3021c74dacfb752692c&scene=21#wechat_redirect)
 10. [王川: 比特币的支付费用为什么这么高](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672246775&idx=1&sn=206bf28f6091d4e2c06a0b2a5c3eb1b7&chksm=85a15933b2d6d025d33e12e76fb12c8f6c563e0f1f3ffaf477335e8dec1c60eb65de8fdde0a9&scene=21#wechat_redirect)
+11. [](https://tokeninsight.com/zh/report/2708)

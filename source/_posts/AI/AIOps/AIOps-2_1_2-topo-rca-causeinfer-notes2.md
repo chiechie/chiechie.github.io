@@ -1,5 +1,5 @@
 ---
-title: chapter2.1.2 基于拓扑的根因定位-CauseInfer论文笔记2
+title: chapter2.1.2 基于拓扑的根因定位-CauseInfer2
 author: chiechie
 categories: 
 - AIOps

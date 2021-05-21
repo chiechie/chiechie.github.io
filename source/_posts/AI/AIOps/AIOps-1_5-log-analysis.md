@@ -1,5 +1,5 @@
 ---
-title:  chapter1.5 日志监控怎么做？
+title:  chapter1.5 日志聚类
 author: "chiechie"
 header-style: text
 categories: 

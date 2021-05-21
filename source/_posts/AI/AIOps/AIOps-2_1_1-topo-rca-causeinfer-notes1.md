@@ -1,5 +1,5 @@
 ---
-title: chapter2.1.1 基于拓扑的根因定位CauseInfer论文笔记1-白话版
+title: chapter2.1.1 基于拓扑的根因定位CauseInfer
 author: chiechie
 date: 2021-03-02 14:41:39
 mathjax: true

@@ -1,5 +1,5 @@
 ---
-title: chapter2.1-AIOps_2.1_对IT系统进行根因定位
+title: chapter2.1 对IT系统进行根因定位
 author: chiechie
 mathjax: true
 date: 2021-05-21 16:05:13

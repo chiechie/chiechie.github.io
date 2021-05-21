@@ -116,11 +116,17 @@ tags:
 - 再去下钻分析，指标层面的故障
 
 
+有两种方法: pagerank, 深度优先遍历
+
+### PageRank
+
+ 
+
 # 验证方案的可行性
 
 ## 1. 调用链路根因分析
 
-![调用链路做根因分析.png](AIOps-21-topo-rca/trace_rca.png)
+![调用链路做根因分析.png](./trace_rca.png)
 
 
 ## 2 AIOps挑战赛

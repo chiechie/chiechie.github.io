@@ -27,13 +27,13 @@ categories:
 
 ## 关联分析
   
-![corr](corr.png)
+![corr](./orr.png)
 
-![节点个数](anomalies-classification/img.png)
+![节点个数](./img.png)
 
 对应的 因果图巨大无比，如下：
 
-![图1-关联拓扑](correlation_topology.png)
+![图1-关联拓扑](./correlation_topology.png)
 
 
 

@@ -39,6 +39,7 @@ categories:
 
 ![](./global_anomalie.png)
 
+
 ### 条件异常
 
 条件异常(contextual or conditional anomalies)：value deviates quite a lot from the rest of the data points，举2个例子：

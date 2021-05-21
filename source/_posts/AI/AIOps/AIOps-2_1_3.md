@@ -7,14 +7,12 @@ tags:
 - AIOps
 categories: 
 - AI
-
 ---
-
-
 
 ## 数据解析
 
 比赛数据包括： 部署拓扑，指标数据，日志数据，调用链数据，故障标签
+
 
 ### 部署数据
 
@@ -42,6 +40,7 @@ kpi_0304.csv
       'ServiceTest7', 'ServiceTest8', 'ServiceTest9'
 
 ![业务指标](./aiops2021-demo/yewu.png)
+
 
 #### 性能指标
 
@@ -125,7 +124,6 @@ kpi_0304.csv
 ![对比](./aiops2021-demo/evaluate.png)
 
 
-
 ## 参考资料
 
-1.[aiops挑战赛2021-官网](http://iops.ai/competition_detail/?competition_id=17&flag=1)
+1. [aiops挑战赛2021-官网](http://iops.ai/competition_detail/?competition_id=17&flag=1)

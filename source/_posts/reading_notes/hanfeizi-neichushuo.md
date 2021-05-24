@@ -1,5 +1,5 @@
 ---
-title: hanfeizi_neichushuo
+title: 韩非子--内储说
 author: chiechie
 mathjax: true
 date: 2021-05-24 08:51:49

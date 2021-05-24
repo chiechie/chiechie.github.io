@@ -48,6 +48,8 @@ categories:
 12. 信息不充分时，不可能推导出真相，先hold，不着急给结论，给的结论大概率也是错的。
    
    > 就好像预测股票，只用股票历史数据，不可能预测出来，因为更多有价值的信息在股票之外
+   > To retain innocence, reduce judgements.--Naval
+
 
 
 ## 实践-自我成长

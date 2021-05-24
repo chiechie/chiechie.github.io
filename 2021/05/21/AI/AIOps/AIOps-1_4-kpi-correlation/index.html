@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 hapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类   chapter2 故障定位  chapter2.1 基于拓扑数据的根因定位  chapter2.1.1 CauseInfer1 chapter2.1.2 CauseInfe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chapter1.4 指标异常关联">
+<meta property="og:url" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Cosmos">
+<meta property="og:description" content="chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 hapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类   chapter2 故障定位  chapter2.1 基于拓扑数据的根因定位  chapter2.1.1 CauseInfer1 chapter2.1.2 CauseInfe">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_jpg/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZ2oGk0FGldica8CEhhF4yZOTtia9a5mDcpiaP7H1uLj83VKqbfoKVBLXSA/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_jpg/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZND6kn9hTDotgLwYhlsUKo8dy8YT6cxv1tic71w6ibSZl3ykZPNIXrsaw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="article:published_time" content="2021-05-21T14:32:17.000Z">
+<meta property="article:modified_time" content="2021-05-24T01:56:27.001Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="AIOps">
+<meta property="article:tag" content="异常检测">
+<meta property="article:tag" content="异常分类">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>chapter1.4 指标异常关联 | Chiechie's Cosmos</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Chiechie's Cosmos" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Cosmos</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          chapter1.4 指标异常关联<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AI/AIOps/AIOps-1_4-kpi-correlation.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-21 22:32:17" itemprop="dateCreated datePublished" datetime="2021-05-21T22:32:17+08:00">2021-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate.md/">chapter1 故障发现</a>
+<ul>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation.md">hapter1.4 指标异常关联</a></li>
+<li><a href="https://chiechie.github.io/2021/05/06/AI/AIOps/AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 基于拓扑数据的根因定位</a>
+<ul>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020">chapter2.1.5 N-Softbei2020比赛</a></li>
+</ul></li>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_3-trace_rca/">chapter2.3 调用链数据的预处理</a></li>
+<li><a href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+</ul>
+<p>《KPI波动关联分析助力故障排查-CoFlux》是清华和阿里巴巴公司的最新AIOps合作成果。 CoFlux挖掘KPI之间的异常波动关联，从而帮助运维人员进行故障排查，具体的，波动关联关系结果可以在以下三个方面帮助进行故障排查：报警压缩、推荐TOP-N的可能原因、构建异常波动传播链。该工作对应的论文《</p>
+<h2 id="背景">背景</h2>
+<p>为了对互联网公司的各项服务进行管理，运维人员通常会监控收集成千上万的关键性能指标KPI（Key Performance Indicator），这些KPI（例如服务请求数量、服务请求成功率等）的形式多为时间序列。</p>
+<p>在实际的运维管理工作中，由于各种原因（例如网络中断、恶意攻击等），公司的服务中断不可避免。当服务发生故障时，与故障原因相关的许多KPI数据也会出现异常的波动，而且这些波动也会传递到其他有业务关联或者模块调用关系的KPI，形成报警风暴。报警风暴产生的报警邮件和短信会使得运维人员很头大，因为其中的大量报警都是冗余的，只有少数的报警需要运维人员去关注和解决。此外，发生异常波动的KPI交织在一起，也使得故障排查工作费时费力非常困难。如果可以自动挖掘KPI之间的异常波动关系，就可以帮助运维人员进行更加高效智能地进行故障排查。</p>
+<figure>
+<img src="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="问题描述">问题描述</h2>
+<figure>
+<img src="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://mmbiz.qpic.cn/mmbiz_jpg/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZ2oGk0FGldica8CEhhF4yZOTtia9a5mDcpiaP7H1uLj83VKqbfoKVBLXSA/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图1 时间序列，预测序列，波动特征序列</p>
+<p>​ 对于一个时间序列<span class="math inline">\(S = [*s**1**, s**2* *,…, s**m*]\)</span>，<em>si</em>是KPI S在时刻i的数据，m是KPI的长度。对于单一KPI，在数据采集和预处理时要求相邻时刻数据间的时间间隔相同。对于两个KPI，如果时间间隔不同，可以取两个KPI时间间隔的最小公倍数作为公共的时间间隔。KPI S的预测序列P = [*p**1, p2, …, pm*]，<em>pi</em>是<em>si</em>的预测值。因此，一个KPI的预测误差序列F = [*f**1, f2, …, fm*]，<em>fi = si</em> – *p**i*。对于一个KPI，正常的部分是比较准确容易的被预测出来，但是异常波动部分通常都是由一些不可预见的突发因素导致的，很难被预测。因此，预测误差可以很好的用来表示KPI的波动特征，CoFlux使用KPI的预测误差序列来表示该KPI的波动特征。图1 展示了一个时间序列，预测序列，波动特征序列的实例。此外，用于得到预测序列的预测模型以及对应的参数即为特征检测器。</p>
+<figure>
+<img src="https://mmbiz.qpic.cn/mmbiz_jpg/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZND6kn9hTDotgLwYhlsUKo8dy8YT6cxv1tic71w6ibSZl3ykZPNIXrsaw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图2 （左）6个KPI，（右）KPI对应的波动特征曲线</p>
+<p>​ CoFlux的目的是挖掘两个KPI之间的波动关联关系，这种波动关联关系可以帮助进行故障排查。具体的，这种关系包括三个具体问题：1. 两个KPI的波动是否相关？如果相关，2. 波动的先后顺序如何（同时发生或者某根曲线的波动先发生）？3. 波动的方向是否一致（波动方向一致或者相反）？</p>
+<p>​ 利用原始的KPI曲线来判断波动关联关系比较困难，我们可以借助KPI的波动特征曲线。如果两个KPI的波动特征曲线相关（即波动同时发生或者发生时有一定的相位差），那么原始的两个KPI的波动相关。图2展示了6根KPI及其对应的波动特征曲线。从图2中可以看出，<em>K1</em>和<em>K2</em>、<em>K3</em>波动相关，但是与<em>K4</em>波动无关；<em>K1</em>的波动先于<em>K2</em>和<em>K3</em>发生，且波动方向相反；<em>K2</em>和<em>K3</em>的波动同时发生，且波动方向相同。</p>
+<h2 id="挑战">挑战</h2>
+<figure>
+<img src="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>​ 分析判断KPI的波动关联关系，主要有以下三个挑战：</p>
+<p>​ \1. KPI曲线数据众多且曲线特征各异（例如不同的周期性、平稳性、趋势等），因此，没有通用的方法可以对所有的KPI进行波动特征提取。</p>
+<p>​ \2. 基于异常检测结果的波动关联关系分析不合适。基于异常检测的方式需要挑选合适的异常检测算法并进行异常的定义（异常的阈值等），并且二分类的异常结果也比波动特征的信息量要少很多。</p>
+<p>​ \3. 波动关联关系复杂。正如在问题描述中所说，两个KPI间的波动可能有不同的先后顺序以及波动方向，这给判断波动关联关系时带来了更大的挑战。</p>
+<figure>
+<img src="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="方法">方法</h2>
+<figure>
+<img src="" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图3 CoFlux方法架构图</p>
+<p>​ CoFlux的输入是两根KPI曲线，输出结果是波动关联关系：两个KPI是否波动相关，如果相关，同时输出波动的先后顺序和波动的方向。算法整体分为两个大的部分：特征工程和相关性测量。</p>
+<p>​ 特征工程的目的是为KPI找到合适的特征检测器，由于不同KPI有不同的特征，单一的特征检测器无法适用于所有的KPI。因此，我们基于两个直观假设：如果可以提供足够多的特征检测算法，那么，1.对于任何一个KPI，总有一个算法可以为该KPI提取到合适的波动特征。2.如果两个KPI波动相关，至少有来自两个KPI的波动特征也相关。相关性测量的目的是根据特征工程得到波动特征计算得到相关性结果。接下来，我们具体介绍特征工程和相关性测量。</p>
+<p><strong>第一步，特征工程</strong>。特征工程主要包括两个步骤，特征提取、特征放大。</p>
+<p>特征提取：如表1，特征提取主要包含了我们预选取的预测模型及参数，总计一共有86个检测器，因此对于一个KPI，我们可以得到86个波动特征。</p>
+<p>表1 CoFlux中的预测模型和检测器</p>
+<p>[img]</p>
+<p>​ 特征放大：一个KPI大部分时间范围内都是正常的，没有很大波动，只有随机的噪声。只有当服务受到影响时，才会产生波动。因此，波动的数量是远远小于正常数据的。为了削弱噪声的影响，我们采用改进版的激励函数：一个KPI的波动程度越大，波动特征也就会被放大的越大，这样就使得我们的波动特征更具区别度，对最后的相关性判断也更有帮助。</p>
+<figure>
+<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>​ <strong>第二步，相关性判断</strong>。对两个KPI的波动特征进行相关性判断时，需要考虑到KPI波动的轻微形变以及相位差。因此，我们挑选Cross-Correlation来测量两个波动特征的相关性结果。</p>
+<figure>
+<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="实验">实验</h2>
+<figure>
+<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>​ 实验部分包括了两个数据集：数据集1：波动相关的两个KPI的原始曲线数据特征不同；数据集2：波动相关的两个KPI的原始数据曲线特征相似。由于没有专门的处理波动关联分析的算法，我们选取了已有的五种关联分析工作以及变种（一共有7种方法）作为对比算法，表2展示了CoFlux方法和对比算法在两个数据集上的结果。结果表明CoFlux在两个数据集上都比其他的算法效果要更好，且在三个问题上的F1-score分别大于0.84，0.92，和0.95。</p>
+<p>表2 CoFlux和对比方法在两个数据集的结果</p>
+<figure>
+<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>接下来介绍CoFlux在故障排查工作中的应用实例。</p>
+<p>报警压缩：对于大量的KPI，我们首先利用CoFlux计算所有KPI的两两之间的波动相关程度，然后使用K-means进行聚类（K可以使用轮廓系数方法选择）。每一类内的KPI可以当成一个报警簇，在报警的时候当成一个整体进行报警。图4展示了CoFlux利用24根KPI的波动相关结果聚成3类报警簇的实例。</p>
+<figure>
+<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图4 报警压缩实例热度图表示</p>
+<p>推荐TOPN的可能原因：如图5，对于任一KPI X，我们可以通过CoFlux找到该KPI的TOPN相关的KPI曲线。在进行故障排查时，运维人员可以优先检查这TOPN的曲线来对KPI X进行快速异常分析。</p>
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" />图5 推荐TOPN的可能原因实例</p>
+<p>​ 构建异常波动传播链：我们可以利用KPI之间的波动传播关系来构建异常波动传播链，这个异常波动传播链可以反映不同KPI之间的波动是如何关联在一起的。图6 展示了CoFlux在数据库服务上自动构建波动传播链的实例，相比较人工的方式，CoFlux在不需要专家领域知识的情况下可以自动准确的构建异常波动传播链。</p>
+<figure>
+<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图6 （左）人工构建的异常波动传播链；（右）根据CoFlux自动构建的异常波动传播链</p>
+<figure>
+<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="结论">结论</h2>
+<figure>
+<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>利用KPI的波动特征进行关联分析对于故障排查是非常有用的，本文是服务运维管理领域第一篇定义研究这种波动关联分析的工作。未来的工作计划是采用深度学习的方法更加准确的提取KPI的波动特征。更多细节可以点击“阅读原文”进行阅读。</p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>CoFlux: Robustly Correlating KPIs by Fluctuations for Service Troubleshooting》发表在IWQoS 2019。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AIOps/" rel="tag"># AIOps</a>
+              <a href="/tags/%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B/" rel="tag"># 异常检测</a>
+              <a href="/tags/%E5%BC%82%E5%B8%B8%E5%88%86%E7%B1%BB/" rel="tag"># 异常分类</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/" rel="prev" title="chapter1.1 单指标异常检测">
+      <i class="fa fa-chevron-left"></i> chapter1.1 单指标异常检测
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause/" rel="next" title="chapter2.1.5 基于拓扑的根因定位-MicroCause">
+      chapter2.1.5 基于拓扑的根因定位-MicroCause <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%91%E6%88%98"><span class="nav-number">3.</span> <span class="nav-text">挑战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">5.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">6.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">148</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">160</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

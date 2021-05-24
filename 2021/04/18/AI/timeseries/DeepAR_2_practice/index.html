@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="DeepAR探索 以DeepAR为例，回忆下我们从探索到落地的过程：  Student： 网上找到了pytorch版本的deepAR版（发于2017年4月），训练过程很慢要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？ Teacher： 生产环境，这种性能实在不能接受。既然amazon将DeepAR作为时序预测场景的主推算法方案，这种性能肯定拿不出手，后续肯定做了的优化，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从DeepAR谈论paper到工程化的距离">
+<meta property="og:url" content="https://chiechie.github.io/2021/04/18/AI/timeseries/DeepAR_2_practice/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Cosmos">
+<meta property="og:description" content="DeepAR探索 以DeepAR为例，回忆下我们从探索到落地的过程：  Student： 网上找到了pytorch版本的deepAR版（发于2017年4月），训练过程很慢要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？ Teacher： 生产环境，这种性能实在不能接受。既然amazon将DeepAR作为时序预测场景的主推算法方案，这种性能肯定拿不出手，后续肯定做了的优化，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-18T03:56:59.000Z">
+<meta property="article:modified_time" content="2021-05-24T01:56:27.157Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="时间序列">
+<meta property="article:tag" content="AIOps">
+<meta property="article:tag" content="DeepAR">
+<meta property="article:tag" content="知识分子">
+<meta property="article:tag" content="RNN">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/04/18/AI/timeseries/DeepAR_2_practice/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>从DeepAR谈论paper到工程化的距离 | Chiechie's Cosmos</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Chiechie's Cosmos" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Cosmos</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/AI/timeseries/DeepAR_2_practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从DeepAR谈论paper到工程化的距离<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AI/timeseries/DeepAR_2_practice.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-18 11:56:59" itemprop="dateCreated datePublished" datetime="2021-04-18T11:56:59+08:00">2021-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="deepar探索">DeepAR探索</h2>
+<p>以DeepAR为例，回忆下我们从探索到落地的过程：</p>
+<ul>
+<li>Student： 网上找到了pytorch版本的deepAR版（发于2017年4月），训练过程很慢要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？</li>
+<li>Teacher： 生产环境，这种性能实在不能接受。既然amazon将DeepAR作为时序预测场景的主推算法方案，这种性能肯定拿不出手，后续肯定做了的优化，去查一下近3年的amazon关于DeepAR相关的资料，重点看看有没有更优秀的实现方案。</li>
+<li>Student：找到了--基于MXNET的gluon-ts（于2019年6月发表），mxnet在electricty上的训练和预测时间大概是10min左右。</li>
+<li>Teacher： nice！</li>
+</ul>
+<p>最开始把gluon-ts实现的DeepAR算法当黑盒用的时候，发现效果很神奇，不调参，换不同数据进去效果都还挺好，周期性和趋势性都还能学到。</p>
+<p>但是就觉得很奇怪，按照自己构建RNN的经验，调参就要反反复复好多次，最后效果还不一定好。使用gluon-TS的代码我没有调参的，并且默认的网络结构很简单 不太可能过拟合.</p>
+<p>看了源代码之后，有一个很大的感受就是，<strong>完成论文demo和完成一个业界可用方案，两者的工作量 ，可能是0到1再到100的距离。</strong></p>
+<p>按照paper所说，整个网络结构非常之简单，1层rnn + 1层 dense层（输出分布参数），构成2层rnn，大概十几行代码。 但是，<strong>真正大量的代码都在做预处理以及 模型训练的一些小trick。 这些小trick，对提升模型效果非常有帮助，但是paper里面是没有的，应该随是工程团队总结出的最佳实践</strong>。</p>
+<ul>
+<li>best practice1: 把每个样本（历史依赖）的scale 取对数，放入样本。 （因为所有的lags项在归一化之后已经丢失了scale信息，为了避免这个信息的丢失，还是把log scale 放入特征，用于区别不同的曲线的模式）</li>
+<li>best practice2: 在rnn中，每一层rnn后都接了一个residual和一个dropout。（原文没有提到）</li>
+<li>best practice3: 为了学习到数据的周期性模式，除了一定要有的context_length，代码还会跳着取lag , 类似空洞卷积。这些周期性的lag项，是被硬编码在代码里面的，比如年/月/日的周期性。</li>
+</ul>
+<p>（我甚至怀疑论文的作者都不知道，因为作者自己写了一个pytorch版本，没有见到相关的处理，并且训练时长是gluon-TS的100倍以上）</p>
+<h2 id="对于aiops建设的启发">对于AIOps建设的启发</h2>
+<p>对于根因分析，日志关联等大部分场景，业界没有可参考的工具，转而求助学术界，可参考论文以及kaggle比赛等。</p>
+<p>但是要注意，这些方案只是demo，没有在工业界的数据和真实需求上验证过，实际上真实业务环境会比做实验要复杂得多。</p>
+<p>从调研demo到完成一个业务上高可用的方案，有大量的优化工作。评估时间的时候，需要预留buffer，来验证和调优，可能需要迭代多轮，有不确定性。</p>
+<h2 id="从paper到工程落地的距离">从paper到工程落地的距离？</h2>
+<ul>
+<li>实验室方案不能直接搬到 真实业务的 几个原因：
+<ul>
+<li>样本数据不一致：
+<ul>
+<li>实验室的数据有一些 标记质量差，以及标记的标准不一致。</li>
+<li>实验室的数据模式单一，很多是模拟生成的，没法模拟出真实业务上复杂的模式</li>
+<li>真实环境中数据质量差：历史数据不够，缺失值多，有用特征缺失。</li>
+<li>实验室数据格式 千奇百怪，要适当预处理才能给 业务使用</li>
+</ul></li>
+<li>评估指标不一致
+<ul>
+<li>实验室只能基于已有的封闭数据集，业务上的指标是开放式的跟业务运营相关的</li>
+</ul></li>
+<li>效果不一致
+<ul>
+<li>实验 中效果好的方案 到真实环境中 效果不好</li>
+</ul></li>
+<li>性能要求不一致：
+<ul>
+<li>实验室方案运行效率到不到真实环境的标准</li>
+<li>eg，kaggle比赛常用模型ensenmble方案，在工业界就很少会用，计算效率的问题å</li>
+</ul></li>
+</ul></li>
+<li>正常的开发流程是：
+<ul>
+<li>理解论文原理</li>
+<li>复现论文：开发demo，</li>
+<li>初步上线（beta）： demo性能优化，覆盖现实中可能的异常</li>
+<li>稳定上线（正式）： 在真实环境上测试一段时间。</li>
+<li>产品化：给其他无背景的人用</li>
+</ul></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/" rel="tag"># 时间序列</a>
+              <a href="/tags/AIOps/" rel="tag"># AIOps</a>
+              <a href="/tags/DeepAR/" rel="tag"># DeepAR</a>
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E5%88%86%E5%AD%90/" rel="tag"># 知识分子</a>
+              <a href="/tags/RNN/" rel="tag"># RNN</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/18/technology/information-theory/" rel="prev" title="信息论">
+      <i class="fa fa-chevron-left"></i> 信息论
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/18/reading_notes/taleb-blackswan/" rel="next" title="黑天鹅">
+      黑天鹅 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#deepar%E6%8E%A2%E7%B4%A2"><span class="nav-number">1.</span> <span class="nav-text">DeepAR探索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8Eaiops%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%90%AF%E5%8F%91"><span class="nav-number">2.</span> <span class="nav-text">对于AIOps建设的启发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8Epaper%E5%88%B0%E5%B7%A5%E7%A8%8B%E8%90%BD%E5%9C%B0%E7%9A%84%E8%B7%9D%E7%A6%BB"><span class="nav-number">3.</span> <span class="nav-text">从paper到工程落地的距离？</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">148</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">160</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

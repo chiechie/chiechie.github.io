@@ -99,4 +99,5 @@ NFT 的概念其实很早就出现了，就是腾讯的Q币，只是中心化的
 ](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672246948&idx=1&sn=6c7b36184fabeabd095bd649342f0598&chksm=85a12660b2d6af76fe53bcc7feb656550858be7b99ce9094a67d65db8a27f454dc50cb04328b&scene=21#wechat_redirect)
 9. [王川：去中心化的流动性黑洞, 和区块链第一法则](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672247406&idx=1&sn=55316a2d422c033ca214ad843fd25a02&chksm=85a124aab2d6adbc02041db1ba3d0e8b4e1b813578035dbeecb48fb1b3021c74dacfb752692c&scene=21#wechat_redirect)
 10. [王川: 比特币的支付费用为什么这么高](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672246775&idx=1&sn=206bf28f6091d4e2c06a0b2a5c3eb1b7&chksm=85a15933b2d6d025d33e12e76fb12c8f6c563e0f1f3ffaf477335e8dec1c60eb65de8fdde0a9&scene=21#wechat_redirect)
-11. [](https://tokeninsight.com/zh/report/2708)
+11. [report](https://tokeninsight.com/zh/report/2708)
+12. [youtube-nft](https://www.youtube.com/watch?v=Oz9zw7-_vhM)

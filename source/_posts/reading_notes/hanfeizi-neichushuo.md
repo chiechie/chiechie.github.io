@@ -1,5 +1,5 @@
 ---
-title: 韩非子--内储说
+title: 《韩非子--内储说》读书笔记
 author: chiechie
 mathjax: true
 date: 2021-05-24 08:51:49

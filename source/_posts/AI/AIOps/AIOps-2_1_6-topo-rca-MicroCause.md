@@ -73,7 +73,6 @@ categories:
 因此在该问题中，我们将针对一个微服务故障实例，给出N个metrics，作为故障的Top N根因。通常一个故障实例由三部分信息组成：异常的KPI，异常的微服务ID和异常时间点。
 
 
-
 ## 已有方法
 
 如表1中所示，目前已有的解决方法主要是利用微服务之间的故障传播关系（cross），通常分为两个阶段：
@@ -224,4 +223,5 @@ CauseInfer[INFOCOM14]中提到，使用PC算法来学习基于时间序列的因
 
 ## 参考
 1. [清华阿里AIOps新作：基于因果分析的微服务内根因定位](https://wemp.app/posts/6013f2da-c11a-4f6f-b393-2b631c45172a)
-2. [paper](https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf)
+2. [causeinfer--paper](https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf)
+3. []()

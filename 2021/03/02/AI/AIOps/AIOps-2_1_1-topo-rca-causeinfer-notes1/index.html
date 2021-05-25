@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 chapter1.2 故障预测 chapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类 chapter1.5.2 美团日志聚类   chapter2 故障定位  chapter2.1 基于拓扑数据的根因定位  chapter2.1">
+  <meta name="description" content="目录  chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 chapter1.3 故障预测 chapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类 chapter1.5.2 美团日志聚类   chapter2 故障定位  chapter2.1 微服务系统的故障定位  chapter2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="chapter2.1.1 基于拓扑的根因定位CauseInfer">
 <meta property="og:url" content="https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Cosmos">
-<meta property="og:description" content="chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 chapter1.2 故障预测 chapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类 chapter1.5.2 美团日志聚类   chapter2 故障定位  chapter2.1 基于拓扑数据的根因定位  chapter2.1">
+<meta property="og:description" content="目录  chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 chapter1.3 故障预测 chapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类 chapter1.5.2 美团日志聚类   chapter2 故障定位  chapter2.1 微服务系统的故障定位  chapter2">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/causeinfer_framework.jpeg">
 <meta property="og:image" content="https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/eample1.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/anomalies-classification/img.png">
 <meta property="article:published_time" content="2021-03-02T06:41:39.000Z">
-<meta property="article:modified_time" content="2021-05-24T01:56:27.046Z">
+<meta property="article:modified_time" content="2021-05-25T03:42:58.290Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="图数据">
 <meta property="article:tag" content="AIOps">
@@ -205,7 +205,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
+                <time title="修改时间：2021-05-25 11:42:58" itemprop="dateModified" datetime="2021-05-25T11:42:58+08:00">2021-05-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -235,12 +235,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ul>
+        <h2 id="目录">目录</h2>
+<ul>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/">chapter0 概览</a></li>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate.md/">chapter1 故障发现</a>
 <ul>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_2-fault-prediction/">chapter1.2 故障预测</a></li>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_3-fault-prediction/">chapter1.3 故障预测</a></li>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation.md">chapter1.4 指标异常关联</a></li>
 <li><a href="https://chiechie.github.io/2021/05/06/AI/AIOps/AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
 <ul>
@@ -250,7 +251,7 @@
 </ul></li>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">chapter2 故障定位</a>
 <ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 基于拓扑数据的根因定位</a>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
 <ul>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
@@ -263,6 +264,7 @@
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_3-trace_rca/">chapter2.3 调用链数据的预处理</a></li>
 <li><a href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
 </ul></li>
+<li>chapter3 故障恢复</li>
 </ul>
 <blockquote>
 <p>CauseInfer是一个解决故障定位的通用方案，原理是通过在历史数据中学习因果图，进而在发生故障时，推断出故障根因。</p>
@@ -476,7 +478,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="nav-number">1.</span> <span class="nav-text">名词解释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">几个问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#paper"><span class="nav-number">3.</span> <span class="nav-text">paper</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">3.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">3.2.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%A7%88"><span class="nav-number">3.3.</span> <span class="nav-text">系统概览</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#causeinfer%E7%9A%84%E6%A1%86%E6%9E%B6"><span class="nav-number">3.3.1.</span> <span class="nav-text">CauseInfer的框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BE%E4%B8%AA%E6%BC%94%E7%A4%BA%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">3.3.2.</span> <span class="nav-text">举个🌰演示工作流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%BB%86%E8%8A%82"><span class="nav-number">3.4.</span> <span class="nav-text">系统细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86"><span class="nav-number">3.4.1.</span> <span class="nav-text">A：数据收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%8F%98%E7%82%B9%E6%A3%80%E6%B5%8B"><span class="nav-number">3.4.2.</span> <span class="nav-text">B: 变点检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%9B%A0%E6%9E%9C%E5%9B%BE%E6%9E%84%E5%BB%BA"><span class="nav-number">3.4.3.</span> <span class="nav-text">C: 因果图构建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E7%A6%BB%E7%BA%BF%E5%92%8C%E5%9C%A8%E7%BA%BF%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">3.5.</span> <span class="nav-text">总结一下离线和在线的流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E7%BA%BF%E5%88%86%E6%9E%90"><span class="nav-number">3.6.</span> <span class="nav-text">离线分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E7%BA%BF%E6%8E%A8%E6%96%AD"><span class="nav-number">3.7.</span> <span class="nav-text">在线推断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0"><span class="nav-number">3.8.</span> <span class="nav-text">评估</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="nav-number"></span> <span class="nav-text">名词解释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="nav-number"></span> <span class="nav-text">几个问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#paper"><span class="nav-number"></span> <span class="nav-text">paper</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%A7%88"><span class="nav-number">3.</span> <span class="nav-text">系统概览</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#causeinfer%E7%9A%84%E6%A1%86%E6%9E%B6"><span class="nav-number">3.1.</span> <span class="nav-text">CauseInfer的框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BE%E4%B8%AA%E6%BC%94%E7%A4%BA%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">3.2.</span> <span class="nav-text">举个🌰演示工作流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%BB%86%E8%8A%82"><span class="nav-number">4.</span> <span class="nav-text">系统细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86"><span class="nav-number">4.1.</span> <span class="nav-text">A：数据收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E5%8F%98%E7%82%B9%E6%A3%80%E6%B5%8B"><span class="nav-number">4.2.</span> <span class="nav-text">B: 变点检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E5%9B%A0%E6%9E%9C%E5%9B%BE%E6%9E%84%E5%BB%BA"><span class="nav-number">4.3.</span> <span class="nav-text">C: 因果图构建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E7%A6%BB%E7%BA%BF%E5%92%8C%E5%9C%A8%E7%BA%BF%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">总结一下离线和在线的流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E7%BA%BF%E5%88%86%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">离线分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E7%BA%BF%E6%8E%A8%E6%96%AD"><span class="nav-number">7.</span> <span class="nav-text">在线推断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0"><span class="nav-number">8.</span> <span class="nav-text">评估</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number"></span> <span class="nav-text">参考文献</span></a></div>
       </div>
       <!--/noindex-->
 
@@ -503,7 +505,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">160</span>
+        <span class="site-state-item-count">164</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

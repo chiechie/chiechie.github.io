@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 chapter1.2 故障预测 chapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类 chapter1.5.2 美团日志聚类   chapter2 故障定位  chapter2.1 基于拓扑数据的根因定位  chapter2.1">
+  <meta name="description" content="目录  chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 chapter1.3 故障预测 chapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类 chapter1.5.2 美团日志聚类   chapter2 故障定位  chapter2.1 微服务系统的故障定位  chapter2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="chapter1.1 使用GAN做异常检测">
 <meta property="og:url" content="https://chiechie.github.io/2021/05/06/AI/AIOps/AIOps-1_1_1-GAN/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Cosmos">
-<meta property="og:description" content="chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 chapter1.2 故障预测 chapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类 chapter1.5.2 美团日志聚类   chapter2 故障定位  chapter2.1 基于拓扑数据的根因定位  chapter2.1">
+<meta property="og:description" content="目录  chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 chapter1.3 故障预测 chapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类 chapter1.5.2 美团日志聚类   chapter2 故障定位  chapter2.1 微服务系统的故障定位  chapter2">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pic4.zhimg.com/80/v2-3afb9ef54ee08b8983abcec88975ff17_hd.jpg">
 <meta property="og:image" content="https://chiechie.github.io/Users/stellazhao/research_space/EasyMLBOOK/_image/v2-592e8ddc687eda45212d8ddf70853aeb_hd.png">
@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://chiechie.github.io/2021/05/06/AI/AIOps/_image/image-20191113125624723.png">
 <meta property="og:image" content="https://chiechie.github.io/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20191113125714058.png">
 <meta property="article:published_time" content="2021-05-06T08:37:13.000Z">
-<meta property="article:modified_time" content="2021-05-24T01:56:27.001Z">
+<meta property="article:modified_time" content="2021-05-25T03:42:58.330Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="AIOps">
 <meta property="article:tag" content="异常检测">
@@ -211,7 +211,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
+                <time title="修改时间：2021-05-25 11:42:58" itemprop="dateModified" datetime="2021-05-25T11:42:58+08:00">2021-05-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,12 +241,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ul>
+        <h2 id="目录">目录</h2>
+<ul>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/">chapter0 概览</a></li>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate.md/">chapter1 故障发现</a>
 <ul>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_2-fault-prediction/">chapter1.2 故障预测</a></li>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_3-fault-prediction/">chapter1.3 故障预测</a></li>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation.md">chapter1.4 指标异常关联</a></li>
 <li><a href="https://chiechie.github.io/2021/05/06/AI/AIOps/AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
 <ul>
@@ -256,7 +257,7 @@
 </ul></li>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">chapter2 故障定位</a>
 <ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 基于拓扑数据的根因定位</a>
+<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
 <ul>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
@@ -267,9 +268,13 @@
 </ul></li>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
 <li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_3-trace_rca/">chapter2.3 调用链数据的预处理</a></li>
-<li><a href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a> &gt; 使用gnn做异常检测</li>
+<li><a href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
 </ul></li>
+<li>chapter3 故障恢复</li>
 </ul>
+<blockquote>
+<p>使用gnn做异常检测</p>
+</blockquote>
 <h1 id="不仅仅生成图片用gan做无监督的异常检测">不仅仅生成图片，用GAN做无监督的异常检测</h1>
 <p>代码：https://github.com/chiechie/wgan-gp-anomaly</p>
 <p>GAN被LeCun赞为继CNN之后最为重要的一个工作，其原因在于让各位惊呼“这才有点人工智能的样子”。相比于CNN或者RNN而言，GAN是一种完全不一样的思路。CNN或者RNN，其本质都是一种有监督的学习方式，相比于传统的方式而言，得益于网络强大的表达能力和自动学习特征的end-to-end的学习能力，CNN和RNN在很多任务上实现了巨大提升从而引领了这一次的人工智能的兴起。但是有监督学习的缺陷在于需要大量的数据进行学习，所以很多人工智能公司都是花了大量的资金和人力来收集和标注数据。记得在学校听“驭势科技”的黄波博士的一次技术分享，他就谈到数据的问题，笑称其实现在最赚钱的不是做人工智能技术的公司，而是那些做数据标注的公司。如果我没有记错的话，似乎买一张给自动驾驶标注的<strong>精细的语义分割</strong>的标签图需要1块人民币左右（敲黑板！商机啊！同学们）。</p>
@@ -404,7 +409,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8D%E4%BB%85%E4%BB%85%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E7%94%A8gan%E5%81%9A%E6%97%A0%E7%9B%91%E7%9D%A3%E7%9A%84%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B"><span class="nav-number">1.</span> <span class="nav-text">不仅仅生成图片，用GAN做无监督的异常检测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%8Agan%E5%BA%94%E7%94%A8%E4%BA%8E%E5%81%9A%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B"><span class="nav-number">1.1.</span> <span class="nav-text">把GAN应用于做异常检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.2.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8D%E4%BB%85%E4%BB%85%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E7%94%A8gan%E5%81%9A%E6%97%A0%E7%9B%91%E7%9D%A3%E7%9A%84%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B"><span class="nav-number"></span> <span class="nav-text">不仅仅生成图片，用GAN做无监督的异常检测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%8Agan%E5%BA%94%E7%94%A8%E4%BA%8E%E5%81%9A%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B"><span class="nav-number">1.</span> <span class="nav-text">把GAN应用于做异常检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -431,7 +436,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">160</span>
+        <span class="site-state-item-count">164</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

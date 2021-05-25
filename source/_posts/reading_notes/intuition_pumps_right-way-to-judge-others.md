@@ -1,5 +1,5 @@
 ---
-title: 如何正确地批评别人？
+title: 《直觉泵》读书笔记1——如何正确地批评别人？
 author: chiechie
 date: 2021-02-28 11:40:47
 categories: 

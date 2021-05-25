@@ -1,5 +1,5 @@
 ---
-title: 韩非子-说林
+title: 《韩非子-说林》读书笔记
 author: chiechie
 mathjax: true
 date: 2021-05-15 22:46:04
@@ -7,6 +7,7 @@ tags:
 - 韩非子
 - 道家
 - 发家
+- 读书笔记
 categories: 
 - 阅读
 ---

@@ -1,5 +1,5 @@
 ---
-title: 认知科学中的概念--"小人儿委员会"
+title: 《直觉泵》读书笔记2
 author: chiechie
 date: 2021-03-04 09:59:33
 categories: 
@@ -7,7 +7,6 @@ categories:
 tags: 
 - 认知科学
 - 人工智能
-
 ---
 
 ## 观点

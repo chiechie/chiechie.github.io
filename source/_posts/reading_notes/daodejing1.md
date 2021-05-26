@@ -46,4 +46,3 @@ categories:
 
 ## 参考
 1. [反者道之动, 弱者道之用”之詮釋](https://www.aisixiang.com/data/37674.html)
-2. [](http://thueps.org/uploadfile/2020/0121/20200121035640681.pdf)

@@ -1,5 +1,4 @@
 ---
-top: true
 title: chapter0 AIOps概览
 author: chiechie
 mathjax: true

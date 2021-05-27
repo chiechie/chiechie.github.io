@@ -1,5 +1,5 @@
 ---
-title: 《the book of why》读书笔记
+title: 《the book of why》读书笔记-1
 author: chiechie
 mathjax: true
 date: 2021-03-06 08:33:38

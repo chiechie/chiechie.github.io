@@ -59,10 +59,9 @@ categories:
 
 ## 练手项目
 
-- https://stable-baselines.readthedocs.io/en/master/
 - [使用强化学习炒股](https://github.com/wangshub/RL-Stock)
 - [强化学习应用于金融问题的文章](https://zhuanlan.zhihu.com/p/267998242)
-- [Gym](https://gym.openai.com/) is a toolkit for developing and comparing reinforcement learning algorithms.
+- [Gym-线上模拟平台](https://gym.openai.com/) ：is a toolkit for developing and comparing reinforcement learning algorithms.
 
 
 ## 强化学习的应用

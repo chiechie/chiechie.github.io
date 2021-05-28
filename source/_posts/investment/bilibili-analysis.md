@@ -4,8 +4,8 @@ author: chiechie
 mathjax: true
 date: 2021-05-21 10:26:00
 tags:
-- 个股分析
 - 投资
+- 行业研究
 categories: 
 - 投资
 ---

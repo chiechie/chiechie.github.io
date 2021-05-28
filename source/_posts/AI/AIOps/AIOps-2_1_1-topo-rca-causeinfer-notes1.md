@@ -1,5 +1,5 @@
 ---
-title: chapter2.1.1 基于拓扑的根因定位CauseInfer
+title: chapter2.1.1 基于拓扑的根因定位CauseInfer1
 author: chiechie
 date: 2021-03-02 14:41:39
 mathjax: true
@@ -26,16 +26,17 @@ categories:
 
 - [chapter2 故障定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/)
 	- [chapter2.1 微服务系统的故障定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/)
-		- [chapter2.1.1 CauseInfer1](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/)
-		- [chapter2.1.2 CauseInfer2](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/)
-		- [chapter2.1.3 AIOps挑战赛2020-获奖方案分享](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020)
-		- [chapter2.1.4 AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/)
+		- [chapter2.1.1 CauseInfer1](https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/)
+		- [chapter2.1.2 CauseInfer2](https://chiechie.github.io/2021/03/03/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/)
+		- [chapter2.1.3 AIOps挑战赛2020-获奖方案分享](https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020/)
+		- [chapter2.1.4 AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/)
 		- [chapter2.1.5 N-Softbei2020比赛](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020)
 		- [chapter2.1.6 MicroCause](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause)
 	- [chapter2.2 多维下钻根因定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/): 暂无
 	- [chapter2.3 调用链数据的预处理](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_3-trace_rca/)
 	- [chapter2.4 时间序列关联性分析](https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/)
 - chapter3 故障恢复
+
 
 
 > CauseInfer是一个解决故障定位的通用方案，原理是通过在历史数据中学习因果图，进而在发生故障时，推断出故障根因。
@@ -47,7 +48,7 @@ categories:
 > 原则上，第一篇不用技术背景也能看明白，问题是啥，解题思路是啥。第二篇就是给算法人员看的，要出方案了，所以要越详细越好。
 
 
-# 名词解释
+## 名词解释
 
 来，补充业务知识
 
@@ -57,7 +58,7 @@ categories:
 - SLO（service level objective）:服务等级目标。指的是目标，例如：qps 99.99% ，响应时间10ms等。
 
 
-# 几个问题
+## 几个问题
 
 看完第一遍之后，还有几个问题
 
@@ -101,10 +102,8 @@ categories:
 - 根因推断的时候，多个根因怎么打分？
   找最异常的那个指标。
 
+## 引言 
 
-
-# paper
-## 摘要
 关于性能诊断领域，之前大部分工作都很粗糙，只涉及定位异常，但是我们觉得还应该包括根因推断，使得软件维护更高效，并且提供更有用的信息给软件bug。
 
 解决所有的性能诊断问题，没有银弹（silver bullet）。本文也只是诊断性能问题的一个子集。
@@ -117,7 +116,6 @@ categories:
 我们的目的是，找到导致这些指标异常（cpu消耗过多，db被锁）的原因，我们不直接识别软件bug，我们提供一些提示。
 举个例子，如果我们定位到根因是，锁的个数异常，则可能是系统中有一个并发bug。
 
-## 引言 
 CauseInfer的思路是这样的，构建一个因果图，来捕捉因果（cause-effect ）关系，然后沿着因果路径推断出根因（root cause）。
 为了完成这个任务，CauseInfer自动化地构建了额一个两层的分层的因果图。
 
@@ -238,7 +236,7 @@ BCP效果更好，更适合分析长序列，但是不适合在线模式，
 我们解决的是一个因果推断的问题，因此常用的统计学的设计实验的思路在这里行不通。
 
 
-# 参考文献
+## 参考文献
 
 1. [2014-INFOCOM_CauseInfer](https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf)
 2. [2007-The Journal of MachineLearning Research-pc算法](https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)

@@ -15,6 +15,7 @@ categories:
 
 ## 目录
 
+
 - [chapter0 概览](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/)
 - [chapter1 故障发现](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate.md/)
 	- [chapter1.1 单指标异常检测](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/)
@@ -26,10 +27,10 @@ categories:
 
 - [chapter2 故障定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/)
 	- [chapter2.1 微服务系统的故障定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/)
-		- [chapter2.1.1 CauseInfer1](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/)
-		- [chapter2.1.2 CauseInfer2](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/)
-		- [chapter2.1.3 AIOps挑战赛2020-获奖方案分享](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020)
-		- [chapter2.1.4 AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/)
+		- [chapter2.1.1 CauseInfer1](https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/)
+		- [chapter2.1.2 CauseInfer2](https://chiechie.github.io/2021/03/03/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/)
+		- [chapter2.1.3 AIOps挑战赛2020-获奖方案分享](https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020/)
+		- [chapter2.1.4 AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/)
 		- [chapter2.1.5 N-Softbei2020比赛](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020)
 		- [chapter2.1.6 MicroCause](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause)
 	- [chapter2.2 多维下钻根因定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/): 暂无
@@ -38,13 +39,14 @@ categories:
 - chapter3 故障恢复
 
 
+
 > 本文是《CauseInfer论文笔记》的第二篇，[《CauseInfer论文笔记1》](https://chiechie.github.io/2021/03/02/technology/causeinfer-notes1/)，从high-level的角度描述了causeinfer的工作流。这里要开始涉及到方案的具体的实现了，所以内容比较硬核
 >
 > 不做方案实现的话，可以不用看这篇文章
 
-# 因果建模
+## 因果建模
 
-## 构建服务依赖图
+### 构建服务依赖图
 
 服务依赖图长什么样？一个DAG：
 
@@ -94,7 +96,7 @@ $$
 如果$k^{*}<0$,则B是A的因（cause），B导致了A，记为 $$B \rightarrow A $$
 
 
-## 构建指标因果图
+### 构建指标因果图
 
 如何指标因果图？需要用到「因果推断」技术，从数据得到因果关系。这里使用的是[PC算法](https://chiechie.github.io/2021/03/09/technology/PC-algo/)
 > pc算法是一种发现因果关系的算法，在满足一定的假设前提下，使用的基于统计的方法，推导出因果关系。
@@ -108,7 +110,7 @@ $$
 工作负载（workload），配置错误，依赖服务的延迟。
 
 
-### 激进派算法
+#### 激进派算法
 
 如果一个服务（比如db服务）只会被别人调用，那么指标因果图就只会使用该服务的本地性能指标（服务依赖图依赖的数据一起采集了）。
 
@@ -133,7 +135,7 @@ b. 表象指标通过图中的每条路径都可以达到。
 c. 预设的根因指标没有父母。
 d. 对于一个双向的连接，随机选择一个方向。（这就是随机游走的意思？）
 
-### 保守派算法
+#### 保守派算法
 
 保守派算法，跟激进派很像。区别在于，使用PC算法之前，保守派会利用先验信息做初始化DAG。
 和激进算法比，保守算法可以捕捉更多的因果关系，减少反直觉的因果关系。
@@ -143,12 +145,12 @@ d. 对于一个双向的连接，随机选择一个方向。（这就是随机�
 
 ![图3-保守派构建出来的因果图-右边](inference.png)
 
-# 因果推断
+## 因果推断
 
 
 因果模型构建好了，接下来就需要根据这个因果图去做因果推断了。
 
-## 整体思路
+### 整体思路
 
 当前端的服务可用性指标（SLO）出现异常，就会触发根因分析：
 
@@ -157,7 +159,7 @@ d. 对于一个双向的连接，随机选择一个方向。（这就是随机�
 一直追本溯源，一直到最底层的被调用方，即物理层。
 
 
-## 指标因果图根因推断
+### 指标因果图根因推断
 
 指标因果图
 
@@ -193,7 +195,7 @@ $$\operatorname{violation}(X)=\frac{X(t)-\overline{X_{t-60, t-1}}}{\sigma_{t-60,
 - $\varepsilon$ : 扰动项
 
 
-# 参考文献
+## 参考文献
 
 1. [2014-INFOCOM_CauseInfer](https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf)
 2. [2007-The Journal of MachineLearning Research-pc算法](https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)

@@ -37,7 +37,7 @@ tags:
 	- [chapter2.4 时间序列关联性分析](https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/)
 - chapter3 故障恢复
 
-> 本文是美团的提出的告警聚类的一种算法，其实也已有的paper，美团应用了一下。
+> 本文是美团的提出的告警聚类的一种算法，其实也只是基于已有的paper做了一下应用。
 > 
 > 跟logmine的区别是，他可以定义多层的泛化结构，对于有多层关系的属性有很好的效果。
 
@@ -53,7 +53,7 @@ tags:
 
 ### **算法选择**
 
-聚类算法采用论文[Clustering intrusion detection alarms to support root cause analysis--paper]中的算法。
+聚类算法采用论文《Clustering intrusion detection alarms to support root cause analysis》中的算法。
 
 ![img](./kjhjk.png)
 

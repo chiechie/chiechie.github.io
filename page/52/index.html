@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/15/AI/AIOps/AIOps-2_3-trace_rca/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/16/investment/industry-research/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/15/AI/AIOps/AIOps-2_3-trace_rca/" class="post-title-link" itemprop="url">chapter2.3 调用链数据的预处理</a>
+            <a href="/2021/03/16/investment/industry-research/" class="post-title-link" itemprop="url">行业研究</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-15 16:49:19" itemprop="dateCreated datePublished" datetime="2021-03-15T16:49:19+08:00">2021-03-15</time>
+              <time title="创建时间：2021-03-16 10:49:46" itemprop="dateCreated datePublished" datetime="2021-03-16T10:49:46+08:00">2021-03-16</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-25 11:42:58" itemprop="dateModified" datetime="2021-05-25T11:42:58+08:00">2021-05-25</time>
+                <time title="修改时间：2021-05-20 08:12:50" itemprop="dateModified" datetime="2021-05-20T08:12:50+08:00">2021-05-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
                 </span>
             </span>
 
@@ -219,51 +219,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="目录">目录</h2>
+          <h2 id="券商的行研报告">券商的行研报告</h2>
 <ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate.md/">chapter1 故障发现</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_3-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation.md">chapter1.4 指标异常关联</a></li>
-<li><a href="https://chiechie.github.io/2021/05/06/AI/AIOps/AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_3-trace_rca/">chapter2.3 调用链数据的预处理</a></li>
-<li><a href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
+<li><a target="_blank" rel="noopener" href="http://data.eastmoney.com/report/industry.jshtml">东方财经</a></li>
 </ul>
-<h2 id="调用链的数据格式">调用链的数据格式</h2>
-<figure>
-<img src="../../_drafts/gluon-ts_2/img_1.png" alt="RPC框架下采集的调用链原始数据&amp;AIOps比赛的子调用数据" /><figcaption aria-hidden="true">RPC框架下采集的调用链原始数据&amp;AIOps比赛的子调用数据</figcaption>
-</figure>
+<h2 id="行业舆情数据">行业舆情数据</h2>
 <ul>
-<li>最顶上的表格中是最原始的数据，中间表格和下面的表格是处理后的数据</li>
-<li>中间表格的是做调用链路分析（TraceAnomaly）用到的数据，用到了耗时，以及调用链的结构信息。</li>
-<li>最下面表格是2021AIOps比赛的调用链的数据，每个span_id表示一次子调用，即一次trace中，从触发该trace，开始的调用路径中，途径当前服务的那次子调用，对应表2中的一个call path。但是耗时是只包括当前服务从接受到call，到完成处理，开始response的时间间隔。</li>
-<li>【补充】这里的表格信息量很少，它不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。</li>
+<li><a target="_blank" rel="noopener" href="https://www.percent.cn/Resource/DataReport.html">百分百行业研究报告</a></li>
 </ul>
-<h2 id="参考资料">参考资料</h2>
+<h2 id="个股">个股</h2>
+<ul>
+<li>财报： 个股所在交易所得官网</li>
+<li>讨论： 雪球</li>
+</ul>
+<h2 id="科技股分析框架">科技股分析框架</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA">清华微众AIOps新作:基于深度学习的调用轨迹异常检测算法 -微信公众号</a></li>
-<li><a href="https://chiechie.github.io/2021/03/09/AIOps/aiops2021-demo/">AIOps挑战赛2020-demo方案-chiechie</a></li>
+<li>看老板：看老板的格局（投机型的，短期kpi导向的不行），人品（山寨，碰瓷型的），做事能力（野心大于能力不行，为啥pcg 做啥都不行，微信做啥都行？）。</li>
+<li>观测尺度放长一点：做投资，要有中长期持有的准备，也不用太长，太长公司命运会怎样，谁都无法预料。</li>
+<li>看公司生命周期，腾讯现在 这个阶段其实不太适合投资了，业务已经进入稳定期（想要扩张业务板块 不是那么容易）， 所以股价不会大涨了。相反的，拼多多，nio 这些年轻的 企业就还有很好 的成长空间，适合投资。最近腾讯的大股东-南非控股抛售了部分腾讯的股份，就是为了投资更多创新性企企业。</li>
+</ol>
+<h2 id="对不同行业公司估值分别看什么指标">对不同行业公司估值分别看什么指标？</h2>
+<blockquote>
+<p>在 Altimeter Capital 时期投资了 ByteDance、Pinduoduo 的 Ram Parameswaran 讲他看不同类型公司的时候看什么指标：</p>
+</blockquote>
+<ul>
+<li>广告公司
+<ul>
+<li>用户规模 x 用户每天上线时间；</li>
+<li>投放广告工具的质量（一开始在你平台投放广告的肯定是中小企业，所以工具要足够好用）</li>
+</ul></li>
+<li>内容订阅公司
+<ul>
+<li>内容的深度和质量</li>
+</ul></li>
+<li>电商
+<ul>
+<li>单位产品在扣除折扣后需要盈利；</li>
+<li>物流速度要快（现在的消费者愿意为方便付费）；</li>
+<li>购物过程要愉快（中国的 Pinduoduo、欧美的 Etsy、Poshmark）</li>
+</ul></li>
+<li>市场（和电商有交叉）
+<ul>
+<li>只做连接供给的生意可以让你发展到一定规模，但之后如果要发展，公司必须能控制供给；举个没有控制住攻击的例子，原神2020年选择在bilibili和taptap上架，华为小米等手机厂商的应用市场就少了一块收入，</li>
+</ul></li>
+<li>O2O（英文叫 on-demand services）
+<ul>
+<li>主要是街头混战的能力（掌握供给、网络效应），eg美团/uber/滴滴</li>
+</ul></li>
+<li>支付：
+<ul>
+<li>帮商家降低交易费</li>
+<li>美国的交易费非常高（1.5% - 3%），Stripe、Square 都大幅降低了交易费，中国的阿里由于是体系内部转账，所以交易费只有 0.1%。</li>
+</ul></li>
+<li>开发者工具
+<ul>
+<li>火爆程度：使用人数、讨论数量</li>
+<li>稳定性，易用性，口碑（交付质量，响应及时性）</li>
+</ul></li>
+<li>互联网行业：
+<ul>
+<li>没有严格意义上的赢家通吃市场，总有新公司能从新角度提供更好的服务：可能因为大公司很多时候没有做某类产品的基因（例如微软失败的工作交流软件Microsoft Teams、谷歌失败的购物产品）。</li>
+<li>看好并投资的印度公司Pine Labs (Square), Udaan (Pinduoduo), Zomato (DoorDash)（括号里是对标的中美公司）。他觉得印度接下来会有三五个百亿美元的公司，之前印度公司让人失望是因为退出不够好。</li>
+<li>互联网占经济的整体比例还很低，前景无量）</li>
+<li>ByteDance数据驱动，公司各个团队同时做上百种不同产品……</li>
+</ul></li>
+</ul>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.joincolossus.com/episodes/22392883/parameswaran-internet-scale-businesses?tab=mentionedcontent">invest like the best 访谈ram--互联网的规模生意</a></li>
 </ol>
 
       
@@ -284,7 +307,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/15/reading_notes/ray-dalio_coperation/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/15/investment/xueqiu-QA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -298,7 +321,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/15/reading_notes/ray-dalio_coperation/" class="post-title-link" itemprop="url">原则-如何协作？</a>
+            <a href="/2021/03/15/investment/xueqiu-QA/" class="post-title-link" itemprop="url">雪球上的精彩问答</a>
         </h2>
 
         <div class="post-meta">
@@ -308,14 +331,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-15 11:44:59" itemprop="dateCreated datePublished" datetime="2021-03-15T11:44:59+08:00">2021-03-15</time>
+              <time title="创建时间：2021-03-15 23:25:09" itemprop="dateCreated datePublished" datetime="2021-03-15T23:25:09+08:00">2021-03-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+                <time title="修改时间：2021-04-27 13:16:48" itemprop="dateModified" datetime="2021-04-27T13:16:48+08:00">2021-04-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -323,7 +346,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
                 </span>
             </span>
 
@@ -338,27 +361,75 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>好无聊啊，为什么要把时间浪费在这些技巧上面</p>
-</blockquote>
-<h2 id="向上管理">向上管理</h2>
-<p>老板既不是组织结构图上的一个头衔，也不是一个“职能”。他们是有个性的人，他们有权以自己最得心应手的方式来工作。与他们共事的人有责任观察他们，了解他们的工作方式，并做出相应的自我调整，去适应老板最有效的工作方式。</p>
-<h2 id="跟同级的人沟通">跟同级的人沟通</h2>
+          <h2 id="出口为何对一个国家很重要">出口为何对一个国家很重要</h2>
+<p>净出口额一般只占据一个国家的gdp不到5%？美国甚至长期逆差？那么出口为何很重要？</p>
+<ul>
+<li>进出口是参与全球化社会分工的方式。</li>
+<li>社会分工的好处是，取人之长，避已之短，发挥专业性优势，把事情做到极致，提高效率。这个跟人与人之间的分工是一样的。</li>
+<li>现在大部分人不种粮食，不织布，不养鸡，他们只是从事复杂社会分工中的一个很细分环节，他们从事自己的分工获得收入可以理解为“出口”，他们用获得的收入购买别人的产品与服务可以理解为“进口”，进口与出口可能顺差，也可能逆差，但大体是均衡的，这样每个参与社会分工的人，都获得了比自己种粮、织布、养鸡高得多的生活水平。</li>
+</ul>
+<p>既然能通过工业品制造的优势赚取大量的钱，应该同等地扩大消费需求啊，进口和出口大致平衡才是正常的吧。就像一个人靠某项技能大把赚钱，还不是买房买车旅行等花掉？不知道是否和外汇管制有关系，赚到的美元并不能很自由买外国货。</p>
+<p>跟外汇管制没有关系，跟产业结构有关系。 中国产业品类齐全，竞争力越来越强，大部分产品与服务都是本国生产为主。 就以两个最大的品类不例，房地产完全自产，汽车自产比例越来越高，进口产品的吸引力下降，市场份额当然也下降。</p>
+<p>Q:中国为何可以长期对外保持顺差，就好像一个人长期赚的多花的少？</p>
+<p>A:这是因为，中国在最大宗的商品品类（工业品）方面的优势实在太大。</p>
+<p>世界变化之快是超出人想像的。100年前，中国所有工业品都要进口，自己出口些生丝、茶叶、桐油换点外汇。 现在中国大批出口工业品到美国，从美国购买大豆、玉米、小麦。。</p>
+<p>我觉得中国在服务业方面的优势，比工业更强。但这个品类不好出口。</p>
+<p>Q:但是有没有可能突然有天我们最具优势的就是服务业开始出口呢，毕竟全球化在有条不紊的进行中，就好比美团迅速占领世界<span class="math inline">\(美团-W(03690)\)</span></p>
+<p>A: 很难，主要是劳动力无法输出。</p>
+<p>所以现在最有可能出口的服务业是线上服务业，比如游戏，比如tiktok。</p>
+<p>Q: “大部分产品与服务都是本国生产为主”，这可能也和中国特殊国情有关系，比如汽车行业，如果去除关税、外汇等因素，中国人的汽车进口可能会大幅增加。也就是说，“中国产业品类齐全”，也未必就是自然竞争的结果。</p>
+<p>A:我觉得不会。</p>
+<p>以汽车为例，中国对大排量汽车（比如3.0以上）征收关税和大排量税，造成进口车比国外贵很多，如果取消这些税，会增加汽车的进口量。但这部分市场规模并不大。</p>
+<p>主流排量的汽车（2.0-2.5)已经完全国产化了，国内外价格相差不大，甚至，同样排量的汽车，国产的比进口的质量可能更好，根本没有必要进口了。</p>
+<p>https://xueqiu.com/1078554131/174396377</p>
+<h2 id="战略和战术">战略和战术</h2>
+<p>Q：在网络上，有关经营生意的信息中，有时会提到战略这个词，现在对战略的定义很多。 在商业范畴中，您认为什么是战略？ 战略决定生死吗？</p>
+<p>A：战略和战术，是相对的。</p>
+<p>更全面、更综合、更长期，就是战略；更局部，更单一，更短期，就是战术。</p>
+<p>比如在战争中，涉及到政治理念、资源组织、长期目标，就是战略。 以你谈到的中日云南战役为例，比如单兵战术、部队（中队、联队、师团、军）级别的作战，日军优势都比较强。 但是，在当时的全球战场上，日军在太平洋战争中已经全面溃败，本土已经开始挨炸；日本国内的经济资源已经完全支撑不了战争；而日本长期的目标（在太平洋地区建立一个日本为核心的殖地民体系）也与当时的全球政治环境格格不入，所以，战术上的优势毫无意义。</p>
+<p>放在企业经营层面，行业选择、长期目标规划、企业文化建设，就是战略。这些决定了企业的生死。</p>
+<p>https://xueqiu.com/9978035065/173274995</p>
+<h2 id="fb值得买吗">FB值得买吗？</h2>
+<p>Q：请问，FB未来三年的护城河会比今天宽吗？时间是FB的朋友吗？</p>
+<p>A：当然会更宽。</p>
+<p>首先社交关系和用户生产的内容会的沉淀。</p>
+<p>其次，公司正确的功能开发运营（比如电商,比如支付)，会强化产品的功能，让用户更离不开它。</p>
+<p>https://xueqiu.com/2751731294/173191111</p>
+<h2 id="特斯拉">特斯拉？</h2>
+<p>Q：为什么特斯拉不是理想的标的？</p>
+<p>A：大概是这样：</p>
+<p>汽车是一个产业规模很大，市场集中度受限的行业，单一公司的市场份额都会有天花板，不能形成绝对垄断格局，也难以维持特别高的利润率。</p>
+<p>汽车产品并无网络效应（越多人用越好用）。汽车生产有规模效应，但汽车产能的扩张高度依赖于资本投资。资本是开放的，不会给单一公司独享。</p>
+<p>汽车的技术变革会影响市场格局，但技术是外溢的，单一公司无法长期保持技术领先，也无法依赖技术领先或者独占性获得绝对垄断的市场份额。最终，效率（成本优势）与品牌（溢价）是汽车公司的核心竞争力。</p>
+<p>汽车与手机是有根本区别的。手机只是工具，差异化在于每个用户使用的软件及其连接的世界不同。而汽车，人们使用的是其本身（驾驶、乘坐、炫耀）的体验，消费者会追求其本身的差异化，而厂家也尽力满足这个差异化的需求。</p>
+<p>A2: 绝大部分认同，只有一点，即，数据的积累有可能会导致公司技术领先和规模效应。</p>
+<p>Q: 仿照ABB走品牌差异化路线还能保证一定的利润率，走大众路线的车厂最后拼硬件拼规模拼成本</p>
+<p>A: 现在看特斯拉的定价策略，是铁了心要靠价格走销量路线了。</p>
+<p>这方面会碰上中国企业硬杠。</p>
+<p>在价格路线（成本优势）上，没有企业能竞争得过中国人。</p>
+<p>Q: 绝大部分外资都在中国有工厂,原材料可能更便宜,但成本就是比中国高,这就是事实,不需要知道是为什么?如果一定要说,那就是外资更腐败.</p>
+<p>A: 我观察主要不是腐败，而是：</p>
 <ol type="1">
-<li><p>每个人都有他自己的做事方法，也有权按照自己的方式来工作，而不是按你的方法来工作。重要的是，<strong>他们能否有所作为以及他们持有什么样的价值观</strong>。</p></li>
-<li><p>每个人的工作方式不一样。提高效率的第一步是了解跟你合作的人，以利用他们的长处、工作方式和价值观。工作关系当以工作为基础，也以人为基础。</p></li>
-<li><p>人际关系责任的第二部分内容是沟通责任。人跟人之间的大部分冲突是因为：不知道别人在做什么，采取怎样的工作方式，想要做出什么样的贡献以及期望得到怎样的结果。不了解的原因是他们没去问。这种不去问明情况的做法，与其说是反映了人类的愚蠢，倒不如说是历史使然。在以前，人们没必要把这些情况告诉任何人。</p>
-<blockquote>
-<p>比如在中世纪的城市，一个区的每一个人从事的行业都一样。在乡村，土地刚一解冻，山谷里的每一个人就开始播种同一种农作物。即使有少数人做的事情和大家不一样，他们也是单独工作，因此不需要告诉任何人他们在做什么。</p>
-</blockquote></li>
+<li>管理效率低而成本高。</li>
+<li>决策效率低，啥事都层层汇报。 本质上是远程管理的职业经理人跟中国本土企业家在竞争。</li>
 </ol>
-<h2 id="关于团队分工">关于团队分工</h2>
-<p>桥水使用一种称为“团队倾向简表”的测试来合理安排工作。“团队倾向简表”识别的5种类型是创造者、推进者、改进者、贯彻者和变通者。· 创造者提出新想法、新概念。他们喜欢非结构化、抽象的活动，喜欢创新和不走寻常路。· 推进者传递这些新想法并推进。他们喜欢感觉和人际关系，管理各种人的因素。他们非常善于激发工作热情。· 改进者挑战想法。他们分析计划以寻找缺陷，然后以很客观、符合逻辑的方式改进计划。他们喜欢事实和理论，以系统性的方式工作。· 贯彻者也可以叫作执行者。他们确保重要的工作得到执行，目标被实现。他们关注细节和结果。· 变通者是以上4种类型的结合。他们能根据特定需求调整自身，并能从各种各样的视角看待问题。</p>
+<p>Q：根据方丈的理论一般是决策链和本地化的问题。MSN当年加个功能换个版本啥的得几个月汇报沟通。汽车上适不适用倒是不一定。</p>
+<p>A：我给大家举个例子吧。</p>
+<p>就是沃尔沃在福特手上的时候，经营状况差得要命；后来吉利收购了，重新焕发了青春。</p>
+<p>那么这个过程中吉利做了什么呢？ 其实吉利做的最核心的一件事情，是把沃尔沃从（福特的）一个部门，恢复成一家独立（可以自主决策）的公司。</p>
+<p>原来在福特手里的时候，事事都要向（福特）总部汇报，而总部的决策效率很低，正确率也很低。</p>
+<p>这种体制真的能把企业搞死。</p>
+<ul>
+<li>我对汽车行业的商业模式有过思考，有过几个简单的结论。
+<ul>
+<li>第一、汽车制造是一个<strong>有规模效应、但没有网络效应的行业</strong>，这个行业的扩张高度依赖于资本的再投入，所以它的扩张成本很高，单一厂商的市场份额必然是有天花板的，利润率受制于竞争也是有天花板的。这是一个对汽车行业的整体看法，目前全球所有汽车公司都没能逃脱出这个模式。</li>
+<li>第二、关于新能源汽车，我自己算是一个对特斯拉，包括自动驾驶技术研究得比较深入的用户，综合下来我的结论，就是说<strong>没有一个公司</strong>能够在<strong>电池</strong>技术和<strong>自动驾驶技术</strong>方面<strong>长期拥有独家的技术优势</strong>，最后大家还是要在<strong>品牌</strong>和<strong>效率</strong>层面来竞争。</li>
+<li>第三、我刚才说过，我喜欢投资那种<strong>能够意识</strong>到<strong>个人能力和公司资源有限</strong>的企业，但是特斯拉高度不符合。芒格也说过，马斯克很聪明，但是比起一个人的智商有170，却认为自己的智商是250，他更愿意选择一个认为自己的智商是120，但实际上是130的人。特斯拉股价确实涨了很多，但我对我的想法没有任何变化，不能根据短期的股价涨跌，就认为自己的看法是错的。反过来，可能我卖出特斯拉不是错，买入可能才是错。</li>
+</ul></li>
+<li>投资很有意思，可能有的时候挣到了钱，但你是错的，有的时候亏了钱，但你是对的。所以还是<strong>要赚自己认知体系内的钱</strong>。</li>
+</ul>
 <h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?src=11&amp;timestamp=1615476352&amp;ver=2940&amp;signature=2sRvaRpQinI2YVCYYfi3Amq*2KJv2UTfXyQWq-uML68g4DuwxKNaulHbkixJc91hNrDn2MHZUVgTr8T4RSCLVRZa3pGGRXm921lm*wgATyH*Azwj-rBslwjClDhLx*eL&amp;new=1">你事业的上限究竟在哪里？-公众号文章</a></li>
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/848324405e0fe08483ab6a4kc7432af0210c74d97b01b1c">RayDalio的原则</a></li>
-</ol>
+<p>https://xueqiu.com/1547652891/170378968</p>
 
       
     </div>
@@ -377,7 +448,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/51/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><span class="page-number current">52</span><a class="page-number" href="/page/53/">53</a><span class="space">&hellip;</span><a class="page-number" href="/page/74/">74</a><a class="extend next" rel="next" href="/page/53/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/51/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><span class="page-number current">52</span><a class="page-number" href="/page/53/">53</a><span class="space">&hellip;</span><a class="page-number" href="/page/76/">76</a><a class="extend next" rel="next" href="/page/53/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -443,7 +514,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">148</span>
+          <span class="site-state-item-count">151</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/AI/NLP/NLP_2_bert/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/" class="post-title-link" itemprop="url">chapter2.4 时间序列关联性分析</a>
+            <a href="/2021/04/18/AI/NLP/NLP_2_bert/" class="post-title-link" itemprop="url">NLP_2_Transformer的原理</a>
         </h2>
 
         <div class="post-meta">
@@ -189,179 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-14 17:27:26" itemprop="dateCreated datePublished" datetime="2021-04-14T17:27:26+08:00">2021-04-14</time>
+              <time title="创建时间：2021-04-18 00:04:13" itemprop="dateCreated datePublished" datetime="2021-04-18T00:04:13+08:00">2021-04-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-25 11:42:58" itemprop="dateModified" datetime="2021-05-25T11:42:58+08:00">2021-05-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="目录">目录</h2>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate.md/">chapter1 故障发现</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_3-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation.md">chapter1.4 指标异常关联</a></li>
-<li><a href="https://chiechie.github.io/2021/05/06/AI/AIOps/AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_3-trace_rca/">chapter2.3 调用链数据的预处理</a></li>
-<li><a href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
-</ul>
-<blockquote>
-<p>performance counter： 性能监视器</p>
-</blockquote>
-<h2 id="背景">背景</h2>
-<p>为了保证产品的服务质量、减少服务宕机时间，从而避免更大的经济损失，对关键的服务事件的诊断显得尤为重要。实际的运维工作中，对服务事件进行诊断时，运维人员可以通过分析与服务事件相关的时序数据，来对事件发生的原因进行分析。虽然这个相关关系不能完全准确的反映真实的因果关系，但是仍然可以为诊断提供一些很好的线索和启发。</p>
-<ul>
-<li><p>如下图， 两个事件：程序A启动和程序B启动，一个时序：cpu使用率。 可以看到，事件（程序A的运行）与时序（CPU使用率）存在相关关系，并且程序A启动会导致CPU使用率升高，记为A-&gt;cpu上升。</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMjzFINogsh.png?alt=media&amp;token=9002fb74-9363-4a57-a182-fac68f04bd60" /></p></li>
-</ul>
-<p>希望能使用数据驱动的方法，找到类似的相关组合，也就是&lt;事件, 指标&gt;对，例如A-&gt;cpu上升，</p>
-<h2 id="基本概念">基本概念</h2>
-<ul>
-<li>时间序列（metric）： 通常有固定的时间间隔，例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。</li>
-<li>事件（event）：就是一个正常的操作比如程序A的启动，这个是需要运维指定的 他感兴趣的某个日志模版。 比如“Out of memory” /启动某个磁盘intensive程序/ 启动某个cpu intensive程序/query-time out alerts/某个告警，类似log3C的日志pattern，big pandas 的变更事件。event报告告警和日志。</li>
-<li>日志(logging)：例如有个应用出错，抛出了NullPointerExcepction。</li>
-<li>事件序列（event sequence）：记录了特定事件发生的序列。</li>
-<li>故障（incident）：故障定位，就是要找到这个故障的根因。 （感觉也能跟BigPanda的告警关联之后的结果 对应起来），</li>
-</ul>
-<h2 id="总结">总结</h2>
-<ul>
-<li>这篇文章主要是解决的什么问题？找到事件（E，event）和指标（S，metric）的相关性。</li>
-<li>具体的思路？将这个问题转换为统计中的两样本问题，并且使用邻近算法判断相关性。</li>
-<li>难点是什么？异构数据 + 异常关联性，异构指的是文本+时序，异常关联性，指的是，只关心事件和指标异常时刻的相关性。</li>
-<li>用的什么分析方法？还可以应用到哪些领域？ 用2-sample解决event 和 指标 之间的关联关系，可推广到所有离散变量的相关性分析中。</li>
-<li>这篇文章没有解决的问题是？这些问题有什么解决方法？ 本文还是比较学术派，只是给了一个 分析指标 和 事件 的相关性 方法，至于怎么从众多原始日志和告警中得到事件，以及分析出来的相关性怎么应用到故障定位上面去，没有说。但是这两步 对于实际应用来说 是必不可少的。</li>
-<li>BigPandas将众多告警基于业务关系（拓扑数据）收敛成incident，然后将incident跟变更事件进行关联，得到的变更事件就是root cause</li>
-</ul>
-<h3 id="技术细节">技术细节</h3>
-<p>要解决两个问题：</p>
-<ol type="1">
-<li>确定指标和事件的因果关系，即事件A--&gt;指标1：两个随机分布的相似性指标</li>
-<li>确定因果关系中指标的单调性，即事件A--&gt;指标1上升：判断两个随机变量的大小关系的指标</li>
-</ol>
-<p>都是统计中的假设检验的方法。</p>
-<p>判断方向可以转化为以下问题：</p>
-<ol type="1">
-<li>判断事件发生前的 一段序列 跟 整个时序的相似性。如果差异大，说明指标 --&gt; event</li>
-<li>判断事件发生后的 一段序列 跟 整个时序的相似性。如果差异大，说明event --&gt; 指标</li>
-</ol>
-<p>判断单调性，是这么做的：</p>
-<ol type="1">
-<li><p>计算event前后，2个子序列的 均值的差 <span class="math display">\[ t_{s c o r e}=\frac{\mu_{\Gamma^{f r o n t}}-\mu_{\Gamma^{r e a r}}}{\sqrt{\frac{\sigma_{\Gamma^{f} r o n t}^{2}+\sigma_{\Gamma^{r e a r}}^{2}}{n}}} \]</span></p></li>
-<li><p>判断单调性：</p></li>
-</ol>
-<ul>
-<li><p>如果<span class="math inline">\(t_{score} &gt; \alpha\)</span>, 得到负的单调性，即 <img src="./img.png" /></p></li>
-<li><p>如果<span class="math inline">\(t_{score} &lt; -\alpha\)</span>, 得到正的单调性。</p>
-<p>这里P=0.025对应<span class="math inline">\(\alpha=1.96\)</span>，P=0.001对应<span class="math inline">\(\alpha=2.58\)</span></p></li>
-</ul>
-<h3 id="实验">实验</h3>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGkHOys2alH.png?alt=media&amp;token=95dde9c8-0249-4033-a027-83bca9a543ff" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fy5QnzhCHAl.png?alt=media&amp;token=13774051-eb1f-4ada-a978-9cd7d2bee748" /></li>
-</ul>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/SIGKDD-2014-Correlating-Events-with-Time-Series-for-Incident-Diagnosis.pdf">微软-指标与事件的关联分析paper</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/jixinpu/aiopstools/tree/master/aiopstools/association_analysis">关联分析code</a>:</li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-NMwaCD4Kzkt4BTnr5JKDQ">智能运维前沿-微软AIOps工作：时序数据与事件的关联分析</a></li>
-<li>H. B. Mann， On a test of whether one of two random variables is stochastically larger than the other. The annals of mathematical statistics, 1947.</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/14/AI/timeseries/DeepAR_1_notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/14/AI/timeseries/DeepAR_1_notes/" class="post-title-link" itemprop="url">DeepAR笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-14 17:21:19" itemprop="dateCreated datePublished" datetime="2021-04-14T17:21:19+08:00">2021-04-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
+                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -384,141 +219,356 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="一些疑惑">一些疑惑</h2>
+          <h1 id="transformer">Transformer</h1>
+<blockquote>
+<p>先概括Transformer的主要设计思路；再讲每一步的具体技术细节。</p>
+<p>只想粗略了解Transformer的设计可以只看 “high-level ideas”这部分。</p>
+</blockquote>
 <ul>
-<li>时序预测的技术难点在哪里？</li>
-<li>模型的输入是来自多个序列（有点点像类似迁移学习中的样本的横向扩展，以及持续学习中灌多个样本：
-<ul>
-<li>为了保证模型不会出现灾难性遗忘掉先学到的模式，需要把来自不同的曲线的样本打散？</li>
-<li>如果说序列之间的模式本身就不一致，会不会导致模型学习到一个混乱的模式？</li>
-<li>要不要求序列本身就是相似的？</li>
-<li>不同scale的曲线如何share一个模型 ？</li>
-<li>1个DeepAR模型可以容纳的最大的曲线条数是多少？每个曲线的样本个数是多少？</li>
-</ul></li>
-<li>deepAR不适用的场景有哪些？</li>
-<li>encoder和decoder的权重是共享的么？</li>
-<li>预测target为count类型或者为正的数值类型，模型是怎么做的？</li>
+<li>Transformer是google2016年在论文《attention is all you need》提出的一个机器翻译模型。</li>
+<li>Transformer是一个很典型的seq2seq架构。</li>
+<li>Transformer的亮点在于将attention和self-attention机制完全剥离开之前rnn的结构，只跟dense层组合。</li>
 </ul>
-<h2 id="相关技术综述">相关技术综述</h2>
+<h2 id="high-level-ideas">High-Level ideas</h2>
+<p>首先把模型看作一个黑盒。 在机器翻译（eg德译英）任务中，它会将一个句子（例如德文）翻译成一种语言（机器语言），然后再将其翻译成另一种语言（例如英文）。</p>
+<p>打开Transformer的黑盒，我们看到一个encoders组件，一个decoders组件，以及它们之间的数据流。</p>
+<p><img src="./transformer_encoders_decoders.png" /></p>
+<p>encoders内部stacked encoders(论文堆了六个)，decoders内部也是stacked decoders(论文堆了六个)。</p>
+<p>一个encoder或一个decoder叫做一个block。</p>
+<p><img src="./transformer_encoder_decoder_stack.png" /></p>
+<p>encoders包含的6个block，结构相同，但是不共享权重。</p>
+<p>每个encoder block包含2层:</p>
 <ul>
-<li>classic时序预测： arima/state space/exponential smoothing
-<ul>
-<li>只对单个曲线做预测，缺点是要一个个曲线去做模型选择，并且每个样本曲线需要积累大量的历史数据</li>
-</ul></li>
-<li>基于神经网络：
-<ul>
-<li>单个曲线训练</li>
-<li>分组训练：发现即使分了组，每个组里面的曲线差异也很大</li>
-<li>全局训练：DeepAR是第一个</li>
-</ul></li>
-<li>【支线】其他领域：nlp，图像生成，语音生成技术 都可以用于时间序列，但是要注意有两个不同点：
-<ul>
-<li>时序场景中，下游的决策应用依赖输出概率分布</li>
-<li>时序场景中，输出为count类型，使用负的二项分布计算likelihood，这个时候不能使用标准的归一化方法，参考
-<ul>
-<li>归一化层，目前主要有这几个方法：Batch Normalization（2015年）、Layer Normalization（2016年）、Instance Normalization（2017年）、Group Normalization（2018年）、Switchable Normalization（2018年）；</li>
-</ul></li>
-</ul></li>
-<li>技术难点：
-<ul>
-<li>现实中需要对多条曲线建模，分别建模人工成本高</li>
-<li>不同曲线scale不一样，但是学习一个global model对nn来说挑战很大（nn擅长局部建模）</li>
-<li>预测概率分布</li>
-</ul></li>
+<li>self-attention层，参数不共享</li>
+<li>ffnn层，参数共享</li>
 </ul>
-<h2 id="总结">总结</h2>
-<ul>
-<li>DeepAR是一种时间序列预测算法.</li>
-<li>DeepAR不做点估计，而是估计概率分布</li>
-<li>由于deepAR输出的是概率分布，所以对未来一段时间的预测，需要采样递归生成，但是采样只是1个路径，如果希望得到期望，需要重复采样</li>
-<li>适用于噪声较大的数据：相较于点估计能提供更有用的信息，如方差，在金融领域这个值代表风险，价值的(比如var用于计算准备金)。</li>
-<li>在交易上的启发：构建基于波动率的策略，风险大的情况下不交易。</li>
-</ul>
-<h2 id="deepar原理">DeepAR原理</h2>
-<p>基本概念&amp;符号说明：</p>
-<ul>
-<li><span class="math inline">\(z_{i,t}\)</span>: 第i个时间序列在t时刻的值</li>
-<li><span class="math inline">\(P\left(\mathbf{z}_{i, t_{0}: T} \mid \mathbf{z}_{i, 1: t_{0}-1}, \mathbf{x}_{i, 1: T}\right)\)</span>: 模型输出</li>
-<li>conditioning range： <span class="math inline">\(t_0\)</span>表示历史依赖长度</li>
-<li>prediction range：预测区间</li>
-<li><span class="math inline">\(\mathbf{Z}_{i, t_{0}: T}\)</span>: 预测区间内，Z的取值</li>
-</ul>
-<h3 id="模型架构">模型架构：</h3>
-<p>训练过程（左边）和 预测过程（右边）：</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjTfoJccA7q.png?alt=media&amp;token=6850c357-b303-4053-81b8-2756678deb58" /></p>
-<h3 id="学习目标">学习目标</h3>
-<p>最大化likelyhood:</p>
-<p><span class="math inline">\(\mathcal{L}=-\sum\limits_{i=1}^{N} \sum\limits_{t=t_{0}}^{T} \log \ell\left(z_{i, t} \mid \theta\left(\mathbf{h}_{i, t}\right)\right)\)</span></p>
-<h3 id="重点对不同scale曲线怎么处理的">【重点】对不同scale曲线怎么处理的？</h3>
+<p><img src="./Transformer_encoder.png" /></p>
+<p>每个decoder block除了这两层，还有一个encoder-decoder attention层，用来关注encoder的输出，作用类似于 <a target="_blank" rel="noopener" href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/">seq2seq models</a> 中的attention。</p>
+<p><img src="./Transformer_decoder.png" /></p>
+<h2 id="输入tensor">输入tensor</h2>
+<p>上面介绍了Transformer的主要组件，现在看一下组件之间的数据流向。</p>
+<p>和一般的NLP任务一样，Transformer首先使用<a target="_blank" rel="noopener" href="https://medium.com/deeper-learning/glossary-of-deep-learning-word-embedding-f90c3cec34ca">embedding algorithm</a>将每个输入单词转换成一个向量。</p>
+<p><img src="./transformer_embeddings.png" /></p>
+<p>如上图，每个单词都被embedded为大小为512的向量（上面的x1，x2，x3）。</p>
+<p>接下来，这个512的向量会流入self-attention和ffnn层。</p>
+<p><img src="./transformer_encoder_with_tensors.png" /></p>
+<p>接下来，我们以一个短句为例，看一下Transfomer内部细节。</p>
+<h2 id="encoder">Encoder</h2>
+<p>前面提到，encoder的输入是多个向量构成的list：[x1，x2]。</p>
+<p>接下来它是怎么处理这个list的呢？</p>
 <ol type="1">
-<li>不同曲线怎么做归一化和逆归一化？缺失值多&amp;方差变化大
-<ul>
-<li>context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。</li>
-<li>相当于在第一层做了layer Normalization</li>
-</ul></li>
-<li>不同曲线的长度和重要性不一样，如果是按照曲线id来均匀采样，会导致重要的曲线学的不够（underfit）
-<ul>
-<li>不做均匀采样，而是做加权采样--使用1里面计算得到的scale作为权重</li>
-</ul></li>
+<li>将这些向量传递到一个"self-attention’"层，输出z1，z2</li>
+<li>然后将z1，z2 丢入一个前馈神经网络，输出r1，r2。注意这一层的dense layer的参数对所有的z1，z2，是共享的。</li>
 </ol>
-<h3 id="重点deepar是怎么得到概率分布的">【重点】DeepAR是怎么得到概率分布的？</h3>
+<p>然后将r1，r2 传递给下一个编码器encoder2作为输入，encoder1的输入（x1,x2）和输出（r1，r2）的维度是一样的。</p>
+<figure>
+<img src="./transformer_encoder_with_tensors_2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="self-attention">self-attention</h3>
+<h4 id="high-level-ideas-1">High Level ideas</h4>
+<p>假设下面的句子是我们要翻译的输入句子:</p>
+<p>”<code>The animal didn't cross the street because it was too tired</code>”</p>
+<p>这个句子中的"it"指的是什么？它指的是“street”还是“Theanimal”？对于人类来说很简单区分，但对于算法就不那么简单了。</p>
+<p>当模型解读每个word时，self-attention会让模型回顾上下文信息，也就是输入序列中的其他word，从而帮助模型更好地理解这个word。</p>
+<p>RNN通过hidden state策略，使得 它将 当前词 与 上下文（准确来说只有上文）的信息进行融合。</p>
+<p>类似的，Transformer通过self-attention来实现这个目的。</p>
+<p>还是回到上面的例子，当模型处理单词"it"时，self-attention使它能够将"it"与"animal"联系起来。</p>
+<figure>
+<img src="./transformer_self-attention_visualization.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>上图表示，当我们在encoder #5 中对"it"编码时，self-attention会将一部分注意力集中在"Animal"上，并将“Animal”的信息融入了"it"的编码中。</p>
+<p>相关可视化工具参考Tensor2Tensor （<a target="_blank" rel="noopener" href="https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb">Tensor2Tensor notebook</a> ）。</p>
+<p>先看看如何使用向量计算self-attention，然后再看看使用矩阵如何实现。。</p>
+<h4 id="第一步-计算3个向量">第一步 计算3个向量</h4>
+<p>对于每个单词，我们创建三个向量：</p>
 <ul>
-<li><p>比较intutive的推导--updata0926</p>
-<ul>
-<li>我们希望得到条件概率分布，即p（z｜x），</li>
-<li>Q 如何得到概率分布呢？</li>
-<li>A ：分两步走
-<ul>
-<li>先拍一个概率分布的形式（函数族），eg高斯分布</li>
-<li>使用指标&lt; <span class="math inline">\(\mu, \sigma\)</span>&gt; 进一步确定这个分布</li>
-</ul></li>
-<li>Q 剩下的问题（不确定的因素）为，如何确定量化指标？</li>
-<li>A ：构建一个神经网络，输入x，输出&lt; <span class="math inline">\(\mu, \sigma\)</span>&gt;</li>
-<li>Q 那么nn怎么知道输出的u，sigma对不对呢，又没有监督信号 来指引，只有&lt;x, y&gt; pair</li>
-<li>A： 使用likelihood 和 y 来度量输出的&lt;<span class="math inline">\(\mu, \sigma\)</span>&gt; 质量好不好
-<ul>
-<li>有点像，有个人号称 他的理论知识渊博&lt;<span class="math inline">\(\mu, \sigma\)</span>&gt; (覆盖了y空间中所有的案例），现在要检验他的方法论对不对呢？只有一个实践案例----- 假设是对的，然后看是否适用该案例</li>
-</ul></li>
-<li>总结下：
-<ul>
-<li>模型输出&lt;<span class="math inline">\(\mu, \sigma\)</span>&gt; , 实际给的ground truth：y</li>
-<li>loss为：<span class="math inline">\(-log Prob(\mu,\sigma,y)\)</span></li>
-</ul></li>
-</ul></li>
-<li><p>前提，先假设预测的数据服从的分布族，有几个待估参数</p>
-<ul>
-<li>实值--假设是高斯分布</li>
-<li>整数--假设是一个二项分布</li>
-</ul></li>
-<li><p>设计网络的时候，需要某一层输出是 分布的参数（例如<span class="math inline">\(\mu\)</span> 和 <span class="math inline">\(\sigma\)</span>）,</p>
-<ul>
-<li>训练的时候，将&lt;<span class="math inline">\(\mu, \sigma\)</span>&gt; 带入pdf，计算pdf中 ground truth的概率，取negtive log，作为反馈信号（-log prob就是loss），这个值越大（loss越小）说明模型预测的越准。</li>
-<li>做推断的时候，将&lt;<span class="math inline">\(\mu, \sigma\)</span>&gt; 带入pdf， 进行采样，得到预测值</li>
-</ul></li>
+<li>一个 Query vector</li>
+<li>一个 Key vector</li>
+<li>一个 Value vector。</li>
 </ul>
-<p>【重点】输出的概率分布，怎么评估模型效果？</p>
-<h3 id="总结-1">总结</h3>
-<p>由于DeepAR输出的是概率分布，所以对未来一段时间的预测，需要采样递归生成，但是采样只是1个路径，如果希望得到期望，需要重复采样 适用于噪声较大的数据：相较于点估计能提供更有用的信息，如方差，在金融领域这个值代表风险，有价值。</p>
-<h3 id="一些疑惑-1">一些疑惑</h3>
-<p>模型的输入是来自多个序列（btw，有点点像 横向联邦学习）： 为了保证模型不会灾难性遗忘掉先学到的模式，需要把来自不同的曲线的样本打散？ 如果序列之间的模式差异很大，会不会导致学习到一个混乱的模式？</p>
-<p>要不要求序列本身就是相似的？ 在交易上的启发： 构建基于波动率的策略，风险大的情况下不交易，会不会更好盈利？</p>
-<h3 id="关于deepar-的冷启动">关于DeepAR 的冷启动</h3>
-<p>DeepAR号称能解决冷启动的问题，然而在实验设置中，如果没有给出item 的特征数据，是不可能在冷启动item上得到靠谱结果的： 因为 压根没又数据可以 学item之间的相关性。 之前在想会不会因为不同曲线丢到1个模型训练，学习到混乱的模式，放到这里可以将问题进一步明确： 会不会导致 在曲线A上利用曲线B学到的模式进行预测？（然而A和B相差很大）</p>
-<p>为了避免这个现象，需要满足： - 目标1-训练阶段，模型能区别A和B两种模式 - 目标2-推断阶段，新样本匹配到它真正的模式（A或者B）</p>
-<p>有两种方法：</p>
+<p>这些向量是通过将单词的embedding乘以三个矩阵来创建的。</p>
+<p>请注意，得到的新向量的维度（64）比embedding（512）小。</p>
+<p>这么设计的目的是，保证在加入了multi-head self- attention之后，encoder的输出和输入维度（512）还能保持一致。</p>
+<p><img src="./transformer_self_attention_vectors.png" alt="img" /> 这三个向量如何解读？为何有用？</p>
+<h4 id="第二步-计算权重分数">第二步 计算权重分数</h4>
+<p>第二步是计算权重分数<span class="math inline">\(\alpha\)</span>，目的是量化 其他单词应该被关注的程度。</p>
+<p>方法如下：</p>
+<p>当前单词的query vector和其他单词的 key vector求 内积。</p>
+<p>如下:</p>
+<p><span class="math inline">\(&lt;q_1, k_1&gt;, &lt;q_1, k_2&gt;, ... &lt; q1, k_m&gt;\)</span></p>
+<figure>
+<img src="./transformer_self_attention_score.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h4 id="第三步和第四步--权重分数归一化">第三步和第四步 -权重分数归一化</h4>
+<p>第三步：将第二步算出来的权重得分向量（长度为m）进行归一化，目的是让权重不要受到key vector的长度（paper里面是64）的影响，这样算梯度就更稳定，。</p>
+<p>第四步：将归一化的权重得分向量（长度为m）送入激活函数（paper里面是softmax），目的是得到一个概率向量，所有数值加起来为1。</p>
+<p>最终的向量，表示每个单词应该被当前单词关注的程度，值越大越应该被关注。。</p>
+<figure>
+<img src="./transformer_self-attention_softmax.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h4 id="第五步和第六步-计算context向量">第五步和第六步-计算context向量</h4>
+<p>第五步和第六步是将每个单词的value vector使用权重概率向量进行加权求和，作为当前单词的self-attention表达（长度为value vector的长度为64，用了8个头，一起输出是64* 8 = 512）。</p>
+<figure>
+<img src="./transformer_self-attention-output.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>然后就结束了。</p>
+<h4 id="使用矩阵运算对self-attention整个过程总结">使用矩阵运算对self-attention整个过程总结</h4>
+<p>把刚刚的过程再加入一个维度，也就是从一个单词 变成 多个单词，计算他们各自的self-attention表示，</p>
+<p>下面用矩阵表达：</p>
+<p>第一步是计算 Query、 Key 和 Value 矩阵：</p>
 <ul>
-<li>方法1: 在训练阶段加入item的index信息（item元数据）</li>
-<li>方法2:在训练阶段加入item的特征信息（更general的item元数据）</li>
+<li><p>我们将embeddings塞到一个矩阵x：行数表示单词个数，列表示embedding的长度</p></li>
+<li><p>权重矩阵(WQ、 WK、 WV）：行代表embedding向量的长度，列分别代表query空间，key空间，value空间的维度</p></li>
+<li><p>X分别和这几个矩阵相乘</p></li>
 </ul>
-<p>方法1和方法2都能达到目标1，但是对于目标2，方法2更接近一些： 方法1只能对 index出现在训练阶段的item 做预测 方法2可以对index没有出现在训练阶段的item做预测，真正 有可能 解决冷启动问题。（也是有边界的，比如item 元数据是某个类别变量，那么类别只有在训练阶段出现过的item才能被预测，eg 训练集中 包含 衣服 和 书籍两种 商品类型，推断阶段 就只能预测 这两种类型的 新商品，）</p>
-<h3 id="关于曲线的混乱模式">关于曲线的混乱模式</h3>
-<p>之前比较担心，喂入不同曲线，会让模型学习到 或者 匹配到 混乱模式。 现在想了一下，即使学到了 混合的模式，未必是件坏事，要分两个层面看：</p>
+<figure>
+<img src="./transformer_self-attention-matrix-calculation.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>第二步，利用第一步的结果来计算attention的输出，用一个矩阵计算来表达，简洁优雅</p>
+<figure>
+<img src="./transformer_self-attention-matrix-calculation-2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="多头怪兽">多头怪兽</h3>
+<p>论文通过增加"多头"注意机制进一步细化self-attention layer。 这在两个方面改善了self-attention层的表现:</p>
 <ol type="1">
-<li>混合是个好事：比如冷启动的商品或者缺失值过多的商品，如果能借鉴 模式相近（学出来的）的数据质量很好的其他商品 ，是比单独自己学 的效果好的。</li>
-<li>混合是个坏事：比如数据质量本身就很好，不用参考别人的学习资料（可能还会拖后腿） 所以，如果希望用一个global 模型一劳永逸对所有商品 建模，我觉得至少要考虑到 ，单个商品的 local模型 和 global 模型 要择优录取。</li>
+<li><p>它扩展了模型关注不同位置的能力。单头机制虽然会注意到其他单词，但是注意力还是 很有可能完全被当前自己的状态牵制。多头的话，相当于多审视几遍 这个注意力，减少完全 关注自己 情况发生的可能性。</p></li>
+<li><p>它给予attention层多个"表示子空间"。 正如我们接下来将看到的，通过多头，我们不仅有一组，而且有多组 query / key / value 权重矩阵(Transformer 使用八个头，因此我们最终为每个encoders / decoders设置了八组)。 这些集合中的每一个都是随机初始化的。</p>
+<p>训练完后，每组的三个矩阵，用于将embedding输入(或来自底层的编encoders/decoders向量)映射到表征子空间。</p></li>
 </ol>
-<h3 id="参考资料">参考资料</h3>
-<p>段易通：概率自回归预测——DeepAR模型浅析 GluonTS - Probabilistic Time Series Modeling Probabilistic Demand Forecasting at Scale</p>
+<figure>
+<img src="./transformer_attention_heads_qkv.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>类似上面提到的单头self-attention计算，我们现在只是用8个不同的权重矩阵算了8次，并且得到了8个不同的 z 矩阵</p>
+<figure>
+<img src="./transformer_attention_heads_z.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>后面怎么跟dense层进行衔接呢？</p>
+<ol type="1">
+<li>将这8个z矩阵进行列拼接（concat）</li>
+<li>拼接后的矩阵大小为m*512，丢入全连接层WO</li>
+</ol>
+<figure>
+<img src="./transformer_attention_heads_weight_matrix_o.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这几乎就是multi-headed self-attention的全部内容。把整个过程放在一个图中描述：</p>
+<figure>
+<img src="./transformer_multi-headed_self-attention-recap.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>回顾一下之前的例子，当我们对"it"进行encoding时，8个注意力头分别关注什么？</p>
+<p>先看2个头的情况：</p>
+<p>如下图所示，在对"it"进行encoding时，一个head（黄色）最关注"animal"上，而另一个head（绿色）最关注“tired”——某种意义上说，这个模型对"it"表达融合了"animal"和“tied”信息。</p>
+<figure>
+<img src="./transformer_self-attention_visualization_2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>再看8个头的情况：</p>
+<p>如下图所示，我们把8个头的信息都表达在图中，就会变得很难解释：</p>
+<figure>
+<img src="./transformer_self-attention_visualization_3.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="用位置编码positional-encoding表示序列的顺序">用位置编码（Positional Encoding）表示序列的顺序</h3>
+<p>到目前为止，我们的模型还没有考虑词的顺序关系。</p>
+<p>为了解决这个问题，transformer向每个输入embedding向量（x1）又加上一个位置编码向量（t1）。</p>
+<figure>
+<img src="./transformer_positional_encoding_vectors.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>假设embedding的维度是4，那么实际的位置编码看起来是这样的:</p>
+<figure>
+<img src="./transformer_positional_encoding_example.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这个模式意味什么？</p>
+<p>在下图中，每一行对应一个向量的位置编码。第一行表示第一个word。</p>
+<p>每行包含512个值，介于1和 -1之间。用颜色表示值的大小</p>
+<figure>
+<img src="./transformer_positional_encoding_large_example.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>可以看到所有的位置编码向量被分成了两半。 左半边的值是由一个函数(使用正弦函数)生成的，而右半边的值是由另一个函数(使用余弦函数)生成的。 然后将它们进行拼接（concate）。</p>
+<p>本文(3.5节)描述了位置编码<a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensor2tensor/blob/23bd23b9830059fbc349381b70d9429b5c40a139/tensor2tensor/layers/common_attention.py"><code>get_timing_signal_1d()</code></a>的公式。 这只是其中一种位置编码的方法。</p>
+<h3 id="残差连接和layer-normalization">残差连接和layer-normalization</h3>
+<p>encoder的架构中还有一个细节：在每个block中，self-attention和ffnn都有一个残差连接，然后接一个层标准化（layer-normalization）步骤。</p>
+<figure>
+<img src="./transformer_resideual_layer_norm.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>如果我们将残差连接和layer normalization用矩阵表示，就是下图：</p>
+<figure>
+<img src="./transformer_resideual_layer_norm_2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>decoder的sub-layers 也同样用到了add &amp; normalization的设计。</p>
+<p>下图是一个简化版的Transformer架构：由2个stacked encoder和2个stacked decoder组成。</p>
+<figure>
+<img src="./transformer_resideual_layer_norm_3.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="decoder">Decoder</h2>
+<p>现在来看看encoder和decoder是如何协作的：</p>
+<ul>
+<li>第一个的encoder的输入式原始的embedding；</li>
+<li>最后一个encoder输出是一个z向量，以及两个矩阵：keys matrix和value maxtrix</li>
+</ul>
+<figure>
+<img src="./transformer_decoding_1.gif" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>encoding阶段（phase）完成后，我们开始decoding阶段，decoding的每个step描述如下：</p>
+<ol type="1">
+<li>每个step 输出一个element的概率分布。</li>
+<li>从step1的概率分布中抽样出word（或者直接选择概率最大的word），作为decoder的输入。</li>
+<li>重复step1，直到产生结束符。</li>
+</ol>
+<p>decoder也会用到位置编码，下图的右半边</p>
+<figure>
+<img src="./transformer_decoding_2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>decoder中的 self attention layers与encoder的运作方式略有不同:</p>
+<p>在decoder中，self-attention layer只能接触到输出序列中的前半部分。</p>
+<p>怎么做到呢？在softmax操作之前，masking序列后半部分(设为 -inf)</p>
+<p>"Encoder-Decoder Attention"层的工作原理和多头self-attention一样，只不过它的Queries矩阵来自下面的decoder的输出和stacked encoder中的Keys矩阵和Values矩阵 。</p>
+<h2 id="最后的dense层和softmax层">最后的dense层和Softmax层</h2>
+<p>stack decoders输出一个数值向量。 我们怎么把它变成一个词呢？</p>
+<p>这是最后的dense层+softmax在做的事情。</p>
+<p>dense层是一个简单的全连接神经网络，它将stack of decoders的输出映射为一个长多的logits向量（长度就是输出词汇表的大小）。</p>
+<p><img src="./transformer_decoder_output_softmax.gif" alt="img" /> 这个图从底部开始，生成一个vector作为decoder stack的输出。 然后它被转换成一个输出单词。</p>
+<h2 id="训练">训练</h2>
+<p>我们假设输出词汇表只包含六个单词("a"、"am"、"i"、"thanks"、"student"和"eos"("句子结束"的缩写))。</p>
+<blockquote>
+<p>模型的输出词汇表是在开始训练之前的预处理阶段创建的。一旦定义了输出词汇表，就可以使用 one-hot 编码 来表示词汇表中的每个单词。</p>
+</blockquote>
+<p>假设我们正在训练的目标是将"merci"翻译成"thanks"。</p>
+<p>也就是说，当我们输入“merci”的embedding向量，希望模型输出的概率分布向量中单词"thanks"的概率值最大。</p>
+<p>训练的过程：将模型输出与目标输出进行比较，然后使用反向传播方法调整模型的权重，使模型输出更接近目标输出。</p>
+<p>如何比较两种概率分布？ 可查看 <a target="_blank" rel="noopener" href="https://colah.github.io/posts/2015-09-Visual-Information/">cross-entropy</a>和 <a target="_blank" rel="noopener" href="https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained">Kullback-Leibler</a>. 。</p>
+<p>目标概率分布：</p>
+<figure>
+<img src="./output_target_probability_distributions.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>模型输出：</p>
+<figure>
+<img src="./transformer_output_trained_model_probability_distributions.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h1 id="bert模型">bert模型</h1>
+<figure>
+<img src="https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&amp;rect=0%2C0%2C2668%2C3126&amp;w=1980&amp;h=2320" alt="bert模型可视化" /><figcaption aria-hidden="true">bert模型可视化</figcaption>
+</figure>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a> paper, the Transformer blog post ( (<a target="_blank" rel="noopener" href="https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html">Transformer: A Novel Neural Network Architecture for Language Understanding</a>), and the ) ，<a target="_blank" rel="noopener" href="https://ai.googleblog.com/2017/06/accelerating-deep-learning-research.html">Tensor2Tensor announcement</a>.</li>
+<li>Watch <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=rBCqOTEfxvg">Łukasz Kaiser’s talk</a> walking through the model and its details</li>
+<li>Play with the <a target="_blank" rel="noopener" href="https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb">Jupyter Notebook provided as part of the Tensor2Tensor repo</a></li>
+<li>Explore the <a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensor2tensor">Tensor2Tensor repo</a>.</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03059">Depthwise Separable Convolutions for Neural Machine Translation</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.05137">One Model To Learn Them All</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1801.09797">Discrete Autoencoders for Sequence Models</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1801.10198">Generating Wikipedia by Summarizing Long Sequences</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1802.05751">Image Transformer</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1804.00247">Training Tips for the Transformer Model</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1803.02155">Self-Attention with Relative Position Representations</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1803.03382">Fast Decoding in Sequence Models using Discrete Latent Variables</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1804.04235">Adafactor: Adaptive Learning Rates with Sublinear Memory Cost</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/14/reading_notes/nava-joerogan-show/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/14/reading_notes/nava-joerogan-show/" class="post-title-link" itemprop="url">joerogan访谈nava</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-14 18:27:20" itemprop="dateCreated datePublished" datetime="2021-04-14T18:27:20+08:00">2021-04-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-06 09:40:45" itemprop="dateModified" datetime="2021-05-06T09:40:45+08:00">2021-05-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>人生只有一次，尽最大可能让他精彩。</p>
+</blockquote>
+<h2 id="摘要">摘要</h2>
+<ul>
+<li><p>what you do, who you do with, how you do it, weight more important than how hard you work</p></li>
+<li><p>outputs are nonlinear based on the quality of the work that you put in</p></li>
+<li><p>the right way that work is like a lion, you and i are not like cows, we are not meant to graze all day right.</p></li>
+<li><p>一个公司的规模，取决于内部和外部的交易成本（transaction costs）对比。信息时代带来的最大的便利就是，让外部交易变得更便捷；现在的趋势是公司的最优规模在锐减。</p>
+<blockquote>
+<p>chiechie：会有越来越多的敏捷和有创意的小公司</p>
+<p>大公司的问题：每个小模块有自己的KPI，生产链路长。多任务并发的时候，经常会遇到性能瓶颈。</p>
+<p>根本原因可能是大公司的官僚式管理制度问题？每个模块只用对生产链路中，自己这一环的kpi负责，而不是对整个业务的最终效果负责，根本就违背了「风险共担」。</p>
+</blockquote></li>
+<li><p>现阶段ai是什么阶段？low ai，即模式识别。</p></li>
+<li><p>为什么短时间内通用ai不可能？人连大脑的运行机制都不懂。根据摩尔定律，我们要再花50年，算力才能赶上一个cell内部的计算速度.</p></li>
+<li><p>bankers是不是洗劫了社会的财富？其实他们也冒了很大的风险，赌输了也会破产。</p></li>
+</ul>
+<h2 id="关于资本主义-和-社会主义">关于资本主义 和 社会主义</h2>
+<ul>
+<li><p>“资本主义”其实大部分时候说的是“自由市场”。</p></li>
+<li><p>“社会主义”强调结果公平，伴随的一定有violence--暴力重分配</p></li>
+<li><p>许多人年轻的时候是社会主义（heart），长大后是资本主义（head）</p></li>
+<li><p>taleb说，对我的家人，我是一个communist；对我最亲密的朋友来说，我是一个社会主义者；在我的state-level的政治中，我是一个democrat；higher levels的政治中我是一个republican；在federal level政治中，我是一个libertarian</p></li>
+<li><p>一个组织或者群体的规模越大，群体内利益差异就越大，相互之间的信任的可能就越少，会产生更多的cheating，为了让这个系统运作的越好 就需要 匹配的 激励机制，将激励机制发挥到极致的例子就是资本主义。</p>
+<blockquote>
+<p>管理小团队，like family；管理大团队，要奖惩机制。</p>
+</blockquote></li>
+<li><p>群体的规模越小，比如对待家人，成为一个社会主义，会让你更幸福，但是对陌生人不行。</p></li>
+</ul>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=3qHkcs3kG44">Joe Rogan Experience #1309 - Naval Ravikants</a></li>
+</ol>
 
       
     </div>
@@ -537,7 +587,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/27/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/74/">74</a><a class="extend next" rel="next" href="/page/29/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/27/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/76/">76</a><a class="extend next" rel="next" href="/page/29/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -603,7 +653,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">148</span>
+          <span class="site-state-item-count">151</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

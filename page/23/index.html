@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/21/reading_notes/something-about-investment/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/22/AI/timeseries/gluon-ts_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/21/reading_notes/something-about-investment/" class="post-title-link" itemprop="url">投资最重要的事</a>
+            <a href="/2021/04/22/AI/timeseries/gluon-ts_1/" class="post-title-link" itemprop="url">使用gluon-ts做时序预测(1)</a>
         </h2>
 
         <div class="post-meta">
@@ -189,142 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-21 09:04:33" itemprop="dateCreated datePublished" datetime="2021-04-21T09:04:33+08:00">2021-04-21</time>
+              <time title="创建时间：2021-04-22 17:35:59" itemprop="dateCreated datePublished" datetime="2021-04-22T17:35:59+08:00">2021-04-22</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-28 09:44:23" itemprop="dateModified" datetime="2021-04-28T09:44:23+08:00">2021-04-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="第1章-序言">第1章 序言</h2>
-<ol type="1">
-<li>宏观未来很难预测, 大部分人都不具备这个知识优势</li>
-<li>"知可知"：对于个别公司和股票，了解的细节越多，越<strong>有可能</strong>获得知识优势，但是对于整个市场的认知做到这一点就很难。</li>
-<li>弄清自己在周期和钟摆中所处的阶段</li>
-<li>找到某个细分的领域，某个公司，通过努力花时间，调研信息。</li>
-</ol>
-<h2 id="第2章-理解市场的有效性以及局限性">第2章 理解市场的有效性以及局限性</h2>
-<ol type="1">
-<li>有效市场假说可以优化为：市场可以迅速快捷地整合信息。</li>
-<li>资产价格能够迅速反映出人们对于信息含义的共识，但是这个共识不一定是对的。</li>
-<li>影响共识的两个因素：心理因素和基本面。前者有时候更重要。</li>
-</ol>
-<h2 id="第10章-抵御消极影响">第10章 抵御消极影响</h2>
-<ol type="1">
-<li>基本观点被转化为高价泡沫的例子--科技股热潮：最开始是有一个有客观吸引力的资产，随着重视程度提高，大家都想要持有这项资产，继而资本流入，价格上涨，资产更加具有吸引力，从而更多人买进，于是上涨进入爆发期。如果这种情况持续的时间足够长、积聚的力量足够大，投资就会变成泡沫。泡沫为善于思考的投资者提供了许多<strong>卖空</strong>的机会。 &gt; 很像平台运营的方式啊。</li>
-</ol>
-<h2 id="第12章-寻找便宜货">第12章 寻找便宜货</h2>
-<ol type="1">
-<li><p>人们通常不愿意挖掘最佳机会。</p></li>
-<li><p>构建投资组合的准备工作：</p>
-<ul>
-<li>潜在投资清单：满足最低的<strong>绝对标准</strong>的股票。</li>
-<li>内在价值估计：要把未来多久的收益考虑进去呢？</li>
-<li>有多少价值price in到价格中了</li>
-<li>每个投资的风险，以及对整体组合的影响。</li>
-</ul></li>
-<li><p>最低标准之一是风险可接受，包括超出投资者专业知识范围导致的不可预测（例如我跟风买比亚迪），以及行业不稳定或者公司财务的不透明导致无法预测。这两点风险都跟价格无关。</p></li>
-<li><p>价值股：高质量，高市值，eg腾讯，茅台，平安。</p></li>
-<li><p>找便宜货：潜在收益/风险 最高的股票，这个是一个<strong>相对标准</strong></p></li>
-<li><p>投资的过程是缜密和经过严格训练的。投资是相对的：不管价格低迷还是高涨，从现存的可能性中选择最好的。这就是相对决策。</p></li>
-<li><p>投资误区：不能区分好在产与好交易，误将客观优点当作投资机会。</p></li>
-<li><p>便宜股为什么收到冷落？</p>
-<ul>
-<li>客观上公司表现不好：资产类别可能存在缺陷；在业内较为落后（公司规模？）；资产负债表可能被过度杠杆化（没有能力没有钱）</li>
-<li>投资者非理性或者片面理解这个公司：没有透过表象全面了解资产，或未能克服某些不以价值为基础的传统、偏见或束缚。</li>
-<li>进一步下跌：大多数投资者会根据以往业绩而不是更可靠的均值回归来预测未来趋势。第一层次思维者倾向于将过去的价格疲软视为负担，而不是资产更为廉价的标志。</li>
-</ul></li>
-<li><p>怎么区分便宜货和垃圾？思索下，牛肉是不是一个被低估的赛道。</p></li>
-</ol>
-<h2 id="第20章-最重要的事情">第20章 最重要的事情</h2>
-<ol type="1">
-<li>怎么给一个公司估值？四个方面：账面现金&amp;有形资产价值，产生现金流能力，以及增值潜力。概括一下就是，现在有多少钱，现在能挣多少钱，以及未来可能挣多少钱。</li>
-<li>买入机会存在的原因：极少数人对便宜货有敏锐的洞察力，大部分人认知低下。</li>
-<li>优先级： 买便宜股 &gt; 成长股 &gt; 热门动量股</li>
-<li>韭菜心理学：
-<ul>
-<li>市场处于周期之中，但是大多数人相信惯性和动量。</li>
-<li>投资者的群体心理也呈现有规律的钟摆式波动——从乐观到悲观，从轻信到怀疑，从唯恐错失良机到害怕遭受损失，从急于买进到迫切卖出。</li>
-</ul></li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/e59329905e4245e59ebd7e1k3c5327902153c59dc0488e1">投资，最重要的事-微信读书</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/21/AI/reinforcement_learning/rf-application/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/21/AI/reinforcement_learning/rf-application/" class="post-title-link" itemprop="url">强化学习2_应用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-21 08:22:04" itemprop="dateCreated datePublished" datetime="2021-04-21T08:22:04+08:00">2021-04-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-20 09:24:06" itemprop="dateModified" datetime="2021-05-20T09:24:06+08:00">2021-05-20</time>
+                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -347,54 +219,175 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="应用场景">应用场景</h2>
-<ol type="1">
-<li><p>商品推荐: 每个用户的信息作为state，推荐的商品是action，长期看用户的点击率/浏览时长/消费额reward</p></li>
-<li><p>网约车调度：&lt;地址，时间&gt;为state为，每个地址在每个时间的冷门程度是value。</p></li>
-<li><p>自动生成SQL语句：</p></li>
-<li><p>神经网络结构搜索(NAS)：</p>
-<blockquote>
-<p>NAS is closely related to hyperparameter optimization and is a subfield of automated machine learning (AutoML)</p>
-</blockquote></li>
-<li><p>游戏：生成NPC</p></li>
-</ol>
-<h3 id="商品推荐">商品推荐</h3>
-<p>强化学习可以讲一个很美好的故事：数据驱动的自动化运营。 但是我更好奇的是在实际落地时，强化学习的效果如何？</p>
-<p>去问了一位在推荐领域做强化学习的朋友，得到的答案比较让人难过： 强化学习很难调，实际效果没有监督学习好。</p>
-<p>系统太复杂又是个黑盒，人hold不住。</p>
-<blockquote>
-<p>facebook的一个工程师 现在facebook--可能也有很多的其他的公司--在内容推荐技术的很多细分场景上开始应用强化学习，eg消息推送时，以用户的长期活跃为目标，而不是短期打开率为目标。 增强学习的好处是解决了短期反馈和长期活跃之前的换算问题，把两万名算法工程师和他们的实习生们从一部分痛苦的调参工作中解放出来，也让分发策略从长期上达到更高的价值创造。 但一个更加追求用户长期活跃的社交平台就会是环境更健康的么？我对此深表怀疑。（不健康的社交平台，比如很多喷子，反人性的言论）</p>
+          <blockquote>
+<p>看一下amazon官方对DeepAR的实现</p>
 </blockquote>
-<h3 id="网约车调度">网约车调度</h3>
-<p>didi的paper是这么写的，不知道生产系统是不是这么用的。</p>
-<h3 id="神经网络结构搜索nas">神经网络结构搜索（NAS）</h3>
-<p>就好像下一盘棋一样，一局玩完可能要很久，所以每走一步，都可以，判断当前这步棋走的水平如何。</p>
-<p>但是只有当一盘都下完了，我们才真的知道具体的reward。</p>
-<p>NAS是auto-ml的子领域，为了让机器去设计神经网络。 2017年谷歌发了一篇paper，使用基于强化学习的思路，去设计网络结构。 具体思路是这样的，假设要设计一个20层的CNN，超参个数为20*3，即每一层卷积，需要设置：</p>
+<h3 id="实验数据">实验数据</h3>
+<p>数据： <a target="_blank" rel="noopener" href="https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014">electricity数据集--Electricity dataset from UCI</a>： , 2011 ~2014期间，370 个 家庭的用电量 ，频率为小时 train/test：2014年9月第一周 作为test，之前的所有数据作为train:</p>
 <ul>
-<li>卷积核数量</li>
-<li>卷积核大小</li>
-<li>步长大小</li>
+<li>窗口长度(window_size)：192（8天），其中</li>
+<li>conditioning range：168（前7天）</li>
+<li>prediction range：24（第8天）</li>
+<li>stride_size: 24 hour，滑窗步长</li>
+<li>input_size： window_size-stride_size，14</li>
 </ul>
-<p>怎么定义为强化学习的问题呢？</p>
+<h2 id="问题">问题</h2>
 <ul>
-<li>state：截至目前，已经确定的超参。</li>
-<li>action：超参取值</li>
-<li>policy value function：选择某组超参，长期收益，也就是验证集上的准确率。</li>
-<li>策略网络：一个RNN。</li>
+<li>gluon-ts里面将输入做对数处理效果会不会好一点？
+<ul>
+<li>不用，mxnet已经做了， 并且额外做预处理，可能还会带来负面影响，
+<ul>
+<li>loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，</li>
+</ul></li>
+<li>参考论文--context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。</li>
+</ul></li>
+<li>为什么pytorch的训练要7个小时？mxnet训练只要10min？
+<ul>
+<li>主要在样本采样这块</li>
+</ul></li>
+<li>自己能不用tensorflow复现mxnet的效果？
+<ul>
+<li>对比参数量，准确率，计算时间，内存消耗</li>
+</ul></li>
+<li>为什DeepAR和DeepFator的loss scale 差这么大? loss的含义都不一样</li>
 </ul>
-<p>输入向量 <span class="math inline">\(x_t\)</span> 是对上一个超参数 <span class="math inline">\(a_{t−1}\)</span> 做 Embedding 得到的</p>
-<p>策略函数为什么不用监督算法拟合（like 贝叶斯优化里面的的高斯过程回归）？ 因为超参有可能是离散的，也就是说，损失和奖励对于策略网络参数<span class="math inline">\(\theta\)</span>不可微。(btw,贝叶斯优化本身也处理不了离散的超参。)</p>
-<p>应用强化学习的代价？需要大量的训练样本，至少上万个奖励，即从初始化开始训练几万个CNN，计算量非常大。</p>
-<p>后面学术界提出了更优秀的NAS方法--DARTS 及其变体。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># deepAR</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss</span>(<span class="params">self, x: Tensor</span>) -&gt; Tensor:</span></span><br><span class="line">	<span class="keyword">return</span> -self.log_prob(x)</span><br><span class="line"><span class="comment"># deepFator</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">negative_normal_likelihood</span>(<span class="params">self, F, y, mu, sigma</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (F.log(sigma) + <span class="number">0.5</span> * math.log(<span class="number">2</span> * math.pi)+ <span class="number">0.5</span> * F.square((y - mu) / sigma))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对不同曲线预测的时候，为什么有的曲线效果很， 好有的曲线效果很差？
+<ul>
+<li>deepAR会针对不同曲线，给loss 赋予不同的权重：loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的。</li>
+</ul></li>
+</ul>
+<h2 id="算法前期调研中的一些小插曲">算法前期调研中的一些小插曲</h2>
+<p>网上找到了pytorch版本的deepAR版，但是很慢</p>
+<ul>
+<li>Student： 训练过程很慢 要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？</li>
+<li>Teacher： 看了amazon已经将deepAR做了产品化，按照算法开发的流程肯定经历了效率优化的，并且deepAR的文章发于2017年4月，到目前为止amazon应该做了多次迭代的，所以去查一下近3年的amazon deepAR 相关的资料，看有没有开源的稳定的算法代码。</li>
+<li>Student：找到了--基于MXNET的gluon-ts（于2019年6月发表），mxnet在electricty上的训练和预测时间大概是10min左右</li>
+<li>Teacher：很好，接下来可以考虑更多的产品化方面的事情了，结合运维场景；另外注意到CNN-QR的训练效率也很不错，把这几个算法的准确率对比看一下</li>
+<li>Student：整体上准确率 CNN-QR略逊于DeepAR，但是考虑到计算效率，两者还是不相上下。
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUD6-nafIsi.png?alt=media&amp;token=a359d00d-bde2-41b2-bb96-d9222cb4514c" /></li>
+</ul></li>
+<li>Teacher：下一步，试着CNN-QR的拓展,DeepAR用于异常检测 的效果也测试下</li>
+<li>Student：使用数据平台的两台主机的cpu指标测试，发现cpu的效果还不错，体现在 不同类型的曲线，他们的方差趋势都预测的很准。
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FxofMTtcgaV.png?alt=media&amp;token=26cd83f2-717e-4c9c-8a93-da589dcfe63d" /></li>
+</ul></li>
+<li>Teacher：使用有异常标注的数据测试具体的指标，两种都测下--批量预测 和 实时预测</li>
+<li>Student：在获取数据阶段踩了一些坑，因为维度太多，全部数据维度都要 会导致拉数据接口快挂了</li>
+<li>Teacher：找出其中最重要的维度（重要度 即记录的条数 或者 指标求和）</li>
+<li>Student：从5w个维度过滤出来了100个维度，剩下的大部分维度怎么弄呢？</li>
+<li>Teacher：先管好这个100个维度，跑一跑模型，剩下的数据质量差可以暂时不监控。</li>
+<li>Student：这批数据有个特点--不同曲线形态模式很不一样，我怀疑1个模型很容易学混，接下来就证实了这一点（100个曲线上面的图，待补充）<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHF_Qc1aO1g.png?alt=media&amp;token=3591cf24-bfdf-44b7-894b-ba03652522f1" /></li>
+<li>Teacher：尝试加入feat_static_cat特征，来区分不同曲线。</li>
+<li>Student：有些许变化，但是改进还不太明显。另外在做实验过程中，发现几个优化的方向
+<ul>
+<li><strong>epoch</strong>： 从 5 到 50，带来了大量的提升</li>
+<li><strong>lstm</strong>的网络结构参数：layers从2到1，units从40到20，准确率有部分提升</li>
+</ul></li>
+<li>Teacher：因为样本较少（3k个训练样本）更适合用简单的模型</li>
+<li>Student：除了直接使用deepar的默认scale以及概率分布的参数，还尝试了另外一个方法： 因为cpu使用率本身是0～1，将数据预处理（除以100）到0～1 之间后跑，但是直接跑模型会报错， 做了以下设置才能跑：
+<ul>
+<li>scale设置为False</li>
+<li>value 为边界点（0或者1）时，加入扰动项</li>
+<li>输出的概率分布设置为beta分布 输出的上下界，非常符合比率型设定（上界不会超过1，下界不会低于0），但是就是准确率不高，一看就是学混了（移花接木，局部的模式 太弱了）</li>
+</ul></li>
+<li>出bug了，排查问题</li>
+</ul>
 <h2 id="参考">参考</h2>
-<ol start="6" type="1">
-<li><a target="_blank" rel="noopener" href="https://rct.ai/zh-hans/blog/the-key-technology-behind-morpheus-engine">rct的混沌球算法</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DRL/tree/master/Notes_CN">DRL-wangshusen中文教材</a></li>
-<li><a target="_blank" rel="noopener" href="https://lilianweng.github.io/lil-log/2020/08/06/neural-architecture-search.html">NAS-介绍</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Neural_architecture_search">NAS-wiki</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1806.09055">DARTS: Differentiable Architecture Search-paper</a></li>
-<li><a href="https://chiechie.github.io/2021/03/24/technology/bayes-optimization//">chiechie: 贝叶斯优化</a></li>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/zhykoties/TimeSeries">pytorch版本</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/21/investment/didi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Cosmos">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/21/investment/didi/" class="post-title-link" itemprop="url">对滴滴的分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-21 10:00:14" itemprop="dateCreated datePublished" datetime="2021-04-21T10:00:14+08:00">2021-04-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-27 09:22:51" itemprop="dateModified" datetime="2021-04-27T09:22:51+08:00">2021-04-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="reflection">reflection</h2>
+<ol type="1">
+<li><p>网约车行业到底挣钱不挣钱？终归是拼价格，要降价抢市场就亏钱；要涨价谋利润，等于将市场拱手让给竞争对手。</p>
+<blockquote>
+<p>Lyft作为全球首家上市的网约车公司，上市第二天就跌破发行价，截至7月22日，Lyft市值仅为93亿美元，较最高市值跌去60%。</p>
+<p>Uber上市后同样遭遇血洗，首日破发报收42美元，如今市值只有568亿美元，远低于Uber最后一轮私募融资时的760亿美元，这意味着解禁后，投资人将血本无归。</p>
+</blockquote></li>
+<li><p>滴滴现在挣钱不挣钱？滴滴的主营业务是快车，但是主要盈利的业务是顺风车，专车，但是盘子太小，总的来说是亏钱。</p></li>
+<li><p>滴滴未来有没有可能做大做强？不可能，因为没有护城河, 用户没有忠诚度。同时，竞争对手很强，其他平台方具备资金优势，地方政府关系过硬，在合规上更胜一筹。</p></li>
+<li><p>网约车是一门社会价值大于商业价值的生意，还是政府来主导比较好。</p></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/t-ISF-ptH7tP4TFygqDyig">王川：Uber 上市会引爆硅谷的泡沫破灭吗?</a></li>
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/62e321a071a486b862ee729kb6d32b90216b6d767d2f0dc">商业的本质和互联网</a></li>
+<li><a target="_blank" rel="noopener" href="https://tech.qq.com/a/20200722/014719.htm">等不到IPO这一天，投资人正在抛弃滴滴？</a></li>
 </ol>
 
       
@@ -414,7 +407,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/74/">74</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/76/">76</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -480,7 +473,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">148</span>
+          <span class="site-state-item-count">151</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/05/meditation/about-problem-Definition-and-info-collection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/04/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/" class="post-title-link" itemprop="url">chapter1.5.1 使用logmine加强版做日志聚类</a>
+            <a href="/2021/03/05/meditation/about-problem-Definition-and-info-collection/" class="post-title-link" itemprop="url">关于「问题的定义和搜集哪些数据」的一次实践</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-04 11:01:18" itemprop="dateCreated datePublished" datetime="2021-03-04T11:01:18+08:00">2021-03-04</time>
+              <time title="创建时间：2021-03-05 11:49:24" itemprop="dateCreated datePublished" datetime="2021-03-05T11:49:24+08:00">2021-03-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-25 11:42:58" itemprop="dateModified" datetime="2021-05-25T11:42:58+08:00">2021-05-25</time>
+                <time title="修改时间：2021-05-14 15:29:02" itemprop="dateModified" datetime="2021-05-14T15:29:02+08:00">2021-05-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -219,144 +219,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="目录">目录</h2>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate.md/">chapter1 故障发现</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_3-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation.md">chapter1.4 指标异常关联</a></li>
-<li><a href="https://chiechie.github.io/2021/05/06/AI/AIOps/AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_3-trace_rca/">chapter2.3 调用链数据的预处理</a></li>
-<li><a href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
-</ul>
-<blockquote>
-<p>日志聚类本质上是在简洁性和信息丰富性之间trade-off。</p>
-<p>原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。</p>
+          <blockquote>
+<p>问题粗粒度定义--&gt;信息搜集--&gt;问题再定义--&gt;信息再搜集--&gt;...</p>
+<p>阶段1：problem formulation--&gt; collect information---&gt;demo validation</p>
+<p>阶段2：【reflection】：阶段1的demo验证结果 + collect more information---&gt;problem reformulation--&gt; collect information---&gt;demo validation</p>
+<p>阶段3：重复</p>
+<p>阶段4：重复</p>
+<p>。。。</p>
 </blockquote>
-<h2 id="问题描述">问题描述</h2>
-<p>将不同来源的日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。</p>
-<h2 id="解决方案">解决方案</h2>
-<p>logmine使用的是基于聚类的方法，做日志摘要生成。</p>
-<p>主要思路是，一边构建cluster，一边提取pattern</p>
-<h3 id="找cluster">找cluster</h3>
+<h2 id="问题定义和信息搜集一个反复迭代同时要验证的过程">问题定义和信息搜集一个反复迭代同时要验证的过程</h2>
 <ul>
-<li><p>先定义一个参数MaxDist， 表示cluster的半径</p></li>
-<li><p>对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就以他为中心创建一个新的cluster。</p>
-<blockquote>
-<p>为了提升效率，判断是否属于某个cluster时使用early abandon的策略，如果已对比的字段累计距离超过了半径，就可以提前停止了，因为距离只会越来越大。</p>
-</blockquote></li>
+<li>做项目的时候，关于「问题定义」（「需求定义」也类似）和 「数据搜集」往往是一个迭代往复的过程。</li>
+<li>【formulation + demo + validation】认知是从模糊到清晰的：先基于模糊的认知，确定一个粗粒度的问题，以及相应的解决方案，然后使用「概念验证」（思想泵）的方法去验证。</li>
+<li>【reflection】方案中发现有重大缺陷，然后搜集更多信息，比如别人是怎么解决问题的，以及定义问题的关键信息漏了哪些，方案有哪些是我们没有想到的。</li>
+<li>【reformulation + demo + validation】接下来，根据搜集到的信息，重新定义问题，以及梳理方案，这一次的问题和方案 因为有了更多的信息，业务上的和技术上的， 认识更清晰是肯定的，理论上梳理出来的问题和方案粒度更细致，我们也更有把握。 总结下，就是 问题定义和信息搜集一个反复迭代同时要验证的过程</li>
 </ul>
-<h3 id="对于每个cluster提取pattern">对于每个cluster，提取pattern</h3>
-<figure>
-<img src="./image-20210226000021042.png" alt="图2-日志分析流程" /><figcaption aria-hidden="true">图2-日志分析流程</figcaption>
-</figure>
+<h2 id="一次实践">一次实践</h2>
 <ul>
-<li>step1. 字段类型检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date。这个模式和正则表达式可以让用户定义。</li>
-<li>step2. 分词，每条日志都得到一个word vector.</li>
-<li>step3. 一边聚类 一边提取pattern</li>
+<li>先有一个模糊认知 ：要日志型的数据（完全非结构化的），告警数据（指标或者日志经过人工规则生成的），事件型数据（第三方的公告或者舆情告警），拓扑数据</li>
+<li>聚焦到问题-"根因定位"-的时候：发现不管是日志型数据，还是告警数据，还是拓扑数据，他们都是围绕着"故障事件定义"展开的。即需要定义到的故障事件的粒度</li>
 </ul>
-<p><img src="./img.png" /></p>
-<h3 id="怎么设置level">怎么设置level？</h3>
-<figure>
-<img src="./cost_function.png" alt="图3-评价当前pattern的信息含量" /><figcaption aria-hidden="true">图3-评价当前pattern的信息含量</figcaption>
-</figure>
-<p>怎么设置level？看每个level的信息损失程度，这里用cost function表示，值越大，表示丢失的信息越多</p>
-<p><span class="math display">\[\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times\left(a_{1} W C_{i}+a_{2} V a r_{i}+a_{3} F V_{i}\right)\]</span></p>
-<ul>
-<li><span class="math inline">\({Size}_i\)</span>: 第i个pattern包含的日志个数，</li>
-<li><span class="math inline">\({WC}_i\)</span>: 第i个pattern，**的个数，对应权重a1，默认取1</li>
-<li><span class="math inline">\({Var}_i\)</span>:第i个pattern，变量的个数，对应权重a2，默认取0</li>
-<li><span class="math inline">\({FV}_i\)</span>: 第i个pattern，固定值的个数，对应权重a3，默认取0</li>
-</ul>
-<p>提取层次化模式，参考下图</p>
-<figure>
-<img src="./logmine_image-20210225214320632.png" alt="图1-层次化地提取日志模式" /><figcaption aria-hidden="true">图1-层次化地提取日志模式</figcaption>
-</figure>
-<figure>
-<img src="./logmin-result.png" alt="图2-logmine-result" /><figcaption aria-hidden="true">图2-logmine-result</figcaption>
-</figure>
-<h3 id="衡量两条日志的相似性">衡量两条日志的相似性</h3>
-<p>衡量两条日志相似性的函数：</p>
-<p><span class="math display">\[\operatorname{Dist}(P, Q)=1-\sum\limits_{i=1}^{\operatorname{Min}(\operatorname{len}(P), \operatorname{len}(Q))} \frac{\operatorname{Score}\left(P_{i}, Q_{i}\right)}{\operatorname{Max}(\operatorname{len}(P), \operatorname{len}(Q))}\]</span></p>
-<p><span class="math display">\[\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
-<ul>
-<li><span class="math inline">\(P_i\)</span>：日志P的第i个字段，len(P): 日志P的字段的个数。</li>
-<li><span class="math inline">\(k_1\)</span>: 如果两个字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1。</li>
-</ul>
-<h3 id="衡量两个pattern的相似性">衡量两个pattern的相似性</h3>
-<p>pattern包含三类字段：fixed value， Variable 和 Wildcard</p>
-<ul>
-<li>固定值（fixed value field ）：如www, httpd, INFO，固化的。</li>
-<li>可变字段（A variable field）：需要用户定义name和regex，如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的，</li>
-<li>Wildcards ：就是**。</li>
-</ul>
-<p>衡量两个pattern相似性的函数（不同类型的word给的权重不一样）：</p>
-<p><span class="math display">\[\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are fixed value } \\ k_{2} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are variable } \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
-<ul>
-<li><span class="math inline">\(k_1\)</span>: 如果两个fixed value字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1</li>
-<li><span class="math inline">\(k_2\)</span>: 如果两个变量字段一样，得<span class="math inline">\(k_2\)</span>分，默认值为2</li>
-</ul>
-<h3 id="怎么评估效果">怎么评估效果？</h3>
-<p>整个问题的评估可以拆分为两个小评估:</p>
-<ul>
-<li>评估聚类的准确率？</li>
-<li>评估模式的准确率？</li>
-</ul>
-<p>因为没有标签，所以聚类和评估都是跟baseline比</p>
-<blockquote>
-<p>都有了baseline，还要logmine的必要性在于：可能logmine有性能优势？</p>
-</blockquote>
-<ul>
-<li><p>聚类效果跟baseline--OPTICS对比: 看最大公共子集的比例（原文中的agreement score）。</p></li>
-<li><p>模式效果跟baseline--UPGMA比：UPGMA的结果作为ground truth，比较recall和precision.</p>
-<blockquote>
-<p>UPGMA算法的输入一批原始日志，输出是一个patten</p>
-</blockquote></li>
-</ul>
-<p><span class="math inline">\(\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}\)</span></p>
-<h2 id="chiechies对logmine的总结">chiechie's对logmine的总结</h2>
-<p>论文看完了，代码也跑了一遍，发现有几个问题：</p>
-<ol type="1">
-<li><p>所谓的不需要人工干预，没有做到。很重要的一个功能就是从原始文本中提取variable类型的字段（field），需要人指定variable的name以及正则匹配规则。否则代码是不会主动帮你探测的。 <img src="./c2.png" /></p></li>
-<li><p>不同的cluster的pattern可能存在如下的父子关系 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pattern36 : datetime dms<span class="emphasis">_frontend_</span>mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern50:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern53:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp 1c7c49d5 11024333 from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern64:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>聚类时，比的是原始日志log_signature和类中心log_signature的距离，<br />
-这有一个问题，有一些日志虽然跟该cluster的中心相距较远，但是提取出的pattern可能又很接近.</p>
-</blockquote></li>
-<li><p>2的解决方案：</p>
-<ol type="1">
-<li>对于每个cluster提取pattern时，只保留最抽象的一层</li>
-<li>所有的cluster构建完之后，将存在父子pattern的cluster手动合并。</li>
-</ol></li>
-</ol>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf">logmine-paper</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/trungdq88/logmine/tree/master/src">logmine-github</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">apache_2k.log</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">chiechie-关于logmine的实践</a></li>
-</ol>
+<p>最开始的时候， 我是这么定义事件的： 资源类型 + 事件描述</p>
+<p>后面发现这个粒度定义是不行滴，</p>
+<p>举个例子 机器1的mysql服务指标异常，机器2的mysql服务指标异常，使用 「资源类型 + 事件描述」这种定义的还，不就是一个事件了吗？ 但是考虑到应用场景-根因定位，到底是「机器1的mysql服务的指标异常」还是「机器2的mysql服务异常」，这是两个需要区分的cause metric，因为，对应着不同的操作。 更进一步，这两个事件对应的是根因图 上的不同的节点。</p>
+<p>总结下，事件定义的粒度越粗糙，定位到的根因就越粗糙，起到的作用就越少。 参考别人的定义： 2元组&lt;ip：服务名称&gt; 或者 3元组 &lt;ip: 端口：传输协议类型&gt;</p>
 
       
     </div>
@@ -376,7 +262,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/AI/cause-effect/cause-inference-learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -390,7 +276,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/" class="post-title-link" itemprop="url">chapter1.5.1 使用logmine加强版做日志聚类</a>
+            <a href="/2021/03/04/AI/cause-effect/cause-inference-learning/" class="post-title-link" itemprop="url">因果推断</a>
         </h2>
 
         <div class="post-meta">
@@ -400,14 +286,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-04 11:01:18" itemprop="dateCreated datePublished" datetime="2021-03-04T11:01:18+08:00">2021-03-04</time>
+              <time title="创建时间：2021-03-04 23:23:02" itemprop="dateCreated datePublished" datetime="2021-03-04T23:23:02+08:00">2021-03-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-25 11:42:58" itemprop="dateModified" datetime="2021-05-25T11:42:58+08:00">2021-05-25</time>
+                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -415,7 +301,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
                 </span>
             </span>
 
@@ -430,215 +316,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="目录">目录</h2>
+          <h1 id="因果推断和因果发现">因果推断和因果发现</h1>
+<p>因果问题分为两种：一种是因果推断，另一种是因果发现</p>
 <ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate.md/">chapter1 故障发现</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_3-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation.md">chapter1.4 指标异常关联</a></li>
-<li><a href="https://chiechie.github.io/2021/05/06/AI/AIOps/AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_3-trace_rca/">chapter2.3 调用链数据的预处理</a></li>
-<li><a href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
+<li>因果推断（causal inf erence）：比如给定两个变量 X、Y，希望找到一个衡量它们之间因果关系的参数 theta；</li>
+<li>因果发现（causal discovery）：即给定一组变量，找到他们之间的因果关系，这个在统计上是不可能的。</li>
 </ul>
-<p>《根因分析初探：一种报警聚类算法在业务系统的落地实施》针对后端服务告警风暴问题，使用了一种基于聚类的rca方法，对业务告警日志进行分析。</p>
-<h2 id="背景">背景</h2>
-<p>日志实时记录应用程序的状态。 通常情况下，日志主要是记录关键执行点、程序执行错误时的现场信息等。 系统出现故障时，运维人员一般先查看错误日志，定位故障原因。 当业务流量小、逻辑复杂度低时，应用出现故障时错误日志一般较少，运维人员一般能够根据错误日志迅速定位到问题。 但是，随着业务逻辑的迭代，系统接入的依赖服务不断增多，引入的组件不断增多，当系统出现故障时（如Bug被触发、依赖服务超时等等），错误日志的量级会急剧增加。极端情况下甚至出现“疯狂报错”的现象，这时候错误日志的内容会存在相互掩埋、相互影响的问题，运维人员面对报错一时难以理清逻辑，有时甚至顾此失彼，没能第一时间解决最核心的问题。</p>
-<p>错误日志是系统报警的一种，实际生产中，运维人员能够收到的报警信息多种多样。如果在报警流出现的时候，通过处理程序，将报警进行聚类，整理出一段时间内的报警摘要，那么运维人员就可以在摘要信息的帮助下，先对当前的故障有一个大致的轮廓，再结合技术知识与业务知识定位故障的根本原因。</p>
-<p>围绕上面描述的问题，以及对于报警聚类处理的分析假设，本文主要做了以下事情：</p>
+<h1 id="两种数据产生途径">两种数据产生途径</h1>
+<p>数据有两种产生途径：</p>
+<ul>
+<li>一种是通过有意控制、随机化的实验得到的:例如拨测,能够直接做因果推断</li>
+<li>一种是通过观测数据得到的: 需要另外知道一些先验知识，才能做因果推断。</li>
+</ul>
+<h1 id="用数学语言表达因果模型">用数学语言表达因果模型</h1>
+<p>因果模型有三种表达方式： - 反事实（counterfactuals） - 因果图（causal graph） - 结构方程模型（structural equation models）</p>
+<p>一个简单的例子『睡眠超过 7 小时的人』（X）『生病少』（Y)，只是代表 X 和 Y 之间有关联性，并不代表如果强制一个人睡眠超过 7 小时，ta 就能够生病少。因为可能『身体好的人』容易『睡眠超过 7 小时』，同时 ta 也『生病少』；但是一个本来身体不好的人，强制 ta 睡眠多，ta 可能也生病不会少。</p>
+<p>因果关系可以从随机化的实验中得到；但是很难从观察到的数据中得到。</p>
+<h2 id="反事实counterfactuals">反事实（Counterfactuals）</h2>
+<p>考虑一个 treatment X，和一个 outcome Y。我们能观察到的是一些数据 <span class="math inline">\(\left\{\left(X_{i}, Y_{i}\right)\right\}\)</span> ，但是我们无法知道如果对于某一个数据点 <span class="math inline">\(\left(X_{i}, Y_{i}\right)\)</span> ，如果改变 X 的值，Y 会怎么变。这件事情就叫做反事实（counterfactual）。</p>
+<p>Notes 里面给了一个图（下图），从数据上看，X 和 Y 是正相关的，但其实对于每一个 样本来说，如果增大 X，会引起 Y 的减小。这一点最开始看的时候并不好理解。举一个例子。研究航空公司票价（X）对销量（Y）的影响，显然，对于某一个客户来说，增加票价（X 变大）会降低客户购买意愿，即使得销量将达（Y 变小）。但是实际中的情况是，在节假日人们出行意愿大导致销量高（Y 大），定价也会相应变高（X 大），从而从数据上看，形成左边图的情形。</p>
+<figure>
+<img src="dl-framework/img.png" alt="反事实举例" /><figcaption aria-hidden="true">反事实举例</figcaption>
+</figure>
+<h2 id="因果图causal-graph">因果图（causal graph）</h2>
+<p>因果图是一个DAG，表明各变量之间的联合概率分布。</p>
+<p><span class="math inline">\(p\left(y_{1}, \ldots, y_{k}\right)=\prod p\left(y_{j} \mid \operatorname{parents}\left(y_{j}\right)\right)\)</span></p>
+<p>下面举例说明，在给定一个因果图之后，如何做因果推断。 考虑下面一个因果图，目标是求<span class="math inline">\(p(y \mid \operatorname{set} X=x)\)</span></p>
+<ul>
+<li><p>首先，可以看出该 causal graph 提供的信息为 <span class="math inline">\(p(x, y, z)=p(z) p(x \mid z) p(y \mid x, z)\)</span></p></li>
+<li><p>接下来，由于考虑的是给定 X的影响，因此构建一个新图<span class="math inline">\(G_{*}\)</span>, 移除掉所有指向 X 的边，得到新的联合概率分布: <span class="math inline">\(p_{*}(y, z)=p(z) p(y \mid x, z)\)</span></p></li>
+<li><p>最后，该概率分布下的数值就是因果推断的结果: <span class="math inline">\(p(y \mid \text { set } X=x) \equiv p_{*}(y)=\int p_{*}(y, z) d z=\int p(z) p(y \mid x, z) d z\)</span></p></li>
+</ul>
+<h2 id="因果图-和-概率图-的区别">因果图 和 概率图 的区别</h2>
+<p>举例说明，比如下雨（Rain，R）和湿草坪（Wet Lawn，W）是不相互独立的 对于下两种 DAG，它们都是合理的 probability graph。即对于任意的联合概率分布 <span class="math inline">\(p(w, r)\)</span>，都可以写成 <span class="math inline">\(p(w) p(r \mid w)\)</span> 或者 <span class="math inline">\(p(r) p(w \mid r)\)</span>. 但显然下雨是因、草坪湿是果，只有左边的图才是正确的 causal graph。</p>
+<figure>
+<img src="right_causal_graph.png" alt="right_causal_graph" /><figcaption aria-hidden="true">right_causal_graph</figcaption>
+</figure>
+<h1 id="因果发现是不可能的">因果发现是不可能的</h1>
+<p>总存在一个 faithful 的分布使得在样本足够多的时候，产生足够大的 type I error。</p>
+<h1 id="参考">参考</h1>
 <ol type="1">
-<li>选定聚类算法，简单描述了算法的基本原理，并给出了针对报警日志聚类的一种具体的实现方案。</li>
-<li>在分布式业务服务的系统下构造了三种不同实验场景，验证了算法的效果，并且对算法的不足进行分析阐述。</li>
-</ol>
-<h2 id="目标">目标</h2>
-<p>对一段时间内的报警进行聚类处理，将具有相同根因的报警归纳为能够涵盖报警内容的泛化报警（Generalized Alarms），最终形成仅有几条泛化报警的报警摘要。如下图1所示意。</p>
-<figure>
-<img src="https://p0.meituan.net/travelcube/0405c8ee9e4e3ea813eedf46c803101122272.png" alt="图1" /><figcaption aria-hidden="true">图1</figcaption>
-</figure>
-<p>图1</p>
-<p>我们希望这些泛化报警既要具有很强的概括性，同时尽可能地保留细节。这样运维人员在收到报警时，便能快速定位到故障的大致方向，从而提高故障排查的效率。</p>
-<h2 id="设计"><strong>设计</strong></h2>
-<p>如图2所示，异常报警根因分析的设计大致分为四个部分：收集报警信息、提取报警信息的关键特征、聚类处理、展示报警摘要。</p>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_png/hEx03cFgUsVq2hV7sWGmR23MsBdk4smSocM0BaK4FvkHO04PLTibN1zeeMeOb3u1yxUulgibtvem7jLrf4GpicVEA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图2" />图2</p>
-<h3 id="算法选择"><strong>算法选择</strong></h3>
-<p>聚类算法采用论文“Clustering Intrusion Detection Alarms to Support Root Cause Analysis” [KLAUS JULISCH, 2002]中描述的根因分析算法。该算法基于一个假设：将报警日志集群经过泛化，得到的泛化报警能够表示报警集群的主要特征。以下面的例子来说明，有如下的几条报警日志：</p>
-<figure>
-<img src="../_image/kjhjk.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>我们可以将这几条报警抽象为：“全部服务器 网络调用 故障”，该泛化报警包含的范围较广；也可以抽象为：“server_room_a服务器 网络调用 产品信息获取失败”和“server_room_b服务器 RPC 获取产品类型信息失败”，此时包含的范围较小。当然也可以用其他层次的抽象来表达这个报警集群。</p>
-<p>我们可以观察到，抽象层次越高，细节越少，但是它能包含的范围就越大；反之，抽象层次越低，则可能无用信息越多，包含的范围就越小。</p>
-<p>这种抽象的层次关系可以用一些有向无环图（DAG）来表达，如图3所示：</p>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_png/hEx03cFgUsVq2hV7sWGmR23MsBdk4smSvyibDcmjvEGg4FoygET5CpGiaibYQtFZc435aGDYlB5Jyvo1cNAnbZs6g/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图3 泛化层次结构示例" />图3 泛化层次结构示例</p>
-<p>为了确定报警聚类泛化的程度，我们需要先了解一些定义：</p>
-<ul>
-<li>属性（Attribute）：构成报警日志的某一类信息，如机器、环境、时间等，文中用Ai表示。</li>
-<li>值域（Domain）：属性Ai的域（即取值范围），文中用Dom(Ai)表示。</li>
-<li>泛化层次结构（Generalization Hierarchy）：对于每个Ai都有一个对应的泛化层次结构，文中用Gi表示。</li>
-<li>不相似度（Dissimilarity）：定义为d(a1, a2)。它接受两个报警a1、a2作为输入，并返回一个数值量，表示这两个报警不相似的程度。与相似度相反，当d(a1, a2)较小时，表示报警a1和报警a2相似。为了计算不相似度，需要用户定义泛化层次结构。</li>
-</ul>
-<p>为了计算d(a1, a2)，我们先定义两个属性的不相似度。令x1、x2为某个属性Ai的两个不同的值，那么x1、x2的不相似度为：在泛化层次结构Gi中，通过一个公共点父节点p连接x1、x2的最短路径长度。即d(x1, x2) := min{d(x1, p) + d(x2, p) | p ∈ Gi, x1 ⊴ p, x2 ⊴ p}。例如在图3的泛化层次结构中，d("Thrift", "Pigeon") = d("RPC", "Thrift") + d("RPC", "Pigeon") = 1 + 1 = 2。</p>
-<p>对于两个报警a1、a2，其计算方式为：</p>
-<p><span class="math inline">\(d\left(\mathbf{a}_{1}, \mathbf{a}_{2}\right):=\sum\limits_{i=1}^{n} d\left(\mathbf{a}_{1}\left[A_{i}\right], \mathbf{a}_{2}\left[A_{i}\right]\right)\)</span>公式1</p>
-<p>例如：</p>
-<p>a1 = ("server_room_b-biz_tag-offline02", "Thrift"), a2 = ("server_room_a-biz_tag-online01", "Pigeon"),</p>
-<p>那么d(a1, a2)</p>
-<p>= d("server_room_b-biz_tag-offline02", "server_room_a-biz_tag-online01") + d(("Thrift", "Pigeon")</p>
-<p>= d("server_room_b-biz_tag-offline02", "服务器") + d("server_room_a-biz_tag-online01", "服务器") + d("RPC", "Thrift") + d("RPC", "Pigeon")</p>
-<p>= 2 + 2 + 1 + 1 = 6。</p>
-<p>我们用C表示报警集合，g是C的一个泛化表示，即满足<span class="math inline">\(\forall a \in C, a \leq g\)</span>。</p>
-<p>以报警集合{"dx-trip-package-api02 Thrift get deal list error.", "dx-trip-package-api01 Thrift get deal list error."}为例，“dx服务器 thrift调用 获取产品信息失败”是一个泛化表示，“服务器 网络调用 获取产品信息失败”也是一个泛化表示。对于某个报警聚类来说，我们希望获得既能够涵盖它的集合又有最具象化的表达的泛化表示。为了解决这个问题，定义以下两个指标：</p>
-<p><span class="math display">\[\begin{aligned} \bar{d}(\mathbf{g}, \mathcal{C}) &amp;:=1 /|\mathcal{C}| \times \sum_{\mathbf{a} \in \mathcal{C}} d(\mathbf{g}, \mathbf{a}) \\ H(\mathcal{C}) &amp;:=\min \left\{\bar{d}(\mathbf{g}, \mathcal{C}) | \mathbf{g} \in \mathbf{X}_{i=1}^{n} \operatorname{Dom}\left(A_{i}\right), \forall \mathbf{a} \in \mathcal{C}: \mathbf{a} \leq \mathbf{g}\right\} \end{aligned}\]</span></p>
-<p>公式2</p>
-<p>H(C)值最小时对应的g，就是我们要找的最适合的泛化表示，我们称g为C的“覆盖”（Cover）。</p>
-<p>基于以上的概念，将报警日志聚类问题定义为：定义L为一个日志集合，min_size为一个预设的常量，Gi(i = 1, 2, 3……n) 为属性Ai的泛化层次结构，目标是找到一个L的子集C，满足 |C| &gt;= min_size，且H(C)值最小。min_size是用来控制抽象程度的，极端情况下如果min_size与L集合的大小一样，那么我们只能使用终极抽象了，而如果min_size = 1，则每个报警日志是它自己的抽象。找到一个聚类之后，我们可以去除这些元素，然后在L剩下的集合里找其他的聚类。</p>
-<p>不幸的是，这是个NP完全问题，因此论文提出了一种启发式算法，该算法满足|C| &gt;= min_size，使H(C)值尽量小。</p>
-<h3 id="算法描述"><strong>算法描述</strong></h3>
-<ol type="1">
-<li>算法假设所有的泛化层次结构Gi都是树，这样每个报警集群都有一个唯一的、最顶层的泛化结果。</li>
-<li>将L定义为一个原始的报警日志集合，算法选择一个属性Ai，将L中所有报警的Ai值替换为Gi中Ai的父值，通过这一操作不断对报警进行泛化。</li>
-<li>持续步骤2的操作，直到找到一个覆盖报警数量大于min_size的泛化报警为止。</li>
-<li>输出步骤3中找到的报警。</li>
-</ol>
-<p>算法伪代码如下所示：</p>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_png/hEx03cFgUsVq2hV7sWGmR23MsBdk4smSCNkmZEYrz8ztmMQgIyRs6g1XoT05jQobez8w7kmreibaeghleFsgR3A/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>其中第7行的启发算法为：</p>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_jpg/hEx03cFgUsVq2hV7sWGmR23MsBdk4smSG3vtGGUFMtRGoYHFKgyq5l9lNqLKNtqMXypibqPA1OvNhIPj1tSwF3Q/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>这里的逻辑是：如果有一个报警a满足 a[count]&gt;= min_size，那么对于所有属性Ai , 均能满足Fi &gt;= fi(a[Ai]) &gt;= min_size。反过来说，如果有一个属性Ai的Fi值小于min_size，那么a[count]就不可能大于min_size。所以选择Fi值最小的属性Ai进行泛化，有助于尽快达到聚类的条件。</p>
-<p>此外，关于min_size的选择，如果选择了一个过大的min_size，那么会迫使算法合并具有不同根源的报警。另一方面，如果过小，那么聚类可能会提前结束，具有相同根源的报警可能会出现在不同的聚类中。</p>
-<p>因此，设置一个初始值，可以记作ms0。定义一个较小的值 ℇ(0 &lt; ℇ &lt; 1)，当min_size取值为ms0、ms0 * (1 - ℇ)、ms0 * (1 + ℇ)时的聚类结果相同时，我们就说此时聚类是ℇ-鲁棒的。如果不相同，则使ms1 = ms0 * (1 - ℇ)，重复这个测试，直到找到一个鲁棒的最小值。</p>
-<p>需要注意的是，ℇ-鲁棒性与特定的报警日志相关。因此，给定的最小值，可能相对于一个报警日志来说是鲁棒的，而对于另一个报警日志来说是不鲁棒的。</p>
-<h2 id="实现">实现</h2>
-<h3 id="提取报警特征">1. 提取报警特征</h3>
-<p>根据线上问题排查的经验，运维人员通常关注的指标包括时间、机器（机房、环境）、异常来源、报警日志文本提示、故障所在位置（代码行数、接口、类）、Case相关的特殊ID（订单号、产品编号、用户ID等等）等。</p>
-<p>但是，我们的实际应用场景都是线上准实时场景，时间间隔比较短，因此我们不需要关注时间。同时，Case相关的特殊ID不符合我们希望获得一个抽象描述的要求，因此也无需关注此项指标。</p>
-<p>综上，我们选择的特征包括：机房、环境、异常来源、报警日志文本关键内容、故障所在位置（接口、类）共5个。</p>
-<h3 id="算法实现">2. 算法实现</h3>
-<h4 id="提取关键特征">(1) 提取关键特征</h4>
-<p>我们的数据来源是日志中心已经格式化过的报警日志信息，这些信息主要包含：报警日志产生的时间、服务标记、在代码中的位置、日志内容等。</p>
-<ul>
-<li><p>故障所在位置</p>
-<p>优先查找是否有异常堆栈，如存在则查找第一个本地代码的位置；如果不存在，则取日志打印位置。</p></li>
-<li><p>异常来源</p>
-<p>获得故障所在位置后，优先使用此信息确定异常报警的来源（需要预先定义词典支持）；如不能获取，则在日志内容中根据关键字匹配（需要预先定义词典支持）。</p></li>
-<li><p>报警日志文本关键内容</p>
-<p>优先查找是否有异常堆栈，如存在，则查找最后一个异常（通常为真正的故障原因）；如不能获取，则在日志中查找是否存在“code=……,message=……” 这样形式的错误提示；如不能获取，则取日志内容的第一行内容（以换行符为界），并去除其中可能存在的Case相关的提示信息</p></li>
-<li><p>提取“机房和环境”这两个指标比较简单，在此不做赘述。</p></li>
-</ul>
-<h4 id="聚类算法">(2) 聚类算法</h4>
-<p>算法的执行，我们以图4来表示。</p>
-<p><img src="../_image/111khkh.png" alt="图4 报警日志聚类流程图" />图4 报警日志聚类流程图</p>
-<h4 id="min_size-选择">(3) min_size 选择</h4>
-<p>考虑到日志数据中可能包含种类极多，且根据小规模数据实验表明，min_size = 1/5 * 报警日志数量时，算法已经有较好的表现，再高会增加过度聚合的风险，因此我们取min_size = 1/5 * 报警日志数量，ℇ参考论文中的实验，取0.05。</p>
-<h4 id="聚类停止条件">(4) 聚类停止条件</h4>
-<p>考虑到部分场景下，报警日志可能较少，因此min_size的值也较少，此时聚类已无太大意义，因此设定聚类停止条件为：聚类结果的报警摘要数量小于等于20或已经存在某个类别的count值达到min_size的阈值，即停止聚类。</p>
-<h3 id="泛化层次结构"><strong>3. 泛化层次结构</strong></h3>
-<p>泛化层次结构，用于记录属性的泛化关系，是泛化时向上抽象的依据，需要预先定义。</p>
-<p>根据实验所用项目的实际使用环境，我们定义的泛化层次结构如下：</p>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_png/hEx03cFgUsVq2hV7sWGmR23MsBdk4smSkVF5hcF6U40Gy0cNgSHkDoiaoOeNZ1D3wmz2QWYEQviahoOZDesU45tg/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图5 机房泛化层次结构" /><figcaption aria-hidden="true">图5 机房泛化层次结构</figcaption>
-</figure>
-<p>图5 机房泛化层次结构</p>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_png/hEx03cFgUsVq2hV7sWGmR23MsBdk4smStH7RSGjAGLHyhRibwWrjkMLzu1djrAHz71FEBrZDpDH99BJpjKBC2hg/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图6 环境泛化层次结构" /><figcaption aria-hidden="true">图6 环境泛化层次结构</figcaption>
-</figure>
-<p>图6 环境泛化层次结构</p>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_png/hEx03cFgUsVq2hV7sWGmR23MsBdk4smS7lL9Mxrokn9ib67qbBshkFLM6wCAibgETibYowWibyQVIdnBjOw3XGEReg/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图7 错误来源泛化层次结构" />图7 错误来源泛化层次结构</p>
-<figure>
-<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20200618162349910.png" alt="image-20200618162349910" /><figcaption aria-hidden="true">image-20200618162349910</figcaption>
-</figure>
-<p>图8 日志文本摘要泛化层次结构</p>
-<p>“故障所在位置”此属性无需泛化层次结构，每次泛化时直接按照包路径向上层截断，直到系统包名。</p>
-<h2 id="实验">实验</h2>
-<p>以下三个实验均使用C端API系统。</p>
-<h3 id="单依赖故障">1. 单依赖故障</h3>
-<p>实验材料来自于线上某业务系统真实故障时所产生的大量报警日志。</p>
-<ul>
-<li>环境：线上</li>
-<li>故障原因：产品中心线上单机故障</li>
-<li>报警日志数量：939条</li>
-</ul>
-<p>部分原始报警日志如图9所示，初次观察时，很难理出头绪。</p>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_png/hEx03cFgUsVq2hV7sWGmR23MsBdk4smSYnImv1xH64x1Xticc5OgNYQayR8ovbgqUedqySG3wYSdvwYxpibXrmbA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>图9 单依赖故障报警日志节选</p>
-<p>经过聚类后的报警摘要如表1所示：</p>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_jpg/hEx03cFgUsVq2hV7sWGmR23MsBdk4smSKGotXvGIRzRu6EhdA4lzibBHQfC0qSNrK6JQFicfia9MKbBtwHb2uZWPg/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>我们可以看到前三条报警摘要的Count远超其他报警摘要，并且它们指明了故障主要发生在产品中心的接口。</p>
-<h3 id="无相关的多依赖同时故障">2. 无相关的多依赖同时故障</h3>
-<p>实验材料为利用故障注入工具，在Staging环境模拟运营置顶服务和A/B测试服务同时产生故障的场景。</p>
-<ul>
-<li>环境：Staging（使用线上录制流量和压测平台模拟线上正常流量环境）</li>
-<li>模拟故障原因：置顶与A/B测试接口大量超时</li>
-<li>报警日志数量：527条</li>
-</ul>
-<p>部分原始报警日志如图10所示：</p>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_png/hEx03cFgUsVq2hV7sWGmR23MsBdk4smSxr3fsRdCRzw4gp7t4oZyypof7IkFlBicOjKKpq6Jlx3hQQWCW4pnWPA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>图10 无相关的多依赖同时故障报警日志节选</p>
-<p>经过聚类后的报警摘要如表2所示：</p>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_jpg/hEx03cFgUsVq2hV7sWGmR23MsBdk4smSjQ84mnba75OyKqE7OcLbicBOhLic3TP1pxasgbosiaoPg4dA2QCJ5n90w/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>从上表可以看到，前两条报警摘要符合本次试验的预期，定位到了故障发生的原因。说明在多故障的情况下，算法也有较好的效果。</p>
-<h3 id="中间件与相关依赖同时故障">3. 中间件与相关依赖同时故障</h3>
-<p>实验材料为利用故障注入工具，在Staging环境模拟产品中心服务和缓存服务同时产生超时故障的场景。</p>
-<ul>
-<li>环境：Staging（使用线上录制流量和压测平台模拟线上正常流量环境）</li>
-<li>模拟故障原因：产品中心所有接口超时，所有缓存服务超时</li>
-<li>报警日志数量：2165</li>
-</ul>
-<p>部分原始报警日志如图11所示：</p>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_png/hEx03cFgUsVq2hV7sWGmR23MsBdk4smSHSeCjrssh5eOcTchcAicoFMjYSiaibQUjx56Z2VWqlo9WR7ia7jcDgWTbw/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>图11 中间件与相关依赖同时故障报警日志节选</p>
-<p>经过聚类后的报警摘要如表3所示：</p>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_jpg/hEx03cFgUsVq2hV7sWGmR23MsBdk4smSkhZiahel7pmDgmIrl8D1wXYE6MTI0ibgTKdycicfnvDcLvCphMYRG91vw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>从上表可以看到，缓存（Squirrel和Cellar双缓存）超时最多，产品中心的超时相对较少，这是因为我们系统针对产品中心的部分接口做了兜底处理，当超时发生时后先查缓存，如果缓存查不到会穿透调用一个离线信息缓存系统，因此产品中心超时总体较少。</p>
-<p>综合上述三个实验得出结果，算法对于报警日志的泛化是具有一定效果。在所进行实验的三个场景中，均能够定位到关键问题。但是依然存在一些不足，报警摘要中，有的经过泛化的信息过于笼统（比如Other Exception）。</p>
-<p>经过分析，我们发现主要的原因有：其一，对于错误信息中关键字段的提取，在一定程度上决定了向上泛化的准确度。其二，系统本身日志设计存在一定的局限性。</p>
-<p>同时，在利用这个泛化后的报警摘要进行分析时，需要使用者具备相应领域的知识。</p>
-<h2 id="未来规划">未来规划</h2>
-<ol type="1">
-<li>日志内容的深度分析。本文仅对报警日志做了简单的关键字提取和人工标记，未涉及太多文本分析的内容。我们可以通过使用文本分类、文本特征向量相似度等，提高日志内容分析的准确度，提升泛化效果。</li>
-<li>多种聚类算法综合使用。本文仅探讨了处理系统错误日志时表现较好的聚类算法，针对系统中多种不同类型的报警，未来也可以配合其他聚类算法（如K-Means）共同对报警进行处理，优化聚合效果。</li>
-<li>自适应报警阈值。除了对报警聚类，我们还可以通过对监控指标的时序分析，动态管理报警阈值，提高告警的质量和及时性，减少误报和漏告数量。</li>
-</ol>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li>Julisch, Klaus. "Clustering intrusion detection alarms to support root cause analysis." ACM transactions on information and system security (TISSEC) 6.4 (2003): 443-471.</li>
-<li>https://en.wikipedia.org/wiki/Cluster_analysis</li>
-<li>https://tech.meituan.com/2019/02/28/root-clause-analysis.html</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/88173582">zhihu-关于因果推断公开课翻译</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.stat.cmu.edu/~larry/=sml/Causation.pdf">英文原文</a></li>
 </ol>
 
       
@@ -658,7 +377,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/62/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><span class="page-number current">63</span><a class="page-number" href="/page/64/">64</a><span class="space">&hellip;</span><a class="page-number" href="/page/74/">74</a><a class="extend next" rel="next" href="/page/64/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/62/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><span class="page-number current">63</span><a class="page-number" href="/page/64/">64</a><span class="space">&hellip;</span><a class="page-number" href="/page/76/">76</a><a class="extend next" rel="next" href="/page/64/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -724,7 +443,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">148</span>
+          <span class="site-state-item-count">151</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

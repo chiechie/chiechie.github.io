@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-28 21:39:33" itemprop="dateModified" datetime="2021-05-28T21:39:33+08:00">2021-05-28</time>
+                <time title="修改时间：2021-05-28 22:05:06" itemprop="dateModified" datetime="2021-05-28T22:05:06+08:00">2021-05-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -251,19 +251,16 @@
 <li>chapter3 故障恢复</li>
 </ul>
 <h2 id="调用链的数据格式">调用链的数据格式</h2>
-<figure>
-<img src="../../_drafts/gluon-ts_2/img_1.png" alt="RPC框架下采集的调用链原始数据&amp;AIOps比赛的子调用数据" /><figcaption aria-hidden="true">RPC框架下采集的调用链原始数据&amp;AIOps比赛的子调用数据</figcaption>
-</figure>
 <ul>
-<li>最顶上的表格中是最原始的数据，中间表格和下面的表格是处理后的数据</li>
-<li>中间表格的是做调用链路分析（TraceAnomaly）用到的数据，用到了耗时，以及调用链的结构信息。</li>
-<li>最下面表格是2021AIOps比赛的调用链的数据，每个span_id表示一次子调用，即一次trace中，从触发该trace，开始的调用路径中，途径当前服务的那次子调用，对应表2中的一个call path。但是耗时是只包括当前服务从接受到call，到完成处理，开始response的时间间隔。</li>
-<li>【补充】这里的表格信息量很少，它不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。</li>
+<li>做调用链路分析（TraceAnomaly）用到了耗时，以及调用链的结构信息。</li>
+<li>2021AIOps比赛的调用链的数据：每个span_id表示一个trace中的一次子调用，耗时表示当前服务从接受call，到开始response的时间间隔。这里的表格信息量很少，它不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。</li>
 </ul>
+<h2 id="代码">代码</h2>
+<p>放这里: https://github.com/chiechie/TraceAnomaly</p>
 <h2 id="参考资料">参考资料</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA">清华微众AIOps新作:基于深度学习的调用轨迹异常检测算法 -微信公众号</a></li>
-<li><a href="https://chiechie.github.io/2021/03/09/AIOps/aiops2021-demo/">AIOps挑战赛2020-demo方案-chiechie</a></li>
+<li><a href="https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
 </ol>
 
       

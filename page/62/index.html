@@ -22,9 +22,9 @@
 
   <meta name="description" content="a reader &amp; thinker">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Chiechie&#39;s Cosmos">
+<meta property="og:title" content="Chiechie&#39;s mini world">
 <meta property="og:url" content="https://chiechie.github.io/page/62/index.html">
-<meta property="og:site_name" content="Chiechie&#39;s Cosmos">
+<meta property="og:site_name" content="Chiechie&#39;s mini world">
 <meta property="og:description" content="a reader &amp; thinker">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Chiechie">
@@ -44,7 +44,7 @@
   };
 </script>
 
-  <title>Chiechie's Cosmos</title>
+  <title>Chiechie's mini world</title>
   
 
 
@@ -75,7 +75,7 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="Chiechie's Cosmos" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="Chiechie's mini world" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -96,7 +96,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Chiechie's Cosmos</h1>
+      <h1 class="site-title">Chiechie's mini world</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
@@ -165,6 +165,97 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/06/AI/cause-effect/judea-pearl_the-book-of-why3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's mini world">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/06/AI/cause-effect/judea-pearl_the-book-of-why3/" class="post-title-link" itemprop="url">《the book of why》读书笔记-3</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-06 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-06T08:33:38+08:00">2021-03-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-28 21:23:28" itemprop="dateModified" datetime="2021-05-28T21:23:28+08:00">2021-05-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>the book of why 的第三章-从证据到原因</p>
+</blockquote>
+<h2 id="贝叶斯公式">贝叶斯公式</h2>
+<ol type="1">
+<li>因果图只是贝叶斯网络中的一个特例，不是所有的贝叶斯网络都是因果关系网络</li>
+<li>休谟的观点：不可靠的证据不能推翻可靠的自然法则。举个例子，自然法则说"凡人皆有一死"可推导出"基督难逃一死"，不可靠的证人的言论是不能推翻这个结论的。</li>
+<li>人的直觉思维很容易推算出前向概率，但是逆向概率，即执果说因，很难通过直觉算出来。</li>
+<li>贝叶斯将休谟提出的问题往前推一步：到底需要多少证据才能推翻已有的自然法则？具体来说，贝叶斯公式给出了逆向概率的推导方法，也就是说，不可靠的证人的前提下基督是上帝儿子的概率。</li>
+<li>科学方法的步骤：提出假设；推断假设的可检验结果；做实验；利用实验结论更新假设信念。通常来说检测和更新只有正确和错误两种结果，贝叶斯公式却可以定量地处理不确定性。</li>
+<li>贝叶斯概率的另外一个应用，先沿着一个方向估计条件概率，根据贝叶斯公式推导另外一个方向的条件概率 &gt; 如何估算女程序员中练瑜伽的比例？ &gt; 搜集几个数据：女性中练习瑜伽的比例(10/100)，练习瑜伽的人中程序员的比例(1/1100)，女性中程序员的比例（1/10000）, &gt; 所以 女程序员中练瑜伽的比例为10/11</li>
+</ol>
+<h2 id="从贝叶斯公式到贝叶斯网络">从贝叶斯公式到贝叶斯网络</h2>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书-引言</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">知乎-反事实和干预</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/06/AI/cause-effect/judea-pearl_the-book-of-why1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -174,7 +265,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
+      <meta itemprop="name" content="Chiechie's mini world">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -263,97 +354,6 @@
 </figure></li>
 <li></li>
 </ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书-引言</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">知乎-反事实和干预</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/06/AI/cause-effect/judea-pearl_the-book-of-why3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Cosmos">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/06/AI/cause-effect/judea-pearl_the-book-of-why3/" class="post-title-link" itemprop="url">《the book of why》读书笔记-3</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-06 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-06T08:33:38+08:00">2021-03-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-28 21:23:28" itemprop="dateModified" datetime="2021-05-28T21:23:28+08:00">2021-05-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>the book of why 的第三章-从证据到原因</p>
-</blockquote>
-<h2 id="贝叶斯公式">贝叶斯公式</h2>
-<ol type="1">
-<li>因果图只是贝叶斯网络中的一个特例，不是所有的贝叶斯网络都是因果关系网络</li>
-<li>休谟的观点：不可靠的证据不能推翻可靠的自然法则。举个例子，自然法则说"凡人皆有一死"可推导出"基督难逃一死"，不可靠的证人的言论是不能推翻这个结论的。</li>
-<li>人的直觉思维很容易推算出前向概率，但是逆向概率，即执果说因，很难通过直觉算出来。</li>
-<li>贝叶斯将休谟提出的问题往前推一步：到底需要多少证据才能推翻已有的自然法则？具体来说，贝叶斯公式给出了逆向概率的推导方法，也就是说，不可靠的证人的前提下基督是上帝儿子的概率。</li>
-<li>科学方法的步骤：提出假设；推断假设的可检验结果；做实验；利用实验结论更新假设信念。通常来说检测和更新只有正确和错误两种结果，贝叶斯公式却可以定量地处理不确定性。</li>
-<li>贝叶斯概率的另外一个应用，先沿着一个方向估计条件概率，根据贝叶斯公式推导另外一个方向的条件概率 &gt; 如何估算女程序员中练瑜伽的比例？ &gt; 搜集几个数据：女性中练习瑜伽的比例(10/100)，练习瑜伽的人中程序员的比例(1/1100)，女性中程序员的比例（1/10000）, &gt; 所以 女程序员中练瑜伽的比例为10/11</li>
-</ol>
-<h2 id="从贝叶斯公式到贝叶斯网络">从贝叶斯公式到贝叶斯网络</h2>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书-引言</a></li>

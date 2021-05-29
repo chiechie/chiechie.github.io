@@ -6,6 +6,7 @@ date: 2021-05-20 07:13:07
 tags:
 - 未来趋势
 - 元宇宙
+- 创造者经济
 categories:
 - 沉思录
 ---
@@ -24,5 +25,14 @@ categories:
 6. 医疗健康产业未来10年有很大市场，包括健康饮食，制药，医疗器械。
 7. 理财教育低龄化，终身化。
 8. 老龄化已成为现实
-9. 量子计算机是趋势？
+9. 量子计算机.
+10. 创造者经济
+11. 权利从机构释放到个体。
+    
+    > The Creator Economy and NFTs are massive human potential unlocks. Even if certain assets are in a short-term bubble, we are on an inexorable march towards individuals mattering more than institutions.
 
+
+
+
+## 参考
+1. [Power to the Person](https://notboring.mirror.xyz/SPV_-bchriVn_ncDj8OgnLccSb5qAsU0sXNpg9y_UTk)

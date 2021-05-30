@@ -1,5 +1,5 @@
 ---
-title: rf3-使用gym解决出租车路线规划问题
+title: 强化学习3_-使用gym规划出租车行车路线的demo
 author: chiechie
 mathjax: true
 date: 2021-05-27 20:33:14
@@ -43,6 +43,7 @@ env.render()
 ![environment](img.png)
 
 上图环境渲染的图中
+
 - 黄色方块代表出租车当前的位置
 - “|”代表一堵墙，不能穿透
 - 蓝色的字母表示载人地方

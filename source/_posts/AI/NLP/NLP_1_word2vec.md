@@ -29,11 +29,13 @@ one-hot vector没法表达word在语义上的相似性。
 
 ## what
 
-我对wod2vec的理解: 本质上，是对一个word的one-hot vector降维。
+我对wod2vec的理解: 是对一个word的one-hot vector降维。
 
-跟传统的降维方法如PCA比，区别在于：
+跟传统的线性降维方法如PCA比，本质上都是在寻找原始输入的一种更经济、高效的表达。
 
-- PCA： 经过编码-解码之后，信息丢失尽可能少。想重构回原来空间。
+区别在于：
+
+- PCA：经过编码-解码之后,信息丢失尽可能少,想重构回原来空间。
 - word2vec： 经过编码-解码之后，中心词映射为背景词，或者，背景词映射为中心词。想预测另外一个东西。 其中，前者是（Skip-gram model，SG），后者是连续词袋模型（Continuous Bag-of-Words，CBOW）。
 
 ![img.png](bootstrap/img.png)

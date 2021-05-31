@@ -70,15 +70,15 @@ CoFlux挖掘KPI之间的异常波动关联，从而帮助运维人员进行故�
 
 ## 挑战
 
-![img](https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
 
-​      分析判断KPI的波动关联关系，主要有以下三个挑战：
 
-​      \1. KPI曲线数据众多且曲线特征各异（例如不同的周期性、平稳性、趋势等），因此，没有通用的方法可以对所有的KPI进行波动特征提取。
+分析判断KPI的波动关联关系，主要有三个挑战：
 
-​      \2. 基于异常检测结果的波动关联关系分析不合适。基于异常检测的方式需要挑选合适的异常检测算法并进行异常的定义（异常的阈值等），并且二分类的异常结果也比波动特征的信息量要少很多。
+1. KPI曲线数据众多且曲线特征各异（例如不同的周期性、平稳性、趋势等），因此，没有通用的方法可以对所有的KPI进行波动特征提取。
 
-​      \3. 波动关联关系复杂。正如在问题描述中所说，两个KPI间的波动可能有不同的先后顺序以及波动方向，这给判断波动关联关系时带来了更大的挑战。
+2. 基于异常检测结果的波动关联关系分析不合适。基于异常检测的方式需要挑选合适的异常检测算法并进行异常的定义（异常的阈值等），并且二分类的异常结果也比波动特征的信息量要少很多。
+
+3. 波动关联关系复杂。正如在问题描述中所说，两个KPI间的波动可能有不同的先后顺序以及波动方向，这给判断波动关联关系时带来了更大的挑战。
 
 
 
@@ -87,8 +87,6 @@ CoFlux挖掘KPI之间的异常波动关联，从而帮助运维人员进行故�
 
 
 ## 方法
-
-![img]()
 
 
 
@@ -159,4 +157,5 @@ CoFlux挖掘KPI之间的异常波动关联，从而帮助运维人员进行故�
 
 ## 参考
 
-1. CoFlux: Robustly Correlating KPIs by Fluctuations for Service Troubleshooting》发表在IWQoS 2019。
+1. CoFlux: Robustly Correlating KPIs by Fluctuations for Service Troubleshooting》发表在IWQoS 2019
+2. [coflux中文介绍](https://mp.weixin.qq.com/s/SpiIquuz-8Ud_C3e4oVyaQ)

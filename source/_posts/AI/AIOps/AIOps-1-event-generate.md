@@ -11,7 +11,7 @@ categories:
 - AIOps
 ---
 
-## 目录
+# 目录
 
 - [chapter0 概览](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/)
 - [chapter1 故障发现](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate/)
@@ -36,7 +36,7 @@ categories:
 - chapter3 故障恢复
 
 
-## 概览
+# 概览
 
 故障发现阶段，根据监控的对象不同，可以细分为以下场景：
 
@@ -45,5 +45,57 @@ categories:
 3. 故障预测
 4. 指标异常关联
 5. 日志聚类
-6. 调用链异常检测
+6. 调用链异常检测： https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA
 
+
+
+# 相关资料
+
+## 异常检测
+
+### 论文
+
+- 半自动的标记工具Label-Less: A Semi-automatic Labelling Tool for KPI Anomalies
+- 非监督异常检测算法-对复杂kpi使用vae进行对抗训练Unsupervised Anomaly Detection for Intricate KPIs via Adversarial Training of VAE
+- 对非结构化日志数据进行异常检测-LogAnomaly: Unsupervised Detection of Sequential and Quantitative Anomalies in Unstructured Logs
+- 多指标时序异常检测Robust Anomaly Detection for Multivariate Time Series through Stochastic Recurrent Neural Network
+- 对周期性时间序列数据进行异常检测-Automatic and Generic Periodicity Adaptation for KPI Anomaly Detection:[paper](https://netman.aiops.org/wp-content/uploads/2019/08/08723601.pdf)
+- Robust and Rapid Adaption for Concept Drift in Software System Anomaly Detection
+- 无监督异常检测-基于聚类Robust and Rapid Clustering of KPIs for Large-Scale Anomaly Detection
+- 无监督异常检测-基于VAE：Unsupervised Anomaly Detection via Variational Auto-Encoder for Seasonal KPIs in Web Applications
+- 有监督异常检测-Opprentice: Towards Practical and Automatic Anomaly Detection Through Machine Learning:[paper](http://netman.cs.tsinghua.edu.cn/wp-content/uploads/2015/11/liu_imc15_Opprentice.pdf)
+- 雅虎开源的时序预测和异常检测项目 EGAD:[论文的中文翻译](http://www.infoq.com/cn/articles/automated-time-series-anomaly-detection)
+- CMU 做多指标模式提取和异常检测的 SPIRIT 系统论文：[paper](https://bitquill.net/pdf/spirit_vldb05.pdf)
+
+### 代码
+
+- 阿里巴巴开源的Time2Graph(基于序列片段的图迁移路径做异常检测)：[code](https://github.com/petecheng/Time2Graph)
+- 清华/阿里巴巴开源的 Donut(基于 VAE 算法)：[code](https://github.com/haowen-xu/donut)
+- 清华开源的 Bagel(Donut改进型，基于 CVAE 算法)：[code](https://github.com/lizeyan/Bagel)
+- 清华/百度的 opprentice 系统(14 个检测器，平均取参数值，随机森林)：[code](https://github.com/tencent/metis)
+- 清华/建行做的指标批量标注 Label-less 项目(基于 iForest 异常检测和 DTW 相似度学习)：[code](https://netman.aiops.org/wp-content/uploads/2019/10/Label-less-v2.pdf>)
+- 百度开源的指标异常标注工具：[code](https://github.com/baidu/Curve)
+- 微软开源的指标异常工具：[code](https://github.com/Microsoft/TagAnomaly)
+- 清华OmniAnomaly-多指标异常检测: [code](https://github.com/NetManAIOps/OmniAnomaly/tree/master/omni_anomaly)
+- 清华/南开/腾讯的 ADS 系统(ROCKA+opprentice+CPLE)：[paper](https://netman.aiops.org/wp-content/uploads/2018/12/bujiahao.pdf)|[code](https://github.com/tmadl/semisup-learn)
+- 开源的时序特征值提取库 tsfresh：[code](http://tsfresh.readthedocs.io/en/latest/)
+
+- arundo 开源的 adtk 时序异常检测 python 库：[code](https://github.com/arundo/adtk)
+
+- netflix基于 PCA 算法的异常检测，跑在 Pig 上：[code](https://github.com/netflix/surus)
+- twitter 的异常检测库，R 语言[code](https://github.com/twitter/anomalydetection)
+
+- numenta 公司，HTM 算法：[code](https://github.com/numenta/nupic)|[code-评估](https://github.com/numenta/NAB/blob/master/nab/scorer.py)|[data](https://github.com/numenta/NAB/tree/master/data)
+
+- 雅虎开源的时序预测和异常检测项目 EGADS:[code](https://github.com/yahoo/egads)
+- 亿客行Expedia开源的异常检测项目 adaptive-alerting:[code](https://github.com/ExpediaDotCom/adaptive-alerting)
+
+
+- 新加坡国立大学做传感器多变量指标异常检测的开源项目(基于 GAN 算法)：[code](https://github.com/LiDan456/MAD-GANs)
+
+
+### 比赛
+
+清华裴丹团队举办的 KPI 异常检测比赛：[data](http://iops.ai/competition_detail/?competition_id=5&flag=1)
+
+清华裴丹团队举办的 KPI 异常检测比赛方案分享：[slide](http://workshop.aiops.org/)

@@ -159,11 +159,11 @@ categories:
 - [个人项目-基于深度学习的时间序列预测](https://github.com/Alro10/deep-learning-time-series/tree/master/notebooks)
 - pytorch-forecasting
     - [doc](https://pytorch-forecasting.readthedocs.io/en/latest/contribute.html) | [code](https://github.com/jdb78/pytorch-forecasting)
-    
 
-# 参考 
+# 比赛 
 
 1. [数据集](https://github.com/jbrownlee/Datasets)
 2. [M5 Competition](https://mofc.unic.ac.cy/m5-competition/)
 3. [M4 Competition](https://github.com/Mcompetitions/M4-methods)
 4. [awesome time series--github](https://github.com/cuge1995/awesome-time-series#Datasets)
+

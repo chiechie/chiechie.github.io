@@ -170,13 +170,58 @@ categories:
 ## 2 AIOps挑战赛
 
 1. AIOps挑战赛2020-获奖方案分案
+
 2. AIOps挑战赛2021-demo方案
 
+   
 
-# 参考资料
+# 根因参考资料
 
-1. [知乎-关于因果推断](https://zhuanlan.zhihu.com/p/88173582)
-2. [根因推断的英文原文](http://www.stat.cmu.edu/~larry/=sml/Causation.pdf)
-6. [AIOps挑战赛2020-官网](http://iops.ai/competition_detail/?competition_id=15&flag=1)
-4. [开源代码-Insigter](https://github.com/chiechie/Insighter)
+## 比赛
+
+1. [AIOps挑战赛2020-微服务系统根因分析](http://iops.ai/competition_detail/?competition_id=15&flag=1)
+
+2. [AIOps挑战赛2020-微服务系统根因分析-方案分享](https://mp.weixin.qq.com/s/hYiXUMveSprkIiOy8mCmCg)
+
+3. [AIOps挑战赛2021-微服务系统根因分析](http://iops.ai/competition_detail/?competition_id=17&flag=1)
+
+4. [CN-Softbei2020-根因分析-比赛](http://www.cnsoftbei.com/plus/view.php?aid=479)
+
+5. [AIOps挑战赛2020-微服务系统根因分析-数据](https://mp.weixin.qq.com/s/93USWr2evhRTQvS_NgB56A)
+
+   
+
+## 代码
+
+1. [根因分析代码-Insigter](https://github.com/chiechie/Insighter)
+
+
+## 论文
+
+1. [清华阿里AIOps新作：基于因果分析的微服务内根因定位](https://wemp.app/posts/6013f2da-c11a-4f6f-b393-2b631c45172a)
+2. [2007-The Journal of MachineLearning Research-pc算法](https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf)
+3. [对陈鹏飞教授CauseInfer论文的解读](https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/)
+
+
+## 其他
+
+1. [2014-INFOCOM_CauseInfer](https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf)
+
+
+4. [CauseInfer论文笔记2](https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/)
+
+5. [2014-INFOCOM_CauseInfer](https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf)
+
+8. [chiechie对PC算法的总结](https://chiechie.github.io/2021/03/09/technology/PC-algo/)
+
+9. [CauseInfer论文笔记1](https://chiechie.github.io/2021/03/02/technology/causeinfer-notes1/)
+
+
+11. [causeinfer--paper](https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf)
+
+12. J. Pearl, Causality: models, reasoning and inference. Cambridge Univ Press, 2000, vol. 29.
+
+13. D. Barry, “A bayesian analysis for change point problems,” Journal of the American Statistical Association, vol. 88, no. 421, pp. 309–319, 1993.
+
+     
 

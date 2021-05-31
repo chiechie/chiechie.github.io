@@ -152,7 +152,7 @@ MicroCause的架构图如下（图5），
    ![图3：四个时间序列的因果关系图- G_C](./img.png)
 
 2. 第二步，将$G_C$转化为节点为指标的因果图$G_{FCG}$，这样才能做根因定位。理论上，如果$G_C$中时序A和时序B的时间点中存在一条边，那么$G_{FCG}$中, 时列A到时序B就有一条边。
-   
+  
 	![图8：针对故障实例A,基于PCTS算法生成的因果图](./image-20200622140031849.png)
 
 	![图6：四个指标间的故障因果图-G_FCG](./image-20200622135001778.png)
@@ -226,4 +226,5 @@ CauseInfer[INFOCOM14]中提到，使用PC算法来学习基于时间序列的因
 ## 参考
 1. [清华阿里AIOps新作：基于因果分析的微服务内根因定位](https://wemp.app/posts/6013f2da-c11a-4f6f-b393-2b631c45172a)
 2. [causeinfer--paper](https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf)
-3. []()
+
+   

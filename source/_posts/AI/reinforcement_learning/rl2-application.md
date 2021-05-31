@@ -1,5 +1,5 @@
 ---
-title: 强化学习2_应用
+title: 强化学习2 应用
 author: chiechie
 mathjax: true
 date: 2021-04-21 08:22:04
@@ -21,6 +21,9 @@ categories:
    
     > NAS is closely related to hyperparameter optimization and is a subfield of automated machine learning (AutoML)
 5. 游戏：生成NPC
+6. 交易机器人
+7. 控制机器人
+
 
 ### 商品推荐
 
@@ -75,10 +78,23 @@ NAS是auto-ml的子领域，为了让机器去设计神经网络。
 后面学术界提出了更优秀的NAS方法--DARTS 及其变体。
 
 
+### 交易机器人
+
+使用强化学习构建股票交易机器人，看到github有一个项目 [使用强化学习炒股](https://github.com/wangshub/RL-Stock)。
+
+大概建模思路是这样，state是当前的市场行情数据，action是买/卖/hold，reward就是盈利。
+
+这个思路是可以的，监督学习最多可以构建一个简单的基于预测的交易策略，比如高买低卖。强化学习可能可以学到更多的人意想不到的交易策略。
+
+但是，因为模型的黑盒和不可预测性，类似无人驾驶，无人运维，很难让人放心把这么重要的事情交给一个机器人手里。
+
+
+
 ## 参考
-6. [rct的混沌球算法](https://rct.ai/zh-hans/blog/the-key-technology-behind-morpheus-engine)
-1. [DRL-wangshusen中文教材](https://github.com/wangshusen/DRL/tree/master/Notes_CN)
-2. [NAS-介绍](https://lilianweng.github.io/lil-log/2020/08/06/neural-architecture-search.html)
-3. [NAS-wiki](https://en.wikipedia.org/wiki/Neural_architecture_search)
-4. [DARTS: Differentiable Architecture Search-paper](https://arxiv.org/abs/1806.09055)
-5. [chiechie: 贝叶斯优化](https://chiechie.github.io/2021/03/24/technology/bayes-optimization//)
+1. [rct的混沌球算法](https://rct.ai/zh-hans/blog/the-key-technology-behind-morpheus-engine)
+2. [DRL-wangshusen中文教材](https://github.com/wangshusen/DRL/tree/master/Notes_CN)
+3. [NAS-介绍](https://lilianweng.github.io/lil-log/2020/08/06/neural-architecture-search.html)
+4. [NAS-wiki](https://en.wikipedia.org/wiki/Neural_architecture_search)
+5. [DARTS: Differentiable Architecture Search-paper](https://arxiv.org/abs/1806.09055)
+6. [chiechie: 贝叶斯优化](https://chiechie.github.io/2021/03/24/technology/bayes-optimization//)
+7. [使用强化学习炒股](https://github.com/wangshub/RL-Stock)

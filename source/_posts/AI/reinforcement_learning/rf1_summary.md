@@ -1,5 +1,5 @@
 ---
-title: 强化学习1_资料汇总
+title: 强化学习1 资料汇总
 author: chiechie
 mathjax: true
 date: 2021-04-18 20:16:31
@@ -15,22 +15,15 @@ categories:
 
 可能可以超越人类。监督学习 只能模仿，不能超越
 
-
 ## 公开课
 
 ### zhoubolei：rf-intro
 
-- 课程资源
-    - [github-课程资料](https://github.com/zhoubolei/introRL) ｜[slide](https://github.com/zhoubolei/introRL/blob/master/lecture1.pdf)
-    -  [视频](https://www.bilibili.com/video/BV1LE411G7Xj)
-- chiechie的笔记
-    - [rf-intro 1 基本概念](https://chiechie.github.io/2021/04/18/technology/rf-intro1/)
-    - [rf-intro 2 马尔可夫过程](https://chiechie.github.io/2021/04/18/technology/rf-intro2/)
-    - [rf-intro 7 model-based强化学习](https://chiechie.github.io/2021/04/18/technology/rf-intro7/)
-
-### wangshusen
-
-- 课程资源：
+- zhoubolei: ：rf-intro
+  
+    - [zhoubolei-github-课程资料](https://github.com/zhoubolei/introRL) ｜[slide](https://github.com/zhoubolei/introRL/blob/master/lecture1.pdf)
+    - [zhoubolei视频](https://www.bilibili.com/video/BV1LE411G7Xj)
+- wangshusen
     - [baidu网盘](https://pan.baidu.com/s/1XpTgny_Vr0LobBsuYF4KkA):密码:x0wb
     - [强化学习中文教材](https://github.com/wangshusen/DRL/blob/master/Notes_CN/DRL.pdf)
     - [视频](https://youtu.be/vmkRMvhCW5c)|[深度学习课件](https://github.com/wangshusen/DeepLearning)|[深度强化学习课件](https://github.com/wangshusen/DRL)
@@ -61,17 +54,17 @@ categories:
 
 - [使用强化学习炒股](https://github.com/wangshub/RL-Stock)
 - [强化学习应用于金融问题的文章](https://zhuanlan.zhihu.com/p/267998242)
-- [Gym-线上模拟平台](https://gym.openai.com/) ：is a toolkit for developing and comparing reinforcement learning algorithms.
+- [Gym-强化学习开发框架](https://gym.openai.com/)：开发强化学习算法的工具箱，有很多第三方环境
 
 
 ## 强化学习的应用
+
+[强化学习的应用--chiechie](https://chiechie.github.io/2021/04/21/reinforcement_learning/rf-application/)
 
 - 神经网络结构搜索
 - 自动生成SQL语句
 - 推荐系统
 - 网约车调度
-
-[chiechie的笔记-关于强化学习的应用](https://chiechie.github.io/2021/04/21/reinforcement_learning/rf-application/)
 
 ## 一些思考
 
@@ -101,24 +94,20 @@ categories:
 
 - 监督学习
     - 要求数据 是独立同分布的
-    - 学习过程需要被告知，labels是什么
+    - 学习过程有老师手把手教，标准答案（label）是什么
 - 强化学习
     - 数据不用iid
-    - 正确的action不能获取即时的正反馈
-- 两者对比
-    - 强化学习需要序列数据作为输入（不是iid）
-    - 强化学习本身不会被告知正确的action是什么，而是需要自己去试错，找到具长期reward最大的action。监督学习会直接被告知正确到案是什么。
-    - 试错机制--在探索 和 利用中间寻找平衡
-    - 强化学习没有一个导师（supervisor），只有一个奖励信号，并且还是有延迟的。
-
+    - 没有导师（supervisor），不会被告知正确的action是什么，只有一个奖励信号，并且有延迟的。需要自己去试错，找到具长期reward最大的action
+    
 ### 强化学习的特点
 
 - 强化学习中随机性的两个来源：action可以是随机的，状态转移可以是随机的
 - 试错机制
 - 延迟reward
 - 时间会产生影响
-- agent的行为会影响后续收到的数据（agent的action改变了环境）
-    - 类似我们的模型自动更新，担心时间会对模型造成影响。比如模型推荐了商品a，我们也只能收到关于商品a的反馈。
+- agent的行为会影响后续收到的数据（agent的action改变了环境） 
+  
+  > 类似我们的模型自动更新，担心时间会对模型造成影响。比如模型推荐了商品a，我们也只能收到关于商品a的反馈。
     
 
 ## 参考

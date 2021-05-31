@@ -165,6 +165,105 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/15/AI/machine_learning/tree_model/trees_3/" class="post-title-link" itemprop="url">树模型3_GBDT介绍</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-15 10:39:45" itemprop="dateCreated datePublished" datetime="2021-05-15T10:39:45+08:00">2021-05-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-18 08:24:23" itemprop="dateModified" datetime="2021-05-18T08:24:23+08:00">2021-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost</p>
+</blockquote>
+<h2 id="high-level理解">high-level理解</h2>
+<ol type="1">
+<li>GBDT是一种data-driven的预测方法。</li>
+<li>GBDT的预测逻辑，分两个层次，第一层，保证每一个样本的准确率；第二层，构造决策路径，即希望通过特征来达到第一层的准确率。实现第一层目的的方法是基于梯度确定阶段性目标；实现第二层的目的的方法通过特征去拟合阶段性目标（残差），也就是cart。</li>
+</ol>
+<h3 id="adaboost-gbdt-与-xgboost">Adaboost, GBDT 与 XGBoost</h3>
+<ol type="1">
+<li>Adaboost是GBDT的一个特例</li>
+<li>XGB在GBDT的基础上引入了二阶导数，并且在loss中加入了正则项。</li>
+</ol>
+<h2 id="算法细节">算法细节</h2>
+<figure>
+<img src="trees_1/img.png" alt="adaboost" /><figcaption aria-hidden="true">adaboost</figcaption>
+</figure>
+<p>boosting中有三个重要的参数： - 树的棵树 - <span class="math inline">\(\lambda\)</span>: 学习速率 - 每一棵树的最大splits个数</p>
+<h3 id="公式推导">公式推导</h3>
+<h3 id="代码实现">代码实现</h3>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
+<li><a target="_blank" rel="noopener" href="https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/6062a083acbfe82c7195b27d/1617076404560/ISLR%2BSeventh%2BPrinting.pdf">An Introduction to Statistical Learning</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/14/investment/about-invement-education/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -284,114 +383,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/07/reading_notes/qukuailian2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/07/reading_notes/qukuailian2/" class="post-title-link" itemprop="url">《区块链实战：从技术创新到商业模式》读书笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-07 09:22:55" itemprop="dateCreated datePublished" datetime="2021-05-07T09:22:55+08:00">2021-05-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-26 09:18:16" itemprop="dateModified" datetime="2021-05-26T09:18:16+08:00">2021-05-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="区块链如何分类">区块链如何分类</h2>
-<ol type="1">
-<li><p>按照参与者访问数据的资格，区块链分为：公链，私链，联盟链。</p></li>
-<li><p>按照发布新区块是否要permission，区块链分为：许可链和非许可链</p></li>
-<li><p>EOS采用委托权益证明共识机制、全网设置21个超级节点的公链，验证出块的许可门槛很高，或许应该称为“公开许可链”。</p></li>
-<li><p>联盟链/私链以其用户身份可验证、性能更高、更易扩展、更快达成共识、更易合规监管的特性适用于更多商业需求场景。</p></li>
-<li><p>跨链，是两个相对独立的区块链账本间进行资产互操作过程</p>
-<blockquote>
-<p>互操作：指两条区块链之间进行资产转移，支付或者信息交互。</p>
-</blockquote></li>
-<li><p>互联网是信息自由流通的网络，而区块链跨链形成的则是价值自由流通的网络。</p></li>
-<li><p>以太坊创始人--维塔利克·布特林设想的跨链技术的5个应用场景（大部分依然没有得以实现与普及）：</p>
-<ul>
-<li>数字资产跨链转移：锚定资产，现有A、B两条链，需要把资产X从A转到B，就需要A中一定数量的货币冻结或销毁），同时在B链解冻或产生相对应数量的货币</li>
-<li>跨链资产原子交换：两条链路的两个交易同时完成。</li>
-<li>跨链状态读取：侧链技术</li>
-<li>跨链资产抵押锁定：要求一些资产在A链上被“冻结”抵押，这样才能在B链上完成特定的动作</li>
-<li>跨链智能合约调用：难度最大，至今没有解决</li>
-</ul></li>
-<li><p>2019年8月，专注于跨链技术的Cosmos项目发布了IBC规范（V1.0.0-rc3),Cosmos希望像当年TCP/IP协议栈一样能构建一组标准化协议来统一解决跨链的问题。</p></li>
-<li><p>ArcBlock的链网和跨链采用了更为“实用主义”的简化设计策略。ArcBlock支持的跨链实际包以下两部分:</p>
-<ul>
-<li>开放链访问协议（Open Chain Access Protocal，缩写OCAP），即采用相同的接口去访问不同的区块链</li>
-<li>跨链资产原子交换协议</li>
-</ul></li>
-<li><p>三种主要的跨链实现方法:</p></li>
-</ol>
-<ul>
-<li>公证人机制：</li>
-<li>侧链/中继</li>
-</ul>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li>https://weread.qq.com/web/reader/3b63273071e8eda73b6dc4d</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -461,7 +452,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">153</span>
+          <span class="site-state-item-count">154</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -474,7 +465,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">174</span>
+        <span class="site-state-item-count">175</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

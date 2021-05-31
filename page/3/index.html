@@ -22,9 +22,9 @@
 
   <meta name="description" content="a reader &amp; thinker">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Chiechie&#39;s mini world">
+<meta property="og:title" content="Chiechie&#39;s Mini World">
 <meta property="og:url" content="https://chiechie.github.io/page/3/index.html">
-<meta property="og:site_name" content="Chiechie&#39;s mini world">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
 <meta property="og:description" content="a reader &amp; thinker">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Chiechie">
@@ -44,7 +44,7 @@
   };
 </script>
 
-  <title>Chiechie's mini world</title>
+  <title>Chiechie's Mini World</title>
   
 
 
@@ -75,7 +75,7 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="Chiechie's mini world" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -96,7 +96,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Chiechie's mini world</h1>
+      <h1 class="site-title">Chiechie's Mini World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/24/technology/visualize-graph/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/27/AI/reinforcement_learning/rl3-gym/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,12 +174,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's mini world">
+      <meta itemprop="name" content="Chiechie's Mini World">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/24/technology/visualize-graph/" class="post-title-link" itemprop="url">风控领域的图挖掘场景</a>
+            <a href="/2021/05/27/AI/reinforcement_learning/rl3-gym/" class="post-title-link" itemprop="url">强化学习3_-使用gym规划出租车行车路线的demo</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-24 09:08:21" itemprop="dateCreated datePublished" datetime="2021-05-24T09:08:21+08:00">2021-05-24</time>
+              <time title="创建时间：2021-05-27 20:33:14" itemprop="dateCreated datePublished" datetime="2021-05-27T20:33:14+08:00">2021-05-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-26 09:18:16" itemprop="dateModified" datetime="2021-05-26T09:18:16+08:00">2021-05-26</time>
+                <time title="修改时间：2021-05-31 08:24:44" itemprop="dateModified" datetime="2021-05-31T08:24:44+08:00">2021-05-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
                 </span>
             </span>
 
@@ -219,53 +219,57 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="几个场景">几个场景</h1>
-<h2 id="攻防对抗">攻防对抗</h2>
-<p>一般都会有下述风控规则：</p>
+          <blockquote>
+<p>看完了强化学习的理论，现在来动手试一试</p>
+</blockquote>
+<h2 id="场景介绍">场景介绍</h2>
+<p>以出租车司机路线规划为背景，下面演示一下如何由强化学习解决这个问题</p>
+<p>为了将问题进一步简化，基于已有的强化学习框架gym，我就可以更关注在策略实现了</p>
+<p>首先强化学习将问题建模为两个部分：环境（enirontent）和 决策主体（agent）。 环境基于state，action给出反馈（reward），以及下一个时刻的reward。 agent基于state，给出最佳的action。</p>
+<p>对于「出租车路线规划问题」，state就是给定区域：出租车坐标，行人坐标，行人目的地，障碍物（墙）的坐标，出租车当前是否已经载人</p>
+<p>action就4个方向（东南西北），2个动作（载人，下客）</p>
+<h2 id="开始编程实现啦">开始编程实现啦</h2>
+<h3 id="step1-加载出租车路线规划这个环境">step1: 加载「出租车路线规划」这个环境</h3>
+<p>因为gym已经带有这个环境，直接可用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gym</span><br><span class="line"></span><br><span class="line">env = gym.make(<span class="string">&quot;Taxi-v3&quot;</span>)</span><br><span class="line">env.reset()</span><br><span class="line"><span class="comment"># visulize current state</span></span><br><span class="line">env.render()</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="img.png" alt="environment" /><figcaption aria-hidden="true">environment</figcaption>
+</figure>
+<p>上图环境渲染的图中</p>
 <ul>
-<li>7天内在注册账户数超过**的设备号</li>
-<li>1天内某IP关联超过xx个账户</li>
+<li>黄色方块代表出租车当前的位置</li>
+<li>“|”代表一堵墙，不能穿透</li>
+<li>蓝色的字母表示载人地方</li>
+<li>紫色的字母表示下客的地方</li>
+<li>出租车接到人之后会编程绿色</li>
 </ul>
-<p>虽然规则简单，但由于实时性和贴近业务的特点，可以拦截不少黑产, 但也会造成一定误杀，特别是IP类的规则。</p>
-<p>同时因为风控是攻防对抗的过程，黑产也会升级，比如通过伪造设备、LBS、频繁更换IP等手段尽可能伪装成一个真人，隐蔽聚集性等显性特征，绕过风控规则。</p>
-<p>相应风控技术也在进化，如使用设备指纹、IP画像、验证码对抗等。</p>
-<h2 id="基于关联关系识别团伙">基于关联关系识别团伙</h2>
-<p>可以定义设备-账户的Graph如下：</p>
-<ul>
-<li>节点：账户 + 设备</li>
-<li>边：近xx天账户与设备出现在同一事件中，则它们之间有一条边。</li>
-</ul>
-<p>识别方法：</p>
-<ul>
-<li>无监督方法：通过「连通子图算法」识别出一个个连通的社区，如果社区规模较大，可能背后业务含义是黑产控制一批账户。定义社区规模为score，通过调节阈值来控制误杀、召回。</li>
-<li>有监督方法-传统：等价为节点分类问题，通过提取节点业务特征、拓扑特征、所属社区特征，训练一个分类器去预测。</li>
-<li>有监督方法-图神经网络：将节点业务特征X与网络拓扑结构A作为输入学习函数，用于对未知数据的预测.相比规则来说，此类方法不仅用到了更复杂的关系，同时也考虑了节点业务和拓扑特征。故防控能力会更强一些。</li>
-</ul>
-<h2 id="基于相似度识别团伙">基于相似度识别团伙</h2>
-<p>如果黑产成功避开设备指纹、聚集性规则等风控措施，把自己伪装成一个真人，如何检测？——只要作案了，总会留下蛛丝马迹。</p>
-<ul>
-<li>垃圾文本：比如留下了垃圾文本，那么利用文本之间相似度（Jaccard、semi-hash）构建账户之间相似关系，然后使用图分割+连通子图查找技术识别，具体可<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/23385044">参考这里</a></li>
-<li>行为相似度：facebook针对刷量的行为，通过计算账户之间行为度来构建graph，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/58334765">详见这里</a>.此类方法最大问题是, 两两节点相似度计算性能问题。一般会做下约束，如限制在某个事件场景下、限制在某段事件内以及如何分段计算+合并，并且往往是通过spark分布式计算。</li>
-</ul>
-<h2 id="基于共享特征识别团伙">基于共享特征识别团伙</h2>
-<p>因为黑产控制大量的账户通过软件进行攻击，而不是手工操作，故这些账户某些共同属性上会有Pattern。</p>
-<p>大概的解题思路是“搜集证据”，将共享的某特征/字段作为，判断证据强弱，如共享设备是强证据，可以仅凭此条直接断案。 但是像共用某品牌手机是弱证据，需要多个弱证据结合一起断案。</p>
-<p>再抽象一点是有点像「层次社区划分算法」：</p>
+<p>注意，这些颜色，形状只是方便人理解，算法内部只关心有5个状态</p>
+<h3 id="step2-看一下action的6个状态">step2： 看一下action的6个状态</h3>
+<p>看一下action的6个状态， down (0), up (1), right (2), left (3), pick-up (4), and drop-off (5). <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(env.action_space)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    print(env.action_space.sample())</span><br></pre></td></tr></table></figure> <img src="img_1.png" alt="img_1.png" /></p>
+<h3 id="step3-跟env交互一次">step3: 跟env交互一次</h3>
+<p>跟env交互一次，拿到反馈和最新的状态</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">state, reward, done, info = env.step(action=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="img_3.png" alt="img_3.png" /> 注意：每个Gym环境的step方法都返回state, reward, done, info这四个变量，输入某个action</p>
+<h3 id="step4-使用某个简单策略随机策略">step4： 使用某个简单策略（随机策略）</h3>
+<p>使用某个简单策略（随机策略），让出租车跑完一轮</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">state = env.reset()</span><br><span class="line">env.render()</span><br><span class="line">n = <span class="number">0</span></span><br><span class="line">r = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    state, reward, done, info = env.step(action=env.action_space.sample())</span><br><span class="line">    r += reward</span><br><span class="line">    n = n + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> done:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">print(<span class="string">&quot;totally make %d decisions&quot;</span> % (n+<span class="number">1</span>), <span class="string">&quot;total reward&quot;</span>, r)</span><br><span class="line">env.render()</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
+</figure>
+<h3 id="step5-升级策略-q-table-跑多轮">step5: 升级策略-Q-table, 跑多轮</h3>
+<p>Q-table使用bellman方程迭代更新策略，并且存放到一张表中（这个表就是Q-table），即每个状态，每个action对应的Q-value</p>
+<p><span class="math display">\[Q_{t+1}\left(s_{t}, a_{t}\right)=\underbrace{Q_{t}\left(s_{t}, a_{t}\right)}_{\text {old value }}+\underbrace{\alpha_{t}\left(s_{t}, a_{t}\right)}_{\text {learning rate }} \times[\overbrace{\underbrace{R_{t+1}}_{\text {reward }}+\underbrace{\gamma}_{\text {discount factor }} \underbrace{\max _{a} Q_{t}\left(s_{t+1}, a_{t}\right)}_{\text {estimate of optimal future value }}}^{\text {learned value }}-\underbrace{Q_{t}\left(s_{t}, a_{t}\right)}_{\text {old value }}]\]</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">n_state = env.observation_space.n</span><br><span class="line">n_action = env.action_space.n</span><br><span class="line">Q_table = np.zeros((n_state, n_action))</span><br><span class="line">alpha = <span class="number">0.615</span></span><br><span class="line">gamma = <span class="number">0.9</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> episode <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">    state = env.reset()</span><br><span class="line">    <span class="comment">#env.render()</span></span><br><span class="line">    n = <span class="number">0</span></span><br><span class="line">    r = <span class="number">0</span></span><br><span class="line">    done = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">while</span> done <span class="keyword">is</span> <span class="literal">False</span>:</span><br><span class="line">        best_action = np.argmax(Q_table[state, :])</span><br><span class="line">        state2, reward, done, info = env.step(action=best_action)</span><br><span class="line">        Q_table[state, best_action] = Q_table[state, best_action] + alpha *(reward + gamma * np.<span class="built_in">max</span>(Q_table[state2]) - Q_table[state, best_action])</span><br><span class="line">        r += reward</span><br><span class="line">        n = n + <span class="number">1</span></span><br><span class="line">        <span class="comment"># 别漏了</span></span><br><span class="line">        state = state2 </span><br><span class="line">    <span class="keyword">if</span> episode % <span class="number">50</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">&#x27;Episode &#123;&#125; Total Reward: &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(episode,r))</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="img_6.png" alt="img_6.png" /><figcaption aria-hidden="true">img_6.png</figcaption>
+</figure>
+<h2 id="遗留问题">遗留问题</h2>
 <ol type="1">
-<li>定义证据：通过业务经验定义共享特征集，不通场景特征集应该是不同的。</li>
-<li>找证据：分别对每个/每组特征进行聚类/社区划分算法，得到一个个簇.</li>
-<li>组合证据：将2得到的簇作为节点，簇之间共有账户数作为连边，构建graph，再进一步划分得到最终的社区，每个社区中的节点共享多个特征。</li>
+<li>策略函数要设置约束，比如不能撞墙</li>
 </ol>
-<h1 id="总结">总结</h1>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li>上述三种类型方法的主要区别在于graph的不同，在整个图挖掘体系中最核心也最难一点在于，如何将业务经验抽象成Graph。</li>
-<li>社区发现算法以图分割+连通子图查找为主，一方面可解释强，另外可以通过调节阈值权衡召回和误差，以满足运营人员需要。这也是 "拿算法适配业务，而不是业务适配算法"的工作准则。</li>
-</ol>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://scikit-network.readthedocs.io/en/latest/">scikit-network的doc</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/search?type=content&amp;q=%E5%9B%BE%E6%8C%96%E6%8E%98">zhihu-风控</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/62750137">GCN</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.oreilly.com/radar/introduction-to-reinforcement-learning-and-openai-gym/">rf-based on gym introduction</a></li>
 </ol>
 
       
@@ -286,7 +290,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/23/AI/cause-effect/randomwalking/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/26/reading_notes/daodejing1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -295,12 +299,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's mini world">
+      <meta itemprop="name" content="Chiechie's Mini World">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/23/AI/cause-effect/randomwalking/" class="post-title-link" itemprop="url">随机游走</a>
+            <a href="/2021/05/26/reading_notes/daodejing1/" class="post-title-link" itemprop="url">道德经1-反者道之动, 弱者道之用</a>
         </h2>
 
         <div class="post-meta">
@@ -309,23 +313,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-05-23 12:52:46" itemprop="dateCreated datePublished" datetime="2021-05-23T12:52:46+08:00">2021-05-23</time>
+              <time title="创建时间：2021-05-26 09:23:01 / 修改时间：10:33:51" itemprop="dateCreated datePublished" datetime="2021-05-26T09:23:01+08:00">2021-05-26</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -340,25 +338,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="介绍">介绍</h2>
-<p>已知因果图时，随机游走可以用来做因果推断。</p>
-<p>原理是，基于因果关系，构建概率转移矩阵，通过模拟故障传播路径，得到故障根因。</p>
-<h2 id="随机游走算法-详细">随机游走算法-详细</h2>
-<ul>
-<li>Step 1. 生成一个关系图G. <span class="math inline">\(e_{ij} = 1\)</span> 表示节点i是节点j的原因（之一）</li>
-<li>Step 2. 计算转移矩阵Q:
-<ol type="1">
-<li>向前游走：从result节点到 the cause节点.理论上，跟异常节点越相关的节点，就越有可能是根因. 也就是说 <span class="math inline">\(Q_{ij} = R(v_{abnormal}, v_j)\)</span>, <span class="math inline">\(R(v_{abnormal}, v_j)\)</span>表示异常节点<span class="math inline">\(v_{abnormal}\)</span> 和 $ v_j$之间的相关系数, and <span class="math inline">\(e_{ji} = 1\)</span></li>
-<li>向后游走：从cause节点到result节点. 为了避免算法陷入跟异常不相关或者低相关的节点，随机游走允许从cause节点跳出到result节点。 如果 <span class="math inline">\(e_{j i} \in E\)</span>且 <span class="math inline">\(e_{ij} \notin E\)</span>, 那么 <span class="math display">\[Q_{ji} =\rho R\left(v_{abnormal}, v_{i}\right),\rho \in[0,1]\]</span>.</li>
-<li>维持原状：如果一个节点，它的邻居们都跟异常节点的相关性很低，这个节点很有可能就是根因了，所以游走者应该停留在这里， <span class="math display">\[Q_{i i}=\max \left[ 0, R\left(v_{abnormal}, v_{i}\right)- \max _{k: e_{k i} \in E} R\left(v_{abnormal}, v_{k}\right) \right]\]</span></li>
-</ol></li>
-<li>Step 3. 对行做归一化，得到转移概率矩阵 <span class="math display">\[\bar{Q}_{i j}=\frac{Q_{i j}}{\sum_{j} Q_{i j}}\]</span></li>
-<li>Step 4. 在G上面随机游走，使转移概率<span class="math inline">\(\bar{Q}\)</span></li>
-</ul>
-<p>采用类似pagerank的方法，得到每个节点的得分。</p>
+          <p>守弱：如婴儿般的柔和与可塑。</p>
+<p>任何属性，操性，仁则都有其正负两面，也就是阴与阳。而属性明显曰「强」，属性混沌曰「弱」。如果根据一己之经验，认为一种属性，操性，仁则只有好处，没有缺陷，而拼命发展，必致「阴」「阳」失调而进入危境。</p>
+<p>二十三章:「希言自然。故飘风不终朝，骤雨不终日。孰为此者?天地。天地尚不能久，而况于人乎。」</p>
+<p>以飘风骤雨为天候中「阴」「阳」不调之例子。这就隐喻到「雷厉风行」，偏执一「仁」一「义」之治事方法是不能长久的;无论在当事人看来他的「政治理想」是多么完美或吸引人。</p>
+<p>五十五章:「含德之厚，比于赤子……知和曰常，知常曰明。益生曰祥。心使气曰强。物壮则老，谓之不道，不道早巳。」</p>
+<p>以婴儿为「合乎自然」的例子，也就是阴阳调和之例子。婴儿柔和，乃负阴抱阳之象，合于大道。但人一旦成长启智之后，就慢慢的开始过分发展某种属性，操性，或仁则，其原因可是功利的，也可是欲望驱使的。而过分发展某种属性之结果就是「老」。</p>
+<p>三十章:「……果而勿矜，果而勿伐，果而勿骄。果而不得已，果而勿强。物壮则老，是谓不道，不道早巳。」</p>
+<p>人之「老」在躯体也在头脑，最大的特征在失去思想之柔韧与变通---这些都是过分发展某一属性之「果」。人会变得过于执着固定事物，或过于刚猛，或过于退怯;百象皆有，不一而足;總之，都不合道。从老子之道来看就是失去「负阴抱阳」之特性。</p>
+<p>十一章： 三十辐共一毂，当其无，有车之用。埏埴以为器，当其无，有器之用。凿户牖以为室，当其无，有室之用。故有之以为利，无之以为用。</p>
+<p>任何器具、房室、或机械要发生作用，都要有一「容纳」其他事物之「空间」，老子以此「空间」喻道之「无」，而容万物之性使万物发生作用。</p>
+<p>四十章:「反者道之动;弱者道之用。天下万物生于有，有生于无」。</p>
+<p>王弼的诠释:「高以下为基，贵以贱为本，有以无为用，此其反也，动皆知其所无，则物通矣」。「此其反也，动皆知其所无(道之本体)」一段有双关之意，即「相反相成」与「返于道之本体[无]」。「动皆知其所无」指要明白大道之运作，一定要对万事万物追溯至「无」之起源处。</p>
+<p>这个道理对古之君王重要，对于一般人或短时间却不尽然。一般人在一时空下可有某一操性，或行某一仁则而畅通无阻，甚至终生得志。但这只是从一人或一团体来看;对整体国家来说则大不相同。毫无疑问的，治道要讲求整体国家之长治久安，所以明了[弱者道之用]是必要的</p>
+<blockquote>
+<p>对做平台也很重要。</p>
+</blockquote>
 <h2 id="参考">参考</h2>
-<ol start="4" type="1">
-<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">Page3,4 -paper</a></li>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.aisixiang.com/data/37674.html">反者道之动, 弱者道之用”之詮釋</a></li>
 </ol>
 
       
@@ -378,7 +376,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/76/">76</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/77/">77</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -444,7 +442,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-count">153</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -457,7 +455,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">168</span>
+        <span class="site-state-item-count">174</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

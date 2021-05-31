@@ -22,9 +22,9 @@
 
   <meta name="description" content="a reader &amp; thinker">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Chiechie&#39;s mini world">
+<meta property="og:title" content="Chiechie&#39;s Mini World">
 <meta property="og:url" content="https://chiechie.github.io/page/40/index.html">
-<meta property="og:site_name" content="Chiechie&#39;s mini world">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
 <meta property="og:description" content="a reader &amp; thinker">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Chiechie">
@@ -44,7 +44,7 @@
   };
 </script>
 
-  <title>Chiechie's mini world</title>
+  <title>Chiechie's Mini World</title>
   
 
 
@@ -75,7 +75,7 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="Chiechie's mini world" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -96,7 +96,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Chiechie's mini world</h1>
+      <h1 class="site-title">Chiechie's Mini World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/01/AI/timeseries/ad-and-prediction/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/02/meditation/how-to-organize/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,12 +174,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's mini world">
+      <meta itemprop="name" content="Chiechie's Mini World">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/01/AI/timeseries/ad-and-prediction/" class="post-title-link" itemprop="url">预测和异常检测</a>
+            <a href="/2021/04/02/meditation/how-to-organize/" class="post-title-link" itemprop="url">怎么给算法项目制定目标？</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-01 23:12:28" itemprop="dateCreated datePublished" datetime="2021-04-01T23:12:28+08:00">2021-04-01</time>
+              <time title="创建时间：2021-04-02 22:20:36" itemprop="dateCreated datePublished" datetime="2021-04-02T22:20:36+08:00">2021-04-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
+                <time title="修改时间：2021-05-06 20:53:14" itemprop="dateModified" datetime="2021-05-06T20:53:14+08:00">2021-05-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -220,76 +220,21 @@
 
       
           <blockquote>
-<p>一些reflection</p>
+<p>至今没有很完美的解决方案</p>
 </blockquote>
-<h2 id="公理">公理</h2>
+<h2 id="okr-vs-kpi">OKR vs KPI</h2>
+<p>KPI就是领导根据经验，拍脑袋定一个值。现实中，太多随机因素会影响模型效果了，拍脑袋出来的目标经常不靠谱。</p>
+<p>再说说现在流行OKR，即先制定目标，然后将目标拆解为key results，本意是避免KPI的唯指标论。 但是在实施过程中，会经常遇到key result做好了，目标没有达成。原因在于拆解这一步出了问题。 从目标拆解出key results实践起来难度很大，对操刀之人的素质要求很高。</p>
+<p>KPI和OKR两种方式都不能拿来直接用。</p>
+<h2 id="chiechie的思考">chiechie的思考</h2>
 <ol type="1">
-<li>何为异常？正常的反面即异常。那么我们只需知道一个对象的正常模式即可，恰好时序预测 就是来预测 一个时序指标的最有可能的情况。</li>
-<li>时序预测是一种做异常检测的方法。</li>
-<li>何为异常？不合群的极少数就是异常
-<ul>
-<li>如果这个群体就是一个五花八门的, 很难说哪个异常，因为都很有个性。eg美国的拉美裔，女权团体。</li>
-<li>如果这个群体mostly有秩序，只有少部分个体表现的不符合这个秩序，这些人就是异常。</li>
-</ul></li>
-<li>异常检测比预测更简单。异常检测只需自圆其说即可，时序预测需要拿现实数据来验证。</li>
-<li>异常检测分两步，先做模式识别，也就是找规律，然后判断当前数据是否符合规律，符合即正常，反之则为异常。</li>
-<li>不是所有的序列都可以预测，比如股票数据就不可预测，因为历史数据里面包含的信息有限。 但是天气很好预测，因为很有规律。但是「能不能由预测」这些元知识都是人类总结出来的，通过很短的历史数据很难挖掘出这样的认识。</li>
-<li>狭义的预测，即，上面的预测 是想要 排除掉 异常的场景的，比如 出现经融危机的时候，希望预测出来正常值，所以，上面的预测 跟 一般的时序预测 不一样，上面的 预测 是希望 观测数据（训练数据） 或者 说 评分指标 能过滤掉哪些 极端异常的情况。
-<ul>
-<li>但是 实际情况是，我们很难给到 最单纯的 观测数据，现实中由于设备或者 采集环境 的原因，得到的观测值 往往是 含有噪声的，那么进一步的，这个噪声也分为两种，一种是正常的噪声，一种是极端异常值（比如金融危机，或者整个系统瘫痪）。</li>
-<li>对于正常的噪声，我们希望能够捕捉它的范围，然后在 推断阶段，依葫芦画瓢，也认为观测值是模式 + 正常噪声的结果。</li>
-<li>对于极端异常值，我们希望在训练阶段屏蔽掉 该值的影响，然后在 推断阶段，能识别出 它是远离 正常噪声范围的。进而告警。 8.又引申出新的问题，如何 分离出 一个观测值中的 趋势 + 噪声模式 + 极端值这三个分量？</li>
-<li>最直觉的方法 就是用stl的方法，基本原理 就是 待定系数法， 假设有3个函数组成（参数待估），然后用真实样本拟合（loss 应该是l2吧）。</li>
-<li>这种方法有一个问题，就是 拟合出来的趋势 经常是0，拟合出来的噪声经常是带有周期性的，并且也没法干预吼？</li>
-</ul></li>
-</ol>
-<h2 id="推论">推论</h2>
-<ol type="1">
-<li>异常检测只需要告知自己理解是啥；预测需要更进一步，考虑现实中的所有可能发生的情况。异常检测可以大胆地做，理论上没法证伪。预测是企业家的事情，需要一比高下。做异常检测是学术界的事情，选定一个视角，自己得出结论，不用跟别人一比高下。</li>
-<li>异常检测的原理是历史外延，没法证伪。如果预测和现实有偏差，碰巧能找到故障。如果找不到，也有可能是隐患，或者我们的视角有局限。没法证明是误判。</li>
-<li>一种异常检测器是一种视角，应该允许存在多个视角，并且可自由切换。</li>
-<li>什么样的告警结果用户可接受？符合他们认知的，比如同环比，上下界。</li>
-</ol>
-<h2 id="时间序列和iid样本">时间序列和iid样本</h2>
-<ol type="1">
-<li><p>时间序列相对于iid样本，生成机制不一样。时间序列比如人在不同时刻的行为序列，是有延续的。iid的数据比如，体育彩票，每一期中奖号码跟上一期没有关系。</p></li>
-<li><p>iid的样本，符合中心极限定理。时间序列分布就没有这么简单，样本之间的关系还粘粘乎乎的。</p></li>
-<li><p>简单粗暴地将CLT套到时间序列上面行不行？即，如果新来的样本点不满足历史正态分布，就是异常。 不行，有两个反例：</p>
-<ul>
-<li>反例1：新来的样本不满足正态分布，但是正常--周期性凸起</li>
-<li>反例2：新来的样本满足正态分布，但是异常--局部拐点</li>
-</ul></li>
-<li><p>还是想补救一下，能不能认为，排除掉了周期性凸起和局部拐点之后，就满足CLT了？或者切换到一个更简单清晰的视角，不用CLT，而是从时间序列的模式出发？like stl模式：假设时间序列是由周期性 + 趋势性 + 高斯噪声 三部分组成。在历史数据中分解出这3种模式。假设趋势性保持，周期性往复，高斯噪声依旧无规律，生成一个预测区间。然后拿新样本去对比。</p>
+<li><p>KPI加强版：领导先定一个很低的指标，就是及格线，剩下的让队员自由发挥。 优点是，领导拍脑袋的心理压力得到缓解，同时，队员朝着肉眼可及的目标努力，也很有干劲。</p>
+<p>这个框架下，如何激励表现更好的员工？看模型效果，员工积极性，参与度等维度。</p>
 <blockquote>
-<p>需求验证 1. 能否将周期性凸起屏蔽掉， 2. 能否告出局部拐点</p>
-<p>我猜测1和2都不行，1的话因为周期性凸起一般波动非常大，算法很难精准拟合，毕竟要照顾其他大部分平庸之辈的拟合程度，2是因为因为给的置信区间太大了局部拐点告不出来。。</p>
+<p>这些指标其实也不好量化, 思索中。。。</p>
 </blockquote></li>
-</ol>
-<h2 id="周期性凸起和局部拐点是不是两个不相容的问题">周期性凸起和局部拐点是不是两个不相容的问题？</h2>
-<ol type="1">
-<li>要不要拆分成两个子问题，做两个方案:环比 + 同比.一个策略检测环比（检测突升突降），一个策略检测同比（屏蔽周期性告警）。</li>
-<li>检测突升突降要考虑到时间上的秩序感，ma肯定没有ewma效果好。</li>
-<li>ewma局部 + 同比屏蔽周期告警 的组合 策略可以，验证过了。</li>
-</ol>
-<h2 id="需求还是方案">需求还是方案？</h2>
-<p>怎么给一个合适的阈值？怎么给一个合适的窗口？</p>
-<p>这个是一个需求？（用户定）还是一个解决方案？（我们给最佳实践）</p>
-<h2 id="怎么确定个体是不是某个群体的异类呢">怎么确定个体是不是某个群体的异类呢？</h2>
-<ol type="1">
-<li>先判断群体的属性，有没有秩序？有秩序的话，是什么类型的秩序？</li>
-<li>如果没有秩序，说明，单纯的数据挖掘，获取不到可信的知识。就像做图像分类，本来给的一堆动物世界中的动物做训练，然后测试的时候，给了一个孙悟空，模型就不认识了。这种任务就不应该交给算法，应该转交给更高级的人类去处理，他有领域知识，比机器聪明。</li>
-<li>如果有秩序，去对比。异常会涉及到进一步的异常细分。</li>
-</ol>
-<h2 id="自己作为方法">自己作为方法</h2>
-<ol type="1">
-<li>用预测的方法，去做曲线模式判断，用拟合程度来判断符合哪个模式，即找到最佳视角能够解释这个现象</li>
-<li>将1中的视角选中，采用历史外推的方式，估算出正常区间，</li>
-<li>更进一步的，正常区间之外，想要找出某个类型的异常，就再次配置出异常类型。</li>
-</ol>
-<h2 id="一些实践">一些实践</h2>
-<ol type="1">
-<li>使用邻近窗口的高斯检测器，要注意，这个方法忽略了时间序列的趋势性。</li>
-<li>使用ewma，或者曲线拟合出趋势，都可以弥补1的问题。</li>
+<li><p>OKR加强版：让能力强有大局观的人来拆解，不要轻易把拆解的工作分给能力一般的人。</p></li>
+<li><p>1和2配合使用，外层框架用OKR，里面的框架用KPI</p></li>
 </ol>
 
       
@@ -310,7 +255,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/31/reading_notes/zhihu-ml-prediction-and-decision/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/02/reading_notes/sam-altman-researcher-and-creater/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -319,12 +264,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's mini world">
+      <meta itemprop="name" content="Chiechie's Mini World">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/31/reading_notes/zhihu-ml-prediction-and-decision/" class="post-title-link" itemprop="url">机器学习在预测和决策场景中的应用</a>
+            <a href="/2021/04/02/reading_notes/sam-altman-researcher-and-creater/" class="post-title-link" itemprop="url">优秀的人是怎样工作的？</a>
         </h2>
 
         <div class="post-meta">
@@ -334,14 +279,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-31 08:52:16" itemprop="dateCreated datePublished" datetime="2021-03-31T08:52:16+08:00">2021-03-31</time>
+              <time title="创建时间：2021-04-02 12:26:17" itemprop="dateCreated datePublished" datetime="2021-04-02T12:26:17+08:00">2021-04-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
+                <time title="修改时间：2021-04-16 00:18:34" itemprop="dateModified" datetime="2021-04-16T00:18:34+08:00">2021-04-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -364,17 +309,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="一些reflection">一些reflection</h2>
+          <blockquote>
+<p>原文是resercher和fouder，我根据内容修改了标题。 优秀的研究员和企业创始人都具备什么特征呢？</p>
+</blockquote>
+<h2 id="优秀的研究员和创始人都具备什么特征呢">优秀的研究员和创始人都具备什么特征呢？</h2>
 <ol type="1">
-<li>机器学习的预测能力，实际上是一种归纳能力。也就是说当带预测数据完全来自已有训练样本的分布中时，才具备应用的可能性。</li>
-<li>强化学习中，决策的基础是基于对未来的长期的局势的预测。</li>
-<li>机器学习做预测，不适合的典型场景--股票预测，就是拿过去的股票数据去预测未来的股票数据。</li>
-<li>做预测是企业家的事情，是跟概率相关的，先不管它决策的对不对，多重空间的客观存在，推导出人是不可能给出一种确定的结果的。</li>
-<li>同时，在未来到来时，人的行为又可以改变后续的演化路径。人在未来的行与未来以及更未来的结局是纠缠态的。</li>
+<li>花非常多时间思考一个问题(Hamming question)：这个领域最重要的问题是什么？你为什么不行动？拥有好的‘problem taste’，这个需要3个能力综合：独立思考，解释未来，以及识别攻击向量。</li>
+<li>非常有毅力和意愿去work hard。要记住：不work hard大概率不能成功。（警惕那些说反话的人，除非你愿意接手他的工作；还要警惕一些人，曾经work hard）</li>
+<li>非常重视自主性，很难遵守没有价值的的规则。</li>
+<li><strong>他们对什么可以work以及什么不work，保持敏锐目光，以及极度坦诚。</strong>（两个方向缺一不可）</li>
+<li>他们是点子王，有一些点子可能很糟糕，但是从来不缺点子。</li>
+</ol>
+<h2 id="备注">备注</h2>
+<ol type="1">
+<li>Hamming question: what are the most important problems in your field, and why are you not working on them?</li>
+<li>the best people do it the most, and have the best ‘problem taste’, which is some combination of learning to think independently, reason about the future, and identify attack vectors</li>
+<li>攻击向量（Attack Vector）是一种路径或手段，黑客可以通过它访问计算机或网络服务器，以传递有效负载或恶意结果。攻击向量使黑客能够利用系统漏洞，包括人为因素。</li>
+<li>攻击向量包括病毒、电子邮件附件、网页、弹出窗口、即时消息、聊天室和欺骗。所有这些方法都涉及到软件（少数情况下涉及到硬件）和欺骗。在欺骗中，人类操作员通常被愚弄去移除或削弱系统的防御。</li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>https://www.zhihu.com/question/437563654/answer/1729894854</li>
+<li><a target="_blank" rel="noopener" href="https://blog.samaltman.com/researchers-and-founders">sam's blog-研究员和创始人</a></li>
 </ol>
 
       
@@ -394,7 +349,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/39/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><span class="space">&hellip;</span><a class="page-number" href="/page/76/">76</a><a class="extend next" rel="next" href="/page/41/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/39/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><span class="space">&hellip;</span><a class="page-number" href="/page/77/">77</a><a class="extend next" rel="next" href="/page/41/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -460,7 +415,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-count">153</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -473,7 +428,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">168</span>
+        <span class="site-state-item-count">174</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

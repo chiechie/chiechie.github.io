@@ -22,9 +22,9 @@
 
   <meta name="description" content="a reader &amp; thinker">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Chiechie&#39;s mini world">
+<meta property="og:title" content="Chiechie&#39;s Mini World">
 <meta property="og:url" content="https://chiechie.github.io/page/66/index.html">
-<meta property="og:site_name" content="Chiechie&#39;s mini world">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
 <meta property="og:description" content="a reader &amp; thinker">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Chiechie">
@@ -44,7 +44,7 @@
   };
 </script>
 
-  <title>Chiechie's mini world</title>
+  <title>Chiechie's Mini World</title>
   
 
 
@@ -75,7 +75,7 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="Chiechie's mini world" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -96,7 +96,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Chiechie's mini world</h1>
+      <h1 class="site-title">Chiechie's Mini World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/03/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,12 +174,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's mini world">
+      <meta itemprop="name" content="Chiechie's Mini World">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/03/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/" class="post-title-link" itemprop="url">chapter2.1.2 基于拓扑的根因定位-CauseInfer2</a>
+            <a href="/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/" class="post-title-link" itemprop="url">chapter1.5.2 美团的日志聚类</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-03 22:50:18" itemprop="dateCreated datePublished" datetime="2021-03-03T22:50:18+08:00">2021-03-03</time>
+              <time title="创建时间：2021-03-04 11:01:18" itemprop="dateCreated datePublished" datetime="2021-03-04T11:01:18+08:00">2021-03-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -251,126 +251,153 @@
 <li>chapter3 故障恢复</li>
 </ul>
 <blockquote>
-<p>本文是《CauseInfer论文笔记》的第二篇，<a href="https://chiechie.github.io/2021/03/02/technology/causeinfer-notes1/">《CauseInfer论文笔记1》</a>，从high-level的角度描述了causeinfer的工作流。这里要开始涉及到方案的具体的实现了，所以内容比较硬核</p>
-<p>不做方案实现的话，可以不用看这篇文章</p>
+<p>本文是美团的提出的告警聚类的一种算法，其实也只是基于已有的paper做了一下应用。</p>
+<p>跟logmine的区别是，他可以定义多层的泛化结构，对于有多层关系的属性有很好的效果。</p>
 </blockquote>
-<h2 id="因果建模">因果建模</h2>
-<h3 id="构建服务依赖图">构建服务依赖图</h3>
-<p>服务依赖图长什么样？一个DAG：</p>
+<h2 id="设计"><strong>设计</strong></h2>
+<p>如[图2]所示，异常报警根因分析的设计大致分为四个部分：搜集告警数据、提取告警的关键特征、聚类、展示告警摘要。</p>
+<figure>
+<img src="img.png" alt="图2" /><figcaption aria-hidden="true">图2</figcaption>
+</figure>
+<h3 id="算法选择"><strong>算法选择</strong></h3>
+<p>聚类算法采用论文《Clustering intrusion detection alarms to support root cause analysis》中的算法。</p>
+<figure>
+<img src="./kjhjk.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>我们可以将这几条报警抽象为：“全部服务器 网络调用 故障”，该泛化报警包含的范围较广；也可以抽象为：“server_room_a服务器 网络调用 产品信息获取失败”和“server_room_b服务器 RPC 获取产品类型信息失败”，此时包含的范围较小。当然也可以用其他层次的抽象来表达这个报警集群。</p>
+<p>可以观察到，抽象层次越高，细节越少，但是它能包含的范围就越大；反之，抽象层次越低，则可能无用信息越多，包含的范围就越小。</p>
+<p>这种抽象的层次关系可以用DAG表达，如图3所示：</p>
+<figure>
+<img src="img_1.png" alt="图3 泛化层次结构示例" /><figcaption aria-hidden="true">图3 泛化层次结构示例</figcaption>
+</figure>
+<h3 id="基本概念">基本概念</h3>
 <ul>
-<li>节点（node）：一个服务。</li>
-<li>边（edge）：代表服务依赖关系。</li>
+<li><p>属性（Attribute）：构成报警日志的某一类信息，如机器、环境、时间等，文中用<span class="math inline">\(A_i\)</span>表示。</p></li>
+<li><p>值域（Domain）：属性<span class="math inline">\(A_i\)</span>的取值范围，文中用<span class="math inline">\(Dom(A_i)\)</span>表示。</p></li>
+<li><p>泛化层次结构（Generalization Hierarchy）：对于每个Ai都有一个对应的泛化层次结构，文中用<span class="math inline">\(G_i\)</span>表示。 <img src="img_1.png" alt="图3 泛化层次结构示例" /></p></li>
+<li><p>属性的不相似度:令<span class="math inline">\(x_1\)</span>、<span class="math inline">\(x_2\)</span>为某个属性<span class="math inline">\(A_i\)</span>的两个不同的值，那么<span class="math inline">\(x_1\)</span>、<span class="math inline">\(x_2\)</span>的不相似度为：在泛化层次结构<span class="math inline">\(Gi\)</span>中，通过一个公共点父节点p连接x1、x2的最短路径长度。即 d(x1, x2) := min{d(x1, p) + d(x2, p) | p ∈ Gi, x1 ⊴ p, x2 ⊴ p}。例如在图3的泛化层次结构中，d("Thrift", "Pigeon") = d("RPC", "Thrift") + d("RPC", "Pigeon") = 1 + 1 = 2。</p></li>
+<li><p>告警的不相似度（Dissimilarity）: 对于两个报警<span class="math inline">\(a_1, a_2\)</span>, 距离为： <span class="math display">\[d\left(\mathbf{a}_{1}, \mathbf{a}_{2}\right):=\sum\limits_{i=1}^{n} d\left(\mathbf{a}_{1}\left[A_{i}\right], \mathbf{a}_{2}\left[A_{i}\right]\right)\]</span></p>
+<p>例如： a1 = ("server_room_b-biz_tag-offline02", "Thrift"),a2 = ("server_room_a-biz_tag-online01", "Pigeon"), 那么d(a1, a2) = d("server_room_b-biz_tag-offline02", "server_room_a-biz_tag-online01") + d(("Thrift", "Pigeon") = 2 + 2 + 1 + 1 = 6。</p></li>
+<li><p>告警集合：C</p></li>
+<li><p>告警摘要：g，<span class="math inline">\(\forall a \in C, a \leq g\)</span>, 就是pattern</p></li>
 </ul>
-<p>这块主要是工程性工作，需要数据采集。</p>
-<ul>
-<li><p>服务依赖图是什么？以服务为节点，服务间的调用关系为边，构造出来的DAG。</p></li>
-<li><p>针对本方案的应用场景，有3个假设前提：</p>
-<ol type="a">
-<li>所有服务都是使用TCP作为传输层的协议，</li>
-<li>本文的方法依赖网络统计工具，和kprobe来探测系统调用（system call）。根据观察，大部分应用都是采用TCP协议来通信，如mysql，tomcat等；几乎所有主流的操作系统-如linux-都已经跟网络统计工具集成了，例如netstat，tcpdump 和 kprobe。</li>
-<li>利用流量延迟，来决定服务依赖图中的依赖的方向，而不是用分析结果来确定图的结构， 这一部分可以大大减少错误风险， 以及减少计算复杂度。</li>
-</ol></li>
-<li><p>本文用tuple来表示一个服务，即 (ip, service name)，chiechie： 为什么作者能抽象出来，我抽象不出来啊？为什么不像有的文章那样，用three-tuple表示(ip, port, proto)，因为考虑到一个服务可能占用多个端口。举一个例子，在一个三层的系统中，一个web server可以通过任意一个端口访问application server的。如果，使用端口作为唯一服务的属性，这个服务依赖图，就会变得非常之大，即使所有请求都是由同一个服务发起的。</p></li>
-</ul>
+<p>以报警集合{"dx-trip-package-api02 Thrift get deal list error.", "dx-trip-package-api01 Thrift get deal list error."}为例，“dx服务器 thrift调用 获取产品信息失败”是一个泛化表示，“服务器 网络调用 获取产品信息失败”也是一个泛化表示。对于某个聚类来说，我们希望获得既能涵盖它的集合又有最大信息量的摘要（pattern）。为了解决这个问题，定义以下两个指标：</p>
+<p><span class="math display">\[\begin{aligned} \bar{d}(\mathbf{g}, \mathcal{C}) &amp;:=1 /|\mathcal{C}| \times \sum_{\mathbf{a} \in \mathcal{C}} d(\mathbf{g}, \mathbf{a}) \\ H(\mathcal{C}) &amp;:=\min \left\{\bar{d}(\mathbf{g}, \mathcal{C}) | \mathbf{g} \in \mathbf{X}_{i=1}^{n} \operatorname{Dom}\left(A_{i}\right), \forall \mathbf{a} \in \mathcal{C}: \mathbf{a} \leq \mathbf{g}\right\} \end{aligned}\]</span></p>
+<p>公式2</p>
+<p>H(C)值最小时对应的g，就是我们要找的最适合的泛化表示，我们称g为C的“覆盖”（Cover）。</p>
+<p>基于以上的概念，将报警日志聚类问题定义为：</p>
 <blockquote>
-<p>补充：</p>
-<p>在分布式系统中，IP表示一台唯一的主机，服务名称表示 运行在该主机上的 唯一的服务。</p>
+<p>定义L为一个日志集合，$G_i(i = 1, 2, 3……n) $为属性Ai的泛化层次结构，目标是找到一个L的子集C，满足 |C| &gt;= min_size，且H(C)值最小。</p>
 </blockquote>
-<ul>
-<li><p>服务依赖的定义：如果服务A需要服务B提供特定功能，来满足 客户端的请求。就说A-&gt;B. 箭头表示「依赖」的意思。举个例子，一个web service需要获取一些数据库的内容，就依赖db服务，就可以说web服务-&gt;db服务。本文只考虑client-server类型的应用（还有什么类型的应用?）</p></li>
-<li><p>怎么获取服务依赖图？</p>
-<ul>
-<li>第一步是搭架子：使用服务间的连接信息来构建 服务依赖图 的骨架（skeleton）。通过运行工具-netstat（有点像一个采集器，类似istatus，小米手环），在一个主机中，我们可以拿到关于一个网络连接的 一堆信息，包括协议，来源，目的地，连接状态。提取来源和目的地信息，每一个连接可以表示为这个形式：source_ip:port -&gt; desination_ip:port. 这一组信息叫一个channel。channel类似，服务依赖pair，除了一点：channel不包含服务名称，只包含port。</li>
-<li>第二步是端口映射：将第一步获取到的服务的端口映射为一个服务的名称。本地服务名称可以通过查询端口信息获取（netstats）。但是对于一个remote端口，需要传输一个查询请求给remote的主机，来获取。将端口映射为服务名之后，一个本地主机的服务依赖图的架子就搭好了。</li>
-<li>第三步是调整依赖方向：由于client和server是双向传递的，即，在不同的主机中观察时，我们可能拿到一个反向的服务依赖。举个例子：
-<ul>
-<li>当在192.168.1.117中观察时，可以获取一个连接：(192.168.1.117,httpd) → (192.168.1.115, tomcat)，即httpd调用了tomcat。</li>
-<li>但是在192.168.1.115中观察时，又能得到这个连接：(192.168.1.115,tomcat) → (192.168.1.117, httpd), 即tomcat调用了 httpd。</li>
-</ul></li>
-</ul>
-<p>为了解决这个问题，使用流量滞后关联的方法：</p>
-<p>X是服务A的出流量的，Y是服务B的出流量 衡量X和Y之间的滞后的相关性可以用这个指标，k</p></li>
-</ul>
-<p><span class="math display">\[
-\rho_{X Y}(k)=\frac{\sum_{t=0}^{N-1}\left(Y_{t}-\bar{Y}\right)\left(X_{t-k}-\bar{X}\right)}{\sqrt{\sum_{t=0}^{N-1}\left(X_{t}-\bar{X}\right)^{2} \sum_{t=0}^{N-1}\left(Y_{t}-\bar{Y}\right)^{2}}} k \in Z
-\]</span> k取什么值合适呢？平移后两个序列的相关性最大，如下，即为最优的<span class="math inline">\(k^{*}\)</span> <span class="math display">\[
-k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in[-30,30]\right\}
-\]</span></p>
-<p>如果<span class="math inline">\(k^{*}&gt;0\)</span>,则A是B的因（cause），A导致了B, 记为 <span class="math display">\[A \rightarrow B \]</span> 如果<span class="math inline">\(k^{*}&lt;0\)</span>,则B是A的因（cause），B导致了A，记为 <span class="math display">\[B \rightarrow A \]</span></p>
-<h3 id="构建指标因果图">构建指标因果图</h3>
-<p>如何指标因果图？需要用到「因果推断」技术，从数据得到因果关系。这里使用的是<a href="https://chiechie.github.io/2021/03/09/technology/PC-algo/">PC算法</a> &gt; pc算法是一种发现因果关系的算法，在满足一定的假设前提下，使用的基于统计的方法，推导出因果关系。</p>
+<p>min_size是用来控制抽象程度的，min_size越大抽象的越厉害. 这是个NP问题，论文提出了如下的启发式算法</p>
+<h3 id="算法描述"><strong>算法描述</strong></h3>
 <ol type="1">
-<li>构建因果图的架子</li>
-<li>确定因果关系的方向</li>
+<li>假设所有的泛化层次结构<span class="math inline">\(G_i\)</span>都是树，这样每个cluster都有一个唯一的、最顶层的泛化结果。</li>
+<li>将L定义为一个原始的告警日志集合，算法选择一个属性<span class="math inline">\(A_i\)</span>，将L中所有报警的<span class="math inline">\(A_i\)</span>值替换为<span class="math inline">\(G_i\)</span>中<span class="math inline">\(A_i\)</span>的父值，通过这一操作不断对报警进行泛化。</li>
+<li>持续步骤2的操作，直到找到一个覆盖报警数量大于min_size的pattern为止。</li>
+<li>输出步骤3中找到的报警。</li>
 </ol>
-<p>基于PC算法，我们提出了两种方法：保守的 和 激进的。 激进的意思是不使用任何先验知识，来构建因果图。 保守的意思是，使用一些先验知识初始化。</p>
-<p>先验知识是什么呢？ 比如哪些变量没有父母--根因指标，哪些变量没有孩子--表象指标。 比如本地服务的网络延迟（TCP_LATENCY）指标就没有孩子，只是表象指标，因为网络延迟不会导致其他指标的变化。背后的原因可能是 工作负载（workload），配置错误，依赖服务的延迟。</p>
-<h4 id="激进派算法">激进派算法</h4>
-<p>如果一个服务（比如db服务）只会被别人调用，那么指标因果图就只会使用该服务的本地性能指标（服务依赖图依赖的数据一起采集了）。</p>
-<p>但是一个服务，会调用别人，如web service，这个因果图的构建，不仅仅需要本地的性能指标，还需要它调用的服务的TCP LATENCY指标。</p>
-<p>训练数据的长度取的是默认值200，然后使用PC算法，来构建因果图，可以得到一个DAG。</p>
-<p>激进派构建出来的因果图中，会有反直觉的因果关系和双向links；可能包含多个独立的子图，由于缺乏evidence，统计错误， 或者 压根儿就没有因果关系。</p>
-<p>举个例子，Figure 6 (a)(下图左边)的因果图是激进派算法构建的： - M5是一个孤立的服务 - M4 → M2 的因果关系是反直觉的 - M1 和 M4的因果关系是双向的。</p>
-<figure>
-<img src="inference.png" alt="图2-激进法构建出来的因果图" /><figcaption aria-hidden="true">图2-激进法构建出来的因果图</figcaption>
-</figure>
-<p>所以激进派构建出来的因果图需要进一步的加工：根据以下限制条件，从DAG中选择最大的子图</p>
-<ol type="a">
-<li>子图裁剪：TCP LATENCY指标是表象指标，他不可能是别的指标的cause了</li>
-<li>表象指标通过图中的每条路径都可以达到。</li>
-<li>预设的根因指标没有父母。</li>
-<li>对于一个双向的连接，随机选择一个方向。（这就是随机游走的意思？）</li>
-</ol>
-<h4 id="保守派算法">保守派算法</h4>
-<p>保守派算法，跟激进派很像。区别在于，使用PC算法之前，保守派会利用先验信息做初始化DAG。 和激进算法比，保守算法可以捕捉更多的因果关系，减少反直觉的因果关系。</p>
-<p>举个例子(下图右边)，M1 → SLO的因果关系，激进算法会丢失，但是保守算法会保留。同时 反直觉的因果关系，M4 → M2也被消除了</p>
-<figure>
-<img src="inference.png" alt="图3-保守派构建出来的因果图-右边" /><figcaption aria-hidden="true">图3-保守派构建出来的因果图-右边</figcaption>
-</figure>
-<h2 id="因果推断">因果推断</h2>
-<p>因果模型构建好了，接下来就需要根据这个因果图去做因果推断了。</p>
-<h3 id="整体思路">整体思路</h3>
-<p>当前端的服务可用性指标（SLO）出现异常，就会触发根因分析：</p>
-<ul>
-<li>首先找自己的问题：使用指标因果图 推断本地， 导致服务性能问题的根因指标。</li>
-<li>其次，如果问题是别人造成的，就去找别人的问题：如果根因指标是依赖服务的SLO（注意，用到了调用链关系），这个推断就会继续，传播到远程的依赖的服务。 一直追本溯源，一直到最底层的被调用方，即物理层。</li>
-</ul>
-<h3 id="指标因果图根因推断">指标因果图根因推断</h3>
-<p>指标因果图</p>
-<p>如何定位一个节点上哪个指标的是故障根因？</p>
-<ul>
-<li><p>使用了DFS算法--深度优先搜索，对指标因果图进行遍历。</p></li>
-<li><p>访问到一个节点，对它进行异常检测（cusum）：</p>
-<ul>
-<li>如果异常，继续访问他的后继（descendants）节点，</li>
-<li>如果正常，就去访问的邻居节点。</li>
-</ul></li>
-<li><p>如果一个异常节点没有后继节点，无法再溯源了，或者它的后继节点都正常时，他就是根因。</p></li>
-</ul>
-<figure>
-<img src="inference.png" alt="图3-推断.png" /><figcaption aria-hidden="true">图3-推断.png</figcaption>
-</figure>
-<p>如果SLO异常，从SLO节点开始推断，有两个推断路径</p>
-<ul>
-<li>路径1： 检测M1，如果M1正常的，就访问M1的邻居M2，如果M2异常，就是根因。</li>
-<li>路径2.：接下来M3如果异常，我们就去检测M2，因为M2是异常的，所以我们就输出根因M2。</li>
-</ul>
-<p>最后，我们只找到了一个根因M2，虽然M2和M3都是异常的。</p>
-<p>然而，在某些情况下，因为多个因果路径存在，可能得到一系列的潜在根因集合。 因此，必须把这些根因进行排序，然后输出概率最大的根因。</p>
-<p>如何去给根因进行排序呢？找异常程度最大的那个指标，也就是对异常贡献度最大的指标，就是根因。 这里基于z-score方法提出了一个指标，来衡量性能指标的异常程度，这个评估指标是</p>
-<p><span class="math display">\[\operatorname{violation}(X)=\frac{X(t)-\overline{X_{t-60, t-1}}}{\sigma_{t-60, t-1}+\varepsilon}, \varepsilon=0.001\]</span></p>
-<ul>
-<li><span class="math inline">\(\overline{X_{t-60, t-1}}\)</span> ：滑动窗口的均值</li>
-<li><span class="math inline">\(\sigma_{t-60, t-1}\)</span> ：滑动窗口的标准差</li>
-<li><span class="math inline">\(\varepsilon\)</span> : 扰动项</li>
-</ul>
-<h2 id="参考文献">参考文献</h2>
+<p>算法伪代码如下所示：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">输入：报警日志集合L，min<span class="emphasis">_size，每个属性的泛化层次结构G1,......,Gn</span></span><br><span class="line"><span class="emphasis">输出：所有符合条件的泛化报警</span></span><br><span class="line"><span class="emphasis">T := L;              // 将报警日志集合保存至表T</span></span><br><span class="line"><span class="emphasis">for all alarms a in T do</span></span><br><span class="line"><span class="emphasis">    a[count] := 1;   // &quot;count&quot;属性用于记录a当前覆盖的报警数量</span></span><br><span class="line"><span class="emphasis">while ∀a ∈ T : a[count] &lt; min_</span>size do &#123;</span><br><span class="line"><span class="code">    使用启发算法选择一个属性Ai;</span></span><br><span class="line"><span class="code">    for all alarms a in T do</span></span><br><span class="line"><span class="code">        a[Ai] := parent of a[Ai] in Gi;</span></span><br><span class="line"><span class="code">        while identical alarms a, a&#x27; exist do</span></span><br><span class="line"><span class="code">            Set a[count] := a[count] + a&#x27;[count];</span></span><br><span class="line"><span class="code">            delete a&#x27; from T;</span></span><br><span class="line"><span class="code">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>其中第7行的启发算法为：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">首先计算Ai对应的Fi</span><br><span class="line">fi(v) := SELECT sum(count) FROM T WHERE Ai = v   // 统计在Ai属性上值为v的报警的数量</span><br><span class="line">Fi := max&#123;fi(v) | v ∈ Dom(Ai)&#125;</span><br><span class="line">选择Fi值最小的属性Ai</span><br></pre></td></tr></table></figure>
+<h2 id="实现">实现</h2>
+<h3 id="提取报警特征">提取报警特征</h3>
+<p>根据线上问题排查的经验，运维人员通常关注的指标包括时间、机器（机房、环境）、异常来源、报警日志文本提示、故障所在位置（代码行数、接口、类）、Case相关的特殊ID（订单号、产品编号、用户ID等等）等。</p>
+<p>但是，Case相关的特殊ID不符合我们希望获得一个抽象描述的要求，因此不关注。</p>
+<p>综上，最后选择的特征包括：机房、环境、异常来源、报警日志文本关键内容、故障所在位置（接口、类）共5个。</p>
+<h3 id="算法实现">算法实现</h3>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf">2014-INFOCOM_CauseInfer</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
-<li><a target="_blank" rel="noopener" href="https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/">别人对CauseInfer论文的解读</a></li>
-<li><a href="https://chiechie.github.io/2021/03/09/technology/PC-algo/">chiechie对PC算法的总结</a></li>
-<li><a href="https://chiechie.github.io/2021/03/02/technology/causeinfer-notes1/">CauseInfer论文笔记1</a></li>
+<li>提取关键特征：数据来源是日志中心已经格式化过的告警日志信息，包含：报警日志产生的时间、服务标记、在代码中的位置、日志内容等。</li>
+</ol>
+<ul>
+<li>故障所在位置：优先查找是否有异常堆栈，如存在则查找第一个本地代码的位置；如果不存在，则取日志打印位置。</li>
+<li>异常来源：获得故障所在位置后，优先使用此信息确定异常报警的来源（需要预先定义词典支持）；如不能获取，则在日志内容中根据关键字匹配（需要预先定义词典支持）。</li>
+<li>报警日志文本关键内容：优先查找是否有异常堆栈，如存在，则查找最后一个异常（通常为真正的故障原因）；如不能获取，则在日志中查找是否存在“code=……,message=……” 这样形式的错误提示；如不能获取，则取日志内容的第一行内容（以换行符为界），并去除其中可能存在的Case相关的提示信息</li>
+<li>提取“机房和环境”这两个指标比较简单，在此不做赘述。</li>
+</ul>
+<ol start="2" type="1">
+<li><p>聚类算法：以图4来表示。</p>
+<figure>
+<img src="img_2.png" alt="图4 报警日志聚类流程图" /><figcaption aria-hidden="true">图4 报警日志聚类流程图</figcaption>
+</figure></li>
+</ol>
+<h3 id="泛化层次结构">泛化层次结构</h3>
+<p>泛化层次结构，用于记录属性的泛化关系，是泛化时向上抽象的依据，需要预先定义。</p>
+<p>下面是4个预先定义的泛化层次结构</p>
+<figure>
+<img src="img_9.png" alt="图5 机房泛化层次结构" /><figcaption aria-hidden="true">图5 机房泛化层次结构</figcaption>
+</figure>
+<figure>
+<img src="img_10.png" alt="图6 环境泛化层次结构g" /><figcaption aria-hidden="true">图6 环境泛化层次结构g</figcaption>
+</figure>
+<figure>
+<img src="img_11.png" alt="图7 错误来源泛化层次结构" /><figcaption aria-hidden="true">图7 错误来源泛化层次结构</figcaption>
+</figure>
+<figure>
+<img src="img_12.png" alt="图8 日志文本摘要泛化层次结构" /><figcaption aria-hidden="true">图8 日志文本摘要泛化层次结构</figcaption>
+</figure>
+<p>“故障所在位置”此属性无需泛化层次结构，每次泛化时直接按照包路径向上层截断，直到系统包名。</p>
+<h2 id="实验">实验</h2>
+<p>以下三个实验均使用C端API系统。</p>
+<h3 id="单依赖故障">1. 单依赖故障</h3>
+<ul>
+<li>环境：线上</li>
+<li>故障原因：产品中心线上单机故障</li>
+<li>报警日志数量：939条</li>
+</ul>
+<p>部分原始报警日志如图9所示，初次观察时，很难理出头绪。</p>
+<figure>
+<img src="img_3.png" alt="图9 单依赖故障报警日志节选" /><figcaption aria-hidden="true">图9 单依赖故障报警日志节选</figcaption>
+</figure>
+<p>经过聚类后的摘要如表1所示：</p>
+<figure>
+<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
+</figure>
+<p>可以看到前三条摘要的Count远超其他摘要，并且它们指明了故障主要发生在产品中心的接口。</p>
+<h3 id="无相关的多依赖同时故障">2. 无相关的多依赖同时故障</h3>
+<p>利用故障注入工具，在Staging环境模拟运营置顶服务和A/B测试服务同时产生故障的场景。</p>
+<ul>
+<li>环境：Staging,使用线上录制流量和压测平台模拟线上正常流量环境</li>
+<li>模拟故障原因：置顶与A/B测试接口大量超时</li>
+<li>报警日志数量：527条</li>
+</ul>
+<p>部分原始报警日志如图10所示：</p>
+<figure>
+<img src="img_5.png" alt="图10 无相关的多依赖同时故障报警日志节选" /><figcaption aria-hidden="true">图10 无相关的多依赖同时故障报警日志节选</figcaption>
+</figure>
+<p>经过聚类后的报警摘要如表2所示：</p>
+<figure>
+<img src="img_6.png" alt="表2" /><figcaption aria-hidden="true">表2</figcaption>
+</figure>
+<p>从上表可以看到，前两条摘要符合本次试验的预期，定位到了故障发生的原因。</p>
+<p>说明在多故障的情况下，算法也有较好的效果。</p>
+<h3 id="中间件与相关依赖同时故障">3. 中间件与相关依赖同时故障</h3>
+<p>利用故障注入工具，在Staging环境模拟产品中心服务和缓存服务同时产生超时故障的场景。</p>
+<ul>
+<li>环境：Staging，使用线上录制流量和压测平台模拟线上正常流量环境</li>
+<li>模拟故障原因：产品中心所有接口超时，所有缓存服务超时</li>
+<li>报警日志数量：2165</li>
+</ul>
+<p>部分原始告警日志如图11所示：</p>
+<figure>
+<img src="img_7.png" alt="图11 中间件与相关依赖同时故障报警日志节选" /><figcaption aria-hidden="true">图11 中间件与相关依赖同时故障报警日志节选</figcaption>
+</figure>
+<p>经过聚类后的报警摘要如表3所示：</p>
+<figure>
+<img src="img_8.png" alt="img_8.png" /><figcaption aria-hidden="true">img_8.png</figcaption>
+</figure>
+<p>从上表可以看到，缓存（Squirrel和Cellar双缓存）超时最多，产品中心的超时相对较少，这是因为我们针对产品中心的部分接口做了兜底处理，当超时发生时后先查缓存，如果缓存查不到会穿透调用一个离线信息缓存系统，因此产品中心超时总体较少。</p>
+<h3 id="总结">总结</h3>
+<ul>
+<li>优点：综合上述三个实验得出结果，算法对于报警日志的泛化是具有一定效果。</li>
+<li>不足：有些摘要过于笼统；利用摘要进行进一步定位，也需要领域知识。</li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cluster_analysis">Cluster_analysis--wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://tech.meituan.com/2019/02/28/root-clause-analysis.html">meituan-blog</a></li>
+<li><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.136.1949&amp;rep=rep1&amp;type=pdf">Clustering intrusion detection alarms to support root cause analysis--paper</a>)</li>
 </ol>
 
       
@@ -391,7 +418,7 @@ k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/02/technology/bigdata-plus-cloudcomputing-equal-PlannedEconomy/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/reading_notes/intuition_pumps_xiaorener/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -400,12 +427,12 @@ k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's mini world">
+      <meta itemprop="name" content="Chiechie's Mini World">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/02/technology/bigdata-plus-cloudcomputing-equal-PlannedEconomy/" class="post-title-link" itemprop="url">大数据是否意味计划经济成为可能？</a>
+            <a href="/2021/03/04/reading_notes/intuition_pumps_xiaorener/" class="post-title-link" itemprop="url">《直觉泵》读书笔记2</a>
         </h2>
 
         <div class="post-meta">
@@ -415,14 +442,14 @@ k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-02 23:18:18" itemprop="dateCreated datePublished" datetime="2021-03-02T23:18:18+08:00">2021-03-02</time>
+              <time title="创建时间：2021-03-04 09:59:33" itemprop="dateCreated datePublished" datetime="2021-03-04T09:59:33+08:00">2021-03-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 10:43:10" itemprop="dateModified" datetime="2021-04-15T10:43:10+08:00">2021-04-15</time>
+                <time title="修改时间：2021-05-26 09:18:16" itemprop="dateModified" datetime="2021-05-26T09:18:16+08:00">2021-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -430,7 +457,7 @@ k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -445,23 +472,29 @@ k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>有了大数据和人工智能，政府是否变成了一个全知全能的存在？计划经济是否可以重登舞台？</p>
-</blockquote>
-<h2 id="一些观点">一些观点</h2>
+          <h2 id="观点">观点</h2>
 <ol type="1">
-<li>市场经济和计划经济是两种配置资源的模式，在现实中，两种模式是并存的。 一般来说，企业内部权威支配下的计划主导，企业和企业，企业和个人，个人和个人是市场主导。</li>
-<li>诺奖得主哈耶克指出，计划经济的最大问题是「信息」。中央计划者拿不到最全面的「信息」，来辅助制定经济决策。他不知道消费者的偏好，不知道技术和成本，所以不可能有效配置资源。</li>
-<li>相对来说，市场的优势在于，以“价格”为枢纽，建立了更高效率的信息收集器和发布器。消费者和企业分散的决策，通过市场交易形成「价格」，价格融合了消费者的偏好和企业的成本信息，接下来会传播到市场。</li>
-<li>技术狂热者认为无所不在的传感器使得大数据量收集成为可能，中央计划者随即可拥有他们所需要的一切信息。哈耶克进一步辨析到，计划经济者错误地假设，经济和社会计划所需要的数据在计划之前就已经存在。但是，这又一个逻辑错误，收集到的数据和 制定计划用的数据在时间上是滞后的。也就是说，传感器再多再全，只能收集数据而不是产生数据，产生数据的仍然是在市场上进行交易的人。集中式的权威永远无法得到足够数据。此外，市场还是信息的发生器，供求信息通过货币表达。</li>
-<li>那么人脑植入芯片，将感觉转化为价格信号可行吗？需要定制化芯片，成本太高。而在市场中，感觉转化为价格信号，这个成本几乎为零，具体一点，消费者在购买商品和服务时，自动和无偿地完成了这个关键的转化。</li>
-<li>技术狂热者，可能会说，有没有可能通过技术绕过「产生数据」这个步骤？从滞后的数据直接推断消费者的行为？有，AI就是专门做这个事情。但是从过去预测未来必须具备两个前提条件：消费者 的偏好不变 以及 厂商的技术和产品不变。但是在当代的创新经济中，厂商的技术和产品变化多端，进一步造成人们的偏好更为频繁的变化。从而两点都不成立。</li>
-<li>市场还有一个作用是激励产生创新企业家，这个是从整个社会角度说的。创新企业家如乔布斯，他的伟大之处在于，自身有驱动力追求完美的产品，并且勇于承担失败的风险。 相比之下，登月计划虽然涉及尖端复杂科技，但是都是已知可解的工程性问题，没有不确定性。 企业创新好比原始人在亚马逊热带雨林中摸索前行，现代人的登月则像在GPS导引下穿行于北京那样的超大城市。创新需要乔布斯那样的企业家，而资深工程师或官员即可计划和指挥登月工程。</li>
-<li>市场经济的元素--私有产权，自由市场，自愿交易，都是技术革命的必要前提。产权保证了企业家的创新收益，让他们感到值得冒险搏击（理性人会对激励做出反应）；自由市场为技术创新配置资金人才，为成功的高风险准备好了高回报。硅谷既有思想的市场，也有技术，人才，资本的市场，成为创新发源地是必然。</li>
+<li><p>「中心小人儿」理论：假设大脑中有一个聪明绝顶的决策者，但是用归谬法会推导出，这个小人儿大脑中是不是也有一个中心小人儿，。。。然后陷入了无线倒推论。</p></li>
+<li><p>「小人儿机械主义」理论:假设大脑中有一堆小人儿在做决策--决策委员会，他们不断地将服务任务拆解成原子的简单的任务。</p>
+<blockquote>
+<p>有点像虚拟机的原理，嵌套学习。有点像官僚体系。</p>
+</blockquote></li>
+<li><p>「小人儿机械主义」相对于「中心小人儿」理论的高明之处在于，他不会陷入“无线倒退论”的荒谬处境，而是有一个ending的。即，当拆解之后的操作变得简单乏味时，就可以终止了，让机器来了。</p></li>
+<li><p>老式人工智能采用自上而下的工作方式，有严格的等级分工，但是却是不必要的设计！ 这种自上而下的工作方式，有个特点，分配任务的层级规模非常庞大。在计算机发明的早期，这种组织形式所以有效，是因为执行层的能力很弱--单个计算机又小又慢。 因此顶层设计人员要将目标任务成功地分解成一组比较容易掌控的子任务，进而知道怎么编程实现每个小功能，以及将程序整合成一个可行的系统。顶层设计人员可以用「概念验证」的方法，有时候省时省力。</p></li>
+</ol>
+<blockquote>
+<p>关于「概念验证」（proof of concept， POC）：</p>
+<p>「概念验证」是一个有用的工程学概念：为了设计出一个非常精致、非常复杂工具或者系统，可以先设计并且解决一个“demo问题 ”（toy problem），即，先做一个简单的小玩意儿，让它按照简化的工作原理运行，这就是在“验证概念”。接下来让这个小东西的功能完善，只需投入更多时间和金钱。这个简单的小玩意儿可以让一个复杂的问题首先在概念上得以“解决”。有时候，“概念验证”很有效。</p>
+</blockquote>
+<ol start="3" type="1">
+<li><p>「小人儿机械主义」的理念设计出来的计算机，需求和工作几乎是完全独立的。各种程序按照一个队列有序进行，不会陷入你争我夺的厮杀，马克思说过的"从各展其能到各取所需"。计算机科学家埃里克称这种等级控制为"政治"。但是神经系统则不一样，人体的普通细胞和工蚁很像--没有私心，机械的工作，百依百顺的奴隶，赶着一成不变的活儿，没有竞争的环境中生存。但是大脑必须参与激烈的市场竞争。神经玩想要的是填饱肚子，活下去。每个神经细胞类似一个生物机器人，虽然没有意识。 但是，并不妨碍它们，在生死攸关的争斗中，成为极强战斗力的行动者。它们的竞争环境在大脑所要求的环境里。在这里，谁能更有效地建立连接网络，谁能在人类的欲望和冲动层面发挥更大的作用，谁就赢了。</p></li>
+<li><p>神经系统中的很多子系统都以敌对的方式存在，每个子系统都希望以自己的方式行事，彼此之间常常会陷入拉锯战。例如，我们的各种情感会为了取代对方而相互对抗，有时候它们也会结成联盟来阻挠劲敌行动。现在我渐渐明白，人类各种情感之间动态的对抗过程，以及情感对我们思想的影响，都是以神经化学系统为基础的。不像那些本质上自私的行动者，比如癌细胞，从一个更广阔的运作范畴来看，神经细胞还算是不错的团队成员.</p></li>
+<li><p>诺贝尔奖得主、生物学家弗朗索瓦·雅各布（François Jacob）说过，每个细胞都梦想着能完成分裂变成两个细胞，只有神经元不图繁殖，一心只想着要保持活力、有所作为。按照这种观点，对动物行为的智能控制是一种计算过程，就像在股票市场里完成一次交易那样。但正如神经科学家塞巴斯蒂安·承（SebastianSeung）所说，神经元也是自私的，它们总是会倾其所能，最大程度地吸纳能在我们的大脑中获得的所有酬劳，这些酬劳以不同的“货币形式”出现。那么神经元利用多巴胺、5-羟色胺还有催产素都买了些什么呢？它们购买的是更加强大的影响力，能让自己在所处的连接网络中变得更加可靠。骡子虽不能生育，但它们仍会努力地营生。同样，神经元也有自我保护的本能，本质上，这是从它们可繁殖的祖先那里遗传下来的。</p></li>
+<li><p>「自下而上的小人儿式机械主义」是指，神经系统是由哪些未成熟的小人儿组成，每个小人儿都有感知，标记和记忆的能力。类似群体智慧。它们之间有竞争也有协作，从胚胎到成人的过程中，整个系统不断建构和修改。目前该理论可以很合理地解释人体复杂认知系统。</p></li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/62e321a071a486b862ee729k9a132c802349a1158154a83">许小年-商业的本质和互联网-第9章</a></li>
+<li>《直觉泵和其他思考工具》-丹尼尔·丹尼特</li>
 </ol>
 
       
@@ -481,7 +514,7 @@ k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/65/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/65/">65</a><span class="page-number current">66</span><a class="page-number" href="/page/67/">67</a><span class="space">&hellip;</span><a class="page-number" href="/page/76/">76</a><a class="extend next" rel="next" href="/page/67/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/65/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/65/">65</a><span class="page-number current">66</span><a class="page-number" href="/page/67/">67</a><span class="space">&hellip;</span><a class="page-number" href="/page/77/">77</a><a class="extend next" rel="next" href="/page/67/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -547,7 +580,7 @@ k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-count">153</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -560,7 +593,7 @@ k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">168</span>
+        <span class="site-state-item-count">174</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

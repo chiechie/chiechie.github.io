@@ -81,17 +81,43 @@ class StockEnv(gym.Env):
 ```
 step1-2: 定义step方法，step是标准环境类的标准方法，输入输出的格式是固定的，输入一个state，输出下一个state, reward, done, info。
 
-这一步涉及到交易的常识，补充下几个概念：
+这里涉及到交易的常识，补充下几个概念：
 
 - net value：账户净值，也就是说账户当前现金+股票折现价值
 - cash：这里叫现金是为了方便理解。专业的叫法是balance。
-- action amount：
+- action amount：一个百分比，基于当前账户余额（balance）可以买卖的比例。 
 
+```python
+def step(self, action):
+    current_price = self.df.loc[self.current_step, "cLose"]
+    action_type, action_percent = action
+    
+    # [0, 1)表示买     
+    action_amount = self.cash * action_percent / current_price
+    if action_type < 1:
+        self.share_hold += action_amount
+        self.cash -= action_amount * current_price
+        reward = (self.df.loc[self.current_step + 1, "cLose"] - current_price) * (action_amount + self.share_hold)
+    # [1,2) 表示卖
+    elif action_type < 2:
+        self.share_hold -= action_amount * current_price
+        self.cash = action_amount 
+        reward = (self.df.loc[self.current_step + 1, "cLose"] - current_price) * ( - action_amount + self.share_hold)
+    # [2, 3]表示不动
+    self.current_step += 1
+    observation = self.df
+    next_price = self.df.loc[self.current_step, "cLose"]
+                                   
+    self.net_worth = self.cash + self.share_hold * self.df.loc[self.current_step + 1, "cLose"]
+                                          
+    return observation, reward, done, info
 
+```
 
 ## 参考
-5. [构建交易环境和交易策略-github](https://github.com/wangshub/RL-Stock)
-4. [构建交易环境-medium](https://towardsdatascience.com/creating-a-custom-openai-gym-environment-for-stock-trading-be532be3910e)
+
 1. [quantML-github-chiechie](https://github.com/chiechie/quantML/blob/master/gym_rl.py)
 2. [强化学习算法框架--stable-baselines](https://github.com/hill-a/stable-baselines)
-3. [强化学习环境框架-gym](https://www.oreilly.com/radar/introduction-to-reinforcement-learning-and-openai-gym/))
+3. [强化学习环境框架-gym](https://www.oreilly.com/radar/introduction-to-reinforcement-learning-and-openai-gym/)
+4. [构建交易环境-medium](https://towardsdatascience.com/creating-a-custom-openai-gym-environment-for-stock-trading-be532be3910e)
+5. [构建交易环境和交易策略-github](https://github.com/wangshub/RL-Stock)

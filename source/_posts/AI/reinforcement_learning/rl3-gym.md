@@ -18,7 +18,7 @@ categories:
 
 为了将问题进一步简化，基于已有的强化学习框架gym，我就可以更关注在策略实现了
 
-首先强化学习将问题建模为两个部分：环境（enirontent）和 决策主体（agent）。
+首先强化学习将问题建模为两个部分：环境（environment）和 决策主体（agent）。
 环境基于state，action给出反馈（reward），以及下一个时刻的reward。
 agent基于state，给出最佳的action。
 
@@ -135,4 +135,5 @@ for episode in range(1000):
 
 
 ## 参考
-1. [rf-based on gym introduction](https://www.oreilly.com/radar/introduction-to-reinforcement-learning-and-openai-gym/)
+
+1. [强化学习环境框架-gym](https://www.oreilly.com/radar/introduction-to-reinforcement-learning-and-openai-gym/))

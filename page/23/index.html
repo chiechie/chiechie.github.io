@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/25/investment/pork-and-beef/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/25/investment/pork-and-beef/" class="post-title-link" itemprop="url">牛肉是不是未来的趋势之一？</a>
+            <a href="/2021/05/15/AI/machine_learning/tree_model/trees_4/" class="post-title-link" itemprop="url">树模型4_xgboost介绍</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-25 16:36:04" itemprop="dateCreated datePublished" datetime="2021-04-25T16:36:04+08:00">2021-04-25</time>
+              <time title="创建时间：2021-05-15 14:59:29" itemprop="dateCreated datePublished" datetime="2021-05-15T14:59:29+08:00">2021-05-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-27 09:22:51" itemprop="dateModified" datetime="2021-04-27T09:22:51+08:00">2021-04-27</time>
+                <time title="修改时间：2021-05-18 08:24:23" itemprop="dateModified" datetime="2021-05-18T08:24:23+08:00">2021-05-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
                 </span>
             </span>
 
@@ -219,20 +219,60 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>昨天跟朋友聊到，未来几年牛肉市场可能会迎来爆发。</p>
-<p>判断依据是，人们的生活质量要求变高，对健康饮食的追求提升，而牛肉营养比猪肉好。</p>
-<p>这个趋势在发达国家验证过，比如日本。</p>
-<p>国内为什么养牛的这么少？从供需两方面看，需求上牛肉没有那么刚需，猪肉可替代他。 从供给侧来看，养牛周期长，平均两年半，一次只能产一个牛崽，成本高，散农养牛成本比养猪成本要高。</p>
-<p>但是，我觉得如果大家都这么想的话，这反而可能是一个机会，随着市场变化，养牛的成本可能可以通过一些技术手段降低。比如开大养殖场，规模化。</p>
-<p>作为普通人如何参与市场？</p>
-<ol type="1">
-<li>实体经济：卖养料；养牛；卖牛肉；食品标准制定。</li>
-<li>金融市场：看多饲料， 买一些衍生品。</li>
-</ol>
-<p>其他再想想吧。</p>
-<h2 id="一些资料">一些资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://xueqiu.com/2684655177/151583638">8000亿市场，外国牛肉入侵：中国企业为什么就是不太愿意养牛？-雪球</a></li>
+          <h2 id="xgboost">xgboost</h2>
+<p>boosting tree的另外一个代表是xgboost,下面重点介绍一下xgboost</p>
+<h3 id="损失函数定义">损失函数定义</h3>
+<p>先看看，xgboost怎么定义ensemble tree的 损失函数：</p>
+<p><span class="math display">\[\begin{array}{l}{\mathcal{L}(\phi)=\sum\limits_{i} l\left(\hat{y}_{i}, y_{i}\right)+\sum\limits_{k} \Omega\left(f_{k}\right)}\end{array}\]</span> <span class="math display">\[ \\{\Omega(f)=\gamma T+\frac{1}{2} \lambda\|w\|^{2}} \]</span></p>
+<ul>
+<li><span class="math inline">\(\hat{y}_{i}=\phi\left(\mathbf{x}_{i}\right)=\sum^{K} f_{k}\left(\mathbf{x}_{i}\right), \quad f_{k} \in \mathcal{F}\)</span></li>
+<li>l是一个可谓的图函数</li>
+<li>k表示第k棵树</li>
+<li>i表示第i个样本</li>
+<li>T is the number of leaves in the tree.</li>
+<li><span class="math inline">\(f_k\)</span>表示第k棵树的预测函数，</li>
+<li>q代表的书的结构，w代表叶子节点的权重</li>
+<li><span class="math inline">\(\Omega(f_k)\)</span>表示第k棵树的复杂度</li>
+</ul>
+<h3 id="reformulate目标函数">reformulate目标函数</h3>
+<p>上面的优化问题的解，近似求一系列优化问题的解，如下</p>
+<p><span class="math inline">\(\mathcal{L}^{(t)}=\sum\limits_{i=1}^{n} l\left(y_{i}, \hat{y}_{i}^{(t-1)}+f_{t}\left(\mathbf{x}_{i}\right)\right)+\Omega\left(f_{t}\right)\)</span></p>
+<ul>
+<li><span class="math inline">\(\mathcal{L}^{(t)}\)</span>表示第t棵树的训练目标，也就是通过依次求解最优的树来逼近最开始的损失函数。</li>
+</ul>
+<h3 id="损失函数-二阶展开">损失函数-二阶展开</h3>
+<p>而为了方便计算，上面的损失函数还可以进一步简化（利用二阶展开）</p>
+<p><span class="math inline">\(\mathcal{L}^{(t)} \simeq\sum\limits_{i=1}^{n}\left[l\left(y_{i}, \hat{y}^{(t-1)}\right)+g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
+<p>这里：</p>
+<p><span class="math inline">\(g_{i}=\partial_{\hat{y}^{(t-1) }}l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span></p>
+<p><span class="math inline">\(h_{i}=\partial_{\hat y^{(t-1)}}^{2} l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span></p>
+<p>进一步，我们remove常数项，得到</p>
+<p><span class="math inline">\(\tilde{\mathcal{L}}^{(t)}=\sum\limits_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
+<h3 id="基于样本集重新定义损失函数">基于样本集重新定义损失函数</h3>
+<p>更进一步，我们将<span class="math inline">\(I_{j}=\left\{i | q\left(\mathbf{x}_{i}\right)=j\right\}\)</span>定义为落入叶子j的样本集, 那么可以更进一步formulate模型为</p>
+<p><span class="math inline">\(\begin{aligned} \tilde{\mathcal{L}}^{(t)} &amp;=\sum_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\gamma T+\frac{1}{2} \lambda \sum_{j=1}^{T} w_{j}^{2} \\ &amp;=\sum_{j=1}^{T}\left[\left(\sum_{i \in I_{j}} g_{i}\right) w_{j}+\frac{1}{2}\left(\sum_{i \in I_{j}} h_{i}+\lambda\right) w_{j}^{2}\right]+\gamma T \end{aligned}\)</span></p>
+<p>对于一个固定的结构q(x),我们可以算出叶子j的最佳权重为</p>
+<p><span class="math inline">\(w_{j}^{*}=-\frac{\sum\limits_{i \in I_{j}} g_{i}}{\sum\limits_{i \in I_{j}} h_{i}+\lambda}\)</span> 以及最优函数值为:</p>
+<p><span class="math inline">\(\tilde{\mathcal{L}}^{(t)}(q)=-\frac{1}{2} \sum_{j=1}^{T} \frac{\left(\sum_{i \in I_{j}} g_{i}\right)^{2}}{\sum_{i \in I_{j}} h_{i}+\lambda}+\gamma T\)</span> （6）</p>
+<p>公式（6）可以用来衡量树结构q的质量，类似决策树中的impurity得分。</p>
+<p>枚举所有的树结构不现实，best practice是使用一个贪婪算法：</p>
+<ul>
+<li><p>从1个叶子结点出发</p></li>
+<li><p>迭代式的添加branch</p>
+<p>令<span class="math inline">\(I=I_{L} \cup I_{R}\)</span>, 可以使用下面的公式（7）去评估切分后带来的损失下降</p>
+<p><span class="math inline">\(\mathcal{L}_{s p l i t}=\frac{1}{2}\left[\frac{\left(\sum_{i \in I_{L}} g_{i}\right)^{2}}{\sum_{i \in I_{L}} h_{i}+\lambda}+\frac{\left(\sum_{i \in I_{R}} g_{i}\right)^{2}}{\sum_{i \in I_{R}} h_{i}+\lambda}-\frac{\left(\sum_{i \in I} g_{i}\right)^{2}}{\sum_{i \in I} h_{i}+\lambda}\right]-\gamma\)</span> (7)</p></li>
+</ul>
+<h3 id="切分点查找算法">切分点查找算法</h3>
+<p>最朴素的算法，遍历所有特征的所有的切分值，找出最佳的。</p>
+<p>目前大部分单机的机器学习库都是采用的这种算法。</p>
+<figure>
+<img src="./image-20200107161207967.png" alt="image-20200107161207967" /><figcaption aria-hidden="true">image-20200107161207967</figcaption>
+</figure>
+<h2 id="最佳实践">最佳实践</h2>
+<p>number of trees:太大会造成过拟合，一般用cross validation去挑最好的参数 shrinkage parameter:迭代步长，通常取0.01或者0.001，较小的lambda会需要很大的B来取得较好的效果。 number of split d:通常d=1效果就比较好了。d表示的interation depth，就是交叉项的深度。</p>
+<h2 id="参考资料">参考资料</h2>
+<ol start="2" type="1">
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
 </ol>
 
       
@@ -253,7 +293,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/24/reading_notes/bayes_zhexue/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -267,7 +307,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/24/reading_notes/bayes_zhexue/" class="post-title-link" itemprop="url">谈一谈概率哲学的贝叶斯模型</a>
+            <a href="/2021/05/15/AI/machine_learning/tree_model/trees_3/" class="post-title-link" itemprop="url">树模型3_GBDT介绍</a>
         </h2>
 
         <div class="post-meta">
@@ -277,14 +317,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-24 09:03:28" itemprop="dateCreated datePublished" datetime="2021-04-24T09:03:28+08:00">2021-04-24</time>
+              <time title="创建时间：2021-05-15 10:39:45" itemprop="dateCreated datePublished" datetime="2021-05-15T10:39:45+08:00">2021-05-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
+                <time title="修改时间：2021-05-18 08:24:23" itemprop="dateModified" datetime="2021-05-18T08:24:23+08:00">2021-05-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -292,7 +332,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
                 </span>
             </span>
 
@@ -308,21 +348,30 @@
 
       
           <blockquote>
-<p>自然法则（a law of nature）：根据简单性（simplicity）和信息量（informativeness）的平衡，我们从众多不同的科学理论的系统中选出最好的一套系统；如果一个自然规律（regularity）是这套系统内的定律，那么这个规律就是自然法则。 有些自然法则是确定性的（deterministic）--比如说牛顿定律，而有些则是概率的（probabilistic）--比如说量子力学中的玻恩定理（Born Rule）。</p>
+<p>boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost</p>
 </blockquote>
-<h2 id="两种概率学派">两种概率学派</h2>
+<h2 id="high-level理解">high-level理解</h2>
 <ol type="1">
-<li>概率有两种：主观概率和客观概率。主观概率的代表是贝叶斯学派，客观概率的代表有：原始派（Primitivism），频率派（Frequentism）。</li>
-<li>主观概率派认为，概率不是关于物理系统的，而是关于物理系统和我们之间的关系。他们并且用信念的强度（degrees of partial belief）来定义概率。</li>
-<li>客观概率派认为，概率是关于客观世界的，关于物理系统的，独立于人们对世界的信念。客观概率的代表有：原始派（Primitivism），频率派（Frequentism）。</li>
-<li>原始派认为：概率是单个物体或者系统的原始的属性，既可能是确定的，也可能是随机的，但是不管如何，都是由事物本身决定的。天体运动规律非常确定，符合牛顿定律，微观粒子做布朗运动。</li>
-<li>频率派：频率派直接将概率和频率化作等号。频率派下最被看好的一个分支：系统派（The Best-System View）/休谟式解释（the Humean Account）。</li>
-<li>系统派将概率和自然法则联系起来。对系统派来说，概率性的系统和确定性的系统没有区别，没有更深层次的属性可以来解释（原始派认为有，就是事物本身的属性）。系统派认为，概率法则和确定性法则，只不过是我们描述，归纳的不同方式罢了，本质都是在寻求简洁性和信息量的trade-off.</li>
+<li>GBDT是一种data-driven的预测方法。</li>
+<li>GBDT的预测逻辑，分两个层次，第一层，保证每一个样本的准确率；第二层，构造决策路径，即希望通过特征来达到第一层的准确率。实现第一层目的的方法是基于梯度确定阶段性目标；实现第二层的目的的方法通过特征去拟合阶段性目标（残差），也就是cart。</li>
 </ol>
-<h2 id="参考">参考</h2>
+<h3 id="adaboost-gbdt-与-xgboost">Adaboost, GBDT 与 XGBoost</h3>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/26895086/answer/175050065">概率（Probability）的本质是什么？-知乎</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20318246/answer/22309277">因果关系是否存在？</a></li>
+<li>Adaboost是GBDT的一个特例</li>
+<li>XGB在GBDT的基础上引入了二阶导数，并且在loss中加入了正则项。</li>
+</ol>
+<h2 id="算法细节">算法细节</h2>
+<figure>
+<img src="trees_1/img.png" alt="adaboost" /><figcaption aria-hidden="true">adaboost</figcaption>
+</figure>
+<p>boosting中有三个重要的参数： - 树的棵树 - <span class="math inline">\(\lambda\)</span>: 学习速率 - 每一棵树的最大splits个数</p>
+<h3 id="公式推导">公式推导</h3>
+<h3 id="代码实现">代码实现</h3>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
+<li><a target="_blank" rel="noopener" href="https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/6062a083acbfe82c7195b27d/1617076404560/ISLR%2BSeventh%2BPrinting.pdf">An Introduction to Statistical Learning</a></li>
 </ol>
 
       

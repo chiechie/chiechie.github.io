@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/07/technology/virtual-machine/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/04/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/" class="post-title-link" itemprop="url">chapter1.5.1 使用logmine加强版做日志聚类</a>
+            <a href="/2021/03/07/technology/virtual-machine/" class="post-title-link" itemprop="url">思考工具--虚拟机</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-04 11:01:18" itemprop="dateCreated datePublished" datetime="2021-03-04T11:01:18+08:00">2021-03-04</time>
+              <time title="创建时间：2021-03-07 12:02:36" itemprop="dateCreated datePublished" datetime="2021-03-07T12:02:36+08:00">2021-03-07</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-28 21:39:33" itemprop="dateModified" datetime="2021-05-28T21:39:33+08:00">2021-05-28</time>
+                <time title="修改时间：2021-04-09 14:11:22" itemprop="dateModified" datetime="2021-04-09T14:11:22+08:00">2021-04-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
                 </span>
             </span>
 
@@ -219,143 +219,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="目录">目录</h2>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate/">chapter1 故障发现</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
-<li><a href="https://chiechie.github.io/2021/02/19/AI/AIOps/AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="https://chiechie.github.io/2021/03/03/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
-<li><a href="https://chiechie.github.io/2021/03/15/AI/AIOps/AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
-<li><a href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
-</ul>
-<blockquote>
-<p>日志聚类本质上是在简洁性和信息丰富性之间trade-off。</p>
-<p>原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。</p>
+          <blockquote>
+<p>以虚拟机为原型的一个学习方法, 即「层层嵌套」，先使用high-level的视角：「只见森林不见树木」，再使用low-level的视角。</p>
+<p>虚拟机的设计范式，将逻辑复杂度从硬件转移到软件，当服务出现故障时，需要在多层次的软件层中找原因，隐隐有种不安。</p>
 </blockquote>
-<h2 id="问题描述">问题描述</h2>
-<p>将不同来源的日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。</p>
-<h2 id="解决方案">解决方案</h2>
-<p>logmine使用的是基于聚类的方法，做日志摘要生成。</p>
-<p>主要思路是，一边构建cluster，一边提取pattern</p>
-<h3 id="找cluster">找cluster</h3>
-<ul>
-<li><p>先定义一个参数MaxDist， 表示cluster的半径</p></li>
-<li><p>对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就以他为中心创建一个新的cluster。</p>
-<blockquote>
-<p>为了提升效率，判断是否属于某个cluster时使用early abandon的策略，如果已对比的字段累计距离超过了半径，就可以提前停止了，因为距离只会越来越大。</p>
-</blockquote></li>
-</ul>
-<h3 id="对于每个cluster提取pattern">对于每个cluster，提取pattern</h3>
-<figure>
-<img src="./image-20210226000021042.png" alt="图2-日志分析流程" /><figcaption aria-hidden="true">图2-日志分析流程</figcaption>
-</figure>
-<ul>
-<li>step1. 字段类型检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date。这个模式和正则表达式可以让用户定义。</li>
-<li>step2. 分词，每条日志都得到一个word vector.</li>
-<li>step3. 一边聚类 一边提取pattern</li>
-</ul>
-<p><img src="./img.png" /></p>
-<h3 id="怎么设置level">怎么设置level？</h3>
-<figure>
-<img src="./cost_function.png" alt="图3-评价当前pattern的信息含量" /><figcaption aria-hidden="true">图3-评价当前pattern的信息含量</figcaption>
-</figure>
-<p>怎么设置level？看每个level的信息损失程度，这里用cost function表示，值越大，表示丢失的信息越多</p>
-<p><span class="math display">\[\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times\left(a_{1} W C_{i}+a_{2} V a r_{i}+a_{3} F V_{i}\right)\]</span></p>
-<ul>
-<li><span class="math inline">\({Size}_i\)</span>: 第i个pattern包含的日志个数，</li>
-<li><span class="math inline">\({WC}_i\)</span>: 第i个pattern，**的个数，对应权重a1，默认取1</li>
-<li><span class="math inline">\({Var}_i\)</span>:第i个pattern，变量的个数，对应权重a2，默认取0</li>
-<li><span class="math inline">\({FV}_i\)</span>: 第i个pattern，固定值的个数，对应权重a3，默认取0</li>
-</ul>
-<p>提取层次化模式，参考下图</p>
-<figure>
-<img src="./logmine_image-20210225214320632.png" alt="图1-层次化地提取日志模式" /><figcaption aria-hidden="true">图1-层次化地提取日志模式</figcaption>
-</figure>
-<figure>
-<img src="./logmin-result.png" alt="图2-logmine-result" /><figcaption aria-hidden="true">图2-logmine-result</figcaption>
-</figure>
-<h3 id="衡量两条日志的相似性">衡量两条日志的相似性</h3>
-<p>衡量两条日志相似性的函数：</p>
-<p><span class="math display">\[\operatorname{Dist}(P, Q)=1-\sum\limits_{i=1}^{\operatorname{Min}(\operatorname{len}(P), \operatorname{len}(Q))} \frac{\operatorname{Score}\left(P_{i}, Q_{i}\right)}{\operatorname{Max}(\operatorname{len}(P), \operatorname{len}(Q))}\]</span></p>
-<p><span class="math display">\[\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
-<ul>
-<li><span class="math inline">\(P_i\)</span>：日志P的第i个字段，len(P): 日志P的字段的个数。</li>
-<li><span class="math inline">\(k_1\)</span>: 如果两个字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1。</li>
-</ul>
-<h3 id="衡量两个pattern的相似性">衡量两个pattern的相似性</h3>
-<p>pattern包含三类字段：fixed value， Variable 和 Wildcard</p>
-<ul>
-<li>固定值（fixed value field ）：如www, httpd, INFO，固化的。</li>
-<li>可变字段（A variable field）：需要用户定义name和regex，如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的，</li>
-<li>Wildcards ：就是**。</li>
-</ul>
-<p>衡量两个pattern相似性的函数（不同类型的word给的权重不一样）：</p>
-<p><span class="math display">\[\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are fixed value } \\ k_{2} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are variable } \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
-<ul>
-<li><span class="math inline">\(k_1\)</span>: 如果两个fixed value字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1</li>
-<li><span class="math inline">\(k_2\)</span>: 如果两个变量字段一样，得<span class="math inline">\(k_2\)</span>分，默认值为2</li>
-</ul>
-<h3 id="怎么评估效果">怎么评估效果？</h3>
-<p>整个问题的评估可以拆分为两个小评估:</p>
-<ul>
-<li>评估聚类的准确率？</li>
-<li>评估模式的准确率？</li>
-</ul>
-<p>因为没有标签，所以聚类和评估都是跟baseline比</p>
-<blockquote>
-<p>都有了baseline，还要logmine的必要性在于：可能logmine有性能优势？</p>
-</blockquote>
-<ul>
-<li><p>聚类效果跟baseline--OPTICS对比: 看最大公共子集的比例（原文中的agreement score）。</p></li>
-<li><p>模式效果跟baseline--UPGMA比：UPGMA的结果作为ground truth，比较recall和precision.</p>
-<blockquote>
-<p>UPGMA算法的输入一批原始日志，输出是一个patten</p>
-</blockquote></li>
-</ul>
-<p><span class="math inline">\(\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}\)</span></p>
-<h2 id="chiechies对logmine的总结">chiechie's对logmine的总结</h2>
-<p>论文看完了，代码也跑了一遍，发现有几个问题：</p>
+<h1 id="总结">总结</h1>
 <ol type="1">
-<li><p>所谓的不需要人工干预，没有做到。很重要的一个功能就是从原始文本中提取variable类型的字段（field），需要人指定variable的name以及正则匹配规则。否则代码是不会主动帮你探测的。 <img src="./c2.png" /></p></li>
-<li><p>不同的cluster的pattern可能存在如下的父子关系 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pattern36 : datetime dms<span class="emphasis">_frontend_</span>mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern50:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern53:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp 1c7c49d5 11024333 from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern64:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>聚类时，比的是原始日志log_signature和类中心log_signature的距离，<br />
-这有一个问题，有一些日志虽然跟该cluster的中心相距较远，但是提取出的pattern可能又很接近.</p>
-</blockquote></li>
-<li><p>2的解决方案：</p>
-<ol type="1">
-<li>对于每个cluster提取pattern时，只保留最抽象的一层</li>
-<li>所有的cluster构建完之后，将存在父子pattern的cluster手动合并。</li>
-</ol></li>
+<li>设计者一般会根据实体机的功能和用途去给实体取名字。</li>
+<li>计算机也类似，不同的是，他被要求做成千上万件事情。用户只用点开不同的程序，就能够让计算机内部实现切换，从而转换成不同的装置去完成不同的工作。每套装置都是一个单独的小机器，这就是虚拟机。</li>
+<li>对计算机来说，指令就是齿轮和滑轮。所有的信息都要转换成二进制代码0和1。他们是计算能够读写的唯一语言。芯片上的电路会分流0/1代码，逻辑门不断开合，将信息流输送到某条电路，并且以这种方式来下达指令。计算机上唯一可移动的部件--是硬件上百万个的小空位，可以在1态和0态之间切换。计算机在某个时刻具有什么功能，取决于百万个微型元件的设置。</li>
+<li>若一台实体机的各组件相互配合，呈现不同状态，具备极强可塑性，只需施加一套特殊指令，就能把它变成虚拟机。虚拟机处理的是信息，它能够跟实体计算机做一样的工作：实体计算机中的可移动部件只是硬件中的状态变化；虚拟机可以直接操纵状态变化，来代表那些"可移动部件"。举个例子，你可以在草稿纸上演算除法，也可以在头脑中演算。两者都可以得出结果，因为我们的目标是得到一种信息--除法的结果。计算机十分擅长在头脑中演算，我们用计算机的时候，很难分清楚，自己操作的是一个专用的硬连线机器，还是一部多用途芯片上运行的虚拟机。</li>
+<li>几乎所有的电梯，空调，汽车都使用廉价的计算机芯片，它能运行PC的所有程序，但是我们却选择让他们只运行一个简单的程序--刻录在只读存储器上的代码，例如点火控制或者周期除霜。为什么呢？多功能芯片生产成本更低。</li>
+<li>虚拟机最初表示的是"实体机的一种独立有效的复制品"，实体机是实在的硬件，由硅芯片和芯片组成，称为A。而虚拟机是运行在另外一台实体机B上的计算机程序，他能完美地模拟计算机A；速度可能会慢点，毕竟他要先保障自己硬件B上的基本操作有效运行（通用操作），才能组织其硬件A上的那些操作。（基于linux开发的程序想要运行在window上，需要在windows机器上开发一个虚拟机；在开发阶段开发的程序要部署到生产环境，可以在生产环境安装一个容器，然后将生产环境的程序安插在容器内）</li>
+<li>虚拟机带来的好处是，避免资源浪费：假设有很多只能在MAC上运行的软件，你没有mac，他们就没法用，如果可以在PC上编写一个模拟MAC的虚拟机，然后这些mac软件就可以使用了。你的电脑会认定自己是真的mac，而且那些软件更加浑然不知。</li>
+<li>目前，绝大多数程序都需要专门的操作系统而不是专门的硬件，相同的硬件可以运行不同的操作系统。一种操作系统本身就是一个虚拟机，它能够让一个程序在略有差异的两台机器上同样有效运行。但是一个操作系统毕竟没有模拟任何实际存在的硬件，他只是按照要求创建出虚构的机器，接受待定的输入。</li>
+<li>JAVA虚拟机（JVM）是当今最流行的一种虚拟机，它比较像一个操作系统。用Java语言编写的web应用可以跨平台使用，不管是用windows还是安卓还是macOS。why？因为java程序的运行环境只依赖JVM，而每个操作系统都有专门的JVM，当运行某个java程序时时，跟你设备匹配的JVM会自动下载到你的电脑，几秒就装好了。然后，各种java小程序就可以运行了。</li>
+<li>可以看到，几乎所有的计算机程序都是虚拟机--由指令构成的软件，一旦运行，将通用计算机变成了专用计算机，这种专用计算机本可以专门设计和创建专门的硬件（例如AI芯片）。只需要在通用计算机上简单安装和运行程序，就可以得到一台功能清晰的计算机。</li>
+<li>图灵机或者笔记本，只能一条条执行指令，再次基础上扩展除了"并行"计算机的概念，可以一次执行数百万条指令。</li>
+<li>考虑一个在国际象棋的程序，它由common lisp这种高级语言写成，在一台pc上运行的windows操作系统上运行。实际上，这台pc伪装成了一台windows机器，这台windows机器又伪装成了一台lisp机器，这台lisp机器又伪装成了一台国际象棋游戏机。</li>
+<li>无论在哪个level上，我们总是只见森林不见树木，low-level的细节总是很容易忽略。计算机上虚拟机的层层嵌套和「小人儿功能主义」中小人儿的层层嵌套，两者之间的雷同并非巧合。虚拟机推动人类的创造和理解，完成了很多创造性任务。这些计算机的成就也给人类带来了启发：如果对大脑也实施类似的逆向工程，或许也能有所收获。</li>
+<li>所有说法语的人 都具备某种版本的法语虚拟机，说英语的人大脑里面也有一套固定模式的系统--英语虚拟机，如何在大脑中建立语言虚拟机？尚未有答案，不过可以看看计算机是怎么做的：编译器将高层指令翻译成可以在硬件上执行的代码，只需程序员在high-level设计出一个想法，它就有把握生成一个可执行的程序。</li>
 </ol>
-<h2 id="参考资料">参考资料</h2>
+<blockquote>
+<p>概念验证：无需动用神奇组织，我们找到了一种方法，能够清楚地说出"具有数万亿活动部件的计算机，它的那种高等能力到底是什么?"--编译器。</p>
+</blockquote>
+<h1 id="参考">参考</h1>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf">logmine-paper</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/trungdq88/logmine/tree/master/src">logmine-github</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">apache_2k.log</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">chiechie-关于logmine的实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/21532330716e9c7a215e76c">直觉泵和其他思考工具-丹尼尔·丹尼特-微信读书</a></li>
+<li><a href="https://chiechie.github.io/2021/03/18/technology/dive-into-JVM/">关于JVM的延伸笔记-chiechie</a></li>
 </ol>
 
       
@@ -376,7 +267,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/06/AI/cause-effect/judea-pearl_the-book-of-why1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -390,7 +281,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/" class="post-title-link" itemprop="url">chapter1.5.2 美团的日志聚类</a>
+            <a href="/2021/03/06/AI/cause-effect/judea-pearl_the-book-of-why1/" class="post-title-link" itemprop="url">《the book of why》读书笔记-1</a>
         </h2>
 
         <div class="post-meta">
@@ -400,14 +291,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-04 11:01:18" itemprop="dateCreated datePublished" datetime="2021-03-04T11:01:18+08:00">2021-03-04</time>
+              <time title="创建时间：2021-03-06 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-06T08:33:38+08:00">2021-03-06</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-28 21:39:33" itemprop="dateModified" datetime="2021-05-28T21:39:33+08:00">2021-05-28</time>
+                <time title="修改时间：2021-05-28 09:22:03" itemprop="dateModified" datetime="2021-05-28T09:22:03+08:00">2021-05-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -415,7 +306,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -430,185 +321,54 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="目录">目录</h2>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate/">chapter1 故障发现</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
-<li><a href="https://chiechie.github.io/2021/02/19/AI/AIOps/AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="https://chiechie.github.io/2021/03/03/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
-<li><a href="https://chiechie.github.io/2021/03/15/AI/AIOps/AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
-<li><a href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
-</ul>
-<blockquote>
-<p>本文是美团的提出的告警聚类的一种算法，其实也只是基于已有的paper做了一下应用。</p>
-<p>跟logmine的区别是，他可以定义多层的泛化结构，对于有多层关系的属性有很好的效果。</p>
+          <blockquote>
+<p>《the book of why》是一本关于因果关系的科普书，作者是judea pearl，该书于2019年出版。</p>
+<p>最近工作正好涉及根因分析，加上我对因果推断领域比较感兴趣，所以将本书作为入门读物。打算以此为基础，再看技术paper。</p>
+<p>这个是第一篇-引言-思维胜于数据</p>
+<p>重新review了一下读书笔记，感觉还是没有消化里面的内容</p>
 </blockquote>
-<h2 id="设计"><strong>设计</strong></h2>
-<p>如[图2]所示，异常报警根因分析的设计大致分为四个部分：搜集告警数据、提取告警的关键特征、聚类、展示告警摘要。</p>
+<h2 id="因果推断流程图">因果推断流程图</h2>
 <figure>
-<img src="img.png" alt="图2" /><figcaption aria-hidden="true">图2</figcaption>
+<img src="inference_engine.png" alt="图一--因果推断引擎" /><figcaption aria-hidden="true">图一--因果推断引擎</figcaption>
 </figure>
-<h3 id="算法选择"><strong>算法选择</strong></h3>
-<p>聚类算法采用论文《Clustering intrusion detection alarms to support root cause analysis》中的算法。</p>
-<figure>
-<img src="./kjhjk.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>我们可以将这几条报警抽象为：“全部服务器 网络调用 故障”，该泛化报警包含的范围较广；也可以抽象为：“server_room_a服务器 网络调用 产品信息获取失败”和“server_room_b服务器 RPC 获取产品类型信息失败”，此时包含的范围较小。当然也可以用其他层次的抽象来表达这个报警集群。</p>
-<p>可以观察到，抽象层次越高，细节越少，但是它能包含的范围就越大；反之，抽象层次越低，则可能无用信息越多，包含的范围就越小。</p>
-<p>这种抽象的层次关系可以用DAG表达，如图3所示：</p>
-<figure>
-<img src="img_1.png" alt="图3 泛化层次结构示例" /><figcaption aria-hidden="true">图3 泛化层次结构示例</figcaption>
-</figure>
-<h3 id="基本概念">基本概念</h3>
 <ul>
-<li><p>属性（Attribute）：构成报警日志的某一类信息，如机器、环境、时间等，文中用<span class="math inline">\(A_i\)</span>表示。</p></li>
-<li><p>值域（Domain）：属性<span class="math inline">\(A_i\)</span>的取值范围，文中用<span class="math inline">\(Dom(A_i)\)</span>表示。</p></li>
-<li><p>泛化层次结构（Generalization Hierarchy）：对于每个Ai都有一个对应的泛化层次结构，文中用<span class="math inline">\(G_i\)</span>表示。 <img src="img_1.png" alt="图3 泛化层次结构示例" /></p></li>
-<li><p>属性的不相似度:令<span class="math inline">\(x_1\)</span>、<span class="math inline">\(x_2\)</span>为某个属性<span class="math inline">\(A_i\)</span>的两个不同的值，那么<span class="math inline">\(x_1\)</span>、<span class="math inline">\(x_2\)</span>的不相似度为：在泛化层次结构<span class="math inline">\(Gi\)</span>中，通过一个公共点父节点p连接x1、x2的最短路径长度。即 d(x1, x2) := min{d(x1, p) + d(x2, p) | p ∈ Gi, x1 ⊴ p, x2 ⊴ p}。例如在图3的泛化层次结构中，d("Thrift", "Pigeon") = d("RPC", "Thrift") + d("RPC", "Pigeon") = 1 + 1 = 2。</p></li>
-<li><p>告警的不相似度（Dissimilarity）: 对于两个报警<span class="math inline">\(a_1, a_2\)</span>, 距离为： <span class="math display">\[d\left(\mathbf{a}_{1}, \mathbf{a}_{2}\right):=\sum\limits_{i=1}^{n} d\left(\mathbf{a}_{1}\left[A_{i}\right], \mathbf{a}_{2}\left[A_{i}\right]\right)\]</span></p>
-<p>例如： a1 = ("server_room_b-biz_tag-offline02", "Thrift"),a2 = ("server_room_a-biz_tag-online01", "Pigeon"), 那么d(a1, a2) = d("server_room_b-biz_tag-offline02", "server_room_a-biz_tag-online01") + d(("Thrift", "Pigeon") = 2 + 2 + 1 + 1 = 6。</p></li>
-<li><p>告警集合：C</p></li>
-<li><p>告警摘要：g，<span class="math inline">\(\forall a \in C, a \leq g\)</span>, 就是pattern</p></li>
+<li><p>【1号框-知识】「知识」（knowledge）指「推断主体」（reasoning agent）过去的经历（experience），包括过去的观察（observation），过去的行为（actions），教育和文化（hearsay）等跟目标问题有关的内容。「知识」的虚线框表示，它仍存在于推断主体（reasoning agent）的心智中，是隐式的，而不是显示地在表达在模型中。</p></li>
+<li><p>【2号框-假设】科学研究经常需要简化「假设」（assumptions），即值得显式表达的「陈述」（statements）。 虽然大部分研究人员的知识都隐式地存在于他脑中，只有「假设」得见天日，并且「封装」（encapsulated）在模型之中。「假设」可以从模型中读到，这让一些逻辑学家得出结论：模型不过是一堆「假设」而已。计算机专家对此观点持有异议，他们提出需注意「假设」呈现的方式，因为人的不同解读而产生很大区别。</p></li>
+<li><p>【3号框-因果模型】「因果模型」（causal model）有多种表达语言：「因果图」（causal graph），「结构方程」（structural equation），「逻辑陈述」等。以「因果图」为例，如果X是Y的因（cause），即Y听从X，就会在因果图中，画一个X到Y的箭头。</p></li>
+<li><p>【4号框-可测试蕴含】从「因果图」中推导出来的一些统计性质，可以使用数据去证伪</p></li>
+<li><p>【5号框-查询】提交到推荐引擎的查询（queries），是一个科学的问题我们要回答的，他们可以用一个因果词汇来表达，例如，P（L | do(D)）是多少，eg我努力了的话成功的概率是多少？因果革命的一个主要的成就，就是让因果语言在科学上容易理解，在数据上精确严谨。</p></li>
+<li><p>【6号框-被估量】「被估量」（estimand），是一个统计量，需要从数据中算出，可被写成概率公式，例如P（L｜ D，Z）* P（Z）。 &gt; 跟传统统计学不一样，在当前因果模型中，有些问题是没有答案的，即使收集了再多数据也没用。这个时候要做的是，回去修正「因果模型」--加入新「知识」，或者简化「假设」（注意吃出存在犯错风险）</p></li>
+<li><p>【7号框-数据】数据（data）是填充「被估量」的原料，需要认识到，数据本身不能表达因果关系。数据只能告诉我们P（L｜D），或者P（L｜D，Z）。而「被估量」将这些观测概率转为干预概率P(L|do(D))。</p></li>
+<li><p>【8号框-统计估计量】 「统计估计量」（statistical estimation）是一个新鲜出炉的东西，然而，它仅仅是一个估计值，因为基于事实：我们能获取到的仅仅是无限总体的有限样本。幸运的是，统计学给了我们很多方法来应对这些不确定性--最大似然估计，propensity分数，置信区间，显著性检验。</p></li>
+<li><p>【9号框-估计】「估计」（estimate）即为「查询」的答案。如果我们的「因果模型」是对的，并且我们的数据是充分的，我们可以得到「查询」的答案，例如 药物提升了糖尿病人的寿命30%+/-20%。 这样的回答，也会增加我们的科学的「知识」。如果这一答案与我们的生活常识不符，则说明我们需要对「因果模型」（3号框）做一些修正。</p></li>
 </ul>
-<p>以报警集合{"dx-trip-package-api02 Thrift get deal list error.", "dx-trip-package-api01 Thrift get deal list error."}为例，“dx服务器 thrift调用 获取产品信息失败”是一个泛化表示，“服务器 网络调用 获取产品信息失败”也是一个泛化表示。对于某个聚类来说，我们希望获得既能涵盖它的集合又有最大信息量的摘要（pattern）。为了解决这个问题，定义以下两个指标：</p>
-<p><span class="math display">\[\begin{aligned} \bar{d}(\mathbf{g}, \mathcal{C}) &amp;:=1 /|\mathcal{C}| \times \sum_{\mathbf{a} \in \mathcal{C}} d(\mathbf{g}, \mathbf{a}) \\ H(\mathcal{C}) &amp;:=\min \left\{\bar{d}(\mathbf{g}, \mathcal{C}) | \mathbf{g} \in \mathbf{X}_{i=1}^{n} \operatorname{Dom}\left(A_{i}\right), \forall \mathbf{a} \in \mathcal{C}: \mathbf{a} \leq \mathbf{g}\right\} \end{aligned}\]</span></p>
-<p>公式2</p>
-<p>H(C)值最小时对应的g，就是我们要找的最适合的泛化表示，我们称g为C的“覆盖”（Cover）。</p>
-<p>基于以上的概念，将报警日志聚类问题定义为：</p>
-<blockquote>
-<p>定义L为一个日志集合，$G_i(i = 1, 2, 3……n) $为属性Ai的泛化层次结构，目标是找到一个L的子集C，满足 |C| &gt;= min_size，且H(C)值最小。</p>
-</blockquote>
-<p>min_size是用来控制抽象程度的，min_size越大抽象的越厉害. 这是个NP问题，论文提出了如下的启发式算法</p>
-<h3 id="算法描述"><strong>算法描述</strong></h3>
+<p>这个流程图看起来很复杂，我们在日常生活和工作中处理因果问题时使用直觉就可以，而不用按照这个流程来。 但是如果我们要教会一个机器人懂得因果推断，我们就必须审视自己的因果推断的流程，并且形成一门科学语言，先模拟自己，再教会机器。</p>
+<h2 id="深度学习-和-因果推断">深度学习 和 因果推断</h2>
 <ol type="1">
-<li>假设所有的泛化层次结构<span class="math inline">\(G_i\)</span>都是树，这样每个cluster都有一个唯一的、最顶层的泛化结果。</li>
-<li>将L定义为一个原始的告警日志集合，算法选择一个属性<span class="math inline">\(A_i\)</span>，将L中所有报警的<span class="math inline">\(A_i\)</span>值替换为<span class="math inline">\(G_i\)</span>中<span class="math inline">\(A_i\)</span>的父值，通过这一操作不断对报警进行泛化。</li>
-<li>持续步骤2的操作，直到找到一个覆盖报警数量大于min_size的pattern为止。</li>
-<li>输出步骤3中找到的报警。</li>
-</ol>
-<p>算法伪代码如下所示：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">输入：报警日志集合L，min<span class="emphasis">_size，每个属性的泛化层次结构G1,......,Gn</span></span><br><span class="line"><span class="emphasis">输出：所有符合条件的泛化报警</span></span><br><span class="line"><span class="emphasis">T := L;              // 将报警日志集合保存至表T</span></span><br><span class="line"><span class="emphasis">for all alarms a in T do</span></span><br><span class="line"><span class="emphasis">    a[count] := 1;   // &quot;count&quot;属性用于记录a当前覆盖的报警数量</span></span><br><span class="line"><span class="emphasis">while ∀a ∈ T : a[count] &lt; min_</span>size do &#123;</span><br><span class="line"><span class="code">    使用启发算法选择一个属性Ai;</span></span><br><span class="line"><span class="code">    for all alarms a in T do</span></span><br><span class="line"><span class="code">        a[Ai] := parent of a[Ai] in Gi;</span></span><br><span class="line"><span class="code">        while identical alarms a, a&#x27; exist do</span></span><br><span class="line"><span class="code">            Set a[count] := a[count] + a&#x27;[count];</span></span><br><span class="line"><span class="code">            delete a&#x27; from T;</span></span><br><span class="line"><span class="code">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>其中第7行的启发算法为：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">首先计算Ai对应的Fi</span><br><span class="line">fi(v) := SELECT sum(count) FROM T WHERE Ai = v   // 统计在Ai属性上值为v的报警的数量</span><br><span class="line">Fi := max&#123;fi(v) | v ∈ Dom(Ai)&#125;</span><br><span class="line">选择Fi值最小的属性Ai</span><br></pre></td></tr></table></figure>
-<h2 id="实现">实现</h2>
-<h3 id="提取报警特征">提取报警特征</h3>
-<p>根据线上问题排查的经验，运维人员通常关注的指标包括时间、机器（机房、环境）、异常来源、报警日志文本提示、故障所在位置（代码行数、接口、类）、Case相关的特殊ID（订单号、产品编号、用户ID等等）等。</p>
-<p>但是，Case相关的特殊ID不符合我们希望获得一个抽象描述的要求，因此不关注。</p>
-<p>综上，最后选择的特征包括：机房、环境、异常来源、报警日志文本关键内容、故障所在位置（接口、类）共5个。</p>
-<h3 id="算法实现">算法实现</h3>
-<ol type="1">
-<li>提取关键特征：数据来源是日志中心已经格式化过的告警日志信息，包含：报警日志产生的时间、服务标记、在代码中的位置、日志内容等。</li>
-</ol>
+<li><p>人工智能和大数据和因果模型：当今很多人工智能的研究者只依赖数据解决所有的认知难题。他们希望在因果问题出现时，数据能指引他们找到答案。换句话说，他们坚信数据是万能的，也可以称这类人--信仰「数据教」。这种想法通常是秘而不宣。</p></li>
+<li><p>作者对"数据万能"的趋势表示质疑，因为，对因果关系的知识，数据没有发言权。举个例子，关于「行动」或「干预结果」的信息，根本无法从原始数据中获取，这些信息只能从对照实验中收集。</p></li>
+<li><p>反事实问题比如"如果当时我采取了相反的行动会发生什么"，是人工智能最具挑战性的问题。想要回答反事实问题，因果模型的作用很重要。</p></li>
+<li><p>因果模型相对深度学习的特有优势--适应性。 因果模型研究的是更本质，更稳固，适用范围更广的知识，相对来说深度学习是一个肤浅的学习者，和拙劣的模仿者:</p>
 <ul>
-<li>故障所在位置：优先查找是否有异常堆栈，如存在则查找第一个本地代码的位置；如果不存在，则取日志打印位置。</li>
-<li>异常来源：获得故障所在位置后，优先使用此信息确定异常报警的来源（需要预先定义词典支持）；如不能获取，则在日志内容中根据关键字匹配（需要预先定义词典支持）。</li>
-<li>报警日志文本关键内容：优先查找是否有异常堆栈，如存在，则查找最后一个异常（通常为真正的故障原因）；如不能获取，则在日志中查找是否存在“code=……,message=……” 这样形式的错误提示；如不能获取，则取日志内容的第一行内容（以换行符为界），并去除其中可能存在的Case相关的提示信息</li>
-<li>提取“机房和环境”这两个指标比较简单，在此不做赘述。</li>
-</ul>
-<ol start="2" type="1">
-<li><p>聚类算法：以图4来表示。</p>
+<li>假设我们面临一个问题，新冠疫苗的药效的评估者，通过观察印度的情况--病患注射疫苗后的存活时间，得到了关于疫苗有效性的结论；接下来想评估疫苗在中国的有效性，但是中国和印度的卫生情况，饮食习惯，工作习惯，人均寿命寿命都不一样。</li>
+<li>「深度学习流派」的做法是：重新获取中国的病患数据，重新训练模型和做预测，本质上深度学习就是将函数和数据拟合。</li>
+<li>「因果推断流派」的做法是：该研究者首先掌握疫苗的作用机制（regime），如果中国疫苗作用机制跟印度一致，那么在印度得到的估计参数仍然有效，可生成一个新的中国总体的预测函数。</li>
+</ul></li>
+</ol>
+<h2 id="因果之梯">因果之梯</h2>
+<p>1.「反事实」和「干预」（intervention）区分的关键在于「事后来看」（hindsight）。即反事实强调在对结果已知观测的基础上再对反事实的问题进行解答：“假如当时发生的与实际情况不同，结果会怎样？”，这就要求一种对虚构世界的推理能力。另一方面，Intervention关注的更多是群体的总效应或者平均因果效应。而反事实更关注特定事件或个体层面的因果关系。举个栗子，比如Intervention解决的是“吸烟是否导致肺癌”，而counterfactual研究的是“我的外公30年来每天一支烟，假如他不曾吸烟的话，他会活多久”，这两者之间是具有很大差别的。</p>
+<h3 id="概率与因果关系">概率与因果关系</h3>
+<ol type="1">
+<li><p>20世纪中期的哲学家，使用"概率提高"的概念，来定义因果关系。 &gt; 如果事件X提高了Y的概率，那么就说X导致了Y &gt; &gt; 决策树生成算法，挑选节点的时候，有异曲同工之妙啊。</p>
 <figure>
-<img src="img_2.png" alt="图4 报警日志聚类流程图" /><figcaption aria-hidden="true">图4 报警日志聚类流程图</figcaption>
+<img src="qiantan-ai/img.png" alt="决策树中的概率提高思想" /><figcaption aria-hidden="true">决策树中的概率提高思想</figcaption>
 </figure></li>
+<li></li>
 </ol>
-<h3 id="泛化层次结构">泛化层次结构</h3>
-<p>泛化层次结构，用于记录属性的泛化关系，是泛化时向上抽象的依据，需要预先定义。</p>
-<p>下面是4个预先定义的泛化层次结构</p>
-<figure>
-<img src="img_9.png" alt="图5 机房泛化层次结构" /><figcaption aria-hidden="true">图5 机房泛化层次结构</figcaption>
-</figure>
-<figure>
-<img src="img_10.png" alt="图6 环境泛化层次结构g" /><figcaption aria-hidden="true">图6 环境泛化层次结构g</figcaption>
-</figure>
-<figure>
-<img src="img_11.png" alt="图7 错误来源泛化层次结构" /><figcaption aria-hidden="true">图7 错误来源泛化层次结构</figcaption>
-</figure>
-<figure>
-<img src="img_12.png" alt="图8 日志文本摘要泛化层次结构" /><figcaption aria-hidden="true">图8 日志文本摘要泛化层次结构</figcaption>
-</figure>
-<p>“故障所在位置”此属性无需泛化层次结构，每次泛化时直接按照包路径向上层截断，直到系统包名。</p>
-<h2 id="实验">实验</h2>
-<p>以下三个实验均使用C端API系统。</p>
-<h3 id="单依赖故障">1. 单依赖故障</h3>
-<ul>
-<li>环境：线上</li>
-<li>故障原因：产品中心线上单机故障</li>
-<li>报警日志数量：939条</li>
-</ul>
-<p>部分原始报警日志如图9所示，初次观察时，很难理出头绪。</p>
-<figure>
-<img src="img_3.png" alt="图9 单依赖故障报警日志节选" /><figcaption aria-hidden="true">图9 单依赖故障报警日志节选</figcaption>
-</figure>
-<p>经过聚类后的摘要如表1所示：</p>
-<figure>
-<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
-</figure>
-<p>可以看到前三条摘要的Count远超其他摘要，并且它们指明了故障主要发生在产品中心的接口。</p>
-<h3 id="无相关的多依赖同时故障">2. 无相关的多依赖同时故障</h3>
-<p>利用故障注入工具，在Staging环境模拟运营置顶服务和A/B测试服务同时产生故障的场景。</p>
-<ul>
-<li>环境：Staging,使用线上录制流量和压测平台模拟线上正常流量环境</li>
-<li>模拟故障原因：置顶与A/B测试接口大量超时</li>
-<li>报警日志数量：527条</li>
-</ul>
-<p>部分原始报警日志如图10所示：</p>
-<figure>
-<img src="img_5.png" alt="图10 无相关的多依赖同时故障报警日志节选" /><figcaption aria-hidden="true">图10 无相关的多依赖同时故障报警日志节选</figcaption>
-</figure>
-<p>经过聚类后的报警摘要如表2所示：</p>
-<figure>
-<img src="img_6.png" alt="表2" /><figcaption aria-hidden="true">表2</figcaption>
-</figure>
-<p>从上表可以看到，前两条摘要符合本次试验的预期，定位到了故障发生的原因。</p>
-<p>说明在多故障的情况下，算法也有较好的效果。</p>
-<h3 id="中间件与相关依赖同时故障">3. 中间件与相关依赖同时故障</h3>
-<p>利用故障注入工具，在Staging环境模拟产品中心服务和缓存服务同时产生超时故障的场景。</p>
-<ul>
-<li>环境：Staging，使用线上录制流量和压测平台模拟线上正常流量环境</li>
-<li>模拟故障原因：产品中心所有接口超时，所有缓存服务超时</li>
-<li>报警日志数量：2165</li>
-</ul>
-<p>部分原始告警日志如图11所示：</p>
-<figure>
-<img src="img_7.png" alt="图11 中间件与相关依赖同时故障报警日志节选" /><figcaption aria-hidden="true">图11 中间件与相关依赖同时故障报警日志节选</figcaption>
-</figure>
-<p>经过聚类后的报警摘要如表3所示：</p>
-<figure>
-<img src="img_8.png" alt="img_8.png" /><figcaption aria-hidden="true">img_8.png</figcaption>
-</figure>
-<p>从上表可以看到，缓存（Squirrel和Cellar双缓存）超时最多，产品中心的超时相对较少，这是因为我们针对产品中心的部分接口做了兜底处理，当超时发生时后先查缓存，如果缓存查不到会穿透调用一个离线信息缓存系统，因此产品中心超时总体较少。</p>
-<h3 id="总结">总结</h3>
-<ul>
-<li>优点：综合上述三个实验得出结果，算法对于报警日志的泛化是具有一定效果。</li>
-<li>不足：有些摘要过于笼统；利用摘要进行进一步定位，也需要领域知识。</li>
-</ul>
-<h2 id="参考资料">参考资料</h2>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cluster_analysis">Cluster_analysis--wiki</a></li>
-<li><a target="_blank" rel="noopener" href="https://tech.meituan.com/2019/02/28/root-clause-analysis.html">meituan-blog</a></li>
-<li><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.136.1949&amp;rep=rep1&amp;type=pdf">Clustering intrusion detection alarms to support root cause analysis--paper</a>)</li>
+<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书-引言</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">知乎-反事实和干预</a></li>
 </ol>
 
       

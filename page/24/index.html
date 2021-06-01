@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/22/AI/timeseries/gluon-ts_1/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/14/investment/about-invement-education/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/22/AI/timeseries/gluon-ts_1/" class="post-title-link" itemprop="url">使用gluon-ts做时序预测(1)</a>
+            <a href="/2021/05/14/investment/about-invement-education/" class="post-title-link" itemprop="url">关于理财教育</a>
         </h2>
 
         <div class="post-meta">
@@ -189,167 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-22 17:35:59" itemprop="dateCreated datePublished" datetime="2021-04-22T17:35:59+08:00">2021-04-22</time>
+              <time title="创建时间：2021-05-14 08:28:15" itemprop="dateCreated datePublished" datetime="2021-05-14T08:28:15+08:00">2021-05-14</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>看一下amazon官方对DeepAR的实现</p>
-</blockquote>
-<h3 id="实验数据">实验数据</h3>
-<p>数据： <a target="_blank" rel="noopener" href="https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014">electricity数据集--Electricity dataset from UCI</a>： , 2011 ~2014期间，370 个 家庭的用电量 ，频率为小时 train/test：2014年9月第一周 作为test，之前的所有数据作为train:</p>
-<ul>
-<li>窗口长度(window_size)：192（8天），其中</li>
-<li>conditioning range：168（前7天）</li>
-<li>prediction range：24（第8天）</li>
-<li>stride_size: 24 hour，滑窗步长</li>
-<li>input_size： window_size-stride_size，14</li>
-</ul>
-<h2 id="问题">问题</h2>
-<ul>
-<li>gluon-ts里面将输入做对数处理效果会不会好一点？
-<ul>
-<li>不用，mxnet已经做了， 并且额外做预处理，可能还会带来负面影响，
-<ul>
-<li>loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，</li>
-</ul></li>
-<li>参考论文--context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。</li>
-</ul></li>
-<li>为什么pytorch的训练要7个小时？mxnet训练只要10min？
-<ul>
-<li>主要在样本采样这块</li>
-</ul></li>
-<li>自己能不用tensorflow复现mxnet的效果？
-<ul>
-<li>对比参数量，准确率，计算时间，内存消耗</li>
-</ul></li>
-<li>为什DeepAR和DeepFator的loss scale 差这么大? loss的含义都不一样</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># deepAR</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss</span>(<span class="params">self, x: Tensor</span>) -&gt; Tensor:</span></span><br><span class="line">	<span class="keyword">return</span> -self.log_prob(x)</span><br><span class="line"><span class="comment"># deepFator</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">negative_normal_likelihood</span>(<span class="params">self, F, y, mu, sigma</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (F.log(sigma) + <span class="number">0.5</span> * math.log(<span class="number">2</span> * math.pi)+ <span class="number">0.5</span> * F.square((y - mu) / sigma))</span><br></pre></td></tr></table></figure>
-<ul>
-<li>对不同曲线预测的时候，为什么有的曲线效果很， 好有的曲线效果很差？
-<ul>
-<li>deepAR会针对不同曲线，给loss 赋予不同的权重：loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的。</li>
-</ul></li>
-</ul>
-<h2 id="算法前期调研中的一些小插曲">算法前期调研中的一些小插曲</h2>
-<p>网上找到了pytorch版本的deepAR版，但是很慢</p>
-<ul>
-<li>Student： 训练过程很慢 要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？</li>
-<li>Teacher： 看了amazon已经将deepAR做了产品化，按照算法开发的流程肯定经历了效率优化的，并且deepAR的文章发于2017年4月，到目前为止amazon应该做了多次迭代的，所以去查一下近3年的amazon deepAR 相关的资料，看有没有开源的稳定的算法代码。</li>
-<li>Student：找到了--基于MXNET的gluon-ts（于2019年6月发表），mxnet在electricty上的训练和预测时间大概是10min左右</li>
-<li>Teacher：很好，接下来可以考虑更多的产品化方面的事情了，结合运维场景；另外注意到CNN-QR的训练效率也很不错，把这几个算法的准确率对比看一下</li>
-<li>Student：整体上准确率 CNN-QR略逊于DeepAR，但是考虑到计算效率，两者还是不相上下。
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUD6-nafIsi.png?alt=media&amp;token=a359d00d-bde2-41b2-bb96-d9222cb4514c" /></li>
-</ul></li>
-<li>Teacher：下一步，试着CNN-QR的拓展,DeepAR用于异常检测 的效果也测试下</li>
-<li>Student：使用数据平台的两台主机的cpu指标测试，发现cpu的效果还不错，体现在 不同类型的曲线，他们的方差趋势都预测的很准。
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FxofMTtcgaV.png?alt=media&amp;token=26cd83f2-717e-4c9c-8a93-da589dcfe63d" /></li>
-</ul></li>
-<li>Teacher：使用有异常标注的数据测试具体的指标，两种都测下--批量预测 和 实时预测</li>
-<li>Student：在获取数据阶段踩了一些坑，因为维度太多，全部数据维度都要 会导致拉数据接口快挂了</li>
-<li>Teacher：找出其中最重要的维度（重要度 即记录的条数 或者 指标求和）</li>
-<li>Student：从5w个维度过滤出来了100个维度，剩下的大部分维度怎么弄呢？</li>
-<li>Teacher：先管好这个100个维度，跑一跑模型，剩下的数据质量差可以暂时不监控。</li>
-<li>Student：这批数据有个特点--不同曲线形态模式很不一样，我怀疑1个模型很容易学混，接下来就证实了这一点（100个曲线上面的图，待补充）<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHF_Qc1aO1g.png?alt=media&amp;token=3591cf24-bfdf-44b7-894b-ba03652522f1" /></li>
-<li>Teacher：尝试加入feat_static_cat特征，来区分不同曲线。</li>
-<li>Student：有些许变化，但是改进还不太明显。另外在做实验过程中，发现几个优化的方向
-<ul>
-<li><strong>epoch</strong>： 从 5 到 50，带来了大量的提升</li>
-<li><strong>lstm</strong>的网络结构参数：layers从2到1，units从40到20，准确率有部分提升</li>
-</ul></li>
-<li>Teacher：因为样本较少（3k个训练样本）更适合用简单的模型</li>
-<li>Student：除了直接使用deepar的默认scale以及概率分布的参数，还尝试了另外一个方法： 因为cpu使用率本身是0～1，将数据预处理（除以100）到0～1 之间后跑，但是直接跑模型会报错， 做了以下设置才能跑：
-<ul>
-<li>scale设置为False</li>
-<li>value 为边界点（0或者1）时，加入扰动项</li>
-<li>输出的概率分布设置为beta分布 输出的上下界，非常符合比率型设定（上界不会超过1，下界不会低于0），但是就是准确率不高，一看就是学混了（移花接木，局部的模式 太弱了）</li>
-</ul></li>
-<li>出bug了，排查问题</li>
-</ul>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/zhykoties/TimeSeries">pytorch版本</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/21/investment/didi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/21/investment/didi/" class="post-title-link" itemprop="url">对滴滴的分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-21 10:00:14" itemprop="dateCreated datePublished" datetime="2021-04-21T10:00:14+08:00">2021-04-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-27 09:22:51" itemprop="dateModified" datetime="2021-04-27T09:22:51+08:00">2021-04-27</time>
+                <time title="修改时间：2021-05-20 08:12:50" itemprop="dateModified" datetime="2021-05-20T08:12:50+08:00">2021-05-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -372,22 +219,163 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="reflection">reflection</h2>
+          <h2 id="市场分析">市场分析</h2>
 <ol type="1">
-<li><p>网约车行业到底挣钱不挣钱？终归是拼价格，要降价抢市场就亏钱；要涨价谋利润，等于将市场拱手让给竞争对手。</p>
-<blockquote>
-<p>Lyft作为全球首家上市的网约车公司，上市第二天就跌破发行价，截至7月22日，Lyft市值仅为93亿美元，较最高市值跌去60%。</p>
-<p>Uber上市后同样遭遇血洗，首日破发报收42美元，如今市值只有568亿美元，远低于Uber最后一轮私募融资时的760亿美元，这意味着解禁后，投资人将血本无归。</p>
-</blockquote></li>
-<li><p>滴滴现在挣钱不挣钱？滴滴的主营业务是快车，但是主要盈利的业务是顺风车，专车，但是盘子太小，总的来说是亏钱。</p></li>
-<li><p>滴滴未来有没有可能做大做强？不可能，因为没有护城河, 用户没有忠诚度。同时，竞争对手很强，其他平台方具备资金优势，地方政府关系过硬，在合规上更胜一筹。</p></li>
-<li><p>网约车是一门社会价值大于商业价值的生意，还是政府来主导比较好。</p></li>
+<li>国内中产阶级人群增长红利，带动“理财”需求增长。</li>
+<li>“理财”在国内过去的教育体系，并没有太多涉及，想要获得较优的“理财判断与决策能力”，市场上的“理财教育”应运而生。近年新兴的需求已支撑起国内“营收过亿”、“融资过亿”的理财教育公司。</li>
+<li>“理财教育”市场有两个正在发生的变化：
+<ul>
+<li>过去“鱼龙混杂”、“推销理财产品”为主的“教育”公司，正被新一代具有专业知识的教育公司取代。</li>
+<li>用户大众化。“理财”教育≠“如何选购理财产品”，它更多是“理财”认知、管理与决策能力的提高。它的受众不仅是越来越多有“财产”富余的成年人，还有k12这些更低龄阶段的“财商”教育普及。</li>
+</ul></li>
+<li>国内APP数据服务商Questmobile在今年初的报告，呈现了“越来越广泛受众使用理财APP”的数据变化。综合月活跃用户同比去年增长29%，平均使用时长也同比增加26%。</li>
 </ol>
+<h2 id="理财教育是个啥">理财教育是个啥？</h2>
+<h3 id="理财范畴">理财范畴</h3>
+<ol type="1">
+<li>供给端和需求端两端推进，理财行业兴起。对于个人理财，主看供给端的产品：比如股票、基金、债券、保险、黄金等资产，住房贷款、消费信贷等负债产品。</li>
+<li>当下，国内也在供给端与需求端双向促进，推动理财市场发展的进程。</li>
+</ol>
+<h3 id="理财教育教什么">理财教育教什么</h3>
+<h4 id="理财教育-理财产品推荐与售卖">理财教育 ≠ 理财产品推荐与售卖</h4>
+<ol type="1">
+<li><p>理财覆盖个人财务的所有范畴，从流程来看，包括：</p>
+<ul>
+<li>评估个人财务总体情况，资产与负债；</li>
+<li>制定理财的长短期目标；</li>
+<li>做出理财计划、落实计划；</li>
+<li>以及后续的跟进与重新评估。</li>
+</ul></li>
+<li><p>从管理标的来看，涵盖：收入、支出、资产、负债、投资、保险等等。</p></li>
+<li><p>与之对应的是，“理财教育”：覆盖“理财流程”以及管理目标，目标是提升每个环节的认知、管理与决策能力。</p></li>
+<li><p>“购买理财产品”仅是理财的一部分行为。“如何选购理财产品”因而也只是“理财教育”时可能存在的一部分。而且，这里强调的是如何选购的原则“知识传输”，而不是“理财产品”的推销。</p></li>
+</ol>
+<h4 id="财商">财商</h4>
+<ol type="1">
+<li>财商(Financial Quotient)是“驾驭”操作行为的能力（包括认知、投资理财行为与管理）。 &gt; “财商”首次在1990s年《富爸爸，穷爸爸》被提出，即要懂得如何管理财富、使财富增值，而不只是“埋头兢兢业业稳定工作以维生”。</li>
+<li>在接受“理财”相关教育的时候，最主要的目的是：提高“财商”、具备作出越来越优的“理财”决策能力。然后进行“理财”行为下，获得预期更优收益。</li>
+</ol>
+<h3 id="当下理财教育如何">当下理财教育如何？</h3>
+<ol type="1">
+<li>2015年，美国50个州中有17个要求高中生在毕业前学习个人理财，目前仅剩5个州没有覆盖理财教育（美国有50个州+1个特区）。这是美国政府、学术界与协会共同推进的成果。</li>
+<li>国内的校内“理财”教育暂没有如此普及，市场上“理财教育”服务商已经发展起来了，比如“长投学堂、小帮规划、简七理财、十倍学堂、亿学”等等，他们中有用户数“快速增长”、营收过亿，也有在一级市场完成亿元级别融资。某此前处于平稳发展的早期理财教育公司，疫情期间及至今，营收“仍在快速增长、扩招员工”。经济相对“下行”的时期，人们提高了“理财增值”的意识与需求，也推动了“理财”学习的消费。</li>
+<li>产品服务模式有：线上录播课、线下训练营等，客单价多在在99元至千元区间。</li>
+<li>教学的内容，一种是上面提到的“财商”本身，理解个人财务、资产负债，教授理财与投资的基本知识观念。另一种是相对单价较高，且侧重于某一类“投资产品”，比如股票、基金、保险品类的“进阶”体系内容。</li>
+</ol>
+<h3 id="未来市场展望">未来市场展望</h3>
+<p>有两个基本趋势，一是用户低龄化，二是服务专业化。 1. 目标用户低龄化：美国针对K12阶段设计的金融理财课程；广州也推出了面向k12学生的财商教育试点计划。 &gt; &gt; “K－12”是指从幼儿园到12年级的教育. <img src="metauniverse/img.png" alt="img.png" /> 2. 服务专业化：上一代鱼龙混杂的“理财教育”市场，数万家“理财工作室”，不乏动机不良、“纯粹钓鱼”者。并因此“误导”了入门“理财教育”的个人。当下，新一代以“知识、技能”为导向的教育产品，正成为新的选择。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/t-ISF-ptH7tP4TFygqDyig">王川：Uber 上市会引爆硅谷的泡沫破灭吗?</a></li>
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/62e321a071a486b862ee729kb6d32b90216b6d767d2f0dc">商业的本质和互联网</a></li>
-<li><a target="_blank" rel="noopener" href="https://tech.qq.com/a/20200722/014719.htm">等不到IPO这一天，投资人正在抛弃滴滴？</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.woshipm.com/it/4199514.html">知乎上数百万人关注，理财与它的教育大众化</a></li>
+<li><a target="_blank" rel="noopener" href="https://youzhiyouxing.cn/">有知有行</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/07/reading_notes/qukuailian2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/07/reading_notes/qukuailian2/" class="post-title-link" itemprop="url">《区块链实战：从技术创新到商业模式》读书笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-07 09:22:55" itemprop="dateCreated datePublished" datetime="2021-05-07T09:22:55+08:00">2021-05-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-26 09:18:16" itemprop="dateModified" datetime="2021-05-26T09:18:16+08:00">2021-05-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="区块链如何分类">区块链如何分类</h2>
+<ol type="1">
+<li><p>按照参与者访问数据的资格，区块链分为：公链，私链，联盟链。</p></li>
+<li><p>按照发布新区块是否要permission，区块链分为：许可链和非许可链</p></li>
+<li><p>EOS采用委托权益证明共识机制、全网设置21个超级节点的公链，验证出块的许可门槛很高，或许应该称为“公开许可链”。</p></li>
+<li><p>联盟链/私链以其用户身份可验证、性能更高、更易扩展、更快达成共识、更易合规监管的特性适用于更多商业需求场景。</p></li>
+<li><p>跨链，是两个相对独立的区块链账本间进行资产互操作过程</p>
+<blockquote>
+<p>互操作：指两条区块链之间进行资产转移，支付或者信息交互。</p>
+</blockquote></li>
+<li><p>互联网是信息自由流通的网络，而区块链跨链形成的则是价值自由流通的网络。</p></li>
+<li><p>以太坊创始人--维塔利克·布特林设想的跨链技术的5个应用场景（大部分依然没有得以实现与普及）：</p>
+<ul>
+<li>数字资产跨链转移：锚定资产，现有A、B两条链，需要把资产X从A转到B，就需要A中一定数量的货币冻结或销毁），同时在B链解冻或产生相对应数量的货币</li>
+<li>跨链资产原子交换：两条链路的两个交易同时完成。</li>
+<li>跨链状态读取：侧链技术</li>
+<li>跨链资产抵押锁定：要求一些资产在A链上被“冻结”抵押，这样才能在B链上完成特定的动作</li>
+<li>跨链智能合约调用：难度最大，至今没有解决</li>
+</ul></li>
+<li><p>2019年8月，专注于跨链技术的Cosmos项目发布了IBC规范（V1.0.0-rc3),Cosmos希望像当年TCP/IP协议栈一样能构建一组标准化协议来统一解决跨链的问题。</p></li>
+<li><p>ArcBlock的链网和跨链采用了更为“实用主义”的简化设计策略。ArcBlock支持的跨链实际包以下两部分:</p>
+<ul>
+<li>开放链访问协议（Open Chain Access Protocal，缩写OCAP），即采用相同的接口去访问不同的区块链</li>
+<li>跨链资产原子交换协议</li>
+</ul></li>
+<li><p>三种主要的跨链实现方法:</p></li>
+</ol>
+<ul>
+<li>公证人机制：</li>
+<li>侧链/中继</li>
+</ul>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>https://weread.qq.com/web/reader/3b63273071e8eda73b6dc4d</li>
 </ol>
 
       

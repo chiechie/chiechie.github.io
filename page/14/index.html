@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/18/AI/machine_learning/automl/NAS/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/18/AI/machine_learning/automl/NAS/" class="post-title-link" itemprop="url">可微的NAS方法</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/" class="post-title-link" itemprop="url">chapter2.1.5 基于拓扑的根因定位-CN-Softbei2020比赛</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-18 08:32:24" itemprop="dateCreated datePublished" datetime="2021-05-18T08:32:24+08:00">2021-05-18</time>
+              <time title="创建时间：2021-05-21 14:37:13" itemprop="dateCreated datePublished" datetime="2021-05-21T14:37:13+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-19 10:55:05" itemprop="dateModified" datetime="2021-05-19T10:55:05+08:00">2021-05-19</time>
+                <time title="修改时间：2021-06-01 15:45:07" itemprop="dateModified" datetime="2021-06-01T15:45:07+08:00">2021-06-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -219,29 +219,62 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>NAS是auto-ml的一个子领域，相关的技术有随机搜索，强化学习，基于微分的方法，如DARTS 和 FBNet。</p>
-<p>DARTS 和 FBNet是目前做NAS的the state of arts方法</p>
-<p>下面简单介绍FBNet的思路</p>
-</blockquote>
-<h2 id="fbnet的基本idea">FBNet的基本idea</h2>
-<ol type="1">
-<li><p>定义候选block, eg10个</p></li>
-<li><p>定义神经网络的层数,eg20，神经网络的每一层都是从9个候选block中选一个，搜索空间9^20</p></li>
-<li><p>构建一个很大的神经网络--supernet，每一层由9个候选block并联而成。supernet的待估参数包括9个候选block✖️20层，以及长度为9的权重向量✖️20。</p>
+          <h2 id="目录">目录</h2>
+<ul>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
+</ul>
 <blockquote>
-<p>人工调参，可以看成是，指定supernet中的一条路径，然后灌入数据，来估计路径上20个blcock的参数。使用FBNet就不用人为指定其中某条路径，而是这个大网络supernet从训练数据中，学习出9个block✖️20（层）个参数，以及9✖️20（层）个权重。训练完之后，选择每一层权重最大的block并且连成一条路径，就是机器选定的20层的网络结构。</p>
-</blockquote></li>
-<li><p>模型要落地，还要考虑计算效率。具体的做法，事先算好候选block各自的latency(做一次推断平均耗时多久，block的权重随机给，跑多组数据求平均时延），然后将latency信息加入损失函数中，作为错误率之外的另外的一个惩罚项。</p></li>
-</ol>
-<h2 id="chiechies-reflection">chiechie's reflection</h2>
-<p>联想到之前构建的通用异常检测模型，整体流程大概是这样：定义多个检测器，曲线特征，并用一个随机森林去做集成。希望随机森林可以将不同的曲线路由到适合的检测器上去。</p>
-<p>FBNet的思路跟上面的流程有点像，都是数据驱动去选择适配的组件。不同的地方在于，FBNet最终会减枝，即从9✖️20个可能的路径中，裁剪成一条路径。</p>
-<p>FBNet要解决的任务更简单，给一个小任务找到适配的解决方案；通用异常检测更难，要给n个小任务找解决方案，并且用一套复合的解决方案。</p>
+<p>数据来自CN-Softbei2020比赛--《基于网络拓扑及告警的故障根因定位系统实现及算法研究》</p>
+<p>现在实验一种很激进的做法---仅靠指标做根因分析</p>
+<p>当涉及的指标过多时, 得到的拓扑图非常复杂.</p>
+</blockquote>
+<h2 id="数据解析">数据解析</h2>
+<figure>
+<img src="dataoverview.png" alt="dataoverview" /><figcaption aria-hidden="true">dataoverview</figcaption>
+</figure>
+<p>将每个事件看成一个指标的话，可以得到一个节点为2876的图</p>
+<h2 id="关联分析">关联分析</h2>
+<figure>
+<img src="./orr.png" alt="corr" /><figcaption aria-hidden="true">corr</figcaption>
+</figure>
+<figure>
+<img src="./img.png" alt="节点个数" /><figcaption aria-hidden="true">节点个数</figcaption>
+</figure>
+<p>对应的 因果图巨大无比，如下：</p>
+<figure>
+<img src="./correlation_topology.png" alt="图1-关联拓扑" /><figcaption aria-hidden="true">图1-关联拓扑</figcaption>
+</figure>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=D9m9-CXw_HY">Differentiable Neural Architecture Search-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnsoftbei.com/plus/view.php?aid=479">CN-Softbei2020比赛</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/Insighter/blob/master/aiops_CN-Softbei_2020.ipynb">chiechie的代码-github</a></li>
 </ol>
 
       
@@ -262,7 +295,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/17/reading_notes/how-to-Defi/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -276,7 +309,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/17/reading_notes/how-to-Defi/" class="post-title-link" itemprop="url">《how to Defi》读书笔记</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020/" class="post-title-link" itemprop="url">chapter2.1.3 基于拓扑的根因定位-AIOps挑战赛2020-亚信的方案</a>
         </h2>
 
         <div class="post-meta">
@@ -286,14 +319,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-17 09:20:02" itemprop="dateCreated datePublished" datetime="2021-05-17T09:20:02+08:00">2021-05-17</time>
+              <time title="创建时间：2021-05-21 13:08:27" itemprop="dateCreated datePublished" datetime="2021-05-21T13:08:27+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-26 09:18:16" itemprop="dateModified" datetime="2021-05-26T09:18:16+08:00">2021-05-26</time>
+                <time title="修改时间：2021-06-01 15:45:07" itemprop="dateModified" datetime="2021-06-01T15:45:07+08:00">2021-06-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -301,7 +334,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -316,32 +349,54 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>区块链技术的第一代应用是以比特币为全球支付货币，第二代应用是以太坊完成智能合约，第三代应用是defi和nft完成金融体系重构</p>
-<p>how to defi 讲的就是区块链技术的第三代应用之一--去中心化金融(DeFI)</p>
-</blockquote>
-<h2 id="why-defi">why defi</h2>
-<ol type="1">
-<li>传统金融体系容易遭受与人相关的风险，比如腐败。defi试图通过创建一个更好的金融环境，来弥补现有金融系统的漏洞，主要对银行系统的三个关键部分进行了优化：支付&amp;清算系统；可获取性；中心化&amp;透明度。</li>
-<li>DeFi的最大优势在于能够消除中 介机构并在零审查的环境下运行。</li>
-</ol>
-<h2 id="what">what</h2>
-<ol type="1">
-<li><p>DeFi生态中有哪些应用？</p>
+          <h2 id="目录">目录</h2>
 <ul>
-<li>稳定币：比如泰达币（Tether，USDT) ，稳定币作为稳定的价值存储手段使得DeFi应用对大众来说更加可用。</li>
-<li>借贷服务：传统金融体系要求用户有银行账户，良好的信用评分，以及足够的抵押品；去中心化借贷允许任何人抵押其数字资产，然后利用抵押资产获得贷款。</li>
-<li>交易所：中心化交易所egconbase，huobi，binance，存在被黑客攻击的危险；去中心化交易所更安全，不依赖交易所的偿付能力。</li>
-<li>衍生品：衍生品合约主要在中心化平台上进行交易。目前，许多DeFi平 台正开始构建去中心化衍生品市场。</li>
-<li>基金管理：基金管理主要有主动型和被动型两种，主动型基金管理会有一个管理团队负责投资 决策。被动型基金管理没有管理团队，而被设计为尽可能接近 某一特定基准的表现。</li>
-<li>彩票：结合DeFi的彩票可将资金池的托管转移到以太坊智能合约上。</li>
-<li>支付：通过将支付重置为流模式而非我们熟悉的交易来改变我们处理支付的方式。（比如云服务商，按照使用的流量收费）</li>
-<li>保险：智能合约的漏洞容易被黑客攻击，从而影响智能合约中锁定的代币。当用户在Defi上处理大量资金的时候，购买保险是必要的。</li>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
 </ul></li>
-</ol>
-<h2 id="参考">参考</h2>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
+</ul>
+<p>总结下: 先从业务指标异常触发定位，然后从调用链中异常的服务，然后服务对应的机器，定位根因指标。</p>
+<h2 id="亚信的方案">亚信的方案</h2>
+<blockquote>
+<p>对于调用链根因节点定位的模型实现，我们考虑过两种方案，一种是有监督的方法，即把一定时间切片内的调用链数据作特征提取，转化为一个多分类问题或者二分类问题，但这种方法泛化能力较差，严格依赖于当前系统的数据特征，不利于实际生产环境的迁移，另一方面，我们考虑到复赛数据特征可能与预赛数据不尽相同，因此我们选择了泛化性能更强的方法，也就是无监督的方法。 我们对每条调用链沿着调用关系进行动态搜索，使之构成一个节点间的依赖图，并在这个依赖图上定义了两种不同类型的故障模式，</p>
+<p>第一种定义为非疑似节点，指子节点延时除以父节点延时大于等于51%的节点,主要用于衡量子节点占用的父节点的资源。 第二种定义为疑似异常节点，指父节点耗时-子节点耗时，除以父节点耗时大于等于51%的子节点，衡量的是父节点自己占用的资源。</p>
+<p>第二种异常模式可能不太容易理解，其实它可以来源于生活中一个十分直观的观察，例如我们从商店订购了一份外卖，2个小时后才收到，这时候我们应该认为是商店备餐慢，还是骑手送货慢呢，想要知道答案，只需要看一看同一时间，点了相同外卖的其他人，是否也出现了收货慢的情况。</p>
+</blockquote>
+<figure>
+<img src="./framework.png" alt="根因定位框架" /><figcaption aria-hidden="true">根因定位框架</figcaption>
+</figure>
+<figure>
+<img src="./rca.png" alt="调用链路的异常检测和根因定位" /><figcaption aria-hidden="true">调用链路的异常检测和根因定位</figcaption>
+</figure>
+<h2 id="参考资料">参考资料</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://news.huoxing24.com/20200817195548945458.html">how to difi中文版</a></li>
+<li><a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=15&amp;flag=1">AIOps挑战赛2020-官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hYiXUMveSprkIiOy8mCmCg">2020AIOps挑战赛亚军亚信科技团队方案分享</a></li>
 </ol>
 
       

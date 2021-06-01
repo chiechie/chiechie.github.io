@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="目录  chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 chapter1.3 故障预测 chapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类 chapter1.5.2 美团日志聚类   chapter2 故障定位  chapter2.1 微服务系统的故障定位  chapter2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chapter1.5.2 美团的日志聚类">
+<meta property="og:url" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
+<meta property="og:description" content="目录  chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 chapter1.3 故障预测 chapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类 chapter1.5.2 美团日志聚类   chapter2 故障定位  chapter2.1 微服务系统的故障定位  chapter2">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/kjhjk.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_1.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_1.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_2.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_9.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_10.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_11.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_12.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_3.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_4.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_5.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_6.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_7.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img_8.png">
+<meta property="article:published_time" content="2021-05-21T03:01:18.000Z">
+<meta property="article:modified_time" content="2021-06-01T07:45:07.168Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="AIOps">
+<meta property="article:tag" content="日志分析">
+<meta property="article:tag" content="论文笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/img.png">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>chapter1.5.2 美团的日志聚类 | Chiechie's Mini World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Mini World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          chapter1.5.2 美团的日志聚类<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AI/AIOps/AIOps-1_5_2-log-analysis_meituan.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-21 11:01:18" itemprop="dateCreated datePublished" datetime="2021-05-21T11:01:18+08:00">2021-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-01 15:45:07" itemprop="dateModified" datetime="2021-06-01T15:45:07+08:00">2021-06-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="目录">目录</h2>
+<ul>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
+</ul>
+<blockquote>
+<p>本文是美团的提出的告警聚类的一种算法，其实也只是基于已有的paper做了一下应用。</p>
+<p>跟logmine的区别是，他可以定义多层的泛化结构，对于有多层关系的属性有很好的效果。</p>
+</blockquote>
+<h2 id="设计"><strong>设计</strong></h2>
+<p>如[图2]所示，异常报警根因分析的设计大致分为四个部分：搜集告警数据、提取告警的关键特征、聚类、展示告警摘要。</p>
+<figure>
+<img src="img.png" alt="图2" /><figcaption aria-hidden="true">图2</figcaption>
+</figure>
+<h3 id="算法选择"><strong>算法选择</strong></h3>
+<p>聚类算法采用论文《Clustering intrusion detection alarms to support root cause analysis》中的算法。</p>
+<figure>
+<img src="./kjhjk.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>我们可以将这几条报警抽象为：“全部服务器 网络调用 故障”，该泛化报警包含的范围较广；也可以抽象为：“server_room_a服务器 网络调用 产品信息获取失败”和“server_room_b服务器 RPC 获取产品类型信息失败”，此时包含的范围较小。当然也可以用其他层次的抽象来表达这个报警集群。</p>
+<p>可以观察到，抽象层次越高，细节越少，但是它能包含的范围就越大；反之，抽象层次越低，则可能无用信息越多，包含的范围就越小。</p>
+<p>这种抽象的层次关系可以用DAG表达，如图3所示：</p>
+<figure>
+<img src="img_1.png" alt="图3 泛化层次结构示例" /><figcaption aria-hidden="true">图3 泛化层次结构示例</figcaption>
+</figure>
+<h3 id="基本概念">基本概念</h3>
+<ul>
+<li><p>属性（Attribute）：构成报警日志的某一类信息，如机器、环境、时间等，文中用<span class="math inline">\(A_i\)</span>表示。</p></li>
+<li><p>值域（Domain）：属性<span class="math inline">\(A_i\)</span>的取值范围，文中用<span class="math inline">\(Dom(A_i)\)</span>表示。</p></li>
+<li><p>泛化层次结构（Generalization Hierarchy）：对于每个Ai都有一个对应的泛化层次结构，文中用<span class="math inline">\(G_i\)</span>表示。 <img src="img_1.png" alt="图3 泛化层次结构示例" /></p></li>
+<li><p>属性的不相似度:令<span class="math inline">\(x_1\)</span>、<span class="math inline">\(x_2\)</span>为某个属性<span class="math inline">\(A_i\)</span>的两个不同的值，那么<span class="math inline">\(x_1\)</span>、<span class="math inline">\(x_2\)</span>的不相似度为：在泛化层次结构<span class="math inline">\(Gi\)</span>中，通过一个公共点父节点p连接x1、x2的最短路径长度。即 d(x1, x2) := min{d(x1, p) + d(x2, p) | p ∈ Gi, x1 ⊴ p, x2 ⊴ p}。例如在图3的泛化层次结构中，d("Thrift", "Pigeon") = d("RPC", "Thrift") + d("RPC", "Pigeon") = 1 + 1 = 2。</p></li>
+<li><p>告警的不相似度（Dissimilarity）: 对于两个报警<span class="math inline">\(a_1, a_2\)</span>, 距离为： <span class="math display">\[d\left(\mathbf{a}_{1}, \mathbf{a}_{2}\right):=\sum\limits_{i=1}^{n} d\left(\mathbf{a}_{1}\left[A_{i}\right], \mathbf{a}_{2}\left[A_{i}\right]\right)\]</span></p>
+<p>例如： a1 = ("server_room_b-biz_tag-offline02", "Thrift"),a2 = ("server_room_a-biz_tag-online01", "Pigeon"), 那么d(a1, a2) = d("server_room_b-biz_tag-offline02", "server_room_a-biz_tag-online01") + d(("Thrift", "Pigeon") = 2 + 2 + 1 + 1 = 6。</p></li>
+<li><p>告警集合：C</p></li>
+<li><p>告警摘要：g，<span class="math inline">\(\forall a \in C, a \leq g\)</span>, 就是pattern</p></li>
+</ul>
+<p>以报警集合{"dx-trip-package-api02 Thrift get deal list error.", "dx-trip-package-api01 Thrift get deal list error."}为例，“dx服务器 thrift调用 获取产品信息失败”是一个泛化表示，“服务器 网络调用 获取产品信息失败”也是一个泛化表示。对于某个聚类来说，我们希望获得既能涵盖它的集合又有最大信息量的摘要（pattern）。为了解决这个问题，定义以下两个指标：</p>
+<p><span class="math display">\[\begin{aligned} \bar{d}(\mathbf{g}, \mathcal{C}) &amp;:=1 /|\mathcal{C}| \times \sum_{\mathbf{a} \in \mathcal{C}} d(\mathbf{g}, \mathbf{a}) \\ H(\mathcal{C}) &amp;:=\min \left\{\bar{d}(\mathbf{g}, \mathcal{C}) | \mathbf{g} \in \mathbf{X}_{i=1}^{n} \operatorname{Dom}\left(A_{i}\right), \forall \mathbf{a} \in \mathcal{C}: \mathbf{a} \leq \mathbf{g}\right\} \end{aligned}\]</span></p>
+<p>公式2</p>
+<p>H(C)值最小时对应的g，就是我们要找的最适合的泛化表示，我们称g为C的“覆盖”（Cover）。</p>
+<p>基于以上的概念，将报警日志聚类问题定义为：</p>
+<blockquote>
+<p>定义L为一个日志集合，$G_i(i = 1, 2, 3……n) $为属性Ai的泛化层次结构，目标是找到一个L的子集C，满足 |C| &gt;= min_size，且H(C)值最小。</p>
+</blockquote>
+<p>min_size是用来控制抽象程度的，min_size越大抽象的越厉害. 这是个NP问题，论文提出了如下的启发式算法</p>
+<h3 id="算法描述"><strong>算法描述</strong></h3>
+<ol type="1">
+<li>假设所有的泛化层次结构<span class="math inline">\(G_i\)</span>都是树，这样每个cluster都有一个唯一的、最顶层的泛化结果。</li>
+<li>将L定义为一个原始的告警日志集合，算法选择一个属性<span class="math inline">\(A_i\)</span>，将L中所有报警的<span class="math inline">\(A_i\)</span>值替换为<span class="math inline">\(G_i\)</span>中<span class="math inline">\(A_i\)</span>的父值，通过这一操作不断对报警进行泛化。</li>
+<li>持续步骤2的操作，直到找到一个覆盖报警数量大于min_size的pattern为止。</li>
+<li>输出步骤3中找到的报警。</li>
+</ol>
+<p>算法伪代码如下所示：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">输入：报警日志集合L，min<span class="emphasis">_size，每个属性的泛化层次结构G1,......,Gn</span></span><br><span class="line"><span class="emphasis">输出：所有符合条件的泛化报警</span></span><br><span class="line"><span class="emphasis">T := L;              // 将报警日志集合保存至表T</span></span><br><span class="line"><span class="emphasis">for all alarms a in T do</span></span><br><span class="line"><span class="emphasis">    a[count] := 1;   // &quot;count&quot;属性用于记录a当前覆盖的报警数量</span></span><br><span class="line"><span class="emphasis">while ∀a ∈ T : a[count] &lt; min_</span>size do &#123;</span><br><span class="line"><span class="code">    使用启发算法选择一个属性Ai;</span></span><br><span class="line"><span class="code">    for all alarms a in T do</span></span><br><span class="line"><span class="code">        a[Ai] := parent of a[Ai] in Gi;</span></span><br><span class="line"><span class="code">        while identical alarms a, a&#x27; exist do</span></span><br><span class="line"><span class="code">            Set a[count] := a[count] + a&#x27;[count];</span></span><br><span class="line"><span class="code">            delete a&#x27; from T;</span></span><br><span class="line"><span class="code">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>其中第7行的启发算法为：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">首先计算Ai对应的Fi</span><br><span class="line">fi(v) := SELECT sum(count) FROM T WHERE Ai = v   // 统计在Ai属性上值为v的报警的数量</span><br><span class="line">Fi := max&#123;fi(v) | v ∈ Dom(Ai)&#125;</span><br><span class="line">选择Fi值最小的属性Ai</span><br></pre></td></tr></table></figure>
+<h2 id="实现">实现</h2>
+<h3 id="提取报警特征">提取报警特征</h3>
+<p>根据线上问题排查的经验，运维人员通常关注的指标包括时间、机器（机房、环境）、异常来源、报警日志文本提示、故障所在位置（代码行数、接口、类）、Case相关的特殊ID（订单号、产品编号、用户ID等等）等。</p>
+<p>但是，Case相关的特殊ID不符合我们希望获得一个抽象描述的要求，因此不关注。</p>
+<p>综上，最后选择的特征包括：机房、环境、异常来源、报警日志文本关键内容、故障所在位置（接口、类）共5个。</p>
+<h3 id="算法实现">算法实现</h3>
+<ol type="1">
+<li>提取关键特征：数据来源是日志中心已经格式化过的告警日志信息，包含：报警日志产生的时间、服务标记、在代码中的位置、日志内容等。</li>
+</ol>
+<ul>
+<li>故障所在位置：优先查找是否有异常堆栈，如存在则查找第一个本地代码的位置；如果不存在，则取日志打印位置。</li>
+<li>异常来源：获得故障所在位置后，优先使用此信息确定异常报警的来源（需要预先定义词典支持）；如不能获取，则在日志内容中根据关键字匹配（需要预先定义词典支持）。</li>
+<li>报警日志文本关键内容：优先查找是否有异常堆栈，如存在，则查找最后一个异常（通常为真正的故障原因）；如不能获取，则在日志中查找是否存在“code=……,message=……” 这样形式的错误提示；如不能获取，则取日志内容的第一行内容（以换行符为界），并去除其中可能存在的Case相关的提示信息</li>
+<li>提取“机房和环境”这两个指标比较简单，在此不做赘述。</li>
+</ul>
+<ol start="2" type="1">
+<li><p>聚类算法：以图4来表示。</p>
+<figure>
+<img src="img_2.png" alt="图4 报警日志聚类流程图" /><figcaption aria-hidden="true">图4 报警日志聚类流程图</figcaption>
+</figure></li>
+</ol>
+<h3 id="泛化层次结构">泛化层次结构</h3>
+<p>泛化层次结构，用于记录属性的泛化关系，是泛化时向上抽象的依据，需要预先定义。</p>
+<p>下面是4个预先定义的泛化层次结构</p>
+<figure>
+<img src="img_9.png" alt="图5 机房泛化层次结构" /><figcaption aria-hidden="true">图5 机房泛化层次结构</figcaption>
+</figure>
+<figure>
+<img src="img_10.png" alt="图6 环境泛化层次结构g" /><figcaption aria-hidden="true">图6 环境泛化层次结构g</figcaption>
+</figure>
+<figure>
+<img src="img_11.png" alt="图7 错误来源泛化层次结构" /><figcaption aria-hidden="true">图7 错误来源泛化层次结构</figcaption>
+</figure>
+<figure>
+<img src="img_12.png" alt="图8 日志文本摘要泛化层次结构" /><figcaption aria-hidden="true">图8 日志文本摘要泛化层次结构</figcaption>
+</figure>
+<p>“故障所在位置”此属性无需泛化层次结构，每次泛化时直接按照包路径向上层截断，直到系统包名。</p>
+<h2 id="实验">实验</h2>
+<p>以下三个实验均使用C端API系统。</p>
+<h3 id="单依赖故障">1. 单依赖故障</h3>
+<ul>
+<li>环境：线上</li>
+<li>故障原因：产品中心线上单机故障</li>
+<li>报警日志数量：939条</li>
+</ul>
+<p>部分原始报警日志如图9所示，初次观察时，很难理出头绪。</p>
+<figure>
+<img src="img_3.png" alt="图9 单依赖故障报警日志节选" /><figcaption aria-hidden="true">图9 单依赖故障报警日志节选</figcaption>
+</figure>
+<p>经过聚类后的摘要如表1所示：</p>
+<figure>
+<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
+</figure>
+<p>可以看到前三条摘要的Count远超其他摘要，并且它们指明了故障主要发生在产品中心的接口。</p>
+<h3 id="无相关的多依赖同时故障">2. 无相关的多依赖同时故障</h3>
+<p>利用故障注入工具，在Staging环境模拟运营置顶服务和A/B测试服务同时产生故障的场景。</p>
+<ul>
+<li>环境：Staging,使用线上录制流量和压测平台模拟线上正常流量环境</li>
+<li>模拟故障原因：置顶与A/B测试接口大量超时</li>
+<li>报警日志数量：527条</li>
+</ul>
+<p>部分原始报警日志如图10所示：</p>
+<figure>
+<img src="img_5.png" alt="图10 无相关的多依赖同时故障报警日志节选" /><figcaption aria-hidden="true">图10 无相关的多依赖同时故障报警日志节选</figcaption>
+</figure>
+<p>经过聚类后的报警摘要如表2所示：</p>
+<figure>
+<img src="img_6.png" alt="表2" /><figcaption aria-hidden="true">表2</figcaption>
+</figure>
+<p>从上表可以看到，前两条摘要符合本次试验的预期，定位到了故障发生的原因。</p>
+<p>说明在多故障的情况下，算法也有较好的效果。</p>
+<h3 id="中间件与相关依赖同时故障">3. 中间件与相关依赖同时故障</h3>
+<p>利用故障注入工具，在Staging环境模拟产品中心服务和缓存服务同时产生超时故障的场景。</p>
+<ul>
+<li>环境：Staging，使用线上录制流量和压测平台模拟线上正常流量环境</li>
+<li>模拟故障原因：产品中心所有接口超时，所有缓存服务超时</li>
+<li>报警日志数量：2165</li>
+</ul>
+<p>部分原始告警日志如图11所示：</p>
+<figure>
+<img src="img_7.png" alt="图11 中间件与相关依赖同时故障报警日志节选" /><figcaption aria-hidden="true">图11 中间件与相关依赖同时故障报警日志节选</figcaption>
+</figure>
+<p>经过聚类后的报警摘要如表3所示：</p>
+<figure>
+<img src="img_8.png" alt="img_8.png" /><figcaption aria-hidden="true">img_8.png</figcaption>
+</figure>
+<p>从上表可以看到，缓存（Squirrel和Cellar双缓存）超时最多，产品中心的超时相对较少，这是因为我们针对产品中心的部分接口做了兜底处理，当超时发生时后先查缓存，如果缓存查不到会穿透调用一个离线信息缓存系统，因此产品中心超时总体较少。</p>
+<h3 id="总结">总结</h3>
+<ul>
+<li>优点：综合上述三个实验得出结果，算法对于报警日志的泛化是具有一定效果。</li>
+<li>不足：有些摘要过于笼统；利用摘要进行进一步定位，也需要领域知识。</li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cluster_analysis">Cluster_analysis--wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://tech.meituan.com/2019/02/28/root-clause-analysis.html">meituan-blog</a></li>
+<li><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.136.1949&amp;rep=rep1&amp;type=pdf">Clustering intrusion detection alarms to support root cause analysis--paper</a>)</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NLP/" rel="tag"># NLP</a>
+              <a href="/tags/AIOps/" rel="tag"># AIOps</a>
+              <a href="/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/" rel="tag"># 日志分析</a>
+              <a href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" rel="tag"># 论文笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/21/investment/xindong-analysis/" rel="prev" title="对心动的股票分析">
+      <i class="fa fa-chevron-left"></i> 对心动的股票分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/" rel="next" title="chapter1.5.1 使用logmine加强版做日志聚类">
+      chapter1.5.1 使用logmine加强版做日志聚类 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E9%80%89%E6%8B%A9"><span class="nav-number">2.1.</span> <span class="nav-text">算法选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.3.</span> <span class="nav-text">算法描述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E6%8A%A5%E8%AD%A6%E7%89%B9%E5%BE%81"><span class="nav-number">3.1.</span> <span class="nav-text">提取报警特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%9B%E5%8C%96%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-number">3.3.</span> <span class="nav-text">泛化层次结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">4.</span> <span class="nav-text">实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E4%BE%9D%E8%B5%96%E6%95%85%E9%9A%9C"><span class="nav-number">4.1.</span> <span class="nav-text">1. 单依赖故障</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%9B%B8%E5%85%B3%E7%9A%84%E5%A4%9A%E4%BE%9D%E8%B5%96%E5%90%8C%E6%97%B6%E6%95%85%E9%9A%9C"><span class="nav-number">4.2.</span> <span class="nav-text">2. 无相关的多依赖同时故障</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%B8%8E%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96%E5%90%8C%E6%97%B6%E6%95%85%E9%9A%9C"><span class="nav-number">4.3.</span> <span class="nav-text">3. 中间件与相关依赖同时故障</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">154</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">175</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

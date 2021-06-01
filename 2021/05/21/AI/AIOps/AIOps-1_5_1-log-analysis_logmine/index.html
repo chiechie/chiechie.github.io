@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="目录  chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 chapter1.3 故障预测 chapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类 chapter1.5.2 美团日志聚类   chapter2 故障定位  chapter2.1 微服务系统的故障定位  chapter2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chapter1.5.1 使用logmine加强版做日志聚类">
+<meta property="og:url" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
+<meta property="og:description" content="目录  chapter0 概览 chapter1 故障发现  chapter1.1 单指标异常检测 chapter1.3 故障预测 chapter1.4 指标异常关联 chapter1.5 日志聚类  chapter1.5.1 使用logmine加强版做日志聚类 chapter1.5.2 美团日志聚类   chapter2 故障定位  chapter2.1 微服务系统的故障定位  chapter2">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/image-20210226000021042.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/cost_function.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/logmine_image-20210225214320632.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/logmin-result.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/c2.png">
+<meta property="article:published_time" content="2021-05-21T03:01:18.000Z">
+<meta property="article:modified_time" content="2021-06-01T07:57:27.681Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="AIOps">
+<meta property="article:tag" content="日志分析">
+<meta property="article:tag" content="论文笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/image-20210226000021042.png">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>chapter1.5.1 使用logmine加强版做日志聚类 | Chiechie's Mini World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Mini World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          chapter1.5.1 使用logmine加强版做日志聚类<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AI/AIOps/AIOps-1_5_1-log-analysis_logmine.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-21 11:01:18" itemprop="dateCreated datePublished" datetime="2021-05-21T11:01:18+08:00">2021-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-01 15:57:27" itemprop="dateModified" datetime="2021-06-01T15:57:27+08:00">2021-06-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="目录">目录</h1>
+<ul>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
+</ul>
+<blockquote>
+<p>日志聚类本质上是在简洁性和信息丰富性之间trade-off。</p>
+<p>原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。</p>
+</blockquote>
+<h1 id="问题描述">问题描述</h1>
+<p>将不同来源的日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。</p>
+<h1 id="解决方案">解决方案</h1>
+<p>logmine使用的是基于聚类的方法，做日志摘要生成。</p>
+<p>主要思路是，一边构建cluster，一边提取pattern</p>
+<h2 id="找cluster">找cluster</h2>
+<ul>
+<li><p>先定义一个参数MaxDist， 表示cluster的半径</p></li>
+<li><p>对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就以他为中心创建一个新的cluster。</p>
+<blockquote>
+<p>为了提升效率，判断是否属于某个cluster时使用early abandon的策略，如果已对比的字段累计距离超过了半径，就可以提前停止了，因为距离只会越来越大。</p>
+</blockquote></li>
+</ul>
+<h2 id="对于每个cluster提取pattern">对于每个cluster，提取pattern</h2>
+<figure>
+<img src="./image-20210226000021042.png" alt="图2-日志分析流程" /><figcaption aria-hidden="true">图2-日志分析流程</figcaption>
+</figure>
+<ul>
+<li>step1. 字段类型检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date。这个模式和正则表达式可以让用户定义。</li>
+<li>step2. 分词，每条日志都得到一个word vector.</li>
+<li>step3. 一边聚类 一边提取pattern</li>
+</ul>
+<p><img src="./img.png" /></p>
+<h2 id="怎么设置level">怎么设置level？</h2>
+<figure>
+<img src="./cost_function.png" alt="图3-评价当前pattern的信息含量" /><figcaption aria-hidden="true">图3-评价当前pattern的信息含量</figcaption>
+</figure>
+<p>怎么设置level？看每个level的信息损失程度，这里用cost function表示损耗的信息，值越大，表示丢失的信息越多</p>
+<p><span class="math display">\[\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times\left(a_{1} W C_{i}+a_{2} V a r_{i}+a_{3} F V_{i}\right)\]</span></p>
+<ul>
+<li><span class="math inline">\({Size}_i\)</span>: 第i个pattern包含的日志个数，</li>
+<li><span class="math inline">\({WC}_i\)</span>: 第i个pattern，**的个数，对应权重a1，默认取1</li>
+<li><span class="math inline">\({Var}_i\)</span>:第i个pattern，变量的个数，对应权重a2，默认取0</li>
+<li><span class="math inline">\({FV}_i\)</span>: 第i个pattern，固定值的个数，对应权重a3，默认取0</li>
+</ul>
+<p>提取层次化模式，参考下图</p>
+<figure>
+<img src="./logmine_image-20210225214320632.png" alt="图1-层次化地提取日志模式" /><figcaption aria-hidden="true">图1-层次化地提取日志模式</figcaption>
+</figure>
+<figure>
+<img src="./logmin-result.png" alt="图2-logmine-result" /><figcaption aria-hidden="true">图2-logmine-result</figcaption>
+</figure>
+<h2 id="衡量两条日志的相似性">衡量两条日志的相似性</h2>
+<p>衡量两条日志相似性的函数：</p>
+<p><span class="math display">\[\operatorname{Dist}(P, Q)=1-\sum\limits_{i=1}^{\operatorname{Min}(\operatorname{len}(P), \operatorname{len}(Q))} \frac{\operatorname{Score}\left(P_{i}, Q_{i}\right)}{\operatorname{Max}(\operatorname{len}(P), \operatorname{len}(Q))}\]</span></p>
+<p><span class="math display">\[\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
+<ul>
+<li><span class="math inline">\(P_i\)</span>：日志P的第i个字段，len(P): 日志P的字段的个数。</li>
+<li><span class="math inline">\(k_1\)</span>: 如果两个字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1。</li>
+</ul>
+<p>###衡量两个pattern的相似性</p>
+<p>pattern包含三类字段：fixed value， Variable 和 Wildcard</p>
+<ul>
+<li>固定值（fixed value field ）：如www, httpd, INFO，固化的。</li>
+<li>可变字段（A variable field）：需要用户定义name和regex，如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的，</li>
+<li>Wildcards ：就是**。</li>
+</ul>
+<p>衡量两个pattern相似性的函数（不同类型的word给的权重不一样）：</p>
+<p><span class="math display">\[\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are fixed value } \\ k_{2} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are variable } \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
+<ul>
+<li><span class="math inline">\(k_1\)</span>: 如果两个fixed value字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1</li>
+<li><span class="math inline">\(k_2\)</span>: 如果两个变量字段一样，得<span class="math inline">\(k_2\)</span>分，默认值为2</li>
+</ul>
+<h2 id="怎么评估效果">怎么评估效果？</h2>
+<p>整个问题的评估可以拆分为两个小评估:</p>
+<ul>
+<li>评估聚类的准确率？</li>
+<li>评估模式的准确率？</li>
+</ul>
+<p>因为没有标签，所以聚类和评估都是跟baseline比</p>
+<blockquote>
+<p>都有了baseline，还要logmine的必要性在于：可能logmine有性能优势？</p>
+</blockquote>
+<ul>
+<li><p>聚类效果跟baseline--OPTICS对比: 看最大公共子集的比例（原文中的agreement score）。</p></li>
+<li><p>模式效果跟baseline--UPGMA比：UPGMA的结果作为ground truth，比较recall和precision.</p>
+<blockquote>
+<p>UPGMA算法的输入一批原始日志，输出是一个patten</p>
+</blockquote></li>
+</ul>
+<p><span class="math inline">\(\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}\)</span></p>
+<h1 id="chiechies对logmine的总结">chiechie's对logmine的总结</h1>
+<p>论文看完了，代码也跑了一遍，发现有几个问题：</p>
+<ol type="1">
+<li><p>所谓的不需要人工干预，没有做到。很重要的一个功能就是从原始文本中提取variable类型的字段（field），需要人指定variable的name以及正则匹配规则。否则代码是不会主动帮你探测的。 <img src="./c2.png" /></p></li>
+<li><p>不同的cluster的pattern可能存在如下的父子关系 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pattern36 : datetime dms<span class="emphasis">_frontend_</span>mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern50:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern53:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp 1c7c49d5 11024333 from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern64:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>聚类时，比的是原始日志log_signature和类中心log_signature的距离，<br />
+这有一个问题，有一些日志虽然跟该cluster的中心相距较远，但是提取出的pattern可能又很接近.</p>
+</blockquote></li>
+<li><p>2的解决方案：</p>
+<ol type="1">
+<li>对于每个cluster提取pattern时，只保留最抽象的一层</li>
+<li>所有的cluster构建完之后，将存在父子pattern的cluster手动合并。</li>
+</ol></li>
+</ol>
+<h1 id="参考资料">参考资料</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf">logmine-paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/trungdq88/logmine/tree/master/src">logmine-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">数据-apache_2k.log</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">logmine加强版-chiechie's github</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NLP/" rel="tag"># NLP</a>
+              <a href="/tags/AIOps/" rel="tag"># AIOps</a>
+              <a href="/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/" rel="tag"># 日志分析</a>
+              <a href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" rel="tag"># 论文笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/" rel="prev" title="chapter1.5.2 美团的日志聚类">
+      <i class="fa fa-chevron-left"></i> chapter1.5.2 美团的日志聚类
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/21/AI/AIOps/AIOps-1_2-fault-prediction/" rel="next" title="chapter1.2 故障预测">
+      chapter1.2 故障预测 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%BEcluster"><span class="nav-number">3.1.</span> <span class="nav-text">找cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E6%AF%8F%E4%B8%AAcluster%E6%8F%90%E5%8F%96pattern"><span class="nav-number">3.2.</span> <span class="nav-text">对于每个cluster，提取pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AElevel"><span class="nav-number">3.3.</span> <span class="nav-text">怎么设置level？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A1%E9%87%8F%E4%B8%A4%E6%9D%A1%E6%97%A5%E5%BF%97%E7%9A%84%E7%9B%B8%E4%BC%BC%E6%80%A7"><span class="nav-number">3.4.</span> <span class="nav-text">衡量两条日志的相似性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%AF%84%E4%BC%B0%E6%95%88%E6%9E%9C"><span class="nav-number">3.5.</span> <span class="nav-text">怎么评估效果？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chiechies%E5%AF%B9logmine%E7%9A%84%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">chiechie&#39;s对logmine的总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">154</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">175</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

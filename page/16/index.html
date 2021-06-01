@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/15/AI/machine_learning/tree_model/trees_1/" class="post-title-link" itemprop="url">树模型1_常用树模型介绍</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/" class="post-title-link" itemprop="url">chapter1.5.2 美团的日志聚类</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-15 14:59:29" itemprop="dateCreated datePublished" datetime="2021-05-15T14:59:29+08:00">2021-05-15</time>
+              <time title="创建时间：2021-05-21 11:01:18" itemprop="dateCreated datePublished" datetime="2021-05-21T11:01:18+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-18 08:24:23" itemprop="dateModified" datetime="2021-05-18T08:24:23+08:00">2021-05-18</time>
+                <time title="修改时间：2021-06-01 15:45:07" itemprop="dateModified" datetime="2021-06-01T15:45:07+08:00">2021-06-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -219,17 +219,185 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="树模型">树模型</h2>
-<p>最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</p>
-<p>回一下机器学习的三个要素： 1. 假设函数的空间： 2. 学习策略or目标函数 3. 优化算法</p>
-<p>bootstrap是统计学中一种抽样的方法，为了获得样本方差或者均值，采取多次有放回的抽样，获得统计量。 针对单个决策树方差过大的问题。 bagging trees 利用bootstrap的思想，提取B份独立的样本集，分别估计出预测值<span class="math inline">\(\hat{f}^{1}(x), \hat{f}^{2}(x), \ldots, \hat{f}^{B}(x)\)</span> ，然后将结果取平均，就可以得到一个方差更小的预测模型，通过多次实验获得多个regression tree或者classification tree，对每一个input，会产生多个输出，regression tree的输出是K个树的输出取average。classification tree是采用投票的方法，大多数相同的那一类就是输出的那一类 。 bagging involves creating multiple copies of the original training data set using the bootstrap, fitting a separate decision tree to each copy, and then combining all of the trees in order to create a single predictive model.</p>
-<p>random forest是bagging tree的加强版本，因为他考虑到了tree之间的de correlates，使得组合后结果的variance更小。构造树过程如下：consider 每一个split的时候，会从p个predictors中<strong>随机</strong>的挑<span class="math inline">\(m = \sqrt p\)</span>）个作为split candidate，</p>
-<p>boosting是另外一种提升决策树效果的方法，Boosting works in a similar way,也是杨原始样本复制n份，然后构建n个模型，跟bagging tree不一样的地方在于，trees are grown sequentially: each tree is grown using information from previously grown trees. Boosting does not involve bootstrap sampling; instead each tree is fit on a modified version of the original data set.</p>
-<p><img src="trees_1/img.png" alt="img.png" /> xgboost是一种boosting tree的一种，其他的还是有gbdt，catboost</p>
+          <h2 id="目录">目录</h2>
+<ul>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
+</ul>
+<blockquote>
+<p>本文是美团的提出的告警聚类的一种算法，其实也只是基于已有的paper做了一下应用。</p>
+<p>跟logmine的区别是，他可以定义多层的泛化结构，对于有多层关系的属性有很好的效果。</p>
+</blockquote>
+<h2 id="设计"><strong>设计</strong></h2>
+<p>如[图2]所示，异常报警根因分析的设计大致分为四个部分：搜集告警数据、提取告警的关键特征、聚类、展示告警摘要。</p>
+<figure>
+<img src="img.png" alt="图2" /><figcaption aria-hidden="true">图2</figcaption>
+</figure>
+<h3 id="算法选择"><strong>算法选择</strong></h3>
+<p>聚类算法采用论文《Clustering intrusion detection alarms to support root cause analysis》中的算法。</p>
+<figure>
+<img src="./kjhjk.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>我们可以将这几条报警抽象为：“全部服务器 网络调用 故障”，该泛化报警包含的范围较广；也可以抽象为：“server_room_a服务器 网络调用 产品信息获取失败”和“server_room_b服务器 RPC 获取产品类型信息失败”，此时包含的范围较小。当然也可以用其他层次的抽象来表达这个报警集群。</p>
+<p>可以观察到，抽象层次越高，细节越少，但是它能包含的范围就越大；反之，抽象层次越低，则可能无用信息越多，包含的范围就越小。</p>
+<p>这种抽象的层次关系可以用DAG表达，如图3所示：</p>
+<figure>
+<img src="img_1.png" alt="图3 泛化层次结构示例" /><figcaption aria-hidden="true">图3 泛化层次结构示例</figcaption>
+</figure>
+<h3 id="基本概念">基本概念</h3>
+<ul>
+<li><p>属性（Attribute）：构成报警日志的某一类信息，如机器、环境、时间等，文中用<span class="math inline">\(A_i\)</span>表示。</p></li>
+<li><p>值域（Domain）：属性<span class="math inline">\(A_i\)</span>的取值范围，文中用<span class="math inline">\(Dom(A_i)\)</span>表示。</p></li>
+<li><p>泛化层次结构（Generalization Hierarchy）：对于每个Ai都有一个对应的泛化层次结构，文中用<span class="math inline">\(G_i\)</span>表示。 <img src="img_1.png" alt="图3 泛化层次结构示例" /></p></li>
+<li><p>属性的不相似度:令<span class="math inline">\(x_1\)</span>、<span class="math inline">\(x_2\)</span>为某个属性<span class="math inline">\(A_i\)</span>的两个不同的值，那么<span class="math inline">\(x_1\)</span>、<span class="math inline">\(x_2\)</span>的不相似度为：在泛化层次结构<span class="math inline">\(Gi\)</span>中，通过一个公共点父节点p连接x1、x2的最短路径长度。即 d(x1, x2) := min{d(x1, p) + d(x2, p) | p ∈ Gi, x1 ⊴ p, x2 ⊴ p}。例如在图3的泛化层次结构中，d("Thrift", "Pigeon") = d("RPC", "Thrift") + d("RPC", "Pigeon") = 1 + 1 = 2。</p></li>
+<li><p>告警的不相似度（Dissimilarity）: 对于两个报警<span class="math inline">\(a_1, a_2\)</span>, 距离为： <span class="math display">\[d\left(\mathbf{a}_{1}, \mathbf{a}_{2}\right):=\sum\limits_{i=1}^{n} d\left(\mathbf{a}_{1}\left[A_{i}\right], \mathbf{a}_{2}\left[A_{i}\right]\right)\]</span></p>
+<p>例如： a1 = ("server_room_b-biz_tag-offline02", "Thrift"),a2 = ("server_room_a-biz_tag-online01", "Pigeon"), 那么d(a1, a2) = d("server_room_b-biz_tag-offline02", "server_room_a-biz_tag-online01") + d(("Thrift", "Pigeon") = 2 + 2 + 1 + 1 = 6。</p></li>
+<li><p>告警集合：C</p></li>
+<li><p>告警摘要：g，<span class="math inline">\(\forall a \in C, a \leq g\)</span>, 就是pattern</p></li>
+</ul>
+<p>以报警集合{"dx-trip-package-api02 Thrift get deal list error.", "dx-trip-package-api01 Thrift get deal list error."}为例，“dx服务器 thrift调用 获取产品信息失败”是一个泛化表示，“服务器 网络调用 获取产品信息失败”也是一个泛化表示。对于某个聚类来说，我们希望获得既能涵盖它的集合又有最大信息量的摘要（pattern）。为了解决这个问题，定义以下两个指标：</p>
+<p><span class="math display">\[\begin{aligned} \bar{d}(\mathbf{g}, \mathcal{C}) &amp;:=1 /|\mathcal{C}| \times \sum_{\mathbf{a} \in \mathcal{C}} d(\mathbf{g}, \mathbf{a}) \\ H(\mathcal{C}) &amp;:=\min \left\{\bar{d}(\mathbf{g}, \mathcal{C}) | \mathbf{g} \in \mathbf{X}_{i=1}^{n} \operatorname{Dom}\left(A_{i}\right), \forall \mathbf{a} \in \mathcal{C}: \mathbf{a} \leq \mathbf{g}\right\} \end{aligned}\]</span></p>
+<p>公式2</p>
+<p>H(C)值最小时对应的g，就是我们要找的最适合的泛化表示，我们称g为C的“覆盖”（Cover）。</p>
+<p>基于以上的概念，将报警日志聚类问题定义为：</p>
+<blockquote>
+<p>定义L为一个日志集合，$G_i(i = 1, 2, 3……n) $为属性Ai的泛化层次结构，目标是找到一个L的子集C，满足 |C| &gt;= min_size，且H(C)值最小。</p>
+</blockquote>
+<p>min_size是用来控制抽象程度的，min_size越大抽象的越厉害. 这是个NP问题，论文提出了如下的启发式算法</p>
+<h3 id="算法描述"><strong>算法描述</strong></h3>
+<ol type="1">
+<li>假设所有的泛化层次结构<span class="math inline">\(G_i\)</span>都是树，这样每个cluster都有一个唯一的、最顶层的泛化结果。</li>
+<li>将L定义为一个原始的告警日志集合，算法选择一个属性<span class="math inline">\(A_i\)</span>，将L中所有报警的<span class="math inline">\(A_i\)</span>值替换为<span class="math inline">\(G_i\)</span>中<span class="math inline">\(A_i\)</span>的父值，通过这一操作不断对报警进行泛化。</li>
+<li>持续步骤2的操作，直到找到一个覆盖报警数量大于min_size的pattern为止。</li>
+<li>输出步骤3中找到的报警。</li>
+</ol>
+<p>算法伪代码如下所示：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">输入：报警日志集合L，min<span class="emphasis">_size，每个属性的泛化层次结构G1,......,Gn</span></span><br><span class="line"><span class="emphasis">输出：所有符合条件的泛化报警</span></span><br><span class="line"><span class="emphasis">T := L;              // 将报警日志集合保存至表T</span></span><br><span class="line"><span class="emphasis">for all alarms a in T do</span></span><br><span class="line"><span class="emphasis">    a[count] := 1;   // &quot;count&quot;属性用于记录a当前覆盖的报警数量</span></span><br><span class="line"><span class="emphasis">while ∀a ∈ T : a[count] &lt; min_</span>size do &#123;</span><br><span class="line"><span class="code">    使用启发算法选择一个属性Ai;</span></span><br><span class="line"><span class="code">    for all alarms a in T do</span></span><br><span class="line"><span class="code">        a[Ai] := parent of a[Ai] in Gi;</span></span><br><span class="line"><span class="code">        while identical alarms a, a&#x27; exist do</span></span><br><span class="line"><span class="code">            Set a[count] := a[count] + a&#x27;[count];</span></span><br><span class="line"><span class="code">            delete a&#x27; from T;</span></span><br><span class="line"><span class="code">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>其中第7行的启发算法为：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">首先计算Ai对应的Fi</span><br><span class="line">fi(v) := SELECT sum(count) FROM T WHERE Ai = v   // 统计在Ai属性上值为v的报警的数量</span><br><span class="line">Fi := max&#123;fi(v) | v ∈ Dom(Ai)&#125;</span><br><span class="line">选择Fi值最小的属性Ai</span><br></pre></td></tr></table></figure>
+<h2 id="实现">实现</h2>
+<h3 id="提取报警特征">提取报警特征</h3>
+<p>根据线上问题排查的经验，运维人员通常关注的指标包括时间、机器（机房、环境）、异常来源、报警日志文本提示、故障所在位置（代码行数、接口、类）、Case相关的特殊ID（订单号、产品编号、用户ID等等）等。</p>
+<p>但是，Case相关的特殊ID不符合我们希望获得一个抽象描述的要求，因此不关注。</p>
+<p>综上，最后选择的特征包括：机房、环境、异常来源、报警日志文本关键内容、故障所在位置（接口、类）共5个。</p>
+<h3 id="算法实现">算法实现</h3>
+<ol type="1">
+<li>提取关键特征：数据来源是日志中心已经格式化过的告警日志信息，包含：报警日志产生的时间、服务标记、在代码中的位置、日志内容等。</li>
+</ol>
+<ul>
+<li>故障所在位置：优先查找是否有异常堆栈，如存在则查找第一个本地代码的位置；如果不存在，则取日志打印位置。</li>
+<li>异常来源：获得故障所在位置后，优先使用此信息确定异常报警的来源（需要预先定义词典支持）；如不能获取，则在日志内容中根据关键字匹配（需要预先定义词典支持）。</li>
+<li>报警日志文本关键内容：优先查找是否有异常堆栈，如存在，则查找最后一个异常（通常为真正的故障原因）；如不能获取，则在日志中查找是否存在“code=……,message=……” 这样形式的错误提示；如不能获取，则取日志内容的第一行内容（以换行符为界），并去除其中可能存在的Case相关的提示信息</li>
+<li>提取“机房和环境”这两个指标比较简单，在此不做赘述。</li>
+</ul>
+<ol start="2" type="1">
+<li><p>聚类算法：以图4来表示。</p>
+<figure>
+<img src="img_2.png" alt="图4 报警日志聚类流程图" /><figcaption aria-hidden="true">图4 报警日志聚类流程图</figcaption>
+</figure></li>
+</ol>
+<h3 id="泛化层次结构">泛化层次结构</h3>
+<p>泛化层次结构，用于记录属性的泛化关系，是泛化时向上抽象的依据，需要预先定义。</p>
+<p>下面是4个预先定义的泛化层次结构</p>
+<figure>
+<img src="img_9.png" alt="图5 机房泛化层次结构" /><figcaption aria-hidden="true">图5 机房泛化层次结构</figcaption>
+</figure>
+<figure>
+<img src="img_10.png" alt="图6 环境泛化层次结构g" /><figcaption aria-hidden="true">图6 环境泛化层次结构g</figcaption>
+</figure>
+<figure>
+<img src="img_11.png" alt="图7 错误来源泛化层次结构" /><figcaption aria-hidden="true">图7 错误来源泛化层次结构</figcaption>
+</figure>
+<figure>
+<img src="img_12.png" alt="图8 日志文本摘要泛化层次结构" /><figcaption aria-hidden="true">图8 日志文本摘要泛化层次结构</figcaption>
+</figure>
+<p>“故障所在位置”此属性无需泛化层次结构，每次泛化时直接按照包路径向上层截断，直到系统包名。</p>
+<h2 id="实验">实验</h2>
+<p>以下三个实验均使用C端API系统。</p>
+<h3 id="单依赖故障">1. 单依赖故障</h3>
+<ul>
+<li>环境：线上</li>
+<li>故障原因：产品中心线上单机故障</li>
+<li>报警日志数量：939条</li>
+</ul>
+<p>部分原始报警日志如图9所示，初次观察时，很难理出头绪。</p>
+<figure>
+<img src="img_3.png" alt="图9 单依赖故障报警日志节选" /><figcaption aria-hidden="true">图9 单依赖故障报警日志节选</figcaption>
+</figure>
+<p>经过聚类后的摘要如表1所示：</p>
+<figure>
+<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
+</figure>
+<p>可以看到前三条摘要的Count远超其他摘要，并且它们指明了故障主要发生在产品中心的接口。</p>
+<h3 id="无相关的多依赖同时故障">2. 无相关的多依赖同时故障</h3>
+<p>利用故障注入工具，在Staging环境模拟运营置顶服务和A/B测试服务同时产生故障的场景。</p>
+<ul>
+<li>环境：Staging,使用线上录制流量和压测平台模拟线上正常流量环境</li>
+<li>模拟故障原因：置顶与A/B测试接口大量超时</li>
+<li>报警日志数量：527条</li>
+</ul>
+<p>部分原始报警日志如图10所示：</p>
+<figure>
+<img src="img_5.png" alt="图10 无相关的多依赖同时故障报警日志节选" /><figcaption aria-hidden="true">图10 无相关的多依赖同时故障报警日志节选</figcaption>
+</figure>
+<p>经过聚类后的报警摘要如表2所示：</p>
+<figure>
+<img src="img_6.png" alt="表2" /><figcaption aria-hidden="true">表2</figcaption>
+</figure>
+<p>从上表可以看到，前两条摘要符合本次试验的预期，定位到了故障发生的原因。</p>
+<p>说明在多故障的情况下，算法也有较好的效果。</p>
+<h3 id="中间件与相关依赖同时故障">3. 中间件与相关依赖同时故障</h3>
+<p>利用故障注入工具，在Staging环境模拟产品中心服务和缓存服务同时产生超时故障的场景。</p>
+<ul>
+<li>环境：Staging，使用线上录制流量和压测平台模拟线上正常流量环境</li>
+<li>模拟故障原因：产品中心所有接口超时，所有缓存服务超时</li>
+<li>报警日志数量：2165</li>
+</ul>
+<p>部分原始告警日志如图11所示：</p>
+<figure>
+<img src="img_7.png" alt="图11 中间件与相关依赖同时故障报警日志节选" /><figcaption aria-hidden="true">图11 中间件与相关依赖同时故障报警日志节选</figcaption>
+</figure>
+<p>经过聚类后的报警摘要如表3所示：</p>
+<figure>
+<img src="img_8.png" alt="img_8.png" /><figcaption aria-hidden="true">img_8.png</figcaption>
+</figure>
+<p>从上表可以看到，缓存（Squirrel和Cellar双缓存）超时最多，产品中心的超时相对较少，这是因为我们针对产品中心的部分接口做了兜底处理，当超时发生时后先查缓存，如果缓存查不到会穿透调用一个离线信息缓存系统，因此产品中心超时总体较少。</p>
+<h3 id="总结">总结</h3>
+<ul>
+<li>优点：综合上述三个实验得出结果，算法对于报警日志的泛化是具有一定效果。</li>
+<li>不足：有些摘要过于笼统；利用摘要进行进一步定位，也需要领域知识。</li>
+</ul>
 <h2 id="参考资料">参考资料</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cluster_analysis">Cluster_analysis--wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://tech.meituan.com/2019/02/28/root-clause-analysis.html">meituan-blog</a></li>
+<li><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.136.1949&amp;rep=rep1&amp;type=pdf">Clustering intrusion detection alarms to support root cause analysis--paper</a>)</li>
 </ol>
 
       
@@ -250,7 +418,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_4/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/investment/xindong-analysis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -264,7 +432,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/15/AI/machine_learning/tree_model/trees_4/" class="post-title-link" itemprop="url">树模型4_xgboost介绍</a>
+            <a href="/2021/05/21/investment/xindong-analysis/" class="post-title-link" itemprop="url">对心动的股票分析</a>
         </h2>
 
         <div class="post-meta">
@@ -274,14 +442,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-15 14:59:29" itemprop="dateCreated datePublished" datetime="2021-05-15T14:59:29+08:00">2021-05-15</time>
+              <time title="创建时间：2021-05-21 10:27:35" itemprop="dateCreated datePublished" datetime="2021-05-21T10:27:35+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-18 08:24:23" itemprop="dateModified" datetime="2021-05-18T08:24:23+08:00">2021-05-18</time>
+                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -289,7 +457,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
                 </span>
             </span>
 
@@ -304,60 +472,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="xgboost">xgboost</h2>
-<p>boosting tree的另外一个代表是xgboost,下面重点介绍一下xgboost</p>
-<h3 id="损失函数定义">损失函数定义</h3>
-<p>先看看，xgboost怎么定义ensemble tree的 损失函数：</p>
-<p><span class="math display">\[\begin{array}{l}{\mathcal{L}(\phi)=\sum\limits_{i} l\left(\hat{y}_{i}, y_{i}\right)+\sum\limits_{k} \Omega\left(f_{k}\right)}\end{array}\]</span> <span class="math display">\[ \\{\Omega(f)=\gamma T+\frac{1}{2} \lambda\|w\|^{2}} \]</span></p>
-<ul>
-<li><span class="math inline">\(\hat{y}_{i}=\phi\left(\mathbf{x}_{i}\right)=\sum^{K} f_{k}\left(\mathbf{x}_{i}\right), \quad f_{k} \in \mathcal{F}\)</span></li>
-<li>l是一个可谓的图函数</li>
-<li>k表示第k棵树</li>
-<li>i表示第i个样本</li>
-<li>T is the number of leaves in the tree.</li>
-<li><span class="math inline">\(f_k\)</span>表示第k棵树的预测函数，</li>
-<li>q代表的书的结构，w代表叶子节点的权重</li>
-<li><span class="math inline">\(\Omega(f_k)\)</span>表示第k棵树的复杂度</li>
-</ul>
-<h3 id="reformulate目标函数">reformulate目标函数</h3>
-<p>上面的优化问题的解，近似求一系列优化问题的解，如下</p>
-<p><span class="math inline">\(\mathcal{L}^{(t)}=\sum\limits_{i=1}^{n} l\left(y_{i}, \hat{y}_{i}^{(t-1)}+f_{t}\left(\mathbf{x}_{i}\right)\right)+\Omega\left(f_{t}\right)\)</span></p>
-<ul>
-<li><span class="math inline">\(\mathcal{L}^{(t)}\)</span>表示第t棵树的训练目标，也就是通过依次求解最优的树来逼近最开始的损失函数。</li>
-</ul>
-<h3 id="损失函数-二阶展开">损失函数-二阶展开</h3>
-<p>而为了方便计算，上面的损失函数还可以进一步简化（利用二阶展开）</p>
-<p><span class="math inline">\(\mathcal{L}^{(t)} \simeq\sum\limits_{i=1}^{n}\left[l\left(y_{i}, \hat{y}^{(t-1)}\right)+g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
-<p>这里：</p>
-<p><span class="math inline">\(g_{i}=\partial_{\hat{y}^{(t-1) }}l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span></p>
-<p><span class="math inline">\(h_{i}=\partial_{\hat y^{(t-1)}}^{2} l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span></p>
-<p>进一步，我们remove常数项，得到</p>
-<p><span class="math inline">\(\tilde{\mathcal{L}}^{(t)}=\sum\limits_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
-<h3 id="基于样本集重新定义损失函数">基于样本集重新定义损失函数</h3>
-<p>更进一步，我们将<span class="math inline">\(I_{j}=\left\{i | q\left(\mathbf{x}_{i}\right)=j\right\}\)</span>定义为落入叶子j的样本集, 那么可以更进一步formulate模型为</p>
-<p><span class="math inline">\(\begin{aligned} \tilde{\mathcal{L}}^{(t)} &amp;=\sum_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\gamma T+\frac{1}{2} \lambda \sum_{j=1}^{T} w_{j}^{2} \\ &amp;=\sum_{j=1}^{T}\left[\left(\sum_{i \in I_{j}} g_{i}\right) w_{j}+\frac{1}{2}\left(\sum_{i \in I_{j}} h_{i}+\lambda\right) w_{j}^{2}\right]+\gamma T \end{aligned}\)</span></p>
-<p>对于一个固定的结构q(x),我们可以算出叶子j的最佳权重为</p>
-<p><span class="math inline">\(w_{j}^{*}=-\frac{\sum\limits_{i \in I_{j}} g_{i}}{\sum\limits_{i \in I_{j}} h_{i}+\lambda}\)</span> 以及最优函数值为:</p>
-<p><span class="math inline">\(\tilde{\mathcal{L}}^{(t)}(q)=-\frac{1}{2} \sum_{j=1}^{T} \frac{\left(\sum_{i \in I_{j}} g_{i}\right)^{2}}{\sum_{i \in I_{j}} h_{i}+\lambda}+\gamma T\)</span> （6）</p>
-<p>公式（6）可以用来衡量树结构q的质量，类似决策树中的impurity得分。</p>
-<p>枚举所有的树结构不现实，best practice是使用一个贪婪算法：</p>
-<ul>
-<li><p>从1个叶子结点出发</p></li>
-<li><p>迭代式的添加branch</p>
-<p>令<span class="math inline">\(I=I_{L} \cup I_{R}\)</span>, 可以使用下面的公式（7）去评估切分后带来的损失下降</p>
-<p><span class="math inline">\(\mathcal{L}_{s p l i t}=\frac{1}{2}\left[\frac{\left(\sum_{i \in I_{L}} g_{i}\right)^{2}}{\sum_{i \in I_{L}} h_{i}+\lambda}+\frac{\left(\sum_{i \in I_{R}} g_{i}\right)^{2}}{\sum_{i \in I_{R}} h_{i}+\lambda}-\frac{\left(\sum_{i \in I} g_{i}\right)^{2}}{\sum_{i \in I} h_{i}+\lambda}\right]-\gamma\)</span> (7)</p></li>
-</ul>
-<h3 id="切分点查找算法">切分点查找算法</h3>
-<p>最朴素的算法，遍历所有特征的所有的切分值，找出最佳的。</p>
-<p>目前大部分单机的机器学习库都是采用的这种算法。</p>
-<figure>
-<img src="./image-20200107161207967.png" alt="image-20200107161207967" /><figcaption aria-hidden="true">image-20200107161207967</figcaption>
-</figure>
-<h2 id="最佳实践">最佳实践</h2>
-<p>number of trees:太大会造成过拟合，一般用cross validation去挑最好的参数 shrinkage parameter:迭代步长，通常取0.01或者0.001，较小的lambda会需要很大的B来取得较好的效果。 number of split d:通常d=1效果就比较好了。d表示的interation depth，就是交叉项的深度。</p>
-<h2 id="参考资料">参考资料</h2>
-<ol start="2" type="1">
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
+          <h2 id="key-performance">key performance</h2>
+<ol type="1">
+<li>2020年TapTap中国版的MAU为2570万，同比增长43.7%；海外版MAU为481万，同步增长330.9%，且去年Q4的平均MAU已经达到了1070万；游戏下载次数为4.1亿，同比增长15.8%；而心动的信息服务收入（主要为TapTap广告业务）为5.2亿，同比增长12.2%。</li>
+<li>4月6日，心动收购云服务提供商LeanCloud，后者2020年超50％收入来自游戏客户。在未来，LeanCloud将与TapTap的开发者服务（TDS）团队一起负责公司面向开发者的产品线。</li>
+<li>LeanCloud是AVOS中国团队在2013年9月发布的应用开发一站式后端服务，为开发者提供数据存储、实时消息、消息推送以及统计分析等服务。AVOS则是由YouTube联合创始人陈士骏和Chad Hurley创建，2011年4月，Chad Hurley和陈士骏从雅虎手中收购了书签网站Delicious，并在此基础上成立了AVOS公司。游戏客户在LeanCloud 2020年的收入里已经占到一半以上。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>游戏葡萄</li>
 </ol>
 
       

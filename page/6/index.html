@@ -165,6 +165,232 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/" class="post-title-link" itemprop="url">chapter2.1.2 基于拓扑的根因定位-CauseInfer2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-21 22:50:18" itemprop="dateCreated datePublished" datetime="2021-05-21T22:50:18+08:00">2021-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-01 15:45:07" itemprop="dateModified" datetime="2021-06-01T15:45:07+08:00">2021-06-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="目录">目录</h2>
+<ul>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
+</ul>
+<blockquote>
+<p>本文是《CauseInfer论文笔记》的第二篇，<a href="https://chiechie.github.io/2021/03/02/technology/causeinfer-notes1/">《CauseInfer论文笔记1》</a>，从high-level的角度描述了causeinfer的工作流。这里要开始涉及到方案的具体的实现了，所以内容比较硬核</p>
+<p>不做方案实现的话，可以不用看这篇文章</p>
+</blockquote>
+<h2 id="因果建模">因果建模</h2>
+<h3 id="构建服务依赖图">构建服务依赖图</h3>
+<p>服务依赖图长什么样？一个DAG：</p>
+<ul>
+<li>节点（node）：一个服务。</li>
+<li>边（edge）：代表服务依赖关系。</li>
+</ul>
+<p>这块主要是工程性工作，需要数据采集。</p>
+<ul>
+<li><p>服务依赖图是什么？以服务为节点，服务间的调用关系为边，构造出来的DAG。</p></li>
+<li><p>针对本方案的应用场景，有3个假设前提：</p>
+<ol type="a">
+<li>所有服务都是使用TCP作为传输层的协议，</li>
+<li>本文的方法依赖网络统计工具，和kprobe来探测系统调用（system call）。根据观察，大部分应用都是采用TCP协议来通信，如mysql，tomcat等；几乎所有主流的操作系统-如linux-都已经跟网络统计工具集成了，例如netstat，tcpdump 和 kprobe。</li>
+<li>利用流量延迟，来决定服务依赖图中的依赖的方向，而不是用分析结果来确定图的结构， 这一部分可以大大减少错误风险， 以及减少计算复杂度。</li>
+</ol></li>
+<li><p>本文用tuple来表示一个服务，即 (ip, service name)，chiechie： 为什么作者能抽象出来，我抽象不出来啊？为什么不像有的文章那样，用three-tuple表示(ip, port, proto)，因为考虑到一个服务可能占用多个端口。举一个例子，在一个三层的系统中，一个web server可以通过任意一个端口访问application server的。如果，使用端口作为唯一服务的属性，这个服务依赖图，就会变得非常之大，即使所有请求都是由同一个服务发起的。</p></li>
+</ul>
+<blockquote>
+<p>补充：</p>
+<p>在分布式系统中，IP表示一台唯一的主机，服务名称表示 运行在该主机上的 唯一的服务。</p>
+</blockquote>
+<ul>
+<li><p>服务依赖的定义：如果服务A需要服务B提供特定功能，来满足 客户端的请求。就说A-&gt;B. 箭头表示「依赖」的意思。举个例子，一个web service需要获取一些数据库的内容，就依赖db服务，就可以说web服务-&gt;db服务。本文只考虑client-server类型的应用（还有什么类型的应用?）</p></li>
+<li><p>怎么获取服务依赖图？</p>
+<ul>
+<li>第一步是搭架子：使用服务间的连接信息来构建 服务依赖图 的骨架（skeleton）。通过运行工具-netstat（有点像一个采集器，类似istatus，小米手环），在一个主机中，我们可以拿到关于一个网络连接的 一堆信息，包括协议，来源，目的地，连接状态。提取来源和目的地信息，每一个连接可以表示为这个形式：source_ip:port -&gt; desination_ip:port. 这一组信息叫一个channel。channel类似，服务依赖pair，除了一点：channel不包含服务名称，只包含port。</li>
+<li>第二步是端口映射：将第一步获取到的服务的端口映射为一个服务的名称。本地服务名称可以通过查询端口信息获取（netstats）。但是对于一个remote端口，需要传输一个查询请求给remote的主机，来获取。将端口映射为服务名之后，一个本地主机的服务依赖图的架子就搭好了。</li>
+<li>第三步是调整依赖方向：由于client和server是双向传递的，即，在不同的主机中观察时，我们可能拿到一个反向的服务依赖。举个例子：
+<ul>
+<li>当在192.168.1.117中观察时，可以获取一个连接：(192.168.1.117,httpd) → (192.168.1.115, tomcat)，即httpd调用了tomcat。</li>
+<li>但是在192.168.1.115中观察时，又能得到这个连接：(192.168.1.115,tomcat) → (192.168.1.117, httpd), 即tomcat调用了 httpd。</li>
+</ul></li>
+</ul>
+<p>为了解决这个问题，使用流量滞后关联的方法：</p>
+<p>X是服务A的出流量的，Y是服务B的出流量 衡量X和Y之间的滞后的相关性可以用这个指标，k</p></li>
+</ul>
+<p><span class="math display">\[
+\rho_{X Y}(k)=\frac{\sum_{t=0}^{N-1}\left(Y_{t}-\bar{Y}\right)\left(X_{t-k}-\bar{X}\right)}{\sqrt{\sum_{t=0}^{N-1}\left(X_{t}-\bar{X}\right)^{2} \sum_{t=0}^{N-1}\left(Y_{t}-\bar{Y}\right)^{2}}} k \in Z
+\]</span> k取什么值合适呢？平移后两个序列的相关性最大，如下，即为最优的<span class="math inline">\(k^{*}\)</span> <span class="math display">\[
+k^{*}=\left\{\operatorname{argmax}\left(\left|\rho_{X Y}(k)\right|\right), k \in[-30,30]\right\}
+\]</span></p>
+<p>如果<span class="math inline">\(k^{*}&gt;0\)</span>,则A是B的因（cause），A导致了B, 记为 <span class="math display">\[A \rightarrow B \]</span> 如果<span class="math inline">\(k^{*}&lt;0\)</span>,则B是A的因（cause），B导致了A，记为 <span class="math display">\[B \rightarrow A \]</span></p>
+<h3 id="构建指标因果图">构建指标因果图</h3>
+<p>如何指标因果图？需要用到「因果推断」技术，从数据得到因果关系。这里使用的是<a href="https://chiechie.github.io/2021/03/09/technology/PC-algo/">PC算法</a> &gt; pc算法是一种发现因果关系的算法，在满足一定的假设前提下，使用的基于统计的方法，推导出因果关系。</p>
+<ol type="1">
+<li>构建因果图的架子</li>
+<li>确定因果关系的方向</li>
+</ol>
+<p>基于PC算法，我们提出了两种方法：保守的 和 激进的。 激进的意思是不使用任何先验知识，来构建因果图。 保守的意思是，使用一些先验知识初始化。</p>
+<p>先验知识是什么呢？ 比如哪些变量没有父母--根因指标，哪些变量没有孩子--表象指标。 比如本地服务的网络延迟（TCP_LATENCY）指标就没有孩子，只是表象指标，因为网络延迟不会导致其他指标的变化。背后的原因可能是 工作负载（workload），配置错误，依赖服务的延迟。</p>
+<h4 id="激进派算法">激进派算法</h4>
+<p>如果一个服务（比如db服务）只会被别人调用，那么指标因果图就只会使用该服务的本地性能指标（服务依赖图依赖的数据一起采集了）。</p>
+<p>但是一个服务，会调用别人，如web service，这个因果图的构建，不仅仅需要本地的性能指标，还需要它调用的服务的TCP LATENCY指标。</p>
+<p>训练数据的长度取的是默认值200，然后使用PC算法，来构建因果图，可以得到一个DAG。</p>
+<p>激进派构建出来的因果图中，会有反直觉的因果关系和双向links；可能包含多个独立的子图，由于缺乏evidence，统计错误， 或者 压根儿就没有因果关系。</p>
+<p>举个例子，Figure 6 (a)(下图左边)的因果图是激进派算法构建的： - M5是一个孤立的服务 - M4 → M2 的因果关系是反直觉的 - M1 和 M4的因果关系是双向的。</p>
+<figure>
+<img src="inference.png" alt="图2-激进法构建出来的因果图" /><figcaption aria-hidden="true">图2-激进法构建出来的因果图</figcaption>
+</figure>
+<p>所以激进派构建出来的因果图需要进一步的加工：根据以下限制条件，从DAG中选择最大的子图</p>
+<ol type="a">
+<li>子图裁剪：TCP LATENCY指标是表象指标，他不可能是别的指标的cause了</li>
+<li>表象指标通过图中的每条路径都可以达到。</li>
+<li>预设的根因指标没有父母。</li>
+<li>对于一个双向的连接，随机选择一个方向。（这就是随机游走的意思？）</li>
+</ol>
+<h4 id="保守派算法">保守派算法</h4>
+<p>保守派算法，跟激进派很像。区别在于，使用PC算法之前，保守派会利用先验信息做初始化DAG。 和激进算法比，保守算法可以捕捉更多的因果关系，减少反直觉的因果关系。</p>
+<p>举个例子(下图右边)，M1 → SLO的因果关系，激进算法会丢失，但是保守算法会保留。同时 反直觉的因果关系，M4 → M2也被消除了</p>
+<figure>
+<img src="inference.png" alt="图3-保守派构建出来的因果图-右边" /><figcaption aria-hidden="true">图3-保守派构建出来的因果图-右边</figcaption>
+</figure>
+<h2 id="因果推断">因果推断</h2>
+<p>因果模型构建好了，接下来就需要根据这个因果图去做因果推断了。</p>
+<h3 id="整体思路">整体思路</h3>
+<p>当前端的服务可用性指标（SLO）出现异常，就会触发根因分析：</p>
+<ul>
+<li>首先找自己的问题：使用指标因果图 推断本地， 导致服务性能问题的根因指标。</li>
+<li>其次，如果问题是别人造成的，就去找别人的问题：如果根因指标是依赖服务的SLO（注意，用到了调用链关系），这个推断就会继续，传播到远程的依赖的服务。 一直追本溯源，一直到最底层的被调用方，即物理层。</li>
+</ul>
+<h3 id="指标因果图根因推断">指标因果图根因推断</h3>
+<p>指标因果图</p>
+<p>如何定位一个节点上哪个指标的是故障根因？</p>
+<ul>
+<li><p>使用了DFS算法--深度优先搜索，对指标因果图进行遍历。</p></li>
+<li><p>访问到一个节点，对它进行异常检测（cusum）：</p>
+<ul>
+<li>如果异常，继续访问他的后继（descendants）节点，</li>
+<li>如果正常，就去访问的邻居节点。</li>
+</ul></li>
+<li><p>如果一个异常节点没有后继节点，无法再溯源了，或者它的后继节点都正常时，他就是根因。</p></li>
+</ul>
+<figure>
+<img src="inference.png" alt="图3-推断.png" /><figcaption aria-hidden="true">图3-推断.png</figcaption>
+</figure>
+<p>如果SLO异常，从SLO节点开始推断，有两个推断路径</p>
+<ul>
+<li>路径1： 检测M1，如果M1正常的，就访问M1的邻居M2，如果M2异常，就是根因。</li>
+<li>路径2.：接下来M3如果异常，我们就去检测M2，因为M2是异常的，所以我们就输出根因M2。</li>
+</ul>
+<p>最后，我们只找到了一个根因M2，虽然M2和M3都是异常的。</p>
+<p>然而，在某些情况下，因为多个因果路径存在，可能得到一系列的潜在根因集合。 因此，必须把这些根因进行排序，然后输出概率最大的根因。</p>
+<p>如何去给根因进行排序呢？找异常程度最大的那个指标，也就是对异常贡献度最大的指标，就是根因。 这里基于z-score方法提出了一个指标，来衡量性能指标的异常程度，这个评估指标是</p>
+<p><span class="math display">\[\operatorname{violation}(X)=\frac{X(t)-\overline{X_{t-60, t-1}}}{\sigma_{t-60, t-1}+\varepsilon}, \varepsilon=0.001\]</span></p>
+<ul>
+<li><span class="math inline">\(\overline{X_{t-60, t-1}}\)</span> ：滑动窗口的均值</li>
+<li><span class="math inline">\(\sigma_{t-60, t-1}\)</span> ：滑动窗口的标准差</li>
+<li><span class="math inline">\(\varepsilon\)</span> : 扰动项</li>
+</ul>
+<h2 id="参考文献">参考文献</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf">2014-INFOCOM_CauseInfer</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/">别人对CauseInfer论文的解读</a></li>
+<li><a href="https://chiechie.github.io/2021/03/09/technology/PC-algo/">chiechie对PC算法的总结</a></li>
+<li><a href="https://chiechie.github.io/2021/03/02/technology/causeinfer-notes1/">CauseInfer论文笔记1</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -196,7 +422,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-31 15:40:05" itemprop="dateModified" datetime="2021-05-31T15:40:05+08:00">2021-05-31</time>
+                <time title="修改时间：2021-06-01 15:45:07" itemprop="dateModified" datetime="2021-06-01T15:45:07+08:00">2021-06-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -221,32 +447,32 @@
       
           <h2 id="目录">目录</h2>
 <ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate/">chapter1 故障发现</a>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
 <ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
-<li><a href="https://chiechie.github.io/2021/02/19/AI/AIOps/AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
 <ul>
-<li><a href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
 </ul></li>
 </ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">chapter2 故障定位</a>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
 <ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
 <ul>
-<li><a href="https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="https://chiechie.github.io/2021/03/03/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
 </ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
-<li><a href="https://chiechie.github.io/2021/03/15/AI/AIOps/AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
-<li><a href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
 </ul></li>
 <li>chapter3 故障恢复</li>
 </ul>
@@ -365,196 +591,6 @@
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://wemp.app/posts/6013f2da-c11a-4f6f-b393-2b631c45172a">清华阿里AIOps新作：基于因果分析的微服务内根因定位</a></li>
 <li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">causeinfer--paper</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/" class="post-title-link" itemprop="url">chapter1.4 指标异常关联</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-21 22:32:17" itemprop="dateCreated datePublished" datetime="2021-05-21T22:32:17+08:00">2021-05-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-31 19:28:12" itemprop="dateModified" datetime="2021-05-31T19:28:12+08:00">2021-05-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="目录">目录</h2>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate/">chapter1 故障发现</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
-<li><a href="https://chiechie.github.io/2021/02/19/AI/AIOps/AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="https://chiechie.github.io/2021/03/03/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
-<li><a href="https://chiechie.github.io/2021/03/15/AI/AIOps/AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
-<li><a href="https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
-</ul>
-<p>《KPI波动关联分析助力故障排查-CoFlux》是清华和阿里巴巴公司的最新AIOps合作成果。 CoFlux挖掘KPI之间的异常波动关联，从而帮助运维人员进行故障排查，具体的，波动关联关系结果可以在以下三个方面帮助进行故障排查：报警压缩、推荐TOP-N的可能原因、构建异常波动传播链。该工作对应的论文《</p>
-<h2 id="背景">背景</h2>
-<p>为了对互联网公司的各项服务进行管理，运维人员通常会监控收集成千上万的关键性能指标KPI（Key Performance Indicator），这些KPI（例如服务请求数量、服务请求成功率等）的形式多为时间序列。</p>
-<p>在实际的运维管理工作中，由于各种原因（例如网络中断、恶意攻击等），公司的服务中断不可避免。当服务发生故障时，与故障原因相关的许多KPI数据也会出现异常的波动，而且这些波动也会传递到其他有业务关联或者模块调用关系的KPI，形成报警风暴。报警风暴产生的报警邮件和短信会使得运维人员很头大，因为其中的大量报警都是冗余的，只有少数的报警需要运维人员去关注和解决。此外，发生异常波动的KPI交织在一起，也使得故障排查工作费时费力非常困难。如果可以自动挖掘KPI之间的异常波动关系，就可以帮助运维人员进行更加高效智能地进行故障排查。</p>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<h2 id="问题描述">问题描述</h2>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_jpg/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZ2oGk0FGldica8CEhhF4yZOTtia9a5mDcpiaP7H1uLj83VKqbfoKVBLXSA/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>图1 时间序列，预测序列，波动特征序列</p>
-<p>​ 对于一个时间序列<span class="math inline">\(S = [*s**1**, s**2* *,…, s**m*]\)</span>，<em>si</em>是KPI S在时刻i的数据，m是KPI的长度。对于单一KPI，在数据采集和预处理时要求相邻时刻数据间的时间间隔相同。对于两个KPI，如果时间间隔不同，可以取两个KPI时间间隔的最小公倍数作为公共的时间间隔。KPI S的预测序列P = [*p**1, p2, …, pm*]，<em>pi</em>是<em>si</em>的预测值。因此，一个KPI的预测误差序列F = [*f**1, f2, …, fm*]，<em>fi = si</em> – *p**i*。对于一个KPI，正常的部分是比较准确容易的被预测出来，但是异常波动部分通常都是由一些不可预见的突发因素导致的，很难被预测。因此，预测误差可以很好的用来表示KPI的波动特征，CoFlux使用KPI的预测误差序列来表示该KPI的波动特征。图1 展示了一个时间序列，预测序列，波动特征序列的实例。此外，用于得到预测序列的预测模型以及对应的参数即为特征检测器。</p>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_jpg/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZND6kn9hTDotgLwYhlsUKo8dy8YT6cxv1tic71w6ibSZl3ykZPNIXrsaw/640?wx_fmt=jpeg&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>图2 （左）6个KPI，（右）KPI对应的波动特征曲线</p>
-<p>​ CoFlux的目的是挖掘两个KPI之间的波动关联关系，这种波动关联关系可以帮助进行故障排查。具体的，这种关系包括三个具体问题：1. 两个KPI的波动是否相关？如果相关，2. 波动的先后顺序如何（同时发生或者某根曲线的波动先发生）？3. 波动的方向是否一致（波动方向一致或者相反）？</p>
-<p>​ 利用原始的KPI曲线来判断波动关联关系比较困难，我们可以借助KPI的波动特征曲线。如果两个KPI的波动特征曲线相关（即波动同时发生或者发生时有一定的相位差），那么原始的两个KPI的波动相关。图2展示了6根KPI及其对应的波动特征曲线。从图2中可以看出，<em>K1</em>和<em>K2</em>、<em>K3</em>波动相关，但是与<em>K4</em>波动无关；<em>K1</em>的波动先于<em>K2</em>和<em>K3</em>发生，且波动方向相反；<em>K2</em>和<em>K3</em>的波动同时发生，且波动方向相同。</p>
-<h2 id="挑战">挑战</h2>
-<p>分析判断KPI的波动关联关系，主要有三个挑战：</p>
-<ol type="1">
-<li><p>KPI曲线数据众多且曲线特征各异（例如不同的周期性、平稳性、趋势等），因此，没有通用的方法可以对所有的KPI进行波动特征提取。</p></li>
-<li><p>基于异常检测结果的波动关联关系分析不合适。基于异常检测的方式需要挑选合适的异常检测算法并进行异常的定义（异常的阈值等），并且二分类的异常结果也比波动特征的信息量要少很多。</p></li>
-<li><p>波动关联关系复杂。正如在问题描述中所说，两个KPI间的波动可能有不同的先后顺序以及波动方向，这给判断波动关联关系时带来了更大的挑战。</p></li>
-</ol>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<h2 id="方法">方法</h2>
-<p>图3 CoFlux方法架构图</p>
-<p>​ CoFlux的输入是两根KPI曲线，输出结果是波动关联关系：两个KPI是否波动相关，如果相关，同时输出波动的先后顺序和波动的方向。算法整体分为两个大的部分：特征工程和相关性测量。</p>
-<p>​ 特征工程的目的是为KPI找到合适的特征检测器，由于不同KPI有不同的特征，单一的特征检测器无法适用于所有的KPI。因此，我们基于两个直观假设：如果可以提供足够多的特征检测算法，那么，1.对于任何一个KPI，总有一个算法可以为该KPI提取到合适的波动特征。2.如果两个KPI波动相关，至少有来自两个KPI的波动特征也相关。相关性测量的目的是根据特征工程得到波动特征计算得到相关性结果。接下来，我们具体介绍特征工程和相关性测量。</p>
-<p><strong>第一步，特征工程</strong>。特征工程主要包括两个步骤，特征提取、特征放大。</p>
-<p>特征提取：如表1，特征提取主要包含了我们预选取的预测模型及参数，总计一共有86个检测器，因此对于一个KPI，我们可以得到86个波动特征。</p>
-<p>表1 CoFlux中的预测模型和检测器</p>
-<p>[img]</p>
-<p>​ 特征放大：一个KPI大部分时间范围内都是正常的，没有很大波动，只有随机的噪声。只有当服务受到影响时，才会产生波动。因此，波动的数量是远远小于正常数据的。为了削弱噪声的影响，我们采用改进版的激励函数：一个KPI的波动程度越大，波动特征也就会被放大的越大，这样就使得我们的波动特征更具区别度，对最后的相关性判断也更有帮助。</p>
-<figure>
-<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>​ <strong>第二步，相关性判断</strong>。对两个KPI的波动特征进行相关性判断时，需要考虑到KPI波动的轻微形变以及相位差。因此，我们挑选Cross-Correlation来测量两个波动特征的相关性结果。</p>
-<figure>
-<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<figure>
-<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<h2 id="实验">实验</h2>
-<figure>
-<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>​ 实验部分包括了两个数据集：数据集1：波动相关的两个KPI的原始曲线数据特征不同；数据集2：波动相关的两个KPI的原始数据曲线特征相似。由于没有专门的处理波动关联分析的算法，我们选取了已有的五种关联分析工作以及变种（一共有7种方法）作为对比算法，表2展示了CoFlux方法和对比算法在两个数据集上的结果。结果表明CoFlux在两个数据集上都比其他的算法效果要更好，且在三个问题上的F1-score分别大于0.84，0.92，和0.95。</p>
-<p>表2 CoFlux和对比方法在两个数据集的结果</p>
-<figure>
-<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>接下来介绍CoFlux在故障排查工作中的应用实例。</p>
-<p>报警压缩：对于大量的KPI，我们首先利用CoFlux计算所有KPI的两两之间的波动相关程度，然后使用K-means进行聚类（K可以使用轮廓系数方法选择）。每一类内的KPI可以当成一个报警簇，在报警的时候当成一个整体进行报警。图4展示了CoFlux利用24根KPI的波动相关结果聚成3类报警簇的实例。</p>
-<figure>
-<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>图4 报警压缩实例热度图表示</p>
-<p>推荐TOPN的可能原因：如图5，对于任一KPI X，我们可以通过CoFlux找到该KPI的TOPN相关的KPI曲线。在进行故障排查时，运维人员可以优先检查这TOPN的曲线来对KPI X进行快速异常分析。</p>
-<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" />图5 推荐TOPN的可能原因实例</p>
-<p>​ 构建异常波动传播链：我们可以利用KPI之间的波动传播关系来构建异常波动传播链，这个异常波动传播链可以反映不同KPI之间的波动是如何关联在一起的。图6 展示了CoFlux在数据库服务上自动构建波动传播链的实例，相比较人工的方式，CoFlux在不需要专家领域知识的情况下可以自动准确的构建异常波动传播链。</p>
-<figure>
-<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>图6 （左）人工构建的异常波动传播链；（右）根据CoFlux自动构建的异常波动传播链</p>
-<figure>
-<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<h2 id="结论">结论</h2>
-<figure>
-<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>利用KPI的波动特征进行关联分析对于故障排查是非常有用的，本文是服务运维管理领域第一篇定义研究这种波动关联分析的工作。未来的工作计划是采用深度学习的方法更加准确的提取KPI的波动特征。更多细节可以点击“阅读原文”进行阅读。</p>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li>CoFlux: Robustly Correlating KPIs by Fluctuations for Service Troubleshooting》发表在IWQoS 2019</li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SpiIquuz-8Ud_C3e4oVyaQ">coflux中文介绍</a></li>
 </ol>
 
       

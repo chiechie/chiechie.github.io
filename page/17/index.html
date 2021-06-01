@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_3/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/investment/bilibili-analysis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/15/AI/machine_learning/tree_model/trees_3/" class="post-title-link" itemprop="url">树模型3_GBDT介绍</a>
+            <a href="/2021/05/21/investment/bilibili-analysis/" class="post-title-link" itemprop="url">对bilibili的股票分析</a>
         </h2>
 
         <div class="post-meta">
@@ -189,113 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-15 10:39:45" itemprop="dateCreated datePublished" datetime="2021-05-15T10:39:45+08:00">2021-05-15</time>
+              <time title="创建时间：2021-05-21 10:26:00" itemprop="dateCreated datePublished" datetime="2021-05-21T10:26:00+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-18 08:24:23" itemprop="dateModified" datetime="2021-05-18T08:24:23+08:00">2021-05-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost</p>
-</blockquote>
-<h2 id="high-level理解">high-level理解</h2>
-<ol type="1">
-<li>GBDT是一种data-driven的预测方法。</li>
-<li>GBDT的预测逻辑，分两个层次，第一层，保证每一个样本的准确率；第二层，构造决策路径，即希望通过特征来达到第一层的准确率。实现第一层目的的方法是基于梯度确定阶段性目标；实现第二层的目的的方法通过特征去拟合阶段性目标（残差），也就是cart。</li>
-</ol>
-<h3 id="adaboost-gbdt-与-xgboost">Adaboost, GBDT 与 XGBoost</h3>
-<ol type="1">
-<li>Adaboost是GBDT的一个特例</li>
-<li>XGB在GBDT的基础上引入了二阶导数，并且在loss中加入了正则项。</li>
-</ol>
-<h2 id="算法细节">算法细节</h2>
-<figure>
-<img src="trees_1/img.png" alt="adaboost" /><figcaption aria-hidden="true">adaboost</figcaption>
-</figure>
-<p>boosting中有三个重要的参数： - 树的棵树 - <span class="math inline">\(\lambda\)</span>: 学习速率 - 每一棵树的最大splits个数</p>
-<h3 id="公式推导">公式推导</h3>
-<h3 id="代码实现">代码实现</h3>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
-<li><a target="_blank" rel="noopener" href="https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/6062a083acbfe82c7195b27d/1617076404560/ISLR%2BSeventh%2BPrinting.pdf">An Introduction to Statistical Learning</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/14/investment/about-invement-education/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/14/investment/about-invement-education/" class="post-title-link" itemprop="url">关于理财教育</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-14 08:28:15" itemprop="dateCreated datePublished" datetime="2021-05-14T08:28:15+08:00">2021-05-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-20 08:12:50" itemprop="dateModified" datetime="2021-05-20T08:12:50+08:00">2021-05-20</time>
+                <time title="修改时间：2021-05-29 08:37:37" itemprop="dateModified" datetime="2021-05-29T08:37:37+08:00">2021-05-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -318,55 +219,120 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="市场分析">市场分析</h2>
+          <blockquote>
+<p>豪掷8亿拿下《英雄联盟》后，B站又获《守望先锋》数年赛事独播权</p>
+</blockquote>
+<h2 id="key-performance">key performance</h2>
+<blockquote>
+<p>3年来，B站在电竞板块大动作频繁</p>
+</blockquote>
 <ol type="1">
-<li>国内中产阶级人群增长红利，带动“理财”需求增长。</li>
-<li>“理财”在国内过去的教育体系，并没有太多涉及，想要获得较优的“理财判断与决策能力”，市场上的“理财教育”应运而生。近年新兴的需求已支撑起国内“营收过亿”、“融资过亿”的理财教育公司。</li>
-<li>“理财教育”市场有两个正在发生的变化：
-<ul>
-<li>过去“鱼龙混杂”、“推销理财产品”为主的“教育”公司，正被新一代具有专业知识的教育公司取代。</li>
-<li>用户大众化。“理财”教育≠“如何选购理财产品”，它更多是“理财”认知、管理与决策能力的提高。它的受众不仅是越来越多有“财产”富余的成年人，还有k12这些更低龄阶段的“财商”教育普及。</li>
-</ul></li>
-<li>国内APP数据服务商Questmobile在今年初的报告，呈现了“越来越广泛受众使用理财APP”的数据变化。综合月活跃用户同比去年增长29%，平均使用时长也同比增加26%。</li>
+<li><p>2018年，B站成立了哔哩哔哩电竞公司，任命前战旗直播CEO陈悠悠出任公司总裁。</p></li>
+<li><p>2019年12月，B站豪掷8亿元的价格，拿下英雄联盟全球总决赛中国地区三年独家直播版权。</p></li>
+<li><p>2020年又与EA合作了2020秋季赛FIFA ONLINE 4顶级职业赛事的电竞活动。</p></li>
+<li><p>2020年8月,拳头也宣布，英雄联盟S10、S11都将在中国举办。两个事件都大力推动了《英雄联盟》中国地区在线上线下的电竞产业发展。</p></li>
+<li><p>2021年，B站拿下《守望先锋联赛》独播权，一方面是因为2年前8亿换来的三年独播权，让B站在电竞板块同时得到了短期流量增长与长线产业布局的收益，而在疫情改变玩家的网络使用习惯后，经验与时机都让B站有更充足的底气采取类似的激进策略拿下《守望先锋》。另一方面，哔哩哔哩电竞或希望其电竞布局，能够突破MOBA类游戏的范围，在FPS等多个电竞品类中建立起自己的用户池，使其在电竞行业中有更细分的竞争力。此前，陈睿将「用户增长」作为公司近期的工作重点，哔哩哔哩电竞的一系列动作也符合该逻辑。</p>
+<blockquote>
+<p>根据此前MakeDataShine公布的全球网络游戏流量份额Top 10，2019-2020年《英雄联盟》与《守望先锋》持续稳定在1、3名,</p>
+</blockquote></li>
 </ol>
-<h2 id="理财教育是个啥">理财教育是个啥？</h2>
-<h3 id="理财范畴">理财范畴</h3>
+<h2 id="消息来源">消息来源</h2>
 <ol type="1">
-<li>供给端和需求端两端推进，理财行业兴起。对于个人理财，主看供给端的产品：比如股票、基金、债券、保险、黄金等资产，住房贷款、消费信贷等负债产品。</li>
-<li>当下，国内也在供给端与需求端双向促进，推动理财市场发展的进程。</li>
+<li>游戏葡萄</li>
 </ol>
-<h3 id="理财教育教什么">理财教育教什么</h3>
-<h4 id="理财教育-理财产品推荐与售卖">理财教育 ≠ 理财产品推荐与售卖</h4>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/reading_notes/phisics-yangfengganshe/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/21/reading_notes/phisics-yangfengganshe/" class="post-title-link" itemprop="url">从「双缝干涉」到量子力学</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-21 08:24:14" itemprop="dateCreated datePublished" datetime="2021-05-21T08:24:14+08:00">2021-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-31 08:31:39" itemprop="dateModified" datetime="2021-05-31T08:31:39+08:00">2021-05-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>20世纪物理学的一些重要进展和矛盾</p>
+</blockquote>
+<h2 id="总结">总结</h2>
 <ol type="1">
-<li><p>理财覆盖个人财务的所有范畴，从流程来看，包括：</p>
-<ul>
-<li>评估个人财务总体情况，资产与负债；</li>
-<li>制定理财的长短期目标；</li>
-<li>做出理财计划、落实计划；</li>
-<li>以及后续的跟进与重新评估。</li>
-</ul></li>
-<li><p>从管理标的来看，涵盖：收入、支出、资产、负债、投资、保险等等。</p></li>
-<li><p>与之对应的是，“理财教育”：覆盖“理财流程”以及管理目标，目标是提升每个环节的认知、管理与决策能力。</p></li>
-<li><p>“购买理财产品”仅是理财的一部分行为。“如何选购理财产品”因而也只是“理财教育”时可能存在的一部分。而且，这里强调的是如何选购的原则“知识传输”，而不是“理财产品”的推销。</p></li>
+<li>20世纪物理学的一种根本矛盾，广义相对论和量子理论不自洽，两者不能统一。</li>
+<li>所有的基本粒子，都是宇宙弦的不同振动模式或者振动激发态。弦的不同频率的振动，对应不同质量和能量。</li>
+<li>20世纪30年代，狄拉克把相对论与量子力学放在一起研究，电厂和磁场相互作用时。看电子的行为，发现，电子必须有其反粒子（叫正电子）才能存在。两年后，物理学家们在宇宙射线中发现了正电子。随后这个现象成了一个原理，质子必有反质子，中子必有反中子，所有基本粒子都必须有反粒子，他们才能存在。粒子与反粒子相遇就会彼此湮灭，转化为能量。</li>
+<li>能量从何而来，宇宙的总能量刚好是零，宇宙的物质是由正能量构成，然而所有物质都由引力互相吸引，引力场具有负能量。</li>
+<li>量子电动力学：宇宙暴涨时期，能量密度保持不变，当宇宙体积加倍时，正物质能和负引力能都加倍，总能量保持为零，不破环能量守恒。在这个时期，其实只是一个非常短的瞬间，宇宙的尺度增大了非常多倍，可以制造粒子的总能量就变得非常大。</li>
+<li>量子纠缠，传统的自然科学都标榜自己研究的是东西，是不以人主观意志为转移的客观真理。但是杨氏双缝干涉实验，否定了这个世界观。</li>
+<li>杨氏双缝干涉实验: 一个电子通过两个狭缝往后面走，如果电子只通过其中一个狭缝，看到的图像就不会出现干涉，如果电子同时通过了两个狭缝，看到的图像就会出现干涉，也就是有些地方加强有些地方减弱，类似水波浪。实验的结论就是，有干涉。</li>
+<li>薛定谔的猫：针对解决爱因斯坦和波尔争论的议题，薛定谔设计了第一个“薛定谔的猫”的思想实验。</li>
+<li>带着放毒面具的朋友：1963年，基于薛定谔的猫的实验，维格纳加上了一个“带着放毒面具的朋友”，这个朋友要进到房间里面，观测猫是死还是活。</li>
+<li>维格纳结论是，当朋友的意识被包含在整个系统中时，叠加态就不适用了，即使他本人在门外，箱子里的波函数家还是因为朋友的观测而不断地被触动，因此只有“死猫”和“活猫”两种纯态。为什么人会改变世界的状态？人有意识，也就是分辨心。意识一旦包含在微观系统里，微观系统就会坍塌。维格纳认为，意识可以作用于外部世界，使得波函数坍塌是不足为奇的，因为外部世界的变化可以引起我们意识的改变，根据牛顿第三定律，作用与反作用原理，意识也应当反过来作用与外部世界。量子物理的观察问题中，意识无疑是在触动波函数种起了重要的作用。</li>
+<li>平行宇宙：没有人类的意识观测之前，宇宙在百亿年中，都处于混沌状态，每个粒子都以波函数的形式存在，并无确定的状态和清晰的图像。好比近视眼看到的周围世界只是模糊不清的一片。在人类有意识地观测之时，万物才突然从不确定坍塌到确定的状态，宇宙才突然呈现出清晰的图像，就想戴上眼镜，外界突然清晰呈现那样。</li>
 </ol>
-<h4 id="财商">财商</h4>
-<ol type="1">
-<li>财商(Financial Quotient)是“驾驭”操作行为的能力（包括认知、投资理财行为与管理）。 &gt; “财商”首次在1990s年《富爸爸，穷爸爸》被提出，即要懂得如何管理财富、使财富增值，而不只是“埋头兢兢业业稳定工作以维生”。</li>
-<li>在接受“理财”相关教育的时候，最主要的目的是：提高“财商”、具备作出越来越优的“理财”决策能力。然后进行“理财”行为下，获得预期更优收益。</li>
-</ol>
-<h3 id="当下理财教育如何">当下理财教育如何？</h3>
-<ol type="1">
-<li>2015年，美国50个州中有17个要求高中生在毕业前学习个人理财，目前仅剩5个州没有覆盖理财教育（美国有50个州+1个特区）。这是美国政府、学术界与协会共同推进的成果。</li>
-<li>国内的校内“理财”教育暂没有如此普及，市场上“理财教育”服务商已经发展起来了，比如“长投学堂、小帮规划、简七理财、十倍学堂、亿学”等等，他们中有用户数“快速增长”、营收过亿，也有在一级市场完成亿元级别融资。某此前处于平稳发展的早期理财教育公司，疫情期间及至今，营收“仍在快速增长、扩招员工”。经济相对“下行”的时期，人们提高了“理财增值”的意识与需求，也推动了“理财”学习的消费。</li>
-<li>产品服务模式有：线上录播课、线下训练营等，客单价多在在99元至千元区间。</li>
-<li>教学的内容，一种是上面提到的“财商”本身，理解个人财务、资产负债，教授理财与投资的基本知识观念。另一种是相对单价较高，且侧重于某一类“投资产品”，比如股票、基金、保险品类的“进阶”体系内容。</li>
-</ol>
-<h3 id="未来市场展望">未来市场展望</h3>
-<p>有两个基本趋势，一是用户低龄化，二是服务专业化。 1. 目标用户低龄化：美国针对K12阶段设计的金融理财课程；广州也推出了面向k12学生的财商教育试点计划。 &gt; &gt; “K－12”是指从幼儿园到12年级的教育. <img src="metauniverse/img.png" alt="img.png" /> 2. 服务专业化：上一代鱼龙混杂的“理财教育”市场，数万家“理财工作室”，不乏动机不良、“纯粹钓鱼”者。并因此“误导”了入门“理财教育”的个人。当下，新一代以“知识、技能”为导向的教育产品，正成为新的选择。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="http://www.woshipm.com/it/4199514.html">知乎上数百万人关注，理财与它的教育大众化</a></li>
-<li><a target="_blank" rel="noopener" href="https://youzhiyouxing.cn/">有知有行</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=CBttlMxCUvU&amp;list=PLSFBUUyJDmPhLJZEvBv_amqDqPo9skYD0&amp;index=16">朱清时谈佛学与物理学（上）</a></li>
 </ol>
 
       

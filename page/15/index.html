@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/reading_notes/hanfeizi_shuolin/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_2-fault-prediction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/15/reading_notes/hanfeizi_shuolin/" class="post-title-link" itemprop="url">《韩非子-说林》读书笔记</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-1_2-fault-prediction/" class="post-title-link" itemprop="url">chapter1.2 故障预测</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-15 22:46:04" itemprop="dateCreated datePublished" datetime="2021-05-15T22:46:04+08:00">2021-05-15</time>
+              <time title="创建时间：2021-05-21 11:01:18" itemprop="dateCreated datePublished" datetime="2021-05-21T11:01:18+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-26 09:18:16" itemprop="dateModified" datetime="2021-05-26T09:18:16+08:00">2021-05-26</time>
+                <time title="修改时间：2021-06-01 15:45:07" itemprop="dateModified" datetime="2021-06-01T15:45:07+08:00">2021-06-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -219,76 +219,139 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>《说林》分上下两篇，共七十一则传说故事，这些故事应为韩非子为其论文写作而准备的材料。</p>
-</blockquote>
-<h1 id="上">上</h1>
-<h2 id="二">二</h2>
-<p>晋人伐邢，齐桓公将救之。鲍叔[1]曰：“太蚤。邢不亡，晋不敝；晋不敝，齐不重。且夫持危之功，不如存亡之德大。君不如晚救之以敝晋，齐实利。待邢亡而复存之，其名实美。”桓公乃弗救</p>
-<h2 id="三">三</h2>
-<p>智伯索地于魏宣子，魏宣子弗予。任章曰：“何故不予？”宣子曰：“无故请地，故弗予。”任章曰：“无故索地，邻国必恐。彼重欲无厌，天下必惧。君予之地，智伯必骄而轻敌，邻邦必惧而相亲。以相亲之兵待轻敌之国，则智伯之命不长矣。《周书》[1]曰：‘将欲败之，必姑辅之；将欲取之，必姑予之。’君不如予之以骄智伯。且君何释以天下图智氏，而独以吾国为智氏质乎？”君曰：“善。”乃与之万户之邑。智伯大悦，因索地于赵，弗与，因围晋阳。韩、魏反之外，赵氏应之内，智氏以亡。</p>
-<h1 id="下">下</h1>
-<h2 id="一">一</h2>
-<p>桓赫曰：“刻削[1]之道，鼻莫如大，目莫如小。鼻大可小，小不可大也；目小可大，大不可小也。”举事亦然。为其后可复者也，则事寡败矣。</p>
-<p>[1]刻削：雕刻。</p>
-<p>做事情跟雕刻一样要留有余地，就不容易失败。</p>
-<hr />
-<p>崇侯、恶来知不适纣之诛也，而不见武王之灭之也。比干、子胥知其君之必亡也，而不知身之死也。故曰：“崇候、恶来知心而不知事，比干、子胥知事而不知心。”圣人其备矣。</p>
-<p>最明智的人，眼观六路，耳听八方。</p>
+          <h2 id="目录">目录</h2>
+<ul>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
+</ul>
 <blockquote>
-<p>六路：指上、下、四方；八方：指东、南、西、北、东南、西南、西北、东北。形容人机智灵活，遇事能多方观察分析。</p>
+<p>未来之眼：硬盘故障预测实战</p>
 </blockquote>
-<hr />
-<p>宋太宰贵而主断。季子将见宋君，梁子闻之曰：“语必可与太宰三坐乎，不然，将不免。”季子因说以贵主而轻国。</p>
-<p>宋国太宰地位尊贵但处事独断。季子想求见宋国国君，梁子听到后说：“你和宋国国君说话时，一定要像与国君、太宰坐在一起时那样，否则，你可能难逃杀身之祸。”季子因此进言了一些尊重君主而少问国事的话。</p>
-<p>言论可被公开。</p>
-<h2 id="二-1">二</h2>
-<p>杨朱之弟杨布衣素衣而出。天雨，解素衣，衣缁衣[1]而反，其狗不知而吠之。杨布怒，将击之。杨朱曰：“子勿击也，子亦犹是。曩[2]者使女狗白而往，黑而来，子岂能毋怪哉？”</p>
-<p>[1]缁衣：黑衣服。</p>
-<p>[2]曩（nǎng）：以往，从前。</p>
-<hr />
-<p>惠子曰：“羿执决[3]持扞[4]，操弓关[5]机，越人争为持的。弱子扞弓，慈母入室闭户。”故曰：“可必，则越人不疑羿；不可必，则慈母逃弱子。”</p>
-<p>[3]决：古代射箭的人戴在右手大拇指上用以拉弦的工具。</p>
-<p>[4]扞（hàn）：古代射箭的人往左手臂上戴的一种袖套，多为皮制。[5]关：牵引。</p>
-<p>事关自身生存的时候，还是会考虑用能力胜任的人，而不是用关系亲近的人。</p>
-<hr />
-<p>桓公问管仲：“富有涯乎？”答曰：“水之以涯，其无水者也；富之以涯，其富已足者也。人不能自止于足，而亡其富之涯乎！”</p>
-<p>人的欲望是没有尽头的，什么时候都不会认为自己已经足够成功，或者足够富裕了。</p>
-<h2 id="三-1">三</h2>
-<p>宋之富贾有监止子者，与人争买百金之璞玉，因佯失而毁之，负其百金，而理其毁瑕，得千溢[1]焉。事有举之而有败，而贤其毋举之者，负之时也。</p>
-<p>[1]溢：同“镒”。一镒相当于二十两。一说为二十四两。</p>
-<p>就好像创业，创业肯定有一定概率成功或者失败，但是很多人因为害怕失败，就不去做这个事情，是因为只看到了负面的效应。</p>
-<hr />
-<p>有欲以御见荆王者，众驺[2]妒之。因曰：“臣能撽[3]鹿。”见王。王为御，不及鹿；自御，及之。王善其御也，乃言众驺妒之。</p>
-<p>[2]驺（zōu）：马夫。 [3]撽（qiào）：打，击。</p>
-<p>先得证明自己的实力？</p>
-<hr />
-<p>荆令公子将伐陈。丈人送之曰：“晋强，不可不慎也。”公子曰：“丈人奚忧？吾为丈人破晋。”丈人曰：“可。吾方庐陈南门之外。”公子曰：“是何也？”曰：“我笑勾践也。为人之如是其易也，己独何为密密十年难乎？”</p>
-<p>年轻人容易把问题看的太容易</p>
-<h2 id="四">四</h2>
-<p>公子纠将为乱，桓公使使者视之。使者报曰：“笑不乐，视不见，必为乱。”乃使鲁人杀之。</p>
-<hr />
-<p>公孔弘断发而为越王骑，公孔喜使人绝[1]之，曰：“吾不与子为昆弟矣。”公孙弘曰：“我断发，子断颈而为人用兵，我将谓子何？”周南之战，公孙喜死焉。</p>
-<p>[1]绝：断绝关系。</p>
-<hr />
-<p>有与悍者邻，欲卖宅而避之。人曰：“是其贯将满矣，子姑待之。”答曰：“吾恐其以我满贯也。”遂去之。故曰：“物之几者，非所靡也。”</p>
-<p>事情如果到了紧急关头，就不要再拖拖拉拉、磨磨蹭蹭、犹豫不决的了，需当机立断！</p>
-<hr />
-<p>孔子谓弟子曰：“孰能导子西之钓名也？”子贡曰：“赐也能。”乃导之，不复疑也。孔子曰：“宽哉，不被于利！洁哉，民性有恒！曲为曲，直为直。”孔子曰：“子西不免。”白公之难，子西死焉。故曰：“直于行者曲于欲。”</p>
-<h2 id="五">五</h2>
-<p>靖郭君将城薛，客多以谏者。靖郭君谓谒者曰：“毋为客通。”齐人有请见者曰：“臣请三言而已。过三言，臣请烹。”靖郭君因见之。客趋进曰：“海大鱼。”因反走。靖郭君曰：“请闻其说。”客曰：“臣不敢以死为戏。”靖郭君曰：“原为寡人言之。”答曰：“君闻大鱼乎？网不能止，缴[2]不能□[3]也，荡而失水，蝼蚁得意焉。今夫齐亦君之海也。君长有齐，奚以薛为？君失齐，虽隆薛城至于天，犹无益也。”靖郭君曰：“善。”乃辍，不城薛。</p>
-<h2 id="六">六</h2>
-<p>荆王弟在秦，秦不出也。中射之士[1]曰：“资臣百金，臣能出之。”因载百金之晋，见叔向，曰：“荆王弟在秦，秦不出也。请以百金委叔向。”叔向受金，而以见之晋平公曰：“可以城壶丘矣。”平公曰：“何也？”对曰：“荆王弟在秦，秦不出也，是秦恶荆也，必不敢禁我城壶丘。若禁之，我曰：‘为我出荆王之弟，吾不城也。’彼如出之，可以德荆；彼不出，是卒恶也，必不敢禁我城壶丘矣。”公曰：“善。”乃城壶丘。谓秦公曰：“为我出荆王之弟，吾不城也。”秦因出之。荆王大说，以链金百镒遗晋。</p>
-<p>叔向收了楚国臣子的金子，并没有告诉晋平公，而是顺着晋国的角度，帮君主分析如何在秦国和楚国之间周旋，获得利益，得到的结论 也跟自己的利益相符合。</p>
-<hr />
-<p>阖庐攻郢，战三胜，问子胥曰：“可以退乎？”子胥对曰：“溺人者一饮而止，则无遂者，以其休也。不如乘之以沈[2]之。”</p>
-<hr />
-<p>郑人有一子，将宦，谓其家曰：“必筑坏墙，是不善，人将窃。”其巷人亦云。不时筑，而人果窃之。以其子为智，以巷人告者为盗。</p>
-<p>人本能会甩锅给关系疏远的人，而把功劳归给关系亲近的人。</p>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/0c332090718443e90c34969">韩非子-微信读书</a></li>
-</ol>
+<p>#<strong>一、背景篇</strong></p>
+<p>伴随着公司业务的蓬勃发展，从2011年至今每年新增的服务器开始呈现快速增长的态势,经过了五六年后，现在大批量服务器开始出现老旧问题，预计到2016年底过保设备占比将超过50%，其中上架超5年的服务器占比将达20%。我们开始面临日益凸显的服务器整体老龄化问题。</p>
+<p>很容易想到越老的机器发生故障的几率也将越高。统计结果也发现随着服务器老龄化的加剧，故障概率会加速上升，这会对业务造成不小的负面影响，同时也大大提高了运营的成本。</p>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/aksjhd.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图1.服务器部件故障占比</p>
+<p>在这些故障中“贡献”最多的当属硬盘了（如图1所示），它在服务器部件故障中占比高达70%以上，把第二名的主板甩出了几条街。这也归结于它的体量最大，并且生命周期比较短（如表1所示），硬盘的生命周期一般只有3到5年。而我们的服务器使用年限超过了5年，所以硬盘故障率非常高。</p>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/asdhhh.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>表1.服务器部件生命周期表</p>
+<p>于是乎，想快速有效的降低服务器故障的影响，核心就在于降低硬盘故障的影响。当前业界采用更多的是在线故障监控和故障后自动修复，不能修复则只能换盘，并做业务迁移，虽然这一定程度上也起到了一些作用，降低了数据丢失的风险和对业务的影响，但毕竟有点马后炮了。故障不可避免，故障永远会发生，但如果我们有一双未来之眼，可以提前预知故障的发生，从容淡定的迁移数据和业务，该有多好。</p>
+<h1 id="二硬盘预测面临的困难"><strong>二、硬盘预测面临的困难</strong></h1>
+<p>虽然预测这种东西由来已久，但真正能做到精确的寥寥无几。像地震，虽然根据监控地壳的活动和动物的异常行为，可以提前预知地震的发生，预留一些时间，让人们可以提前迁移到庇护所，尽可能减少人身财产损失，并且早在公元132年就有地震仪的诞生，但到目前为止，仍然无法精确的预知它的发生。因为这里面涉及到的因素太多，方方面面都要考虑。硬盘故障也是这样，从20世纪50年代至今，经历了一系列技术革新和换代，到目前为止，仍然很难预测它何时会坏。虽然可以从统计学上获取一些粗略统计：服务器及关键部件生命周期上限一般是5年，行业内针对大于5年的老龄设备通常采取的是直接退役的方案，但是并不适用于体量巨大的我们，考虑到成本、业务迁移等问题，这种方案还是太过任性了些。既然一刀切不行，那是否有折中方案可供选择呢。</p>
+<p>#<strong>三、硬盘故障预测的探索过程</strong></p>
+<p>俗话说“巧妇难为无米之炊”，没有依据如何预测，所以数据源的选取是头等大事，有了数据才能开搞。但是面对杂七杂八体量巨大的数据，如何才能将它玩出花样来。这里涉及到一系列的数据处理、数据建模和模型验证的过程（如图2所示）。为了达到更佳的预测效果，可能会重复多次建模，直到模型的预测结果符合标准为止。</p>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/dasdklj.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图2.流程简图</p>
+<h3 id="关于数据源"><strong>1.关于数据源</strong></h3>
+<p>自13年以来，我们就陆陆续续对硬盘故障开展了一系列的研究和分析，虽说现在数据挖掘技术日趋完善，但预测的首要问题在于数据的选取，高质量的数据，对最后取得良好的预测效果有决定性的作用，所以没有数据支撑，何谈预测。所以我们经历了一连串的筛选过程。</p>
+<p>刚开始很容易想到的是硬盘的宿主——服务器，会是个主要影响因素，因为我们已经知道随着服务器上架年限的增加，整体故障率会逐渐加速上升，由此推测如果在上架时间的基础上，再结合机型、业务等维度，是否能给出一些推论甚至于有价值的结果呢。所以我们用聚类的方法，对此进行了统计分析，但是结果并非如此。或许这些服务器配置信息能给出一些统计结果，我们想要的是即将故障的硬盘，而不是这些差异性不大的各个集合的整体故障率。</p>
+<p>我们希望知道的是单块盘的故障概率，把危险的盘更明显的标记出来，所以后来我们又<u>考虑了磁盘I/O，因为直观上，觉得磁盘负载越高就越容易坏</u>，所以决定一试究竟。我们对三种值进行了分析：每秒磁盘读写块数（即902-读，903-写）和每秒之中用于IO操作的CPU时间占的比例（即999），通过对比多种方法，最终我们选用临近两个时间点之间的IO变化的绝对值作为主要的元数据，也就是后一个时间点与前一个时间点对应IO差的绝对值，简称为IO跳变。它与磁盘故障间关系如图3所示：</p>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/asddkjhkjhk.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图3.磁盘I/O大小与故障关系</p>
+<p>由上图可以看到故障时的IO跳变大小排在前10%的故障数占比66%以上，看到这个本来让我们有信心可以用它来预测磁盘故障了。但是最后的预测正确率却不到40%。具体可参见<a target="_blank" rel="noopener" href="http://km.oa.com/group/11783/articles/show/170959">《磁盘IO与磁盘故障率研究》</a></p>
+<p>我们再接再厉，又考虑了磁盘S.M.A.R.T（Self-Monitoring Analysis and Reporting Technology——自我检测、分析及报告技术，后面简称SMART）。之所以考虑用SMART作为核心数据，一则是因其相关技术发展比较成熟，至今也近20年了，业界对其认可度较高，二则也是经过我们实际验证的结果，所谓“不信广告信疗效”嘛。</p>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/dkhajsdd.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图4.磁盘S.M.A.R.T示意图</p>
+<p>###<strong>2.数据处理</strong></p>
+<p>数据积累到一定程度后，发现问题来了，数据量太大，如何用？如果只是几百万数据，那还简单，可是现在是几十上百亿条、一两百个维度的数据，没有装备玩不转如何破？幸好我厂有TDW这么高大上的系统，借助于TDW强大的数据存储和计算能力，我们才可以把这个事情顺利地开展下去。</p>
+<p>一百多个维度的SMART信息并不都跟故障密切相关，如果一股脑全用上，有些反而会成为干扰项，所以经过关联分析和聚类分析，层层筛选，最终只选取了其中13项作为我们建模的基础数据，如表2所示：</p>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/asddnnbkbx.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>表2.选定的SMART信息项</p>
+<p>值得一提的是，由于每种特性分原始值raw和标准值value，原始值范围不一，会影响权重，故而这里我们主要取的是标准值value，可以理解为归一化后的值。对于Reallocated Sector Count和Current Pending Sector Count这种核心项的原始值也会给与一定的考虑，例如会重点关注坏块达800的硬盘故障情况。</p>
+<p>###<strong>3.预测模型</strong></p>
+<p>这里选取的是支持向量机SVM来对历史故障样本和非故障样本建模，再将模型用于线上数据。其他故障预测方法，这里不再详述，有兴趣可以参考姊妹篇<a target="_blank" rel="noopener" href="http://km.oa.com/group/23255/articles/show/251071">《部件故障预测初论》</a>。</p>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/aksdhakjsd.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图5.SVM示意图</p>
+<p>###<strong>4.统计模型</strong></p>
+<p>上面说的SVM是个二分类器，也就是说在它的世界里非黑即白，无所谓中间状态，那问题来了，这个耿直boy给出的结果这么多，就算判刑也要有个轻重之分吧，我们怎么判断哪些是“更坏的”可以直接判死刑，哪些是“没那么坏的”可以判个死缓呢？所以这里我们根据对历史预测结果，结合硬盘型号、服务器类型、上架月份、版本号等维度，进行统计，计算出每个小集合的正确率，然后倒排，这样我们就可以很轻易的排出轻重缓急了。如图6所示，横坐标代表每个小集合的编号，这里就有一万多个小集合。点A之前左边对应的小集合的正确率都是100%，之后开始逐渐下降，于是累计正确率开始被拉低，到点B的时候是80.93%，如果继续往右，会继续下降，直到点C也就是整体正确率的44.46%。因此可以通过酌情设置“门限”（对应小集合的累计正确率，后面简称为预测比）就能将重要紧急的先放出来，剩下的可以从长计议。另外这个“门限”是随时可调的，增加了很大的灵活性。</p>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/dhakjshd.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><em>说明：横坐标代表一个小集合。</em></p>
+<p>图6.SATA预测与实际发送故障匹配图</p>
+<p>###<strong>5.运营模型</strong></p>
+<p>有了预测模型，可以给出预故障盘，有了统计模型，可以给出预故障盘的预测比。但是问题来了，对于运营同事来说，不同的服务器可能优先级又会有所差异，并且这个优先级还是随时可调的。为了支持我们提供了运营模型设置，主要包括服务器类型，上架年限，服务器健康度，业务模块，预测比，坏块比，性能参数等，系统会根据这个设置表，对满足其中任意一条规则的预测故障盘，自动发起故障流程。至于不符合任意一条规则的也会展示出详细信息，供运营同事进一步确认。</p>
+<p>如图7所示（受篇幅所限只列出了部分维度），第二行表示预测比在0.6到0.8之间并且上架月份在3到6年的预测故障盘。如果单看预测比可能会觉得这个指标略低，因为按照我们前期定的标准：预测比要达到80%以上才可发起故障单，而对80%以下的，则不做过多考虑。但按照我们之前的统计，5年以上的老旧机器故障率会加速攀升，如果这部分机器已经有故障的态势，那么它故障的概率比正常机器要大得多。处于这种考虑，我们在预测策略中，将预测比和上架月份结合了起来。所以第二条策略，既考虑了预测比在60%到80%（略低于80%），又考虑了上架月份满足3到6年（老旧机器），这样我们就会更加有信心了。其他规则也是类似的根据不同维度之间的权衡给出来。</p>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/znmbZe.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图7.硬盘故障预测策略设置表</p>
+<p>##<strong>6.</strong>总体框架</p>
+<p>结合上面几点，基本上就得到了我们的系统总体框架，如图8所示。这里提到了SMART阈值检查可以作为一种简单的判断过程，它会将SMART的核心项远远超过正常值的情况直接判断为预故障。另外，在应用层我们会提供预测结果查询页面，可以查看预测单的状态和相关信息，进行运营模型设置，人工激活预故障单，由Titan发起故障处理流程。</p>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/，jsdk.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图8.硬盘故障预测系统框架</p>
+<p>#<strong>四、效果篇</strong></p>
+<p>现已完成希捷SATA硬盘预测，各型号预测正确率和故障覆盖率如表3所示。其中前六种型号达到运营要求，已进入推广，具体覆盖65%的SATA盘。第七、八两种型号暂需进一步优化和验证后才会放出来。剩下的部分体量少，还需进一步优化和验证。</p>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/jhkdakshd.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>表3. 希捷SATA盘各型号预测正确率和故障覆盖率</p>
+<p>​ 部分型号提前天数&amp;预测正确率的趋势参考图9：</p>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/xkjhsdd.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/er5.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/er4.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/er3.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/er1.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="/Users/stellazhao/Desktop/EasyMLBOOK/_image/er2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图9. 部分型号提前天数&amp;预测正确率的趋势参考图</p>
+<p>值得一提的是，刚开始我们把预测单与实际故障单作对比时，效果并不是非常理想。因为我们预测是以SMART数据为准，我们报出来的预故障单都是从SMART上看，属于“亚健康”甚至“病危”状态的硬盘。而实际故障单是以磁盘自检失败并且不可在线修复和系统dmesg信息中的错误关键字（主要包括SCSI设备掉线，ATA设备超时和设备故障）为准发起故障处理流程，并且结单故障类型为硬盘故障，也就是说有实际换盘的，这个定义其实是相当严苛的，它其实会漏掉很多情况。因为结单故障类型是现场去确认后填写的，如果没有换盘或者没有填写结单故障类型就会算是我们的误报，这真是比窦娥还冤。另外实际故障单更多的侧重于依赖OS层面的判断，把部分能捕捉到的问题暴露了出来，其实一定程度上漏掉了一些健康堪忧但并未报障的硬盘，也就是说硬件本身当前最原始的健康状况被忽视了。针对这些问题，我们把误报的部分提供给厂商确认，的确被确诊为病态盘甚至于高危盘。于是我们不单纯依赖于结单故障类型，还要关注单块硬盘自身的健康状态。如果它的SMART核心项远远超过安全阈值，也会作为故障判断。这一点在运营模型中也有所体现：预测比就是根据实际故障单而来，坏块比和性能指数就是SMART核心项的反映。有了这些支撑，我们的预测正确率才能一步步逐渐提高。</p>
+<p>运营同事可以通过提供的预测管理页面，做一系列的操作，包括批量预测结果查询、手工触发报故障单、处理策略管理、阈值管理、状态维护、处理进度管理等功能。从2016年2月到5月，共预测出2353片硬盘故障，现网已灰度产生2340单故障，其中人工发起1962单，自动发起378单（前期比较谨慎，运营逐步确认后发起，后续会逐渐放开）。成功预测的硬盘故障数量，粗略估算已覆盖SATA硬盘故障数的50%左右，进而促使5年以上服务器对业务影响的硬件整体故障率也下降了0.5%。</p>
+<p>#<strong>五、下一步工作</strong></p>
+<p>故障预测类似于临震预报，最重要的意义是给用户一个从容的时间段进行数据和业务的迁移或处理，改善用户体验。但预测技术的研究也是一项厚积薄发的事情，从我们摩拳擦掌、跃跃欲试到真正落实下来，也经历了一系列的磨砺过程，最终的点点成效就是对我们最大的肯定。故障预测一期的核心主要侧重于SATA盘的故障预测，后续二期我们会把SAS、SSD作为核心，希望能有更大的作为。</p>
 
       
     </div>
@@ -308,7 +371,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/bootstrap/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -322,7 +385,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/15/AI/machine_learning/bootstrap/" class="post-title-link" itemprop="url">一种重采样方法-resampling</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/" class="post-title-link" itemprop="url">chapter1.5.1 使用logmine加强版做日志聚类</a>
         </h2>
 
         <div class="post-meta">
@@ -332,14 +395,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-15 16:29:28" itemprop="dateCreated datePublished" datetime="2021-05-15T16:29:28+08:00">2021-05-15</time>
+              <time title="创建时间：2021-05-21 11:01:18" itemprop="dateCreated datePublished" datetime="2021-05-21T11:01:18+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
+                <time title="修改时间：2021-06-01 15:57:27" itemprop="dateModified" datetime="2021-06-01T15:57:27+08:00">2021-06-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -347,7 +410,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -362,25 +425,143 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="bootstrap的假设">bootstrap的假设</h2>
+          <h1 id="目录">目录</h1>
 <ul>
-<li>当前的数据资料是最能反映population信息的一批资料</li>
-<li>绝大部分样本跟population中的个体很相似</li>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
 </ul>
+<blockquote>
+<p>日志聚类本质上是在简洁性和信息丰富性之间trade-off。</p>
+<p>原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。</p>
+</blockquote>
+<h1 id="问题描述">问题描述</h1>
+<p>将不同来源的日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。</p>
+<h1 id="解决方案">解决方案</h1>
+<p>logmine使用的是基于聚类的方法，做日志摘要生成。</p>
+<p>主要思路是，一边构建cluster，一边提取pattern</p>
+<h2 id="找cluster">找cluster</h2>
+<ul>
+<li><p>先定义一个参数MaxDist， 表示cluster的半径</p></li>
+<li><p>对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就以他为中心创建一个新的cluster。</p>
+<blockquote>
+<p>为了提升效率，判断是否属于某个cluster时使用early abandon的策略，如果已对比的字段累计距离超过了半径，就可以提前停止了，因为距离只会越来越大。</p>
+</blockquote></li>
+</ul>
+<h2 id="对于每个cluster提取pattern">对于每个cluster，提取pattern</h2>
 <figure>
-<img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+<img src="./image-20210226000021042.png" alt="图2-日志分析流程" /><figcaption aria-hidden="true">图2-日志分析流程</figcaption>
 </figure>
-<h2 id="为什么bootstrap比一般的参数估计方法更有效">为什么bootstrap比一般的参数估计方法更有效？</h2>
+<ul>
+<li>step1. 字段类型检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date。这个模式和正则表达式可以让用户定义。</li>
+<li>step2. 分词，每条日志都得到一个word vector.</li>
+<li>step3. 一边聚类 一边提取pattern</li>
+</ul>
+<p><img src="./img.png" /></p>
+<h2 id="怎么设置level">怎么设置level？</h2>
 <figure>
-<img src="./img_1.png" alt="bootstrap比一般的参数估计方法更有效" /><figcaption aria-hidden="true">bootstrap比一般的参数估计方法更有效</figcaption>
+<img src="./cost_function.png" alt="图3-评价当前pattern的信息含量" /><figcaption aria-hidden="true">图3-评价当前pattern的信息含量</figcaption>
 </figure>
-<p>bootstrap本质上是一种外推法（extrapolating to the population），更有想象力，当让也更有出错的可能</p>
+<p>怎么设置level？看每个level的信息损失程度，这里用cost function表示损耗的信息，值越大，表示丢失的信息越多</p>
+<p><span class="math display">\[\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times\left(a_{1} W C_{i}+a_{2} V a r_{i}+a_{3} F V_{i}\right)\]</span></p>
+<ul>
+<li><span class="math inline">\({Size}_i\)</span>: 第i个pattern包含的日志个数，</li>
+<li><span class="math inline">\({WC}_i\)</span>: 第i个pattern，**的个数，对应权重a1，默认取1</li>
+<li><span class="math inline">\({Var}_i\)</span>:第i个pattern，变量的个数，对应权重a2，默认取0</li>
+<li><span class="math inline">\({FV}_i\)</span>: 第i个pattern，固定值的个数，对应权重a3，默认取0</li>
+</ul>
+<p>提取层次化模式，参考下图</p>
 <figure>
-<img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
+<img src="./logmine_image-20210225214320632.png" alt="图1-层次化地提取日志模式" /><figcaption aria-hidden="true">图1-层次化地提取日志模式</figcaption>
 </figure>
-<h2 id="参考">参考</h2>
+<figure>
+<img src="./logmin-result.png" alt="图2-logmine-result" /><figcaption aria-hidden="true">图2-logmine-result</figcaption>
+</figure>
+<h2 id="衡量两条日志的相似性">衡量两条日志的相似性</h2>
+<p>衡量两条日志相似性的函数：</p>
+<p><span class="math display">\[\operatorname{Dist}(P, Q)=1-\sum\limits_{i=1}^{\operatorname{Min}(\operatorname{len}(P), \operatorname{len}(Q))} \frac{\operatorname{Score}\left(P_{i}, Q_{i}\right)}{\operatorname{Max}(\operatorname{len}(P), \operatorname{len}(Q))}\]</span></p>
+<p><span class="math display">\[\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
+<ul>
+<li><span class="math inline">\(P_i\)</span>：日志P的第i个字段，len(P): 日志P的字段的个数。</li>
+<li><span class="math inline">\(k_1\)</span>: 如果两个字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1。</li>
+</ul>
+<p>###衡量两个pattern的相似性</p>
+<p>pattern包含三类字段：fixed value， Variable 和 Wildcard</p>
+<ul>
+<li>固定值（fixed value field ）：如www, httpd, INFO，固化的。</li>
+<li>可变字段（A variable field）：需要用户定义name和regex，如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的，</li>
+<li>Wildcards ：就是**。</li>
+</ul>
+<p>衡量两个pattern相似性的函数（不同类型的word给的权重不一样）：</p>
+<p><span class="math display">\[\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are fixed value } \\ k_{2} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are variable } \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
+<ul>
+<li><span class="math inline">\(k_1\)</span>: 如果两个fixed value字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1</li>
+<li><span class="math inline">\(k_2\)</span>: 如果两个变量字段一样，得<span class="math inline">\(k_2\)</span>分，默认值为2</li>
+</ul>
+<h2 id="怎么评估效果">怎么评估效果？</h2>
+<p>整个问题的评估可以拆分为两个小评估:</p>
+<ul>
+<li>评估聚类的准确率？</li>
+<li>评估模式的准确率？</li>
+</ul>
+<p>因为没有标签，所以聚类和评估都是跟baseline比</p>
+<blockquote>
+<p>都有了baseline，还要logmine的必要性在于：可能logmine有性能优势？</p>
+</blockquote>
+<ul>
+<li><p>聚类效果跟baseline--OPTICS对比: 看最大公共子集的比例（原文中的agreement score）。</p></li>
+<li><p>模式效果跟baseline--UPGMA比：UPGMA的结果作为ground truth，比较recall和precision.</p>
+<blockquote>
+<p>UPGMA算法的输入一批原始日志，输出是一个patten</p>
+</blockquote></li>
+</ul>
+<p><span class="math inline">\(\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}\)</span></p>
+<h1 id="chiechies对logmine的总结">chiechie's对logmine的总结</h1>
+<p>论文看完了，代码也跑了一遍，发现有几个问题：</p>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=gcPIyeqymOU">Resampling methods-bootstrapping--youtube</a></li>
+<li><p>所谓的不需要人工干预，没有做到。很重要的一个功能就是从原始文本中提取variable类型的字段（field），需要人指定variable的name以及正则匹配规则。否则代码是不会主动帮你探测的。 <img src="./c2.png" /></p></li>
+<li><p>不同的cluster的pattern可能存在如下的父子关系 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pattern36 : datetime dms<span class="emphasis">_frontend_</span>mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern50:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern53:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp 1c7c49d5 11024333 from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern64:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>聚类时，比的是原始日志log_signature和类中心log_signature的距离，<br />
+这有一个问题，有一些日志虽然跟该cluster的中心相距较远，但是提取出的pattern可能又很接近.</p>
+</blockquote></li>
+<li><p>2的解决方案：</p>
+<ol type="1">
+<li>对于每个cluster提取pattern时，只保留最抽象的一层</li>
+<li>所有的cluster构建完之后，将存在父子pattern的cluster手动合并。</li>
+</ol></li>
+</ol>
+<h1 id="参考资料">参考资料</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf">logmine-paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/trungdq88/logmine/tree/master/src">logmine-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">数据-apache_2k.log</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">logmine加强版-chiechie's github</a></li>
 </ol>
 
       

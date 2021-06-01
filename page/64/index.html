@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/06/AI/cause-effect/judea-pearl_the-book-of-why3/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/AI/cause-effect/PC-algo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/06/AI/cause-effect/judea-pearl_the-book-of-why3/" class="post-title-link" itemprop="url">《the book of why》读书笔记-3</a>
+            <a href="/2021/03/09/AI/cause-effect/PC-algo/" class="post-title-link" itemprop="url">PC算法</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-06 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-06T08:33:38+08:00">2021-03-06</time>
+              <time title="创建时间：2021-03-09 10:06:00" itemprop="dateCreated datePublished" datetime="2021-03-09T10:06:00+08:00">2021-03-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-28 21:23:28" itemprop="dateModified" datetime="2021-05-28T21:23:28+08:00">2021-05-28</time>
+                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
                 </span>
             </span>
 
@@ -219,23 +219,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>the book of why 的第三章-从证据到原因</p>
+          <h1 id="背景">背景</h1>
+<p>学术界有两种对因果关系建模的方法：因果图和结构方程。 对于构建因果图，目前使用的最多的是PC算法。</p>
+<p>通过观察N个独立同分布的样本，来挖掘随机变量的之间的因果关系。 每个样本都是来自M个随机变量的1组观测值。</p>
+<p>有点类似机器学习中，使用随机森林去学习特征的相关性。特征就类似因果图中的节点，也就是随机变量。</p>
+<h2 id="基本概念">基本概念</h2>
+<ul>
+<li>因果图（cause graph）：因果模型的一种表达方式，因果图是一个DAG， G=（V，E），对于每一个节点v，给定了他的双亲pa（v），v跟所有非后代都是独立的。</li>
+<li>冲撞点（collider）：一种V型结构的因果图.</li>
+<li>PC算法的两个假设：马尔可夫条件和faithfulness。</li>
+<li>马尔科夫条件：可用来区分因果关系和相关关系，被用于生成依赖关系集合，构造因果图框架。</li>
+<li>faithfulness假设：可以用来保证，V中的所有变量的独立关系，都可以通过D-seperation表达。</li>
+</ul>
+<p>D-分离</p>
+<blockquote>
+<p>D分离（D-Separation）是一种用来判断两个变量是否条件独立的图形化方法，相比于非图形化方法，更加直观，且计算简单。</p>
 </blockquote>
-<h2 id="贝叶斯公式">贝叶斯公式</h2>
+<p>定义: 设 X，Y，Z 是 DAG 中不相交的节点集合， <span class="math inline">\(\pi\)</span> 为一条连接 X 中某节点到 Y 中某节点的路径 （不管方向）。 如果路径 <span class="math inline">\(\pi\)</span> 上某节点满足如下的条件：</p>
 <ol type="1">
-<li>因果图只是贝叶斯网络中的一个特例，不是所有的贝叶斯网络都是因果关系网络</li>
-<li>休谟的观点：不可靠的证据不能推翻可靠的自然法则。举个例子，自然法则说"凡人皆有一死"可推导出"基督难逃一死"，不可靠的证人的言论是不能推翻这个结论的。</li>
-<li>人的直觉思维很容易推算出前向概率，但是逆向概率，即执果说因，很难通过直觉算出来。</li>
-<li>贝叶斯将休谟提出的问题往前推一步：到底需要多少证据才能推翻已有的自然法则？具体来说，贝叶斯公式给出了逆向概率的推导方法，也就是说，不可靠的证人的前提下基督是上帝儿子的概率。</li>
-<li>科学方法的步骤：提出假设；推断假设的可检验结果；做实验；利用实验结论更新假设信念。通常来说检测和更新只有正确和错误两种结果，贝叶斯公式却可以定量地处理不确定性。</li>
-<li>贝叶斯概率的另外一个应用，先沿着一个方向估计条件概率，根据贝叶斯公式推导另外一个方向的条件概率 &gt; 如何估算女程序员中练瑜伽的比例？ &gt; 搜集几个数据：女性中练习瑜伽的比例(10/100)，练习瑜伽的人中程序员的比例(1/1100)，女性中程序员的比例（1/10000）, &gt; 所以 女程序员中练瑜伽的比例为10/11</li>
+<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 V结构 , 即<span class="math inline">\(X \rightarrow w \leftarrow Y\)</span>，且 w 及其后代不在 Z中；(因为collider关系，w不可观测时,X,Y 相互独立)</li>
+<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 非V结构 ，且w在Z中 。</li>
 </ol>
-<h2 id="从贝叶斯公式到贝叶斯网络">从贝叶斯公式到贝叶斯网络</h2>
-<h2 id="参考">参考</h2>
+<p>则称Z阻断了路径<span class="math inline">\(\pi\)</span>。</p>
+<p>如果Z阻断了所有的X到Y的路径，就说Z集合D分离了X和Y，记作<span class="math inline">\((X \perp Y \mid Z)_{G}\)</span>.</p>
+<h1 id="pc算法-概览">PC算法-概览</h1>
+<p>PC算法输入N个m维的样本，输出一个有向无环图（DAG）， 举个例子，如果要构建一个故障因果图，一个指标就是图中的一个节点，每个时间点的观测值，就是一个样本。 如果给定一个变量集合，S，A和B独立，即 A ⊥ B|S，那么A和B两个节点就没有边。</p>
+<p>PC算法分为四步:</p>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书-引言</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">知乎-反事实和干预</a></li>
+<li>构建一个全连接图，M个随机变量就对应M个节点</li>
+<li>条件独立性检验：对于每一组相邻的节点，给定置信度<span class="math inline">\(\alpha\)</span>, 如果条件独立，那么两个变量之间的边就remove掉。 条件变量S的大小每次迭代递增，直到没有多余的变量可以被加入S</li>
+<li>基于v-structure确定边的方向.</li>
+<li>确定剩下的边的方向，传播.</li>
+</ol>
+<p>PC算法是一种发现因果关系的算法，在满足一定的假设的前提下（基于马尔科夫条件 和 D-separation），使用基于统计的方法（显著性检验-<span class="math inline">\(G^2\)</span>），推导出因果关系（代表因果关系的DAG）。实现流程包括三步:</p>
+<figure>
+<img src="pc-overview.png" alt="图1-PC算法" /><figcaption aria-hidden="true">图1-PC算法</figcaption>
+</figure>
+<h2 id="条件独立性检验">条件独立性检验</h2>
+<p>从全连接图开始，移走条件独立的边</p>
+<figure>
+<img src="pc1.png" alt="图2-确定框架" /><figcaption aria-hidden="true">图2-确定框架</figcaption>
+</figure>
+<p>Z从空集开始，不断增加</p>
+<p>具体来说，可以用指标<span class="math inline">\(G^2\)</span>（条件交叉熵）来检验给定Z时，X和Y的独立性，这里X，Y，Z是互斥的。</p>
+<p><span class="math inline">\(G^{2}=2 m C E(X, Y \mid Z)\)</span></p>
+<ul>
+<li>m：样本大小</li>
+<li>$ C E(X, Y Z)$:给定Z时，X和Y的条件交叉熵，</li>
+</ul>
+<blockquote>
+<p>显著性低于0.05，就说明条件分布和联合分布没有显著性差异，有因果关系 显著性超过0.05， 就说明条件分布和联合分布没有显著性差异，没有因果关系，是独立的。</p>
+</blockquote>
+<p>如果<span class="math inline">\(G^2\)</span>超过一个预先设定的显著性，比如0.05， 那么X和Y是条件独立的。</p>
+<p>PC算法使用一个全连接的无向图，然后使用<span class="math inline">\(G^2\)</span>描述条件独立性。</p>
+<h2 id="确定边的方向">确定边的方向</h2>
+<p>当DAG的架子搭起来了， 接下来的工作就是决定因果关系的方向了。这里使用到了D-seperation的方法。</p>
+<figure>
+<img src="pc2.png" alt="图3-确定方向" /><figcaption aria-hidden="true">图3-确定方向</figcaption>
+</figure>
+<h2 id="传播方向">传播方向</h2>
+<figure>
+<img src="pc3.png" alt="图4-传播方向" /><figcaption aria-hidden="true">图4-传播方向</figcaption>
+</figure>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=o2A61bJ0UCw">pc算法-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">因果图的基本概念-知乎</a></li>
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">Page,3-paper</a></li>
 </ol>
 
       
@@ -256,7 +307,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/05/meditation/about-problem-Definition-and-info-collection/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/meditation/free-career-choice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -270,7 +321,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/05/meditation/about-problem-Definition-and-info-collection/" class="post-title-link" itemprop="url">关于「问题的定义和搜集哪些数据」的一次实践</a>
+            <a href="/2021/03/08/meditation/free-career-choice/" class="post-title-link" itemprop="url">要不要做一个自由职业者？</a>
         </h2>
 
         <div class="post-meta">
@@ -280,14 +331,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-05 11:49:24" itemprop="dateCreated datePublished" datetime="2021-03-05T11:49:24+08:00">2021-03-05</time>
+              <time title="创建时间：2021-03-08 13:48:38" itemprop="dateCreated datePublished" datetime="2021-03-08T13:48:38+08:00">2021-03-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-14 15:29:02" itemprop="dateModified" datetime="2021-05-14T15:29:02+08:00">2021-05-14</time>
+                <time title="修改时间：2021-04-21 19:03:03" itemprop="dateModified" datetime="2021-04-21T19:03:03+08:00">2021-04-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -310,30 +361,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>问题粗粒度定义--&gt;信息搜集--&gt;问题再定义--&gt;信息再搜集--&gt;...</p>
-<p>阶段1：problem formulation--&gt; collect information---&gt;demo validation</p>
-<p>阶段2：【reflection】：阶段1的demo验证结果 + collect more information---&gt;problem reformulation--&gt; collect information---&gt;demo validation</p>
-<p>阶段3：重复</p>
-<p>阶段4：重复</p>
-<p>。。。</p>
-</blockquote>
-<h2 id="问题定义和信息搜集一个反复迭代同时要验证的过程">问题定义和信息搜集一个反复迭代同时要验证的过程</h2>
-<ul>
-<li>做项目的时候，关于「问题定义」（「需求定义」也类似）和 「数据搜集」往往是一个迭代往复的过程。</li>
-<li>【formulation + demo + validation】认知是从模糊到清晰的：先基于模糊的认知，确定一个粗粒度的问题，以及相应的解决方案，然后使用「概念验证」（思想泵）的方法去验证。</li>
-<li>【reflection】方案中发现有重大缺陷，然后搜集更多信息，比如别人是怎么解决问题的，以及定义问题的关键信息漏了哪些，方案有哪些是我们没有想到的。</li>
-<li>【reformulation + demo + validation】接下来，根据搜集到的信息，重新定义问题，以及梳理方案，这一次的问题和方案 因为有了更多的信息，业务上的和技术上的， 认识更清晰是肯定的，理论上梳理出来的问题和方案粒度更细致，我们也更有把握。 总结下，就是 问题定义和信息搜集一个反复迭代同时要验证的过程</li>
-</ul>
-<h2 id="一次实践">一次实践</h2>
-<ul>
-<li>先有一个模糊认知 ：要日志型的数据（完全非结构化的），告警数据（指标或者日志经过人工规则生成的），事件型数据（第三方的公告或者舆情告警），拓扑数据</li>
-<li>聚焦到问题-"根因定位"-的时候：发现不管是日志型数据，还是告警数据，还是拓扑数据，他们都是围绕着"故障事件定义"展开的。即需要定义到的故障事件的粒度</li>
-</ul>
-<p>最开始的时候， 我是这么定义事件的： 资源类型 + 事件描述</p>
-<p>后面发现这个粒度定义是不行滴，</p>
-<p>举个例子 机器1的mysql服务指标异常，机器2的mysql服务指标异常，使用 「资源类型 + 事件描述」这种定义的还，不就是一个事件了吗？ 但是考虑到应用场景-根因定位，到底是「机器1的mysql服务的指标异常」还是「机器2的mysql服务异常」，这是两个需要区分的cause metric，因为，对应着不同的操作。 更进一步，这两个事件对应的是根因图 上的不同的节点。</p>
-<p>总结下，事件定义的粒度越粗糙，定位到的根因就越粗糙，起到的作用就越少。 参考别人的定义： 2元组&lt;ip：服务名称&gt; 或者 3元组 &lt;ip: 端口：传输协议类型&gt;</p>
+          <ol type="1">
+<li>自由职业，失败了只能怪自己。</li>
+<li>自由太久，想回到有序的有压迫性的状态。</li>
+<li>一个东西，比如自由，没有的时候，想要得到。得到了，会想。我要这玩意儿干嘛呢？</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://steveshuo.com/65">Steve说65期 - 张潇雨 - 欲望可以有界，意义必然无穷</a></li>
+</ol>
 
       
     </div>

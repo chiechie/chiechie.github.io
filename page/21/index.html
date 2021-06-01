@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/28/technology/pred-sparse-ts/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/17/reading_notes/how-to-Defi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/28/technology/pred-sparse-ts/" class="post-title-link" itemprop="url">对稀疏序列进行预测</a>
+            <a href="/2021/05/17/reading_notes/how-to-Defi/" class="post-title-link" itemprop="url">《how to Defi》读书笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -188,17 +188,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-04-28 09:33:02 / 修改时间：10:07:51" itemprop="dateCreated datePublished" datetime="2021-04-28T09:33:02+08:00">2021-04-28</time>
+              <time title="创建时间：2021-05-17 09:20:02" itemprop="dateCreated datePublished" datetime="2021-05-17T09:20:02+08:00">2021-05-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-26 09:18:16" itemprop="dateModified" datetime="2021-05-26T09:18:16+08:00">2021-05-26</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -213,35 +219,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="背景和问题描述">背景和问题描述</h2>
+          <blockquote>
+<p>区块链技术的第一代应用是以比特币为全球支付货币，第二代应用是以太坊完成智能合约，第三代应用是defi和nft完成金融体系重构</p>
+<p>how to defi 讲的就是区块链技术的第三代应用之一--去中心化金融(DeFI)</p>
+</blockquote>
+<h2 id="why-defi">why defi</h2>
+<ol type="1">
+<li>传统金融体系容易遭受与人相关的风险，比如腐败。defi试图通过创建一个更好的金融环境，来弥补现有金融系统的漏洞，主要对银行系统的三个关键部分进行了优化：支付&amp;清算系统；可获取性；中心化&amp;透明度。</li>
+<li>DeFi的最大优势在于能够消除中 介机构并在零审查的环境下运行。</li>
+</ol>
+<h2 id="what">what</h2>
+<ol type="1">
+<li><p>DeFi生态中有哪些应用？</p>
 <ul>
-<li>我有一个time-series dataset (daily frequency) ，代表某个顾客购买某个商品的数量，如下:
-<ul>
-<li>[0,0,0,0,24,0,0,0,0,0,0,0,4,0,0,0,0,17,0,0,0,0,9,0,...]</li>
+<li>稳定币：比如泰达币（Tether，USDT) ，稳定币作为稳定的价值存储手段使得DeFi应用对大众来说更加可用。</li>
+<li>借贷服务：传统金融体系要求用户有银行账户，良好的信用评分，以及足够的抵押品；去中心化借贷允许任何人抵押其数字资产，然后利用抵押资产获得贷款。</li>
+<li>交易所：中心化交易所egconbase，huobi，binance，存在被黑客攻击的危险；去中心化交易所更安全，不依赖交易所的偿付能力。</li>
+<li>衍生品：衍生品合约主要在中心化平台上进行交易。目前，许多DeFi平 台正开始构建去中心化衍生品市场。</li>
+<li>基金管理：基金管理主要有主动型和被动型两种，主动型基金管理会有一个管理团队负责投资 决策。被动型基金管理没有管理团队，而被设计为尽可能接近 某一特定基准的表现。</li>
+<li>彩票：结合DeFi的彩票可将资金池的托管转移到以太坊智能合约上。</li>
+<li>支付：通过将支付重置为流模式而非我们熟悉的交易来改变我们处理支付的方式。（比如云服务商，按照使用的流量收费）</li>
+<li>保险：智能合约的漏洞容易被黑客攻击，从而影响智能合约中锁定的代币。当用户在Defi上处理大量资金的时候，购买保险是必要的。</li>
 </ul></li>
-<li>每个数据表示 某一天商品的销量</li>
-<li>已有的算法如arima，holtwinter只能对连续型 和 光滑型数据做预测，不适合现在的稀疏数据。</li>
-<li>总结下，target 非负&amp;稀疏&amp;整数，有什么技术可以做预测吗？</li>
-</ul>
-<h2 id="方案1将天的数据聚合成周">方案1:将天的数据聚合成周：</h2>
-<p>if you don't need daily resolution in your predictions, perhaps by aggregating to weekly you will have an easier time series to forecast.</p>
-<h2 id="方案2对两个事件的时间间隔-和-数值-进行建模">方案2:对两个事件的时间间隔 和 数值 进行建模</h2>
-<pre><code>- 假设数据是由两个随机过程驱动生成
-    - 1  a distribution over time intervals, （poisson？）
-    - 2 a distribution over purchase amounts. （gaussian？）</code></pre>
-<h2 id="方案3对用户的库存建模">方案3:对用户的库存建模</h2>
-<p>假设用户的库存是随事件衰减的，到达某个阈值就开始考虑购入，那么可以用手头的购买数据来拟合已经有的曲线（注意 消耗速率和threshold都有可能随时间变化）</p>
-<h2 id="方案4-建模成一个state-space模型state是时间间隔space是取值">方案4-建模成一个state-space模型，state是时间间隔，space是取值</h2>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbO8qrMgQNa.png?alt=media&amp;token=4078557f-5b4f-4b43-8fed-1eed975a0d80" /></p>
-<h2 id="chiechies-refomulation">chiechie's refomulation</h2>
-<p>突然想到，事件序列可以和 时间序列 重新定义到 一个框架下建模： - 事件序列 相当于 是中间有缺失值 或者 零值的 时间序列， - 一种建模方式是，按照滑动事件窗口的方式，将最近w个事件放入一个样本，特征除了event的值，还有相邻两个event的时间间隔 - 还有一种建模方式，缺失时刻补0，然后重新聚合，然后取时间窗口， - 两种方式都是把序列数据 转换为 表数据。</p>
-<h2 id="先转换--cusum-不仅适合sparse信号还适合固定值的信号">先转换--&gt;cusum, 不仅适合sparse信号，还适合固定值的信号：</h2>
-<ul>
-<li>You might be getting caught up on the sparsity characteristic... If you take a cumulative sum then it's just a plain old monotonic time series!</li>
-<li>https://www.reddit.com/r/datascience/comments/a63aq9/sparse_time_series_prediction/</li>
-</ul>
+</ol>
 <h2 id="参考">参考</h2>
-<p>1.<a target="_blank" rel="noopener" href="https://datascience.stackexchange.com/questions/17341/forecasting-non-negative-sparse-time-series-data">ts_prediction-stackexchange</a></p>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://news.huoxing24.com/20200817195548945458.html">how to difi中文版</a></li>
+</ol>
 
       
     </div>
@@ -261,7 +265,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/27/technology/python_regrex/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/reading_notes/hanfeizi_shuolin/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -275,7 +279,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/27/technology/python_regrex/" class="post-title-link" itemprop="url">使用python进行正则操作</a>
+            <a href="/2021/05/15/reading_notes/hanfeizi_shuolin/" class="post-title-link" itemprop="url">《韩非子-说林》读书笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -285,14 +289,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-27 10:51:56" itemprop="dateCreated datePublished" datetime="2021-04-27T10:51:56+08:00">2021-04-27</time>
+              <time title="创建时间：2021-05-15 22:46:04" itemprop="dateCreated datePublished" datetime="2021-05-15T22:46:04+08:00">2021-05-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-30 08:43:13" itemprop="dateModified" datetime="2021-04-30T08:43:13+08:00">2021-04-30</time>
+                <time title="修改时间：2021-05-26 09:18:16" itemprop="dateModified" datetime="2021-05-26T09:18:16+08:00">2021-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -300,7 +304,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -316,25 +320,74 @@
 
       
           <blockquote>
-<p>正则表达式一直都迷糊的很，现在要做日志聚类了，看看吧</p>
+<p>《说林》分上下两篇，共七十一则传说故事，这些故事应为韩非子为其论文写作而准备的材料。</p>
 </blockquote>
-<h2 id="re.compile-和-split">re.compile 和 split</h2>
-<p><img src="max-common-subsequence/img.png" alt="img.png" /> re.compile: 将字符串的正则表达式，转换为pattern对象。</p>
-<p>pattern对象，有点像re的中间数据对象，它有很多方法，like</p>
-<ul>
-<li>Object.split</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; some_text &#x3D; &#39;a,b,,,,c d&#39;</span><br><span class="line">&gt;&gt;&gt; reObj &#x3D; re.compile(&#39;[, ]+&#39;)</span><br><span class="line">&gt;&gt;&gt; reObj.split(some_text)</span><br><span class="line">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;]</span><br></pre></td></tr></table></figure>
-<p>也可以不用先转换为pattern对象</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import re</span><br><span class="line">&gt;&gt;&gt; some_text &#x3D; &#39;a,b,,,,c d&#39;</span><br><span class="line">&gt;&gt;&gt; re.split(&#39;[, ]+&#39;,some_text)</span><br><span class="line">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;]</span><br></pre></td></tr></table></figure>
-<h2 id="re.sub">re.sub</h2>
-<p>re.sub：将某些固定的模式，替换为指定的格式。 比如 将连续空格转换为"-"</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import re</span><br><span class="line">&gt;&gt;&gt; some_text &#x3D; &#39;a,  b,,,  ,c    d&#39;</span><br><span class="line">&gt;&gt;&gt; re.sub(r&#39;\s+&#39;, &quot;-&quot;, some_text)</span><br><span class="line">a,-b,,,-,c-d</span><br></pre></td></tr></table></figure>
-<h2 id="str.strip">str.strip</h2>
-<p>去除首字符 和 尾字符</p>
+<h1 id="上">上</h1>
+<h2 id="二">二</h2>
+<p>晋人伐邢，齐桓公将救之。鲍叔[1]曰：“太蚤。邢不亡，晋不敝；晋不敝，齐不重。且夫持危之功，不如存亡之德大。君不如晚救之以敝晋，齐实利。待邢亡而复存之，其名实美。”桓公乃弗救</p>
+<h2 id="三">三</h2>
+<p>智伯索地于魏宣子，魏宣子弗予。任章曰：“何故不予？”宣子曰：“无故请地，故弗予。”任章曰：“无故索地，邻国必恐。彼重欲无厌，天下必惧。君予之地，智伯必骄而轻敌，邻邦必惧而相亲。以相亲之兵待轻敌之国，则智伯之命不长矣。《周书》[1]曰：‘将欲败之，必姑辅之；将欲取之，必姑予之。’君不如予之以骄智伯。且君何释以天下图智氏，而独以吾国为智氏质乎？”君曰：“善。”乃与之万户之邑。智伯大悦，因索地于赵，弗与，因围晋阳。韩、魏反之外，赵氏应之内，智氏以亡。</p>
+<h1 id="下">下</h1>
+<h2 id="一">一</h2>
+<p>桓赫曰：“刻削[1]之道，鼻莫如大，目莫如小。鼻大可小，小不可大也；目小可大，大不可小也。”举事亦然。为其后可复者也，则事寡败矣。</p>
+<p>[1]刻削：雕刻。</p>
+<p>做事情跟雕刻一样要留有余地，就不容易失败。</p>
+<hr />
+<p>崇侯、恶来知不适纣之诛也，而不见武王之灭之也。比干、子胥知其君之必亡也，而不知身之死也。故曰：“崇候、恶来知心而不知事，比干、子胥知事而不知心。”圣人其备矣。</p>
+<p>最明智的人，眼观六路，耳听八方。</p>
+<blockquote>
+<p>六路：指上、下、四方；八方：指东、南、西、北、东南、西南、西北、东北。形容人机智灵活，遇事能多方观察分析。</p>
+</blockquote>
+<hr />
+<p>宋太宰贵而主断。季子将见宋君，梁子闻之曰：“语必可与太宰三坐乎，不然，将不免。”季子因说以贵主而轻国。</p>
+<p>宋国太宰地位尊贵但处事独断。季子想求见宋国国君，梁子听到后说：“你和宋国国君说话时，一定要像与国君、太宰坐在一起时那样，否则，你可能难逃杀身之祸。”季子因此进言了一些尊重君主而少问国事的话。</p>
+<p>言论可被公开。</p>
+<h2 id="二-1">二</h2>
+<p>杨朱之弟杨布衣素衣而出。天雨，解素衣，衣缁衣[1]而反，其狗不知而吠之。杨布怒，将击之。杨朱曰：“子勿击也，子亦犹是。曩[2]者使女狗白而往，黑而来，子岂能毋怪哉？”</p>
+<p>[1]缁衣：黑衣服。</p>
+<p>[2]曩（nǎng）：以往，从前。</p>
+<hr />
+<p>惠子曰：“羿执决[3]持扞[4]，操弓关[5]机，越人争为持的。弱子扞弓，慈母入室闭户。”故曰：“可必，则越人不疑羿；不可必，则慈母逃弱子。”</p>
+<p>[3]决：古代射箭的人戴在右手大拇指上用以拉弦的工具。</p>
+<p>[4]扞（hàn）：古代射箭的人往左手臂上戴的一种袖套，多为皮制。[5]关：牵引。</p>
+<p>事关自身生存的时候，还是会考虑用能力胜任的人，而不是用关系亲近的人。</p>
+<hr />
+<p>桓公问管仲：“富有涯乎？”答曰：“水之以涯，其无水者也；富之以涯，其富已足者也。人不能自止于足，而亡其富之涯乎！”</p>
+<p>人的欲望是没有尽头的，什么时候都不会认为自己已经足够成功，或者足够富裕了。</p>
+<h2 id="三-1">三</h2>
+<p>宋之富贾有监止子者，与人争买百金之璞玉，因佯失而毁之，负其百金，而理其毁瑕，得千溢[1]焉。事有举之而有败，而贤其毋举之者，负之时也。</p>
+<p>[1]溢：同“镒”。一镒相当于二十两。一说为二十四两。</p>
+<p>就好像创业，创业肯定有一定概率成功或者失败，但是很多人因为害怕失败，就不去做这个事情，是因为只看到了负面的效应。</p>
+<hr />
+<p>有欲以御见荆王者，众驺[2]妒之。因曰：“臣能撽[3]鹿。”见王。王为御，不及鹿；自御，及之。王善其御也，乃言众驺妒之。</p>
+<p>[2]驺（zōu）：马夫。 [3]撽（qiào）：打，击。</p>
+<p>先得证明自己的实力？</p>
+<hr />
+<p>荆令公子将伐陈。丈人送之曰：“晋强，不可不慎也。”公子曰：“丈人奚忧？吾为丈人破晋。”丈人曰：“可。吾方庐陈南门之外。”公子曰：“是何也？”曰：“我笑勾践也。为人之如是其易也，己独何为密密十年难乎？”</p>
+<p>年轻人容易把问题看的太容易</p>
+<h2 id="四">四</h2>
+<p>公子纠将为乱，桓公使使者视之。使者报曰：“笑不乐，视不见，必为乱。”乃使鲁人杀之。</p>
+<hr />
+<p>公孔弘断发而为越王骑，公孔喜使人绝[1]之，曰：“吾不与子为昆弟矣。”公孙弘曰：“我断发，子断颈而为人用兵，我将谓子何？”周南之战，公孙喜死焉。</p>
+<p>[1]绝：断绝关系。</p>
+<hr />
+<p>有与悍者邻，欲卖宅而避之。人曰：“是其贯将满矣，子姑待之。”答曰：“吾恐其以我满贯也。”遂去之。故曰：“物之几者，非所靡也。”</p>
+<p>事情如果到了紧急关头，就不要再拖拖拉拉、磨磨蹭蹭、犹豫不决的了，需当机立断！</p>
+<hr />
+<p>孔子谓弟子曰：“孰能导子西之钓名也？”子贡曰：“赐也能。”乃导之，不复疑也。孔子曰：“宽哉，不被于利！洁哉，民性有恒！曲为曲，直为直。”孔子曰：“子西不免。”白公之难，子西死焉。故曰：“直于行者曲于欲。”</p>
+<h2 id="五">五</h2>
+<p>靖郭君将城薛，客多以谏者。靖郭君谓谒者曰：“毋为客通。”齐人有请见者曰：“臣请三言而已。过三言，臣请烹。”靖郭君因见之。客趋进曰：“海大鱼。”因反走。靖郭君曰：“请闻其说。”客曰：“臣不敢以死为戏。”靖郭君曰：“原为寡人言之。”答曰：“君闻大鱼乎？网不能止，缴[2]不能□[3]也，荡而失水，蝼蚁得意焉。今夫齐亦君之海也。君长有齐，奚以薛为？君失齐，虽隆薛城至于天，犹无益也。”靖郭君曰：“善。”乃辍，不城薛。</p>
+<h2 id="六">六</h2>
+<p>荆王弟在秦，秦不出也。中射之士[1]曰：“资臣百金，臣能出之。”因载百金之晋，见叔向，曰：“荆王弟在秦，秦不出也。请以百金委叔向。”叔向受金，而以见之晋平公曰：“可以城壶丘矣。”平公曰：“何也？”对曰：“荆王弟在秦，秦不出也，是秦恶荆也，必不敢禁我城壶丘。若禁之，我曰：‘为我出荆王之弟，吾不城也。’彼如出之，可以德荆；彼不出，是卒恶也，必不敢禁我城壶丘矣。”公曰：“善。”乃城壶丘。谓秦公曰：“为我出荆王之弟，吾不城也。”秦因出之。荆王大说，以链金百镒遗晋。</p>
+<p>叔向收了楚国臣子的金子，并没有告诉晋平公，而是顺着晋国的角度，帮君主分析如何在秦国和楚国之间周旋，获得利益，得到的结论 也跟自己的利益相符合。</p>
+<hr />
+<p>阖庐攻郢，战三胜，问子胥曰：“可以退乎？”子胥对曰：“溺人者一饮而止，则无遂者，以其休也。不如乘之以沈[2]之。”</p>
+<hr />
+<p>郑人有一子，将宦，谓其家曰：“必筑坏墙，是不善，人将窃。”其巷人亦云。不时筑，而人果窃之。以其子为智，以巷人告者为盗。</p>
+<p>人本能会甩锅给关系疏远的人，而把功劳归给关系亲近的人。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.programiz.com/python-programming/regex">怎么写正则表达式</a></li>
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/0c332090718443e90c34969">韩非子-微信读书</a></li>
 </ol>
 
       

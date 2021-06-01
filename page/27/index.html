@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/AI/reinforcement_learning/rf1_summary/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/27/technology/python_regrex/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/AI/reinforcement_learning/rf1_summary/" class="post-title-link" itemprop="url">强化学习1 资料汇总</a>
+            <a href="/2021/04/27/technology/python_regrex/" class="post-title-link" itemprop="url">使用python进行正则操作</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-18 20:16:31" itemprop="dateCreated datePublished" datetime="2021-04-18T20:16:31+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-27 10:51:56" itemprop="dateCreated datePublished" datetime="2021-04-27T10:51:56+08:00">2021-04-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-31 10:13:29" itemprop="dateModified" datetime="2021-05-31T10:13:29+08:00">2021-05-31</time>
+                <time title="修改时间：2021-04-30 08:43:13" itemprop="dateModified" datetime="2021-04-30T08:43:13+08:00">2021-04-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
                 </span>
             </span>
 
@@ -219,126 +219,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="why-rl">why rl?</h2>
-<p>可能可以超越人类。监督学习 只能模仿，不能超越</p>
-<h2 id="公开课">公开课</h2>
-<h3 id="zhouboleirf-intro">zhoubolei：rf-intro</h3>
+          <blockquote>
+<p>正则表达式一直都迷糊的很，现在要做日志聚类了，看看吧</p>
+</blockquote>
+<h2 id="re.compile-和-split">re.compile 和 split</h2>
+<p><img src="max-common-subsequence/img.png" alt="img.png" /> re.compile: 将字符串的正则表达式，转换为pattern对象。</p>
+<p>pattern对象，有点像re的中间数据对象，它有很多方法，like</p>
 <ul>
-<li><p>zhoubolei: ：rf-intro</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/zhoubolei/introRL">zhoubolei-github-课程资料</a> ｜<a target="_blank" rel="noopener" href="https://github.com/zhoubolei/introRL/blob/master/lecture1.pdf">slide</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1LE411G7Xj">zhoubolei视频</a></li>
-</ul></li>
-<li><p>wangshusen</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1XpTgny_Vr0LobBsuYF4KkA">baidu网盘</a>:密码:x0wb</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DRL/blob/master/Notes_CN/DRL.pdf">强化学习中文教材</a></li>
-<li><a target="_blank" rel="noopener" href="https://youtu.be/vmkRMvhCW5c">视频</a>|<a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">深度学习课件</a>|<a target="_blank" rel="noopener" href="https://github.com/wangshusen/DRL">深度强化学习课件</a></li>
-</ul></li>
-<li><p>chiechie的笔记</p>
-<ul>
-<li>【基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf1-basic-concepts/">1. 强化学习的基本概念</a></li>
-<li>【基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf2-value-based/">2. 基于价值的强化学习-DQN 和 TD 算法</a>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FSSywH-1RRf.png?alt=media&amp;token=6b811aba-b275-47f0-a6d3-2945b6fff817" /></li>
-</ul></li>
-<li>【强化学习基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf3-policy-based/">3. 基于策略的强化学习</a>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVhwFEvq-CN.png?alt=media&amp;token=de826d99-eaa2-4c92-8bec-520c7a04ee0b" /></li>
-</ul></li>
-<li>【强化学习基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf4-actor-critic/">4. actor-critic 方法</a></li>
-<li>【专题】价值学习高级技巧
-<ul>
-<li><a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf5-advanced-value-based/">价值学习高级技巧1/3-经验回放</a>
-<ul>
-<li>对TD算法的改进</li>
-<li>对神经网络结构的改进</li>
-</ul></li>
-</ul></li>
-<li>【专题】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf6-baseline-in-policy-gradient/">策略梯度中的baseline</a>
-<ul>
-<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。Baseline 可以是任何不依赖于动作的函数。这节课我们做数学推导，得出带有 baseline 的策略梯度，并对它做蒙特卡洛近似。在后面的两节课中，我们把它用在 REINFORCE 和 A2C 方法中。</li>
-<li>策略梯度中的Baseline 1/4-数学推导</li>
-<li>策略梯度中的Baseline 2/4-REINFORCE with Baseline
-<ul>
-<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。这节课我们学习 REINFORCE with Baseline，它是一种策略梯度方法。它用价值网络近似 baseline 函数。它用带 baseline 的策略梯度学习策略网络，用价值网络去拟合观测到的回报。</li>
-</ul></li>
-<li>策略梯度中的Baseline 3/4-A2C 方法</li>
-<li>策略梯度中的Baseline 4/4-REINFORCE与A2C的异同</li>
-</ul></li>
-<li>【专题】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf7-continous-action/">连续控制</a>
-<ul>
-<li>连续控制1/3-离散控制与连续控制</li>
-<li>连续控制2/3-确定策略梯度DPG</li>
-<li>连续控制3/3-用随机策略做连续控制</li>
-</ul></li>
-</ul></li>
+<li>Object.split</li>
 </ul>
-<h2 id="练手项目">练手项目</h2>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshub/RL-Stock">使用强化学习炒股</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267998242">强化学习应用于金融问题的文章</a></li>
-<li><a target="_blank" rel="noopener" href="https://gym.openai.com/">Gym-强化学习开发框架</a>：开发强化学习算法的工具箱，有很多第三方环境</li>
-</ul>
-<h2 id="强化学习的应用">强化学习的应用</h2>
-<p><a href="https://chiechie.github.io/2021/04/21/reinforcement_learning/rf-application/">强化学习的应用--chiechie</a></p>
-<ul>
-<li>神经网络结构搜索</li>
-<li>自动生成SQL语句</li>
-<li>推荐系统</li>
-<li>网约车调度</li>
-</ul>
-<h2 id="一些思考">一些思考</h2>
-<h3 id="价值学习策略学习动作裁判学习-这三种方法-存在的必要">价值学习，策略学习，动作裁判学习 这三种方法 存在的必要？</h3>
-<ul>
-<li>既然有了policy Function 或者 Q, 都可以告诉agent怎么操作。那有什么必要去做 actor-critic 算法呢？单独学两个神经网络不就可以了？</li>
-<li>问题就是不容易学呀！所以才会有Actor-Critic这种复杂的方法。</li>
-</ul>
-<h3 id="强化学习-适合哪些应用场景图像分类-适合用吗为什么-auto-ml适合用">强化学习 适合哪些应用场景？图像分类 适合用吗？为什么 auto-ml适合用？</h3>
-<ul>
-<li>适合 序列决策 问题， 图像分类没必要 用</li>
-<li>训练一个大的神经网络类似玩一局游戏 耗时很久，每一个迭代 类似 游戏里面的 一小步，可以拿到即时reward，这样就可以使用TD算法来学习 value-function。</li>
-</ul>
-<h3 id="在线学习-和-强化学习的-区别">在线学习 和 强化学习的 区别？</h3>
-<ul>
-<li>online learning 不假定模型输出会影响未来输入，只看单步损失</li>
-<li>reinforcement learning 中模型输出会影响未来输入，必须考虑输出的后果</li>
-</ul>
-<h3 id="on-policy-和-off-policy-的-区别">on-policy 和 off-policy 的 区别？</h3>
-<ul>
-<li>相同点：都是用来更新价值网络的学习算法</li>
-<li>不同点是：on-policy是按照当前的policy来估计q-value；off-policy是按照最优的policy来估计q-value</li>
-</ul>
-<h3 id="监督学习-和-强化学习的区别">监督学习 和 强化学习的区别</h3>
-<ul>
-<li>监督学习
-<ul>
-<li>要求数据 是独立同分布的</li>
-<li>学习过程有老师手把手教，标准答案（label）是什么</li>
-</ul></li>
-<li>强化学习
-<ul>
-<li>数据不用iid</li>
-<li>没有导师（supervisor），不会被告知正确的action是什么，只有一个奖励信号，并且有延迟的。需要自己去试错，找到具长期reward最大的action</li>
-</ul></li>
-</ul>
-<h3 id="强化学习的特点">强化学习的特点</h3>
-<ul>
-<li><p>强化学习中随机性的两个来源：action可以是随机的，状态转移可以是随机的</p></li>
-<li><p>试错机制</p></li>
-<li><p>延迟reward</p></li>
-<li><p>时间会产生影响</p></li>
-<li><p>agent的行为会影响后续收到的数据（agent的action改变了环境）</p>
-<blockquote>
-<p>类似我们的模型自动更新，担心时间会对模型造成影响。比如模型推荐了商品a，我们也只能收到关于商品a的反馈。</p>
-</blockquote></li>
-</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; some_text &#x3D; &#39;a,b,,,,c d&#39;</span><br><span class="line">&gt;&gt;&gt; reObj &#x3D; re.compile(&#39;[, ]+&#39;)</span><br><span class="line">&gt;&gt;&gt; reObj.split(some_text)</span><br><span class="line">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;]</span><br></pre></td></tr></table></figure>
+<p>也可以不用先转换为pattern对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import re</span><br><span class="line">&gt;&gt;&gt; some_text &#x3D; &#39;a,b,,,,c d&#39;</span><br><span class="line">&gt;&gt;&gt; re.split(&#39;[, ]+&#39;,some_text)</span><br><span class="line">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;]</span><br></pre></td></tr></table></figure>
+<h2 id="re.sub">re.sub</h2>
+<p>re.sub：将某些固定的模式，替换为指定的格式。 比如 将连续空格转换为"-"</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import re</span><br><span class="line">&gt;&gt;&gt; some_text &#x3D; &#39;a,  b,,,  ,c    d&#39;</span><br><span class="line">&gt;&gt;&gt; re.sub(r&#39;\s+&#39;, &quot;-&quot;, some_text)</span><br><span class="line">a,-b,,,-,c-d</span><br></pre></td></tr></table></figure>
+<h2 id="str.strip">str.strip</h2>
+<p>去除首字符 和 尾字符</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/questions/184657/what-is-the-difference-between-off-policy-and-on-policy-learning">on-policy和off-policy的区别-stackoverflow</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/290530992">深度强化学习 在实际应用中少吗？难点在那里？</a></li>
-<li><a target="_blank" rel="noopener" href="https://weibo.com/titaniumviii?refer_flag=0000015010_&amp;from=feed&amp;loc=nickname">宋一松SYS</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/64526936">强化学习和在线学习的区别-zhihu</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.programiz.com/python-programming/regex">怎么写正则表达式</a></li>
 </ol>
 
       
@@ -359,7 +259,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reading_notes/taleb-blackswan/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/27/investment/about-cryptocurrency/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -373,7 +273,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/reading_notes/taleb-blackswan/" class="post-title-link" itemprop="url">黑天鹅</a>
+            <a href="/2021/04/27/investment/about-cryptocurrency/" class="post-title-link" itemprop="url">关于区块链和加密货币</a>
         </h2>
 
         <div class="post-meta">
@@ -382,17 +282,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-04-18 19:55:49 / 修改时间：19:57:23" itemprop="dateCreated datePublished" datetime="2021-04-18T19:55:49+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-27 08:47:47" itemprop="dateCreated datePublished" datetime="2021-04-27T08:47:47+08:00">2021-04-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-24 20:33:47" itemprop="dateModified" datetime="2021-05-24T20:33:47+08:00">2021-05-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
                 </span>
             </span>
 
@@ -407,57 +313,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="序言">序言</h1>
+          <blockquote>
+<p>chiechie的粗浅见解先抛出来，过一段时间再来验一验</p>
+</blockquote>
+<h2 id="区块链">区块链</h2>
+<ol type="1">
+<li>区块链的本质是一个分布式账本，这个账本是去中心化的。基于这个基础设施可以孵化很多应用</li>
+<li>第一代区块链应用是加密货币，代表是比特币，想变成国际支付货币。</li>
+<li>第二代区块链应用是智能合约，代表是以太坊。</li>
+<li>第三代区块链应用是去中心化金融，代表是DeFI和NFT，可能重塑金融行业。</li>
+</ol>
+<h2 id="第一代应用-去中心化数字货币">第一代应用-去中心化数字货币</h2>
+<h3 id="加密货币">加密货币</h3>
+<ol type="1">
+<li>加密货币，最大的需求方就是，希望绕开监管的交易，比如国际支付，洗钱。</li>
+<li>比特币是价值存储的载体之一。 价值就是财富，类似数据，水，食物等其他资源，暂时用不完，希望存起来，后面有需要的时候再用，但是存储财富的载体，经常会被政府操纵，比如人们把财富藏于房产中，股票中，货币中，政府可以操控房子的价格，股票的价格，货币的数量。有点像，政府可以不费吹灰之力，凭空创造财富，财富==钞票；打工人可以增加财富的绝对数字，但it is in vain，政府下一步就可以控制财富分配的比例。</li>
+<li>加密货币是理想主义geek对抗现实世界不公正的产物。（然而，理想丰满，现实还是困难重重的）</li>
+<li>加密货币跟政府权利存在竞争关系，政府不乐意将印钱权利拱手送人。但是如果要制衡美元，世界上其他国家还是🈶️可能联合起来借助区块链的力量。但是之后呢？竞争仍然存在.</li>
+<li>加密货币的风险？机构做空，政府监管，都会导致币存储的财富缩水。政府宣布交易违法，关闭交易所，</li>
+<li>现实世界的资产大概有几类：
 <ul>
-<li>黑天鹅举例子
-<ul>
-<li>能带来收益的：风险投资，科技发现</li>
-<li>能带来损失的：金融危机，失业</li>
-</ul></li>
-<li>关于学习，人性又一个弱点：习惯学习精确的东西，而不是从整体上把握
-<ul>
-<li>【马其诺防线的故事】第一次世界大战之后，为了避免德国人再次入侵，法国人沿德国人曾经入侵的路线修建了一条防御工事，而希特勒（几乎）毫不费力地绕过了它。</li>
-<li>问题产生于我们的思维结构：我们不学习规律，而是学习事实，而且只学习事实。。我们似乎不太善于认识到我们的超规律（即我们倾向于不学习规律的规律）。我们蔑视抽象的东西——疯狂地蔑视。</li>
-</ul></li>
-<li>这个问题为什么很重要？
-<ul>
-<li>这种直觉的方法论，对于现代复杂且越来越具循环性的环境来说是非常不切实际的。</li>
-</ul></li>
-<li>我们的生物基因决定了，我们其实不擅长思考。
-<ul>
-<li>我们的头脑似乎不是用来思考和内省的，远古时期，我进行反常规内省和努力思考的祖先会被老虎吃掉，而他不爱思考但身体反应迅速的表亲早已跑开躲了起来。</li>
-</ul></li>
-<li>因为钟形曲线忽（高斯曲线）略大的离差，无法解释它们，但还要让我们相信不确定性是可以控制的，我在本书中戏称它为“智力大骗局”。</li>
-<li>【关于模型】模型和结构并不永远是错的，它们只错在一些具体的运用上。困难在于你不可能事前知道哪里会错（而只能事后知道），也不可能知道错误会导致严重后果。这些模型就像某些可能有效，但同时也可能具有非常严重的副作用的药品。</li>
-<li>教室中的人从没有面对过在不确定性条件下进行决策的真实情况，意识不到什么是重要的，什么是不重要的，即使他们是关于不确定性问题的学者。我所说的不确定性实践，可以是当海盗、做商品投机、职业赌博、在黑手党的某个分部效力，或者是简单的持续创业</li>
+<li>有抵押或者信用担保的债务，如国债（政府背书），公司债券（企业自己背书），股票</li>
+<li>有使用价值的资产：住房</li>
+<li>收藏品类的资产：茅台，钻石，泡沫时期的荷兰郁金香，重点是稀缺性</li>
 </ul>
-<h1 id="第一部分-极端斯坦-与-黑天鹅现象">第一部分 极端斯坦 与 黑天鹅现象</h1>
-<h2 id="第一章-自我欺骗的人类">第一章 自我欺骗的人类</h2>
-<ul>
-<li>面对历史，人类的思想会犯三个毛病：
-<ul>
-<li>第一宠迷雾：我们以为我们生活的这个世界比他实际上更加可理解，可解释，可预测</li>
-</ul></li>
-</ul>
-<h2 id="第三章-极端斯坦与平均斯坦">第三章 极端斯坦与平均斯坦</h2>
-<ul>
-<li>关于职业选择，有两类职业：
-<ul>
-<li>“一劳永逸型”：
-<ul>
-<li>录音师和电影演员也是一样：他们会让电影院的音效工程师调好播放器，而不必在每一次播放电影时都出现。</li>
-</ul></li>
-<li>“苦力活”
-<ul>
-<li>面包师必须为每一位新客户——烤出面包。</li>
-</ul></li>
-<li>假如我必须给出建议的话，我会建议选择一个收入不具有突破性的职业---面包师！收入具有突破性的职业只有在你成功的时候对你是有利的。这样的职业竞争更激烈，导致更大的不平均和不确定性，在努力和回报之间存在巨大差异，因为少数人获得蛋糕的大部分，其他人可能什么也得不到，而这怪不了别人</li>
-</ul></li>
-<li>可以这样陈述平均斯坦的最高法则：当你的样本量足够大时，任何个例都不会对整体产生重大影响。最大的观察值虽然令人吃惊，但对整体而言最终微不足道。</li>
-<li></li>
-</ul>
-<h1 id="第三部分-极端斯坦的灰天鹅">第三部分 极端斯坦的灰天鹅</h1>
-<h2 id="第十八章-骗子的不确定性">第十八章 骗子的不确定性</h2>
+比特币短期和长期都具备收藏品的属性。</li>
+<li>成为currency的前提是，大家达成共识，都认为这个currency代表的财富不会缩水。迄今为止，只有黄金和美元能保持这种地位。美元是基于美国的政治经济军事各方面实力。比特币代表的加密货币除了信徒们的情怀，还有什么能支持长期的市值？</li>
+<li>收藏品是一个小圈子的共识和信仰，比特币完美符合。</li>
+<li>小圈子内的currency：这个有可能，类似QQ币。</li>
+</ol>
+<h3 id="黄金相对于货币的优势">黄金相对于货币的优势？</h3>
+<p>黄金作为价值载体的价格，主要靠自由市场来决定，政府不能凭空创造黄金。</p>
+<blockquote>
+<p>全世界当前黄金还有20%没有被开采，政府们纷纷放弃金本位，不是因为担心黄金不够造成的通货紧缩（早得很），是迫不及待想扩大手中的权利。</p>
+<p>比如发债券，可以像庞氏骗局一样，到期了就续期。</p>
+</blockquote>
+<p>但是政府可以凭空创造货币，比如发国债，让下一任的政府来还，本质来说，就是在发行货币（央行和财政部唱双簧，央行用发的货币来购买了财政部发的国债）</p>
+<h3 id="区块链相对于黄金的优势">区块链相对于黄金的优势？</h3>
+<p>政府可以控制黄金在市场上流通，因为黄金太个头太大了，很容易被监控到。</p>
+<p>政府没法控制区块链，首先，区块链是虚拟资产，第二，公共账本被全世界的节点在维护着 第三，资产的匿名性，公共账本虽然会记录交易双方比特币账户的地址，但是账户在真实世界的身份是不得而知的。这三点都会导致政府的监管成本极高。</p>
+<h2 id="第二代应用-智能合约">第二代应用-智能合约</h2>
+<h2 id="第三代应用-defi和nft">第三代应用-DeFi和NFT</h2>
+<ol type="1">
+<li>NFT 的概念其实很早就出现了，就是腾讯的Q币，只是中心化的。现在不管是名人、宣传还是NFT都是在为市场扩圈，币圈与非币圈之间也已经没有明显的界限了，而 NFT会把这个现象推向更高的高潮。</li>
+</ol>
+<h2 id="chiechie的猜测">chiechie的猜测</h2>
+<ol type="1">
+<li>全世界范围内，政府（除美国）短期不会打压数字货币，甚至还会推动数字货币的发展，直到世界格局改变。</li>
+<li>各种去中心化数字货币成为国际流通货币的可能性很小，但是，不要失望，有较大可能演变成一个收藏品，比特币会成为其中的顶级收藏品。</li>
+<li>动物币、狗狗币?我认为这些东西的出现对币市是有好处的，特别是狗狗币给市场带来了很多外部的资产。不论是动物币、狗狗币还是shib，都成功用娱乐的形式把外面的客户引流进来。如果只是一本正经地推广比特币，人们可能会觉得没有意思，到那时一提到狗币，shib 大家都很感兴趣。马克斯也为币圈带来了一些热度，我们可以把这个价值等同于娱乐圈的IP 价值，是对人们生活的调剂。</li>
+</ol>
+<p>先就这些吧，想到再补</p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.chainnews.com/articles/503060403039.htm">对话 DODO 雷达熊：DeFi 有太多反逻辑，应创造无需许可的产品并发挥价值</a></li>
+<li><a target="_blank" rel="noopener" href="https://assets.coingecko.com/books/how-to-defi/How_to_DeFi_Chinese.pdf">How_to_DeFi-中文</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hGh0cwRR8DkuWe2NpKkH6A">王川: 入门以太坊</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672247422&amp;idx=1&amp;sn=28ac3ca342cc6e0454a710b6c32d28b4&amp;chksm=85a124bab2d6adac3fee8c3569b91485c5e796dbea4cf35b9443a7fbcf911e7621dc25e4bf3d&amp;scene=21#wechat_redirect">王川：以太坊的费用，为什么这么高</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JTwjtUM1qaoifqJlHNxCtw">王川: 公众号-历史文章</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672247421&amp;idx=1&amp;sn=d817389613f098feca94bd93b869f081&amp;chksm=85a124b9b2d6adaf64132760465d7d9a4976a3c0ede83dbc3a65c8af0f560bc13f05cfe2f9fb&amp;scene=21#wechat_redirect">王川: 关于比特币的rtfm</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246704&amp;idx=1&amp;sn=c38edcdc74282d13771f78b047cd802e&amp;chksm=85a15974b2d6d0620230b7a5145a8dfc33e8419e3a3a3111469adf21ba568dea94cfd505b2ad&amp;scene=21#wechat_redirect">王川: naval的区块链断言</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246708&amp;idx=1&amp;sn=7558d34e23d5713cf59f069698a8f7d6&amp;chksm=85a15970b2d6d066c7c654017b697566ef0ed23a3308728e79b6b019b66738638ad3f297347c&amp;scene=21#wechat_redirect">王川: 关于区块链随想</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246779&amp;idx=1&amp;sn=3eb31aba31da622e598063f84ed28c3d&amp;chksm=85a1593fb2d6d0298ec62e1f733997970030001fea90e0ff22a271b4970dda0033f7e3e41a35&amp;scene=21#wechat_redirect">王川: 区块链技术的终局是什么</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246948&amp;idx=1&amp;sn=6c7b36184fabeabd095bd649342f0598&amp;chksm=85a12660b2d6af76fe53bcc7feb656550858be7b99ce9094a67d65db8a27f454dc50cb04328b&amp;scene=21#wechat_redirect">王川：关于区块链投资的七个猜测</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672247406&amp;idx=1&amp;sn=55316a2d422c033ca214ad843fd25a02&amp;chksm=85a124aab2d6adbc02041db1ba3d0e8b4e1b813578035dbeecb48fb1b3021c74dacfb752692c&amp;scene=21#wechat_redirect">王川：去中心化的流动性黑洞, 和区块链第一法则</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&amp;mid=2672246775&amp;idx=1&amp;sn=206bf28f6091d4e2c06a0b2a5c3eb1b7&amp;chksm=85a15933b2d6d025d33e12e76fb12c8f6c563e0f1f3ffaf477335e8dec1c60eb65de8fdde0a9&amp;scene=21#wechat_redirect">王川: 比特币的支付费用为什么这么高</a></li>
+<li><a target="_blank" rel="noopener" href="https://tokeninsight.com/zh/report/2708">report</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Oz9zw7-_vhM">youtube-nft</a></li>
+</ol>
 
       
     </div>

@@ -1,7 +1,7 @@
 ---
 title: chapter2.1.1 基于拓扑的根因定位CauseInfer1
 author: chiechie
-date: 2021-03-02 14:41:39
+date: 2021-05-21 14:41:39
 mathjax: true
 tags:
 - AIOps
@@ -13,27 +13,25 @@ categories:
 ---
 
 ## 目录
-
-- [chapter0 概览](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/)
-- [chapter1 故障发现](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate/)
-	- [chapter1.1 单指标异常检测](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/)
-	- [chapter1.3 故障预测](https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_2-fault-prediction/)
-	- [chapter1.4 指标异常关联](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/)
-	- [chapter1.5 日志聚类](https://chiechie.github.io/2021/02/19/AI/AIOps/AIOps-1_5-log-analysis/)
-		- [chapter1.5.1 使用logmine加强版做日志聚类](https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/)
-		- [chapter1.5.2 美团日志聚类](https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/)
-	
-- [chapter2 故障定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/)
-	- [chapter2.1 微服务系统的故障定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/)
-		- [chapter2.1.1 CauseInfer1](https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/)
-		- [chapter2.1.2 CauseInfer2](https://chiechie.github.io/2021/03/03/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/)
-		- [chapter2.1.3 AIOps挑战赛2020-获奖方案分享](https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020/)
-		- [chapter2.1.4 AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/)
-		- [chapter2.1.5 N-Softbei2020比赛](https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/)
-		- [chapter2.1.6 MicroCause](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause)
-	- [chapter2.2 多维下钻根因定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/): 暂无
-	- [chapter2.3 调用链根因分析](https://chiechie.github.io/2021/03/15/AI/AIOps/AIOps-2_3-trace_rca/)
-	- [chapter2.4 时间序列关联性分析](https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/)
+- [chapter0 概览](../AIOps-0-summary/)
+- [chapter1 故障发现](../AIOps-1-event-generate/)
+	- [chapter1.1 单指标异常检测](../AIOps-1_1-kpi-detector/)
+	- [chapter1.3 故障预测](../AIOps-1_2-fault-prediction/)
+	- [chapter1.4 指标异常关联](../AIOps-1_4-kpi-correlation/)
+	- [chapter1.5 日志聚类](../AIOps-1_5-log-analysis/)
+		- [chapter1.5.1 使用logmine加强版做日志聚类](../AIOps-1_5_1-log-analysis_logmine/)
+		- [chapter1.5.2 美团日志聚类](../AIOps-1_5_2-log-analysis_meituan/)
+- [chapter2 故障定位](../AIOps-2-event-analysis/)
+	- [chapter2.1 微服务系统的故障定位](../AIOps-2_1-topo-rca/)
+		- [chapter2.1.1 CauseInfer1](../AIOps-2_1_1-topo-rca-causeinfer-notes1/)
+		- [chapter2.1.2 CauseInfer2](../AIOps-2_1_2-topo-rca-causeinfer-notes2/)
+		- [chapter2.1.3 AIOps挑战赛2020-获奖方案分享](../AIOps-2_1_3-topo-rca-aiops2020/)
+		- [chapter2.1.4 AIOps挑战赛2021-demo方案](../AIOps-2_1_4-topo-rca-aiops2021/)
+		- [chapter2.1.5 N-Softbei2020比赛](../AIOps-2_1_5-topo-rca-cnsoftbei2020/)
+		- [chapter2.1.6 MicroCause](../AIOps-2_1_6-topo-rca-MicroCause)
+	- [chapter2.2 多维下钻根因定位](../AIOps-2_2-multi-dimensional-rca/): 暂无
+	- [chapter2.3 调用链根因分析](../AIOps-2_3-trace_rca/)
+	- [chapter2.4 时间序列关联性分析](../AIOps-2_4-metric_event_correlation/)
 - chapter3 故障恢复
 
 
@@ -61,21 +59,14 @@ categories:
 看完第一遍之后，还有几个问题
 
 - 因果图是什么？
-  
-  因果图是一个两层分层的图。（two layered hierarchical causality graph）
-  较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph）。
-  较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph）
-
+  - 因果图是一个两层分层的图（two layered hierarchical causality graph），因果图 = 指标因果图（刻画局部的依赖关系） + 服务依赖图（刻画整个信息设备的依赖关系）。
+  - 服务依赖图（Service Dependency Graph）：粗粒度的信息，表示每台机器上每个服务间的依赖关系，用于定位到服务级别的cause。
+  - 指标因果图（Metric Causality Graph）：细粒度的信息，表示表达的是一台机器上，一个服务的指标和多个机器之间的故障传播关系），用于定位到性能异常的真正的元凶。
+    
 - 指标因果图和服务依赖图是什么关系？
   
-  指标因果图 和 服务依赖图可以看成是因果图的两个视图。
-  
-  因果图 = 指标因果图（刻画局部的依赖关系） + 服务依赖图（刻画整个信息设备的依赖关系）。
-  
-  指标因果图是细粒度的视图，表达的是一台机器上，一个服务的指标和多个机器之间的故障传播关系。
-  
-  服务依赖图是粗粒度的视图，表达的是不同机器的不同服务之间的故障传播关系。
-  
+    指标因果图中的节点 是 服务依赖图中的节点 的一个属性
+
 - 因果图是怎么构建？
   
   两种方式结合：采集调用链构建拓扑 + 数据分析得到因果关系
@@ -89,18 +80,22 @@ categories:
   对的，每个主机上的每个服务都有一个自己的指标因果图。 然后跨主机的服务调用，就靠服务依赖图表示。
   
 - 因果图中不同的机器IP是否是不同的节点？
+  
   是的，服务依赖图的粒度更细，是一个机器上的一个服务是一个节点。
 
 -  一个服务的SLO指标是怎么定义的？有什么规则？其他指标是怎么选取的？
+   
   一般来说是需要对每一个应用去定制化定义的，但是这里可以用一个统一的指标，即服务相应时长。   
 
 - 根因推断的时候，多个因导致的结果怎么推断出来？
+  
   这种复杂的问题解决不了.
 
 - 根因推断的时候，多个根因怎么打分？
-  找最异常的那个指标。
+  
+  找异常程度最高的那个指标。
 
-## 引言 
+## 问题描述
 
 关于性能诊断领域，之前大部分工作都很粗糙，只涉及定位异常，但是我们觉得还应该包括根因推断，使得软件维护更高效，并且提供更有用的信息给软件bug。
 
@@ -108,14 +103,14 @@ categories:
 
 当review完一些开源软件的bugs之后，我们观察到，很多bugs都可能导致性能问题。
 
-这里，我们仅仅考虑那些造成资源异常的bugs，例如 物理资源消耗异常（eg CPU） 或者 逻辑资源异常（eg 锁）。
+这里，我们仅仅考虑那些造成资源异常的bugs，例如导致物理资源消耗异常（eg CPU） 或者 逻辑资源异常（eg 锁）。
 
-为什么要选择这些bugs？ 不需要关注源代码，就可以搜集资源消耗指标；软件中存在太多这种bugs了。
+为什么要选择这些bugs？ 因为 不需要关注源代码，就可以搜集资源消耗指标；软件中存在太多这种bugs了。
 我们的目的是，找到导致这些指标异常（cpu消耗过多，db被锁）的原因，我们不直接识别软件bug，我们提供一些提示。
 举个例子，如果我们定位到根因是，锁的个数异常，则可能是系统中有一个并发bug。
 
 CauseInfer的思路是这样的，构建一个因果图，来捕捉因果（cause-effect ）关系，然后沿着因果路径推断出根因（root cause）。
-为了完成这个任务，CauseInfer自动化地构建了额一个两层的分层的因果图。
+为了完成这个任务，CauseInfer自动化地构建了一个两层的分层的因果图。
 
 一旦服务级别目标（SLO）异常了，就触发因果推断。
 首先将性能异常定位到某个服务（eg，tomcat），通过检测该SLO指标是否异常。
@@ -163,11 +158,13 @@ CauseInfer的思路是这样的，构建一个因果图，来捕捉因果（caus
 - 因此，服务II中的根因分析被触发，在服务II在的机器中，加载出相应的服务指标依赖图，服务I中的指标A异常可能是服务II的SLO异常导致。
 - 因此会继续在服务II中触发因果推断，这里用到该机器的指标因果图。
 - 总结：最后我们找到了根因--指标E， 推断路径为：SLO（service II ） → A（service II ） → D（service II） → E（service II）
-![图2example](eample1.png)
+
+![图2example](./eample1.png)
 
 另外，需要注意的是，推断结果包含多个根因，因此需要一个排序的步骤选择最可能的根因， 来降低误告。
 
 ## 系统细节
+
 CauseInfer包含两个步骤：离线和在线。
 
 在线阶段包括两个模块，数据收集和因果推断。
@@ -212,22 +209,28 @@ BCP效果更好，更适合分析长序列，但是不适合在线模式，
 详细的服务依赖图 和 性能依赖图 的构建，参考[CauseInfer论文笔记2](https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/)
 
 
-## 总结一下离线和在线的流程
+## 把离线和在线串起来
 
-## 离线分析
+### 离线分析
 
-在离线阶段，构建因果图（causality graph），这个是本文的核心技术点。
+在离线阶段，构建因果图（causality graph）:
 
-- 因果图是一个两层分层的图（two layered hierarchical causality graph）
-  - 较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph），用于定位到服务级别的cause。
-  - 较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph），用于定位到性能异常的真正的元凶。
-- 构造服务依赖图分为两步：第一步通过采集器获取边是否存在；第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。
-- 服务依赖图中的实体是怎么定义的呢？二元组 (ip, service name)，有的文章用3元组（three-tuple）表示--(ip, port, proto)，proto是传输协议的类型，比如TCP或者UDP，因为考虑到一个服务可能占用多个端口。举一个例子，在一个三层的系统中，一个web server可以通过任意一个端口访问application server的。如果，使用端口作为唯一服务的属性，这个服务依赖图，就会变得非常之大，即使所有请求都是由同一个服务发起的。
+- 构造服务依赖图分为两步：
+  - 第一步通过采集器获取边是否存在；
+  - 第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。
+- 服务依赖图中的节点怎么定义？二元组 (ip, service name)
+  
+  > 有的文章用3元组(ip, port, proto)表示，proto是传输协议的类型，比如TCP或者UDP。
+  > 
+  > 考虑到一个服务可能占用多个端口, 采用这种方式就会导致图的节点非常多，但是对根因定位其实没有很大的用处。
+  > 
+  > 举个例子，在一个三层的系统中，一个web server可以通过任意一个端口访问application server的。如果使用端口作为服务的唯一属性，这个服务依赖图就会变得非常大，即使所有请求都是由同一个服务发起的。
 
-## 在线推断
+### 在线推断
+
 在实时阶段，使用因果图（causality graph）来做根因推断，得到可能的原因列表。
 
-![图1-根因分析框架](anomalies-classification/img.png)
+![图1-根因分析框架](./img.png)
 
 ## 评估
 

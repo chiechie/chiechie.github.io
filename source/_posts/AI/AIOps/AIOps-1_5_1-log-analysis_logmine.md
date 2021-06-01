@@ -1,7 +1,7 @@
 ---
 title: chapter1.5.1 使用logmine加强版做日志聚类
 author: chiechie
-date: 2021-03-04 11:01:18
+date: 2021-05-21 11:01:18
 categories: 
 - AIOps
 mathjax: true
@@ -12,53 +12,53 @@ tags:
 - 论文笔记 
 ---
 
-## 目录
+# 目录
 
-- [chapter0 概览](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/)
-- [chapter1 故障发现](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate/)
-	- [chapter1.1 单指标异常检测](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/)
-	- [chapter1.3 故障预测](https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_2-fault-prediction/)
-	- [chapter1.4 指标异常关联](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/)
-	- [chapter1.5 日志聚类](https://chiechie.github.io/2021/02/19/AI/AIOps/AIOps-1_5-log-analysis/)
-		- [chapter1.5.1 使用logmine加强版做日志聚类](https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/)
-		- [chapter1.5.2 美团日志聚类](https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/)
-	
-- [chapter2 故障定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/)
-	- [chapter2.1 微服务系统的故障定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/)
-		- [chapter2.1.1 CauseInfer1](https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/)
-		- [chapter2.1.2 CauseInfer2](https://chiechie.github.io/2021/03/03/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/)
-		- [chapter2.1.3 AIOps挑战赛2020-获奖方案分享](https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020/)
-		- [chapter2.1.4 AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/)
-		- [chapter2.1.5 N-Softbei2020比赛](https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/)
-		- [chapter2.1.6 MicroCause](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause)
-	- [chapter2.2 多维下钻根因定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/): 暂无
-	- [chapter2.3 调用链根因分析](https://chiechie.github.io/2021/03/15/AI/AIOps/AIOps-2_3-trace_rca/)
-	- [chapter2.4 时间序列关联性分析](https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/)
+- [chapter0 概览](../AIOps-0-summary/)
+- [chapter1 故障发现](../AIOps-1-event-generate/)
+	- [chapter1.1 单指标异常检测](../AIOps-1_1-kpi-detector/)
+	- [chapter1.3 故障预测](../AIOps-1_2-fault-prediction/)
+	- [chapter1.4 指标异常关联](../AIOps-1_4-kpi-correlation/)
+	- [chapter1.5 日志聚类](../AIOps-1_5-log-analysis/)
+		- [chapter1.5.1 使用logmine加强版做日志聚类](../AIOps-1_5_1-log-analysis_logmine/)
+		- [chapter1.5.2 美团日志聚类](../AIOps-1_5_2-log-analysis_meituan/)
+- [chapter2 故障定位](../AIOps-2-event-analysis/)
+	- [chapter2.1 微服务系统的故障定位](../AIOps-2_1-topo-rca/)
+		- [chapter2.1.1 CauseInfer1](../AIOps-2_1_1-topo-rca-causeinfer-notes1/)
+		- [chapter2.1.2 CauseInfer2](../AIOps-2_1_2-topo-rca-causeinfer-notes2/)
+		- [chapter2.1.3 AIOps挑战赛2020-获奖方案分享](../AIOps-2_1_3-topo-rca-aiops2020/)
+		- [chapter2.1.4 AIOps挑战赛2021-demo方案](../AIOps-2_1_4-topo-rca-aiops2021/)
+		- [chapter2.1.5 N-Softbei2020比赛](../AIOps-2_1_5-topo-rca-cnsoftbei2020/)
+		- [chapter2.1.6 MicroCause](../AIOps-2_1_6-topo-rca-MicroCause)
+	- [chapter2.2 多维下钻根因定位](../AIOps-2_2-multi-dimensional-rca/): 暂无
+	- [chapter2.3 调用链根因分析](../AIOps-2_3-trace_rca/)
+	- [chapter2.4 时间序列关联性分析](../AIOps-2_4-metric_event_correlation/)
 - chapter3 故障恢复
+
 
 > 日志聚类本质上是在简洁性和信息丰富性之间trade-off。
 > 
 > 原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。
 
-## 问题描述
+# 问题描述
 
 将不同来源的日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。
 
 
-## 解决方案
+# 解决方案
 
 logmine使用的是基于聚类的方法，做日志摘要生成。
 
 主要思路是，一边构建cluster，一边提取pattern
 
-### 找cluster
+## 找cluster
 
 - 先定义一个参数MaxDist， 表示cluster的半径
 - 对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就以他为中心创建一个新的cluster。
   
 	> 为了提升效率，判断是否属于某个cluster时使用early abandon的策略，如果已对比的字段累计距离超过了半径，就可以提前停止了，因为距离只会越来越大。
 
-### 对于每个cluster，提取pattern
+## 对于每个cluster，提取pattern
 
 ![图2-日志分析流程](./image-20210226000021042.png)
 
@@ -68,11 +68,11 @@ logmine使用的是基于聚类的方法，做日志摘要生成。
 
 ![](./img.png)
 
-### 怎么设置level？
+## 怎么设置level？
 
 ![图3-评价当前pattern的信息含量](./cost_function.png)
 
-怎么设置level？看每个level的信息损失程度，这里用cost function表示，值越大，表示丢失的信息越多
+怎么设置level？看每个level的信息损失程度，这里用cost function表示损耗的信息，值越大，表示丢失的信息越多
 
 $$\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times\left(a_{1} W C_{i}+a_{2} V a r_{i}+a_{3} F V_{i}\right)$$
 
@@ -90,7 +90,7 @@ $$\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times
 ![图2-logmine-result](./logmin-result.png)
 
 
-### 衡量两条日志的相似性
+## 衡量两条日志的相似性
 
 衡量两条日志相似性的函数：
 
@@ -101,7 +101,7 @@ $$\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathr
 - $P_i$：日志P的第i个字段，len(P): 日志P的字段的个数。
 - $k_1$: 如果两个字段一样，得$k_1$分，默认值为1。
 
-### 衡量两个pattern的相似性
+###衡量两个pattern的相似性
 
 pattern包含三类字段：fixed value， Variable 和 Wildcard
 
@@ -116,7 +116,7 @@ $$\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathrm{x}=
 - $k_1$: 如果两个fixed value字段一样，得$k_1$分，默认值为1
 - $k_2$: 如果两个变量字段一样，得$k_2$分，默认值为2
 
-### 怎么评估效果？
+## 怎么评估效果？
 
 整个问题的评估可以拆分为两个小评估:
 
@@ -134,7 +134,7 @@ $$\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} & \text { if } \mathrm{x}=
 
 $\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}$
 
-## chiechie's对logmine的总结
+# chiechie's对logmine的总结
 
 论文看完了，代码也跑了一遍，发现有几个问题：
 
@@ -157,9 +157,9 @@ $\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c 
 	2. 所有的cluster构建完之后，将存在父子pattern的cluster手动合并。
 
 
-## 参考资料
+# 参考资料
 
 1. [logmine-paper](https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf)
 2. [logmine-github](https://github.com/trungdq88/logmine/tree/master/src)
-3. [apache_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)
-4. [chiechie-关于logmine的实践](https://github.com/chiechie/LogRobot)
+3. [数据-apache_2k.log](https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log)
+4. [logmine加强版-chiechie's github](https://github.com/chiechie/LogRobot)

@@ -14,28 +14,27 @@ categories:
 ---
 
 
-## 目录
+# 目录
 
-- [chapter0 概览](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/)
-- [chapter1 故障发现](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate/)
-	- [chapter1.1 单指标异常检测](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/)
-	- [chapter1.3 故障预测](https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_2-fault-prediction/)
-	- [chapter1.4 指标异常关联](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/)
-	- [chapter1.5 日志聚类](https://chiechie.github.io/2021/02/19/AI/AIOps/AIOps-1_5-log-analysis/)
-		- [chapter1.5.1 使用logmine加强版做日志聚类](https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/)
-		- [chapter1.5.2 美团日志聚类](https://chiechie.github.io/2021/03/04/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/)
-	
-- [chapter2 故障定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/)
-	- [chapter2.1 微服务系统的故障定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/)
-		- [chapter2.1.1 CauseInfer1](https://chiechie.github.io/2021/03/02/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/)
-		- [chapter2.1.2 CauseInfer2](https://chiechie.github.io/2021/03/03/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/)
-		- [chapter2.1.3 AIOps挑战赛2020-获奖方案分享](https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_3-topo-rca-aiops2020/)
-		- [chapter2.1.4 AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/)
-		- [chapter2.1.5 N-Softbei2020比赛](https://chiechie.github.io/2021/03/10/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/)
-		- [chapter2.1.6 MicroCause](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause)
-	- [chapter2.2 多维下钻根因定位](https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/): 暂无
-	- [chapter2.3 调用链根因分析](https://chiechie.github.io/2021/03/15/AI/AIOps/AIOps-2_3-trace_rca/)
-	- [chapter2.4 时间序列关联性分析](https://chiechie.github.io/2021/04/14/AI/AIOps/AIOps-2_4-metric_event_correlation/)
+- [chapter0 概览](../AIOps-0-summary/)
+- [chapter1 故障发现](../AIOps-1-event-generate/)
+	- [chapter1.1 单指标异常检测](../AIOps-1_1-kpi-detector/)
+	- [chapter1.3 故障预测](../AIOps-1_2-fault-prediction/)
+	- [chapter1.4 指标异常关联](../AIOps-1_4-kpi-correlation/)
+	- [chapter1.5 日志聚类](../AIOps-1_5-log-analysis/)
+		- [chapter1.5.1 使用logmine加强版做日志聚类](../AIOps-1_5_1-log-analysis_logmine/)
+		- [chapter1.5.2 美团日志聚类](../AIOps-1_5_2-log-analysis_meituan/)
+- [chapter2 故障定位](../AIOps-2-event-analysis/)
+	- [chapter2.1 微服务系统的故障定位](../AIOps-2_1-topo-rca/)
+		- [chapter2.1.1 CauseInfer1](../AIOps-2_1_1-topo-rca-causeinfer-notes1/)
+		- [chapter2.1.2 CauseInfer2](../AIOps-2_1_2-topo-rca-causeinfer-notes2/)
+		- [chapter2.1.3 AIOps挑战赛2020-获奖方案分享](../AIOps-2_1_3-topo-rca-aiops2020/)
+		- [chapter2.1.4 AIOps挑战赛2021-demo方案](../AIOps-2_1_4-topo-rca-aiops2021/)
+		- [chapter2.1.5 N-Softbei2020比赛](../AIOps-2_1_5-topo-rca-cnsoftbei2020/)
+		- [chapter2.1.6 MicroCause](../AIOps-2_1_6-topo-rca-MicroCause)
+	- [chapter2.2 多维下钻根因定位](../AIOps-2_2-multi-dimensional-rca/): 暂无
+	- [chapter2.3 调用链根因分析](../AIOps-2_3-trace_rca/)
+	- [chapter2.4 时间序列关联性分析](../AIOps-2_4-metric_event_correlation/)
 - chapter3 故障恢复
 
 
@@ -117,79 +116,53 @@ categories:
 ## 构造因果图
 
 先要确定这个因果图的skeleton，有哪些节点，什么方向。
-构建因果图的skeleton：基于服务调用关系以及其他的先验，基于数据分析因果关系，提取最大子图。
+构建因果图的思路。基于服务调用关系以及其他的先验，加上基于数据驱动的因果关系方法，提取最大子图。
+
 因果图长什么样子：
+
 ![因果图.png](AIOps-21-topo-rca/yinguotu.png)
 
 构建因果图（causality graph）是一个核心技术点。
 
 - 因果图是一个两层分层的图（two layered hierarchical causality graph）
 
-  - 较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph），用于定位到服务级别的cause。
-  - 较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph），用于定位到指标。
+  - 较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph），用于定位到服务级别的根因。
+  - 较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph），用于定位到指标级别的根因。
 
-- 构造「服务依赖图」分为两步（就是调用关系）：第一步通过采集器获取边是否存在；第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。
-
+- 构造「服务依赖图」分为两步（就是调用关系）：
+  
+  - 第一步通过采集器获取边是否存在；
+  - 第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。
+	
 - 构造「指标因果图」：使用人工经验+PC算法。 
 
   > pc算法是一种发现因果关系的算法，在满足一定的假设前提下，使用的基于统计的方法，推导出因果关系。
 
-
-
+  
 ## 使用因果图进行推断
 
 当前端的服务可用性指标（SLO）出现异常，就会触发根因分析
 
-一边定位调用链中的异常服务，一边下钻
+根因分析的流程：一边定位调用链中的异常微服务，一边下钻分析，细到指标级别
 
-- 首先：找到异常的服务
-- 其次：找到服务所在的机器，搜集性能指标，对指标因果图进行深度优先搜索 ，推断本地是哪个指标导致服务性能问题。
-- 问题： 如果问题是别人造成的，就去找别人的问题：如果根因指标是依赖服务的SLO（注意，用到了调用链关系），这个推断就会继续，传播到远程的依赖的服务。
-  一直追本溯源，一直到最底层的被调用方，即物理层。
-
-
-先定位调用链中异常服务，最后下钻
-
-- 定位到有故障的服务
-- 再去下钻分析，指标层面的故障
+1. 通过异常KPI找到对应的异常微服务
+2. 找到微服务所在的机器，搜集性能指标，对指标因果图进行深度优先搜索，推断哪个指标导致服务性能问题。有两种方法: pagerank, 深度优先遍历
+3. 如果当前微服务异常是别的微服务异常（上游或者下游）造成的，举个例子，根因指标是依赖服务的SLO（注意，这里用到了调用链关系），这个推断就会传播到依赖的远程服务。
+）
+4. 一直追本溯源，一直到最底层的被调用方。
 
 
-有两种方法: pagerank, 深度优先遍历
-
-### PageRank
-
- 
-
-# 验证方案的可行性
-
-## 1. 调用链路根因分析
-
-![调用链路做根因分析.png](./trace_rca.png)
-
-
-## 2 AIOps挑战赛
-
-1. AIOps挑战赛2020-获奖方案分案
-
-2. AIOps挑战赛2021-demo方案
-
-   
 
 # 根因参考资料
 
 ## 比赛
 
 1. [AIOps挑战赛2020-微服务系统根因分析](http://iops.ai/competition_detail/?competition_id=15&flag=1)
+2. [AIOps挑战赛2020-微服务系统根因分析-数据](https://mp.weixin.qq.com/s/93USWr2evhRTQvS_NgB56A)
+3. [AIOps挑战赛2020-微服务系统根因分析-方案分享](https://mp.weixin.qq.com/s/hYiXUMveSprkIiOy8mCmCg)
+4. [AIOps挑战赛2021-微服务系统根因分析](http://iops.ai/competition_detail/?competition_id=17&flag=1)
+5. [CN-Softbei2020-根因分析-比赛](http://www.cnsoftbei.com/plus/view.php?aid=479)
 
-2. [AIOps挑战赛2020-微服务系统根因分析-方案分享](https://mp.weixin.qq.com/s/hYiXUMveSprkIiOy8mCmCg)
-
-3. [AIOps挑战赛2021-微服务系统根因分析](http://iops.ai/competition_detail/?competition_id=17&flag=1)
-
-4. [CN-Softbei2020-根因分析-比赛](http://www.cnsoftbei.com/plus/view.php?aid=479)
-
-5. [AIOps挑战赛2020-微服务系统根因分析-数据](https://mp.weixin.qq.com/s/93USWr2evhRTQvS_NgB56A)
-
-   
 
 ## 代码
 
@@ -206,22 +179,10 @@ categories:
 ## 其他
 
 1. [2014-INFOCOM_CauseInfer](https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf)
-
-
-4. [CauseInfer论文笔记2](https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/)
-
-5. [2014-INFOCOM_CauseInfer](https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf)
-
-8. [chiechie对PC算法的总结](https://chiechie.github.io/2021/03/09/technology/PC-algo/)
-
-9. [CauseInfer论文笔记1](https://chiechie.github.io/2021/03/02/technology/causeinfer-notes1/)
-
-
-11. [causeinfer--paper](https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf)
-
-12. J. Pearl, Causality: models, reasoning and inference. Cambridge Univ Press, 2000, vol. 29.
-
-13. D. Barry, “A bayesian analysis for change point problems,” Journal of the American Statistical Association, vol. 88, no. 421, pp. 309–319, 1993.
+2. [chiechie对PC算法的总结](https://chiechie.github.io/2021/03/09/technology/PC-algo/)
+3. [causeinfer--paper](https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf)
+4. J. Pearl, Causality: models, reasoning and inference. Cambridge Univ Press, 2000, vol. 29.
+5. D. Barry, “A bayesian analysis for change point problems,” Journal of the American Statistical Association, vol. 88, no. 421, pp. 309–319, 1993.
 
      
 

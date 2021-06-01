@@ -39,7 +39,9 @@ agent需要定义每个state，action的value或者直接给每个state下最优
 
 ## 开始实施
 
-step 1: 自定义一个environment，需要继承gym的标准环境类--gym.Env, 并实现类的关键方法，有step和reset
+### step 1 自定义一个environment
+
+自定义一个environment，需要继承gym的标准环境类--gym.Env, 并实现类的关键方法，有step和reset
 
 ```python
 class CustomEnv(gym.Env):
@@ -66,6 +68,8 @@ class CustomEnv(gym.Env):
 
 
 ```
+#### step1-1: 定义环境类的构造函数
+
 step1-1: 在构造函数中，定义state空间，和 action空间
 state是连续的，action因为涉及到具体买卖多少份额，所以也有部分是连续的，
 可以用gyn.space.Box来定义，需要指定上下界。 此外，为了简化问题，直接把一个df当作成员给这个子类
@@ -79,13 +83,36 @@ class StockEnv(gym.Env):
         self.df = df
 
 ```
-step1-2: 定义step方法，step是标准环境类的标准方法，输入输出的格式是固定的，输入一个state，输出下一个state, reward, done, info。
+
+#### step1-2: 定义环境类的reset方法
+
+定义环境类的reset方法，reset用来重置一局游戏。需要返回游戏的初始状态，收益为0，
+计算收益的几个变量，账户净值，持股数量，余额，以及游戏开始的时间戳（这个可以随机设置的）
+
+
+
+```python
+def reset(self):
+    self.net_worth = 10000
+    self.share_hold = 0
+    self.current_step = 2
+    self.cash = 10000
+    observation = self.df.loc[self.current_step - WINDOW_SIZE + 1: self.current_step,  ["open", "close", "high", "low", "volume"]]
+
+    return observation  # reward, done, info can't be included
+
+```
+
+#### step1-3: 定义环境类的step方法
+
+step1-1: 定义step方法，step是标准环境类的标准方法，输入输出的格式是固定的，输入一个state，输出下一个state, reward, done, info。
 
 这里涉及到交易的常识，补充下几个概念：
 
 - net value：账户净值，也就是说账户当前现金+股票折现价值
 - cash：这里叫现金是为了方便理解。专业的叫法是balance。
 - action amount：一个百分比，基于当前账户余额（balance）可以买卖的比例。 
+- done：什么时候一轮游戏结束？时间到了或者爆仓了，即net value < 0了
 
 ```python
 def step(self, action):
@@ -104,15 +131,19 @@ def step(self, action):
         self.cash = action_amount 
         reward = (self.df.loc[self.current_step + 1, "cLose"] - current_price) * ( - action_amount + self.share_hold)
     # [2, 3]表示不动
+    else:
+        reward = 0
     self.current_step += 1
-    observation = self.df
-    next_price = self.df.loc[self.current_step, "cLose"]
+    observation = self.df.loc[self.current_step - WINDOW_SIZE + 1: self.current_step,  ["open", "close", "high", "low", "volume"]]
                                    
-    self.net_worth = self.cash + self.share_hold * self.df.loc[self.current_step + 1, "cLose"]
+    self.net_worth = self.cash + self.share_hold * self.df.loc[self.current_step, "cLose"]
+    done = self.net_worth
                                           
     return observation, reward, done, info
 
 ```
+
+
 
 ## 参考
 

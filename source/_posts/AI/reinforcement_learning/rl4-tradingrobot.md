@@ -68,9 +68,10 @@ class CustomEnv(gym.Env):
 
 
 ```
+
 #### step1-1: 定义环境类的构造函数
 
-step1-1: 在构造函数中，定义state空间，和 action空间
+在构造函数中，定义state空间，和 action空间
 state是连续的，action因为涉及到具体买卖多少份额，所以也有部分是连续的，
 可以用gyn.space.Box来定义，需要指定上下界。 此外，为了简化问题，直接把一个df当作成员给这个子类
 
@@ -105,7 +106,7 @@ def reset(self):
 
 #### step1-3: 定义环境类的step方法
 
-step1-1: 定义step方法，step是标准环境类的标准方法，输入输出的格式是固定的，输入一个state，输出下一个state, reward, done, info。
+定义step方法，step是标准环境类的标准方法，输入输出的格式是固定的，输入一个state，输出下一个state, reward, done, info。
 
 这里涉及到交易的常识，补充下几个概念：
 

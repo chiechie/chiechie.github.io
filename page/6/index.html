@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-28 21:39:33" itemprop="dateModified" datetime="2021-05-28T21:39:33+08:00">2021-05-28</time>
+                <time title="修改时间：2021-05-31 15:40:05" itemprop="dateModified" datetime="2021-05-31T15:40:05+08:00">2021-05-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -365,7 +365,6 @@
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://wemp.app/posts/6013f2da-c11a-4f6f-b393-2b631c45172a">清华阿里AIOps新作：基于因果分析的微服务内根因定位</a></li>
 <li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">causeinfer--paper</a></li>
-<li><a href=""></a></li>
 </ol>
 
       
@@ -417,7 +416,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-28 21:39:33" itemprop="dateModified" datetime="2021-05-28T21:39:33+08:00">2021-05-28</time>
+                <time title="修改时间：2021-05-31 19:28:12" itemprop="dateModified" datetime="2021-05-31T19:28:12+08:00">2021-05-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -494,20 +493,16 @@
 <p>​ CoFlux的目的是挖掘两个KPI之间的波动关联关系，这种波动关联关系可以帮助进行故障排查。具体的，这种关系包括三个具体问题：1. 两个KPI的波动是否相关？如果相关，2. 波动的先后顺序如何（同时发生或者某根曲线的波动先发生）？3. 波动的方向是否一致（波动方向一致或者相反）？</p>
 <p>​ 利用原始的KPI曲线来判断波动关联关系比较困难，我们可以借助KPI的波动特征曲线。如果两个KPI的波动特征曲线相关（即波动同时发生或者发生时有一定的相位差），那么原始的两个KPI的波动相关。图2展示了6根KPI及其对应的波动特征曲线。从图2中可以看出，<em>K1</em>和<em>K2</em>、<em>K3</em>波动相关，但是与<em>K4</em>波动无关；<em>K1</em>的波动先于<em>K2</em>和<em>K3</em>发生，且波动方向相反；<em>K2</em>和<em>K3</em>的波动同时发生，且波动方向相同。</p>
 <h2 id="挑战">挑战</h2>
-<figure>
-<img src="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>​ 分析判断KPI的波动关联关系，主要有以下三个挑战：</p>
-<p>​ \1. KPI曲线数据众多且曲线特征各异（例如不同的周期性、平稳性、趋势等），因此，没有通用的方法可以对所有的KPI进行波动特征提取。</p>
-<p>​ \2. 基于异常检测结果的波动关联关系分析不合适。基于异常检测的方式需要挑选合适的异常检测算法并进行异常的定义（异常的阈值等），并且二分类的异常结果也比波动特征的信息量要少很多。</p>
-<p>​ \3. 波动关联关系复杂。正如在问题描述中所说，两个KPI间的波动可能有不同的先后顺序以及波动方向，这给判断波动关联关系时带来了更大的挑战。</p>
+<p>分析判断KPI的波动关联关系，主要有三个挑战：</p>
+<ol type="1">
+<li><p>KPI曲线数据众多且曲线特征各异（例如不同的周期性、平稳性、趋势等），因此，没有通用的方法可以对所有的KPI进行波动特征提取。</p></li>
+<li><p>基于异常检测结果的波动关联关系分析不合适。基于异常检测的方式需要挑选合适的异常检测算法并进行异常的定义（异常的阈值等），并且二分类的异常结果也比波动特征的信息量要少很多。</p></li>
+<li><p>波动关联关系复杂。正如在问题描述中所说，两个KPI间的波动可能有不同的先后顺序以及波动方向，这给判断波动关联关系时带来了更大的挑战。</p></li>
+</ol>
 <figure>
 <img src="https://mmbiz.qpic.cn/mmbiz_png/RVMJ0J4z0LzxCnAk4d5fhVM1Gib6rgkCZH8bficj36KtuKiczrZHcqq6NQunbIkMowVN1w0Njyvv3z9AjvsfmD2VA/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img" /><figcaption aria-hidden="true">img</figcaption>
 </figure>
 <h2 id="方法">方法</h2>
-<figure>
-<img src="" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
 <p>图3 CoFlux方法架构图</p>
 <p>​ CoFlux的输入是两根KPI曲线，输出结果是波动关联关系：两个KPI是否波动相关，如果相关，同时输出波动的先后顺序和波动的方向。算法整体分为两个大的部分：特征工程和相关性测量。</p>
 <p>​ 特征工程的目的是为KPI找到合适的特征检测器，由于不同KPI有不同的特征，单一的特征检测器无法适用于所有的KPI。因此，我们基于两个直观假设：如果可以提供足够多的特征检测算法，那么，1.对于任何一个KPI，总有一个算法可以为该KPI提取到合适的波动特征。2.如果两个KPI波动相关，至少有来自两个KPI的波动特征也相关。相关性测量的目的是根据特征工程得到波动特征计算得到相关性结果。接下来，我们具体介绍特征工程和相关性测量。</p>
@@ -558,7 +553,8 @@
 <p>利用KPI的波动特征进行关联分析对于故障排查是非常有用的，本文是服务运维管理领域第一篇定义研究这种波动关联分析的工作。未来的工作计划是采用深度学习的方法更加准确的提取KPI的波动特征。更多细节可以点击“阅读原文”进行阅读。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>CoFlux: Robustly Correlating KPIs by Fluctuations for Service Troubleshooting》发表在IWQoS 2019。</li>
+<li>CoFlux: Robustly Correlating KPIs by Fluctuations for Service Troubleshooting》发表在IWQoS 2019</li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SpiIquuz-8Ud_C3e4oVyaQ">coflux中文介绍</a></li>
 </ol>
 
       

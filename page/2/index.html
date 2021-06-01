@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-01 20:25:19" itemprop="dateModified" datetime="2021-06-01T20:25:19+08:00">2021-06-01</time>
+                <time title="修改时间：2021-06-01 20:34:55" itemprop="dateModified" datetime="2021-06-01T20:34:55+08:00">2021-06-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,25 +219,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="思路">思路</h2>
+          <blockquote>
 <p>现在进行强化学习第2个实践项目--构建交易机器人，</p>
-<p>老路子，先构建environment 再构建agent</p>
-<p>environment需要定义state，action，以及下个时刻的reward，state agent需要定义每个state，action的value或者直接给每个state下最优的action</p>
-<p>作为练手项目，就从0到构建一个吧</p>
-<p>为了构建environment，先简化问题:</p>
+</blockquote>
+<h2 id="思路">思路</h2>
+<p>老路子，先构建environment 再构建agent：</p>
+<ul>
+<li>environment需要定义state，action类型，以及step和render方法。</li>
+<li>agent需要定义策略函数，即每个state下最优action</li>
+</ul>
+<p>下面从0到构建一个, 为了构建environment，先简化问题:</p>
 <ul>
 <li>state: 过去3天close/open/high/low/volume5个指标的数据, shape = &lt;3, 5&gt;</li>
 <li>action: 买/卖/持仓 + 数量(基于目前仓位的百分比), shape = &lt;2, &gt; ,</li>
-<li>step方法:
+<li>step方法返回
 <ul>
 <li>state2: 第二天的close/open/high/low/volume5个指标的数据, shape = &lt;3, 5&gt;</li>
-<li>reward：第二天的net value - 操作之前的net value</li>
+<li>reward：变动仓位 * 变化的股价</li>
 </ul></li>
 </ul>
 <p>为了构建agent:</p>
 <ul>
 <li>随机策略</li>
-<li>Q-table好像不行，因为state不连续了。</li>
+<li>Q-table不行，因为state不连续了</li>
 <li>naive策略：均线策略，or韭菜策略，短期，低买高卖。</li>
 </ul>
 <h2 id="实施">实施</h2>
@@ -259,7 +263,7 @@
 <li>action amount：一个百分比，基于当前账户余额（balance）可以买卖的比例。</li>
 <li>done：什么时候一轮游戏结束？时间到了或者爆仓了，即net value &lt; 0了</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">step</span>(<span class="params">self, action</span>):</span></span><br><span class="line">    current_price = self.df.loc[self.current_step, <span class="string">&quot;close&quot;</span>]</span><br><span class="line">    <span class="comment"># action_type, action_percent = action</span></span><br><span class="line">    <span class="comment"># action = action[0]</span></span><br><span class="line">    action_amount = <span class="built_in">abs</span>(action)</span><br><span class="line">    buy = action &gt; <span class="number">0</span></span><br><span class="line">    sell = action &lt; <span class="number">0</span></span><br><span class="line">    <span class="comment"># 0表示买     </span></span><br><span class="line">    action_amount = self.cash * action / current_price</span><br><span class="line">    reward = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> sell <span class="keyword">and</span> self.share_hold &lt; action_amount:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">elif</span> buy:</span><br><span class="line">        self.share_hold += action_amount</span><br><span class="line">        self.cash -= action_amount * current_price</span><br><span class="line">        reward = (self.df.loc[self.current_step + <span class="number">1</span>, <span class="string">&quot;close&quot;</span>] - current_price) * (action_amount + self.share_hold)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># 不允许做空</span></span><br><span class="line">        self.share_hold -= action_amount</span><br><span class="line">        self.cash += action_amount *  current_price</span><br><span class="line">        reward = (self.df.loc[self.current_step + <span class="number">1</span>, <span class="string">&quot;close&quot;</span>] - current_price) * ( - action_amount + self.share_hold)</span><br><span class="line"></span><br><span class="line">    self.current_step += <span class="number">1</span></span><br><span class="line">    observation = self._next_observation()</span><br><span class="line">    next_price = self.df.loc[self.current_step, <span class="string">&quot;close&quot;</span>]</span><br><span class="line">                                   </span><br><span class="line">    self.net_worth = self.cash + self.share_hold * next_price</span><br><span class="line">    done = self.net_worth &lt;= <span class="number">0.01</span></span><br><span class="line">                                         </span><br><span class="line">                                           </span><br><span class="line">    <span class="keyword">return</span> observation, reward, done, &#123;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">step</span>(<span class="params">self, action</span>):</span></span><br><span class="line">    current_price = self.df.loc[self.current_step, <span class="string">&quot;close&quot;</span>]</span><br><span class="line">    <span class="comment"># action_type, action_percent = action</span></span><br><span class="line">    <span class="comment"># action = action[0]</span></span><br><span class="line">    action_amount = <span class="built_in">abs</span>(action)</span><br><span class="line">    buy = action &gt; <span class="number">0</span></span><br><span class="line">    sell = action &lt; <span class="number">0</span></span><br><span class="line">    <span class="comment"># 0表示买     </span></span><br><span class="line">    action_amount = self.cash * action_amount / current_price</span><br><span class="line">    reward = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> sell <span class="keyword">and</span> self.share_hold &lt; action_amount:</span><br><span class="line">        <span class="comment"># 不允许做空</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">elif</span> buy:</span><br><span class="line">        self.share_hold += action_amount</span><br><span class="line">        self.cash -= action_amount * current_price</span><br><span class="line">        reward = (self.df.loc[self.current_step + <span class="number">1</span>, <span class="string">&quot;close&quot;</span>] - current_price) * action_amount</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        self.share_hold -= action_amount</span><br><span class="line">        self.cash += action_amount *  current_price</span><br><span class="line">        reward = - (self.df.loc[self.current_step + <span class="number">1</span>, <span class="string">&quot;close&quot;</span>] - current_price) * action_amount</span><br><span class="line"></span><br><span class="line">    self.current_step += <span class="number">1</span></span><br><span class="line">    observation = self._next_observation()</span><br><span class="line">    next_price = self.df.loc[self.current_step, <span class="string">&quot;close&quot;</span>]</span><br><span class="line">                                   </span><br><span class="line">    self.net_worth = self.cash + self.share_hold * next_price</span><br><span class="line">    done = self.net_worth &lt;= <span class="number">0.01</span></span><br><span class="line">                                         </span><br><span class="line">                                           </span><br><span class="line">    <span class="keyword">return</span> observation, reward, done, &#123;&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="step2--定义策略policy">step2- 定义策略policy</h3>
 <h4 id="step2-1-定义一个静态策略">step2-1 定义一个静态策略</h4>
 <p>这里先用一个简单的均值回归的策略作为baseline，如下</p>

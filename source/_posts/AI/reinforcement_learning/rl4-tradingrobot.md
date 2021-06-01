@@ -37,7 +37,7 @@ agent需要定义每个state，action的value或者直接给每个state下最优
 - naive策略：均线策略，or韭菜策略，短期，低买高卖。
 
 
-## 开始实施
+## 实施
 
 ### step 1 自定义一个environment
 
@@ -83,6 +83,7 @@ class StockEnv(gym.Env):
         self.observation_space = spaces.Box(low=0, high=1, shape=(3, 5), dtype=np.float16)
         self.df = df
 ```
+
 
 #### step1-2: 定义环境类的reset方法
 
@@ -148,9 +149,9 @@ def reset(self):
         return observation, reward, done, {}
 ```
 
-# step2- 定义策略policy
+### step2- 定义策略policy
 
-## step2-1 定义一个静态策略
+#### step2-1 定义一个静态策略
 
 这里先用一个简单的均值回归的策略作为baseline，如下
 
@@ -170,14 +171,14 @@ def pi(obs):
     
 ```
 
-## step2-2 使用PPO算法构建策略
+#### step2-2 使用PPO算法构建策略
 
 ```python
 env_PPO = DummyVecEnv([lambda: StockEnv(df)])
 model = PPO2(MlpPolicy, env_PPO, verbose=0)
 model.learn(total_timesteps=100)
 ```
-## step2-3 对比
+#### step2-3 对比
 
 ```python
     df = pd.read_csv('./stockdata/train/sh.600004.白云机场.csv')
@@ -213,6 +214,12 @@ model.learn(total_timesteps=100)
 还凑活吧，能用
 
 ![img.png](img.png)
+
+## 总结
+
+1. 牛刀小试，强化学习实际效果不算离谱，凑活能用。
+2. 现有的强化学习算法框架比较成熟了, like stable-baselines，接口简单易用。
+3. 股票交易的Environment，github上还没有找到比较好用的工具，这个只能自己靠自己写了。上面写的一个简单的env，没有考虑交易费用/允许做空等情况，还要进一步细化。
 
 
 ## 参考

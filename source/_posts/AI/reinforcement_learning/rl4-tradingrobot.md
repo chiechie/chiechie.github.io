@@ -11,29 +11,27 @@ categories:
 - AI
 ---
 
+> 现在进行强化学习第2个实践项目--构建交易机器人，
+
 ## 思路
 
-现在进行强化学习第2个实践项目--构建交易机器人，
+老路子，先构建environment 再构建agent：
 
-老路子，先构建environment 再构建agent
+- environment需要定义state，action类型，以及step和render方法。
+- agent需要定义策略函数，即每个state下最优action
 
-environment需要定义state，action，以及下个时刻的reward，state
-agent需要定义每个state，action的value或者直接给每个state下最优的action
-
-作为练手项目，就从0到构建一个吧
-
-为了构建environment，先简化问题:
+下面从0到构建一个, 为了构建environment，先简化问题:
 
 - state: 过去3天close/open/high/low/volume5个指标的数据, shape = <3, 5>
 - action: 买/卖/持仓 + 数量(基于目前仓位的百分比), shape = <2, > ,
-- step方法:
+- step方法返回
     - state2: 第二天的close/open/high/low/volume5个指标的数据, shape = <3, 5>
-    - reward：第二天的net value - 操作之前的net value
+    - reward：变动仓位 * 变化的股价
 
 为了构建agent:
 
 - 随机策略
-- Q-table好像不行，因为state不连续了。
+- Q-table不行，因为state不连续了
 - naive策略：均线策略，or韭菜策略，短期，低买高卖。
 
 
@@ -124,19 +122,19 @@ def reset(self):
         buy = action > 0
         sell = action < 0
         # 0表示买     
-        action_amount = self.cash * action / current_price
+        action_amount = self.cash * action_amount / current_price
         reward = 0
         if sell and self.share_hold < action_amount:
+            # 不允许做空
             pass
         elif buy:
             self.share_hold += action_amount
             self.cash -= action_amount * current_price
-            reward = (self.df.loc[self.current_step + 1, "close"] - current_price) * (action_amount + self.share_hold)
+            reward = (self.df.loc[self.current_step + 1, "close"] - current_price) * action_amount
         else:
-            # 不允许做空
             self.share_hold -= action_amount
             self.cash += action_amount *  current_price
-            reward = (self.df.loc[self.current_step + 1, "close"] - current_price) * ( - action_amount + self.share_hold)
+            reward = - (self.df.loc[self.current_step + 1, "close"] - current_price) * action_amount
 
         self.current_step += 1
         observation = self._next_observation()

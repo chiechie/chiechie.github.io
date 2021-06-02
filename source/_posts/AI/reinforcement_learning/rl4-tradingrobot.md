@@ -32,7 +32,7 @@ categories:
 
 - 随机策略
 - Q-table不行，因为state不连续了
-- naive策略：均线策略，or韭菜策略，短期，低买高卖。
+- naive策略：趋势策略，短期有上升趋势就买入，否则卖出。
 
 
 ## 实施
@@ -151,7 +151,7 @@ def reset(self):
 
 #### step2-1 定义一个静态策略
 
-这里先用一个简单的均值回归的策略作为baseline，如下
+这里先用一个简单的趋势策略作为baseline，如下
 
 ```
 def pi(obs):

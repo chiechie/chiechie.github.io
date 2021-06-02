@@ -31,7 +31,7 @@ categories:
 		- [chapter2.1.4 AIOps挑战赛2021-demo方案](../AIOps-2_1_4-topo-rca-aiops2021/)
 		- [chapter2.1.5 N-Softbei2020比赛](../AIOps-2_1_5-topo-rca-cnsoftbei2020/)
 		- [chapter2.1.6 MicroCause](../AIOps-2_1_6-topo-rca-MicroCause)
-	- [chapter2.2 多维下钻根因定位](../AIOps-2_2-multi-dimensional-rca/): 暂无
+	- [chapter2.2 多维下钻根因定位](../AIOps-2_2-multi-dimensional-rca/)
 	- [chapter2.3 调用链根因分析](../AIOps-2_3-trace_rca/)
 	- [chapter2.4 时间序列关联性分析](../AIOps-2_4-metric_event_correlation/)
 - chapter3 故障恢复

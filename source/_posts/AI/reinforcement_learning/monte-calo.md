@@ -3,6 +3,7 @@ title: 强化学习5 蒙特卡洛树搜索
 author: chiechie
 mathjax: true
 date: 2021-06-02 16:58:05
+tags:
 - 强化学习
 - 人工智能
 categories:
@@ -18,10 +19,8 @@ categories:
 4. 假设已经有策略网络和价值网络，蒙特卡洛树搜索
 
 
-
-
 # hot spot
-# 算法框架
+## 算法框架
 
 调研hotspot，整体算法框架如下：
 
@@ -333,7 +332,7 @@ $$R S e t=B \operatorname{Set}_{2, B_{P, I}}=\{(\text { Fujian, Mobile), (Jiangs
 
        【hotspot的用法】上一步只选定node ，作为本步的输入，然后从validElementsSets中选择一个ps得分最高的element作为扩展（expand）的edge
 
-     - evaluation(快完成了): 根据expand 中输出的edge，初始化一个新的节点s'，并且计算ps, Q和N
+     - evaluation: 根据expand 中输出的edge，初始化一个新的节点s'，并且计算ps, Q和N
 
      - backup: 更新s‘的所有父节点的Q和N(对父节点来说，后继节点集合变大了，对应着，它自己的Qvalue也要更新了)
 
@@ -343,3 +342,6 @@ $$R S e t=B \operatorname{Set}_{2, B_{P, I}}=\{(\text { Fujian, Mobile), (Jiangs
 
   6. 如果potential score超过指定PS或者迭代时长超过给定值或者所有维度都遍历过了，迭代终止，返回ps最大的维度值。
 
+# 参考
+1. [HotSpot-英文paper](https://netman.aiops.org/wp-content/uploads/2018/12/sunyq_IEEEAccess2018_HotSpot.pdf)
+2. [HotSpot-中文](https://mp.weixin.qq.com/s/Kj309bzifIv4j80nZbGVZw)

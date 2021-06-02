@@ -1,5 +1,5 @@
 ---
-title: chapter2.2 多维下钻根因定位 
+title: chapter2.2 多维下钻根因定位/多维指标异常定位
 author: chiechie
 mathjax: true
 date: 2021-05-21 16:05:42
@@ -136,7 +136,7 @@ Recall = TP / (TP + FN)。
 # 参考
 
 1. [HotSpot-英文paper](https://netman.aiops.org/wp-content/uploads/2018/12/sunyq_IEEEAccess2018_HotSpot.pdf)
-2. [多维指标异常定位-HotSpot](https://mp.weixin.qq.com/s/Kj309bzifIv4j80nZbGVZw)
+2. [HotSpot-中文](https://mp.weixin.qq.com/s/Kj309bzifIv4j80nZbGVZw)
 3. [百度做根因钻](https://zhuanlan.zhihu.com/p/48926992)
 4. [Adtributor](https://www.usenix.org/system/files/conference/nsdi14/nsdi14-paper-bhagwan.pdf)
 5. [iDice](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/ICSE-2016-1-iDice-Problem-Identification-for-Emerging-Issues.pdf)

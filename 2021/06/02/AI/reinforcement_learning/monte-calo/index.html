@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="总结  蒙特卡洛树搜索（MCTS）是一种基于模型的强化学习方法。 蒙特卡洛树搜索比价值学习和策略学习更难。 AlphaGp是一个围棋AI，依靠MCTS做决策，决策过程中需要策略网络和价值网络辅助。 假设已经有策略网络和价值网络，蒙特卡洛树搜索  hot spot 算法框架 调研hotspot，整体算法框架如下：  image-20190322210515877   对KPI使用N-sigma进行实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习5 蒙特卡洛树搜索">
+<meta property="og:url" content="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/monte-calo/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
+<meta property="og:description" content="总结  蒙特卡洛树搜索（MCTS）是一种基于模型的强化学习方法。 蒙特卡洛树搜索比价值学习和策略学习更难。 AlphaGp是一个围棋AI，依靠MCTS做决策，决策过程中需要策略网络和价值网络辅助。 假设已经有策略网络和价值网络，蒙特卡洛树搜索  hot spot 算法框架 调研hotspot，整体算法框架如下：  image-20190322210515877   对KPI使用N-sigma进行实">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/_image/image-20190322210515877.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/_image/image-20190322211056826.png">
+<meta property="og:image" content="https://chiechie.github.io/Users/stellazhao/Library/Application%20Support/typora-user-images/image-20190322212044105.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/_image/image-20190322220603157.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/_image/image-20190322212356628.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/_image/image-20190325133227795.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/_image/image-20190325133205483.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/_image/image-20190325133147984.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/_image/image-20190325133126318.png">
+<meta property="article:published_time" content="2021-06-02T08:58:05.000Z">
+<meta property="article:modified_time" content="2021-06-02T09:48:31.279Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="强化学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/_image/image-20190322210515877.png">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/monte-calo/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>强化学习5 蒙特卡洛树搜索 | Chiechie's Mini World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Mini World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/monte-calo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          强化学习5 蒙特卡洛树搜索<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AI/reinforcement_learning/monte-calo.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-02 16:58:05 / 修改时间：17:48:31" itemprop="dateCreated datePublished" datetime="2021-06-02T16:58:05+08:00">2021-06-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="总结">总结</h1>
+<ol type="1">
+<li>蒙特卡洛树搜索（MCTS）是一种基于模型的强化学习方法。</li>
+<li>蒙特卡洛树搜索比价值学习和策略学习更难。</li>
+<li>AlphaGp是一个围棋AI，依靠MCTS做决策，决策过程中需要策略网络和价值网络辅助。</li>
+<li>假设已经有策略网络和价值网络，蒙特卡洛树搜索</li>
+</ol>
+<h1 id="hot-spot">hot spot</h1>
+<h2 id="算法框架">算法框架</h2>
+<p>调研hotspot，整体算法框架如下：</p>
+<figure>
+<img src="../_image/image-20190322210515877.png" alt="image-20190322210515877" /><figcaption aria-hidden="true">image-20190322210515877</figcaption>
+</figure>
+<ul>
+<li>对KPI使用N-sigma进行实时异常检测，如果异常进入2</li>
+<li>开始定位： for layer=1到layer= L:
+<ul>
+<li>for cuboid in layer=l 的cuboids:</li>
+</ul>
+<ol type="1">
+<li>剪枝：cuboid l中如果的element的属性值，没有出现在l-1(上一层的Bset中)，那就把elements去掉，剪掉之后生成备选的elements给2用。</li>
+<li>mcts：使用蒙特卡洛搜索树寻找最有可能是根因的维度组合<span class="math inline">\(B_{set}\)</span>，这里的reward function = potential score（potential score表示该维度为故障根因的概率)： for 迭代次数(即蒙特卡洛数的深度) 从1 到 100： 1.select; .... 返回ps最大的维度</li>
+<li>如果potential score超过指定PS或者迭代时长超过给定值或者所有维度都遍历过了，迭代终止，返回ps最大的维度值。</li>
+</ol></li>
+</ul>
+<h1 id="符号说明">符号说明</h1>
+<figure>
+<img src="../_image/image-20190322211056826.png" alt="image-20190322211056826" /><figcaption aria-hidden="true">image-20190322211056826</figcaption>
+</figure>
+<p><span class="math inline">\(e_i\)</span>: $e=(p, i, d, c) $，表示多个属性值的组合，是有具体的取值的.<img src="/Users/stellazhao/Library/Application%20Support/typora-user-images/image-20190322212044105.png" alt="image-20190322212044105" /></p>
+<p><span class="math inline">\(v(e_i)\)</span>:某个维度上指标的实际值。</p>
+<p><span class="math inline">\(f(e_i)\)</span>:某个维度上指标的预测值。</p>
+<p>cuboids:粒度可以任意细，任意粗 $ {B_{P}, B_{P, I}, B_{P, I, D}, }$ layer1，layer2，。。。layer3的解释如下 <img src="../_image/image-20190322220603157.png" alt="image-20190322220603157" /></p>
+<p>data cube: 多维的时序数据</p>
+<p>ps: 衡量一组<span class="math inline">\(S=\{e_i\}\)</span>是根因的概率。</p>
+<p>e的后继结点：<span class="math inline">\(\operatorname{Desc}(e)=\left\{e^{\prime} | e^{\prime} \text { is a descendant of } e\right\}\)</span></p>
+<p>e的后继LEAF结点：<span class="math inline">\(\operatorname{Desc}^{\prime} (e)=\left\{e^{\prime} | e^{\prime} \left(p^{\prime},i^{\prime}, d^{\prime}, c^{\prime}\right) \in L E A F, e^{\prime} \in \operatorname{Desc}(e) \right\}\)</span></p>
+<p>为什么要单独定义LEAF维度？因为它具有可加性，加起来等于它的父节点,如下</p>
+<p><span class="math inline">\(\begin{array}{c}{v(e)=\sum\limits_{e^{\prime} \in D e s c^{\prime}(e)} v\left(e^{\prime}\right)} \\ {\text { e.g. }} \\ {v(\text { Bei jing }, *, *, *)=\sum\limits_{j, k, h} v\left(\text {Beijing}, i_{j}, d_{k}, c_{h}\right),} \\ {\text { Total } P V=v(*, *, *, *)=\sum\limits_{i, j, k, h} v\left(p_{i}, i_{j}, d_{k}, c_{h}\right)}\end{array}\)</span></p>
+<h1 id="ripple-effect">ripple effect</h1>
+<h1 id="potential-score">potential score</h1>
+<h2 id="potential-score的计算公式">potential score的计算公式</h2>
+<ul>
+<li><p>ps的计算公式如下</p>
+<p><span class="math inline">\(\text { Potential Score }=\max \left(1-\frac{d(\vec{v}, \vec{a})}{d(\vec{v}, \vec{f})}, 0\right)\)</span></p>
+<ul>
+<li>a表示某维度确为根因的假设下，LEAF的预期值</li>
+<li>v表示LEAF的真实值</li>
+<li>f表示LEAF的预期值，跟疑似维度无关</li>
+</ul>
+<p>原理就是：比较在疑似故障这个假设下，LEAF相对真实值的区别，跟没有这个假设的前提下，LEAF相对真实值的区别。这两个区别越大，越说明这个假设是显著的。</p>
+<p>强行令他大于0，是因为想取到0~1 之间的值，当成概率。</p></li>
+<li><p>potential score指标计算公式基于的假设是：如果某个维度是故障的根因，那么在这个维度上的kpi的变化率 跟 它 的所有后代维度（descendant）的实际变化率应该是一致的。所以可以使用某个维度的kpi变化率减去后代的kpi变化率，基于这个difference的值算根因概率potential score，这个差值越大，根因概率越小，反之亦然。</p></li>
+<li><p>这个绝对变化是 预测值（历史均值f）和实际值(v）的差(delta)。</p></li>
+</ul>
+<h2 id="potential-score计算步骤示例">potential score计算步骤示例</h2>
+<p>假设现在最细粒度的LEAF维度有如下6个取值</p>
+<p><span class="math inline">\(\vec{y}\)</span>=[(Beijing;Mobile);(Shanghai;Mobile);</p>
+<p>(Guangdong;Mobile); (Bei jing;Unicom);</p>
+<p>(Shanghai;Unicom); (Guangdong;Unicom)].</p>
+<p>那么</p>
+<p><span class="math inline">\(\vec f = (20;15;10;10;25;20)\)</span>,</p>
+<p><span class="math inline">\(\vec v= (14;9;10;7;)\)</span></p>
+<p>对于cuboid--<span class="math inline">\(B_p\)</span>,它包含3个属性值（elements）:</p>
+<p>[(Beijing;*);(Shanghai; *);(Guangdong;*)]</p>
+<p>所以<span class="math inline">\(B_p\)</span>的所有子集有7个，上面3个ele的排列组合：</p>
+<p><span class="math inline">\(S_{p 1}=\{(B e i j i n g, *)\}\)</span>,</p>
+<p>$ S_{p 2}={(, *)}$</p>
+<p>....</p>
+<p><span class="math inline">\(S_{p 7}=\{(\text {Beijing}, *), \quad \text { (Shanghai,*) },(\text {Guangdong,*}) \}\)</span></p>
+<figure>
+<img src="../_image/image-20190322212356628.png" alt="image-20190322212356628" /><figcaption aria-hidden="true">image-20190322212356628</figcaption>
+</figure>
+<ul>
+<li><p>注：上图中箭头左边是预测值(<span class="math inline">\(\vec{f}\)</span>)，右边的是真实值(<span class="math inline">\(\vec v\)</span>)</p>
+<p>现在以<span class="math inline">\(S_{p1}=\{(B e i j i n g, *)\}\)</span>,$为例，算它的根因概率（ps），步骤如下</p></li>
+</ul>
+<p>（1）如果<span class="math inline">\(S_{p1}\)</span>是故障根因，受其影响，最细维度（LEAF）的预测值为：</p>
+<ul>
+<li><p>(a)<span class="math inline">\(S\)</span>不是LEAF</p>
+<ul>
+<li><p><span class="math inline">\(y_i\)</span> 不属于<span class="math inline">\(D e s c^{\prime}(S)\)</span>（非leaf后继）</p>
+<p><span class="math inline">\(a\left(y_{i}\right)=f\left(y_{i}\right)\)</span></p></li>
+<li><p><span class="math inline">\(y_i\)</span> 属于<span class="math inline">\(D e s c^{\prime}(S)\)</span>(leaf后继)</p>
+<p><span class="math inline">\(a\left(y_{i}^{\prime}\right)=f\left(y_{i}^{\prime}\right)-h(x) \times \frac{f\left(y_{i}^{\prime}\right)}{f(x)},(f(x) \neq 0)\)</span></p></li>
+</ul></li>
+<li><p>(b)<span class="math inline">\(S\)</span>是LEAF:</p>
+<ul>
+<li><p><span class="math inline">\(y_i\)</span> 不属于S， <span class="math inline">\(a(y_i)= f(y_i)\)</span></p></li>
+<li><p><span class="math inline">\(y_i\)</span> 属于S，$ a(y_i)= v(y_i)$</p></li>
+</ul></li>
+</ul>
+<p><span class="math inline">\(\vec{a}\left(S_{p 1}\right)=(14,15,10,7,25,20)\)</span></p>
+<ol start="2" type="1">
+<li>最细维度（LEAF）对应的真实值为:</li>
+</ol>
+<p><span class="math inline">\(\vec{v}=\left[v\left(y_{1}\right), v\left(y_{2}\right), v\left(y_{3}\right), \ldots, v\left(y_{n}\right)\right]\)</span></p>
+<ol start="3" type="1">
+<li>不管<span class="math inline">\(S_{p1}\)</span>是不是故障根因，最细维度（LEAF）上面的预测值为:</li>
+</ol>
+<p><span class="math inline">\(\vec{f}=\left[f\left(y_{1}\right), f\left(y_{2}\right), f\left(y_{3}\right), \ldots, f\left(y_{n}\right)\right]\)</span></p>
+<h1 id="蒙特卡洛树搜索">蒙特卡洛树搜索</h1>
+<h2 id="符号说明-1">符号说明</h2>
+<p>s： 状态，表示每个cubic中的elemments的集合,如<span class="math inline">\(s\{e_1, e_2, ...\}\)</span></p>
+<p><span class="math inline">\(A(s)\)</span>: 表示状态=s时的所有action集合，值就是其中1个element。表示在s选定之后，还可以往里面加入的elements，这个直接用该cuboid的所有terminal-node。</p>
+<p><span class="math inline">\(N(s)\)</span>: 表示s被访问的次数，s就是维度集合</p>
+<p><span class="math inline">\(N(s;a)\)</span>: 表示边(s;a) 被访问的次数</p>
+<p><span class="math inline">\(Q(s, a)\)</span>: 表示action function，取<span class="math inline">\(s^{\prime}\)</span>的ps和<span class="math inline">\(s^{\prime}\)</span>后继节点的ps的较大值。</p>
+<p><span class="math inline">\(Q(s, a)=\max _{u \in\left\{s^{\prime}\right\} \cup \operatorname{descendent}\left(s^{\prime}\right)} p s(S(u))\)</span></p>
+<p>蒙特卡洛搜索树是强化学习框架下的一种数值算法。</p>
+<p>##执行步骤</p>
+<p>1）选择（selection）：根据当前的s和Q选取最优的action</p>
+<p><span class="math inline">\(a=\underset{a \in A(s)}{\arg \max }\left\{Q(s, a)+C \sqrt{\frac{\ln N(s)}{N(s, a)}}\right\}\)</span></p>
+<p>上式中C(*)表示exploration， 左边的Q表示。</p>
+<p>Upper Confidence Bounds（UCB）</p>
+<p>初始状态N(S, A)=0，怎么办？对这些未被访问的(s,a),赋予一定的访问概率R</p>
+<p><span class="math display">\[R=1-Q\left(s, a_{\max }\right)\]</span>, ---（没懂，为什么Q越大，概率越小）</p>
+<p><span class="math inline">\(a_{max} = \arg\max \limits_{a \in A(s) \cap N(s, a)=0} Q(s, a)\)</span></p>
+<p>selection起始于根节点，终于LEAF节点,这个值得是维度组合的叶子节点，如<span class="math inline">\(\{e_1, \dots, e_{12}\}\)</span></p>
+<p>（错误：注意，终止于LEAF的维度值，而不是树的叶子节点）。</p>
+<figure>
+<img src="../_image/image-20190325133227795.png" alt="image-20190325133227795" /><figcaption aria-hidden="true">image-20190325133227795</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>expand：起于上一部选定的分支，终于其子节点。在里面加一个ele。</li>
+</ol>
+<figure>
+<img src="../_image/image-20190325133205483.png" alt="image-20190325133205483" /><figcaption aria-hidden="true">image-20190325133205483</figcaption>
+</figure>
+<p>3）evaluation：计算2)<span class="math inline">\(s&#39;\)</span>的ps，Q，和N</p>
+<figure>
+<img src="../_image/image-20190325133147984.png" alt="image-20190325133147984" /><figcaption aria-hidden="true">image-20190325133147984</figcaption>
+</figure>
+<ol start="4" type="1">
+<li>反向传播（Backpropagation）：更新</li>
+</ol>
+<p>从树的根节点到<span class="math inline">\(s&#39;\)</span>的路径中，更新经过节点的Q和N。</p>
+<p>注意：只有当子节点的Q &gt; 父节点的Q时，我们采取更新父节点的Q</p>
+<figure>
+<img src="../_image/image-20190325133126318.png" alt="image-20190325133126318" /><figcaption aria-hidden="true">image-20190325133126318</figcaption>
+</figure>
+<p>MCTS 将在每个迭代过程（也就是1到4）中增加一个子节点。不过，要注意其实根据不同的应用这里也可以在每个迭代过程中增加超过一个子节点。</p>
+<p>对每个cubic使用MTCS，迭代终止，如果以下条件之一满足：</p>
+<p>1）<span class="math display">\[B S e t=S\]</span> if <span class="math display">\[ p s(S) \geqslant P T\]</span></p>
+<ol start="2" type="1">
+<li>集合中所有可能的节点（维度值）都已经expanded完了</li>
+</ol>
+<p>3）迭代时长超过给定值（根据经验人工确定）</p>
+<h1 id="层次剪枝">层次剪枝</h1>
+<p>为了进一步减少搜索空间 ，HotSpot使用了层次剪枝的策略。</p>
+<p>这里剪枝不是剪的蒙特卡洛搜索树，是剪的原始的action空间。</p>
+<p>基本原理是：</p>
+<p>由于MTCS是一层一层搜索的cuboids的，在搜索lay较小的cubics，例如（layer=1的<span class="math inline">\(B_p\)</span>）</p>
+<p>就可以剪掉一些ps较小的elements，因为这些elements的后继节点也不太可能是根因。</p>
+<h2 id="符号说明-2">符号说明</h2>
+<p><span class="math display">\[B S e t_{l, B}\]</span>: 使用MCTS对layer=l的cubic B, 算出来的ps最大的Set。</p>
+<p>hotspot剪枝的策略：对每层l中的elements不在<span class="math display">\[B S e t_{l, B}\]</span>, 剪掉。这个策略跟关联规则挖掘中的Apriori Principle很像，叫层次剪枝这个名字是因为利用到了layer的信息。</p>
+<h2 id="sumamry">sumamry</h2>
+<p>假设第一层的维度MCTS搜索出来的结果： <span class="math display">\[B S e t_{1, B_{P}}=\{(F u j i a n, *),(\text {Jiangsu}, *)\}\]</span>并且<span class="math display">\[ps(B S e t_{l, B_P})=0.5\]</span></p>
+<p><span class="math display">\[B S e t_{1, B_{I}}=\{(*,Mobile),(*, \text {Unicom})\}\]</span>并且<span class="math display">\[ps(B S e t_{l, B_I})=0.32\]</span></p>
+<p>现在MCTS要去搜索第二层了</p>
+<p>就把 (Zhe jiang; Unicom) 和 (Zhe jiang;Unicom)这两个elements给剪掉了，因为他们的父节点 (Zhe jiang;)不在第一层维度的BSets里面，因此，第二层维度，我们只搜索剩下的4个elements，看哪种组合最优可能是根因的维度集合。</p>
+<p>上面的剪枝将蒙特卡洛搜索树的action空间从63减少到了15 (<span class="math inline">\(2^6- 1\)</span> 到 <span class="math inline">\(2^4 - 1\)</span>).</p>
+<p>然后使用蒙特卡洛搜索树搜到得分最高的set，即根因维度</p>
+<p><span class="math display">\[R S e t=B \operatorname{Set}_{2, B_{P, I}}=\{(\text { Fujian, Mobile), (Jiangsu, Unicom) }\}\]</span>且<span class="math display">\[ps(B \operatorname{Set}_{2, B_{P, I}})=1\]</span></p>
+<h2 id="技术方案">技术方案</h2>
+<p>1.在训练集上使用ripple effect 注入异常，训练模型（用hotspot跑一下）。</p>
+<p>（问题：维度里面的‘unknown’是代表缺失还是汇总‘*’,先默认是缺失）</p>
+<ol type="1">
+<li>数据清洗，把维度值里面的‘unknown’清除。</li>
+<li>在测试集上，直接使用算法进行根因定位,
+<ol type="1">
+<li>样本量太大了，先使用两天的数据跑一下，2018-09-15 00:00:00 到 2018-09-16 23:55:00</li>
+<li>异常检测就使用3-sigma策略，</li>
+</ol></li>
+</ol>
+<ul>
+<li><p>开始定位： for layer=1到layer= L:</p>
+<p>for cuboid in layer=l 的cuboids:</p>
+<p>如果l&gt;=2, 剪枝：cuboid l中如果的element的属性值，没有出现在l-1(上一层的Bset中)，那就把elements去掉，剪掉之后生成备选的elements给2用。</p>
+<p>否则，直接进入下面：</p>
+<ol type="1">
+<li><p>mcts：使用蒙特卡洛树搜索寻找最有可能是根因的维度组合<span class="math inline">\(B_{set}\)</span>，这里的reward function = potential score（potential score表示该维度为故障根因的概率)：</p></li>
+<li><p><span class="math inline">\(Q(s, a)=\max _{u \in\left\{s^{\prime}\right\} \cup \operatorname{descendent}\left(s^{\prime}\right)} p s(S(u))\)</span>，初始值就是ps(S(s))</p></li>
+<li><p><span class="math inline">\(a=\underset{a \in A(s)}{\arg \max }\left\{Q(s, a)+C \sqrt{\frac{\ln N(s)}{N(s, a)}}\right\}\)</span></p></li>
+<li><p><span class="math inline">\(a_{max} = \arg\max \limits_{a \in A(s) \cap N(s, a)=0} Q(s, a)\)</span></p></li>
+<li><p>for 迭代次数(即蒙特卡洛树的深度？？) 从1 到 100：</p>
+<ul>
+<li><p>select：从根节点出发，逐层选择最优的action，深度遍历。</p>
+<ol type="a">
+<li><p>当所有子节点都被访问过，那么根据QCB选择最优的action，并且state跳到子节点（探索和利用），进入下一层select</p></li>
+<li><p>如果存在一部分没有被访问过的子节点，那么以概率R = 1 - max(Q) 访问未被访问过的子节点中Q值最大的那个</p></li>
+</ol></li>
+<li><p>如果选到的action刚好对应着没有被访问过的子节点，select终止</p></li>
+<li><p>如果选到的action还是已经访问过的节点，那么select继续，进入下一层select</p></li>
+</ul>
+<p><span class="math display">\[R=1-Q\left(s, a_{\max }\right)\]</span>, ---（没懂，为什么Q越大，概率越小）</p>
+<p><span class="math inline">\(a_{max} = \arg\max \limits_{a \in A(s) \cap N(s, a)=0} Q(s, a)\)</span></p>
+<p>如果state</p>
+<ol type="1">
+<li><p>游走到了leaf_node(没有子节点)，那么select终止</p></li>
+<li><p>游走到了某个没有被访问过的节点（即b中的概率选择），那么select终止</p>
+<p>（【原始的mcts】select返回的是node + action</p>
+<p>【hotspot的mcts】seletc返回的是node ）</p></li>
+</ol>
+<ul>
+<li><p>expand：</p>
+<p>【原始的mcts】 将上一步选定的action 和 state对应的node，作为输入，构造mcts的新的node，也就是上一步的node的子节点。</p>
+<p>【hotspot的用法】上一步只选定node ，作为本步的输入，然后从validElementsSets中选择一个ps得分最高的element作为扩展（expand）的edge</p></li>
+<li><p>evaluation: 根据expand 中输出的edge，初始化一个新的节点s'，并且计算ps, Q和N</p></li>
+<li><p>backup: 更新s‘的所有父节点的Q和N(对父节点来说，后继节点集合变大了，对应着，它自己的Qvalue也要更新了)</p>
+<p><span class="math inline">\(Q(s, a)=\max _{u \in\left\{s^{\prime}\right\} \cup \operatorname{descendent}\left(s^{\prime}\right)} p s(S(u))\)</span></p></li>
+</ul>
+<p>返回ps最大的维度</p></li>
+<li><p>如果potential score超过指定PS或者迭代时长超过给定值或者所有维度都遍历过了，迭代终止，返回ps最大的维度值。</p></li>
+</ol></li>
+</ul>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2018/12/sunyq_IEEEAccess2018_HotSpot.pdf">HotSpot-英文paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kj309bzifIv4j80nZbGVZw">HotSpot-中文</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
+              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag"># 强化学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/31/AI/reinforcement_learning/rl4-tradingrobot/" rel="prev" title="强化学习4 使用gym构建股票交易机器人">
+      <i class="fa fa-chevron-left"></i> 强化学习4 使用gym构建股票交易机器人
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hot-spot"><span class="nav-number">2.</span> <span class="nav-text">hot spot</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6"><span class="nav-number">2.1.</span> <span class="nav-text">算法框架</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E8%AF%B4%E6%98%8E"><span class="nav-number">3.</span> <span class="nav-text">符号说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ripple-effect"><span class="nav-number">4.</span> <span class="nav-text">ripple effect</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#potential-score"><span class="nav-number">5.</span> <span class="nav-text">potential score</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#potential-score%E7%9A%84%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F"><span class="nav-number">5.1.</span> <span class="nav-text">potential score的计算公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#potential-score%E8%AE%A1%E7%AE%97%E6%AD%A5%E9%AA%A4%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.2.</span> <span class="nav-text">potential score计算步骤示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%A0%91%E6%90%9C%E7%B4%A2"><span class="nav-number">6.</span> <span class="nav-text">蒙特卡洛树搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E8%AF%B4%E6%98%8E-1"><span class="nav-number">6.1.</span> <span class="nav-text">符号说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E5%89%AA%E6%9E%9D"><span class="nav-number">7.</span> <span class="nav-text">层次剪枝</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E8%AF%B4%E6%98%8E-2"><span class="nav-number">7.1.</span> <span class="nav-text">符号说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sumamry"><span class="nav-number">7.2.</span> <span class="nav-text">sumamry</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88"><span class="nav-number">7.3.</span> <span class="nav-text">技术方案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">155</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">175</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

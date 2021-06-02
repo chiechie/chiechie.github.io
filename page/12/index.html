@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/AI/AIOps/AIOps-2-event-analysis/" class="post-title-link" itemprop="url">chapter2 故障定位</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-2_1-topo-rca/" class="post-title-link" itemprop="url">chapter2.1 对IT系统进行根因定位</a>
         </h2>
 
         <div class="post-meta">
@@ -189,125 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-21 16:04:20" itemprop="dateCreated datePublished" datetime="2021-05-21T16:04:20+08:00">2021-05-21</time>
+              <time title="创建时间：2021-05-21 16:05:13" itemprop="dateCreated datePublished" datetime="2021-05-21T16:05:13+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-01 15:45:07" itemprop="dateModified" datetime="2021-06-01T15:45:07+08:00">2021-06-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="目录">目录</h2>
-<ul>
-<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
-<ul>
-<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
-<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
-<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
-<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
-</ul>
-<p>故障定位阶段，需要对众多生成的告警事件进行综合分析，找出事件之间的关联，并且定位出根因。 主要的细分场景包括：</p>
-<ul>
-<li>基于拓扑的故障定位</li>
-<li>多维指标下钻分析</li>
-<li>调用链根因定位</li>
-<li>指标和事件的关联关系</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/21/AI/AIOps/AIOps-1-event-generate/" class="post-title-link" itemprop="url">chapter1 故障发现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-21 16:03:52" itemprop="dateCreated datePublished" datetime="2021-05-21T16:03:52+08:00">2021-05-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-01 15:45:07" itemprop="dateModified" datetime="2021-06-01T15:45:07+08:00">2021-06-01</time>
+                <time title="修改时间：2021-06-02 17:43:09" itemprop="dateModified" datetime="2021-06-02T17:43:09+08:00">2021-06-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -355,60 +244,236 @@
 <li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
 <li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
 </ul></li>
-<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>: 暂无</li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
 <li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
 <li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
 </ul></li>
 <li>chapter3 故障恢复</li>
 </ul>
-<h1 id="概览">概览</h1>
-<p>故障发现阶段，根据监控的对象不同，可以细分为以下场景：</p>
+<h1 id="总结">总结</h1>
 <ol type="1">
-<li>单指标异常检测</li>
-<li>多指标异常检测</li>
-<li>故障预测</li>
-<li>指标异常关联</li>
-<li>日志聚类</li>
-<li>调用链异常检测： https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA</li>
+<li>对于一个微服务系统进行根因分析，主要要解决两个问题，导致故障的根因微服务是哪个？以及导致微服务异常的根因指标是哪个？</li>
+<li>对于第一个问题-导致故障的根因是哪个微服务。还可进一步细分为两种情况：有微服务调用关系和没有服务间的调用关系
+<ol type="1">
+<li>有微服务调用关系，这个关系可能是通过系统工具获取比如causeinfer，也可以是手动配置比如cmdb，使用随机游走的方法推断根因。</li>
+<li>没有微服务调用关系，需要通过基于分析的方法去学习关联关系，比如PC算法，PCTS算法，基于时间滞后的关联分析方法，然后使用随机游走方法推断根因。</li>
+</ol></li>
+<li>对于第二个问题-导致微服务异常的根因指标，实际上跟问题1.2是同一个问题，只是加载元数据的时候（关联指标），需要提供上下游组件的指标，以及部署的机器的信息，也可以使用同一套方案。</li>
+<li>总的来说，做故障定位是从粗力度到细力度，先定位根因的微服务，然后再定位导致微服务异常的指标（可能是上下游，也可能是其所在的机器）</li>
 </ol>
-<h1 id="相关资料">相关资料</h1>
-<h2 id="论文">论文</h2>
+<h1 id="问题分析-和-方案设计">问题分析 和 方案设计</h1>
+<p>一个IT系统包括机器，网络，应用。一个系统中任何一个组成部分都有可能出现故障，从而导致系统瘫痪。 为了减少故障带来的损失，我们需要提前制定预案，即哪些表象对应这哪些故障，从而在故障发生时候，能快速地根据表现识别出故症结所在，进而进行故障处理。</p>
+<p>下面对这个解决方案进行说明。</p>
+<h2 id="因果图-故障传播图">因果图-故障传播图</h2>
+<p>从表象推断出故障症结，可以表达为一个因果推断的需求，即「由果推因」。</p>
+<p>从众多的监控指标，日志信息，事件信息，归纳出导致这些现象出现的原因。</p>
+<p>先分别看故障出现在这三层会出现什么表现（演绎），以及用什么方法去根据表象推断根因（归纳）</p>
 <ul>
-<li>半自动的标记工具Label-Less: A Semi-automatic Labelling Tool for KPI Anomalies</li>
-<li>非监督异常检测算法-对复杂kpi使用vae进行对抗训练Unsupervised Anomaly Detection for Intricate KPIs via Adversarial Training of VAE</li>
-<li>对非结构化日志数据进行异常检测-LogAnomaly: Unsupervised Detection of Sequential and Quantitative Anomalies in Unstructured Logs</li>
-<li>多指标时序异常检测Robust Anomaly Detection for Multivariate Time Series through Stochastic Recurrent Neural Network</li>
-<li>对周期性时间序列数据进行异常检测-Automatic and Generic Periodicity Adaptation for KPI Anomaly Detection:<a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2019/08/08723601.pdf">paper</a></li>
-<li>Robust and Rapid Adaption for Concept Drift in Software System Anomaly Detection</li>
-<li>无监督异常检测-基于聚类Robust and Rapid Clustering of KPIs for Large-Scale Anomaly Detection</li>
-<li>无监督异常检测-基于VAE：Unsupervised Anomaly Detection via Variational Auto-Encoder for Seasonal KPIs in Web Applications</li>
-<li>有监督异常检测-Opprentice: Towards Practical and Automatic Anomaly Detection Through Machine Learning:<a target="_blank" rel="noopener" href="http://netman.cs.tsinghua.edu.cn/wp-content/uploads/2015/11/liu_imc15_Opprentice.pdf">paper</a></li>
-<li>雅虎开源的时序预测和异常检测项目 EGAD:<a target="_blank" rel="noopener" href="http://www.infoq.com/cn/articles/automated-time-series-anomaly-detection">论文的中文翻译</a></li>
-<li>CMU 做多指标模式提取和异常检测的 SPIRIT 系统论文：<a target="_blank" rel="noopener" href="https://bitquill.net/pdf/spirit_vldb05.pdf">paper</a></li>
-</ul>
-<h2 id="代码">代码</h2>
+<li>应用之间在逻辑上存在调用关系，应用可能存在一台机器上，也可能是跨机器甚至跨网络。</li>
+<li>应用是部署在机器上的，应用之间的调用关系，实际上会映射为机器之间的网络连接关系。</li>
+<li>应用层故障：如果某个服务异常了，那么所有依赖它的服务的响应时长都会变长。举个例子，如果某个服务b 调用服务a，现在服务a异常了（比如某个操作系统死机了，或者mysql的请求堵塞了）， 就会表现出
 <ul>
-<li>阿里巴巴开源的Time2Graph(基于序列片段的图迁移路径做异常检测)：<a target="_blank" rel="noopener" href="https://github.com/petecheng/Time2Graph">code</a></li>
-<li>清华/阿里巴巴开源的 Donut(基于 VAE 算法)：<a target="_blank" rel="noopener" href="https://github.com/haowen-xu/donut">code</a></li>
-<li>清华开源的 Bagel(Donut改进型，基于 CVAE 算法)：<a target="_blank" rel="noopener" href="https://github.com/lizeyan/Bagel">code</a></li>
-<li>清华/百度的 opprentice 系统(14 个检测器，平均取参数值，随机森林)：<a target="_blank" rel="noopener" href="https://github.com/tencent/metis">code</a></li>
-<li>清华/建行做的指标批量标注 Label-less 项目(基于 iForest 异常检测和 DTW 相似度学习)：<a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2019/10/Label-less-v2.pdf%3E">code</a></li>
-<li>百度开源的指标异常标注工具：<a target="_blank" rel="noopener" href="https://github.com/baidu/Curve">code</a></li>
-<li>微软开源的指标异常工具：<a target="_blank" rel="noopener" href="https://github.com/Microsoft/TagAnomaly">code</a></li>
-<li>清华OmniAnomaly-多指标异常检测: <a target="_blank" rel="noopener" href="https://github.com/NetManAIOps/OmniAnomaly/tree/master/omni_anomaly">code</a></li>
-<li>清华/南开/腾讯的 ADS 系统(ROCKA+opprentice+CPLE)：<a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2018/12/bujiahao.pdf">paper</a>|<a target="_blank" rel="noopener" href="https://github.com/tmadl/semisup-learn">code</a></li>
-<li>开源的时序特征值提取库 tsfresh：<a target="_blank" rel="noopener" href="http://tsfresh.readthedocs.io/en/latest/">code</a></li>
-<li>twitter 的异常检测库，R 语言<a target="_blank" rel="noopener" href="https://github.com/twitter/anomalydetection">code</a></li>
-<li>numenta公司，HTM 算法：<a target="_blank" rel="noopener" href="https://github.com/numenta/nupic">code</a>|<a target="_blank" rel="noopener" href="https://github.com/numenta/NAB/blob/master/nab/scorer.py">code-评估</a>|<a target="_blank" rel="noopener" href="https://github.com/numenta/NAB/tree/master/data">data</a></li>
-<li>雅虎开源的时序预测和异常检测项目 EGADS:<a target="_blank" rel="noopener" href="https://github.com/yahoo/egads">code</a></li>
-<li>亿客行Expedia开源的异常检测项目 adaptive-alerting:<a target="_blank" rel="noopener" href="https://github.com/ExpediaDotCom/adaptive-alerting">code</a></li>
-<li>新加坡国立大学做传感器多变量指标异常检测的开源项目(基于 GAN 算法)：<a target="_blank" rel="noopener" href="https://github.com/LiDan456/MAD-GANs">code</a></li>
+<li>b服务的响应时间变长；a服务的响应时间变长</li>
+<li>b服务的响应时间进行下钻分析，可以发现b服务依赖的其他服务的响应时间没有异常，只有依赖a服务的响应变长了。</li>
+<li>对a服务的响应进行下钻分析，发现a服务依赖的所有的服务响应时常都是正常的。</li>
+<li>如果服务c 要 调用服务b，然后这个调用并没有用到服务a，服务b的反应就是正常的。 总结一下，每一个服务的健康度是一个量化指标，被调用的成功率，如果成功率低，说明这个服务自身可能异常，也有是依赖服务异常导致。</li>
+</ul></li>
+<li>主机故障：如果某台机器故障，那么部署在这台机器上的所有应用都危险了，进而间接影响到，调用这些应用的调用方，即导致应用的点异常，以及间接导致边异常。</li>
+<li>网络故障：网络故障比如网络设备（网线，机房，交换机，路由器）故障，会导致数据在传输过程中丢失，进而影响到两个跨机器的应用之间的调用，即导致 边异常。</li>
 </ul>
+<p>画一个图表示一下</p>
+<figure>
+<img src="./shougap.png" alt="图1-应用/主机/网络三种故障导致的结果" /><figcaption aria-hidden="true">图1-应用/主机/网络三种故障导致的结果</figcaption>
+</figure>
+<h2 id="根因定位方案工作流图">根因定位方案&amp;工作流图</h2>
+<figure>
+<img src="./workflow.png" alt="image-20210316150746837" /><figcaption aria-hidden="true">image-20210316150746837</figcaption>
+</figure>
+<p><a target="_blank" rel="noopener" href="https://docs.qq.com/flowchart/DVGJiQ0NXc2Z3dGVq">流程图-腾讯文档</a></p>
+<h2 id="关于事件的定义">关于事件的定义</h2>
+<p>事件的定义确定了rca的定位能力的颗粒度。 事件定义的粒度越粗糙，定位到的根因就越粗糙，起到的作用就越少。</p>
+<p>粗糙的事件描述只能定位到粗糙的根因。 事件详细到指标的描述，件可以定位到机器的指标根因。 事件详细到指标的描述，件可以定位到细粒度的根因，</p>
+<p>怎么定义一个事件？ 使用 [机器ip, 服务名称, 事件类型/指标名称]</p>
+<h2 id="要用到那些数据">要用到那些数据？</h2>
+<p>要用到的数据包括：日志，指标，事件以及拓扑数据</p>
+<p>但是每条日志/指标/事件，一定是跟一个实体绑定的（某个主机或者某个主机的某个应用）。</p>
+<p>先定位到有问题的实体，然后下钻分析，该实体的哪个指标为根因。</p>
+<p>如何确定一个实体是健康还是异常？两个思路：</p>
+<ul>
+<li>定义应用/中间件的通用的SLO指标，比如调用成功率，调用耗时。</li>
+<li>定义每个应用/中间件最适合的SLO指标，如db最关心锁个数，是否关闭监听。</li>
+</ul>
+<p>此外，还需要用到调用拓扑数据，即服务之间的相互调用关系，或者服务所部署的机器之间的关系，最终得到一个精确的方案。</p>
+<h2 id="构造因果图">构造因果图</h2>
+<p>先要确定这个因果图的skeleton，有哪些节点，什么方向。 构建因果图的思路。基于服务调用关系以及其他的先验，加上基于数据驱动的因果关系方法，提取最大子图。</p>
+<p>因果图长什么样子：</p>
+<figure>
+<img src="AIOps-21-topo-rca/yinguotu.png" alt="因果图.png" /><figcaption aria-hidden="true">因果图.png</figcaption>
+</figure>
+<p>构建因果图（causality graph）是一个核心技术点。</p>
+<ul>
+<li><p>因果图是一个两层分层的图（two layered hierarchical causality graph）</p>
+<ul>
+<li>较高的层是粗粒度的信息，表示每台机器上每个服务间的依赖关系，也叫服务依赖图（Service Dependency Graph），用于定位到服务级别的根因。</li>
+<li>较低的层是细粒度的信息，表示系统指标组成的细粒度因果关系，也叫指标因果图（Metric Causality Graph），用于定位到指标级别的根因。</li>
+</ul></li>
+<li><p>构造「服务依赖图」分为两步（就是调用关系）：</p>
+<ul>
+<li>第一步通过采集器获取边是否存在；</li>
+<li>第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。</li>
+</ul></li>
+<li><p>构造「指标因果图」：使用人工经验+PC算法。</p>
+<blockquote>
+<p>pc算法是一种发现因果关系的算法，在满足一定的假设前提下，使用的基于统计的方法，推导出因果关系。</p>
+</blockquote></li>
+</ul>
+<h2 id="使用因果图进行推断">使用因果图进行推断</h2>
+<p>当前端的服务可用性指标（SLO）出现异常，就会触发根因分析</p>
+<p>根因分析的流程：一边定位调用链中的异常微服务，一边下钻分析，细到指标级别</p>
+<ol type="1">
+<li>通过异常KPI找到对应的异常微服务</li>
+<li>找到微服务所在的机器，搜集性能指标，对指标因果图进行深度优先搜索，推断哪个指标导致服务性能问题。有两种方法: pagerank, 深度优先遍历</li>
+<li>如果当前微服务异常是别的微服务异常（上游或者下游）造成的，举个例子，根因指标是依赖服务的SLO（注意，这里用到了调用链关系），这个推断就会传播到依赖的远程服务。 ）</li>
+<li>一直追本溯源，一直到最底层的被调用方。</li>
+</ol>
+<h1 id="根因参考资料">根因参考资料</h1>
 <h2 id="比赛">比赛</h2>
 <ol type="1">
-<li>清华裴丹团队举办的 KPI 异常检测比赛：<a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=5&amp;flag=1">data</a></li>
-<li>清华裴丹团队举办的 KPI 异常检测比赛方案-分享：<a target="_blank" rel="noopener" href="http://workshop.aiops.org/">slide</a></li>
+<li><a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=15&amp;flag=1">AIOps挑战赛2020-微服务系统根因分析</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/93USWr2evhRTQvS_NgB56A">AIOps挑战赛2020-微服务系统根因分析-数据</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hYiXUMveSprkIiOy8mCmCg">AIOps挑战赛2020-微服务系统根因分析-方案分享</a></li>
+<li><a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=17&amp;flag=1">AIOps挑战赛2021-微服务系统根因分析</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnsoftbei.com/plus/view.php?aid=479">CN-Softbei2020-根因分析-比赛</a></li>
 </ol>
+<h2 id="代码">代码</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/Insighter">根因分析代码-Insigter</a></li>
+</ol>
+<h2 id="论文">论文</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://wemp.app/posts/6013f2da-c11a-4f6f-b393-2b631c45172a">清华阿里AIOps新作：基于因果分析的微服务内根因定位</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/">对陈鹏飞教授CauseInfer论文的解读</a></li>
+</ol>
+<h2 id="其他">其他</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf">2014-INFOCOM_CauseInfer</a></li>
+<li><a href="https://chiechie.github.io/2021/03/09/technology/PC-algo/">chiechie对PC算法的总结</a></li>
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">causeinfer--paper</a></li>
+<li>J. Pearl, Causality: models, reasoning and inference. Cambridge Univ Press, 2000, vol. 29.</li>
+<li>D. Barry, “A bayesian analysis for change point problems,” Journal of the American Statistical Association, vol. 88, no. 421, pp. 309–319, 1993.</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2-event-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/21/AI/AIOps/AIOps-2-event-analysis/" class="post-title-link" itemprop="url">chapter2 故障定位</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-21 16:04:20" itemprop="dateCreated datePublished" datetime="2021-05-21T16:04:20+08:00">2021-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-02 17:43:09" itemprop="dateModified" datetime="2021-06-02T17:43:09+08:00">2021-06-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="目录">目录</h2>
+<ul>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
+</ul>
+<p>故障定位阶段，需要对众多生成的告警事件进行综合分析，找出事件之间的关联，并且定位出根因。 主要的细分场景包括：</p>
+<ul>
+<li>基于拓扑的故障定位</li>
+<li>多维指标下钻分析</li>
+<li>调用链根因定位</li>
+<li>指标和事件的关联关系</li>
+</ul>
 
       
     </div>
@@ -427,7 +492,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/77/">77</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/78/">78</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -493,7 +558,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">154</span>
+          <span class="site-state-item-count">155</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

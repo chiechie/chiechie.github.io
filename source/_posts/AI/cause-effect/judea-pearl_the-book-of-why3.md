@@ -30,8 +30,15 @@ categories:
 
 ## 从贝叶斯公式到贝叶斯网络
 
+1. 贝叶斯网络中的箭头并不表示因果关系，只是表示条件概率（那岂不是可以有个环？）。
+2. 贝叶斯网络中的三个基本机构: 链/叉/混杂因子
+    - 链： A --> B --> C
+    - 叉： A --> B <-- C
+    - 混杂因子： A<--B --> C
+3. 过目就忘。。。。
+
 
 ## 参考
 
-1. [the book of why-微信读书-引言](http://bayes.cs.ucla.edu/WHY/why-intro.pdf)
+1. [the book of why-微信读书](http://bayes.cs.ucla.edu/WHY/why-intro.pdf)
 2. [知乎-反事实和干预](https://zhuanlan.zhihu.com/p/269625734)

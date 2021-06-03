@@ -88,7 +88,7 @@ AlphaGo在模拟器中交替落子，直到分出胜负，把结果记为r.但�
 $$ \operatorname{score}(a) \triangleq Q(a)+\frac{\eta}{1+N(a)} \cdot \pi(a \mid s ; \boldsymbol{\theta}), \quad \forall a $$
 
 
-## 整个决策串起来
+## 决策
 
 一轮 选择->扩展->扩展->回溯只是执行了单次模拟。
 

@@ -20,7 +20,9 @@ categories:
 - environment需要定义state，action类型，以及step和render方法。
 - agent需要定义策略函数，即每个state下最优action
 
-下面从0到构建一个, 为了构建environment，先简化问题:
+下面从0到构建一个, 
+
+为了构建environment，先简化问题:
 
 - state: 过去3天close/open/high/low/volume5个指标的数据, shape = <3, 5>
 - action: 买/卖/持仓 + 数量(基于目前仓位的百分比), shape = <2, > ,
@@ -223,7 +225,7 @@ model.learn(total_timesteps=100)
 ## 参考
 
 1. [quantML-github-chiechie](https://github.com/chiechie/quantML/blob/master/gym_rl.py)
-2. [强化学习算法框架--stable-baselines](https://github.com/hill-a/stable-baselines)
+2. [强化学习算法框架-stable-baselines](https://github.com/hill-a/stable-baselines)
 3. [强化学习环境框架-gym](https://www.oreilly.com/radar/introduction-to-reinforcement-learning-and-openai-gym/)
 4. [构建交易环境-medium](https://towardsdatascience.com/creating-a-custom-openai-gym-environment-for-stock-trading-be532be3910e)
 5. [构建交易环境和交易策略-github](https://github.com/wangshub/RL-Stock)

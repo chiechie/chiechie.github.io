@@ -149,9 +149,9 @@ def reset(self):
         return observation, reward, done, {}
 ```
 
-### step2- 定义策略policy
+### step 2- 定义策略policy
 
-#### step2-1 定义一个静态策略
+#### step 2-1 定义一个静态策略
 
 这里先用一个简单的趋势策略作为baseline，如下
 
@@ -171,7 +171,11 @@ def pi(obs):
     
 ```
 
-#### step2-2 使用PPO算法构建策略
+#### step 2-2 使用PPO算法构建策略
+
+PPO（Proximal Policy Optimization）算法结合了A2C和TRPO的idea，主要思路是，
+每次更新策略时，新的策略不能离旧的策略太远，具体的做法是对梯度做截断（clipping）。
+
 
 ```python
 env_PPO = DummyVecEnv([lambda: StockEnv(df)])
@@ -229,3 +233,4 @@ model.learn(total_timesteps=100)
 3. [强化学习环境框架-gym](https://www.oreilly.com/radar/introduction-to-reinforcement-learning-and-openai-gym/)
 4. [构建交易环境-medium](https://towardsdatascience.com/creating-a-custom-openai-gym-environment-for-stock-trading-be532be3910e)
 5. [构建交易环境和交易策略-github](https://github.com/wangshub/RL-Stock)
+6. [PPO-youtube](https://www.youtube.com/watch?v=5P7I-xPq8u8)

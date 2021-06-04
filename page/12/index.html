@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1_1-GAN/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1_2-feature/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/AI/AIOps/AIOps-1_1_1-GAN/" class="post-title-link" itemprop="url">chapter1.1 使用GAN做异常检测</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-1_1_2-feature/" class="post-title-link" itemprop="url">chapter1.1 单指标异常检测</a>
         </h2>
 
         <div class="post-meta">
@@ -250,56 +250,105 @@
 </ul></li>
 <li>chapter3 故障恢复</li>
 </ul>
-<blockquote>
-<p>使用gnn做异常检测</p>
-</blockquote>
-<h1 id="不仅仅生成图片用gan做无监督的异常检测">不仅仅生成图片，用GAN做无监督的异常检测</h1>
-<p>代码：https://github.com/chiechie/wgan-gp-anomaly</p>
-<p>GAN被LeCun赞为继CNN之后最为重要的一个工作，其原因在于让各位惊呼“这才有点人工智能的样子”。相比于CNN或者RNN而言，GAN是一种完全不一样的思路。CNN或者RNN，其本质都是一种有监督的学习方式，相比于传统的方式而言，得益于网络强大的表达能力和自动学习特征的end-to-end的学习能力，CNN和RNN在很多任务上实现了巨大提升从而引领了这一次的人工智能的兴起。但是有监督学习的缺陷在于需要大量的数据进行学习，所以很多人工智能公司都是花了大量的资金和人力来收集和标注数据。记得在学校听“驭势科技”的黄波博士的一次技术分享，他就谈到数据的问题，笑称其实现在最赚钱的不是做人工智能技术的公司，而是那些做数据标注的公司。如果我没有记错的话，似乎买一张给自动驾驶标注的<strong>精细的语义分割</strong>的标签图需要1块人民币左右（敲黑板！商机啊！同学们）。</p>
-<p>GAN是一种对抗学习网络，通过生成器G和判别器D的对抗学习来学习训练集的数据分布从而学会生成图片（<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1406.2661.pdf">Goodfellow的paper</a>）。GAN一出来就被大家广泛的讨论，并且大量的人开始研究GAN，2017年以来arxiv上GAN的paper数量如同火箭一般的速度上升。原因就是GAN给做unsupervised learning提供一种很好的思路，最直接的应用在于我们可以用GAN学习真实的数据分布，从而生成图片可以给各种任务做<strong>数据增强</strong>。然后GAN也被应用在其他领域取得了非常不错的效果，有名的比如Twitter的那篇做超分辨的<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1609.04802">SRGAN</a>，最近最火的GAN应该是Berkeley的<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1611.07004">Pix2Pix GAN</a>和<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1703.10593">Cycle GAN</a>。</p>
-<p><strong>Pix2Pix GAN和普通的GAN的区别是实现图片域的转换（Image Translation）</strong>， 比如从手绘画到实物图的转换，而不是从一个噪声生成图片，效果非常之好。但是<strong>Pix2Pix GAN要求需要pair的数据训练</strong>，即两个图片域之间要有对应好的训练数据。Cycle GAN和Pix2Pix GAN一脉相承，加入了cycle consistency loss从而不需要像Pix2Pix GAN一样需要不同图片域里面pair的数据才能训练GAN，实现了unpair的训练就可以完成不同图片域之间的转换。由于开源代码写的非常好（特别是<a href="https://link.zhihu.com/?target=https%3A//github.com/junyanz/pytorch-CycleGAN-and-pix2pix">Pytorch版的代码</a>，简直是Pytoch的良心模板，强推），实验效果也好，并且Image Translation本来就有很多的应用场景（除了刚提到的手绘图还有什么场景？），估计今年的CVPR里面应该会有很多魔改Cycle GAN和Pix2Pix GAN来做各种应用的paper出现。</p>
-<h2 id="把gan应用于做异常检测">把GAN应用于做异常检测</h2>
-<p>这篇文章要讲的不是用GAN来做图片的生成，而是一个非常有意思的应用方向-把GAN应用于做异常检测。首先解释一下什么是异常检测，顾名思义，异常检测就是<strong>检测出异常情况</strong>并且<strong>定位出异常位置</strong>。异常检测有着非常广泛的应用，例如在监控中，人行道中行人正常行走是正常情况，但是一旦出现车、自行车甚至滑板等等就是异常情况；或者在工厂生产产品中，正常外形的产品是合格的，但是也有出现一些瑕疵的产品。一般异常检测任务意味着<strong>异常的复杂性和异常数据的少量性</strong>：</p>
+<h2 id="概述">1. 概述</h2>
+<p>大型集群系统中，可能存在软件问题和硬件问题导致的系统故障，严重影响了系统的高可用性。这就要求7*24小时，对系统不间断监控。这就意味着需要不间断地监控大量时间序列数据，以便检测系统潜在的故障和异常现象。然而，实际当中的系统异常很多，且不容易发现；从而导致人工方式监控方式效率很低。</p>
+<p>异常场景本质上是一个或者多个数据点；数据点一般在系统运行过程中产生，且能反应系统的功能是否正常，多以日志形式呈现。当系统功能发生异常时，就会产生异常数据。快速高效地发现这些异常值，对于快速止损具有重要意义。对此，我们提出一种基于时间序列的异常识别模型，用来及时发现异常。</p>
+<p>对于多数系统，一般都有成功率、流量等指标，故障发生时，这些指标也会出现响应的异常。我们将系统成功率、流量统一称为特征值变量，并对其进行建模，从而方便后续其它特征变量的扩展。为了更好地感知这些特征变量的突变，需要对特征变量进行计算处理或者空间转换。那么异常识别问题就转换为以下两个问题：</p>
 <ul>
-<li>1、复杂性：异常检测不同于分类任务，分类任务是有确定的类别个数，所有的结果都在确定的分类标签中，但是对于异常检测而言，只要是和正常情况有出入就是异常情况，所以异常情况非常多而且事先无法预知，所以如果用分类的方式来做异常检测有很大的局限性。</li>
-<li>2、异常数据的少量性：异常情况往往不常出现，所以导致异常情况的数据不是很方便收集，但是正常情况的数据通常是很多的。</li>
+<li>特征变量的计算处理和转换</li>
+<li>突变的判断</li>
 </ul>
-<p>有很多正常的数据，但是没有很多异常的数据，那我们可不可以通过一个model来学习正常数据的分布，然后需要检测的异常图通过前面学习到的model找到它应该的正常图的样子，这样一对比不是可以找到异常吗？这样的思路简直完美契合GAN的思想！这篇文章里面我将会介绍一篇相关的paper：Unsupervised Anomaly Detection with Generative Adversarial Networks to Guide Marker Discovery， arxiv传送门：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1703.05921">https://arxiv.org/abs/1703.05921</a>。</p>
-<p>这篇paper是把GAN用在医学图像里面做异常检测，我们可以先看下整体的框架图：</p>
-<p><img src="https://pic4.zhimg.com/80/v2-3afb9ef54ee08b8983abcec88975ff17_hd.jpg" alt="img" />Fig.1 图中使用的数据是眼部的SD-OCT图像，这种图像信噪比比较高，然后眼部结构相比于其他部位又比较简单一点。眼部OCT图像需要经过一些预处理：视网膜区域的提取，展平，还有给GAN输入的图像patch的提取和normalization。</p>
-<p>这个框架图基本已经解释了这篇paper的方法，其实就是用正常的图片去训练GAN，然后通过GAN生成与异常图对应的正常图来对比找到异常。</p>
-<p><img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/v2-592e8ddc687eda45212d8ddf70853aeb_hd.png" alt="img" />Fig.2 (a)是网络结构图，(b)是指正常和异常数据的分布</p>
-<p>Fig.2 是paper中使用的GAN的结构图，</p>
-<p>其实在这篇paper里面使用的GAN就是普通的DCGAN，从一个噪声向量Z学习生成一张图片。我们可以看到正常的眼部OCT图的纹理是一种比较正常的过渡，但是异常的OCT图明显纹理产生了变化。DCGAN只用正常的OCT图像训练，这样DCGAN就只能从噪声生成正常纹理的OCT图像。当输入一个异常图时，通过比较DCGAN的生成图和异常图的差异去更新输入的噪声Z，从而生成一个与异常图尽可能相似的正常图。通过这样的方式，可以认为重建出了异常区域的理想的正常情况，这样两张图一对比不仅仅可以认定异常情况，同时还可以找到异常区域。</p>
-<p>这样paper的重点是如何更新GAN的输入噪声Z，最直接的想法就是把在正常图中训练得到的生成器G的参数固定，然后通过计算生成图和输入的L1 loss或者L2 loss来更新输入的噪声Z。这篇paper中同样也是使用了L1 loss，在paper中作者命名为Residual loss，但是本质就是算pixel-wise的L1 loss：</p>
+<p>针对这两个关键问题，我们将在下文中进行建模和分析。</p>
+<h2 id="异常识别">2. 异常识别</h2>
+<p>如下图，通过计算器进行特征变量的计算处理和转换，通过异常检测器来判断数值的突变，从而解决上面的两个问题。其中，异常检测器由比较器和决策器组成。</p>
+<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20180815093422131.png"><img src="http://www.datadriven.top/images/image-20180815093422131.png" alt="image-20180815093422131" /></a>image-20180815093422131</p>
+<p>对于给定时间序列二维矩阵X={xmt∈R：∀t≥0,∀m≥0}X={xtm∈R：∀t≥0,∀m≥0} ，xmtxtm为tt时刻的第m个指标的真实数据，umtutm表示时间tt的xmtxtm的计算值，ymtytm为第m个指标的输出结果，ytyt为整体预测结果。</p>
+<p>xmtxtm通过计算器得到计算值umtutm，然后xmtxtm 和 umtutm分别作为比较器的输入，得到第m个指标的输出ymtytm。y1tyt1,y2tyt2…ymtytm作为决策器的输入得到ytyt。ytyt是一个二元值，可以用<code>TRUE</code>（表示输出数据正常），<code>FALSE</code>（表示输入数据异常）表示。下面对计算器和检测器进行说明。</p>
+<h3 id="计算器">2.1 计算器</h3>
+<p><strong>计算器</strong>用来对输入值xmtxtm 进行计算或者空间转换，从而得到特征变量的计算值umtutm。一般情况下，特征变量具有趋势性、周期性等特征。基于这些特征，计算值的获取，可以使用以下三种方式：累计窗口均值计算器、基于趋势性的环比计算器、基于周期性的同比计算器。</p>
+<h4 id="累积窗口均值计算器">2.1.1 累积窗口均值计算器</h4>
+<p>输入值为xtxt（为了方便省略指标参数<code>m</code>），如果直接只用单个点xtxt的抖动来判断，受噪声影响较大。因此，使用累积窗口均值的方式：</p>
 <figure>
-<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/v2-77779aba2e1a63a5ef312c0de9c38e2e_hd.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="../_image/image-20191012164029688.png" alt="image-20191012164029688" /><figcaption aria-hidden="true">image-20191012164029688</figcaption>
 </figure>
-<p>Fig.3 更新噪声Z的Residual loss</p>
-<p>在这篇paper中作者还加了一个loss去迭代噪声Z，An improved discrimination loss based on feature matching：</p>
-<p><img src="https://pic1.zhimg.com/80/v2-13c9d37e5f19a28390fc17de03097cf4_hd.jpg" alt="img" />Fig.4 更新噪声Z的Improved discrimination loss</p>
-<p>加入这个loss目的是希望同时利用到训练好的判别器D，取判别器D中一个layer的输出，对比生成图和输入图之间在这层layer上feature map的差异，从而更新噪声Z。这样的目的在于加入了一个更high level的对比，希望生成图和输入尽量靠近。最后总体的loss是这两个loss的加权和：</p>
-<p><img src="https://pic1.zhimg.com/80/v2-8b08b59f3a23aa990b2fb63bf65b3acc_hd.jpg" alt="img" />Fig.5 Final loss fuction</p>
-<p>下面是作者贴出来的一些实验结果图，可以看到对于异常区域都可以比较明显的找到。</p>
-<p><img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/v2-9dbf3f09ea6ba47de03569ad1ad0bd6e_hd.png" alt="img" />Fig.6</p>
-<p>第一行：真实的输入图；第二行：迭代噪声Z之后的生成器G的生成图；第三行：计算生成与输入直接差异找到的异常区域；第四行：异常区域的heatmap图。图中的红色和黄色标注分别表示通过Residual loss和Improved discriminator loss认定的异常图片。</p>
-<p>这篇paper提出了一个GAN很有意思的应用方向，对于异常情况，通过这样使用GAN就可以不需要任何异常数据而仅通过正常数据的训练就可以找到异常，相当于是一种无监督的异常检测方法。</p>
-<p>但是这篇paper并没有开源代码，同时数据也没有给下载的link，我自己用Pytorch重现了这篇paper，github传送门：<a href="https://link.zhihu.com/?target=https%3A//github.com/oyxhust/wgan-gp-anomaly">oyxhust/wgan-gp-anomaly</a>（来都来了，点个star再走吧）。和原始的paper不同的是我用了wgan-gp实现，而没有用DCGAN，wgan-gp应该是目前gan训练最稳定的一种方式之一。并且我也没有下载到paper中的眼部OCT数据集，目前是在MNIST在做的测试，我选择数字“0”的图像当成正常图像，然后其他数字图就是异常图。WGAN-gp只用数字“0”的图像进行训练，在测试中我用所有数字的图来测试model。</p>
-<p>下面是我复现的效果图：</p>
+<p>其中，ww为累计窗口的大小。通过窗口平滑之后，会过滤掉尖刺等噪声。</p>
+<h4 id="基于趋势性的计算器">2.1.2 基于趋势性的计算器</h4>
+<p>为了描述数据的趋势性，引入环比类算法。对<span class="math inline">\(x_t\)</span>进行空间转换，得到环比，再使用检测器进行检测。</p>
 <figure>
-<img src="https://pic1.zhimg.com/80/v2-c66190ea550aee83736e30e8e0ff02d0_hd.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20191012163924379.png" alt="image-20191012163924379" /><figcaption aria-hidden="true">image-20191012163924379</figcaption>
 </figure>
-<p>可以看到GAN只能生成数字“0”（相当于正常情况），对于“0”的测试图，GAN可以生成几乎一样的输出。对于其他数字（相当于异常情况），GAN只能生成形状非常类似的“0”的图像。在我自己的实验中，对于“0”的测试图，L1 loss可以降低0.02左右，但是其他数字的测试图最低也是大概0.05左右，所以还是可以很明显地检测出异常。</p>
-<p>我觉得GAN用来做异常检测是一个非常有意思的方向，但是目前还有很多问题，这篇paper里面的做法我认为只能检测出一些比较大的异常。对于比较小的异常，因为GAN生成图并不能做到细节非常明显，所以很难检测。</p>
+<p>其中，分子为当前窗口w内的数据，分母为上一窗口w内数据。通过窗口w对数据进行平滑。</p>
+<h4 id="基于周期性的计算器">2.1.3 基于周期性的计算器</h4>
+<p>为了描述数据的周期性，引入同比算法。当同比值过大或者过小时，认为发生故障。同比公式如下：</p>
 <figure>
-<img src="../_image/image-20191113125624723.png" alt="image-20191113125624723" /><figcaption aria-hidden="true">image-20191113125624723</figcaption>
+<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20191012164057696.png" alt="image-20191012164057696" /><figcaption aria-hidden="true">image-20191012164057696</figcaption>
 </figure>
-<figure>
-<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20191113125714058.png" alt="image-20191113125714058" /><figcaption aria-hidden="true">image-20191113125714058</figcaption>
-</figure>
-<h2 id="参考资料">参考资料</h2>
+<p>其中TT为周期，kk表示第几个周期。一般选取kk为<code>1</code>、<code>7</code>、<code>30</code>，来表示昨天、上周、上个月。</p>
+<h4 id="其他类型计算器">2.1.4 其他类型计算器</h4>
+<p>计算器还可以使用其他算法，包括：</p>
+<ul>
+<li>统计类算法：包括同比、环比算法的改进，或者其他统计算法。此时，计算器的输出结果为预测值，预测值和输入值进行比较即可。</li>
+<li>时序型算法：包含ARIMA、Holter-Winter等时序型算法。计算器的输出结果为预测值。</li>
+<li>机器学习：根据有监督、无监督、深度学习(LSTM)等算法，训练出的模型即为计算器。此时，计算器的输出结果一般为归一化的值，根据归一化的值进行比较。</li>
+</ul>
+<p>这些算法，在这里不再做深入研究和阐述。</p>
+<h3 id="异常检测器">2.2 异常检测器</h3>
+<p>当数据出现异常时，计算值会出现较大偏差，该偏差由<strong>异常检测器</strong>来判断。<strong>异常检测器</strong>由比较器和决策器组成，计算值和真实值通过该模块后，得到最终预测结果。</p>
+<h4 id="比较器">2.2.1 比较器</h4>
+<p>比较器的本质是求解如下公式的过程：</p>
+<p>f(xmt,umt;hm) = boolean(4)(4)f(xtm,utm;hm) = boolean</p>
+<p>其中，xmtxtm为真实值，uu为计算值，hmhm为阈值参数，booleanboolean为结果<code>TRUE/FALSE</code>。真实值已知，计算值通过计算器得到；剩下的阈值参数hmhm，则需要根据故障发生时的实际值进行参数估计。</p>
+<p>很多场景下，该公式还可以简化为：f(umt;hm) = booleanf(utm;hm) = boolean ，即计算值直接和阈值比较即可。</p>
+<h5 id="比较器种类">2.2.1.1 比较器种类</h5>
+<p>比较器有两种：相对值比较器和绝对值比较器。给定计算值umtutm和输入值xmtxtm，得到绝对值比较器：</p>
+<p>f=xmt−umt opretor hm(5)(5)f=xtm−utm opretor hm</p>
+<p>其中，opretoropretor为比较操作符，比如<code>&gt; &lt; &gt;= &lt;=</code>。由于utut由xtxt得到，所以很多情况下公式可以简化为 umtopretorhmtutmopretorhtm，即确定计算值的阈值即可。</p>
+<p>对于一些场景来说，需要捕获特征变量的相对性。因此，引入相对值比较器：</p>
+<p>f=xmt−umtumt opretor hm(6)(6)f=xtm−utmutm opretor hm</p>
+<p>通过对相对值比较器进行阈值处理，既可以检测异常值，同时还能对期望值进行归一化。</p>
+<h5 id="比较器阈值h的选取">2.2.1.2 比较器阈值h的选取</h5>
+<p>一般情况下，阈值参数决定了异常检测模块的敏感度。最优阈值的选择，取决于数据分布的性质以及先验数据。一般情况下，<strong>阈值的选取方法为</strong>：</p>
+<ul>
+<li>方法一：跟踪一组故障数据和正常数据，根据经验估计阈值。</li>
+<li>方法二：跟踪一组故障数据和正常数据，根据经验，并结合<code>3σ准则</code>确定，来确定阈值。（特征变量或者特征变量的组合，服从正态分布）</li>
+</ul>
+<h4 id="决策器">2.2.2 决策器</h4>
+<p>如下公式，基于逻辑操作符，对比较器结果进行合并.</p>
+<ul>
+<li>方式一：逻辑组合</li>
+</ul>
+<p>yt=y1t &amp;| y2t &amp;| y3t &amp;| ... ymt(7)(7)yt=yt1 &amp;| yt2 &amp;| yt3 &amp;| ... ytm</p>
+<p>其中，||表示逻辑或操作，&amp;&amp;表示逻辑与操作。</p>
+<ul>
+<li><p>方式二：权重设置法</p>
+<p>yt=k1∗y1t + k2∗y2t + k3∗y3t + ... km∗ymt(8)</p></li>
+</ul>
+<p>其中，kmkm为系数，这种方式一般适合基本无负样本的场景，参数的确定需要使用<code>层次分析法</code>，将在后面的文章进行说明。</p>
+<h2 id="故障止损">3. 故障止损</h2>
+<p>上面主要阐述了异常识别的方式。如果条件过于严格，刚开始并不容易被识别出来；如果条件过松，可能导致误识别。对此，我们将止损策略分为两级：</p>
+<ul>
+<li>级别一：预警。对于不能完全确定故障发生的场景，使用级别一。</li>
+<li>级别二：预警+止损（踢IDC）。对于能确定IDC故障的场景，使用级别二。</li>
+</ul>
+<h2 id="实际场景应用">4. 实际场景应用</h2>
+<p>下面通过一个规则的场景，进行举例说明。假如存在如下异常场景：</p>
+<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20181108211144340.png"><img src="http://www.datadriven.top/images/image-20181108211144340.png" alt="image-20181108211144340" /></a>image-20181108211144340</p>
+<p><strong>体现在模型中，则级别一（预警）的模型图</strong></p>
+<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20180815093336600.png"><img src="http://www.datadriven.top/images/image-20180815093336600.png" alt="image-20180815093336600" /></a>image-20180815093336600</p>
+<p><strong>级别二（预警+踢IDC）的模型图：</strong></p>
+<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20180815093352931.png"><img src="http://www.datadriven.top/images/image-20180815093352931.png" alt="image-20180815093352931" /></a>image-20180815093352931</p>
+<p>最终，得到故障识别规则：</p>
+<ul>
+<li>级别一触发条件: u1&lt;h1 | (u5&lt;h5 &amp; u6&lt;h6 &amp; u7&lt;h7)u1&lt;h1 | (u5&lt;h5 &amp; u6&lt;h6 &amp; u7&lt;h7)</li>
+<li>级别二触发条件：u1&lt;h2 &amp; u3&gt;h3u1&lt;h2 &amp; u3&gt;h3</li>
+</ul>
+<p>其中，h1,h2,h3,h5,h6,h7h1,h2,h3,h5,h6,h7为阈值参数。需要结合经验和实际数据估计得到。</p>
+<h2 id="小结">5. 小结</h2>
+<p>本文主要基于时间序列的数据，提出了异常场景识别模型，并重点对基于规则的识别进行了说明。</p>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li>https://www.youtube.com/watch?v=pXGqDiE4N0I</li>
+<li><a target="_blank" rel="noopener" href="http://dl.acm.org/citation.cfm?id=2788611">Generic and Scalable Framework for Automated Time-series Anomaly Detection</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.datadriven.top/categories/数据驱动/">数据驱动应用（一）：整体概述</a></li>
 </ol>
 
       

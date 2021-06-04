@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="why？  最早提出用量子体系来计算，或者说模拟量子物理问题的科学家是费曼，不过当时只是一个概念。 真正从数学上证明有效的算法，是20世纪90年代数学家提出的两类算法：Shor算法和Grover算法. Shor算法解决质因数分解问题。用量子的逻辑电路，可以将大数分解问题的求解时间从指数级降低为准多项式级。大数不可分正是现在互联网上应用最广泛的非对称加密系统，也叫公钥加密系统的数学基础。用现在最好的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="量子计算机">
+<meta property="og:url" content="https://chiechie.github.io/2021/06/04/reading_notes/liangzijisuanji/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
+<meta property="og:description" content="why？  最早提出用量子体系来计算，或者说模拟量子物理问题的科学家是费曼，不过当时只是一个概念。 真正从数学上证明有效的算法，是20世纪90年代数学家提出的两类算法：Shor算法和Grover算法. Shor算法解决质因数分解问题。用量子的逻辑电路，可以将大数分解问题的求解时间从指数级降低为准多项式级。大数不可分正是现在互联网上应用最广泛的非对称加密系统，也叫公钥加密系统的数学基础。用现在最好的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/04/reading_notes/liangzijisuanji/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/04/reading_notes/liangzijisuanji/img_1.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/04/reading_notes/liangzijisuanji/img_2.png">
+<meta property="article:published_time" content="2021-06-04T01:05:44.000Z">
+<meta property="article:modified_time" content="2021-06-04T01:32:47.631Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="未来趋势">
+<meta property="article:tag" content="量子计算机">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/06/04/reading_notes/liangzijisuanji/img.png">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/06/04/reading_notes/liangzijisuanji/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>量子计算机 | Chiechie's Mini World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Mini World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/04/reading_notes/liangzijisuanji/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          量子计算机<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/reading_notes/liangzijisuanji.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-04 09:05:44 / 修改时间：09:32:47" itemprop="dateCreated datePublished" datetime="2021-06-04T09:05:44+08:00">2021-06-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="why">why？</h2>
+<ol type="1">
+<li>最早提出用量子体系来计算，或者说模拟量子物理问题的科学家是费曼，不过当时只是一个概念。</li>
+<li>真正从数学上证明有效的算法，是20世纪90年代数学家提出的两类算法：Shor算法和Grover算法.</li>
+<li>Shor算法解决质因数分解问题。用量子的逻辑电路，可以将大数分解问题的求解时间从指数级降低为准多项式级。大数不可分正是现在互联网上应用最广泛的非对称加密系统，也叫公钥加密系统的数学基础。用现在最好的算法破解2048位数的公钥密码，需要超过100万年时间，而用Shor算法只需要几分钟</li>
+<li>Grover算法是一个搜索算法，它可以将无结构的数据搜索问题从N复杂度降低为根号N复杂度。虽然加速能力不如Shor算法，但搜索算法是一种非常基础的算法，可以映射到多种实际问题中去。当N非常大时，这种加速效应也非常显著。目前互联网中每时每刻产生的海量数据，要从中寻找有用信息，正对应着这种N非常大的情况。此外，搜索算法还可以用来进行密码破解。</li>
+<li>此外，量子计算还可以通过模拟复杂系统的哈密顿量来进行量子化学计算，研究原来很难研究的复杂多体物理问题；通过量子纠缠特性，量子计算还可以快速计算多参量的代价函数，从而提高优化问题的求解效率，在人工智能方面也有潜在的应用价值。</li>
+</ol>
+<h2 id="量子计算可以解决什么问题">量子计算可以解决什么问题？</h2>
+<ol type="1">
+<li>计算科学中，所有的计算问题可以分为可判定问题和不可判定问题。</li>
+<li>计算机能够解决的只是可判定类问题，也就是可计算问题。</li>
+<li>NP问题中还有一类NP完全问题，计算复杂度指数增长，其中包括非常经典的最大割问题、行商问题等等。量子计算目前无法解决。</li>
+</ol>
+<figure>
+<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<h2 id="怎么实现量子计算">怎么实现量子计算？</h2>
+<ol type="1">
+<li><p>从理论上看，比较简单，先把问题用比特进行编码，算完之后观测结果 <img src="img_1.png" alt="img_1.png" /></p></li>
+<li><p>从实现上看，比较有挑战，因为实现过程中会有噪声，并且量子不好操控和测量。</p>
+<blockquote>
+<p>量子计算的理论和算法研究早在上世纪八九十年代就出现了，而实验物理研究却一直到2000年以后才逐渐走上快车道。</p>
+</blockquote></li>
+<li><p>现实世界中，能够用来做量子计算的体系有很多，包括自然原子、离子阱、光子、二维电子气、NV-色心、核自旋、冷原子，以及超导量子比特，等等。哪些是优秀的“量子比特”，能成功构建出实用的量子计算机呢？要满足以下条件（Divincenzo准则”）：</p>
+<ul>
+<li>可以构建一组可扩展的大量量子比特，并且能够很好的表征它们</li>
+<li>能够对量子比特进行初始化</li>
+<li>量子比特必须具有足够长的退相干时间</li>
+<li>能实现一组通用的量子门操作</li>
+<li>能够很好地测量这些量子比特的最终状态</li>
+</ul></li>
+<li><p>基于超导量子比特的超导量子计算，满足上面五点，成为现在各大头部公司最看好的技术方案</p></li>
+</ol>
+<h2 id="现状以及未来展望">现状以及未来展望</h2>
+<ol type="1">
+<li>2019年10月，Google在Science上刊出了一篇论文，介绍了他们验证了量子霸权的实验结果。个实验让全世界都备感兴奋，谷歌的CEO皮查伊评价这个实验的意义，就像当年莱特兄弟发明了第一驾飞机。不过，正如第一驾民用客机要到50多年后才诞生，量子计算机走入千家万户，仍有很长的路要走。 <img src="img_2.png" alt="img_2.png" /></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>https://weibo.com/ttarticle/x/m/show/id/2309404644282962411850?<em>wb_client</em>=1</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
+              <a href="/tags/%E6%9C%AA%E6%9D%A5%E8%B6%8B%E5%8A%BF/" rel="tag"># 未来趋势</a>
+              <a href="/tags/%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E6%9C%BA/" rel="tag"># 量子计算机</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/03/economics/huilv/" rel="prev" title="汇率机制">
+      <i class="fa fa-chevron-left"></i> 汇率机制
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#why"><span class="nav-number">1.</span> <span class="nav-text">why？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E5%8F%AF%E4%BB%A5%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">量子计算可以解决什么问题？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text">怎么实现量子计算？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E7%8A%B6%E4%BB%A5%E5%8F%8A%E6%9C%AA%E6%9D%A5%E5%B1%95%E6%9C%9B"><span class="nav-number">4.</span> <span class="nav-text">现状以及未来展望</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">157</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">178</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

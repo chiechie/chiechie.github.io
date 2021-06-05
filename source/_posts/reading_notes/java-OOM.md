@@ -1,5 +1,5 @@
 ---
-title: JVM的自动内存管理
+title: 《深入理解JAVA虚拟机》读书笔记
 author: chiechie
 mathjax: true
 date: 2021-03-22 10:02:13
@@ -7,12 +7,14 @@ tags:
 - 计算机原理
 - 虚拟机
 - 故障诊断
+- 读书笔记
 categories:
-- 计算机原理
+- 阅读
 ---
 
 
-## 背景
+
+## JVM的自动内存管理
 
 ![JVM运行时的数据区](./img.png)
 
@@ -21,7 +23,6 @@ categories:
 - 本地方法栈（Native Method Stack）跟 Java虚拟机栈类似。区别是，虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈则为虚拟机使用到的Native方法服务。
 - Java堆（Java Heap）是被所有线程共享的一块内存区域，是Java虚拟机所管理的内存中最大的一块。Java堆是垃圾收集器管理的主要区域，因此很多时候也被称做“GC堆”（Garbage Collected Heap）。
 - 方法区（Method Area）也是各个线程共享的内存区域，它用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据，
-
 
 
 ## OOM异常

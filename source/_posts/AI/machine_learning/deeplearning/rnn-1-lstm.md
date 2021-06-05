@@ -21,7 +21,7 @@ categories:
    
 ## LSTM
 
-![](./lstm.png)
+![](rnn-1-lstm/lstm.png)
 
 LSTM引入新的内部状态专门进行先行的循环信息传递，同时将非线性加工后的信息给隐藏层的外部状态
 
@@ -31,14 +31,14 @@ lstm有3个门，分别为输入门，输出门，遗忘门，也是三个权重
 - 输出门：控制当前内部状态$\tilde{\mathbf{c}}_{t}$有多少信息要输出给外部状态
 - 遗忘门：一个权重向量表示上一个时刻的内部状态$\mathbf{c}_{t-1}$需要遗忘多少信息
 
-![img.png](img.png)
+![img.png](rnn-1-lstm/img.png)
 
 更新当前记忆
-![img_1.png](img_1.png)
+![img_1.png](rnn-1-lstm/img_1.png)
 
 更新当前时刻的state
 
-![img_2.png](img_2.png)
+![img_2.png](rnn-1-lstm/img_2.png)
 
 
 lstm的参数个数：
@@ -48,7 +48,7 @@ lstm的参数个数：
 
 ## LSTM应用-情感判断
 
-![img_3.png](img_3.png)
+![img_3.png](rnn-1-lstm/img_3.png)
 
 
 ## cnn 和 rnn视觉对比

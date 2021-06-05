@@ -1,13 +1,14 @@
 ---
-title: 深入理解JVM
+title: 《深入理解JVM》读书笔记
 author: chiechie
 mathjax: true
 date: 2021-03-18 11:55:45
 tags:
 - 虚拟机
 - 计算机原理
+- 读书笔记
 categories: 
-- 计算机原理
+- 阅读
 ---
 
 ## Java的技术体系

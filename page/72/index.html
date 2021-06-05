@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/28/reading_notes/intuition_pumps_right-way-to-judge-others/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/AI/cause-effect/cause-inference-learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/28/reading_notes/intuition_pumps_right-way-to-judge-others/" class="post-title-link" itemprop="url">《直觉泵》读书笔记1——如何正确地批评别人？</a>
+            <a href="/2021/03/04/AI/cause-effect/cause-inference-learning/" class="post-title-link" itemprop="url">因果推断</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,123 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-28 11:40:47" itemprop="dateCreated datePublished" datetime="2021-02-28T11:40:47+08:00">2021-02-28</time>
+              <time title="创建时间：2021-03-04 23:23:02" itemprop="dateCreated datePublished" datetime="2021-03-04T23:23:02+08:00">2021-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="因果推断和因果发现">因果推断和因果发现</h1>
+<p>因果问题分为两种：一种是因果推断，另一种是因果发现</p>
+<ul>
+<li>因果推断（causal inf erence）：比如给定两个变量 X、Y，希望找到一个衡量它们之间因果关系的参数 theta；</li>
+<li>因果发现（causal discovery）：即给定一组变量，找到他们之间的因果关系，这个在统计上是不可能的。</li>
+</ul>
+<h1 id="两种数据产生途径">两种数据产生途径</h1>
+<p>数据有两种产生途径：</p>
+<ul>
+<li>一种是通过有意控制、随机化的实验得到的:例如拨测,能够直接做因果推断</li>
+<li>一种是通过观测数据得到的: 需要另外知道一些先验知识，才能做因果推断。</li>
+</ul>
+<h1 id="用数学语言表达因果模型">用数学语言表达因果模型</h1>
+<p>因果模型有三种表达方式： - 反事实（counterfactuals） - 因果图（causal graph） - 结构方程模型（structural equation models）</p>
+<p>一个简单的例子『睡眠超过 7 小时的人』（X）『生病少』（Y)，只是代表 X 和 Y 之间有关联性，并不代表如果强制一个人睡眠超过 7 小时，ta 就能够生病少。因为可能『身体好的人』容易『睡眠超过 7 小时』，同时 ta 也『生病少』；但是一个本来身体不好的人，强制 ta 睡眠多，ta 可能也生病不会少。</p>
+<p>因果关系可以从随机化的实验中得到；但是很难从观察到的数据中得到。</p>
+<h2 id="反事实counterfactuals">反事实（Counterfactuals）</h2>
+<p>考虑一个 treatment X，和一个 outcome Y。我们能观察到的是一些数据 <span class="math inline">\(\left\{\left(X_{i}, Y_{i}\right)\right\}\)</span> ，但是我们无法知道如果对于某一个数据点 <span class="math inline">\(\left(X_{i}, Y_{i}\right)\)</span> ，如果改变 X 的值，Y 会怎么变。这件事情就叫做反事实（counterfactual）。</p>
+<p>Notes 里面给了一个图（下图），从数据上看，X 和 Y 是正相关的，但其实对于每一个 样本来说，如果增大 X，会引起 Y 的减小。这一点最开始看的时候并不好理解。举一个例子。研究航空公司票价（X）对销量（Y）的影响，显然，对于某一个客户来说，增加票价（X 变大）会降低客户购买意愿，即使得销量将达（Y 变小）。但是实际中的情况是，在节假日人们出行意愿大导致销量高（Y 大），定价也会相应变高（X 大），从而从数据上看，形成左边图的情形。</p>
+<figure>
+<img src="dl-framework/img.png" alt="反事实举例" /><figcaption aria-hidden="true">反事实举例</figcaption>
+</figure>
+<h2 id="因果图causal-graph">因果图（causal graph）</h2>
+<p>因果图是一个DAG，表明各变量之间的联合概率分布。</p>
+<p><span class="math inline">\(p\left(y_{1}, \ldots, y_{k}\right)=\prod p\left(y_{j} \mid \operatorname{parents}\left(y_{j}\right)\right)\)</span></p>
+<p>下面举例说明，在给定一个因果图之后，如何做因果推断。 考虑下面一个因果图，目标是求<span class="math inline">\(p(y \mid \operatorname{set} X=x)\)</span></p>
+<ul>
+<li><p>首先，可以看出该 causal graph 提供的信息为 <span class="math inline">\(p(x, y, z)=p(z) p(x \mid z) p(y \mid x, z)\)</span></p></li>
+<li><p>接下来，由于考虑的是给定 X的影响，因此构建一个新图<span class="math inline">\(G_{*}\)</span>, 移除掉所有指向 X 的边，得到新的联合概率分布: <span class="math inline">\(p_{*}(y, z)=p(z) p(y \mid x, z)\)</span></p></li>
+<li><p>最后，该概率分布下的数值就是因果推断的结果: <span class="math inline">\(p(y \mid \text { set } X=x) \equiv p_{*}(y)=\int p_{*}(y, z) d z=\int p(z) p(y \mid x, z) d z\)</span></p></li>
+</ul>
+<h2 id="因果图-和-概率图-的区别">因果图 和 概率图 的区别</h2>
+<p>举例说明，比如下雨（Rain，R）和湿草坪（Wet Lawn，W）是不相互独立的 对于下两种 DAG，它们都是合理的 probability graph。即对于任意的联合概率分布 <span class="math inline">\(p(w, r)\)</span>，都可以写成 <span class="math inline">\(p(w) p(r \mid w)\)</span> 或者 <span class="math inline">\(p(r) p(w \mid r)\)</span>. 但显然下雨是因、草坪湿是果，只有左边的图才是正确的 causal graph。</p>
+<figure>
+<img src="right_causal_graph.png" alt="right_causal_graph" /><figcaption aria-hidden="true">right_causal_graph</figcaption>
+</figure>
+<h1 id="因果发现是不可能的">因果发现是不可能的</h1>
+<p>总存在一个 faithful 的分布使得在样本足够多的时候，产生足够大的 type I error。</p>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/88173582">zhihu-关于因果推断公开课翻译</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.stat.cmu.edu/~larry/=sml/Causation.pdf">英文原文</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/reading_notes/zhexue/intuition_pumps_xiaorener/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/04/reading_notes/zhexue/intuition_pumps_xiaorener/" class="post-title-link" itemprop="url">《直觉泵》读书笔记2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-04 09:59:33" itemprop="dateCreated datePublished" datetime="2021-03-04T09:59:33+08:00">2021-03-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -219,46 +335,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>工作中验收产品/算法方案，审视自己的方案，去别人就某个观点进行argue，都需要这个技能。</p>
-<p>《直觉泵和其他思考工具》对于如何正确地批评别人以及批评那些方面，提出了指引--拉波波特法则和史特金定律，</p>
-<p>拉波波特法则是对「归谬法」的一个补充，是一个更温和的，更让人容易接受的方式。</p>
-<p>史特金定律告诉我们每个领域闪闪发光的知识只有10%或者更少，我们不应该浪费时间，批量一些毫无亮点的东西</p>
+          <h2 id="观点">观点</h2>
+<ol type="1">
+<li><p>「中心小人儿」理论：假设大脑中有一个聪明绝顶的决策者，但是用归谬法会推导出，这个小人儿大脑中是不是也有一个中心小人儿，。。。然后陷入了无线倒推论。</p></li>
+<li><p>「小人儿机械主义」理论:假设大脑中有一堆小人儿在做决策--决策委员会，他们不断地将服务任务拆解成原子的简单的任务。</p>
+<blockquote>
+<p>有点像虚拟机的原理，嵌套学习。有点像官僚体系。</p>
+</blockquote></li>
+<li><p>「小人儿机械主义」相对于「中心小人儿」理论的高明之处在于，他不会陷入“无线倒退论”的荒谬处境，而是有一个ending的。即，当拆解之后的操作变得简单乏味时，就可以终止了，让机器来了。</p></li>
+<li><p>老式人工智能采用自上而下的工作方式，有严格的等级分工，但是却是不必要的设计！ 这种自上而下的工作方式，有个特点，分配任务的层级规模非常庞大。在计算机发明的早期，这种组织形式所以有效，是因为执行层的能力很弱--单个计算机又小又慢。 因此顶层设计人员要将目标任务成功地分解成一组比较容易掌控的子任务，进而知道怎么编程实现每个小功能，以及将程序整合成一个可行的系统。顶层设计人员可以用「概念验证」的方法，有时候省时省力。</p></li>
+</ol>
+<blockquote>
+<p>关于「概念验证」（proof of concept， POC）：</p>
+<p>「概念验证」是一个有用的工程学概念：为了设计出一个非常精致、非常复杂工具或者系统，可以先设计并且解决一个“demo问题 ”（toy problem），即，先做一个简单的小玩意儿，让它按照简化的工作原理运行，这就是在“验证概念”。接下来让这个小东西的功能完善，只需投入更多时间和金钱。这个简单的小玩意儿可以让一个复杂的问题首先在概念上得以“解决”。有时候，“概念验证”很有效。</p>
 </blockquote>
-<h2 id="避免变成一个杠精">避免变成一个杠精！</h2>
-<p>我们在寻找对方说法中隐藏的矛盾时常常容易走过头，变成鸡蛋里挑骨头，变成彻头彻尾的嘲弄。这种认定对手的想法中一定藏有矛盾的冲动，给了你一个容易击中的靶子，怂恿你对别人的看法做出无情解读。</p>
-<p>然而，<strong>这个容易击中的靶子通常与我们真正关心的问题不是一回事儿</strong>，你只是在浪费大家的时间和耐心而已，最多是给支持你的观点的人提供了一点消遣。</p>
-<h2 id="拉波波特法则">拉波波特法则</h2>
-<p>拉波波特法则的内容如下：</p>
-<table>
-<tbody>
-<tr class="odd">
-<td>如何撰写一篇成功的批评性评论?</td>
-</tr>
-<tr class="even">
-<td>① 你应该非常清楚、生动、不偏不倚地重述对手的想法，使得你的对手说：“谢谢你，我刚才要是像你这么表述就好了。”</td>
-</tr>
-<tr class="odd">
-<td>② 你应该把对方观点中你所同意的部分都列出来，尤其是那种并非被人们广泛接受了的观点。</td>
-</tr>
-<tr class="even">
-<td>③ 你应该提到那些从你对手那里学到的东西。</td>
-</tr>
-<tr class="odd">
-<td>④ 只有完成了以上三点，你才能说一句反驳或批评的话。</td>
-</tr>
-</tbody>
-</table>
-<p>遵循此法则的一个直接的好处就是，你的对手会因此乐于倾听你的批评。因为，他们看到你已站在他们的立场上，理解了他们的想法，同时你也展示出了良好的判断力，在一些重要的事情上和他们达成了共识，甚至在有些地方还被他们说服了。</p>
-<p>遵循拉波波特法则，有时内心会有挣扎，因为有些对手不值得我们如此尊重。但对于值得尊重的对手，当我们用了这个方法，总是能有意外之喜。</p>
-<h2 id="史特金定律">史特金定律</h2>
-<p>科幻作家泰德·史特金（Ted Sturgeon）这个评价科幻小说，"百分之九十的科幻小说确实很渣。但是，任何事物当中的百分之九十都是渣滓，而其中那不是渣滓的百分之十才是有意义的。我敢说，那百分之十的科幻小说可以与人类从古至今写就的任何作品相媲美。"</p>
-<p>对史特金定律更通俗的一种表达是：“任何事物当中的百分之九十都是垃圾（crap）。” 百分之九十的分子生物学实验、百分之九十的诗歌、百分之九十的哲学书、数学系里百分之九十的同行评议文章，等等，都是垃圾。</p>
-<h2 id="不要把时间浪费在无意义的事情上">不要把时间浪费在无意义的事情上</h2>
-<p>从史特金定律中我们应该学到：每个领域，每个人身上都有一大堆愚蠢、平庸、糟糕透顶的东西存在。最伟大的思想家经过些许巧妙扭曲之后，他们最好的学说、最精妙的分析也会显得又臭又长，变成彻头彻尾的蠢话。</p>
-<p>为了不浪费你的时间和大家的耐心，请确保你关注的是你能找到的该领域或者个人身上最好的东西，比如获奖之作、杰出成果、大家都赞不绝口的精品，而非糟粕。</p>
-<h2 id="怎么用知乎">怎么用知乎？</h2>
-<p>知乎对我而言最大的意义是，它上面质量前 10% 的内容价值是相当大的，远超其他主流中文互联网平台——至于剩下的，本来互联网上绝大部分内容都是垃圾，知乎也只是体现了世界的常态而已。这也提醒我对于那些有争议的领域，在噪音中找到真正有价值的东西，比带着偏见全盘否定要好上太多。 --张潇雨</p>
+<ol start="3" type="1">
+<li><p>「小人儿机械主义」的理念设计出来的计算机，需求和工作几乎是完全独立的。各种程序按照一个队列有序进行，不会陷入你争我夺的厮杀，马克思说过的"从各展其能到各取所需"。计算机科学家埃里克称这种等级控制为"政治"。但是神经系统则不一样，人体的普通细胞和工蚁很像--没有私心，机械的工作，百依百顺的奴隶，赶着一成不变的活儿，没有竞争的环境中生存。但是大脑必须参与激烈的市场竞争。神经玩想要的是填饱肚子，活下去。每个神经细胞类似一个生物机器人，虽然没有意识。 但是，并不妨碍它们，在生死攸关的争斗中，成为极强战斗力的行动者。它们的竞争环境在大脑所要求的环境里。在这里，谁能更有效地建立连接网络，谁能在人类的欲望和冲动层面发挥更大的作用，谁就赢了。</p></li>
+<li><p>神经系统中的很多子系统都以敌对的方式存在，每个子系统都希望以自己的方式行事，彼此之间常常会陷入拉锯战。例如，我们的各种情感会为了取代对方而相互对抗，有时候它们也会结成联盟来阻挠劲敌行动。现在我渐渐明白，人类各种情感之间动态的对抗过程，以及情感对我们思想的影响，都是以神经化学系统为基础的。不像那些本质上自私的行动者，比如癌细胞，从一个更广阔的运作范畴来看，神经细胞还算是不错的团队成员.</p></li>
+<li><p>诺贝尔奖得主、生物学家弗朗索瓦·雅各布（François Jacob）说过，每个细胞都梦想着能完成分裂变成两个细胞，只有神经元不图繁殖，一心只想着要保持活力、有所作为。按照这种观点，对动物行为的智能控制是一种计算过程，就像在股票市场里完成一次交易那样。但正如神经科学家塞巴斯蒂安·承（SebastianSeung）所说，神经元也是自私的，它们总是会倾其所能，最大程度地吸纳能在我们的大脑中获得的所有酬劳，这些酬劳以不同的“货币形式”出现。那么神经元利用多巴胺、5-羟色胺还有催产素都买了些什么呢？它们购买的是更加强大的影响力，能让自己在所处的连接网络中变得更加可靠。骡子虽不能生育，但它们仍会努力地营生。同样，神经元也有自我保护的本能，本质上，这是从它们可繁殖的祖先那里遗传下来的。</p></li>
+<li><p>「自下而上的小人儿式机械主义」是指，神经系统是由哪些未成熟的小人儿组成，每个小人儿都有感知，标记和记忆的能力。类似群体智慧。它们之间有竞争也有协作，从胚胎到成人的过程中，整个系统不断建构和修改。目前该理论可以很合理地解释人体复杂认知系统。</p></li>
+</ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li>《直觉泵和其他思考工具》-丹尼尔·丹尼特</li>
@@ -278,109 +374,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/27/technology/principle-of-network/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/27/technology/principle-of-network/" class="post-title-link" itemprop="url">私网IP 和 公网IP</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-27 17:38:13" itemprop="dateCreated datePublished" datetime="2021-02-27T17:38:13+08:00">2021-02-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-11 10:48:15" itemprop="dateModified" datetime="2021-04-11T10:48:15+08:00">2021-04-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机原理</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="私网ip-和-公网ip-分别是什么">私网IP 和 公网IP 分别是什么？</h2>
-<ul>
-<li><p>私网IP，也叫private ip address，或者内网IP。是一个局域网内部，用于识别彼此身份的一个id。</p></li>
-<li><p>公网IP，也叫public ip address，或者外网IP。是在因特网中，用户识别设备身份的一个id。 &gt; 早期，当联网设备只有一台电脑时，将你的电脑连向一个modem，会被分配一个ip，就是public ip，这个ip就是你的电脑在整个互联网的一个id &gt; 随着家中联网设备变多（电视机，手机，平板），需要有一个路由的功能，加上上面的modem的功能，就是现在的路由器。他可以将public ip映射为家庭环境中的多个id，分配给多个设备。注意家庭中联网设备构成了一个局域网（LAN）。</p></li>
-<li><p>(https://ljvmiranda921.github.io/notebook/2018/01/31/running-a-jupyter-notebook/)https://ljvmiranda921.github.io/notebook/2018/01/31/running-a-jupyter-notebook/</p></li>
-</ul>
-<h2 id="modem-和-路由器-有什么区别">modem 和 路由器 有什么区别？</h2>
-<ul>
-<li>一台电脑如要跟其他电脑通信，需先hook up on 一个modem，然后modem给他分配一个IP，也就是外网ip。</li>
-<li>路由器是modem的升级版。 路由有两个作用：一个是连接家里的设备，另外一个是连接外面的世界。 家里的多个设备组成了一个局域网，即使不跟外面通信，他们之间是可以通信的，通信的过程中如何识别彼此呢？ 这就是路由器的第二个作用，给局域网中的每个设备分配一个IP--也就是内网IP，这个是局域网的成员才能读懂的代码。</li>
-</ul>
-<h2 id="端口转发是什么">端口转发是什么？</h2>
-<p>由于外网只知道内网设备的外网地址，如何能让外网访问内网某个设备的某个端口的服务呢？ 一个办法就是将局域网中的所有设备和服务，先注册到路由器中，路由器就可以根据外网的请求的端口号码，将之转移到内网提供相应服务的设备上。 这个就是端口转发做的事情。</p>
-<h2 id="网络中的三种设备-集线器交换机-和-路由器">网络中的三种设备-集线器，交换机 和 路由器</h2>
-<p>集线器和交换机是用来创建一个个小网络（局域网），路由器将这些小网络连接起来，变成因特网。</p>
-<ul>
-<li>集线器（hub）： 把内网中的网络设备连接起来，只能广播。</li>
-<li>交换机（switch）：维护一个交换机表，记录了连接的网络设备的mac地址，支持网络设备间p2p通信</li>
-<li>路由器（router）：网关（gateway），网络出入口</li>
-</ul>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=92b-jjBURkw&amp;list=LL70j7MlBEzFqOk5aIHKzmxQ">私有ip和公共ip，以及端口forward</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=92b-jjBURkw&amp;list=LL70j7MlBEzFqOk5aIHKzmxQ">How to Enable SSH in Ubuntu---Install openssh-server？</a></li>
-<li><a target="_blank" rel="noopener" href="https://superuser.com/questions/104929/how-do-you-run-a-ssh-server-on-mac-os-x">how-do-you-run-a-ssh-server-on-mac-os-x</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/71/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><span class="page-number current">72</span><a class="page-number" href="/page/73/">73</a><span class="space">&hellip;</span><a class="page-number" href="/page/79/">79</a><a class="extend next" rel="next" href="/page/73/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/71/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/71/">71</a><span class="page-number current">72</span><a class="page-number" href="/page/73/">73</a><span class="space">&hellip;</span><a class="page-number" href="/page/81/">81</a><a class="extend next" rel="next" href="/page/73/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -446,20 +443,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">157</span>
+          <span class="site-state-item-count">162</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">178</span>
+        <span class="site-state-item-count">182</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -579,6 +576,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

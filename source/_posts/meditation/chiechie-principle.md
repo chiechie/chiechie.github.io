@@ -1,6 +1,6 @@
 ---
 top: true
-title: 我的信念
+title: Chiechie's belief
 author: chiechie
 mathjax: true
 date: 2021-03-18 09:24:00
@@ -18,9 +18,9 @@ categories:
 > 
 > 进一步，如何理解这个世界？我想成为什么样的人？
 > 
-> 我正在探索的路上，想到什么就记下来，姑且称之为「我的信念」吧（对，参考的Ray Dalio的《Principles》）。
+> 正在探索的路上，想到什么就记下来，姑且称之为principle吧
 >
-> 信念有几个来源途径：通过自己的经验总结；看书；观察；跟朋友交流。
+>  信息来源：通过自己的经验总结；看书；观察；跟朋友交流。
 
 
 ## Basic
@@ -54,7 +54,6 @@ categories:
     > To retain innocence, reduce judgements.--Naval
     > 
     > focus on价值链，而不是鄙视链。
-13. 对于别人的人生经验，关注这个经验适用的场景是什么。
 
 
 ## 实践-自我成长

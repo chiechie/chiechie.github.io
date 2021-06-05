@@ -18,7 +18,7 @@ categories:
 keras.layers.Dense(10, activation="relu", kernel_initializer="he_normal")
 ```
 
-![3种初始化方法](../AI/machine_learning/deeplearning/dl-framework/img.png) 
+![3种初始化方法](../../AI/machine_learning/deeplearning/dl-framework/img.png) 
 
 
 ## 训练过程太长，能否实时保存训练结果？

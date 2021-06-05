@@ -54,6 +54,7 @@ mse小，但是correlation也小的例子，如下图：
 ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNUSWvXNmWb.png?alt=media&token=8c03a9f3-60e1-424d-879e-3371c1516623)
 
 原因：
+
 - 欧式距离（mse）量化的 是两个实体（或者两个群体）之间的绝对物理距离
 - 余弦距离（correlation）量化的是 两个实体（或者两个群体）相对原点的角度距离
 - 余弦距离 和 pearson 相关稀疏的 区别： pearson衡量的是 两个变量 之间的 线性关系，具体做法是 使用一个直线去拟合多组样本点<变量1，变量2> ，直线斜率就是 相关关系
@@ -68,7 +69,7 @@ mse小，但是correlation也小的例子，如下图：
 
 观察到1个现象：使用短期趋势中心化后，在使用长期趋势归一化，能使效果变好，背后的理论依据是什么？
 
-分析下原因：因为用到了更长的历史数据作为参考,本身模型是记不住 那么长的历史信息的。（输入才半个小时）
+分析下：因为用到了更长的历史数据作为参考,本身模型是记不住 那么长的历史信息的。（输入才半个小时）
 
 ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fg6FAdLzkOj.png?alt=media&token=362ed41e-1773-4ff5-ac41-a3095f75bb86)
 

@@ -14,7 +14,7 @@ categories:
 - 阅读
 ---
 
-> 先说背景，sam altman在twitter上介绍了Karpathy的这篇文章。sam altman和karpaty都是elon musk的商业合作伙伴。sam和Elon创办了OpenAI，Karpathy是tesla的AILab的leader。GPT-3是OpenAI的代表作品之一。
+> sam altman在twitter上介绍了Karpathy的这篇文章。sam altman和karpaty都是elon musk的商业合作伙伴。sam和Elon创办了OpenAI，Karpathy是tesla的AILab的leader。GPT-3是OpenAI的代表作品之一。
 > 
 > 看到twitter的第一反应是，两个有共同商业利益的人在互捧。但是两个人都是各自领域的大佬，所以想一探究竟，AI界是不是有了什么新的进展？
 > 

@@ -4,7 +4,9 @@ author: chiechie
 mathjax: true
 date: 2021-03-27 23:43:55
 tags:
-categories:
+- 随机对照测试
+categories: 
+- 阅读
 ---
 > 现在有很多平台都在做AB test，甚至还做成了一个变形金刚--实验平台，对于不同的推荐对象，给出不同的推荐方案
 > 

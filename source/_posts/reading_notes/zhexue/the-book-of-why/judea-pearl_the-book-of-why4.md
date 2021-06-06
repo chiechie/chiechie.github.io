@@ -15,7 +15,8 @@ categories:
 ---
 
 > the book of why 的第四章-去混杂
-
+> 
+1. 消除混杂因子的方法：随机对照试验。
 
 
 

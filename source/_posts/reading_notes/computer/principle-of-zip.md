@@ -1,7 +1,7 @@
 ---
 title: 文件压缩的原理是什么？
 categories: 
-- 计算机原理
+- 阅读
 author: chiechie
 date: 2021-02-26 10:23:17
 tags:

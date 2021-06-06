@@ -2,7 +2,7 @@
 title: tcp3次握手和4次挥手
 author: chiechie
 categories: 
-- 计算机原理
+- 阅读
 date: 2021-03-10 13:12:08
 tags: 
 - 计算机网络

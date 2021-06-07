@@ -9,7 +9,7 @@ tags:
 - 时序预测
 - 量化交易
 categories: 
-- 阅读
+- 实践
 ---
 
 # 建模pipeline

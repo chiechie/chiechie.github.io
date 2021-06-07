@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/technology/initialization-tricks/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/practice/initialization-tricks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/08/technology/initialization-tricks/" class="post-title-link" itemprop="url">神经网络训练的一些小tricks</a>
+            <a href="/2021/03/08/practice/initialization-tricks/" class="post-title-link" itemprop="url">神经网络训练的一些小tricks</a>
         </h2>
 
         <div class="post-meta">
@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-05 08:42:57" itemprop="dateModified" datetime="2021-06-05T08:42:57+08:00">2021-06-05</time>
+                <time title="修改时间：2021-06-07 08:47:27" itemprop="dateModified" datetime="2021-06-07T08:47:27+08:00">2021-06-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                  <a href="/categories/%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">实践</span></a>
                 </span>
             </span>
 
@@ -222,7 +222,7 @@
           <h2 id="神经网络的layer如何设置初始化权重">神经网络的layer如何设置初始化权重？</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.layers.Dense(<span class="number">10</span>, activation=<span class="string">&quot;relu&quot;</span>, kernel_initializer=<span class="string">&quot;he_normal&quot;</span>)</span><br></pre></td></tr></table></figure>
 <figure>
-<img src="../AI/machine_learning/deeplearning/dl-framework/img.png" alt="3种初始化方法" /><figcaption aria-hidden="true">3种初始化方法</figcaption>
+<img src="../../AI/machine_learning/deeplearning/dl-framework/img.png" alt="3种初始化方法" /><figcaption aria-hidden="true">3种初始化方法</figcaption>
 </figure>
 <h2 id="训练过程太长能否实时保存训练结果">训练过程太长，能否实时保存训练结果？</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 设置loss，优化算法</span></span><br><span class="line">model.<span class="built_in">compile</span>(loss=..., optimizer=...,</span><br><span class="line">              metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br><span class="line"></span><br><span class="line">EPOCHS = <span class="number">10</span></span><br><span class="line">checkpoint_filepath = <span class="string">&#x27;/tmp/checkpoint&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 定义回调函数</span></span><br><span class="line">model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(</span><br><span class="line">    filepath=checkpoint_filepath,</span><br><span class="line">    save_weights_only=<span class="literal">True</span>,</span><br><span class="line">    monitor=<span class="string">&#x27;val_accuracy&#x27;</span>,</span><br><span class="line">    mode=<span class="string">&#x27;max&#x27;</span>,</span><br><span class="line">    save_best_only=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model weights are saved at the end of every epoch, if it&#x27;s the best seen</span></span><br><span class="line"><span class="comment"># so far.</span></span><br><span class="line"><span class="comment"># 3.在fit中传入回调函数，模型会一边训练一边存储</span></span><br><span class="line">model.fit(epochs=EPOCHS, callbacks=[model_checkpoint_callback])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 从缓存路径中加载模型</span></span><br><span class="line"><span class="comment"># The model weights (that are considered the best) are loaded into the model.</span></span><br><span class="line">model.load_weights(checkpoint_filepath)</span><br></pre></td></tr></table></figure>
@@ -338,7 +338,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/66/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/66/">66</a><span class="page-number current">67</span><a class="page-number" href="/page/68/">68</a><span class="space">&hellip;</span><a class="page-number" href="/page/81/">81</a><a class="extend next" rel="next" href="/page/68/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/66/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/66/">66</a><span class="page-number current">67</span><a class="page-number" href="/page/68/">68</a><span class="space">&hellip;</span><a class="page-number" href="/page/80/">80</a><a class="extend next" rel="next" href="/page/68/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -404,20 +404,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">159</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">182</span>
+        <span class="site-state-item-count">183</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

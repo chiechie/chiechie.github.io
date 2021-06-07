@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-05 08:42:57" itemprop="dateModified" datetime="2021-06-05T08:42:57+08:00">2021-06-05</time>
+                <time title="修改时间：2021-06-07 10:19:58" itemprop="dateModified" datetime="2021-06-07T10:19:58+08:00">2021-06-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -226,28 +226,22 @@
 <li>LSTM通过引入一个传输带（conveyor belt）来缓解梯度消失的问题。过去的信息通过传输带到达下一个时刻，不会发生很大变化。</li>
 </ol>
 <h2 id="lstm">LSTM</h2>
-<p><img src="rnn-1-lstm/lstm.png" /></p>
+<p><img src="./lstm.png" /></p>
 <p>LSTM引入新的内部状态专门进行先行的循环信息传递，同时将非线性加工后的信息给隐藏层的外部状态</p>
 <p>lstm有3个门，分别为输入门，输出门，遗忘门，也是三个权重向量</p>
 <ul>
-<li>输入门：一个权重向量，控制当前时刻的候选状态<span class="math inline">\(\(\mathbf{C}_{t}\)\)</span>有多少信息要保留</li>
+<li>输入门：一个权重向量，控制当前时刻的候选状态<span class="math inline">\(\mathbf{C}_{t}\)</span>有多少信息要保留</li>
 <li>输出门：控制当前内部状态<span class="math inline">\(\tilde{\mathbf{c}}_{t}\)</span>有多少信息要输出给外部状态</li>
 <li>遗忘门：一个权重向量表示上一个时刻的内部状态<span class="math inline">\(\mathbf{c}_{t-1}\)</span>需要遗忘多少信息</li>
 </ul>
-<figure>
-<img src="rnn-1-lstm/img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
-<p>更新当前记忆 <img src="rnn-1-lstm/img_1.png" alt="img_1.png" /></p>
+<p><img src="./img.png" /></p>
+<p>更新当前记忆 <img src="./img_1.png" /></p>
 <p>更新当前时刻的state</p>
-<figure>
-<img src="rnn-1-lstm/img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
-</figure>
+<p><img src="./img_2.png" /></p>
 <p>lstm的参数个数：</p>
 <p>三个门参数 + 记忆单元参数: (dim(x) + dim(h)) ✖ dim(h) ✖4</p>
 <h2 id="lstm应用-情感判断">LSTM应用-情感判断</h2>
-<figure>
-<img src="rnn-1-lstm/img_3.png" alt="img_3.png" /><figcaption aria-hidden="true">img_3.png</figcaption>
-</figure>
+<p><img src="./img_3.png" /></p>
 <h2 id="cnn-和-rnn视觉对比">cnn 和 rnn视觉对比</h2>
 <p>有两个图还蛮有意思的，</p>
 <figure>
@@ -388,7 +382,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/81/">81</a><a class="extend next" rel="next" href="/page/22/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/80/">80</a><a class="extend next" rel="next" href="/page/22/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -454,20 +448,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">159</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">182</span>
+        <span class="site-state-item-count">183</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

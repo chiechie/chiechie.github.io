@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-06-05T01:37:43.258Z</updated>
+  <updated>2021-06-07T00:47:27.602Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>时序预测最佳实践</title>
-    <link href="https://chiechie.github.io/2021/06/05/technology/quantml-practice/"/>
-    <id>https://chiechie.github.io/2021/06/05/technology/quantml-practice/</id>
+    <link href="https://chiechie.github.io/2021/06/05/practice/quantml-practice/"/>
+    <id>https://chiechie.github.io/2021/06/05/practice/quantml-practice/</id>
     <published>2021-06-04T16:06:21.000Z</published>
-    <updated>2021-06-05T01:37:43.258Z</updated>
+    <updated>2021-06-07T00:47:27.602Z</updated>
     
     <content type="html"><![CDATA[<h1 id="建模pipeline">建模pipeline</h1><ol type="1"><li>搜集原始数据: 过去十年的成交数据</li><li>数据筛选: 选择交易日，固定时间段（９:30~15:30)的数据</li><li>对选好的数据进行采样，并不能保证每天都有整数个点</li><li>切分训练集 &amp; 验证集</li><li>模型训练<ul><li>归一化训练集，&lt;x， target&gt;</li><li>训练</li></ul></li><li>模型评估<ul><li>归一化验证集</li><li>预测&amp;画图：</li></ul></li></ol><p>实践过程中遇到的一些问题，需要逐一解决，下面记录其中一些</p><h1 id="问题集合">问题集合</h1><h2 id="问题1.-验证集的mse比训练集低但相关系数训练集远远大于调参集这是bug">问题1. 验证集的mse比训练集低，但相关系数训练集远远大于调参集，这是bug？</h2><p>没有bug，mse和correlation评估的侧重点不一样。</p><p>mse小，但是correlation也小的例子，如下图：</p><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNUSWvXNmWb.png?alt=media&amp;token=8c03a9f3-60e1-424d-879e-3371c1516623" /></p><p>几个距离：</p><ul><li>欧式距离（mse）量化的 是两个实体（或者两个群体）之间的绝对物理距离</li><li>余弦距离（correlation）量化的是 两个实体（或者两个群体）相对原点的角度的距离</li><li>pearson衡量的是 两个变量 之间的 线性相关性，具体做法是使用一个直线去拟合多组样本点&lt;变量1，变量2&gt; ，直线斜率就是相关性大小。</li></ul><h2 id="问题3怎么解决分布漂移的问题">问题3：怎么解决分布漂移的问题？</h2><p>分布漂移在时序预测中尤其常见，使用滑动窗口的均值来 做中心化</p><h2 id="问题4还有哪些措能提升实验效果">问题4：还有哪些措能提升实验效果？</h2><p>取效果好和效果差的两组实验进行对比，观察到1个现象：使用短期趋势中心化后，在使用长期趋势归一化，能使效果变好，背后的理论依据是什么？</p><p>分析下：因为用到了更长的历史数据作为参考,本身模型是记不住那么长的历史信息的。（输入才半个小时）</p><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fg6FAdLzkOj.png?alt=media&amp;token=362ed41e-1773-4ff5-ac41-a3095f75bb86" /></p><p>参考: <a href="https://github.com/Arturus/kaggle-web-traffic/blob/master/how_it_works.md">doc</a></p><h2 id="问题5-过拟合的原因">问题5： 过拟合的原因</h2><p>训练集 的比例远大于 验证集 和测试集</p><h2 id="问题6-是不是预测的准就能挣钱了">问题6： 是不是预测的准就能挣钱了？</h2><p>不是，回测的时候要考虑滑点，交易费用，爆仓风险</p><h2 id="问题7同样一个预测模型lstm商品期货准确率比股指差这么多">问题7：同样一个预测模型（LSTM），商品期货准确率比股指差这么多？</h2><ul><li>因为1min的股指期货数据平滑，噪声少，而1min的商品期货毛刺非常多</li><li>将1min的商品期货聚合成5min之后，再使用过去1h的数据预测未来1h的数据，准确率非常之高</li></ul><h2 id="问题8直接用回归模型预测价格可能有负数怎么处理">问题8：直接用回归模型预测价格，可能有负数怎么处理</h2><p>预测增长率</p><h2 id="问题9除了直接回归还有哪些方法">问题9：除了直接回归，还有哪些方法？</h2><p>转化为分类问题，换预测涨跌幅</p>]]></content>
     
@@ -37,7 +37,7 @@
     
     
     
-    <category term="技术" scheme="https://chiechie.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    <category term="实践" scheme="https://chiechie.github.io/categories/%E5%AE%9E%E8%B7%B5/"/>
     
     
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
@@ -237,9 +237,9 @@
     <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
     
     
-    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
-    
     <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
+    
+    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
   </entry>
   
@@ -279,17 +279,18 @@
     <link href="https://chiechie.github.io/2021/05/26/reading_notes/zhexue/daojia/daodejing1/"/>
     <id>https://chiechie.github.io/2021/05/26/reading_notes/zhexue/daojia/daodejing1/</id>
     <published>2021-05-26T01:23:01.000Z</published>
-    <updated>2021-06-05T08:23:23.102Z</updated>
+    <updated>2021-06-07T03:17:52.148Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="有无之相生">2 有，无之相生</h2><p>传世本：“故有无相生，难易相成，长短相较，高下相倾，音声相和，前后相随。”</p><p>帛书本：“有，无之相生；难，易之相成；长，短之相形；高，下之相盈；音，声之相和；先，后之相随，恒也。"</p><p>“有，无之相生”是说，有，是由无生的，无是有的根本。 与“贵以贱为本，高以下为基”、“天下万物生于有，有生于无”、“天下难事必作于易，天下大事必作于细”相呼应。</p><p>以光学中色散现象为例，棱镜可以把白光分解成七色光谱。</p><p>白光类似"无"，七色光谱代表"有"。</p><p>"无"代表一种混沌态，包含"有"中的元素。</p><p>"有"是"无"的一个子集。</p><h2 id="多闻数穷不如守中">5 多闻数穷，不如守中</h2><p>传世本：“天地之间，其犹橐龠乎？虚而不屈，动而愈出。多言数穷，不如守中。”</p><p>帛书本：“天地之间，其犹橐龠乎？虚而不屈，动而愈出。多闻数穷，不如守中。”</p><blockquote><p>橐龠(tuó yuè): 古代鼓风吹火用的器.</p></blockquote><p>儒家提倡“读万卷书，不如行万里路”，道家却提倡“不出户，知天下”，“其出弥远，其知弥少”，“博者不知，知者不博”，“塞其兑，闭其门”。</p><p>老子的意思是：不要被外物复杂的声色变化迷惑而去追逐表象。为什么？因为它们是无穷无尽的。</p><p>比如现在的AI领域，追着最新的fancy的论文看，看的再多也没法把握技术发展的趋势。</p><h2 id="水利万物而有静">8 水利万物而有静</h2><p>传世本：上善若水，水利万物而不争</p><p>帛书本：上善若水，水利万物而有静</p><p>不到万不得已，不要去争。不是没有能力，而是自己选择保持"静"。</p><p>不然白白消耗了时间体力，收益没有那么大，就好像狮子捕食，</p><p>传世本：“居善地，心善渊，与善仁，言善信，正善治，事善能，动善时。”</p><p>帛书本：“居善地，心善渊，予善信，正善治，事善能，动善时。”</p><p>此处“予善信”的意义：像天一样“损有余而补不足”的去“予人”，方可谓之“善”。</p><p>何为善？得道曰善。</p><h2 id="执今之道以御今之有">14 执今之道，以御今之有</h2><p>传世本：“执古之道，以御今之有，能知古始，是谓道纪。”</p><p>帛书本：“执今之道，以御今之有，能知古始，是谓道纪。”</p><p>庄子进一步的解释：“今子之所言，犹迹也。夫迹，履之所出，而迹岂履哉!”你学习的这些东西，都是先王留下来的遗迹，又哪里是他们的真实内涵呢？脚印是脚踩出来的，但脚印又哪里是脚呢！”</p><p>很像现在社会的浮躁之风，教条之风。</p><p>比如搞中台，也不管自己业务适合不适合。</p><p>追求速成，不思索别人的决策路径，是否符合自己当前的situation，盲目照搬。</p><h2 id="故有之以为利无之以为用">11 故有之以为利，无之以为用</h2><p>十一章： 三十辐共一毂，当其无，有车之用。埏埴以为器，当其无，有器之用。凿户牖以为室，当其无，有室之用。故有之以为利，无之以为用。</p><p>任何器具、房室、或机械要发生作用，都要有一「容纳」其他事物之「空间」，老子以此「空间」喻道之「无」，而容万物之性使万物发生作用。</p><h2 id="希言自然">23 希言自然</h2><p>二十三章:「希言自然。故飘风不终朝，骤雨不终日。孰为此者?天地。天地尚不能久，而况于人乎。」</p><p>以飘风骤雨为天候中「阴」「阳」不调之例子。这就隐喻到「雷厉风行」，偏执一「仁」一「义」之治事方法是不能长久的;无论在当事人看来他的「政治理想」是多么完美或吸引人。</p><p>守弱：如婴儿般的柔和与可塑。</p><p>任何属性，操性，仁则都有其正负两面，也就是阴与阳。而属性明显曰「强」，属性混沌曰「弱」。如果根据一己之经验，认为一种属性，操性，仁则只有好处，没有缺陷，而拼命发展，必致「阴」「阳」失调而进入危境。</p><h2 id="物壮则老是谓不道">33 物壮则老，是谓不道</h2><p>三十章:「……果而勿矜，果而勿伐，果而勿骄。果而不得已，果而勿强。物壮则老，是谓不道，不道早巳。」</p><p>人之「老」在躯体也在头脑，最大的特征在失去思想之柔韧与变通---这些都是过分发展某一属性之「果」。人会变得过于执着固定事物，或过于刚猛，或过于退怯;百象皆有，不一而足;總之，都不合道。从老子之道来看就是失去「负阴抱阳」之特性。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.aisixiang.com/data/37674.html">反者道之动, 弱者道之用”之詮釋</a></li><li>帛书老子校注-高明</li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>道德经有多个版本：王弼/马王堆帛书，从时间来看，帛书本距离老子的年代更近, 可信度更高。但是内容有缺失。</p><p>倒是无大碍，得其意即可，不必咬文嚼字</p></blockquote><h2 id="有无之相生">2 有，无之相生</h2><blockquote><p>王：故有无相生，难易相成，长短相较，高下相倾，音声相和，前后相随。</p><p>帛：有，无之相生；难，易之相成；长，短之相形；高，下之相盈；音，声之相和；先，后之相随，恒也。</p></blockquote><p>“有，无之相生”是说，无是有的根本。 与“贵以贱为本，高以下为基”相呼应。</p><p>以光学中色散现象为例，棱镜可以把白光分解成七色光谱。白光类似"无"，七色光谱代表"有"。</p><p>"无"代表一种混沌态，包含"有"中的元素。</p><p>"有"是"无"的一个子集。</p><h2 id="多闻数穷不如守中">5 多闻数穷，不如守中</h2><blockquote><p>王：“天地之间，其犹橐龠乎？虚而不屈，动而愈出。多言数穷，不如守中。”</p><p>帛：“天地之间，其犹橐龠乎？虚而不屈，动而愈出。多闻数穷，不如守中。”</p></blockquote><p>橐龠(tuó yuè): 古代鼓风吹火用的器.</p><p>儒家提倡“读万卷书，不如行万里路”，道家却提倡“不出户，知天下”，“其出弥远，其知弥少”，“博者不知，知者不博”，“塞其兑，闭其门”。</p><p>老子的意思是：不要被外物复杂的声色变化迷惑而去追逐表象。为什么？因为它们是无穷无尽的。</p><p>比如现在的AI领域，追着最新的fancy的论文看，看的再多也没法把握技术发展的趋势。</p><h2 id="水利万物而有静">8 水利万物而有静</h2><blockquote><p>王：上善若水，水利万物而不争</p><p>帛：上善若水，水利万物而有静</p></blockquote><p>不到万不得已，不要去争。不是没有能力，而是自己选择保持"静"。</p><p>不然白白消耗了时间体力，收益没有那么大，就好像狮子捕食，</p><blockquote><p>王：居善地，心善渊，与善仁，言善信，正善治，事善能，动善时。”</p><p>帛：“居善地，心善渊，予善信，正善治，事善能，动善时。”</p></blockquote><p>此处“予善信”的意义：像天一样“损有余而补不足”的去“予人”，方可谓之“善”。</p><p>何为善？得道曰善。</p><h2 id="故有之以为利无之以为用">11 故有之以为利，无之以为用</h2><blockquote><p>王： 三十辐共一毂，当其无，有车之用。埏埴以为器，当其无，有器之用。凿户牖以为室，当其无，有室之用。故有之以为利，无之以为用。</p></blockquote><p>任何器具、房室、或机械要发生作用，都要有一「容纳」其他事物之「空间」，老子以此「空间」喻道之「无」，而容万物之性使万物发生作用。</p><h2 id="难得之物令人行妨">12 难得之物令人行妨</h2><blockquote><p>王： 五色令人目盲，五音令人耳聋，五味令人口爽，驰骋攻猎令人心发狂。难得之物令人行妨。</p></blockquote><blockquote><p>王：是以圣人为腹不为目，故去彼取此。</p></blockquote><h2 id="执今之道以御今之有">14 执今之道，以御今之有</h2><blockquote><p>王：执古之道，以御今之有，能知古始，是谓道纪。</p><p>帛：执今之道，以御今之有，能知古始，是谓道纪。</p></blockquote><p>庄子进一步的解释：“今子之所言，犹迹也。夫迹，履之所出，而迹岂履哉!”你学习的这些东西，都是先王留下来的遗迹，又哪里是他们的真实内涵呢？脚印是脚踩出来的，但脚印又哪里是脚呢！”</p><p>很像现在社会的浮躁教条之风.比如搞中台，也不管自己业务适合不适合。追求速成，不思索别人的决策路径，是否符合自己当前的situation，盲目照搬。</p><h2 id="天地尚不能久而况于人乎">23 天地尚不能久，而况于人乎</h2><blockquote><p>王：希言自然。故飘风不终朝，骤雨不终日。孰为此者?天地。天地尚不能久，而况于人乎。</p></blockquote><p>以飘风骤雨为天候中「阴」「阳」不调之例子。这就隐喻到「雷厉风行」，偏执一「仁」一「义」之治事方法是不能长久的;无论在当事人看来他的「政治理想」是多么完美或吸引人。</p><p>守弱：如婴儿般的柔和与可塑。</p><p>任何属性，操性，仁则都有其正负两面，也就是阴与阳。而属性明显曰「强」，属性混沌曰「弱」。如果根据一己之经验，认为一种属性，操性，仁则只有好处，没有缺陷，而拼命发展，必致「阴」「阳」失调而进入危境。</p><h2 id="物壮则老是谓不道">33 物壮则老，是谓不道</h2><blockquote><p>王: 果而勿矜，果而勿伐，果而勿骄。果而不得已，果而勿强。物壮则老，是谓不道，不道早巳。</p></blockquote><p>人之「老」在躯体也在头脑，最大的特征在失去思想之柔韧与变通---这些都是过分发展某一属性之「果」。人会变得过于执着固定事物，或过于刚猛，或过于退怯;百象皆有，不一而足;總之，都不合道。从老子之道来看就是失去「负阴抱阳」之特性。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.aisixiang.com/data/37674.html">反者道之动, 弱者道之用”之詮釋</a></li><li>帛书老子校注-高明</li></ol>]]></content>
     
     
       
       
-    <summary type="html">&lt;h2 id=&quot;有无之相生&quot;&gt;2 有，无之相生&lt;/h2&gt;
-&lt;p&gt;传世本：“故有无相生，难易相成，长短相较，高下相倾，音声相和，前后相随。”&lt;/p&gt;
-&lt;p&gt;帛书本：“有，无之相生；难，易之相成；长，短之相形；高，下之相盈；音，声之相和；先，后之相随，恒也。&quot;&lt;/p&gt;
-&lt;p&gt;“有，无</summary>
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;道德经有多个版本：王弼/马王堆帛书，从时间来看，帛书本距离老子的年代更近, 可信度更高。但是内容有缺失。&lt;/p&gt;
+&lt;p&gt;倒是无大碍，得其意即可，不必咬文嚼字&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;有无之相生&quot;&gt;2 有，无之相生&lt;/h2</summary>
       
     
     
@@ -307,10 +308,10 @@
   
   <entry>
     <title>风控领域的图挖掘场景</title>
-    <link href="https://chiechie.github.io/2021/05/24/technology/visualize-graph/"/>
-    <id>https://chiechie.github.io/2021/05/24/technology/visualize-graph/</id>
+    <link href="https://chiechie.github.io/2021/05/24/reading_notes/computer/visualize-graph/"/>
+    <id>https://chiechie.github.io/2021/05/24/reading_notes/computer/visualize-graph/</id>
     <published>2021-05-24T01:08:21.000Z</published>
-    <updated>2021-05-26T01:18:16.313Z</updated>
+    <updated>2021-06-07T00:17:56.791Z</updated>
     
     <content type="html"><![CDATA[<h1 id="几个场景">几个场景</h1><h2 id="攻防对抗">攻防对抗</h2><p>一般都会有下述风控规则：</p><ul><li>7天内在注册账户数超过**的设备号</li><li>1天内某IP关联超过xx个账户</li></ul><p>虽然规则简单，但由于实时性和贴近业务的特点，可以拦截不少黑产, 但也会造成一定误杀，特别是IP类的规则。</p><p>同时因为风控是攻防对抗的过程，黑产也会升级，比如通过伪造设备、LBS、频繁更换IP等手段尽可能伪装成一个真人，隐蔽聚集性等显性特征，绕过风控规则。</p><p>相应风控技术也在进化，如使用设备指纹、IP画像、验证码对抗等。</p><h2 id="基于关联关系识别团伙">基于关联关系识别团伙</h2><p>可以定义设备-账户的Graph如下：</p><ul><li>节点：账户 + 设备</li><li>边：近xx天账户与设备出现在同一事件中，则它们之间有一条边。</li></ul><p>识别方法：</p><ul><li>无监督方法：通过「连通子图算法」识别出一个个连通的社区，如果社区规模较大，可能背后业务含义是黑产控制一批账户。定义社区规模为score，通过调节阈值来控制误杀、召回。</li><li>有监督方法-传统：等价为节点分类问题，通过提取节点业务特征、拓扑特征、所属社区特征，训练一个分类器去预测。</li><li>有监督方法-图神经网络：将节点业务特征X与网络拓扑结构A作为输入学习函数，用于对未知数据的预测.相比规则来说，此类方法不仅用到了更复杂的关系，同时也考虑了节点业务和拓扑特征。故防控能力会更强一些。</li></ul><h2 id="基于相似度识别团伙">基于相似度识别团伙</h2><p>如果黑产成功避开设备指纹、聚集性规则等风控措施，把自己伪装成一个真人，如何检测？——只要作案了，总会留下蛛丝马迹。</p><ul><li>垃圾文本：比如留下了垃圾文本，那么利用文本之间相似度（Jaccard、semi-hash）构建账户之间相似关系，然后使用图分割+连通子图查找技术识别，具体可<a href="https://zhuanlan.zhihu.com/p/23385044">参考这里</a></li><li>行为相似度：facebook针对刷量的行为，通过计算账户之间行为度来构建graph，<a href="https://zhuanlan.zhihu.com/p/58334765">详见这里</a>.此类方法最大问题是, 两两节点相似度计算性能问题。一般会做下约束，如限制在某个事件场景下、限制在某段事件内以及如何分段计算+合并，并且往往是通过spark分布式计算。</li></ul><h2 id="基于共享特征识别团伙">基于共享特征识别团伙</h2><p>因为黑产控制大量的账户通过软件进行攻击，而不是手工操作，故这些账户某些共同属性上会有Pattern。</p><p>大概的解题思路是“搜集证据”，将共享的某特征/字段作为，判断证据强弱，如共享设备是强证据，可以仅凭此条直接断案。 但是像共用某品牌手机是弱证据，需要多个弱证据结合一起断案。</p><p>再抽象一点是有点像「层次社区划分算法」：</p><ol type="1"><li>定义证据：通过业务经验定义共享特征集，不通场景特征集应该是不同的。</li><li>找证据：分别对每个/每组特征进行聚类/社区划分算法，得到一个个簇.</li><li>组合证据：将2得到的簇作为节点，簇之间共有账户数作为连边，构建graph，再进一步划分得到最终的社区，每个社区中的节点共享多个特征。</li></ol><h1 id="总结">总结</h1><ol type="1"><li>上述三种类型方法的主要区别在于graph的不同，在整个图挖掘体系中最核心也最难一点在于，如何将业务经验抽象成Graph。</li><li>社区发现算法以图分割+连通子图查找为主，一方面可解释强，另外可以通过调节阈值权衡召回和误差，以满足运营人员需要。这也是 "拿算法适配业务，而不是业务适配算法"的工作准则。</li></ol><h1 id="参考">参考</h1><ol type="1"><li><a href="https://scikit-network.readthedocs.io/en/latest/">scikit-network的doc</a></li><li><a href="https://www.zhihu.com/search?type=content&amp;q=%E5%9B%BE%E6%8C%96%E6%8E%98">zhihu-风控</a></li><li><a href="https://zhuanlan.zhihu.com/p/62750137">GCN</a></li></ol>]]></content>
     
@@ -329,7 +330,7 @@
     
     
     
-    <category term="技术" scheme="https://chiechie.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
     <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
@@ -383,10 +384,10 @@
   
   <entry>
     <title>PageRank算法</title>
-    <link href="https://chiechie.github.io/2021/05/22/technology/pagerank/"/>
-    <id>https://chiechie.github.io/2021/05/22/technology/pagerank/</id>
+    <link href="https://chiechie.github.io/2021/05/22/practice/pagerank/"/>
+    <id>https://chiechie.github.io/2021/05/22/practice/pagerank/</id>
     <published>2021-05-22T10:07:11.000Z</published>
-    <updated>2021-05-24T01:56:27.164Z</updated>
+    <updated>2021-06-07T00:47:27.605Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>最近需要对图数据进行分析，了解下PageRank的原理</p><p>BTW, PageRank还可以做社区划分？</p></blockquote><h2 id="总结一下">总结一下</h2><p>pagerank: 假设，网上冲浪的人都是漫无目的的人，他们在网页一个链接接一个链接点下去，但是，整个互联网的节点，最终流量可能的分布能达到一个稳态。 也就是说，随机分布于各网页的流量经过次数足够多的转移之后，会达到一个稳定的状态，这个也代表每个网页的信息度。</p><p>基于这个假设，可以构建一个模型， <span class="math display">\[V_n = M ^n * V_0\]</span></p><p>一般来说，可以拿到网页之间调用拓扑，经过转换，可以将这个拓扑变为概率转移矩阵M，最终算出稳定态的V_n</p><p>给定点之间的连接关系，输出每个节点的分数，</p><p>补充下，最naive的方法存在终止点问题，也就是说，一个网站它不链接任何别的网站，或者一个微服务，它不调用其他任何微服务 按照上面的思路很可能出现一种情况，最终的流量全到这个自大狂网页那里去了，所以有一个改进的思路，假设冲浪着有一点点聪明，他并不是一味的接受灌输的链接，而是有一定概率，主动跳出去，到达一个新的站点，这个方式可以用下面的式子建模：</p><p><span class="math display">\[V_n = d * M * V_{n-1} + (1-d) * e \]</span></p><p>e = [1/n,...1/n]</p><p>d表示按照当前页面推荐的链接继续点下去的概率 1-d表示从当前网页跳出来，主动输入一个新网页重新开始的概率</p><h2 id="代码">代码</h2><p>用代码验证一下，理解没有问题</p><p>https://github.com/chiechie/BasicAlgo/blob/main/pagerank.py</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ground truth</span><br><span class="line"> [[0.25419178], [0.13803151], [0.13803151], [0.20599017], [0.26375504]]</span><br><span class="line">result</span><br><span class="line"> [0.25419178 0.13803151 0.13803151 0.20599017 0.26375504]</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://blog.csdn.net/gamer_gyt/article/details/47443877">pagerank-csdn</a></li><li><a href="https://scikit-network.readthedocs.io/en/latest/tutorials/ranking/pagerank.html">scikit-network-pagerank</a></li><li><a href="https://zh.wikipedia.org/wiki/PageRank">wiki-PageRank</a></li><li>https://blog.csdn.net/google19890102/article/details/48660239</li></ol>]]></content>
     
@@ -403,7 +404,7 @@
     
     
     
-    <category term="技术" scheme="https://chiechie.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    <category term="实践" scheme="https://chiechie.github.io/categories/%E5%AE%9E%E8%B7%B5/"/>
     
     
     <category term="图算法" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E7%AE%97%E6%B3%95/"/>
@@ -436,13 +437,13 @@
     <category term="AIOps" scheme="https://chiechie.github.io/categories/AIOps/"/>
     
     
-    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
-    
     <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
     
     <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
     
     <category term="微服务" scheme="https://chiechie.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
@@ -470,8 +471,6 @@
     <category term="AIOps" scheme="https://chiechie.github.io/categories/AIOps/"/>
     
     
-    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
-    
     <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
     
     <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
@@ -481,6 +480,8 @@
     <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
     
     <category term="微服务" scheme="https://chiechie.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
@@ -538,13 +539,13 @@
     <category term="AIOps" scheme="https://chiechie.github.io/categories/AIOps/"/>
     
     
-    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
-    
     <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
     
     <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
     
     <category term="微服务" scheme="https://chiechie.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
@@ -606,9 +607,9 @@
     
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
-    <category term="时间序列" scheme="https://chiechie.github.io/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/"/>
-    
     <category term="论文笔记" scheme="https://chiechie.github.io/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="时间序列" scheme="https://chiechie.github.io/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/"/>
     
     <category term="预测" scheme="https://chiechie.github.io/tags/%E9%A2%84%E6%B5%8B/"/>
     

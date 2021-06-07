@@ -27,14 +27,17 @@
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
 <meta property="og:description" content="应用场景  商品推荐: 每个用户的信息作为state，推荐的商品是action，长期看用户的点击率&#x2F;浏览时长&#x2F;消费额reward 网约车调度：&lt;地址，时间&gt;为state为，每个地址在每个时间的冷门程度是value。 自动生成SQL语句： 神经网络结构搜索(NAS)：  NAS is closely related to hyperparameter optimization and i">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/21/AI/reinforcement_learning/rl2-application/img_1.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/21/AI/reinforcement_learning/rl2-application/img.png">
 <meta property="article:published_time" content="2021-04-21T00:22:04.000Z">
-<meta property="article:modified_time" content="2021-05-31T02:13:29.596Z">
+<meta property="article:modified_time" content="2021-06-07T07:09:16.935Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="强化学习">
 <meta property="article:tag" content="auto ml">
 <meta property="article:tag" content="NAS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/04/21/AI/reinforcement_learning/rl2-application/img_1.png">
 
 <link rel="canonical" href="https://chiechie.github.io/2021/04/21/AI/reinforcement_learning/rl2-application/">
 
@@ -201,7 +204,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-31 10:13:29" itemprop="dateModified" datetime="2021-05-31T10:13:29+08:00">2021-05-31</time>
+                <time title="修改时间：2021-06-07 15:09:16" itemprop="dateModified" datetime="2021-06-07T15:09:16+08:00">2021-06-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,7 +249,7 @@
 </ol>
 <h3 id="商品推荐">商品推荐</h3>
 <p>强化学习可以讲一个很美好的故事：数据驱动的自动化运营。 但是我更好奇的是在实际落地时，强化学习的效果如何？</p>
-<p>去问了一位在推荐领域做强化学习的朋友，得到的答案比较让人难过： 强化学习很难调，实际效果没有监督学习好。</p>
+<p>去问了一位在推荐领域做强化学习的朋友，得到的答案是：强化学习很难调，实际效果没有监督学习好。</p>
 <p>系统太复杂又是个黑盒，人hold不住。</p>
 <blockquote>
 <p>facebook的一个工程师 现在facebook--可能也有很多的其他的公司--在内容推荐技术的很多细分场景上开始应用强化学习，eg消息推送时，以用户的长期活跃为目标，而不是短期打开率为目标。 增强学习的好处是解决了短期反馈和长期活跃之前的换算问题，把两万名算法工程师和他们的实习生们从一部分痛苦的调参工作中解放出来，也让分发策略从长期上达到更高的价值创造。 但一个更加追求用户长期活跃的社交平台就会是环境更健康的么？我对此深表怀疑。（不健康的社交平台，比如很多喷子，反人性的言论）</p>
@@ -278,6 +281,49 @@
 <p>大概建模思路是这样，state是当前的市场行情数据，action是买/卖/hold，reward就是盈利。</p>
 <p>这个思路是可以的，监督学习最多可以构建一个简单的基于预测的交易策略，比如高买低卖。强化学习可能可以学到更多的人意想不到的交易策略。</p>
 <p>但是，因为模型的黑盒和不可预测性，类似无人驾驶，无人运维，很难让人放心把这么重要的事情交给一个机器人手里。</p>
+<h2 id="什么制约强化学习的应用">什么制约强化学习的应用？</h2>
+<p>到目前为止，强化学习最成功的应用仍然是Atari游戏、围棋游戏、星际争霸游戏。 工业界有很多应用尝试过强化学习，但是其中成功的并不多。 究竟是什么在制约深度强化学习的落地应用呢？</p>
+<h3 id="所需要的样本数量过大">所需要的样本数量过大</h3>
+<p>举几个简单例子 1. Atari游戏属于最简单的电子游戏，Rainbow DQN需要1800万帧才能达到人类玩家水平。 2. AlphaGo Zero用了2900万局自我博弈，每一局约有100个状态和动作。 3. TD3算法在MuJoCo物理仿真环境中训练模拟机器人时，虽然只有几个关节需要控制，但是在样本数量100万时尚未收敛</p>
+<p>复杂的场景，需要的样本更多。</p>
+<p>在电子游戏中获取上亿万的样本并不难，但在现实问题中每获取一个样本都是比较 困难的。比如</p>
+<ol type="1">
+<li>在NAS的例子中，每获取一个奖励，需要训练一个 CNN，从初始 化到梯度算法收敛，需要一个 GPU 约一小时的计算量</li>
+<li>机械手臂抓取一个物体至少需要几秒钟时间，那么一天只能收集1w个样本;同时用十个机械手臂，连续运转一百天，才能收集到1000w个样本，未必够训练一个深度强化学习模型。</li>
+</ol>
+<p>强化学习所需的样本量太大，这会限制强化学习在现实中 的应用。</p>
+<h3 id="探索阶段代价太大">探索阶段代价太大</h3>
+<ol type="1">
+<li>强化学习要求智能体与环境交互，用收集到的经验去更新策略。在交互的过程中，智能体会改变环境.</li>
+<li>在仿真、游戏的环境中，智能体对环境造成任何影响都无所谓。但是在现实世界中，智能体对环境的影响可能会造成巨大的代价。</li>
+<li>在强化学习初始的探索阶段，策略几乎是随机的。如果是物理世界中的应用，智能 体的动作难免造成很大的代价。如果应用到推荐系统中，如果上线一个随机的推荐策略， 那么用户的体验会极差，很低的点击率也会给网站造成收入的损失。如果应用到自动驾 驶中，随机的控制策略会导致车辆撞毁。如果应用到医疗中，随机的治疗方案会致死致 残。</li>
+<li>在物理世界的应用中，不能直接让初始的随机策略与环境交互，而应该先对策略做预训练，再在真实环境中部署。一种方法是事先准备一个数据集，用行为克隆等监督学习方法做预训练。另一种方法是搭建模拟器，在模拟器中预训练策略。比如阿里巴巴提 出的“虚拟淘宝”系统是对真实用户的模仿，用这样的模拟器预训练推荐策略。离线强化学习 (Offline RL) 是一个热门而又有价值的研究方向.</li>
+</ol>
+<h3 id="调参难">调参难</h3>
+<p>强化学习的超参数分两种:神经网络结构超参数、算法超参数。这两类超参数的设置都严重影响实验效果：</p>
+<ul>
+<li><p>结构超参数: 神经网络结构超参数包括层数、宽度、激活函数。在监督学习中，在隐层中用不同的激活函数(比如 ReLU、 Leaky ReLU)对结果影响很小，因此用ReLU就可以。但是在深度强化学习中，隐层激活函数对结果的影响很大;有时ReLU远好于Leaky ReLU，有时Leaky ReLU远好于ReLU。由于这种不一致性，在实践中不得不尝试不同的激活函数。</p></li>
+<li><p>算法超参数: 强化学习中的算法超参数很多，包括学习率、批大小 (Batch Size)、经验回放的参数、探索用的噪声，比如Rainbow调了超过10种算法超参数</p>
+<ul>
+<li>学习率(即梯度算法的步长)对结果的影响非常大，并且DDPG、 TD3、A2C等方法中不止有一个学习率。策略网络、价值网络、目标网络中都有各自的学习率。</li>
+<li>如果用经验回放，还有几个超参：回放数组的大小、经验回放的起始时间等。论文[37]中的实验显示回放数组的大小对结果有影响，过大或者过小都不好。经验回放的起始时间也需要调，比如Rainbow在收集到8万条四元组时开始经验回放，而标准的DQN则最好是在收集到20万条之后开始经验回放[49]。</li>
+<li>在探索阶段，DQN、DPG等方法的动作中应当加入一定噪声。「噪声的大小」是需要调的超参数，它可以平衡Exploration和Exploitation。除了设置初始的噪声幅度，还要设置噪声的衰减率，让噪声逐渐变小。</li>
+</ul></li>
+</ul>
+<h4 id="实验效果严重依赖于实现的好坏">实验效果严重依赖于实现的好坏</h4>
+<p>上面的讨论目的在于说明超参数对结果有重大影响。对于相同的方法，不同的人会有不同的实现，比如用不同的网络结构、激活函数、训练算法、学习率、经验回放、噪声。哪怕是一些细微的区别，也会影响最终的效果。论文[48]使用了几个比较有名的开源代码，它们都有TRPO和DDPG方法在Half-Cheetah环境中的实验。论文使用了它们的默认设置，比较了实验结果，如图 19.18 所示。很显然， 相同的方法，不同人的编程实现，实验效果差距巨大。</p>
+<figure>
+<img src="img_1.png" alt="19.18" /><figcaption aria-hidden="true">19.18</figcaption>
+</figure>
+<h4 id="实验对比的可靠性问题">实验对比的可靠性问题</h4>
+<p>如果一篇学术论文提出一种新的方法，往往要在Atari、 MuJoCo 等标准的实验环境中做实验，并与DQN、DDPG、TD3、A2C、TRPO 等有名的基线做实验对照。通常只有当新的方法效果显著优于基线时，论文才有可能发表。但是基线算法的表现严重依赖编程实现的好坏。如果你提出一种新方法，可以把自己的方法实现得非常好，然后从开源的实现中选一个不那么好的基线做实验对比，就可以轻松打败基线算法啦。</p>
+<h3 id="稳定性极差">稳定性极差</h3>
+<p>强化学习训练的过程中充满了随机性。除了环境的随机性之外，随机性还来自于神经网络随机初始化、决策的随机性、经验回放的随机性。想必大家都有这样的经历:用完全相同的程序和超参数，仅更改随机种子 (Random Seed)，就会导致训练的效果有天壤之别。</p>
+<p>如图 19.19所示，如果重复训练十次，往往会有几次完全不收敛。哪怕是非常简单的问题，也会出现这种不收敛的情形。</p>
+<figure>
+<img src="img.png" alt="图 19.19" /><figcaption aria-hidden="true">图 19.19</figcaption>
+</figure>
+<p>在监督学习中，由于随机初始化和随机梯度中的随机性，即使用同样的超参数，训练出的模型表现也会不一致，测试准确率可能会差<strong>几个百分点</strong>。但是监督学习中几乎不会出现图 19.19 中这种情形;如果出现了，几乎可以肯定代码中有错。但是强化学习确实会出现完全不收敛的情形，哪怕代码和超参数都是对的。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://rct.ai/zh-hans/blog/the-key-technology-behind-morpheus-engine">rct的混沌球算法</a></li>
@@ -374,7 +420,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E5%93%81%E6%8E%A8%E8%8D%90"><span class="nav-number">1.1.</span> <span class="nav-text">商品推荐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BA%A6%E8%BD%A6%E8%B0%83%E5%BA%A6"><span class="nav-number">1.2.</span> <span class="nav-text">网约车调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%90%9C%E7%B4%A2nas"><span class="nav-number">1.3.</span> <span class="nav-text">神经网络结构搜索（NAS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E6%9C%BA%E5%99%A8%E4%BA%BA"><span class="nav-number">1.4.</span> <span class="nav-text">交易机器人</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E5%93%81%E6%8E%A8%E8%8D%90"><span class="nav-number">1.1.</span> <span class="nav-text">商品推荐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BA%A6%E8%BD%A6%E8%B0%83%E5%BA%A6"><span class="nav-number">1.2.</span> <span class="nav-text">网约车调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%90%9C%E7%B4%A2nas"><span class="nav-number">1.3.</span> <span class="nav-text">神经网络结构搜索（NAS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E6%9C%BA%E5%99%A8%E4%BA%BA"><span class="nav-number">1.4.</span> <span class="nav-text">交易机器人</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E5%88%B6%E7%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">什么制约强化学习的应用？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%80%E9%9C%80%E8%A6%81%E7%9A%84%E6%A0%B7%E6%9C%AC%E6%95%B0%E9%87%8F%E8%BF%87%E5%A4%A7"><span class="nav-number">2.1.</span> <span class="nav-text">所需要的样本数量过大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2%E9%98%B6%E6%AE%B5%E4%BB%A3%E4%BB%B7%E5%A4%AA%E5%A4%A7"><span class="nav-number">2.2.</span> <span class="nav-text">探索阶段代价太大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E5%8F%82%E9%9A%BE"><span class="nav-number">2.3.</span> <span class="nav-text">调参难</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%95%88%E6%9E%9C%E4%B8%A5%E9%87%8D%E4%BE%9D%E8%B5%96%E4%BA%8E%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%A5%BD%E5%9D%8F"><span class="nav-number">2.3.1.</span> <span class="nav-text">实验效果严重依赖于实现的好坏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E5%AF%B9%E6%AF%94%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">2.3.2.</span> <span class="nav-text">实验对比的可靠性问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%B3%E5%AE%9A%E6%80%A7%E6%9E%81%E5%B7%AE"><span class="nav-number">2.4.</span> <span class="nav-text">稳定性极差</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -388,20 +434,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">159</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">182</span>
+        <span class="site-state-item-count">183</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

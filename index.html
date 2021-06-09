@@ -342,7 +342,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/05/practice/quantml-practice/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/08/reading_notes/computer/coding/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -356,7 +356,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/05/practice/quantml-practice/" class="post-title-link" itemprop="url">时序预测最佳实践</a>
+            <a href="/2021/06/08/reading_notes/computer/coding/" class="post-title-link" itemprop="url">《编程:隐匿在计算机硬件背后的语言 》的读书笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -366,14 +366,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-05 00:06:21" itemprop="dateCreated datePublished" datetime="2021-06-05T00:06:21+08:00">2021-06-05</time>
+              <time title="创建时间：2021-06-08 09:09:12" itemprop="dateCreated datePublished" datetime="2021-06-08T09:09:12+08:00">2021-06-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:47:27" itemprop="dateModified" datetime="2021-06-07T08:47:27+08:00">2021-06-07</time>
+                <time title="修改时间：2021-06-09 11:30:01" itemprop="dateModified" datetime="2021-06-09T11:30:01+08:00">2021-06-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -381,7 +381,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">实践</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -396,55 +396,69 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="建模pipeline">建模pipeline</h1>
+          <h2 id="二进制加法器">12 二进制加法器</h2>
 <ol type="1">
-<li>搜集原始数据: 过去十年的成交数据</li>
-<li>数据筛选: 选择交易日，固定时间段（９:30~15:30)的数据</li>
-<li>对选好的数据进行采样，并不能保证每天都有整数个点</li>
-<li>切分训练集 &amp; 验证集</li>
-<li>模型训练
-<ul>
-<li>归一化训练集，&lt;x， target&gt;</li>
-<li>训练</li>
-</ul></li>
-<li>模型评估
-<ul>
-<li>归一化验证集</li>
-<li>预测&amp;画图：</li>
-</ul></li>
+<li>电路中的逻辑门能实现二进制加法。</li>
 </ol>
-<p>实践过程中遇到的一些问题，需要逐一解决，下面记录其中一些</p>
-<h1 id="问题集合">问题集合</h1>
-<h2 id="问题1.-验证集的mse比训练集低但相关系数训练集远远大于调参集这是bug">问题1. 验证集的mse比训练集低，但相关系数训练集远远大于调参集，这是bug？</h2>
-<p>没有bug，mse和correlation评估的侧重点不一样。</p>
-<p>mse小，但是correlation也小的例子，如下图：</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNUSWvXNmWb.png?alt=media&amp;token=8c03a9f3-60e1-424d-879e-3371c1516623" /></p>
-<p>几个距离：</p>
+<blockquote>
+<p>逻辑门是认为设计的一种电路走线，为了映射到逻辑上的加法运算。</p>
+<p>逻辑门是链接物理世界和信息世界的桥梁，信息世界以逻辑求和为根基，开始构建信息世界的高楼大厦。</p>
+</blockquote>
+<h2 id="从算盘到芯片">18 从算盘到芯片</h2>
+<h2 id="两种微处理器">20 两种微处理器</h2>
+<ol type="1">
+<li><p>微处理器将中央处理器的所有组建整合到一个硅芯片上。</p></li>
+<li><p>第一个微处理器，intel 4004，包含了2300个晶体管</p></li>
+<li><p>三十年过去了，一个微处理器中的晶体管数量逼近1000w个。</p></li>
+<li><p>摩托罗拉公司，从20实际50年代生产半导体和晶体管，在1974年8月推出了6800处理器。</p></li>
+<li><p>得克萨斯仪器在1974年，推处4位的处理器TMS1000，</p></li>
+<li><p>英特尔为8080最初定的价格为360美元，8080是一个8位的微处理器，它包括6000个晶体管，运行的时钟频率为2 MHz，寻址空间为64 KB。</p></li>
+<li><p>这些芯片被称为“单芯片微处理器”（single-chip microprocessors</p></li>
+<li><p>除了处理器之外，计算机还需要其他一些设备，至少要包括存储器（RAM），输入设备（键盘），输出设备（显示屏），以及其他一些能把所有构件连接在一块的芯片（主板，机箱）。</p></li>
+<li><p>通过观测芯片的输入、输出信号，特别是芯片的指令集来理解微处理器的工作原理。</p></li>
+<li><p>微处理器通过管脚提供了处理器的输入和输出访问接入点 <img src="img.png" alt="img.png" /></p></li>
+<li><p>所有电气或电子设备都需要某种电源来供电</p></li>
+<li><p>8080的一个特殊的地方就是它需要三种电源电压：管脚20必须接到5V的电压；管脚11需要接到-5V的电压；管脚28需接12V的电压；管脚2接地。（英特尔在1976年发布了8085芯片，目的就是简化对这些电源的要求）.</p>
 <ul>
-<li>欧式距离（mse）量化的 是两个实体（或者两个群体）之间的绝对物理距离</li>
-<li>余弦距离（correlation）量化的是 两个实体（或者两个群体）相对原点的角度的距离</li>
-<li>pearson衡量的是 两个变量 之间的 线性相关性，具体做法是使用一个直线去拟合多组样本点&lt;变量1，变量2&gt; ，直线斜率就是相关性大小。</li>
-</ul>
-<h2 id="问题3怎么解决分布漂移的问题">问题3：怎么解决分布漂移的问题？</h2>
-<p>分布漂移在时序预测中尤其常见，使用滑动窗口的均值来 做中心化</p>
-<h2 id="问题4还有哪些措能提升实验效果">问题4：还有哪些措能提升实验效果？</h2>
-<p>取效果好和效果差的两组实验进行对比，观察到1个现象：使用短期趋势中心化后，在使用长期趋势归一化，能使效果变好，背后的理论依据是什么？</p>
-<p>分析下：因为用到了更长的历史数据作为参考,本身模型是记不住那么长的历史信息的。（输入才半个小时）</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fg6FAdLzkOj.png?alt=media&amp;token=362ed41e-1773-4ff5-ac41-a3095f75bb86" /></p>
-<p>参考: <a target="_blank" rel="noopener" href="https://github.com/Arturus/kaggle-web-traffic/blob/master/how_it_works.md">doc</a></p>
-<h2 id="问题5-过拟合的原因">问题5： 过拟合的原因</h2>
-<p>训练集 的比例远大于 验证集 和测试集</p>
-<h2 id="问题6-是不是预测的准就能挣钱了">问题6： 是不是预测的准就能挣钱了？</h2>
-<p>不是，回测的时候要考虑滑点，交易费用，爆仓风险</p>
-<h2 id="问题7同样一个预测模型lstm商品期货准确率比股指差这么多">问题7：同样一个预测模型（LSTM），商品期货准确率比股指差这么多？</h2>
+<li>从芯片引出的箭头表明这是一个输出（output）信号，这种信号由微处理器控制，计算机的其他芯片对该信号响应。</li>
+<li>指向芯片的箭头表明该信号是一个输入（input）信号，该信号由其他芯片发出，并由8080芯片对其响应。还一些管脚既是输入又是输出。</li>
+</ul></li>
+<li><p>8080有16个用于寻址的输出信号，标记为A0～A15，因此它的可寻址空间大小为<span class="math inline">\(2^16\)</span></p></li>
+<li><p>在计算机中，所有的指令都是3个字节长（1个字节=8个bit），包括1字节的操作码和2字节的地址，指令长什么样？：</p>
 <ul>
-<li>因为1min的股指期货数据平滑，噪声少，而1min的商品期货毛刺非常多</li>
-<li>将1min的商品期货聚合成5min之后，再使用过去1h的数据预测未来1h的数据，准确率非常之高</li>
+<li>有些指令使8080从存储器的一个特定地址读取字节到微处理器，</li>
+<li>有些指令使8080将一个字节从微处理器写入存储器的特定地址；</li>
+<li>还有些指令使8080在其内部执行而不需要访问RAM</li>
 </ul>
-<h2 id="问题8直接用回归模型预测价格可能有负数怎么处理">问题8：直接用回归模型预测价格，可能有负数怎么处理</h2>
-<p>预测增长率</p>
-<h2 id="问题9除了直接回归还有哪些方法">问题9：除了直接回归，还有哪些方法？</h2>
-<p>转化为分类问题，换预测涨跌幅</p>
+<p>8080执行完第一条指令后，接着从「存储器」读取第二条指令，并依此类推。这些指令组合在一起构成了计算机程序</p></li>
+<li><p>计算机的指令集包括两条非常重要的指令，我们称之为加载（Load）和保存（Store），每条指令占3个字节</p>
+<ul>
+<li>在Load指令中，第一个字节是操作码，其后的两个字节是要加载的操作数的16位地址。当处理器执行加载指令时，会把该指定地址中的字节加载到累加器。</li>
+<li>当Store指令被执行时，累加器中的内容被保存到该指令指定的地址中。</li>
+</ul></li>
+<li><p>8080芯片的微处理器的内部除累加器外还设置了6个寄存器（register），每个寄存器可以存放一个8位的数。这些寄存器和累加器非常相似，事实上累加器被视为一种特殊的寄存器。</p></li>
+<li><p>寄存器是计算机必不可少的部件吗？理论上不是。很多计算机程序都同时用到多个数据，将这些数据存放在寄存器比存放在存储器更便于访问，因为程序访问内存的次数越少其执行速度就越快。</p></li>
+<li><p>利用指令，可以方便地把一个寄存器存放的数据转移到另一个寄存器</p></li>
+<li><p>有一种存储器叫堆栈：以从底部到顶部的顺序把数据存入存储器，并以相反的顺序把数据从堆栈中取出，因此该技术也称作后进先出存储器（last-in-first-out，LIFO）。在计算机中使用堆栈技术是十分方便的。通常把将数据存入堆栈的过程称作压入（push），把从堆栈取出数据的过程称作弹出（pop）。</p></li>
+<li><p>堆栈的功能是怎样实现的呢？首先，堆栈其实就是一段普通的RAM存储空间，只是这段空间相对独立不另作他用。8080微处理器设置了一个专门的16位寄存器对这段存储空间寻址，这个特殊的寄存器称为堆栈指针（SP，Stack Pointer）。</p></li>
+<li><p>在8080中，执行PUSH指令实际上是把16位的数据保存到堆栈，执行POP指令是把这些数据从堆栈中取回至寄存器。</p></li>
+<li><p>每执行一条PUSH指令，堆栈都会增加两个字节，这可能会导致程序出现一些小错误——堆栈可能会不断增大，最终覆盖掉存储器中保存的程序所必需的代码或数据。这种错误被称作堆栈上溢（stackoverflow）。类似的，如果在程序中过多地使用了POP指令，则会过早地取完堆栈中的数据从而导致类似的错误，这种情况称为堆栈下溢（stack underflow）。</p></li>
+<li><p>根据摩尔定律（Moore’s Law），微处理器中的晶体管数量每18个月翻一倍，增加的这些大量的晶体管用来做什么呢？</p>
+<ul>
+<li>一些晶体管用来适应处理器不断增加的数据宽度——从4位、8位、16位到32位；</li>
+<li>另一些新增的晶体管用来应对新的指令。</li>
+</ul></li>
+<li><p>现代处理器主要使用2种策略来提高运行速度:</p>
+<ul>
+<li>一种就是流水线技术（pipelining），即处理器在执行一条指令的同时读取下一条指令，</li>
+<li>还有一种是Cache（高速缓冲存储器），它是一个设置在处理器内部，访问速度非常快的RAM阵列，用来存放处理器最近要执行的指令</li>
+</ul>
+<p>这两种策略都需要在处理器内部增加更多的逻辑组件和晶体管。</p></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/64e32bf071fd5a9164ece6b">编程：隐匿在计算机硬件背后的语言</a></li>
+</ol>
 
       
     </div>
@@ -529,7 +543,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">159</span>
+          <span class="site-state-item-count">160</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

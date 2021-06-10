@@ -7,6 +7,89 @@ tags:
 categories:
 ---
 
+## layers的基本类型
+
+- keras中layer的基本类型：
+    - 卷积：Conv1D
+    - 池化：MaxPooling1D/GlobalAveragePooling1D
+    - dropout：Dropout
+    - 线性全联接层：Dense
+    - high-level层：LSTM，
+- 卷积的维度有1Ｄ，2Ｄ，3D, 区别在于输入数据的shape以及卷积核如何滑动
+    - ![I１维卷积和２维卷积的区别](https://miro.medium.com/max/1621/1*aBN2Ir7y2E-t2AbekOtEIw.png)
+    - 1维卷积（Conv1D）：只有1个维度可以滑动，但是另一维度也是有待估参数的
+    - 2维卷积（Conv2D）：有两个维度可以滑动，
+    - 相同点：从参数视角都是2维的，每一个卷积kernel，参数个数是 height × width +１　（off_ set）
+- 什么情况下，1d比2d好用呢？
+    - 其中2个维度上，做卷积没有意义(high,close,open,close)
+- 神经网络中每一层的输入输出shape，以及参数个数解析：
+```python
+model_m = Sequential()
+model_m.add(Reshape((TIME_PERIODS, num_sensors),
+                    input_shape=(input_shape,)))
+model_m.add(Conv1D(100, 10, activation='relu',
+                   input_shape=(TIME_PERIODS, num_sensors)))
+model_m.add(Conv1D(100, 10, activation='relu'))
+model_m.add(MaxPooling1D(3))
+model_m.add(Conv1D(160, 10, activation='relu'))
+model_m.add(Conv1D(160, 10, activation='relu'))
+model_m.add(GlobalAveragePooling1D())
+model_m.add(Dropout(0.5))
+model_m.add(Dense(num_classes, activation='softmax'))
+```
+- ![Image for post](https://miro.medium.com/max/2073/1*Y117iNR_CnBtBh8MWVtUDg.png)
+- Conv1D：　model_m.add(Conv1D(100, 10, activation='relu', input_shape=(TIME_PERIODS, num_sensors)))：
+    - 输入：(timesteps,  num_series) 
+    - 输出：(timesteps - kerner_size+1, num_kernels)
+    - 参数个数：(kernel_size * num_sensors  + 1) * num_kernels
+- MaxPooling1D: model_m.add(MaxPooling1D(3))
+    - 输入：(timesteps,  num_series)
+    - 输出：(timesteps//3,  num_series)
+    - 备注：书的页数（channel）没变，但是每页的字数变成了1/3
+    - ![Image for post](https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg)
+- GlobalAveragePooling1D：model_m.add(GlobalAveragePooling1D())
+    - 输入：　(timesteps,  num_series) 或者（feature_values, feature_detectors）
+    - 输出：　（１，num_series）或者（１, feature_detectors）
+    - 备注： 书的页数（channel）没变，但是每页的字数变成了1
+- Dropout: model_m.add(Dropout(0.5))： 形状不变
+    输入：（１，num_series）
+    输出：（１，num_series）
+- LSTM：model.add(LSTM(units=128,  dropout=0.5, return_sequences=True, input_shape=input_shape))
+    - 输入： (timestep, series)
+    - 输出：(timestep, units)
+- Dense： model_m.add(Dense(num_classes, activation='softmax'))
+    - 输入：（１，num_series）
+    - 输出：（１，num_classes　×　２）
+- BatchNormalization：
+    - 输入:  (timestep, series)
+    - 输出：(timestep, series) 
+    - 参数个数：４ * series (channel) 
+        - $$y=\gamma\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\beta $$
+        - 参考[[深度学习中几种归一化方法]]
+
+keras中对dropout的处理，因为训练阶段需要dropout ，但是inference阶段不需要dropout，那么keras需要在推断阶段怎么特殊设置吗？
+    - Keras does this by default. In Keras dropout is disabled in test mode. You can look at the code [here](https://github.com/keras-team/keras/blob/dc95ceca57cbfada596a10a72f0cb30e1f2ed53b/keras/layers/core.py#L109) and see that they use the dropped input in training and the actual input while testing.
+    - As far as I know you have to build your own training function from the layers and specify the training flag to predict with dropout (e.g. its not possible to specify a training flag for the predict functions). This is a problem in case you want to do GANs, which use the intermediate output for training and also train the network as a whole, due to a divergence between generated training images and generated test images.
+    - https://stackoverflow.com/questions/47787011/how-to-disable-dropout-while-prediction-in-keras
+
+
+
+## 损失函数
+
+
+tensorflow中的损失函数:
+
+- sparse_categorical_crossentropy: target是interger list，形状n*1； 
+- categorical_crossentropy: target 是one-hot vector，target的shape跟模型输出一致，是n*k(类)。
+    - $$C E(x)=-\sum\limits_{i=1}^{C} y_{i} \log f_{i}(x)$$
+- binary_crossentropy: target 是interger list。
+    $$B C E(x)_{i}=-\left[y_{i} \log f_{i}(x)+\left(1-y_{i}\right) \log \left(1-f_{i}(x)\right)\right]$$
+- 如果输出标签维度为1，只能使用binary_crossentropy，否则程序会报错。不能直接使用categorical_crossentropy 或者sparse_categorical_crossentropy
+- 如果输出标签维度为K：使用categorical_crossentropy 或者sparse_categorical_crossentropy
+- 单标签多分类（multi-class）：softmax + CE
+- 二分类：sigmoid + BCE
+- 多标签多分类（multi-label）的情况：sigmoid + BCE
+- 最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。
 
 
 ## 深度学习中集中归一化的方法
@@ -63,6 +146,7 @@ categories:
 
 
 ## 参考资料
+
 1. [Batch Normalization](https://arxiv.org/pdf/1502.03167.pdf)
 2. [Layer Normalizaiton](https://arxiv.org/pdf/1607.06450v1.pdf)
 3. [Instance Normalization](https://arxiv.org/pdf/1607.08022.pdf)
@@ -74,3 +158,4 @@ categories:
 2. [用书比喻图像很好理解](https://www.jianshu.com/p/05de1f989790)
 3. [Conditional Batch Normalization 详解](https://zhuanlan.zhihu.com/p/61248211)
 4. [从Style的角度理解Instance Normalization](https://zhuanlan.zhihu.com/p/57875010)
+5. [在时序数据上应用conv1D](https://blog.goodaudience.com/introduction-to-1d-convolutional-neural-networks-in-keras-for-time-sequences-3a7ff801a2cf)

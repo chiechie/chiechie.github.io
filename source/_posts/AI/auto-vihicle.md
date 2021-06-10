@@ -1,11 +1,12 @@
 ---
-title: 通用无人驾驶还有多遥远？
+title: 通用无人驾驶还有多远？
 author: chiechie
 mathjax: true
 date: 2021-06-10 17:04:32
 tags: 
 - 科技史
 - 人工智障
+- 人工智能
 categories:
 - 人工智能
 ---

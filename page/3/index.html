@@ -165,6 +165,115 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/04/reading_notes/computer/liangzijisuanji/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/04/reading_notes/computer/liangzijisuanji/" class="post-title-link" itemprop="url">量子计算机</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-04 09:05:44 / 修改时间：09:32:47" itemprop="dateCreated datePublished" datetime="2021-06-04T09:05:44+08:00">2021-06-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="why">why？</h2>
+<ol type="1">
+<li>最早提出用量子体系来计算，或者说模拟量子物理问题的科学家是费曼，不过当时只是一个概念。</li>
+<li>真正从数学上证明有效的算法，是20世纪90年代数学家提出的两类算法：Shor算法和Grover算法.</li>
+<li>Shor算法解决质因数分解问题。用量子的逻辑电路，可以将大数分解问题的求解时间从指数级降低为准多项式级。大数不可分正是现在互联网上应用最广泛的非对称加密系统，也叫公钥加密系统的数学基础。用现在最好的算法破解2048位数的公钥密码，需要超过100万年时间，而用Shor算法只需要几分钟</li>
+<li>Grover算法是一个搜索算法，它可以将无结构的数据搜索问题从N复杂度降低为根号N复杂度。虽然加速能力不如Shor算法，但搜索算法是一种非常基础的算法，可以映射到多种实际问题中去。当N非常大时，这种加速效应也非常显著。目前互联网中每时每刻产生的海量数据，要从中寻找有用信息，正对应着这种N非常大的情况。此外，搜索算法还可以用来进行密码破解。</li>
+<li>此外，量子计算还可以通过模拟复杂系统的哈密顿量来进行量子化学计算，研究原来很难研究的复杂多体物理问题；通过量子纠缠特性，量子计算还可以快速计算多参量的代价函数，从而提高优化问题的求解效率，在人工智能方面也有潜在的应用价值。</li>
+</ol>
+<h2 id="量子计算可以解决什么问题">量子计算可以解决什么问题？</h2>
+<ol type="1">
+<li>计算科学中，所有的计算问题可以分为可判定问题和不可判定问题。</li>
+<li>计算机能够解决的只是可判定类问题，也就是可计算问题。</li>
+<li>NP问题中还有一类NP完全问题，计算复杂度指数增长，其中包括非常经典的最大割问题、行商问题等等。量子计算目前无法解决。</li>
+</ol>
+<figure>
+<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<h2 id="怎么实现量子计算">怎么实现量子计算？</h2>
+<ol type="1">
+<li><p>从理论上看，比较简单，先把问题用比特进行编码，算完之后观测结果 <img src="img_1.png" alt="img_1.png" /></p></li>
+<li><p>从实现上看，比较有挑战，因为实现过程中会有噪声，并且量子不好操控和测量。</p>
+<blockquote>
+<p>量子计算的理论和算法研究早在上世纪八九十年代就出现了，而实验物理研究却一直到2000年以后才逐渐走上快车道。</p>
+</blockquote></li>
+<li><p>现实世界中，能够用来做量子计算的体系有很多，包括自然原子、离子阱、光子、二维电子气、NV-色心、核自旋、冷原子，以及超导量子比特，等等。哪些是优秀的“量子比特”，能成功构建出实用的量子计算机呢？要满足以下条件（Divincenzo准则”）：</p>
+<ul>
+<li>可以构建一组可扩展的大量量子比特，并且能够很好的表征它们</li>
+<li>能够对量子比特进行初始化</li>
+<li>量子比特必须具有足够长的退相干时间</li>
+<li>能实现一组通用的量子门操作</li>
+<li>能够很好地测量这些量子比特的最终状态</li>
+</ul></li>
+<li><p>基于超导量子比特的超导量子计算，满足上面五点，成为现在各大头部公司最看好的技术方案</p></li>
+</ol>
+<h2 id="现状以及未来展望">现状以及未来展望</h2>
+<ol type="1">
+<li>2019年10月，Google在Science上刊出了一篇论文，介绍了他们验证了量子霸权的实验结果。个实验让全世界都备感兴奋，谷歌的CEO皮查伊评价这个实验的意义，就像当年莱特兄弟发明了第一驾飞机。不过，正如第一驾民用客机要到50多年后才诞生，量子计算机走入千家万户，仍有很长的路要走。 <img src="img_2.png" alt="img_2.png" /></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>https://weibo.com/ttarticle/x/m/show/id/2309404644282962411850?<em>wb_client</em>=1</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/03/reading_notes/economics/huilv/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -276,138 +385,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/rl5-monte-calo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/02/AI/reinforcement_learning/rl5-monte-calo/" class="post-title-link" itemprop="url">强化学习5 蒙特卡洛树搜索</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-02 16:58:05" itemprop="dateCreated datePublished" datetime="2021-06-02T16:58:05+08:00">2021-06-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-03 16:48:27" itemprop="dateModified" datetime="2021-06-03T16:48:27+08:00">2021-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="总结">总结</h1>
-<ol type="1">
-<li>蒙特卡洛树搜索（MCTS）是一种基于模型的强化学习方法。</li>
-<li>蒙特卡洛树搜索比价值学习和策略学习更难。</li>
-<li>AlphaGp是一个围棋AI，依靠MCTS做决策，决策过程中需要策略网络和价值网络辅助。</li>
-<li>AlphaGo真正跟人下棋的时候，做决策的不是策略网络或者价值网络，而是MCTS。</li>
-<li>MCTS不需要训练，可以直接做决策，训练策略网络和价值网络的目的是辅助MCTS。</li>
-</ol>
-<h2 id="mcts的基本思想">MCTS的基本思想</h2>
-<ol type="1">
-<li>高手是怎么下棋的？高手一般都会往前多看几步。</li>
-<li>高手下棋，一般是动态看待局势，确保自己几步之后占据优势。如果只根据当前格局做判断，不考虑长远，肯定赢不了高手。</li>
-<li>同理，AI下棋也应该跟高手一样，多往前看几步，枚举所有可能发生的情况，从而判断当前执行什么动作的胜算最大，这样远浩宇用策略网络输出一个动作。</li>
-<li>AlphaGo每走一步，就要用MCTS做成千上万次模拟，基本思想如下：假设当前有3种可选的动作，每次模拟从三种动作中选出一种，然后将游戏进行到底，从而拿到最终结果。 重复成千上万次模拟，统计每种动作的胜负概率，发现胜率分别是48%、56%、52%。那么 AlphaGo 应当执行第二种动作，因为 它的胜算最大。然而实际做起来还有很多难点需要解决。</li>
-</ol>
-<h2 id="mcts的四个步骤">MCTS的四个步骤</h2>
-<p>MCTS每次模拟都要经历四个步骤：选择（selection），扩展（expansion），估值（evaluation），回溯（backup）</p>
-<h3 id="选择">选择</h3>
-<ol type="1">
-<li><p>观察当前局势，找出符合规则的所有走位中最有胜算的那部分走位。 如何评估走位优劣？综合两方面：</p></li>
-<li><p>看走位的胜率，就是动作价值</p></li>
-<li><p>看策略网络给a的评分</p></li>
-</ol>
-<h3 id="扩展">扩展</h3>
-<p>接下来，ALphaGo需要考虑：对方会怎么走？只能靠猜，使用"推己及人"的方式。使用策略网络模拟对手的策略， 策略网络站在对手角度，根据观测到的棋局，给出多个走位的概率，ALphaGo采样一个动作。 这个时候对手落下的子就是ALphaGo的新状态了。</p>
-<p>上面的所有的走位都不是真实发生的，而是在AlphaGo的脑袋中推演的，</p>
-<p>ALphaGo专门执行推演的模块就叫模拟器（就是环境，牛逼的很，自己构建出与现实平行的虚拟世界），</p>
-<p>在模拟器中，ALphaGo每执行一个动作，模拟器就会返回一个新的状态。</p>
-<p>如何搭建一个好的模拟器？关键在于构建的正确的状态转移函数，如果其跟事实偏离太远，那么模拟器就是一个废物。</p>
-<p>AlphaGo如何构建好的模拟器呢？他利用了围棋的对称性：即我方视角的状态转移，等价于对方视角的真实策略--可以复用已经训练好的策略网络。</p>
-<blockquote>
-<p>有点类似理性市场假设，每个人都是同样聪明的人，市场不存在套利机会。</p>
-</blockquote>
-<p>在围棋场景，搭建模拟器很简单，但是其他场景就没有这么简单了。</p>
-<p>比如机器人、无人车等应用，状态转移的构造需要物理模型，要考虑到力、运动、以及外部世界的干扰。 如果物理模型不够准确，导致状态转移函数偏离事实太远，那么 MCTS的模拟结果就不可靠。</p>
-<h3 id="求值">求值</h3>
-<p>AlphaGo在模拟器中交替落子，直到分出胜负，把结果记为r.但是r只是众多平行世界中的一个，把r就作为评判第一个走位的依据，未免过于随机。</p>
-<p>有没有更加稳定的方法？AlphaGo的解决方案，把r与价值网络对下个状态的评价进行求和，得到了下一个状态的价值。</p>
-<p>在实际实现的时候，AlphaGo在这一步训练了一个更小的策略网络。</p>
-<p>为什么只在求值这一步使用小网络呢？因为这一步是连哥哥策略网络交替落子，并且通常要走一两百步，导致这步成为瓶颈。</p>
-<p>用小的策略网络代替大的策略网络，可以大幅加速MCTS</p>
-<h3 id="回溯">回溯</h3>
-<p>对于下一步的每个状态，通过模拟都能得到多条记录--代表该状态的价值。</p>
-<p>把假想走位的所有状态的所有价值记录，求平均，就能得到假想走位的价值。</p>
-<p>将这个候选走位带回第一步，更新每个走位的分数，选出最高的，进行下一轮模拟</p>
-<p><span class="math display">\[ \operatorname{score}(a) \triangleq Q(a)+\frac{\eta}{1+N(a)} \cdot \pi(a \mid s ; \boldsymbol{\theta}), \quad \forall a \]</span></p>
-<h2 id="决策">决策</h2>
-<p>一轮 选择-&gt;扩展-&gt;扩展-&gt;回溯只是执行了单次模拟。</p>
-<p>实际上做一次决策之前，需要做成千上万次模拟。</p>
-<p>每次模拟时，更新每个候选走位的score，选择最高分score，在模拟器执行。</p>
-<p>经过成千上万次模拟后，最经常被选中的走位，就作为最终的决策依据。</p>
-<p>注意，每次在真实世界走完一步，上一步存的分数都要清零。</p>
-<p>总结下，AlphaGo下棋非常暴力：每走一步，都要在虚拟世界模拟几万局。</p>
-<p>计算量是机器战胜柯洁的秘密武器。</p>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2018/12/sunyq_IEEEAccess2018_HotSpot.pdf">HotSpot-英文paper</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kj309bzifIv4j80nZbGVZw">HotSpot-中文</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -477,7 +454,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">161</span>
+          <span class="site-state-item-count">162</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -490,7 +467,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">183</span>
+        <span class="site-state-item-count">187</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

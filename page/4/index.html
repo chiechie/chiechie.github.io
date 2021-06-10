@@ -165,6 +165,138 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/rl5-monte-calo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/02/AI/reinforcement_learning/rl5-monte-calo/" class="post-title-link" itemprop="url">强化学习5 蒙特卡洛树搜索</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-02 16:58:05" itemprop="dateCreated datePublished" datetime="2021-06-02T16:58:05+08:00">2021-06-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-03 16:48:27" itemprop="dateModified" datetime="2021-06-03T16:48:27+08:00">2021-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="总结">总结</h1>
+<ol type="1">
+<li>蒙特卡洛树搜索（MCTS）是一种基于模型的强化学习方法。</li>
+<li>蒙特卡洛树搜索比价值学习和策略学习更难。</li>
+<li>AlphaGp是一个围棋AI，依靠MCTS做决策，决策过程中需要策略网络和价值网络辅助。</li>
+<li>AlphaGo真正跟人下棋的时候，做决策的不是策略网络或者价值网络，而是MCTS。</li>
+<li>MCTS不需要训练，可以直接做决策，训练策略网络和价值网络的目的是辅助MCTS。</li>
+</ol>
+<h2 id="mcts的基本思想">MCTS的基本思想</h2>
+<ol type="1">
+<li>高手是怎么下棋的？高手一般都会往前多看几步。</li>
+<li>高手下棋，一般是动态看待局势，确保自己几步之后占据优势。如果只根据当前格局做判断，不考虑长远，肯定赢不了高手。</li>
+<li>同理，AI下棋也应该跟高手一样，多往前看几步，枚举所有可能发生的情况，从而判断当前执行什么动作的胜算最大，这样远浩宇用策略网络输出一个动作。</li>
+<li>AlphaGo每走一步，就要用MCTS做成千上万次模拟，基本思想如下：假设当前有3种可选的动作，每次模拟从三种动作中选出一种，然后将游戏进行到底，从而拿到最终结果。 重复成千上万次模拟，统计每种动作的胜负概率，发现胜率分别是48%、56%、52%。那么 AlphaGo 应当执行第二种动作，因为 它的胜算最大。然而实际做起来还有很多难点需要解决。</li>
+</ol>
+<h2 id="mcts的四个步骤">MCTS的四个步骤</h2>
+<p>MCTS每次模拟都要经历四个步骤：选择（selection），扩展（expansion），估值（evaluation），回溯（backup）</p>
+<h3 id="选择">选择</h3>
+<ol type="1">
+<li><p>观察当前局势，找出符合规则的所有走位中最有胜算的那部分走位。 如何评估走位优劣？综合两方面：</p></li>
+<li><p>看走位的胜率，就是动作价值</p></li>
+<li><p>看策略网络给a的评分</p></li>
+</ol>
+<h3 id="扩展">扩展</h3>
+<p>接下来，ALphaGo需要考虑：对方会怎么走？只能靠猜，使用"推己及人"的方式。使用策略网络模拟对手的策略， 策略网络站在对手角度，根据观测到的棋局，给出多个走位的概率，ALphaGo采样一个动作。 这个时候对手落下的子就是ALphaGo的新状态了。</p>
+<p>上面的所有的走位都不是真实发生的，而是在AlphaGo的脑袋中推演的，</p>
+<p>ALphaGo专门执行推演的模块就叫模拟器（就是环境，牛逼的很，自己构建出与现实平行的虚拟世界），</p>
+<p>在模拟器中，ALphaGo每执行一个动作，模拟器就会返回一个新的状态。</p>
+<p>如何搭建一个好的模拟器？关键在于构建的正确的状态转移函数，如果其跟事实偏离太远，那么模拟器就是一个废物。</p>
+<p>AlphaGo如何构建好的模拟器呢？他利用了围棋的对称性：即我方视角的状态转移，等价于对方视角的真实策略--可以复用已经训练好的策略网络。</p>
+<blockquote>
+<p>有点类似理性市场假设，每个人都是同样聪明的人，市场不存在套利机会。</p>
+</blockquote>
+<p>在围棋场景，搭建模拟器很简单，但是其他场景就没有这么简单了。</p>
+<p>比如机器人、无人车等应用，状态转移的构造需要物理模型，要考虑到力、运动、以及外部世界的干扰。 如果物理模型不够准确，导致状态转移函数偏离事实太远，那么 MCTS的模拟结果就不可靠。</p>
+<h3 id="求值">求值</h3>
+<p>AlphaGo在模拟器中交替落子，直到分出胜负，把结果记为r.但是r只是众多平行世界中的一个，把r就作为评判第一个走位的依据，未免过于随机。</p>
+<p>有没有更加稳定的方法？AlphaGo的解决方案，把r与价值网络对下个状态的评价进行求和，得到了下一个状态的价值。</p>
+<p>在实际实现的时候，AlphaGo在这一步训练了一个更小的策略网络。</p>
+<p>为什么只在求值这一步使用小网络呢？因为这一步是连哥哥策略网络交替落子，并且通常要走一两百步，导致这步成为瓶颈。</p>
+<p>用小的策略网络代替大的策略网络，可以大幅加速MCTS</p>
+<h3 id="回溯">回溯</h3>
+<p>对于下一步的每个状态，通过模拟都能得到多条记录--代表该状态的价值。</p>
+<p>把假想走位的所有状态的所有价值记录，求平均，就能得到假想走位的价值。</p>
+<p>将这个候选走位带回第一步，更新每个走位的分数，选出最高的，进行下一轮模拟</p>
+<p><span class="math display">\[ \operatorname{score}(a) \triangleq Q(a)+\frac{\eta}{1+N(a)} \cdot \pi(a \mid s ; \boldsymbol{\theta}), \quad \forall a \]</span></p>
+<h2 id="决策">决策</h2>
+<p>一轮 选择-&gt;扩展-&gt;扩展-&gt;回溯只是执行了单次模拟。</p>
+<p>实际上做一次决策之前，需要做成千上万次模拟。</p>
+<p>每次模拟时，更新每个候选走位的score，选择最高分score，在模拟器执行。</p>
+<p>经过成千上万次模拟后，最经常被选中的走位，就作为最终的决策依据。</p>
+<p>注意，每次在真实世界走完一步，上一步存的分数都要清零。</p>
+<p>总结下，AlphaGo下棋非常暴力：每走一步，都要在虚拟世界模拟几万局。</p>
+<p>计算量是机器战胜柯洁的秘密武器。</p>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2018/12/sunyq_IEEEAccess2018_HotSpot.pdf">HotSpot-英文paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kj309bzifIv4j80nZbGVZw">HotSpot-中文</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/31/AI/reinforcement_learning/rl4-tradingrobot/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -308,121 +440,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/30/reading_notes/reality/shisanyao-lian/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/30/reading_notes/reality/shisanyao-lian/" class="post-title-link" itemprop="url">十三邀-采访李安</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-30 12:02:44" itemprop="dateCreated datePublished" datetime="2021-05-30T12:02:44+08:00">2021-05-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-31 08:46:04" itemprop="dateModified" datetime="2021-05-31T08:46:04+08:00">2021-05-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>看了昨天看十三邀采访李安那一期，关于如何面对恐惧，作为旁观者如何深入一个领域，李安分享了一些自己的经验</p>
-<p>这些也是我比较困惑的地方，有一些触动，但是要完全解答我的困惑，还得考自己去实践吧</p>
-</blockquote>
-<h3 id="勤能补拙的旁观者">勤能补拙的旁观者</h3>
-<p>许知远：你说你总是一个旁观者，旁观者可以进入不同的领域，通过研究理解事物，但它的劣势是什么？</p>
-<p>李安：劣势就是不够地道，你只能用将心比心和勤快去弥补；另一个弥补就是电影不是我一个人拍的，这么多人参与，我总是可以跟他们商量，看看对不对，试试风向。</p>
-<p>电影总是人家看嘛，只要你够勤快，天分到，你合作的伙伴愿意投入，入木三分是做得到的。</p>
-<p>局外人的好处是看得比较准，而且一看就能看到； 局内人的话，你的成长经验、成见都会产生影响。</p>
-<p>我觉得让局外人去做一个东西比较简单，但局内人的话，你要把自己的肉拿出来拧的话，有更大的难度。</p>
-<p>事不关己，关己则乱。</p>
-<p>chiechie: 我在研究一个新领域时，也经常会经常怀疑自己，所以要相信勤能补拙，做不到100分，80分总是可以的</p>
-<h3 id="面对不安假装我是谁">面对不安"假装我是谁"</h3>
-<p>许知远：被上了这么多次不同的“身”，面对不安全感、恐惧、挣扎，然后走出来，你觉得人变得更安全了吗？</p>
-<p>李安：我想我们的成长不必靠电影去修炼，你可以用别的方式。我觉得我可能很像演员吧，年轻的时候我想过做演员，做不成，英文不会讲，就做了导演，所以我跟演员扮演角色的感觉很像。我记得梁朝伟跟我讲了一句话，他说“我们做演员很痛苦”，当然，好的演员才会这样讲。因为我每天都在说服他相信一些东西，他自己也相信了，然后就变成了那个人。拍完以后，又要说服自己不要去相信那个东西，要走出来，好累。而我可能就是用电影来扮演不同的角色吧。我觉得就像《色戒》里的主题一样，<strong>透过假装一件事情，你才会有胆量去触摸真实</strong>。<strong>我想人生倒是不可能没有一些好奇心，我们有自己的课业要学，这一辈子有很多东西要学，而这是一个很好的学习方式——“假装是谁”</strong>。</p>
-<p>chiechie： 对于局内人，比如我工作中，要把我的亲身经验拿出来，反复的批判自己，让我感觉很痛苦，但是透过假装一件事情--假装我是谁，做产品的时候可以更有胆量去触摸真实。</p>
-<h3 id="人生就像剥洋葱">人生就像剥洋葱</h3>
-<p>李安：我觉得我也需要去摸自己不同的面向。</p>
-<p>根据成长经验，你到了某一个面向，又到了某一个时间，你会对其他的主题产生兴趣，会遭遇一个困境，需要去触摸它，如果不去触摸的话，它会骚扰不休的。</p>
-<p><strong>首先是要面对，然后去处理它，去处理它以后就可以把它 rationalize（理性化）了，你就定型了</strong>。</p>
-<p>可是一个议题处理以后，你又会有新的会骚扰你的东西，你又要去面对它、处理它，然后把它理性化，<strong>这就跟剥洋葱一样，我想人生是剥不尽的</strong>。</p>
-<h3 id="摸着石头过河">摸着石头过河</h3>
-<p>许知远：那你现在最想剥的是哪块“洋葱”？你最想处理的是哪个主题？</p>
-<p>李安：我不晓得，看下部电影吧。我可能会处理不同议题，也可能是用不同的角度来看同样的事情，这都很难讲，我不是天天思索这种问题的人，我不是搞哲学的。对，哲学有这个需要，它一定要有道理，而<strong>我是拍出来再制作道理</strong>。</p>
-<p>我相信道家的玄之又玄，因为真的就是这样，摸不透，<strong>我只能在我可以触摸的地方去感受它</strong>。有时候触动别人的心的时候，也是有感应的，毕竟我们不是单独的存在嘛；感应多了有时候也有烦的时候，也有想独自一人的时候，<strong>人生也没有什么太大需要解答的东西，摸摸石头过河</strong>。</p>
-<h3 id="命运的安排">命运的安排</h3>
-<p>许知远：如果当时没有去美国，留在台湾，会是什么样？</p>
-<p>李安：不晓得，我的命就是那个时候该离开。我说年纪到了，跟我的朋友冯光远一起去了，后来我们在纽约的人，大部分都回了台湾，很多人到了北京和上海，留在纽约的其实已经很少了。我那时候其实也想回来，可是刚好申请了绿卡，因为美国有一个经纪人签了我。学校刚毕业，太太还在读书，小孩生了，于是就在那边耗着。申请绿卡又好几年不能离开，也不能回台湾找工作，就这么耗着。说真的，我在念书的时候，从来没有想过可能在美国拍电影，这个事情在我脑子还不构成一个想象，连“梦想”都还没有。后来我得了台湾的一个奖，非拍那个片子不可，故事写的是美国，我才开始。后来那个片子又得奖了，一得国际奖，我又进了美国的艺术院线。</p>
-<p>这也不是我设计出来的，好像是命运规定我这么走。现在好像<strong>东西两方我都沾到，有时候也会落到“缝隙”里面</strong>，这种经验也不少。</p>
-<h3 id="失败的经历">失败的经历</h3>
-<p>许知远：落到“缝隙”里是什么感觉？怎样描述这个“缝隙”？</p>
-<p>李安：有一种黑暗无助的感觉。我不是每部电影都那么卖座成功的，我也受过好多打击，刚开始的时候也吃过很多苦头。</p>
-<p>许知远：印象最深的打击是什么？</p>
-<p>李安：不一而足啦，片子不卖座，没人看。但我觉得那片子也挺好，跟我成功的片子一样，<strong>我一样的拍，觉得差不多，可为什么别人不看呢</strong>？</p>
-<p>电影有时真的是<strong>人算不如天算</strong>。</p>
-<p>有的电影中西方都有市场，比如《断背山》这样的，突然大家都喜欢上了，这是没有国界的，我也不晓得为什么，我让一个台湾人看，他为什么会感动，我真的是不晓得。</p>
-<p>我第一次受打击其实是拍完《冰风暴》，真没人看，《绿巨人》也是受打击的。</p>
-<p>其实我受到的打击，我自己也不太知道，即便大约知道是什么，我也不敢肯定，所以会有一种惶恐的感觉，我也不是习惯受打击的。</p>
-<h3 id="参考">参考</h3>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/349695818_563941">十三邀-许知远采访李安-文字稿</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -492,7 +509,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">161</span>
+          <span class="site-state-item-count">162</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -505,7 +522,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">183</span>
+        <span class="site-state-item-count">187</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

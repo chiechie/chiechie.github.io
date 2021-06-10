@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/24/reading_notes/zhexue/bayes_zhexue/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/28/reading_notes/computer/pred-sparse-ts/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/24/reading_notes/zhexue/bayes_zhexue/" class="post-title-link" itemprop="url">谈一谈概率哲学的贝叶斯模型</a>
+            <a href="/2021/04/28/reading_notes/computer/pred-sparse-ts/" class="post-title-link" itemprop="url">对稀疏序列进行预测</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,116 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-24 09:03:28" itemprop="dateCreated datePublished" datetime="2021-04-24T09:03:28+08:00">2021-04-24</time>
+              <time title="创建时间：2021-04-28 09:33:02" itemprop="dateCreated datePublished" datetime="2021-04-28T09:33:02+08:00">2021-04-28</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
+                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="背景和问题描述">背景和问题描述</h2>
+<ul>
+<li>我有一个time-series dataset (daily frequency) ，代表某个顾客购买某个商品的数量，如下:
+<ul>
+<li>[0,0,0,0,24,0,0,0,0,0,0,0,4,0,0,0,0,17,0,0,0,0,9,0,...]</li>
+</ul></li>
+<li>每个数据表示 某一天商品的销量</li>
+<li>已有的算法如arima，holtwinter只能对连续型 和 光滑型数据做预测，不适合现在的稀疏数据。</li>
+<li>总结下，target 非负&amp;稀疏&amp;整数，有什么技术可以做预测吗？</li>
+</ul>
+<h2 id="方案1将天的数据聚合成周">方案1:将天的数据聚合成周：</h2>
+<p>if you don't need daily resolution in your predictions, perhaps by aggregating to weekly you will have an easier time series to forecast.</p>
+<h2 id="方案2对两个事件的时间间隔-和-数值-进行建模">方案2:对两个事件的时间间隔 和 数值 进行建模</h2>
+<pre><code>- 假设数据是由两个随机过程驱动生成
+    - 1  a distribution over time intervals, （poisson？）
+    - 2 a distribution over purchase amounts. （gaussian？）</code></pre>
+<h2 id="方案3对用户的库存建模">方案3:对用户的库存建模</h2>
+<p>假设用户的库存是随事件衰减的，到达某个阈值就开始考虑购入，那么可以用手头的购买数据来拟合已经有的曲线（注意 消耗速率和threshold都有可能随时间变化）</p>
+<h2 id="方案4-建模成一个state-space模型state是时间间隔space是取值">方案4-建模成一个state-space模型，state是时间间隔，space是取值</h2>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbO8qrMgQNa.png?alt=media&amp;token=4078557f-5b4f-4b43-8fed-1eed975a0d80" /></p>
+<h2 id="chiechies-refomulation">chiechie's refomulation</h2>
+<p>突然想到，事件序列可以和 时间序列 重新定义到 一个框架下建模： - 事件序列 相当于 是中间有缺失值 或者 零值的 时间序列， - 一种建模方式是，按照滑动事件窗口的方式，将最近w个事件放入一个样本，特征除了event的值，还有相邻两个event的时间间隔 - 还有一种建模方式，缺失时刻补0，然后重新聚合，然后取时间窗口， - 两种方式都是把序列数据 转换为 表数据。</p>
+<h2 id="先转换--cusum-不仅适合sparse信号还适合固定值的信号">先转换--&gt;cusum, 不仅适合sparse信号，还适合固定值的信号：</h2>
+<ul>
+<li>You might be getting caught up on the sparsity characteristic... If you take a cumulative sum then it's just a plain old monotonic time series!</li>
+<li>https://www.reddit.com/r/datascience/comments/a63aq9/sparse_time_series_prediction/</li>
+</ul>
+<h2 id="参考">参考</h2>
+<p>1.<a target="_blank" rel="noopener" href="https://datascience.stackexchange.com/questions/17341/forecasting-non-negative-sparse-time-series-data">ts_prediction-stackexchange</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/27/reading_notes/computer/python_regrex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/27/reading_notes/computer/python_regrex/" class="post-title-link" itemprop="url">使用python进行正则操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-27 10:51:56" itemprop="dateCreated datePublished" datetime="2021-04-27T10:51:56+08:00">2021-04-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -220,174 +322,25 @@
 
       
           <blockquote>
-<p>自然法则（a law of nature）：根据简单性（simplicity）和信息量（informativeness）的平衡，我们从众多不同的科学理论的系统中选出最好的一套系统；如果一个自然规律（regularity）是这套系统内的定律，那么这个规律就是自然法则。 有些自然法则是确定性的（deterministic）--比如说牛顿定律，而有些则是概率的（probabilistic）--比如说量子力学中的玻恩定理（Born Rule）。</p>
+<p>正则表达式一直都迷糊的很，现在要做日志聚类了，看看吧</p>
 </blockquote>
-<h2 id="两种概率学派">两种概率学派</h2>
-<ol type="1">
-<li>概率有两种：主观概率和客观概率。主观概率的代表是贝叶斯学派，客观概率的代表有：原始派（Primitivism），频率派（Frequentism）。</li>
-<li>主观概率派认为，概率不是关于物理系统的，而是关于物理系统和我们之间的关系。他们并且用信念的强度（degrees of partial belief）来定义概率。</li>
-<li>客观概率派认为，概率是关于客观世界的，关于物理系统的，独立于人们对世界的信念。客观概率的代表有：原始派（Primitivism），频率派（Frequentism）。</li>
-<li>原始派认为：概率是单个物体或者系统的原始的属性，既可能是确定的，也可能是随机的，但是不管如何，都是由事物本身决定的。天体运动规律非常确定，符合牛顿定律，微观粒子做布朗运动。</li>
-<li>频率派：频率派直接将概率和频率化作等号。频率派下最被看好的一个分支：系统派（The Best-System View）/休谟式解释（the Humean Account）。</li>
-<li>系统派将概率和自然法则联系起来。对系统派来说，概率性的系统和确定性的系统没有区别，没有更深层次的属性可以来解释（原始派认为有，就是事物本身的属性）。系统派认为，概率法则和确定性法则，只不过是我们描述，归纳的不同方式罢了，本质都是在寻求简洁性和信息量的trade-off.</li>
-</ol>
+<h2 id="re.compile-和-split">re.compile 和 split</h2>
+<p><img src="max-common-subsequence/img.png" alt="img.png" /> re.compile: 将字符串的正则表达式，转换为pattern对象。</p>
+<p>pattern对象，有点像re的中间数据对象，它有很多方法，like</p>
+<ul>
+<li>Object.split</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; some_text &#x3D; &#39;a,b,,,,c d&#39;</span><br><span class="line">&gt;&gt;&gt; reObj &#x3D; re.compile(&#39;[, ]+&#39;)</span><br><span class="line">&gt;&gt;&gt; reObj.split(some_text)</span><br><span class="line">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;]</span><br></pre></td></tr></table></figure>
+<p>也可以不用先转换为pattern对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import re</span><br><span class="line">&gt;&gt;&gt; some_text &#x3D; &#39;a,b,,,,c d&#39;</span><br><span class="line">&gt;&gt;&gt; re.split(&#39;[, ]+&#39;,some_text)</span><br><span class="line">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;]</span><br></pre></td></tr></table></figure>
+<h2 id="re.sub">re.sub</h2>
+<p>re.sub：将某些固定的模式，替换为指定的格式。 比如 将连续空格转换为"-"</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import re</span><br><span class="line">&gt;&gt;&gt; some_text &#x3D; &#39;a,  b,,,  ,c    d&#39;</span><br><span class="line">&gt;&gt;&gt; re.sub(r&#39;\s+&#39;, &quot;-&quot;, some_text)</span><br><span class="line">a,-b,,,-,c-d</span><br></pre></td></tr></table></figure>
+<h2 id="str.strip">str.strip</h2>
+<p>去除首字符 和 尾字符</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/26895086/answer/175050065">概率（Probability）的本质是什么？-知乎</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20318246/answer/22309277">因果关系是否存在？</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/22/AI/timeseries/gluon-ts_1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/22/AI/timeseries/gluon-ts_1/" class="post-title-link" itemprop="url">使用gluon-ts做时序预测(1)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-22 17:35:59" itemprop="dateCreated datePublished" datetime="2021-04-22T17:35:59+08:00">2021-04-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>看一下amazon官方对DeepAR的实现</p>
-</blockquote>
-<h3 id="实验数据">实验数据</h3>
-<p>数据： <a target="_blank" rel="noopener" href="https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014">electricity数据集--Electricity dataset from UCI</a>： , 2011 ~2014期间，370 个 家庭的用电量 ，频率为小时 train/test：2014年9月第一周 作为test，之前的所有数据作为train:</p>
-<ul>
-<li>窗口长度(window_size)：192（8天），其中</li>
-<li>conditioning range：168（前7天）</li>
-<li>prediction range：24（第8天）</li>
-<li>stride_size: 24 hour，滑窗步长</li>
-<li>input_size： window_size-stride_size，14</li>
-</ul>
-<h2 id="问题">问题</h2>
-<ul>
-<li>gluon-ts里面将输入做对数处理效果会不会好一点？
-<ul>
-<li>不用，mxnet已经做了， 并且额外做预处理，可能还会带来负面影响，
-<ul>
-<li>loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，</li>
-</ul></li>
-<li>参考论文--context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。</li>
-</ul></li>
-<li>为什么pytorch的训练要7个小时？mxnet训练只要10min？
-<ul>
-<li>主要在样本采样这块</li>
-</ul></li>
-<li>自己能不用tensorflow复现mxnet的效果？
-<ul>
-<li>对比参数量，准确率，计算时间，内存消耗</li>
-</ul></li>
-<li>为什DeepAR和DeepFator的loss scale 差这么大? loss的含义都不一样</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># deepAR</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss</span>(<span class="params">self, x: Tensor</span>) -&gt; Tensor:</span></span><br><span class="line">	<span class="keyword">return</span> -self.log_prob(x)</span><br><span class="line"><span class="comment"># deepFator</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">negative_normal_likelihood</span>(<span class="params">self, F, y, mu, sigma</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (F.log(sigma) + <span class="number">0.5</span> * math.log(<span class="number">2</span> * math.pi)+ <span class="number">0.5</span> * F.square((y - mu) / sigma))</span><br></pre></td></tr></table></figure>
-<ul>
-<li>对不同曲线预测的时候，为什么有的曲线效果很， 好有的曲线效果很差？
-<ul>
-<li>deepAR会针对不同曲线，给loss 赋予不同的权重：loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的。</li>
-</ul></li>
-</ul>
-<h2 id="算法前期调研中的一些小插曲">算法前期调研中的一些小插曲</h2>
-<p>网上找到了pytorch版本的deepAR版，但是很慢</p>
-<ul>
-<li>Student： 训练过程很慢 要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？</li>
-<li>Teacher： 看了amazon已经将deepAR做了产品化，按照算法开发的流程肯定经历了效率优化的，并且deepAR的文章发于2017年4月，到目前为止amazon应该做了多次迭代的，所以去查一下近3年的amazon deepAR 相关的资料，看有没有开源的稳定的算法代码。</li>
-<li>Student：找到了--基于MXNET的gluon-ts（于2019年6月发表），mxnet在electricty上的训练和预测时间大概是10min左右</li>
-<li>Teacher：很好，接下来可以考虑更多的产品化方面的事情了，结合运维场景；另外注意到CNN-QR的训练效率也很不错，把这几个算法的准确率对比看一下</li>
-<li>Student：整体上准确率 CNN-QR略逊于DeepAR，但是考虑到计算效率，两者还是不相上下。
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUD6-nafIsi.png?alt=media&amp;token=a359d00d-bde2-41b2-bb96-d9222cb4514c" /></li>
-</ul></li>
-<li>Teacher：下一步，试着CNN-QR的拓展,DeepAR用于异常检测 的效果也测试下</li>
-<li>Student：使用数据平台的两台主机的cpu指标测试，发现cpu的效果还不错，体现在 不同类型的曲线，他们的方差趋势都预测的很准。
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FxofMTtcgaV.png?alt=media&amp;token=26cd83f2-717e-4c9c-8a93-da589dcfe63d" /></li>
-</ul></li>
-<li>Teacher：使用有异常标注的数据测试具体的指标，两种都测下--批量预测 和 实时预测</li>
-<li>Student：在获取数据阶段踩了一些坑，因为维度太多，全部数据维度都要 会导致拉数据接口快挂了</li>
-<li>Teacher：找出其中最重要的维度（重要度 即记录的条数 或者 指标求和）</li>
-<li>Student：从5w个维度过滤出来了100个维度，剩下的大部分维度怎么弄呢？</li>
-<li>Teacher：先管好这个100个维度，跑一跑模型，剩下的数据质量差可以暂时不监控。</li>
-<li>Student：这批数据有个特点--不同曲线形态模式很不一样，我怀疑1个模型很容易学混，接下来就证实了这一点（100个曲线上面的图，待补充）<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHF_Qc1aO1g.png?alt=media&amp;token=3591cf24-bfdf-44b7-894b-ba03652522f1" /></li>
-<li>Teacher：尝试加入feat_static_cat特征，来区分不同曲线。</li>
-<li>Student：有些许变化，但是改进还不太明显。另外在做实验过程中，发现几个优化的方向
-<ul>
-<li><strong>epoch</strong>： 从 5 到 50，带来了大量的提升</li>
-<li><strong>lstm</strong>的网络结构参数：layers从2到1，units从40到20，准确率有部分提升</li>
-</ul></li>
-<li>Teacher：因为样本较少（3k个训练样本）更适合用简单的模型</li>
-<li>Student：除了直接使用deepar的默认scale以及概率分布的参数，还尝试了另外一个方法： 因为cpu使用率本身是0～1，将数据预处理（除以100）到0～1 之间后跑，但是直接跑模型会报错， 做了以下设置才能跑：
-<ul>
-<li>scale设置为False</li>
-<li>value 为边界点（0或者1）时，加入扰动项</li>
-<li>输出的概率分布设置为beta分布 输出的上下界，非常符合比率型设定（上界不会超过1，下界不会低于0），但是就是准确率不高，一看就是学混了（移花接木，局部的模式 太弱了）</li>
-</ul></li>
-<li>出bug了，排查问题</li>
-</ul>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/zhykoties/TimeSeries">pytorch版本</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.programiz.com/python-programming/regex">怎么写正则表达式</a></li>
 </ol>
 
       
@@ -407,7 +360,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/31/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><span class="page-number current">32</span><a class="page-number" href="/page/33/">33</a><span class="space">&hellip;</span><a class="page-number" href="/page/81/">81</a><a class="extend next" rel="next" href="/page/33/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/31/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><span class="page-number current">32</span><a class="page-number" href="/page/33/">33</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><a class="extend next" rel="next" href="/page/33/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -473,20 +426,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">187</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

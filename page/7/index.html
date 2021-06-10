@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/24/reading_notes/computer/visualize-graph/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/31/AI/reinforcement_learning/rl4-tradingrobot/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/24/reading_notes/computer/visualize-graph/" class="post-title-link" itemprop="url">风控领域的图挖掘场景</a>
+            <a href="/2021/05/31/AI/reinforcement_learning/rl4-tradingrobot/" class="post-title-link" itemprop="url">强化学习4 使用gym构建股票交易机器人</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,161 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-24 09:08:21" itemprop="dateCreated datePublished" datetime="2021-05-24T09:08:21+08:00">2021-05-24</time>
+              <time title="创建时间：2021-05-31 15:01:49" itemprop="dateCreated datePublished" datetime="2021-05-31T15:01:49+08:00">2021-05-31</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
+                <time title="修改时间：2021-06-03 16:58:37" itemprop="dateModified" datetime="2021-06-03T16:58:37+08:00">2021-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>现在进行强化学习第2个实践项目--构建交易机器人，</p>
+</blockquote>
+<h2 id="思路">思路</h2>
+<p>老路子，先构建environment 再构建agent：</p>
+<ul>
+<li>environment需要定义state，action类型，以及step和render方法。</li>
+<li>agent需要定义策略函数，即每个state下最优action</li>
+</ul>
+<p>下面从0到构建一个,</p>
+<p>为了构建environment，先简化问题:</p>
+<ul>
+<li>state: 过去3天close/open/high/low/volume5个指标的数据, shape = &lt;3, 5&gt;</li>
+<li>action: 买/卖/持仓 + 数量(基于目前仓位的百分比), shape = &lt;2, &gt; ,</li>
+<li>step方法返回
+<ul>
+<li>state2: 第二天的close/open/high/low/volume5个指标的数据, shape = &lt;3, 5&gt;</li>
+<li>reward：变动仓位 * 变化的股价</li>
+</ul></li>
+</ul>
+<p>为了构建agent:</p>
+<ul>
+<li>随机策略</li>
+<li>Q-table不行，因为state不连续了</li>
+<li>naive策略：趋势策略，短期有上升趋势就买入，否则卖出。</li>
+</ul>
+<h2 id="实施">实施</h2>
+<h3 id="step-1-自定义一个environment">step 1 自定义一个environment</h3>
+<p>自定义一个environment，需要继承gym的标准环境类--gym.Env, 并实现类的关键方法，有step和reset</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomEnv</span>(<span class="params">gym.Env</span>):</span></span><br><span class="line">    metadata = &#123;<span class="string">&#x27;render.modes&#x27;</span>: [<span class="string">&#x27;human&#x27;</span>]&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, arg1, arg2, ...</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(CustomEnv, self).__init__()</span><br><span class="line">        self.action_space = <span class="literal">None</span></span><br><span class="line">        self.observation_space = <span class="literal">None</span></span><br><span class="line">                                       </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">step</span>(<span class="params">self, action</span>):</span>                                               </span><br><span class="line">        <span class="keyword">return</span> observation, reward, done, info</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reset</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> observation  <span class="comment"># reward, done, info can&#x27;t be included</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">render</span>(<span class="params">self, mode=<span class="string">&#x27;human&#x27;</span></span>):</span></span><br><span class="line">                                       </span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close</span> (<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> </span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="step1-1-定义环境类的构造函数">step1-1: 定义环境类的构造函数</h4>
+<p>在构造函数中，定义state空间，和 action空间 state是连续的，action因为涉及到具体买卖多少份额，所以也有部分是连续的， 可以用gyn.space.Box来定义，需要指定上下界。 此外，为了简化问题，直接把一个df当作成员给这个子类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StockEnv</span>(<span class="params">gym.Env</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, df</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(StockEnv, self).__init__()</span><br><span class="line">        self.action_space = spaces.Box(low=-<span class="number">1</span>, high=<span class="number">1</span>,shape=(<span class="number">1</span>, ), dtype=np.float16)</span><br><span class="line">        self.observation_space = spaces.Box(low=<span class="number">0</span>, high=<span class="number">1</span>, shape=(<span class="number">3</span>, <span class="number">5</span>), dtype=np.float16)</span><br><span class="line">        self.df = df</span><br></pre></td></tr></table></figure>
+<h4 id="step1-2-定义环境类的reset方法">step1-2: 定义环境类的reset方法</h4>
+<p>定义环境类的reset方法，reset用来重置一局游戏。需要返回游戏的初始状态，收益为0， 计算收益的几个变量，账户净值，持股数量，余额，以及游戏开始的时间戳（这个可以随机设置的）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reset</span>(<span class="params">self</span>):</span></span><br><span class="line">    self.net_worth = <span class="number">10000</span></span><br><span class="line">    self.share_hold = <span class="number">0</span></span><br><span class="line">    self.current_step = <span class="number">2</span></span><br><span class="line">    self.cash = <span class="number">10000</span></span><br><span class="line">    observation = self.df.loc[self.current_step - WINDOW_SIZE + <span class="number">1</span>: self.current_step,  [<span class="string">&quot;open&quot;</span>, <span class="string">&quot;close&quot;</span>, <span class="string">&quot;high&quot;</span>, <span class="string">&quot;low&quot;</span>, <span class="string">&quot;volume&quot;</span>]]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> observation  <span class="comment"># reward, done, info can&#x27;t be included</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="step1-3-定义环境类的step方法">step1-3: 定义环境类的step方法</h4>
+<p>定义step方法，step是标准环境类的标准方法，输入输出的格式是固定的，输入一个state，输出下一个state, reward, done, info。</p>
+<p>这里涉及到交易的常识，补充下几个概念：</p>
+<ul>
+<li>net value：账户净值，也就是说账户当前现金+股票折现价值</li>
+<li>cash：这里叫现金是为了方便理解。专业的叫法是balance。</li>
+<li>action amount：一个百分比，基于当前账户余额（balance）可以买卖的比例。</li>
+<li>done：什么时候一轮游戏结束？时间到了或者爆仓了，即net value &lt; 0了</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">step</span>(<span class="params">self, action</span>):</span></span><br><span class="line">    current_price = self.df.loc[self.current_step, <span class="string">&quot;close&quot;</span>]</span><br><span class="line">    <span class="comment"># action_type, action_percent = action</span></span><br><span class="line">    <span class="comment"># action = action[0]</span></span><br><span class="line">    action_amount = <span class="built_in">abs</span>(action)</span><br><span class="line">    buy = action &gt; <span class="number">0</span></span><br><span class="line">    sell = action &lt; <span class="number">0</span></span><br><span class="line">    <span class="comment"># 0表示买     </span></span><br><span class="line">    action_amount = self.cash * action_amount / current_price</span><br><span class="line">    reward = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> sell <span class="keyword">and</span> self.share_hold &lt; action_amount:</span><br><span class="line">        <span class="comment"># 不允许做空</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">elif</span> buy:</span><br><span class="line">        self.share_hold += action_amount</span><br><span class="line">        self.cash -= action_amount * current_price</span><br><span class="line">        reward = (self.df.loc[self.current_step + <span class="number">1</span>, <span class="string">&quot;close&quot;</span>] - current_price) * action_amount</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        self.share_hold -= action_amount</span><br><span class="line">        self.cash += action_amount *  current_price</span><br><span class="line">        reward = - (self.df.loc[self.current_step + <span class="number">1</span>, <span class="string">&quot;close&quot;</span>] - current_price) * action_amount</span><br><span class="line"></span><br><span class="line">    self.current_step += <span class="number">1</span></span><br><span class="line">    observation = self._next_observation()</span><br><span class="line">    next_price = self.df.loc[self.current_step, <span class="string">&quot;close&quot;</span>]</span><br><span class="line">                                   </span><br><span class="line">    self.net_worth = self.cash + self.share_hold * next_price</span><br><span class="line">    done = self.net_worth &lt;= <span class="number">0.01</span></span><br><span class="line">                                         </span><br><span class="line">                                           </span><br><span class="line">    <span class="keyword">return</span> observation, reward, done, &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="step-2--定义策略policy">step 2- 定义策略policy</h3>
+<h4 id="step-2-1-定义一个静态策略">step 2-1 定义一个静态策略</h4>
+<p>这里先用一个简单的趋势策略作为baseline，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def pi(obs):</span><br><span class="line">    close_list &#x3D; obs[&quot;close&quot;].values</span><br><span class="line">    ma &#x3D; close_list[:-1].mean()</span><br><span class="line">    price &#x3D;  close_list[-1]</span><br><span class="line"></span><br><span class="line">    if price &#x2F; ma &gt; 1.02:</span><br><span class="line">        action &#x3D; 0.2</span><br><span class="line">    elif price &#x2F; ma &lt; 0.98:</span><br><span class="line">        action &#x3D; -0.2</span><br><span class="line">    else:</span><br><span class="line">        action &#x3D; 0</span><br><span class="line">    return action</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+<h4 id="step-2-2-使用ppo算法构建策略">step 2-2 使用PPO算法构建策略</h4>
+<p>PPO（Proximal Policy Optimization）算法结合了A2C和TRPO的idea，主要思路是， 每次更新策略时，新的策略不能离旧的策略太远，具体的做法是对梯度做截断（clipping）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">env_PPO = DummyVecEnv([<span class="keyword">lambda</span>: StockEnv(df)])</span><br><span class="line">model = PPO2(MlpPolicy, env_PPO, verbose=<span class="number">0</span>)</span><br><span class="line">model.learn(total_timesteps=<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="step2-3-对比">step2-3 对比</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">&#x27;./stockdata/train/sh.600004.白云机场.csv&#x27;</span>)</span><br><span class="line">df = df.sort_values(<span class="string">&#x27;date&#x27;</span>)</span><br><span class="line">df[<span class="string">&quot;volume&quot;</span>] = df[<span class="string">&quot;volume&quot;</span>].<span class="built_in">map</span>(np.log)</span><br><span class="line"></span><br><span class="line">env_PPO = DummyVecEnv([<span class="keyword">lambda</span>: StockEnv(df)])</span><br><span class="line">env_basis = StockEnv(df)</span><br><span class="line">env_PPO1 = StockEnv(df)</span><br><span class="line"></span><br><span class="line">model = PPO2(MlpPolicy, env_PPO, verbose=<span class="number">0</span>)</span><br><span class="line">model.learn(total_timesteps=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">obs_PPO1 = env_PPO1.reset()</span><br><span class="line">obs_basis = env_basis.reset()</span><br><span class="line">env_PPO1.current_step = env_basis.current_step</span><br><span class="line">obs_PPO1 = obs_basis</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">200</span>):</span><br><span class="line">    action_PPO1, _ = model.predict(obs_PPO1)</span><br><span class="line">    action_basis = pi(obs_basis)</span><br><span class="line">    <span class="comment"># print(env_PPO1.current_step, env_basis.current_step)</span></span><br><span class="line">    obs_PPO, rewards_PPO, done_PPO, info_PPO = env_PPO1.step(action_PPO1)</span><br><span class="line">    obs_basis, rewards_basis, done_basis, info_basis = env_basis.step(action_basis)</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">20</span> ==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">&quot;****&quot;</span>*<span class="number">5</span>, <span class="string">&quot;PPO&quot;</span>, <span class="string">&quot;***&quot;</span>*<span class="number">5</span>)</span><br><span class="line">        env_PPO1.render()</span><br><span class="line">        print(<span class="string">&quot;****&quot;</span>*<span class="number">5</span>,<span class="string">&quot;Basis&quot;</span>,<span class="string">&quot;***&quot;</span>*<span class="number">5</span>)</span><br><span class="line">        env_basis.render()</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+<p>还凑活吧，能用</p>
+<figure>
+<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<h2 id="总结">总结</h2>
+<ol type="1">
+<li>牛刀初试，强化学习实际效果不算离谱，凑活能用。</li>
+<li>现有的强化学习算法框架比较成熟了, like stable-baselines，接口简单易用。</li>
+<li>股票交易的Environment，github上还没有找到比较好用的工具，这个只能自己靠自己写了。上面写的一个简单的env，没有考虑交易费用/允许做空等情况，还要进一步细化。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/quantML/blob/master/gym_rl.py">quantML-github-chiechie</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hill-a/stable-baselines">强化学习算法框架-stable-baselines</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.oreilly.com/radar/introduction-to-reinforcement-learning-and-openai-gym/">强化学习环境框架-gym</a></li>
+<li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/creating-a-custom-openai-gym-environment-for-stock-trading-be532be3910e">构建交易环境-medium</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshub/RL-Stock">构建交易环境和交易策略-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=5P7I-xPq8u8">PPO-youtube</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/30/reading_notes/reality/shisanyao-lian/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/30/reading_notes/reality/shisanyao-lian/" class="post-title-link" itemprop="url">十三邀-采访李安</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-30 12:02:44" itemprop="dateCreated datePublished" datetime="2021-05-30T12:02:44+08:00">2021-05-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-31 08:46:04" itemprop="dateModified" datetime="2021-05-31T08:46:04+08:00">2021-05-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,146 +366,47 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="几个场景">几个场景</h1>
-<h2 id="攻防对抗">攻防对抗</h2>
-<p>一般都会有下述风控规则：</p>
-<ul>
-<li>7天内在注册账户数超过**的设备号</li>
-<li>1天内某IP关联超过xx个账户</li>
-</ul>
-<p>虽然规则简单，但由于实时性和贴近业务的特点，可以拦截不少黑产, 但也会造成一定误杀，特别是IP类的规则。</p>
-<p>同时因为风控是攻防对抗的过程，黑产也会升级，比如通过伪造设备、LBS、频繁更换IP等手段尽可能伪装成一个真人，隐蔽聚集性等显性特征，绕过风控规则。</p>
-<p>相应风控技术也在进化，如使用设备指纹、IP画像、验证码对抗等。</p>
-<h2 id="基于关联关系识别团伙">基于关联关系识别团伙</h2>
-<p>可以定义设备-账户的Graph如下：</p>
-<ul>
-<li>节点：账户 + 设备</li>
-<li>边：近xx天账户与设备出现在同一事件中，则它们之间有一条边。</li>
-</ul>
-<p>识别方法：</p>
-<ul>
-<li>无监督方法：通过「连通子图算法」识别出一个个连通的社区，如果社区规模较大，可能背后业务含义是黑产控制一批账户。定义社区规模为score，通过调节阈值来控制误杀、召回。</li>
-<li>有监督方法-传统：等价为节点分类问题，通过提取节点业务特征、拓扑特征、所属社区特征，训练一个分类器去预测。</li>
-<li>有监督方法-图神经网络：将节点业务特征X与网络拓扑结构A作为输入学习函数，用于对未知数据的预测.相比规则来说，此类方法不仅用到了更复杂的关系，同时也考虑了节点业务和拓扑特征。故防控能力会更强一些。</li>
-</ul>
-<h2 id="基于相似度识别团伙">基于相似度识别团伙</h2>
-<p>如果黑产成功避开设备指纹、聚集性规则等风控措施，把自己伪装成一个真人，如何检测？——只要作案了，总会留下蛛丝马迹。</p>
-<ul>
-<li>垃圾文本：比如留下了垃圾文本，那么利用文本之间相似度（Jaccard、semi-hash）构建账户之间相似关系，然后使用图分割+连通子图查找技术识别，具体可<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/23385044">参考这里</a></li>
-<li>行为相似度：facebook针对刷量的行为，通过计算账户之间行为度来构建graph，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/58334765">详见这里</a>.此类方法最大问题是, 两两节点相似度计算性能问题。一般会做下约束，如限制在某个事件场景下、限制在某段事件内以及如何分段计算+合并，并且往往是通过spark分布式计算。</li>
-</ul>
-<h2 id="基于共享特征识别团伙">基于共享特征识别团伙</h2>
-<p>因为黑产控制大量的账户通过软件进行攻击，而不是手工操作，故这些账户某些共同属性上会有Pattern。</p>
-<p>大概的解题思路是“搜集证据”，将共享的某特征/字段作为，判断证据强弱，如共享设备是强证据，可以仅凭此条直接断案。 但是像共用某品牌手机是弱证据，需要多个弱证据结合一起断案。</p>
-<p>再抽象一点是有点像「层次社区划分算法」：</p>
+          <blockquote>
+<p>看了昨天看十三邀采访李安那一期，关于如何面对恐惧，作为旁观者如何深入一个领域，李安分享了一些自己的经验</p>
+<p>这些也是我比较困惑的地方，有一些触动，但是要完全解答我的困惑，还得考自己去实践吧</p>
+</blockquote>
+<h3 id="勤能补拙的旁观者">勤能补拙的旁观者</h3>
+<p>许知远：你说你总是一个旁观者，旁观者可以进入不同的领域，通过研究理解事物，但它的劣势是什么？</p>
+<p>李安：劣势就是不够地道，你只能用将心比心和勤快去弥补；另一个弥补就是电影不是我一个人拍的，这么多人参与，我总是可以跟他们商量，看看对不对，试试风向。</p>
+<p>电影总是人家看嘛，只要你够勤快，天分到，你合作的伙伴愿意投入，入木三分是做得到的。</p>
+<p>局外人的好处是看得比较准，而且一看就能看到； 局内人的话，你的成长经验、成见都会产生影响。</p>
+<p>我觉得让局外人去做一个东西比较简单，但局内人的话，你要把自己的肉拿出来拧的话，有更大的难度。</p>
+<p>事不关己，关己则乱。</p>
+<p>chiechie: 我在研究一个新领域时，也经常会经常怀疑自己，所以要相信勤能补拙，做不到100分，80分总是可以的</p>
+<h3 id="面对不安假装我是谁">面对不安"假装我是谁"</h3>
+<p>许知远：被上了这么多次不同的“身”，面对不安全感、恐惧、挣扎，然后走出来，你觉得人变得更安全了吗？</p>
+<p>李安：我想我们的成长不必靠电影去修炼，你可以用别的方式。我觉得我可能很像演员吧，年轻的时候我想过做演员，做不成，英文不会讲，就做了导演，所以我跟演员扮演角色的感觉很像。我记得梁朝伟跟我讲了一句话，他说“我们做演员很痛苦”，当然，好的演员才会这样讲。因为我每天都在说服他相信一些东西，他自己也相信了，然后就变成了那个人。拍完以后，又要说服自己不要去相信那个东西，要走出来，好累。而我可能就是用电影来扮演不同的角色吧。我觉得就像《色戒》里的主题一样，<strong>透过假装一件事情，你才会有胆量去触摸真实</strong>。<strong>我想人生倒是不可能没有一些好奇心，我们有自己的课业要学，这一辈子有很多东西要学，而这是一个很好的学习方式——“假装是谁”</strong>。</p>
+<p>chiechie： 对于局内人，比如我工作中，要把我的亲身经验拿出来，反复的批判自己，让我感觉很痛苦，但是透过假装一件事情--假装我是谁，做产品的时候可以更有胆量去触摸真实。</p>
+<h3 id="人生就像剥洋葱">人生就像剥洋葱</h3>
+<p>李安：我觉得我也需要去摸自己不同的面向。</p>
+<p>根据成长经验，你到了某一个面向，又到了某一个时间，你会对其他的主题产生兴趣，会遭遇一个困境，需要去触摸它，如果不去触摸的话，它会骚扰不休的。</p>
+<p><strong>首先是要面对，然后去处理它，去处理它以后就可以把它 rationalize（理性化）了，你就定型了</strong>。</p>
+<p>可是一个议题处理以后，你又会有新的会骚扰你的东西，你又要去面对它、处理它，然后把它理性化，<strong>这就跟剥洋葱一样，我想人生是剥不尽的</strong>。</p>
+<h3 id="摸着石头过河">摸着石头过河</h3>
+<p>许知远：那你现在最想剥的是哪块“洋葱”？你最想处理的是哪个主题？</p>
+<p>李安：我不晓得，看下部电影吧。我可能会处理不同议题，也可能是用不同的角度来看同样的事情，这都很难讲，我不是天天思索这种问题的人，我不是搞哲学的。对，哲学有这个需要，它一定要有道理，而<strong>我是拍出来再制作道理</strong>。</p>
+<p>我相信道家的玄之又玄，因为真的就是这样，摸不透，<strong>我只能在我可以触摸的地方去感受它</strong>。有时候触动别人的心的时候，也是有感应的，毕竟我们不是单独的存在嘛；感应多了有时候也有烦的时候，也有想独自一人的时候，<strong>人生也没有什么太大需要解答的东西，摸摸石头过河</strong>。</p>
+<h3 id="命运的安排">命运的安排</h3>
+<p>许知远：如果当时没有去美国，留在台湾，会是什么样？</p>
+<p>李安：不晓得，我的命就是那个时候该离开。我说年纪到了，跟我的朋友冯光远一起去了，后来我们在纽约的人，大部分都回了台湾，很多人到了北京和上海，留在纽约的其实已经很少了。我那时候其实也想回来，可是刚好申请了绿卡，因为美国有一个经纪人签了我。学校刚毕业，太太还在读书，小孩生了，于是就在那边耗着。申请绿卡又好几年不能离开，也不能回台湾找工作，就这么耗着。说真的，我在念书的时候，从来没有想过可能在美国拍电影，这个事情在我脑子还不构成一个想象，连“梦想”都还没有。后来我得了台湾的一个奖，非拍那个片子不可，故事写的是美国，我才开始。后来那个片子又得奖了，一得国际奖，我又进了美国的艺术院线。</p>
+<p>这也不是我设计出来的，好像是命运规定我这么走。现在好像<strong>东西两方我都沾到，有时候也会落到“缝隙”里面</strong>，这种经验也不少。</p>
+<h3 id="失败的经历">失败的经历</h3>
+<p>许知远：落到“缝隙”里是什么感觉？怎样描述这个“缝隙”？</p>
+<p>李安：有一种黑暗无助的感觉。我不是每部电影都那么卖座成功的，我也受过好多打击，刚开始的时候也吃过很多苦头。</p>
+<p>许知远：印象最深的打击是什么？</p>
+<p>李安：不一而足啦，片子不卖座，没人看。但我觉得那片子也挺好，跟我成功的片子一样，<strong>我一样的拍，觉得差不多，可为什么别人不看呢</strong>？</p>
+<p>电影有时真的是<strong>人算不如天算</strong>。</p>
+<p>有的电影中西方都有市场，比如《断背山》这样的，突然大家都喜欢上了，这是没有国界的，我也不晓得为什么，我让一个台湾人看，他为什么会感动，我真的是不晓得。</p>
+<p>我第一次受打击其实是拍完《冰风暴》，真没人看，《绿巨人》也是受打击的。</p>
+<p>其实我受到的打击，我自己也不太知道，即便大约知道是什么，我也不敢肯定，所以会有一种惶恐的感觉，我也不是习惯受打击的。</p>
+<h3 id="参考">参考</h3>
 <ol type="1">
-<li>定义证据：通过业务经验定义共享特征集，不通场景特征集应该是不同的。</li>
-<li>找证据：分别对每个/每组特征进行聚类/社区划分算法，得到一个个簇.</li>
-<li>组合证据：将2得到的簇作为节点，簇之间共有账户数作为连边，构建graph，再进一步划分得到最终的社区，每个社区中的节点共享多个特征。</li>
-</ol>
-<h1 id="总结">总结</h1>
-<ol type="1">
-<li>上述三种类型方法的主要区别在于graph的不同，在整个图挖掘体系中最核心也最难一点在于，如何将业务经验抽象成Graph。</li>
-<li>社区发现算法以图分割+连通子图查找为主，一方面可解释强，另外可以通过调节阈值权衡召回和误差，以满足运营人员需要。这也是 "拿算法适配业务，而不是业务适配算法"的工作准则。</li>
-</ol>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://scikit-network.readthedocs.io/en/latest/">scikit-network的doc</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/search?type=content&amp;q=%E5%9B%BE%E6%8C%96%E6%8E%98">zhihu-风控</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/62750137">GCN</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/23/AI/cause-effect/randomwalking/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/23/AI/cause-effect/randomwalking/" class="post-title-link" itemprop="url">随机游走</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-23 12:52:46" itemprop="dateCreated datePublished" datetime="2021-05-23T12:52:46+08:00">2021-05-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="介绍">介绍</h2>
-<p>已知因果图时，随机游走可以用来做因果推断。</p>
-<p>原理是，基于因果关系，构建概率转移矩阵，通过模拟故障传播路径，得到故障根因。</p>
-<h2 id="随机游走算法-详细">随机游走算法-详细</h2>
-<ul>
-<li>Step 1. 生成一个关系图G. <span class="math inline">\(e_{ij} = 1\)</span> 表示节点i是节点j的原因（之一）</li>
-<li>Step 2. 计算转移矩阵Q:
-<ol type="1">
-<li>向前游走：从result节点到 the cause节点.理论上，跟异常节点越相关的节点，就越有可能是根因. 也就是说 <span class="math inline">\(Q_{ij} = R(v_{abnormal}, v_j)\)</span>, <span class="math inline">\(R(v_{abnormal}, v_j)\)</span>表示异常节点<span class="math inline">\(v_{abnormal}\)</span> 和 $ v_j$之间的相关系数, and <span class="math inline">\(e_{ji} = 1\)</span></li>
-<li>向后游走：从cause节点到result节点. 为了避免算法陷入跟异常不相关或者低相关的节点，随机游走允许从cause节点跳出到result节点。 如果 <span class="math inline">\(e_{j i} \in E\)</span>且 <span class="math inline">\(e_{ij} \notin E\)</span>, 那么 <span class="math display">\[Q_{ji} =\rho R\left(v_{abnormal}, v_{i}\right),\rho \in[0,1]\]</span>.</li>
-<li>维持原状：如果一个节点，它的邻居们都跟异常节点的相关性很低，这个节点很有可能就是根因了，所以游走者应该停留在这里， <span class="math display">\[Q_{i i}=\max \left[ 0, R\left(v_{abnormal}, v_{i}\right)- \max _{k: e_{k i} \in E} R\left(v_{abnormal}, v_{k}\right) \right]\]</span></li>
-</ol></li>
-<li>Step 3. 对行做归一化，得到转移概率矩阵 <span class="math display">\[\bar{Q}_{i j}=\frac{Q_{i j}}{\sum_{j} Q_{i j}}\]</span></li>
-<li>Step 4. 在G上面随机游走，使转移概率<span class="math inline">\(\bar{Q}\)</span></li>
-</ul>
-<p>采用类似pagerank的方法，得到每个节点的得分。</p>
-<h2 id="参考">参考</h2>
-<ol start="4" type="1">
-<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">Page3,4 -paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/349695818_563941">十三邀-许知远采访李安-文字稿</a></li>
 </ol>
 
       
@@ -378,7 +426,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/81/">81</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -444,20 +492,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">187</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/30/reading_notes/reality/shisanyao-lian/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/05/practice/quantml-practice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/30/reading_notes/reality/shisanyao-lian/" class="post-title-link" itemprop="url">十三邀-采访李安</a>
+            <a href="/2021/06/05/practice/quantml-practice/" class="post-title-link" itemprop="url">时序预测最佳实践</a>
         </h2>
 
         <div class="post-meta">
@@ -189,15 +189,131 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-30 12:02:44" itemprop="dateCreated datePublished" datetime="2021-05-30T12:02:44+08:00">2021-05-30</time>
+              <time title="创建时间：2021-06-05 00:06:21" itemprop="dateCreated datePublished" datetime="2021-06-05T00:06:21+08:00">2021-06-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-31 08:46:04" itemprop="dateModified" datetime="2021-05-31T08:46:04+08:00">2021-05-31</time>
+                <time title="修改时间：2021-06-07 08:47:27" itemprop="dateModified" datetime="2021-06-07T08:47:27+08:00">2021-06-07</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">实践</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="建模pipeline">建模pipeline</h1>
+<ol type="1">
+<li>搜集原始数据: 过去十年的成交数据</li>
+<li>数据筛选: 选择交易日，固定时间段（９:30~15:30)的数据</li>
+<li>对选好的数据进行采样，并不能保证每天都有整数个点</li>
+<li>切分训练集 &amp; 验证集</li>
+<li>模型训练
+<ul>
+<li>归一化训练集，&lt;x， target&gt;</li>
+<li>训练</li>
+</ul></li>
+<li>模型评估
+<ul>
+<li>归一化验证集</li>
+<li>预测&amp;画图：</li>
+</ul></li>
+</ol>
+<p>实践过程中遇到的一些问题，需要逐一解决，下面记录其中一些</p>
+<h1 id="问题集合">问题集合</h1>
+<h2 id="问题1.-验证集的mse比训练集低但相关系数训练集远远大于调参集这是bug">问题1. 验证集的mse比训练集低，但相关系数训练集远远大于调参集，这是bug？</h2>
+<p>没有bug，mse和correlation评估的侧重点不一样。</p>
+<p>mse小，但是correlation也小的例子，如下图：</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNUSWvXNmWb.png?alt=media&amp;token=8c03a9f3-60e1-424d-879e-3371c1516623" /></p>
+<p>几个距离：</p>
+<ul>
+<li>欧式距离（mse）量化的 是两个实体（或者两个群体）之间的绝对物理距离</li>
+<li>余弦距离（correlation）量化的是 两个实体（或者两个群体）相对原点的角度的距离</li>
+<li>pearson衡量的是 两个变量 之间的 线性相关性，具体做法是使用一个直线去拟合多组样本点&lt;变量1，变量2&gt; ，直线斜率就是相关性大小。</li>
+</ul>
+<h2 id="问题3怎么解决分布漂移的问题">问题3：怎么解决分布漂移的问题？</h2>
+<p>分布漂移在时序预测中尤其常见，使用滑动窗口的均值来 做中心化</p>
+<h2 id="问题4还有哪些措能提升实验效果">问题4：还有哪些措能提升实验效果？</h2>
+<p>取效果好和效果差的两组实验进行对比，观察到1个现象：使用短期趋势中心化后，在使用长期趋势归一化，能使效果变好，背后的理论依据是什么？</p>
+<p>分析下：因为用到了更长的历史数据作为参考,本身模型是记不住那么长的历史信息的。（输入才半个小时）</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fg6FAdLzkOj.png?alt=media&amp;token=362ed41e-1773-4ff5-ac41-a3095f75bb86" /></p>
+<p>参考: <a target="_blank" rel="noopener" href="https://github.com/Arturus/kaggle-web-traffic/blob/master/how_it_works.md">doc</a></p>
+<h2 id="问题5-过拟合的原因">问题5： 过拟合的原因</h2>
+<p>训练集 的比例远大于 验证集 和测试集</p>
+<h2 id="问题6-是不是预测的准就能挣钱了">问题6： 是不是预测的准就能挣钱了？</h2>
+<p>不是，回测的时候要考虑滑点，交易费用，爆仓风险</p>
+<h2 id="问题7同样一个预测模型lstm商品期货准确率比股指差这么多">问题7：同样一个预测模型（LSTM），商品期货准确率比股指差这么多？</h2>
+<ul>
+<li>因为1min的股指期货数据平滑，噪声少，而1min的商品期货毛刺非常多</li>
+<li>将1min的商品期货聚合成5min之后，再使用过去1h的数据预测未来1h的数据，准确率非常之高</li>
+</ul>
+<h2 id="问题8直接用回归模型预测价格可能有负数怎么处理">问题8：直接用回归模型预测价格，可能有负数怎么处理</h2>
+<p>预测增长率</p>
+<h2 id="问题9除了直接回归还有哪些方法">问题9：除了直接回归，还有哪些方法？</h2>
+<p>转化为分类问题，换预测涨跌幅</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/04/reading_notes/computer/liangzijisuanji/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/04/reading_notes/computer/liangzijisuanji/" class="post-title-link" itemprop="url">量子计算机</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-04 09:05:44 / 修改时间：09:32:47" itemprop="dateCreated datePublished" datetime="2021-06-04T09:05:44+08:00">2021-06-04</time>
+            </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -219,162 +335,47 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>看了昨天看十三邀采访李安那一期，关于如何面对恐惧，作为旁观者如何深入一个领域，李安分享了一些自己的经验</p>
-<p>这些也是我比较困惑的地方，有一些触动，但是要完全解答我的困惑，还得考自己去实践吧</p>
-</blockquote>
-<h3 id="勤能补拙的旁观者">勤能补拙的旁观者</h3>
-<p>许知远：你说你总是一个旁观者，旁观者可以进入不同的领域，通过研究理解事物，但它的劣势是什么？</p>
-<p>李安：劣势就是不够地道，你只能用将心比心和勤快去弥补；另一个弥补就是电影不是我一个人拍的，这么多人参与，我总是可以跟他们商量，看看对不对，试试风向。</p>
-<p>电影总是人家看嘛，只要你够勤快，天分到，你合作的伙伴愿意投入，入木三分是做得到的。</p>
-<p>局外人的好处是看得比较准，而且一看就能看到； 局内人的话，你的成长经验、成见都会产生影响。</p>
-<p>我觉得让局外人去做一个东西比较简单，但局内人的话，你要把自己的肉拿出来拧的话，有更大的难度。</p>
-<p>事不关己，关己则乱。</p>
-<p>chiechie: 我在研究一个新领域时，也经常会经常怀疑自己，所以要相信勤能补拙，做不到100分，80分总是可以的</p>
-<h3 id="面对不安假装我是谁">面对不安"假装我是谁"</h3>
-<p>许知远：被上了这么多次不同的“身”，面对不安全感、恐惧、挣扎，然后走出来，你觉得人变得更安全了吗？</p>
-<p>李安：我想我们的成长不必靠电影去修炼，你可以用别的方式。我觉得我可能很像演员吧，年轻的时候我想过做演员，做不成，英文不会讲，就做了导演，所以我跟演员扮演角色的感觉很像。我记得梁朝伟跟我讲了一句话，他说“我们做演员很痛苦”，当然，好的演员才会这样讲。因为我每天都在说服他相信一些东西，他自己也相信了，然后就变成了那个人。拍完以后，又要说服自己不要去相信那个东西，要走出来，好累。而我可能就是用电影来扮演不同的角色吧。我觉得就像《色戒》里的主题一样，<strong>透过假装一件事情，你才会有胆量去触摸真实</strong>。<strong>我想人生倒是不可能没有一些好奇心，我们有自己的课业要学，这一辈子有很多东西要学，而这是一个很好的学习方式——“假装是谁”</strong>。</p>
-<p>chiechie： 对于局内人，比如我工作中，要把我的亲身经验拿出来，反复的批判自己，让我感觉很痛苦，但是透过假装一件事情--假装我是谁，做产品的时候可以更有胆量去触摸真实。</p>
-<h3 id="人生就像剥洋葱">人生就像剥洋葱</h3>
-<p>李安：我觉得我也需要去摸自己不同的面向。</p>
-<p>根据成长经验，你到了某一个面向，又到了某一个时间，你会对其他的主题产生兴趣，会遭遇一个困境，需要去触摸它，如果不去触摸的话，它会骚扰不休的。</p>
-<p><strong>首先是要面对，然后去处理它，去处理它以后就可以把它 rationalize（理性化）了，你就定型了</strong>。</p>
-<p>可是一个议题处理以后，你又会有新的会骚扰你的东西，你又要去面对它、处理它，然后把它理性化，<strong>这就跟剥洋葱一样，我想人生是剥不尽的</strong>。</p>
-<h3 id="摸着石头过河">摸着石头过河</h3>
-<p>许知远：那你现在最想剥的是哪块“洋葱”？你最想处理的是哪个主题？</p>
-<p>李安：我不晓得，看下部电影吧。我可能会处理不同议题，也可能是用不同的角度来看同样的事情，这都很难讲，我不是天天思索这种问题的人，我不是搞哲学的。对，哲学有这个需要，它一定要有道理，而<strong>我是拍出来再制作道理</strong>。</p>
-<p>我相信道家的玄之又玄，因为真的就是这样，摸不透，<strong>我只能在我可以触摸的地方去感受它</strong>。有时候触动别人的心的时候，也是有感应的，毕竟我们不是单独的存在嘛；感应多了有时候也有烦的时候，也有想独自一人的时候，<strong>人生也没有什么太大需要解答的东西，摸摸石头过河</strong>。</p>
-<h3 id="命运的安排">命运的安排</h3>
-<p>许知远：如果当时没有去美国，留在台湾，会是什么样？</p>
-<p>李安：不晓得，我的命就是那个时候该离开。我说年纪到了，跟我的朋友冯光远一起去了，后来我们在纽约的人，大部分都回了台湾，很多人到了北京和上海，留在纽约的其实已经很少了。我那时候其实也想回来，可是刚好申请了绿卡，因为美国有一个经纪人签了我。学校刚毕业，太太还在读书，小孩生了，于是就在那边耗着。申请绿卡又好几年不能离开，也不能回台湾找工作，就这么耗着。说真的，我在念书的时候，从来没有想过可能在美国拍电影，这个事情在我脑子还不构成一个想象，连“梦想”都还没有。后来我得了台湾的一个奖，非拍那个片子不可，故事写的是美国，我才开始。后来那个片子又得奖了，一得国际奖，我又进了美国的艺术院线。</p>
-<p>这也不是我设计出来的，好像是命运规定我这么走。现在好像<strong>东西两方我都沾到，有时候也会落到“缝隙”里面</strong>，这种经验也不少。</p>
-<h3 id="失败的经历">失败的经历</h3>
-<p>许知远：落到“缝隙”里是什么感觉？怎样描述这个“缝隙”？</p>
-<p>李安：有一种黑暗无助的感觉。我不是每部电影都那么卖座成功的，我也受过好多打击，刚开始的时候也吃过很多苦头。</p>
-<p>许知远：印象最深的打击是什么？</p>
-<p>李安：不一而足啦，片子不卖座，没人看。但我觉得那片子也挺好，跟我成功的片子一样，<strong>我一样的拍，觉得差不多，可为什么别人不看呢</strong>？</p>
-<p>电影有时真的是<strong>人算不如天算</strong>。</p>
-<p>有的电影中西方都有市场，比如《断背山》这样的，突然大家都喜欢上了，这是没有国界的，我也不晓得为什么，我让一个台湾人看，他为什么会感动，我真的是不晓得。</p>
-<p>我第一次受打击其实是拍完《冰风暴》，真没人看，《绿巨人》也是受打击的。</p>
-<p>其实我受到的打击，我自己也不太知道，即便大约知道是什么，我也不敢肯定，所以会有一种惶恐的感觉，我也不是习惯受打击的。</p>
-<h3 id="参考">参考</h3>
+          <h2 id="why">why？</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/349695818_563941">十三邀-许知远采访李安-文字稿</a></li>
+<li>最早提出用量子体系来计算，或者说模拟量子物理问题的科学家是费曼，不过当时只是一个概念。</li>
+<li>真正从数学上证明有效的算法，是20世纪90年代数学家提出的两类算法：Shor算法和Grover算法.</li>
+<li>Shor算法解决质因数分解问题。用量子的逻辑电路，可以将大数分解问题的求解时间从指数级降低为准多项式级。大数不可分正是现在互联网上应用最广泛的非对称加密系统，也叫公钥加密系统的数学基础。用现在最好的算法破解2048位数的公钥密码，需要超过100万年时间，而用Shor算法只需要几分钟</li>
+<li>Grover算法是一个搜索算法，它可以将无结构的数据搜索问题从N复杂度降低为根号N复杂度。虽然加速能力不如Shor算法，但搜索算法是一种非常基础的算法，可以映射到多种实际问题中去。当N非常大时，这种加速效应也非常显著。目前互联网中每时每刻产生的海量数据，要从中寻找有用信息，正对应着这种N非常大的情况。此外，搜索算法还可以用来进行密码破解。</li>
+<li>此外，量子计算还可以通过模拟复杂系统的哈密顿量来进行量子化学计算，研究原来很难研究的复杂多体物理问题；通过量子纠缠特性，量子计算还可以快速计算多参量的代价函数，从而提高优化问题的求解效率，在人工智能方面也有潜在的应用价值。</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/28/investment/about-leishe/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/28/investment/about-leishe/" class="post-title-link" itemprop="url">关于雷蛇的个股研究</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-28 13:31:24" itemprop="dateCreated datePublished" datetime="2021-05-28T13:31:24+08:00">2021-05-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-10 10:28:55" itemprop="dateModified" datetime="2021-06-10T10:28:55+08:00">2021-06-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>试着分析下</p>
-<p>行业--&gt;护城河--&gt;未来增长--&gt;风险</p>
-<p>分析不出啥？？？电脑主机？</p>
-</blockquote>
-<h2 id="行业分析">行业分析</h2>
-<p>雷蛇属于电子消费行业，在2017-11-13 在港交所上市。</p>
-<p>雷蛇卖什么？卖游戏周边，包括：</p>
-<ul>
-<li>硬件：游戏周边设备，鼠标键盘耳机，游戏笔记本</li>
-<li>软件：？？</li>
-<li>服务：支付服务。</li>
-</ul>
-<p>雷蛇的竞争对手，罗技</p>
-<h3 id="关于显卡的产业链">关于显卡的产业链</h3>
-<p>显卡供应商：AMD(AMD),英伟达(NVDA)</p>
-<p>显卡消费者：矿工和游戏玩家</p>
-<p>近半年，受到疫情影响，显卡供应减少，同时需求增多（主要是加密货币火爆行情刺激了矿机需求）</p>
-<p>两种原因导致显卡涨价，但是雷蛇会受到什么影响？</p>
-<figure>
-<img src="about-cryptocurrency/img.png" alt="英伟达股价" /><figcaption aria-hidden="true">英伟达股价</figcaption>
-</figure>
-<figure>
-<img src="./img_1.png" alt="AMD股价" /><figcaption aria-hidden="true">AMD股价</figcaption>
-</figure>
-<figure>
-<img src="./img_2.png" alt="雷蛇股价" /><figcaption aria-hidden="true">雷蛇股价</figcaption>
-</figure>
-<h2 id="未来增长">未来增长</h2>
-<p>集團更進一步拓展移動╱雲端遊戲、主機遊戲、直播產品及電競椅等增長領域</p>
-<h2 id="新闻">新闻</h2>
+<h2 id="量子计算可以解决什么问题">量子计算可以解决什么问题？</h2>
 <ol type="1">
-<li>雷蛇于5月12日在联交所回购855万股，每股价格介乎2.62至2.66846元，涉资约2,281.53万元。</li>
-<li>2021年初至今雷蛇已回购约1.71亿股，占已发行股本约1.9229%。</li>
-<li>2021年6月，大股东折价卖出大手笔股票，割韭菜了。</li>
+<li>计算科学中，所有的计算问题可以分为可判定问题和不可判定问题。</li>
+<li>计算机能够解决的只是可判定类问题，也就是可计算问题。</li>
+<li>NP问题中还有一类NP完全问题，计算复杂度指数增长，其中包括非常经典的最大割问题、行商问题等等。量子计算目前无法解决。</li>
+</ol>
+<figure>
+<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<h2 id="怎么实现量子计算">怎么实现量子计算？</h2>
+<ol type="1">
+<li><p>从理论上看，比较简单，先把问题用比特进行编码，算完之后观测结果 <img src="img_1.png" alt="img_1.png" /></p></li>
+<li><p>从实现上看，比较有挑战，因为实现过程中会有噪声，并且量子不好操控和测量。</p>
+<blockquote>
+<p>量子计算的理论和算法研究早在上世纪八九十年代就出现了，而实验物理研究却一直到2000年以后才逐渐走上快车道。</p>
+</blockquote></li>
+<li><p>现实世界中，能够用来做量子计算的体系有很多，包括自然原子、离子阱、光子、二维电子气、NV-色心、核自旋、冷原子，以及超导量子比特，等等。哪些是优秀的“量子比特”，能成功构建出实用的量子计算机呢？要满足以下条件（Divincenzo准则”）：</p>
+<ul>
+<li>可以构建一组可扩展的大量量子比特，并且能够很好的表征它们</li>
+<li>能够对量子比特进行初始化</li>
+<li>量子比特必须具有足够长的退相干时间</li>
+<li>能实现一组通用的量子门操作</li>
+<li>能够很好地测量这些量子比特的最终状态</li>
+</ul></li>
+<li><p>基于超导量子比特的超导量子计算，满足上面五点，成为现在各大头部公司最看好的技术方案</p></li>
+</ol>
+<h2 id="现状以及未来展望">现状以及未来展望</h2>
+<ol type="1">
+<li>2019年10月，Google在Science上刊出了一篇论文，介绍了他们验证了量子霸权的实验结果。个实验让全世界都备感兴奋，谷歌的CEO皮查伊评价这个实验的意义，就像当年莱特兄弟发明了第一驾飞机。不过，正如第一驾民用客机要到50多年后才诞生，量子计算机走入千家万户，仍有很长的路要走。 <img src="img_2.png" alt="img_2.png" /></li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://doc.irasia.com/listco/hk/razer/annual/2020/crespress.pdf">雷蛇2020年财报</a></li>
-<li><a target="_blank" rel="noopener" href="https://news.futunn.com/post/9452174?lang=zh-cn&amp;src=2&amp;report_type=stock&amp;report_id=17625226&amp;level=1&amp;data_ticket=1615555035779921">雷蛇(01337.HK)斥约2,281万元回购855万股</a></li>
-<li><a target="_blank" rel="noopener" href="https://news.futunn.com/report/821714?lang=zh-cn&amp;src=43&amp;level=1&amp;data_ticket=1615555035779921">广发证券</a></li>
+<li>https://weibo.com/ttarticle/x/m/show/id/2309404644282962411850?<em>wb_client</em>=1</li>
 </ol>
 
       
@@ -394,7 +395,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/81/">81</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -460,20 +461,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">187</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

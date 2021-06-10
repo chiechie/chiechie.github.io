@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/23/AI/cause-effect/randomwalking/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/" class="post-title-link" itemprop="url">chapter2.1.4 基于拓扑的根因定位-AIOps挑战赛2021-demo方案</a>
+            <a href="/2021/05/23/AI/cause-effect/randomwalking/" class="post-title-link" itemprop="url">随机游走</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-21 22:04:42" itemprop="dateCreated datePublished" datetime="2021-05-21T22:04:42+08:00">2021-05-21</time>
+              <time title="创建时间：2021-05-23 12:52:46" itemprop="dateCreated datePublished" datetime="2021-05-23T12:52:46+08:00">2021-05-23</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-02 17:43:09" itemprop="dateModified" datetime="2021-06-02T17:43:09+08:00">2021-06-02</time>
+                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
                 </span>
             </span>
 
@@ -219,130 +219,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="目录">目录</h2>
+          <h2 id="介绍">介绍</h2>
+<p>已知因果图时，随机游走可以用来做因果推断。</p>
+<p>原理是，基于因果关系，构建概率转移矩阵，通过模拟故障传播路径，得到故障根因。</p>
+<h2 id="随机游走算法-详细">随机游走算法-详细</h2>
 <ul>
-<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
-<ul>
-<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
-<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
-<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
-<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
-</ul>
-<h2 id="数据解析">数据解析</h2>
-<p>比赛数据包括： 部署拓扑，指标数据，日志数据，调用链数据，故障标签</p>
-<h3 id="部署数据">部署数据</h3>
-<figure>
-<img src="./bushu.png" alt="部署数据" /><figcaption aria-hidden="true">部署数据</figcaption>
-</figure>
-<h3 id="指标数据">指标数据</h3>
-<p>指标数据包括业务指标 和 性能指标。 业务指标用于触发根因分析，性能指标用于局部的根因定位</p>
-<p>每个指标数据，都需要附带的信息有：归属物理设备id，以及相应用id，（这样才能做机器的指标依赖的额故障定位）</p>
-<h4 id="业务指标">业务指标</h4>
-<p>kpi_0304.csv</p>
-<ul>
-<li>rr：单位%，系统响应率</li>
-<li>sr：单位%，业务成功率</li>
-<li>cnt：单位条，交易量</li>
-<li>mrt：单位ms，平均响应时间</li>
-<li>tc：交易码, 有11种应用, 'ServiceTest1', 'ServiceTest10', 'ServiceTest11', 'ServiceTest2', 'ServiceTest3', 'ServiceTest4', 'ServiceTest5', 'ServiceTest6', 'ServiceTest7', 'ServiceTest8', 'ServiceTest9'</li>
-</ul>
-<figure>
-<img src="./yewu.png" alt="业务指标" /><figcaption aria-hidden="true">业务指标</figcaption>
-</figure>
-<h4 id="性能指标">性能指标</h4>
-<p>每个应用的指标, 每个kpi会有一个对应的机器id（即cmdb_id）</p>
-<ul>
-<li>cmdb_id: 指标归属的物理设备, 每个物理设备上收集到的指标一般来说包括两种，「操作系统」性能指标以及「服务」性能指标。</li>
-<li>kpi_name: 指标归属的服务类型，比如归属于操作系统/java虚拟机/Redis/Tomcat/Mysql等</li>
-</ul>
-<figure>
-<img src="./xingneng.png" alt="性能指标" /><figcaption aria-hidden="true">性能指标</figcaption>
-</figure>
-<h3 id="日志数据">日志数据</h3>
-<p>日志数据有3个重要字段：</p>
-<ul>
-<li>cmdb_id： 日志是从哪台物理机器上产生</li>
-<li>log_name: 日志对应的组件名和日志类别, 相当于4个采集器，eg catalina/gc/localhost/localhost_access_log</li>
-<li>value: 日志内容, 里面的信息包括，日志级别，egINFO/WARNING/SEVERE，具体报错信息</li>
-</ul>
-<p>目前只有Tomcat4台服务器有日志数据；并且根据采集的不同的组件，收集的日志。</p>
-<h3 id="调用链数据">调用链数据</h3>
-<p>调用链路数据来自：trace/trace_0304.csv</p>
-<p>重要的字段有：</p>
-<ul>
-<li>cmdb_id: 即对应的服务是部署在哪个机器上的, 一次全局的trace_id 可能跨越几个设备</li>
-<li>parent_id：子调用的上一次调用</li>
-<li>trace_id：一次trace对应的全局id，一个trace包括多次子调用</li>
-<li>span_id： 本流程的Span ID，</li>
-</ul>
-<figure>
-<img src="./trace.png" alt="调用链" /><figcaption aria-hidden="true">调用链</figcaption>
-</figure>
-<h3 id="故障标签">故障标签</h3>
-<p>故障类型可分为--'应用故障', '网络故障', '资源故障'</p>
-<ul>
-<li>应用故障可分为2类：'JVM CPU负载高', 'JVM OOM Heap'</li>
-<li>网络故障可分为两类：'网络延迟', '网络隔离'</li>
-<li>资源故障可分为三类：CPU使用率爬升，内存使用率过高，磁盘IO写使用率过高</li>
-</ul>
-<h2 id="demo方案">demo方案</h2>
-<p>流程：</p>
+<li>Step 1. 生成一个关系图G. <span class="math inline">\(e_{ij} = 1\)</span> 表示节点i是节点j的原因（之一）</li>
+<li>Step 2. 计算转移矩阵Q:
 <ol type="1">
-<li>对「业务指标」进行异常检测，异常则触发下面的诊断。</li>
-<li>调用链异常检测和根因定位:「业务」指标异常了，定位是哪个中间件或者服务出现了异常，以及根因的那个服务。</li>
-<li>对应机器的指标进行根因定位：定位到了调用链中的根因服务，然后对该服务所在的机器进行下钻分析，进行更细粒度的根因指标定位，使用到了机器和中间件的「性能指标」。</li>
-</ol>
-<h3 id="业务指标异常检测略">业务指标异常检测(略)</h3>
-<p>找出第一个故障发生时刻：</p>
-<ul>
-<li>2021-03-04 08:39:00 - 2021-03-04 08:44:00</li>
+<li>向前游走：从result节点到 the cause节点.理论上，跟异常节点越相关的节点，就越有可能是根因. 也就是说 <span class="math inline">\(Q_{ij} = R(v_{abnormal}, v_j)\)</span>, <span class="math inline">\(R(v_{abnormal}, v_j)\)</span>表示异常节点<span class="math inline">\(v_{abnormal}\)</span> 和 $ v_j$之间的相关系数, and <span class="math inline">\(e_{ji} = 1\)</span></li>
+<li>向后游走：从cause节点到result节点. 为了避免算法陷入跟异常不相关或者低相关的节点，随机游走允许从cause节点跳出到result节点。 如果 <span class="math inline">\(e_{j i} \in E\)</span>且 <span class="math inline">\(e_{ij} \notin E\)</span>, 那么 <span class="math display">\[Q_{ji} =\rho R\left(v_{abnormal}, v_{i}\right),\rho \in[0,1]\]</span>.</li>
+<li>维持原状：如果一个节点，它的邻居们都跟异常节点的相关性很低，这个节点很有可能就是根因了，所以游走者应该停留在这里， <span class="math display">\[Q_{i i}=\max \left[ 0, R\left(v_{abnormal}, v_{i}\right)- \max _{k: e_{k i} \in E} R\left(v_{abnormal}, v_{k}\right) \right]\]</span></li>
+</ol></li>
+<li>Step 3. 对行做归一化，得到转移概率矩阵 <span class="math display">\[\bar{Q}_{i j}=\frac{Q_{i j}}{\sum_{j} Q_{i j}}\]</span></li>
+<li>Step 4. 在G上面随机游走，使转移概率<span class="math inline">\(\bar{Q}\)</span></li>
 </ul>
-<h3 id="调用链异常检测和根因定位">调用链异常检测和根因定位</h3>
-<ol type="1">
-<li>找出异常调用路径--trace_id</li>
-<li>找出对应的根因的子调用--span_id</li>
-<li>找到span_id的机器</li>
-</ol>
-<figure>
-<img src="./trace_rca.png" alt="调用链异常检测和根因定位" /><figcaption aria-hidden="true">调用链异常检测和根因定位</figcaption>
-</figure>
-<h3 id="对定位到的机器进行指标根因分析">对定位到的机器进行指标根因分析</h3>
-<ol type="1">
-<li>搜集该机器的所有性能指标，进行异常检测</li>
-<li>对于异常的指标，根据历史数据中学习到的因果图，进行根因推断。</li>
-</ol>
-<figure>
-<img src="./metric_rca.png" alt="指标根因分析" /><figcaption aria-hidden="true">指标根因分析</figcaption>
-</figure>
-<h3 id="对下-分析结果-和-标准答案">对下 分析结果 和 标准答案</h3>
-<figure>
-<img src="./evaluate.png" alt="对比" /><figcaption aria-hidden="true">对比</figcaption>
-</figure>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=17&amp;flag=1">aiops挑战赛2021-官网</a></li>
+<p>采用类似pagerank的方法，得到每个节点的得分。</p>
+<h2 id="参考">参考</h2>
+<ol start="4" type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">Page3,4 -paper</a></li>
 </ol>
 
       
@@ -363,7 +258,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5-log-analysis/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/22/practice/pagerank/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -377,7 +272,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/AI/AIOps/AIOps-1_5-log-analysis/" class="post-title-link" itemprop="url">chapter1.5 日志聚类</a>
+            <a href="/2021/05/22/practice/pagerank/" class="post-title-link" itemprop="url">PageRank算法</a>
         </h2>
 
         <div class="post-meta">
@@ -387,14 +282,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-21 20:05:20" itemprop="dateCreated datePublished" datetime="2021-05-21T20:05:20+08:00">2021-05-21</time>
+              <time title="创建时间：2021-05-22 18:07:11" itemprop="dateCreated datePublished" datetime="2021-05-22T18:07:11+08:00">2021-05-22</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-02 17:43:09" itemprop="dateModified" datetime="2021-06-02T17:43:09+08:00">2021-06-02</time>
+                <time title="修改时间：2021-06-07 08:47:27" itemprop="dateModified" datetime="2021-06-07T08:47:27+08:00">2021-06-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -402,7 +297,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                  <a href="/categories/%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">实践</span></a>
                 </span>
             </span>
 
@@ -417,72 +312,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="目录">目录</h2>
-<ul>
-<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
-<ul>
-<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
-<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
-<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
-<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
-</ul>
-<h2 id="做项目之前的分析">做项目之前的分析</h2>
-<p>系统出现故障时，运维人员一般先查看错误日志，定位故障原因。如果业务逻辑简单，故障时错误日志较少，运维人员一般一眼就能定位到问题。</p>
-<p>但是，业务逻辑的复杂的情况下，比如系统依赖很多的服务，引入很多的组件时，一旦整个故障时（如触发Bug、依赖服务超时等等），错误日志急剧增加。如何能快速找到最关键的日志报错信息呢？ 可以对报警进行聚类，整理出报警摘要，有了摘要运维就可以对的故障有个大致印象，再结合业务知识定位故障的根原。</p>
-<p>为了解决上面问题，下面介绍一种针对报警日志的聚类算法</p>
-<p>最近要做一个nlp的项目，需求就是从一堆杂乱无章的日志中，发现一些规律。 看看哪些日志其实是在说一个事情，可归为一类；哪些日志暗示着新的事情在发生，就告警。</p>
-<p>本质是一个EDA,有点类似给用户分群。跟用户分群相比，日志分析有一些特殊的需求，比如，我们通常先关注目前发生的事情严不严重，然后才关注细节。描述前者的典型字段包括时间，日志级别，其他关键词。描述后者的典型字段包括具体ip，网站，端口号等等。</p>
-<p>对一段时间内的告警数据进行聚类，将具有相同根因的告警归纳为泛化报警（Generalized Alarms），最终形成仅有几条泛化报警的报警摘要。如下图1所示意。</p>
-<figure>
-<img src="https://p0.meituan.net/travelcube/0405c8ee9e4e3ea813eedf46c803101122272.png" alt="图1" /><figcaption aria-hidden="true">图1</figcaption>
-</figure>
-<p>图1</p>
-<p>我们希望这些泛化报警既要具有很强的概括性，同时尽可能地保留细节。这样运维人员在收到报警时，便能快速定位到故障的大致方向，从而提高故障排查的效率。</p>
-<h2 id="看看别人怎么做的">看看别人怎么做的</h2>
-<h3 id="美团">美团</h3>
-<h3 id="log3c">log3C</h3>
-<p>《identifies service system problems from system logs》-log3C</p>
-<ul>
-<li>讲了通过数据挖掘-对纯文本进行分析的一种思路：原始日志--&gt;提取事件模版--&gt; 聚合成 时间戳 + session id的日志序列计数向量---&gt;聚类得到典型日志序列技术向量模式---&gt; 日志序列模式 和 系统状态（核心KPI 之间的关系）相关性分析</li>
-<li>将相关性分析 应用到了 具有 物理依赖关系的 数据上面，可以得到 因果关系。</li>
-<li>跟指标异常检测的思路不一样，这个不看日志中提取出来的数值指标，看的是日志间的序列关系，出现的先后顺序，更适合用来做辅助 系统的故障定位（复杂的网状调用调用链路），而前者更适合做系统的性能监控，需要人工定义感兴趣的测量方式（人工指定特征）。</li>
-<li>跟日志异常检测相比，本文的应用更加的end2end。</li>
-</ul>
-<blockquote>
-<p>实际中先不考虑这个方案，复杂且黑盒，不好调效果。</p>
+          <blockquote>
+<p>最近需要对图数据进行分析，了解下PageRank的原理</p>
+<p>BTW, PageRank还可以做社区划分？</p>
 </blockquote>
-<h2 id="一些思考">一些思考</h2>
+<h2 id="总结一下">总结一下</h2>
+<p>pagerank: 假设，网上冲浪的人都是漫无目的的人，他们在网页一个链接接一个链接点下去，但是，整个互联网的节点，最终流量可能的分布能达到一个稳态。 也就是说，随机分布于各网页的流量经过次数足够多的转移之后，会达到一个稳定的状态，这个也代表每个网页的信息度。</p>
+<p>基于这个假设，可以构建一个模型， <span class="math display">\[V_n = M ^n * V_0\]</span></p>
+<p>一般来说，可以拿到网页之间调用拓扑，经过转换，可以将这个拓扑变为概率转移矩阵M，最终算出稳定态的V_n</p>
+<p>给定点之间的连接关系，输出每个节点的分数，</p>
+<p>补充下，最naive的方法存在终止点问题，也就是说，一个网站它不链接任何别的网站，或者一个微服务，它不调用其他任何微服务 按照上面的思路很可能出现一种情况，最终的流量全到这个自大狂网页那里去了，所以有一个改进的思路，假设冲浪着有一点点聪明，他并不是一味的接受灌输的链接，而是有一定概率，主动跳出去，到达一个新的站点，这个方式可以用下面的式子建模：</p>
+<p><span class="math display">\[V_n = d * M * V_{n-1} + (1-d) * e \]</span></p>
+<p>e = [1/n,...1/n]</p>
+<p>d表示按照当前页面推荐的链接继续点下去的概率 1-d表示从当前网页跳出来，主动输入一个新网页重新开始的概率</p>
+<h2 id="代码">代码</h2>
+<p>用代码验证一下，理解没有问题</p>
+<p>https://github.com/chiechie/BasicAlgo/blob/main/pagerank.py</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ground truth</span><br><span class="line"> [[0.25419178], [0.13803151], [0.13803151], [0.20599017], [0.26375504]]</span><br><span class="line">result</span><br><span class="line"> [0.25419178 0.13803151 0.13803151 0.20599017 0.26375504]</span><br></pre></td></tr></table></figure>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li><p>要不要用一些文本模型，比如word2vec，doc2vec，transformer，bert？</p>
-<p>在当前日志的场景下，意义不大。 这些深度模型的本质是想将语义上的相似性通过embedding vector表达。 日志场景下，日志都是同一个print语句打出来的，可以看成是机器的语言，比较少有语言歧义（真的有这种近义词的，肯定不是一个组件打出来的日志），所以没必要去寻找语意上的相似性。 分词完之后，当成char就可以了。</p></li>
-</ol>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">apache_2k.log</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">关于logmine的改进版-code-chiechie</a></li>
-<li><a href="../AIOps-1_5_1-log-analysis_logmine/">关于logmine的实践--chiechie's blog</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/gamer_gyt/article/details/47443877">pagerank-csdn</a></li>
+<li><a target="_blank" rel="noopener" href="https://scikit-network.readthedocs.io/en/latest/tutorials/ranking/pagerank.html">scikit-network-pagerank</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/PageRank">wiki-PageRank</a></li>
+<li>https://blog.csdn.net/google19890102/article/details/48660239</li>
 </ol>
 
       
@@ -502,7 +354,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/81/">81</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -568,20 +420,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">187</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

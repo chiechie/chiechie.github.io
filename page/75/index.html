@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/27/reading_notes/computer/principle-of-network/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/reading_notes/zhexue/intuition_pumps_xiaorener/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/27/reading_notes/computer/principle-of-network/" class="post-title-link" itemprop="url">私网IP 和 公网IP</a>
+            <a href="/2021/03/04/reading_notes/zhexue/intuition_pumps_xiaorener/" class="post-title-link" itemprop="url">《直觉泵》读书笔记2</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-27 17:38:13" itemprop="dateCreated datePublished" datetime="2021-02-27T17:38:13+08:00">2021-02-27</time>
+              <time title="创建时间：2021-03-04 09:59:33" itemprop="dateCreated datePublished" datetime="2021-03-04T09:59:33+08:00">2021-03-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
+                <time title="修改时间：2021-06-10 17:29:43" itemprop="dateModified" datetime="2021-06-10T17:29:43+08:00">2021-06-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,36 +219,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="私网ip-和-公网ip-分别是什么">私网IP 和 公网IP 分别是什么？</h2>
-<ul>
-<li>私网IP，也叫private ip address，或者内网IP。是一个局域网内部，用于识别彼此身份的一个id。</li>
-<li>公网IP，也叫public ip address，或者外网IP。是在因特网中，用户识别设备身份的一个id。</li>
-</ul>
+          <h2 id="观点">观点</h2>
+<ol type="1">
+<li><p>「中心小人儿」理论：假设大脑中有一个聪明绝顶的决策者，但是用归谬法会推导出，这个小人儿大脑中是不是也有一个中心小人儿，。。。然后陷入了无线倒推论。</p></li>
+<li><p>「小人儿机械主义」理论:假设大脑中有一堆小人儿在做决策--决策委员会，他们不断地将服务任务拆解成原子的简单的任务。</p>
 <blockquote>
-<p>早期，当联网设备只有一台电脑时，将你的电脑连向一个modem，会被分配一个ip，就是public ip，这个ip就是你的电脑在整个互联网的一个id 随着家中联网设备变多（电视机，手机，平板），需要有一个路由的功能，加上上面的modem的功能，就是现在的路由器。他可以将public ip映射为家庭环境中的多个id，分配给多个设备。注意家庭中联网设备构成了一个局域网（LAN）。</p>
+<p>有点像虚拟机的原理，嵌套学习。有点像官僚体系。</p>
+</blockquote></li>
+<li><p>「小人儿机械主义」相对于「中心小人儿」理论的高明之处在于，他不会陷入“无线倒退论”的荒谬处境，而是有一个ending的。即，当拆解之后的操作变得简单乏味时，就可以终止了，让机器来了。</p></li>
+<li><p>老式人工智能采用自上而下的工作方式，有严格的等级分工，但是却是不必要的设计！ 这种自上而下的工作方式，有个特点，分配任务的层级规模非常庞大。在计算机发明的早期，这种组织形式所以有效，是因为执行层的能力很弱--单个计算机又小又慢。 因此顶层设计人员要将目标任务成功地分解成一组比较容易掌控的子任务，进而知道怎么编程实现每个小功能，以及将程序整合成一个可行的系统。顶层设计人员可以用「概念验证」的方法，有时候省时省力。</p></li>
+</ol>
+<blockquote>
+<p>关于「概念验证」（proof of concept， POC）：</p>
+<p>「概念验证」是一个有用的工程学概念：为了设计出一个非常精致、非常复杂工具或者系统，可以先设计并且解决一个“demo问题 ”（toy problem），即，先做一个简单的小玩意儿，让它按照简化的工作原理运行，这就是在“验证概念”。接下来让这个小东西的功能完善，只需投入更多时间和金钱。这个简单的小玩意儿可以让一个复杂的问题首先在概念上得以“解决”。有时候，“概念验证”很有效。</p>
 </blockquote>
-<ul>
-<li>(https://ljvmiranda921.github.io/notebook/2018/01/31/running-a-jupyter-notebook/)https://ljvmiranda921.github.io/notebook/2018/01/31/running-a-jupyter-notebook/</li>
-</ul>
-<h2 id="modem-和-路由器-有什么区别">modem 和 路由器 有什么区别？</h2>
-<ul>
-<li>一台电脑如要跟其他电脑通信，需先hook up on 一个modem，然后modem给他分配一个IP，也就是外网ip。</li>
-<li>路由器是modem的升级版。 路由有两个作用：一个是连接家里的设备，另外一个是连接外面的世界。 家里的多个设备组成了一个局域网，即使不跟外面通信，他们之间是可以通信的，通信的过程中如何识别彼此呢？ 这就是路由器的第二个作用，给局域网中的每个设备分配一个IP--也就是内网IP，这个是局域网的成员才能读懂的代码。</li>
-</ul>
-<h2 id="端口转发是什么">端口转发是什么？</h2>
-<p>由于外网只知道内网设备的外网地址，如何能让外网访问内网某个设备的某个端口的服务呢？ 一个办法就是将局域网中的所有设备和服务，先注册到路由器中，路由器就可以根据外网的请求的端口号码，将之转移到内网提供相应服务的设备上。 这个就是端口转发做的事情。</p>
-<h2 id="网络中的三种设备-集线器交换机-和-路由器">网络中的三种设备-集线器，交换机 和 路由器</h2>
-<p>集线器和交换机是用来创建一个个小网络（局域网），路由器将这些小网络连接起来，变成因特网。</p>
-<ul>
-<li>集线器（hub）： 把内网中的网络设备连接起来，只能广播。</li>
-<li>交换机（switch）：维护一个交换机表，记录了连接的网络设备的mac地址，支持网络设备间p2p通信</li>
-<li>路由器（router）：网关（gateway），网络出入口</li>
-</ul>
+<ol start="3" type="1">
+<li><p>「小人儿机械主义」的理念设计出来的计算机，需求和工作几乎是完全独立的。各种程序按照一个队列有序进行，不会陷入你争我夺的厮杀，马克思说过的"从各展其能到各取所需"。计算机科学家埃里克称这种等级控制为"政治"。但是神经系统则不一样，人体的普通细胞和工蚁很像--没有私心，机械的工作，百依百顺的奴隶，赶着一成不变的活儿，没有竞争的环境中生存。但是大脑必须参与激烈的市场竞争。神经玩想要的是填饱肚子，活下去。每个神经细胞类似一个生物机器人，虽然没有意识。 但是，并不妨碍它们，在生死攸关的争斗中，成为极强战斗力的行动者。它们的竞争环境在大脑所要求的环境里。在这里，谁能更有效地建立连接网络，谁能在人类的欲望和冲动层面发挥更大的作用，谁就赢了。</p></li>
+<li><p>神经系统中的很多子系统都以敌对的方式存在，每个子系统都希望以自己的方式行事，彼此之间常常会陷入拉锯战。例如，我们的各种情感会为了取代对方而相互对抗，有时候它们也会结成联盟来阻挠劲敌行动。现在我渐渐明白，人类各种情感之间动态的对抗过程，以及情感对我们思想的影响，都是以神经化学系统为基础的。不像那些本质上自私的行动者，比如癌细胞，从一个更广阔的运作范畴来看，神经细胞还算是不错的团队成员.</p></li>
+<li><p>诺贝尔奖得主、生物学家弗朗索瓦·雅各布（François Jacob）说过，每个细胞都梦想着能完成分裂变成两个细胞，只有神经元不图繁殖，一心只想着要保持活力、有所作为。按照这种观点，对动物行为的智能控制是一种计算过程，就像在股票市场里完成一次交易那样。但正如神经科学家塞巴斯蒂安·承（SebastianSeung）所说，神经元也是自私的，它们总是会倾其所能，最大程度地吸纳能在我们的大脑中获得的所有酬劳，这些酬劳以不同的“货币形式”出现。那么神经元利用多巴胺、5-羟色胺还有催产素都买了些什么呢？它们购买的是更加强大的影响力，能让自己在所处的连接网络中变得更加可靠。骡子虽不能生育，但它们仍会努力地营生。同样，神经元也有自我保护的本能，本质上，这是从它们可繁殖的祖先那里遗传下来的。</p></li>
+<li><p>「自下而上的小人儿式机械主义」是指，神经系统是由哪些未成熟的小人儿组成，每个小人儿都有感知，标记和记忆的能力。类似群体智慧。它们之间有竞争也有协作，从胚胎到成人的过程中，整个系统不断建构和修改。目前该理论可以很合理地解释人体复杂认知系统。</p></li>
+</ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=92b-jjBURkw&amp;list=LL70j7MlBEzFqOk5aIHKzmxQ">私有ip和公共ip，以及端口forward</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=92b-jjBURkw&amp;list=LL70j7MlBEzFqOk5aIHKzmxQ">How to Enable SSH in Ubuntu---Install openssh-server？</a></li>
-<li><a target="_blank" rel="noopener" href="https://superuser.com/questions/104929/how-do-you-run-a-ssh-server-on-mac-os-x">how-do-you-run-a-ssh-server-on-mac-os-x</a></li>
+<li>《直觉泵和其他思考工具》-丹尼尔·丹尼特</li>
 </ol>
 
       
@@ -269,7 +262,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/26/reading_notes/computer/principle-of-zip/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/02/reading_notes/economics/bigdata-plus-cloudcomputing-equal-PlannedEconomy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -283,7 +276,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/26/reading_notes/computer/principle-of-zip/" class="post-title-link" itemprop="url">文件压缩的原理是什么？</a>
+            <a href="/2021/03/02/reading_notes/economics/bigdata-plus-cloudcomputing-equal-PlannedEconomy/" class="post-title-link" itemprop="url">《商业的本质和互联网》读书笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -293,14 +286,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-26 10:23:17" itemprop="dateCreated datePublished" datetime="2021-02-26T10:23:17+08:00">2021-02-26</time>
+              <time title="创建时间：2021-03-02 23:18:18" itemprop="dateCreated datePublished" datetime="2021-03-02T23:18:18+08:00">2021-03-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
+                <time title="修改时间：2021-06-05 08:42:57" itemprop="dateModified" datetime="2021-06-05T08:42:57+08:00">2021-06-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -324,22 +317,23 @@
 
       
           <blockquote>
-<p>任何事务都可以分解为“一般性”和“特殊性”两部分。我们可以隐藏或者复用“一般性”，然后专家声明“特殊性”。我们也可以反过来，专家声明“一般性”，然后机器推导“特殊性”。</p>
-<p>最终的目的都是熵减，从复杂的现象中提取出规则的部分（regularity），减少信息编码表征的数据量</p>
-<p>和 zip 压缩文件，其实没啥区别</p>
+<p>有了大数据和人工智能，政府是否变成了一个全知全能的存在？计划经济是否可以重登舞台？</p>
 </blockquote>
-<p>几个G的文件用zip压缩之后，有时候可以变成十几兆，有时候又压缩不了多少，为什么呢？</p>
-<ul>
-<li>压缩原理是 【通过寻找其中的规律，简化数字的排列】。
-<ul>
-<li>每个文件都由各种不同代码组成。比如01代码，这类文件只有数字0与1组合。那么：</li>
-<li>"00000110001111111111" 可以简化成 "5个0,2个1,3个0,10个1的排列"</li>
-<li>"100000000000"可以简化成数学的 "10^10"</li>
-</ul></li>
-<li>压缩的极限，就是这文件的「熵」，即本身的无序程度。 根据香农的信息理论，任何一个文件被无损压缩后的结果不可能小于其 熵 (信息论) 。</li>
-</ul>
+<h2 id="大数据是否意味计划经济成为可能">大数据是否意味计划经济成为可能？</h2>
+<ol type="1">
+<li>市场经济和计划经济是两种配置资源的模式，在现实中，两种模式是并存的。 一般来说，企业内部权威支配下的计划主导，企业和企业，企业和个人，个人和个人是市场主导。</li>
+<li>诺奖得主哈耶克指出，计划经济的最大问题是「信息」。中央计划者拿不到最全面的「信息」，来辅助制定经济决策。他不知道消费者的偏好，不知道技术和成本，所以不可能有效配置资源。</li>
+<li>相对来说，市场的优势在于，以“价格”为枢纽，建立了更高效率的信息收集器和发布器。消费者和企业分散的决策，通过市场交易形成「价格」，价格融合了消费者的偏好和企业的成本信息，接下来会传播到市场。</li>
+<li>技术狂热者认为无所不在的传感器使得大数据量收集成为可能，中央计划者随即可拥有他们所需要的一切信息。哈耶克进一步辨析到，计划经济者错误地假设，经济和社会计划所需要的数据在计划之前就已经存在。但是，这又一个逻辑错误，收集到的数据和 制定计划用的数据在时间上是滞后的。也就是说，传感器再多再全，只能收集数据而不是产生数据，产生数据的仍然是在市场上进行交易的人。集中式的权威永远无法得到足够数据。此外，市场还是信息的发生器，供求信息通过货币表达。</li>
+<li>那么人脑植入芯片，将感觉转化为价格信号可行吗？需要定制化芯片，成本太高。而在市场中，感觉转化为价格信号，这个成本几乎为零，具体一点，消费者在购买商品和服务时，自动和无偿地完成了这个关键的转化。</li>
+<li>技术狂热者，可能会说，有没有可能通过技术绕过「产生数据」这个步骤？从滞后的数据直接推断消费者的行为？有，AI就是专门做这个事情。但是从过去预测未来必须具备两个前提条件：消费者 的偏好不变 以及 厂商的技术和产品不变。但是在当代的创新经济中，厂商的技术和产品变化多端，进一步造成人们的偏好更为频繁的变化。从而两点都不成立。</li>
+<li>市场还有一个作用是激励产生创新企业家，这个是从整个社会角度说的。创新企业家如乔布斯，他的伟大之处在于，自身有驱动力追求完美的产品，并且勇于承担失败的风险。 相比之下，登月计划虽然涉及尖端复杂科技，但是都是已知可解的工程性问题，没有不确定性。 企业创新好比原始人在亚马逊热带雨林中摸索前行，现代人的登月则像在GPS导引下穿行于北京那样的超大城市。创新需要乔布斯那样的企业家，而资深工程师或官员即可计划和指挥登月工程。</li>
+<li>市场经济的元素--私有产权，自由市场，自愿交易，都是技术革命的必要前提。产权保证了企业家的创新收益，让他们感到值得冒险搏击（理性人会对激励做出反应）；自由市场为技术创新配置资金人才，为成功的高风险准备好了高回报。硅谷既有思想的市场，也有技术，人才，资本的市场，成为创新发源地是必然。</li>
+</ol>
 <h2 id="参考">参考</h2>
-<p>https://www.zhihu.com/question/19925039</p>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/62e321a071a486b862ee729k9a132c802349a1158154a83">许小年-商业的本质和互联网-第9章</a></li>
+</ol>
 
       
     </div>
@@ -358,7 +352,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/74/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/74/">74</a><span class="page-number current">75</span><a class="page-number" href="/page/76/">76</a><span class="space">&hellip;</span><a class="page-number" href="/page/81/">81</a><a class="extend next" rel="next" href="/page/76/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/74/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/74/">74</a><span class="page-number current">75</span><a class="page-number" href="/page/76/">76</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><a class="extend next" rel="next" href="/page/76/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -424,20 +418,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">187</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

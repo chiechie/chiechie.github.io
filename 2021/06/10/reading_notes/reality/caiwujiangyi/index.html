@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="思考几个问题，选股的分析框架？看市盈率，看行业龙头股的baseline，跨版本的股票，看业务构成，找相应板块  第3章 花钱-投资与分配 chapter 21 固定资产  固定资产：企业的大件资产，比如厂房，生产设备。不仅花费大，而且是企业准备长期 持有的资产。 与固定资产相对的 是流动资产，如 库存 ，短期投资 等 企业最大的开销是固定资产投资（类似搞基建，互联网公司可以弱化，但是实业公司不能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《财务讲义》读书笔记">
+<meta property="og:url" content="https://chiechie.github.io/2021/06/10/reading_notes/reality/caiwujiangyi/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
+<meta property="og:description" content="思考几个问题，选股的分析框架？看市盈率，看行业龙头股的baseline，跨版本的股票，看业务构成，找相应板块  第3章 花钱-投资与分配 chapter 21 固定资产  固定资产：企业的大件资产，比如厂房，生产设备。不仅花费大，而且是企业准备长期 持有的资产。 与固定资产相对的 是流动资产，如 库存 ，短期投资 等 企业最大的开销是固定资产投资（类似搞基建，互联网公司可以弱化，但是实业公司不能">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-10T08:25:08.000Z">
+<meta property="article:modified_time" content="2021-06-10T08:31:41.806Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="行业研究">
+<meta property="article:tag" content="平台">
+<meta property="article:tag" content="平台治理">
+<meta property="article:tag" content="商业模式">
+<meta property="article:tag" content="创业">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/06/10/reading_notes/reality/caiwujiangyi/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《财务讲义》读书笔记 | Chiechie's Mini World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Mini World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/10/reading_notes/reality/caiwujiangyi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《财务讲义》读书笔记<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/reading_notes/reality/caiwujiangyi.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-10 16:25:08 / 修改时间：16:31:41" itemprop="dateCreated datePublished" datetime="2021-06-10T16:25:08+08:00">2021-06-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>思考几个问题，选股的分析框架？看市盈率，看行业龙头股的baseline，跨版本的股票，看业务构成，找相应板块</p>
+</blockquote>
+<h2 id="第3章-花钱-投资与分配">第3章 花钱-投资与分配</h2>
+<h3 id="chapter-21-固定资产">chapter 21 固定资产</h3>
+<ul>
+<li>固定资产：企业的大件资产，比如厂房，生产设备。不仅花费大，而且是企业准备长期 持有的资产。</li>
+<li>与固定资产相对的 是流动资产，如 库存 ，短期投资 等</li>
+<li>企业最大的开销是固定资产投资（类似搞基建，互联网公司可以弱化，但是实业公司不能弱化）</li>
+<li>租赁的本质是债务融资（跟房贷一样）</li>
+<li>财务决策中，在 同风险等级 的 投资决策 之间进行比较是一个重要原则。</li>
+<li>投资的机会成本 是为了一个项目A 所放弃的 其他项目B 的收益，其他项目B的风险等级必须要和A一样。</li>
+<li>所以，不应该考虑买还是租，而是考虑 租还是 借（钱）。也就是说 把 租赁这种 债务融资方式 和 借 这种债务融资方式 比较</li>
+<li>如何降低租赁对负债率的影响
+<ul>
+<li>在2018年 会计准则修改之前，将融资行负债 修改为 经营性负债</li>
+<li>在2018年 会计准则修改之后，就没法专空子了。</li>
+</ul></li>
+<li>如何盘活租来的固定资产</li>
+<li>融资性 售后回租：将固定资产 卖给 融资租赁公司，然后签订租赁合同，合同期满就可以买回来。</li>
+</ul>
+<h3 id="chapter-22-价值投资-用别人的错误赚钱">chapter 22 价值投资-用别人的错误赚钱</h3>
+<h3 id="chapter-23-资本预算-项目之间是如何pk的">chapter 23 资本预算-项目之间是如何PK的</h3>
+<ul>
+<li>投资收益比较</li>
+<li>（往上一层）投资的溢出效应：值新项目对企业其他项目 或者 外部事物的影响
+<ul>
+<li>负向</li>
+<li>正向-协同效应</li>
+</ul></li>
+<li>投资回收期平衡</li>
+</ul>
+<h3 id="chapter-24-风险量化">chapter 24 风险量化</h3>
+<ul>
+<li>点分析：项目的保本点是多少
+<ul>
+<li>对美国上市公司的盈余公告进行研究：发现每一美元造成的股价下跌，几乎是每一美元盈利带来的股价上涨幅度的两倍</li>
+<li>企业的盈利目标又三个层析：1. 保证不亏损 2 超过前一年同期的盈利 3 超过证券分析师的预期</li>
+<li>局限：
+<ul>
+<li>有的项目处于战略需要一定要投资，即时财务不赚钱</li>
+<li>正向偏离也是一种风险</li>
+</ul></li>
+</ul></li>
+<li>线分析：跟往年比是多少</li>
+<li>面分析：分析师的预期是多少</li>
+</ul>
+<h3 id="chapter-25-实物期权-应对投资的不确定性">chapter 25 实物期权-应对投资的不确定性</h3>
+<ul>
+<li>案例：爱尔眼科怎样降低并购小诊所的风险？
+<ul>
+<li>【道】增加投资的灵活性</li>
+<li>【法】采用延迟期权，扩张期权，放弃期权策略</li>
+<li>【术】联合PE成立 并购基金，联合孵化小型创业公司</li>
+<li>https://www.pedata.cn/jsp/research.html</li>
+</ul></li>
+<li>互联网项目 的投资 适合实物期权投资 策略。</li>
+</ul>
+<h3 id="chapter-26-风险转移-保险和责任共担">chapter 26 风险转移-保险和责任共担</h3>
+<ul>
+<li>常见的企业风险转移方法：
+<ul>
+<li>签订长期合同；利用金融工具；购买保险。</li>
+</ul></li>
+</ul>
+<h3 id="chapter-27-并购策略-以小博大的智慧">chapter 27 并购策略-以小博大的智慧</h3>
+<ul>
+<li>基本概念：
+<ul>
+<li>私有化：将一家上市公司从公众公司重新 变回 私人公司。</li>
+<li>MBO： 管理层收购，manegement buy-out，指管理层要把公司其流通在市场上的股份全部回购。</li>
+<li>LBO：杠杆收购，lenerage buy-out，企业用很少的自由资金，买下一家体谅比自己大很多的企业</li>
+</ul></li>
+<li>判断一家企业的复制扩张战略是否成功看两个指标：收入集中度，利润集中度</li>
+<li>如何看待企业的并购活动？
+<ul>
+<li>是企业实现规模和也业务扩张常用的一种方式</li>
+<li>并购的效果与起亚的管理能力有关</li>
+<li>杠杆收购的本质是利用财务杠杆以小博大，是一种高风险的资本运作方式</li>
+</ul></li>
+</ul>
+<h3 id="chapter-28-并购隐患-商誉这只灰犀牛">chapter 28 并购隐患-商誉这只灰犀牛</h3>
+<h3 id="chapter-29-减值时机">chapter 29 减值时机</h3>
+<h3 id="chapter-30-分红政策-分红多就是好公司吗">chapter 30 分红政策-分红多就是好公司吗</h3>
+<h2 id="第4章-精进-快速把脉一家上市公司">第4章 精进-快速把脉一家上市公司</h2>
+<ul>
+<li>我觉得这一章是 对所有 公司的 财务状况的 诊断，其中上市公司只是一个特例，并且上市公司暴露了更多的财务数据，也有公众对其未来盈利能力的估值（股价）</li>
+</ul>
+<h3 id="chapter-31-财务诊断-分析框架">chapter 31 财务诊断-分析框架</h3>
+<ul>
+<li>哈佛分析框架包括战略分析，会计分析，财务分析和前景分析。战略分析 和 会计分析都是比较 主观的分析，财务分析 和 前景分析是可以用量化的指标 分析出来的</li>
+<li>战略分析：
+<ul>
+<li>先看外部环境-“经营环境分析”
+<ul>
+<li>宏观环境
+<ul>
+<li>政治，经济，法律，社会文化</li>
+</ul></li>
+<li>行业环境
+<ul>
+<li>行业规模，增长前景，利润空间，变革速度</li>
+<li>增长前景，按照行业跟经济周期的关系可以将行业分类：
+<ul>
+<li>增长型行业：如高科技行业</li>
+<li>防御性行业：</li>
+<li>周期性行业：如大宗原材料行业，房地产行业</li>
+</ul></li>
+<li>利润空间
+<ul>
+<li>行业利润率估值方法-波特五力模型：
+<ul>
+<li>行业内竞争的激烈程度</li>
+<li>行业进入 壁垒的高低</li>
+<li>供应商谈判能力的强弱</li>
+<li>购买方谈判能力的强弱</li>
+<li>替代产品威胁的大小</li>
+</ul></li>
+</ul></li>
+<li>行业变革速度：哪些是核心驱动因素，以及核心因素的变化速度
+<ul>
+<li>一个是客户群体以及消费偏好的变化：例如消费行业</li>
+<li>一个是技术革新的速度：如新能源技术在汽车的应用</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>再看自己-“企业自身战略”
+<ul>
+<li>战略：差异化战略（星巴克），成本领先战略（沃尔玛）</li>
+<li>前者毛利率是后者两倍</li>
+</ul></li>
+</ul></li>
+<li>会计分析：检验财务指标的真实性，是否真实的反应了公司的运营状况，重点关注以下3个维度
+<ul>
+<li>1， 对企业影响最大的<strong>会计政策</strong>是什么？
+<ul>
+<li>高科技企业利润要重点关注对研发支出的处理</li>
+<li>重资产企业利润要重点关注固定资产折旧的处理</li>
+</ul></li>
+<li>2 哪些会计政策发生了变化？
+<ul>
+<li>比如某一年度钢铁公司<strong>突然</strong>调节了固定资产折旧政策--延长折旧时间，来降低档期折旧费用。那么就需要进一步了解是否“操纵利润”的嫌疑。（真实情况是，这个是为了避免退市的垂死挣扎）</li>
+</ul></li>
+<li>3，对标企业（同行，用一行业的其他公司）的会计政策有哪些不一样？
+<ul>
+<li>如果发现一家高科技企业的研发支出资本化比例 明显超过同行，就要进一步分析背后的原因。</li>
+</ul></li>
+</ul></li>
+<li>财务分析：从4个维度 用具体的数值 评价公司现在做的怎么样</li>
+<li>前景分析：预测业绩的可持续性，以及未来的价值</li>
+</ul>
+<h3 id="chapter-32-财务分析-4个维度诊断公司健康">chapter 32 财务分析-4个维度诊断公司健康</h3>
+<ul>
+<li><p>我同可以通过建立一些核心的财务指标考察企业在偿债能力，营运能力，盈利能力，价值创造这4个维度的表现，这个分析方法被称为“比率分析”方法。偿债能力: 关注的是企业家必须守住的底线，其他三个指标考虑的是企业的发展问题。企业发展 要靠“开源节流”，也就是，一方面提升盈利，一方面提升管理效率（营运能力）。</p></li>
+<li><p>偿债能力: 关注的是企业家必须守住的底线</p>
+<ul>
+<li>流动比率 = 流动资产 / 流动负债， 小于1说明有重大问题，a股平均值1.22</li>
+<li>速动比率= （流动资产 - 存货） /流动负债，a股平均值0.5
+<ul>
+<li>速冻比率 相对流动比率，剔除了资产中 变现能力 最差的 存货</li>
+</ul></li>
+<li>现金比率 = 货币资金 / 流动负债，a股平均值0.31
+<ul>
+<li>现金比率相对速动比率剔除 了 应收帐款</li>
+<li>这个比率不能过高，过高了虽然风险预防能力是具备了，但是也说明资金使用效率低了。</li>
+</ul></li>
+</ul></li>
+<li><p>营运能力</p>
+<ul>
+<li>周转率：
+<ul>
+<li>主要反应管理效率，</li>
+</ul></li>
+</ul></li>
+<li><p>盈利能力</p></li>
+<li><p>价值创造能力：市盈率 和 市净率 - ### chapter 33 财报工具-竖着比和横着比</p></li>
+<li><p>竖着比就是跟自己往年业绩比</p></li>
+<li><p>横着比就是跟同行业的竞争公司比</p></li>
+</ul>
+<h3 id="chapter-34-财务实战-哈佛分析框架的应用">chapter 34 财务实战-哈佛分析框架的应用</h3>
+<ul>
+<li>【chiechie】作业1-使用哈佛分析框架分析下腾讯</li>
+<li>【chiechie】作业2-使用哈佛分析框架分析下现在在做的项目</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/" rel="tag"># 行业研究</a>
+              <a href="/tags/%E5%B9%B3%E5%8F%B0/" rel="tag"># 平台</a>
+              <a href="/tags/%E5%B9%B3%E5%8F%B0%E6%B2%BB%E7%90%86/" rel="tag"># 平台治理</a>
+              <a href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" rel="tag"># 商业模式</a>
+              <a href="/tags/%E5%88%9B%E4%B8%9A/" rel="tag"># 创业</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/10/reading_notes/phisics/duoshijie/" rel="prev" title="多世界理论">
+      <i class="fa fa-chevron-left"></i> 多世界理论
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/10/AI/machine_learning/deeplearning/dl-basic/" rel="next" title="深度学习基础知识">
+      深度学习基础知识 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC3%E7%AB%A0-%E8%8A%B1%E9%92%B1-%E6%8A%95%E8%B5%84%E4%B8%8E%E5%88%86%E9%85%8D"><span class="nav-number">1.</span> <span class="nav-text">第3章 花钱-投资与分配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-21-%E5%9B%BA%E5%AE%9A%E8%B5%84%E4%BA%A7"><span class="nav-number">1.1.</span> <span class="nav-text">chapter 21 固定资产</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-22-%E4%BB%B7%E5%80%BC%E6%8A%95%E8%B5%84-%E7%94%A8%E5%88%AB%E4%BA%BA%E7%9A%84%E9%94%99%E8%AF%AF%E8%B5%9A%E9%92%B1"><span class="nav-number">1.2.</span> <span class="nav-text">chapter 22 价值投资-用别人的错误赚钱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-23-%E8%B5%84%E6%9C%AC%E9%A2%84%E7%AE%97-%E9%A1%B9%E7%9B%AE%E4%B9%8B%E9%97%B4%E6%98%AF%E5%A6%82%E4%BD%95pk%E7%9A%84"><span class="nav-number">1.3.</span> <span class="nav-text">chapter 23 资本预算-项目之间是如何PK的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-24-%E9%A3%8E%E9%99%A9%E9%87%8F%E5%8C%96"><span class="nav-number">1.4.</span> <span class="nav-text">chapter 24 风险量化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-25-%E5%AE%9E%E7%89%A9%E6%9C%9F%E6%9D%83-%E5%BA%94%E5%AF%B9%E6%8A%95%E8%B5%84%E7%9A%84%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7"><span class="nav-number">1.5.</span> <span class="nav-text">chapter 25 实物期权-应对投资的不确定性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-26-%E9%A3%8E%E9%99%A9%E8%BD%AC%E7%A7%BB-%E4%BF%9D%E9%99%A9%E5%92%8C%E8%B4%A3%E4%BB%BB%E5%85%B1%E6%8B%85"><span class="nav-number">1.6.</span> <span class="nav-text">chapter 26 风险转移-保险和责任共担</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-27-%E5%B9%B6%E8%B4%AD%E7%AD%96%E7%95%A5-%E4%BB%A5%E5%B0%8F%E5%8D%9A%E5%A4%A7%E7%9A%84%E6%99%BA%E6%85%A7"><span class="nav-number">1.7.</span> <span class="nav-text">chapter 27 并购策略-以小博大的智慧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-28-%E5%B9%B6%E8%B4%AD%E9%9A%90%E6%82%A3-%E5%95%86%E8%AA%89%E8%BF%99%E5%8F%AA%E7%81%B0%E7%8A%80%E7%89%9B"><span class="nav-number">1.8.</span> <span class="nav-text">chapter 28 并购隐患-商誉这只灰犀牛</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-29-%E5%87%8F%E5%80%BC%E6%97%B6%E6%9C%BA"><span class="nav-number">1.9.</span> <span class="nav-text">chapter 29 减值时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-30-%E5%88%86%E7%BA%A2%E6%94%BF%E7%AD%96-%E5%88%86%E7%BA%A2%E5%A4%9A%E5%B0%B1%E6%98%AF%E5%A5%BD%E5%85%AC%E5%8F%B8%E5%90%97"><span class="nav-number">1.10.</span> <span class="nav-text">chapter 30 分红政策-分红多就是好公司吗</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC4%E7%AB%A0-%E7%B2%BE%E8%BF%9B-%E5%BF%AB%E9%80%9F%E6%8A%8A%E8%84%89%E4%B8%80%E5%AE%B6%E4%B8%8A%E5%B8%82%E5%85%AC%E5%8F%B8"><span class="nav-number">2.</span> <span class="nav-text">第4章 精进-快速把脉一家上市公司</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-31-%E8%B4%A2%E5%8A%A1%E8%AF%8A%E6%96%AD-%E5%88%86%E6%9E%90%E6%A1%86%E6%9E%B6"><span class="nav-number">2.1.</span> <span class="nav-text">chapter 31 财务诊断-分析框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-32-%E8%B4%A2%E5%8A%A1%E5%88%86%E6%9E%90-4%E4%B8%AA%E7%BB%B4%E5%BA%A6%E8%AF%8A%E6%96%AD%E5%85%AC%E5%8F%B8%E5%81%A5%E5%BA%B7"><span class="nav-number">2.2.</span> <span class="nav-text">chapter 32 财务分析-4个维度诊断公司健康</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter-34-%E8%B4%A2%E5%8A%A1%E5%AE%9E%E6%88%98-%E5%93%88%E4%BD%9B%E5%88%86%E6%9E%90%E6%A1%86%E6%9E%B6%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">2.3.</span> <span class="nav-text">chapter 34 财务实战-哈佛分析框架的应用</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">167</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

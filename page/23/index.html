@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/18/AI/machine_learning/automl/NAS/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/20/reading_notes/qukuailian/intro-to-ether/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/18/AI/machine_learning/automl/NAS/" class="post-title-link" itemprop="url">可微的NAS方法</a>
+            <a href="/2021/05/20/reading_notes/qukuailian/intro-to-ether/" class="post-title-link" itemprop="url">以太坊介绍-Patrick访谈</a>
         </h2>
 
         <div class="post-meta">
@@ -189,111 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-18 08:32:24" itemprop="dateCreated datePublished" datetime="2021-05-18T08:32:24+08:00">2021-05-18</time>
+              <time title="创建时间：2021-05-20 10:14:40" itemprop="dateCreated datePublished" datetime="2021-05-20T10:14:40+08:00">2021-05-20</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-19 10:55:05" itemprop="dateModified" datetime="2021-05-19T10:55:05+08:00">2021-05-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>NAS是auto-ml的一个子领域，相关的技术有随机搜索，强化学习，基于微分的方法，如DARTS 和 FBNet。</p>
-<p>DARTS 和 FBNet是目前做NAS的the state of arts方法</p>
-<p>下面简单介绍FBNet的思路</p>
-</blockquote>
-<h2 id="fbnet的基本idea">FBNet的基本idea</h2>
-<ol type="1">
-<li><p>定义候选block, eg10个</p></li>
-<li><p>定义神经网络的层数,eg20，神经网络的每一层都是从9个候选block中选一个，搜索空间9^20</p></li>
-<li><p>构建一个很大的神经网络--supernet，每一层由9个候选block并联而成。supernet的待估参数包括9个候选block✖️20层，以及长度为9的权重向量✖️20。</p>
-<blockquote>
-<p>人工调参，可以看成是，指定supernet中的一条路径，然后灌入数据，来估计路径上20个blcock的参数。使用FBNet就不用人为指定其中某条路径，而是这个大网络supernet从训练数据中，学习出9个block✖️20（层）个参数，以及9✖️20（层）个权重。训练完之后，选择每一层权重最大的block并且连成一条路径，就是机器选定的20层的网络结构。</p>
-</blockquote></li>
-<li><p>模型要落地，还要考虑计算效率。具体的做法，事先算好候选block各自的latency(做一次推断平均耗时多久，block的权重随机给，跑多组数据求平均时延），然后将latency信息加入损失函数中，作为错误率之外的另外的一个惩罚项。</p></li>
-</ol>
-<h2 id="chiechies-reflection">chiechie's reflection</h2>
-<p>联想到之前构建的通用异常检测模型，整体流程大概是这样：定义多个检测器，曲线特征，并用一个随机森林去做集成。希望随机森林可以将不同的曲线路由到适合的检测器上去。</p>
-<p>FBNet的思路跟上面的流程有点像，都是数据驱动去选择适配的组件。不同的地方在于，FBNet最终会减枝，即从9✖️20个可能的路径中，裁剪成一条路径。</p>
-<p>FBNet要解决的任务更简单，给一个小任务找到适配的解决方案；通用异常检测更难，要给n个小任务找解决方案，并且用一套复合的解决方案。</p>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=D9m9-CXw_HY">Differentiable Neural Architecture Search-youtube</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/17/reading_notes/qukuailian/how-to-Defi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/17/reading_notes/qukuailian/how-to-Defi/" class="post-title-link" itemprop="url">《how to Defi》读书笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-17 09:20:02" itemprop="dateCreated datePublished" datetime="2021-05-17T09:20:02+08:00">2021-05-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-26 09:18:16" itemprop="dateModified" datetime="2021-05-26T09:18:16+08:00">2021-05-26</time>
+                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -317,31 +220,140 @@
 
       
           <blockquote>
-<p>区块链技术的第一代应用是以比特币为全球支付货币，第二代应用是以太坊完成智能合约，第三代应用是defi和nft完成金融体系重构</p>
-<p>how to defi 讲的就是区块链技术的第三代应用之一--去中心化金融(DeFI)</p>
+<p>有空再翻吧</p>
 </blockquote>
-<h2 id="why-defi">why defi</h2>
-<ol type="1">
-<li>传统金融体系容易遭受与人相关的风险，比如腐败。defi试图通过创建一个更好的金融环境，来弥补现有金融系统的漏洞，主要对银行系统的三个关键部分进行了优化：支付&amp;清算系统；可获取性；中心化&amp;透明度。</li>
-<li>DeFi的最大优势在于能够消除中 介机构并在零审查的环境下运行。</li>
-</ol>
-<h2 id="what">what</h2>
-<ol type="1">
-<li><p>DeFi生态中有哪些应用？</p>
+<p>Patrick访谈以太坊组织的研究人员--Justin，内容包括：</p>
 <ul>
-<li>稳定币：比如泰达币（Tether，USDT) ，稳定币作为稳定的价值存储手段使得DeFi应用对大众来说更加可用。</li>
-<li>借贷服务：传统金融体系要求用户有银行账户，良好的信用评分，以及足够的抵押品；去中心化借贷允许任何人抵押其数字资产，然后利用抵押资产获得贷款。</li>
-<li>交易所：中心化交易所egconbase，huobi，binance，存在被黑客攻击的危险；去中心化交易所更安全，不依赖交易所的偿付能力。</li>
-<li>衍生品：衍生品合约主要在中心化平台上进行交易。目前，许多DeFi平 台正开始构建去中心化衍生品市场。</li>
-<li>基金管理：基金管理主要有主动型和被动型两种，主动型基金管理会有一个管理团队负责投资 决策。被动型基金管理没有管理团队，而被设计为尽可能接近 某一特定基准的表现。</li>
-<li>彩票：结合DeFi的彩票可将资金池的托管转移到以太坊智能合约上。</li>
-<li>支付：通过将支付重置为流模式而非我们熟悉的交易来改变我们处理支付的方式。（比如云服务商，按照使用的流量收费）</li>
-<li>保险：智能合约的漏洞容易被黑客攻击，从而影响智能合约中锁定的代币。当用户在Defi上处理大量资金的时候，购买保险是必要的。</li>
-</ul></li>
+<li>以太坊和比特币的区别</li>
+<li>以太坊平台孵化的项目数量日益增长</li>
+<li>共识算法从工作量证明到权益证明的转变，对以太坊的意义</li>
+</ul>
+<h2 id="key-concepts-of-btc">Key Concepts of BTC</h2>
+<ol type="1">
+<li>以太坊（Ethereum）诞生于2015年，是一个去中心化的区块链（blockchain），类似的概念是Bitcoin。</li>
+<li>以太坊的平台原生加密货币是以太（Ether），类似的概念是BTC。</li>
+<li>以太坊网络的交易费用每天达到1500w美元，需求日益增长。</li>
+<li>区块链是一个协作平台（coordination platform），让互联网上的人们即使不认识不信任彼此，也可以协作。</li>
+<li>互联网是区块链的第一个阶段，它的使命是冲破地域限制，让世界各地的人可以commmuniction。区块链是对这一能力的拓展，它可以让彼此不信任对方的现状下，人跟人仍然能协作。它的信任来自代码，数学，技术，而不是人。</li>
+<li>货币的本质，一个账本，这个账本记录每个人有多少购买力。比特币本质也是账本，记录每个人有多少比特币。</li>
+<li>关于安全性有哪些必备条件，可参考最安全的东西--时间。时间有3个属性，过去的不可篡改。第二个属性是，当下，对所有人，是一个共享的体验（shared experience）。第三个属性是，未来是确定的，一定会发生，没有任何人能够阻止。</li>
+<li>回到货币上，过去的交易不可篡改，每个人都能信任比特币的状态，不用第三方。绕开审查（Censorship resistance），如果比特币是一个计算器，以太坊就是一个计算机。</li>
+<li>矿工让彼此不信任的人达成共识，理应获得报酬--BTC。</li>
+</ol>
+<h2 id="以太坊">以太坊</h2>
+<ol type="1">
+<li>what was the original impetus（动力） in early history here?</li>
+<li>Why was Ethereum created?</li>
+<li>What shortcomings of Bitcoin did it seek to address in the early days?</li>
+<li>比特币的编程能力有限，以太坊扩展了变成能力。</li>
+<li>说一说以太坊创始人Vitalik的想法？</li>
+<li>权益证明比工作量证明，更便宜，因为货币的机会成本更低？？啥意思</li>
+<li>The rewards that you get as a validator are, number one, issuance but also these tips that don't get burnt.</li>
+<li>The way that we do ownership really in the crypto world is using public keys. It's basically cryptography that allows you to prove that you're the owner of something. What it means to go buy an NFT is, at the end of the day, to basically change this ledger entry to add your public key as the owner of this hash.</li>
+<li>We have, right now, 130,000 validators that are securing the proof-of-stake in Ethereum. This is going to grow to half a million or even close to a million validators. Another thing that is important is to understand that the proof-of-stake is best-in-class in terms of security. Just to give you one compelling reason for that is that when we have this scarce resource securing your consensus engine being money placed as collateral, you have the option to destroy it fully. If an attacker is in a position to be able to attack Ethereum, meaning that it has amassed all these economic resources, well, as soon as they make an attack, we can penalize them and remove them from the system so the system is self-healing. Actually, because there's only a finite number of ETH out there, we can actually put an upper bound on the number of times that an attacker can successfully make an attack. It's on the order of 10 times</li>
+<li>Be intellectually curious, be intellectually honest in the sense that participating in things that you understand and whenever there's something you don't understand, don't be shy to ask questions. There's a lot of information out there. Actually, on that point a lot of information out there, there's also a lot of bad information out there. This is a very organic, decentralized, and chaotic space.</li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://news.huoxing24.com/20200817195548945458.html">how to difi中文版</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.joincolossus.com/episodes/14242194/drake-ethereum-into-the-ether?tab=blocks">Justin Drake - Ethereum: Into the Ether</a></li>
+<li><a target="_blank" rel="noopener" href="https://steemit.com/cryptocurrency/@danielzhuang/6uohm9">A Letterto Jamie Dimo-中文</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ceresaig.com/wp-content/uploads/2017/11/A-Letter-to-JP-Morgan-Jamie-Dimon-%E2%80%93-Block-Chain-Crypto-FX.pdf">A Letterto Jamie Dimo-英文</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/20/meditation/about-future/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/20/meditation/about-future/" class="post-title-link" itemprop="url">关于未来的一点模糊的认知</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-20 07:13:07" itemprop="dateCreated datePublished" datetime="2021-05-20T07:13:07+08:00">2021-05-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-29 16:05:47" itemprop="dateModified" datetime="2021-05-29T16:05:47+08:00">2021-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="未来趋势">未来趋势</h2>
+<blockquote>
+<p>大部分是别人说的，只是比较接近我的认知，有待观察验证</p>
+</blockquote>
+<ol type="1">
+<li><p>虚拟世界vs物理世界，前者将吞噬掉人类更多的注意力和时间, 终极形态类似「元宇宙」。</p></li>
+<li><p>强AI技术首先在游戏领域突破，然后拓展到整个虚拟世界。目前最promising的技术方向是强化学习。</p></li>
+<li><p>人对精神层次追求的提升，相关产业包括心理咨询，冥想，正念，哲学教育等</p></li>
+<li><p>智能合约孵化的应用普及：去中心化金融，NFT。</p></li>
+<li><p>医疗健康产业未来10年有很大市场，包括健康饮食，制药，医疗器械。</p></li>
+<li><p>理财教育低龄化，终身化。</p></li>
+<li><p>老龄化已成为现实</p></li>
+<li><p>量子计算机.</p></li>
+<li><p>创造者经济</p></li>
+<li><p>权利从机构释放到个体。</p>
+<blockquote>
+<p>The Creator Economy and NFTs are massive human potential unlocks. Even if certain assets are in a short-term bubble, we are on an inexorable march towards individuals mattering more than institutions.</p>
+</blockquote></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://notboring.mirror.xyz/SPV_-bchriVn_ncDj8OgnLccSb5qAsU0sXNpg9y_UTk">Power to the Person</a></li>
 </ol>
 
       
@@ -361,7 +373,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/81/">81</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -427,20 +439,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">187</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

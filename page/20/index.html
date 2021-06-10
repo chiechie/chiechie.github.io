@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/reading_notes/phisics/phisics-yangfengganshe/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_2-fault-prediction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/reading_notes/phisics/phisics-yangfengganshe/" class="post-title-link" itemprop="url">从「双缝干涉」到量子力学</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-1_2-fault-prediction/" class="post-title-link" itemprop="url">chapter1.2 故障预测</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-21 08:24:14" itemprop="dateCreated datePublished" datetime="2021-05-21T08:24:14+08:00">2021-05-21</time>
+              <time title="创建时间：2021-05-21 11:01:18" itemprop="dateCreated datePublished" datetime="2021-05-21T11:01:18+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-10 16:14:05" itemprop="dateModified" datetime="2021-06-10T16:14:05+08:00">2021-06-10</time>
+                <time title="修改时间：2021-06-02 17:43:09" itemprop="dateModified" datetime="2021-06-02T17:43:09+08:00">2021-06-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -219,25 +219,67 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>20世纪物理学的一些重要进展和矛盾</p>
+          <h1 id="目录">目录</h1>
+<ul>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
+</ul>
+<blockquote>
+<p>硬盘故障预测实战</p>
 </blockquote>
+<h1 id="背景">背景</h1>
+<p>最近10年，随着服务器数量快速增长, 服务器老化的问题（商家超过5）日趋严重。越老的服务器发生故障的概率越高，这个会带了不小的负面影响，从而提高运营成本。</p>
+<p>服务器的所有故障中，占比最高的类型属于磁盘故障，达到70%。第二名是主板故障。 因为磁盘生命周期短，一般只有3到5年，而整个服务器使用和年限一般都会超过5年，所以一台服务器的生命周期中几乎必然会发生磁盘故障。</p>
+<p>如何降低磁盘故障带来的影响？业务的方案是，实施监控以及事后自动修复，修复不了就更换磁盘，并且做业务迁移。</p>
+<p>但是这个时候损失已经发生，如果能够在磁盘故障之前，就预测到即将到来的故障，并且提前做预案，是可以避免业务损失的。</p>
+<p>下面就介绍一下，如何预测磁盘故障，从而减少业务损失。</p>
+<h1 id="方案">方案</h1>
+<h2 id="搜集数据">搜集数据</h2>
+<p>范围：即将故障的硬盘以及其宿主的信息 根据经验可以提取如下指标：磁盘负载，磁盘I/O，具体来说</p>
+<ul>
+<li>每秒磁盘读写块数： 902-读，903-写</li>
+<li>每秒中用于I/O操作的CPU时间占的比例：即999，</li>
+</ul>
+<p>其中，I/O指标差分，简称为IO跳变跟故障相关度较高</p>
+<p>此外考虑了磁盘SMART（Self-Monitoring Analysis and Reporting Technology——自我检测、分析及报告技术）。之所以考虑用SMART作为核心数据，因其相关技术发展比较成熟，至今20年了，业界对其认可度较高。</p>
+<h2 id="预测模型">预测模型</h2>
+<p>使用一个分类器（SVM），搜集历史故障样本和非故障样本，</p>
 <h2 id="总结">总结</h2>
 <ol type="1">
-<li>20世纪物理学的一种根本矛盾，广义相对论和量子理论不自洽，两者不能统一。</li>
-<li>所有的基本粒子，都是宇宙弦的不同振动模式或者振动激发态。弦的不同频率的振动，对应不同质量和能量。</li>
-<li>20世纪30年代，狄拉克把相对论与量子力学放在一起研究，电场和磁场相互作用时看电子的行为，发现电子必须有其反粒子（叫正电子）才能存在。两年后，物理学家们在宇宙射线中发现了正电子。随后这个现象成了一个原理，质子必有反质子，中子必有反中子，所有基本粒子都必须有反粒子，他们才能存在。粒子与反粒子相遇就会彼此湮灭，转化为能量。</li>
-<li>宇宙的总能量刚好是零，宇宙的物质是由正能量构成，引力场具有负能量。宇宙大爆炸时期，正物质能和负引力能都加倍，总能量保持为零。在这个非常短的瞬间，宇宙的尺度增大了很多倍，可以制造粒子的总能量就变得非常大。</li>
-<li>传统的自然科学都标榜自己研究的是东西不以人主观意志转移的客观真理。但是杨氏双缝干涉实验，否定了这个世界观。</li>
-<li>杨氏双缝干涉实验: 一个电子通过两个狭缝往后面走，如果电子只通过其中一个狭缝，看到的图像就不会出现干涉，如果电子同时通过了两个狭缝，看到的图像就会出现干涉，也就是有些地方加强有些地方减弱，类似水波浪。实验结果是后者。</li>
-<li>针对解决爱因斯坦和波尔争论的议题，薛定谔设计了第一个“薛定谔的猫”的思想实验。</li>
-<li>1963年，基于薛定谔的猫的实验设置，维格纳加上了一个「带着放毒面具的朋友」，这个「朋友」要进到房间里面，观测猫是死还是活。</li>
-<li>维格纳结论是，当「朋友」的意识被包含在整个系统中时，叠加态就不适用了，即使他本人在门外，箱子里的波函数家还是因为朋友的观测而不断地被触动，因此只有“死猫”和“活猫”两种纯态。为什么人会改变世界的状态？人有意识，也就是分辨心。意识一旦包含在微观系统里，微观系统就会坍塌。维格纳认为，意识可以作用于外部世界，使得波函数坍塌是不足为奇的。因为外部世界的变化可以引起我们意识的改变，根据牛顿第三定律，作用与反作用原理，意识也应当反过来作用于外部世界。量子物理的观察问题中，意识无疑是在触动波函数中起了重要的作用。</li>
-<li>平行宇宙：没有人类的意识观测之前，宇宙在百亿年中，都处于混沌状态，每个粒子都以波函数的形式存在，并无确定的状态和清晰的图像。好比近视眼看到的周围世界只是模糊不清的一片。在人类有意识地观测之时，万物才突然从不确定坍塌到确定的状态，宇宙才突然呈现出清晰的图像，就像戴上眼镜，外界突然清晰呈现那样。</li>
+<li>现已完成希捷SATA硬盘预测，各型号预测正确率和故障覆盖率如表3所示。其中前六种型号达到运营要求，已进入推广，具体覆盖65%的SATA盘</li>
+<li>关于正样本数据的搜集：刚开始我们把预测单与实际故障单作对比时，得到的准确率很低。因为模型报出来的预故障单都是从SMART上看，属于“亚健康”甚至“病危”状态的硬盘。而实际故障单是以磁盘自检失败并且不可在线修复和系统dmesg信息中的错误关键字（主要包括SCSI设备掉线，ATA设备超时和设备故障）为准发起故障处理流程，并且结单故障类型为硬盘故障，也就是说一定要有实际换盘的，这个定义其实是相当严苛的，会漏掉很多情况。因为结单故障类型是现场去确认后填写的，如果没有换盘或者没有填写结单故障类型就会算是我们的误报。 并且，实际故障单更多的侧重于依赖OS层面的判断，一定程度漏掉了一些健康堪忧但并未报障的硬盘。我们把这部分「误报」的部分提供给厂商确认，的确被确诊为病态盘甚至于高危盘。所以是否故障的判断，不能仅依赖结单故障类型，还要关注单块硬盘自身的健康状态--如果它的SMART核心指标远离安全阈值，也应判断为故障。</li>
+<li>下一步工作-现在核心主要侧重于SATA盘的故障预测，后续二期我们会把SAS、SSD作为核心，希望能有更大的作为。</li>
 </ol>
-<h2 id="参考">参考</h2>
+<h1 id="参考">参考</h1>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=CBttlMxCUvU&amp;list=PLSFBUUyJDmPhLJZEvBv_amqDqPo9skYD0&amp;index=16">物理学(上)</a></li>
+<li><a target="_blank" rel="noopener" href="http://km.oa.com/group/23255/articles/show/251071">部件故障预测初论</a></li>
+<li><a target="_blank" rel="noopener" href="https://km.woa.com/group/11783/articles/show/170959?sessionKey=Q3i7YOn2ZcLaDSNohaOIZgxO5ztyEuU8">磁盘IO与磁盘故障率研究</a></li>
 </ol>
 
       
@@ -258,7 +300,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/20/reading_notes/qukuailian/intro-to-ether/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -272,7 +314,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/20/reading_notes/qukuailian/intro-to-ether/" class="post-title-link" itemprop="url">以太坊介绍-Patrick访谈</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/" class="post-title-link" itemprop="url">chapter1.5.1 使用logmine加强版做日志聚类</a>
         </h2>
 
         <div class="post-meta">
@@ -282,14 +324,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-20 10:14:40" itemprop="dateCreated datePublished" datetime="2021-05-20T10:14:40+08:00">2021-05-20</time>
+              <time title="创建时间：2021-05-21 11:01:18" itemprop="dateCreated datePublished" datetime="2021-05-21T11:01:18+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
+                <time title="修改时间：2021-06-02 17:43:09" itemprop="dateModified" datetime="2021-06-02T17:43:09+08:00">2021-06-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -297,7 +339,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -312,45 +354,143 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>有空再翻吧</p>
-</blockquote>
-<p>Patrick访谈以太坊组织的研究人员--Justin，内容包括：</p>
+          <h1 id="目录">目录</h1>
 <ul>
-<li>以太坊和比特币的区别</li>
-<li>以太坊平台孵化的项目数量日益增长</li>
-<li>共识算法从工作量证明到权益证明的转变，对以太坊的意义</li>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
 </ul>
-<h2 id="key-concepts-of-btc">Key Concepts of BTC</h2>
+<blockquote>
+<p>日志聚类本质上是在简洁性和信息丰富性之间trade-off。</p>
+<p>原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。</p>
+</blockquote>
+<h1 id="问题描述">问题描述</h1>
+<p>将不同来源的日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。</p>
+<h1 id="解决方案">解决方案</h1>
+<p>logmine使用的是基于聚类的方法，做日志摘要生成。</p>
+<p>主要思路是，一边构建cluster，一边提取pattern</p>
+<h2 id="找cluster">找cluster</h2>
+<ul>
+<li><p>先定义一个参数MaxDist， 表示cluster的半径</p></li>
+<li><p>对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就以他为中心创建一个新的cluster。</p>
+<blockquote>
+<p>为了提升效率，判断是否属于某个cluster时使用early abandon的策略，如果已对比的字段累计距离超过了半径，就可以提前停止了，因为距离只会越来越大。</p>
+</blockquote></li>
+</ul>
+<h2 id="对于每个cluster提取pattern">对于每个cluster，提取pattern</h2>
+<figure>
+<img src="./image-20210226000021042.png" alt="图2-日志分析流程" /><figcaption aria-hidden="true">图2-日志分析流程</figcaption>
+</figure>
+<ul>
+<li>step1. 字段类型检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date。这个模式和正则表达式可以让用户定义。</li>
+<li>step2. 分词，每条日志都得到一个word vector.</li>
+<li>step3. 一边聚类 一边提取pattern</li>
+</ul>
+<p><img src="./img.png" /></p>
+<h2 id="怎么设置level">怎么设置level？</h2>
+<figure>
+<img src="./cost_function.png" alt="图3-评价当前pattern的信息含量" /><figcaption aria-hidden="true">图3-评价当前pattern的信息含量</figcaption>
+</figure>
+<p>怎么设置level？看每个level的信息损失程度，这里用cost function表示损耗的信息，值越大，表示丢失的信息越多</p>
+<p><span class="math display">\[\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times\left(a_{1} W C_{i}+a_{2} V a r_{i}+a_{3} F V_{i}\right)\]</span></p>
+<ul>
+<li><span class="math inline">\({Size}_i\)</span>: 第i个pattern包含的日志个数，</li>
+<li><span class="math inline">\({WC}_i\)</span>: 第i个pattern，**的个数，对应权重a1，默认取1</li>
+<li><span class="math inline">\({Var}_i\)</span>:第i个pattern，变量的个数，对应权重a2，默认取0</li>
+<li><span class="math inline">\({FV}_i\)</span>: 第i个pattern，固定值的个数，对应权重a3，默认取0</li>
+</ul>
+<p>提取层次化模式，参考下图</p>
+<figure>
+<img src="./logmine_image-20210225214320632.png" alt="图1-层次化地提取日志模式" /><figcaption aria-hidden="true">图1-层次化地提取日志模式</figcaption>
+</figure>
+<figure>
+<img src="./logmin-result.png" alt="图2-logmine-result" /><figcaption aria-hidden="true">图2-logmine-result</figcaption>
+</figure>
+<h2 id="衡量两条日志的相似性">衡量两条日志的相似性</h2>
+<p>衡量两条日志相似性的函数：</p>
+<p><span class="math display">\[\operatorname{Dist}(P, Q)=1-\sum\limits_{i=1}^{\operatorname{Min}(\operatorname{len}(P), \operatorname{len}(Q))} \frac{\operatorname{Score}\left(P_{i}, Q_{i}\right)}{\operatorname{Max}(\operatorname{len}(P), \operatorname{len}(Q))}\]</span></p>
+<p><span class="math display">\[\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
+<ul>
+<li><span class="math inline">\(P_i\)</span>：日志P的第i个字段，len(P): 日志P的字段的个数。</li>
+<li><span class="math inline">\(k_1\)</span>: 如果两个字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1。</li>
+</ul>
+<p>###衡量两个pattern的相似性</p>
+<p>pattern包含三类字段：fixed value， Variable 和 Wildcard</p>
+<ul>
+<li>固定值（fixed value field ）：如www, httpd, INFO，固化的。</li>
+<li>可变字段（A variable field）：需要用户定义name和regex，如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的，</li>
+<li>Wildcards ：就是**。</li>
+</ul>
+<p>衡量两个pattern相似性的函数（不同类型的word给的权重不一样）：</p>
+<p><span class="math display">\[\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are fixed value } \\ k_{2} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are variable } \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
+<ul>
+<li><span class="math inline">\(k_1\)</span>: 如果两个fixed value字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1</li>
+<li><span class="math inline">\(k_2\)</span>: 如果两个变量字段一样，得<span class="math inline">\(k_2\)</span>分，默认值为2</li>
+</ul>
+<h2 id="怎么评估效果">怎么评估效果？</h2>
+<p>整个问题的评估可以拆分为两个小评估:</p>
+<ul>
+<li>评估聚类的准确率？</li>
+<li>评估模式的准确率？</li>
+</ul>
+<p>因为没有标签，所以聚类和评估都是跟baseline比</p>
+<blockquote>
+<p>都有了baseline，还要logmine的必要性在于：可能logmine有性能优势？</p>
+</blockquote>
+<ul>
+<li><p>聚类效果跟baseline--OPTICS对比: 看最大公共子集的比例（原文中的agreement score）。</p></li>
+<li><p>模式效果跟baseline--UPGMA比：UPGMA的结果作为ground truth，比较recall和precision.</p>
+<blockquote>
+<p>UPGMA算法的输入一批原始日志，输出是一个patten</p>
+</blockquote></li>
+</ul>
+<p><span class="math inline">\(\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}\)</span></p>
+<h1 id="chiechies对logmine的总结">chiechie's对logmine的总结</h1>
+<p>论文看完了，代码也跑了一遍，发现有几个问题：</p>
 <ol type="1">
-<li>以太坊（Ethereum）诞生于2015年，是一个去中心化的区块链（blockchain），类似的概念是Bitcoin。</li>
-<li>以太坊的平台原生加密货币是以太（Ether），类似的概念是BTC。</li>
-<li>以太坊网络的交易费用每天达到1500w美元，需求日益增长。</li>
-<li>区块链是一个协作平台（coordination platform），让互联网上的人们即使不认识不信任彼此，也可以协作。</li>
-<li>互联网是区块链的第一个阶段，它的使命是冲破地域限制，让世界各地的人可以commmuniction。区块链是对这一能力的拓展，它可以让彼此不信任对方的现状下，人跟人仍然能协作。它的信任来自代码，数学，技术，而不是人。</li>
-<li>货币的本质，一个账本，这个账本记录每个人有多少购买力。比特币本质也是账本，记录每个人有多少比特币。</li>
-<li>关于安全性有哪些必备条件，可参考最安全的东西--时间。时间有3个属性，过去的不可篡改。第二个属性是，当下，对所有人，是一个共享的体验（shared experience）。第三个属性是，未来是确定的，一定会发生，没有任何人能够阻止。</li>
-<li>回到货币上，过去的交易不可篡改，每个人都能信任比特币的状态，不用第三方。绕开审查（Censorship resistance），如果比特币是一个计算器，以太坊就是一个计算机。</li>
-<li>矿工让彼此不信任的人达成共识，理应获得报酬--BTC。</li>
+<li><p>所谓的不需要人工干预，没有做到。很重要的一个功能就是从原始文本中提取variable类型的字段（field），需要人指定variable的name以及正则匹配规则。否则代码是不会主动帮你探测的。 <img src="./c2.png" /></p></li>
+<li><p>不同的cluster的pattern可能存在如下的父子关系 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pattern36 : datetime dms<span class="emphasis">_frontend_</span>mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern50:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern53:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp 1c7c49d5 11024333 from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern64:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>聚类时，比的是原始日志log_signature和类中心log_signature的距离，<br />
+这有一个问题，有一些日志虽然跟该cluster的中心相距较远，但是提取出的pattern可能又很接近.</p>
+</blockquote></li>
+<li><p>2的解决方案：</p>
+<ol type="1">
+<li>对于每个cluster提取pattern时，只保留最抽象的一层</li>
+<li>所有的cluster构建完之后，将存在父子pattern的cluster手动合并。</li>
+</ol></li>
 </ol>
-<h2 id="以太坊">以太坊</h2>
+<h1 id="参考资料">参考资料</h1>
 <ol type="1">
-<li>what was the original impetus（动力） in early history here?</li>
-<li>Why was Ethereum created?</li>
-<li>What shortcomings of Bitcoin did it seek to address in the early days?</li>
-<li>比特币的编程能力有限，以太坊扩展了变成能力。</li>
-<li>说一说以太坊创始人Vitalik的想法？</li>
-<li>权益证明比工作量证明，更便宜，因为货币的机会成本更低？？啥意思</li>
-<li>The rewards that you get as a validator are, number one, issuance but also these tips that don't get burnt.</li>
-<li>The way that we do ownership really in the crypto world is using public keys. It's basically cryptography that allows you to prove that you're the owner of something. What it means to go buy an NFT is, at the end of the day, to basically change this ledger entry to add your public key as the owner of this hash.</li>
-<li>We have, right now, 130,000 validators that are securing the proof-of-stake in Ethereum. This is going to grow to half a million or even close to a million validators. Another thing that is important is to understand that the proof-of-stake is best-in-class in terms of security. Just to give you one compelling reason for that is that when we have this scarce resource securing your consensus engine being money placed as collateral, you have the option to destroy it fully. If an attacker is in a position to be able to attack Ethereum, meaning that it has amassed all these economic resources, well, as soon as they make an attack, we can penalize them and remove them from the system so the system is self-healing. Actually, because there's only a finite number of ETH out there, we can actually put an upper bound on the number of times that an attacker can successfully make an attack. It's on the order of 10 times</li>
-<li>Be intellectually curious, be intellectually honest in the sense that participating in things that you understand and whenever there's something you don't understand, don't be shy to ask questions. There's a lot of information out there. Actually, on that point a lot of information out there, there's also a lot of bad information out there. This is a very organic, decentralized, and chaotic space.</li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.joincolossus.com/episodes/14242194/drake-ethereum-into-the-ether?tab=blocks">Justin Drake - Ethereum: Into the Ether</a></li>
-<li><a target="_blank" rel="noopener" href="https://steemit.com/cryptocurrency/@danielzhuang/6uohm9">A Letterto Jamie Dimo-中文</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.ceresaig.com/wp-content/uploads/2017/11/A-Letter-to-JP-Morgan-Jamie-Dimon-%E2%80%93-Block-Chain-Crypto-FX.pdf">A Letterto Jamie Dimo-英文</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf">logmine-paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/trungdq88/logmine/tree/master/src">logmine-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">数据-apache_2k.log</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">logmine加强版-chiechie's github</a></li>
 </ol>
 
       
@@ -370,7 +510,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/81/">81</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -436,20 +576,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">187</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

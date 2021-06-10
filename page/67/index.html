@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/AI/cause-effect/PC-algo/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/12/meditation/about-angry/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/09/AI/cause-effect/PC-algo/" class="post-title-link" itemprop="url">PC算法</a>
+            <a href="/2021/03/12/meditation/about-angry/" class="post-title-link" itemprop="url">情绪管理</a>
         </h2>
 
         <div class="post-meta">
@@ -189,156 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-09 10:06:00" itemprop="dateCreated datePublished" datetime="2021-03-09T10:06:00+08:00">2021-03-09</time>
+              <time title="创建时间：2021-03-12 09:17:16" itemprop="dateCreated datePublished" datetime="2021-03-12T09:17:16+08:00">2021-03-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="背景">背景</h1>
-<p>学术界有两种对因果关系建模的方法：因果图和结构方程。 对于构建因果图，目前使用的最多的是PC算法。</p>
-<p>通过观察N个独立同分布的样本，来挖掘随机变量的之间的因果关系。 每个样本都是来自M个随机变量的1组观测值。</p>
-<p>有点类似机器学习中，使用随机森林去学习特征的相关性。特征就类似因果图中的节点，也就是随机变量。</p>
-<h2 id="基本概念">基本概念</h2>
-<ul>
-<li>因果图（cause graph）：因果模型的一种表达方式，因果图是一个DAG， G=（V，E），对于每一个节点v，给定了他的双亲pa（v），v跟所有非后代都是独立的。</li>
-<li>冲撞点（collider）：一种V型结构的因果图.</li>
-<li>PC算法的两个假设：马尔可夫条件和faithfulness。</li>
-<li>马尔科夫条件：可用来区分因果关系和相关关系，被用于生成依赖关系集合，构造因果图框架。</li>
-<li>faithfulness假设：可以用来保证，V中的所有变量的独立关系，都可以通过D-seperation表达。</li>
-</ul>
-<p>D-分离</p>
-<blockquote>
-<p>D分离（D-Separation）是一种用来判断两个变量是否条件独立的图形化方法，相比于非图形化方法，更加直观，且计算简单。</p>
-</blockquote>
-<p>定义: 设 X，Y，Z 是 DAG 中不相交的节点集合， <span class="math inline">\(\pi\)</span> 为一条连接 X 中某节点到 Y 中某节点的路径 （不管方向）。 如果路径 <span class="math inline">\(\pi\)</span> 上某节点满足如下的条件：</p>
-<ol type="1">
-<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 V结构 , 即<span class="math inline">\(X \rightarrow w \leftarrow Y\)</span>，且 w 及其后代不在 Z中；(因为collider关系，w不可观测时,X,Y 相互独立)</li>
-<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 非V结构 ，且w在Z中 。</li>
-</ol>
-<p>则称Z阻断了路径<span class="math inline">\(\pi\)</span>。</p>
-<p>如果Z阻断了所有的X到Y的路径，就说Z集合D分离了X和Y，记作<span class="math inline">\((X \perp Y \mid Z)_{G}\)</span>.</p>
-<h1 id="pc算法-概览">PC算法-概览</h1>
-<p>PC算法输入N个m维的样本，输出一个有向无环图（DAG）， 举个例子，如果要构建一个故障因果图，一个指标就是图中的一个节点，每个时间点的观测值，就是一个样本。 如果给定一个变量集合，S，A和B独立，即 A ⊥ B|S，那么A和B两个节点就没有边。</p>
-<p>PC算法分为四步:</p>
-<ol type="1">
-<li>构建一个全连接图，M个随机变量就对应M个节点</li>
-<li>条件独立性检验：对于每一组相邻的节点，给定置信度<span class="math inline">\(\alpha\)</span>, 如果条件独立，那么两个变量之间的边就remove掉。 条件变量S的大小每次迭代递增，直到没有多余的变量可以被加入S</li>
-<li>基于v-structure确定边的方向.</li>
-<li>确定剩下的边的方向，传播.</li>
-</ol>
-<p>PC算法是一种发现因果关系的算法，在满足一定的假设的前提下（基于马尔科夫条件 和 D-separation），使用基于统计的方法（显著性检验-<span class="math inline">\(G^2\)</span>），推导出因果关系（代表因果关系的DAG）。实现流程包括三步:</p>
-<figure>
-<img src="pc-overview.png" alt="图1-PC算法" /><figcaption aria-hidden="true">图1-PC算法</figcaption>
-</figure>
-<h2 id="条件独立性检验">条件独立性检验</h2>
-<p>从全连接图开始，移走条件独立的边</p>
-<figure>
-<img src="pc1.png" alt="图2-确定框架" /><figcaption aria-hidden="true">图2-确定框架</figcaption>
-</figure>
-<p>Z从空集开始，不断增加</p>
-<p>具体来说，可以用指标<span class="math inline">\(G^2\)</span>（条件交叉熵）来检验给定Z时，X和Y的独立性，这里X，Y，Z是互斥的。</p>
-<p><span class="math inline">\(G^{2}=2 m C E(X, Y \mid Z)\)</span></p>
-<ul>
-<li>m：样本大小</li>
-<li>$ C E(X, Y Z)$:给定Z时，X和Y的条件交叉熵，</li>
-</ul>
-<blockquote>
-<p>显著性低于0.05，就说明条件分布和联合分布没有显著性差异，有因果关系 显著性超过0.05， 就说明条件分布和联合分布没有显著性差异，没有因果关系，是独立的。</p>
-</blockquote>
-<p>如果<span class="math inline">\(G^2\)</span>超过一个预先设定的显著性，比如0.05， 那么X和Y是条件独立的。</p>
-<p>PC算法使用一个全连接的无向图，然后使用<span class="math inline">\(G^2\)</span>描述条件独立性。</p>
-<h2 id="确定边的方向">确定边的方向</h2>
-<p>当DAG的架子搭起来了， 接下来的工作就是决定因果关系的方向了。这里使用到了D-seperation的方法。</p>
-<figure>
-<img src="pc2.png" alt="图3-确定方向" /><figcaption aria-hidden="true">图3-确定方向</figcaption>
-</figure>
-<h2 id="传播方向">传播方向</h2>
-<figure>
-<img src="pc3.png" alt="图4-传播方向" /><figcaption aria-hidden="true">图4-传播方向</figcaption>
-</figure>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=o2A61bJ0UCw">pc算法-youtube</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">因果图的基本概念-知乎</a></li>
-<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">Page,3-paper</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/meditation/free-career-choice/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/08/meditation/free-career-choice/" class="post-title-link" itemprop="url">要不要做一个自由职业者？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-08 13:48:38" itemprop="dateCreated datePublished" datetime="2021-03-08T13:48:38+08:00">2021-03-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-21 19:03:03" itemprop="dateModified" datetime="2021-04-21T19:03:03+08:00">2021-04-21</time>
+                <time title="修改时间：2021-06-03 11:30:11" itemprop="dateModified" datetime="2021-06-03T11:30:11+08:00">2021-06-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -361,14 +219,122 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ol type="1">
-<li>自由职业，失败了只能怪自己。</li>
-<li>自由太久，想回到有序的有压迫性的状态。</li>
-<li>一个东西，比如自由，没有的时候，想要得到。得到了，会想。我要这玩意儿干嘛呢？</li>
+          <blockquote>
+<p>故常无欲, 以观其妙 ; 常有欲，以观其徼（jiǎo）</p>
+</blockquote>
+<h1 id="总结">总结</h1>
+<p>工作中生活中，经常会有情绪失控的时候，该如何应对？</p>
+<p>目前能做到的就是，沟通的时候：</p>
+<ol type="1">
+<li>关注问题而不是情绪 ，这点对我来说很有用。因为人的注意力有限, 一旦专注于解决问题，很自然地不会管其他人的情绪和自己的情绪。</li>
+<li>即使当时没克制住情绪，就算了，我不会苛责自己，也不会放大, let it go。</li>
+<li>放弃直接克制情绪：直接克制情绪有点难，可能是一个长期的修行。阅历多了，奇葩见多了，才能非常淡定。</li>
+<li>提升专业能力：与其把时间花在克制情绪上，还不如花在提升自己专业能力上。比如跟弱者合作，一个人就要把整体方案和所有的细节想清楚，不要指望别人，这样也就没有那么多负面的情绪了。</li>
+</ol>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li>播客-得意忘形-46期-人生中的那些欲言又止</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/11/reading_notes/economics/macro-economy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/11/reading_notes/economics/macro-economy/" class="post-title-link" itemprop="url">现代西方经济学的由来和演变</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-11 21:30:23" itemprop="dateCreated datePublished" datetime="2021-03-11T21:30:23+08:00">2021-03-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-10 08:46:25" itemprop="dateModified" datetime="2021-05-10T08:46:25+08:00">2021-05-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">经济学</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>本文由一堆历史事实堆砌而成，没有任何reflection</p>
+<p>可以当经济学的字典用</p>
+</blockquote>
+<h2 id="基本概念">基本概念</h2>
+<ul>
+<li><strong>滞涨</strong>：失业和通货膨胀共存。</li>
+</ul>
+<h2 id="核心观点">核心观点</h2>
+<ol type="1">
+<li>资产阶级经济学的四个阶段：重商主义，古典经济学，庸俗经济学和庸俗经济学以后。</li>
+<li>1830年进入庸俗经济学阶段，主要在于反对空想社会主义。</li>
+<li>1890年以来，马歇尔为代表的经济学开始在西方流行，他们提出了完全竞争和充分就业假说，进而从供给和需求的角度分析市场价格，以解决资源分配问题。影响力持续到20世纪30年代。这个理论赞赏了资本主义的价格制度，生成资本主义使得每种生产要素都得到了应得的报酬，还说资本主义是一架可以自行调节的机器，能自行解决各种矛盾。在此理论之下，国家不干预经济生活的政策被解释为最好的政策。但是，这种思想随着资本主义的发展而有所削弱。</li>
+<li>19世纪30年代开始，传统经济学经历了3次较大的修改。
+<ul>
+<li>第一次修改-1933年-垄断理论：虽然实际情况中，资本主义已于19世纪末进入垄断阶段。但是，直到20世纪30年代，传统西方经济学仍然把"垄断"视为"例外"。为了改变这种理论和现实背离的状态，张伯伦和罗滨逊于1933年提出了垄断竞争理论。作为对传统西方经济学的补充。</li>
+<li>第二次修改-1936年-凯恩斯理论。由于1929年后的大萧条和国家垄断资本主义的发展，资产阶级为了干预经济，需要一个经济理论支撑。1936，凯恩斯发布了《就业，利息和货币通论》，凯恩斯认为，资本主义的自发作用，不能保证充分就业，需要国家的干预来解决就业。这个理论为国家干预经济政策制造了借口。</li>
+<li>第三次修改-1939年-希克斯出版的《价值与资本》，涉及到价值论和一般均衡论。</li>
+</ul></li>
+<li>第二次世界大战～20世纪60年代-萨缪尔森为首的「新古典综合派」。他们把第一次修改的垄断理论和第三次修改的价值称为微观经济学，把凯恩斯的理论称为宏观经济学。他们宣称，微观经济学是以充分就业为分析前提的，宏观经济学研究的是不同水平的就业量的情况。两种理论相辅相成。传统的自由放任（马歇尔理论）和凯恩斯的国家干预主张，是统一理论体系涉及到的两种不同的现实情况。该学派把现代资本主义说成是"混合经济"，由"私营"和"公营"两个部分组成。"私营"的部分由微观经济学分析，"公营"的部分由宏观经济学分析。</li>
+<li>「新古典综合派」在第二次世界大战之后一直处于正统地位，直到20世纪70年代，西方社会出现了「滞涨」，给了「新古典综合派」沉重的打击。该学派的理论表明，失业（经济活动小于充分就业）和通货膨胀是不可能共存的，这一理论跟当时的现实是不符合的。既无法解释，也提不出对策。</li>
+<li>除了「滞涨」，经济发展迟缓也是「新古典综合派」无法解决的问题。这些都严重动摇了「新古典综合派」在经济理论中的统治地位，西方经济学的其他派别纷纷对「新古典综合派」进行抨击，这些派别主要有货币主义，供给学派，理性预期学派等，但是这些学派自己也不能提出一套完整的理论，所以「新古典综合派」能在风雨飘摇中维持统治地位。</li>
+<li>现在「新古典综合派」已经放弃了"新古典综合"的称号，叫自己「现代经济学」或者「现代主流经济学」。除了维持原有的基本观点外，还吸收和容纳其他派别的论点，特别是「货币主义」和「理性预期」学派。这样，「现代主流经济学」成为缺乏统一理论体系的各派学说的混合物。虽然可消除各派观点的矛盾，但是仍然无法对「滞涨」问题提出对策。</li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://steveshuo.com/65">Steve说65期 - 张潇雨 - 欲望可以有界，意义必然无穷</a></li>
+<li>《现代西方经济学-上册》高鸿业 吴易凤，经济科学出版社，1988年</li>
 </ol>
 
       
@@ -388,7 +354,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/66/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/66/">66</a><span class="page-number current">67</span><a class="page-number" href="/page/68/">68</a><span class="space">&hellip;</span><a class="page-number" href="/page/81/">81</a><a class="extend next" rel="next" href="/page/68/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/66/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/66/">66</a><span class="page-number current">67</span><a class="page-number" href="/page/68/">68</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><a class="extend next" rel="next" href="/page/68/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -454,20 +420,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">187</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

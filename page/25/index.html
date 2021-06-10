@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/19/AI/machine_learning/deeplearning/rnn-0-simpleRNN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/15/AI/machine_learning/tree_model/trees_1/" class="post-title-link" itemprop="url">树模型1_常用树模型介绍</a>
+            <a href="/2021/05/19/AI/machine_learning/deeplearning/rnn-0-simpleRNN/" class="post-title-link" itemprop="url">循环神经网络1-simple RNN</a>
         </h2>
 
         <div class="post-meta">
@@ -188,16 +188,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-05-15 14:59:29" itemprop="dateCreated datePublished" datetime="2021-05-15T14:59:29+08:00">2021-05-15</time>
+              <time title="创建时间：2021-05-19 10:47:27 / 修改时间：17:28:53" itemprop="dateCreated datePublished" datetime="2021-05-19T10:47:27+08:00">2021-05-19</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-18 08:24:23" itemprop="dateModified" datetime="2021-05-18T08:24:23+08:00">2021-05-18</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -219,17 +213,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="树模型">树模型</h2>
-<p>最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</p>
-<p>回一下机器学习的三个要素： 1. 假设函数的空间： 2. 学习策略or目标函数 3. 优化算法</p>
-<p>bootstrap是统计学中一种抽样的方法，为了获得样本方差或者均值，采取多次有放回的抽样，获得统计量。 针对单个决策树方差过大的问题。 bagging trees 利用bootstrap的思想，提取B份独立的样本集，分别估计出预测值<span class="math inline">\(\hat{f}^{1}(x), \hat{f}^{2}(x), \ldots, \hat{f}^{B}(x)\)</span> ，然后将结果取平均，就可以得到一个方差更小的预测模型，通过多次实验获得多个regression tree或者classification tree，对每一个input，会产生多个输出，regression tree的输出是K个树的输出取average。classification tree是采用投票的方法，大多数相同的那一类就是输出的那一类 。 bagging involves creating multiple copies of the original training data set using the bootstrap, fitting a separate decision tree to each copy, and then combining all of the trees in order to create a single predictive model.</p>
-<p>random forest是bagging tree的加强版本，因为他考虑到了tree之间的de correlates，使得组合后结果的variance更小。构造树过程如下：consider 每一个split的时候，会从p个predictors中<strong>随机</strong>的挑<span class="math inline">\(m = \sqrt p\)</span>）个作为split candidate，</p>
-<p>boosting是另外一种提升决策树效果的方法，Boosting works in a similar way,也是杨原始样本复制n份，然后构建n个模型，跟bagging tree不一样的地方在于，trees are grown sequentially: each tree is grown using information from previously grown trees. Boosting does not involve bootstrap sampling; instead each tree is fit on a modified version of the original data set.</p>
-<p><img src="trees_1/img.png" alt="img.png" /> xgboost是一种boosting tree的一种，其他的还是有gbdt，catboost</p>
-<h2 id="参考资料">参考资料</h2>
+          <h2 id="总结">总结</h2>
+<ul>
+<li>在自然语言处理的问题中，数据量足够的情况下，更常用transformer。但是在小数据量上，RNN还是很有效的。</li>
+<li>序列数据（sequential data）包括文本，语音，时时间序列等。</li>
+<li>全连接神经网络（FC Nets）和卷积神经网络（Conv Nets）处理样本的方式是one to one，即输入一张图片，输出该图片的类别。同时输入样本的大小和输出的大小是固定的。</li>
+<li>序列数据面对的问题是，many to one 或者many to many，即输入很长一篇文章，输出该文章所属的类别。同时输入样本的大小不是固定的，一篇文章可长可短，翻译的输出也是可变的。RNN很适合。</li>
+<li>RNN运行原理，类似人脑处理信息的过程：阅读一篇长文章时，是逐句阅读，渐渐积累信息，然后再阅读下一个词。</li>
+<li>RNN接受最新时刻word的embedding向量，通过内部单元权重将embedding向量和上一个时刻的隐藏状态映射为最新的隐藏状态。</li>
+<li>RNN也可以看成一个带状态的函数，输入当前词的embedding向量（维度为m）和上一个时刻的状态向量（h维）输出当前时刻的状态向量（h维）。</li>
+<li>最后一个状态向量<span class="math inline">\(h_t\)</span>，积累整句话的所有信息，所以可以只保留这个state，将更老时刻的state都丢掉。</li>
+<li><span class="math inline">\(h_t\)</span>也可以作为整个序列的特征，提供给下游使用。</li>
+<li>simple rnn有一个Long term dependency problem，即不擅长对长时间建模，因为梯度消失了，最老的state的梯度要么爆炸要么消失，而梯度是调整权重的指路灯，灯坏了，权重就不知道该怎么调了。</li>
+<li>simple rnn很擅长对短间隔依赖关系建模，离输出层最近的梯度还是没毛病的</li>
+<li>怎么解决Long term dependency problem？主要通过引入门控来达到这个目的，这一类网络也叫基于门控的循环神经网络（Gated RNN）,主要是LSTM和GRU。</li>
+</ul>
+<h2 id="simeple-rnn">simeple RNN</h2>
+<ul>
+<li><p>待估参数：权重矩阵A，行数为：dim(h)，列数为：dim(h) + dimm(x) <img src="img.png" alt="img.png" /></p></li>
+<li><p>激活函数：双曲正切函数</p>
+<p>为什么要使用双曲正切作为激活函数？使用别的方法（比如relu），隐藏状态的值传着传着就爆炸了或者没了。， 如果A的特征根大于1，向前传播时，状态值呈指数增长，时间足够长，状态向量取值会爆炸 如果A的特征根小于1，向前传播时，状态值呈0指数衰减，时间足够长，状态向量取值会接近0</p>
+<p>双曲正切作为激活函数的好处是，将每个rnn内部线性映射之后的结果scale到-1到1之间。所以向前传播时，不会出现指数爆炸或者衰减。</p></li>
+<li><p>simple RNN的参数个数：即矩阵A的大小 + intercept, dim(h) ✖ [dim(h) + dimm(x)] + dim(h)</p>
+<blockquote>
+<p>keras在实现RNN默认使用intercept，所以还有一个intercept参数，大小是dim(h)</p>
+</blockquote></li>
+</ul>
+<h2 id="simple-rnn应用-情感判断">simple-RNN应用-情感判断</h2>
+<p>判断电影评价是正面还是负面,</p>
+<figure>
+<img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Cc4ENs6BHQw&amp;list=PLvOO0btloRnuTUGN4XqO85eKPeFSZsEqK&amp;index=3">wangshusen-RNN-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://nndl.github.io/nndl-book.pdf">神经网络与深度学习</a></li>
 </ol>
 
       
@@ -250,7 +269,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_4/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/18/AI/machine_learning/automl/NAS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -264,7 +283,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/15/AI/machine_learning/tree_model/trees_4/" class="post-title-link" itemprop="url">树模型4_xgboost介绍</a>
+            <a href="/2021/05/18/AI/machine_learning/automl/NAS/" class="post-title-link" itemprop="url">可微的NAS方法</a>
         </h2>
 
         <div class="post-meta">
@@ -274,14 +293,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-15 14:59:29" itemprop="dateCreated datePublished" datetime="2021-05-15T14:59:29+08:00">2021-05-15</time>
+              <time title="创建时间：2021-05-18 08:32:24" itemprop="dateCreated datePublished" datetime="2021-05-18T08:32:24+08:00">2021-05-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-18 08:24:23" itemprop="dateModified" datetime="2021-05-18T08:24:23+08:00">2021-05-18</time>
+                <time title="修改时间：2021-05-19 10:55:05" itemprop="dateModified" datetime="2021-05-19T10:55:05+08:00">2021-05-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -304,60 +323,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="xgboost">xgboost</h2>
-<p>boosting tree的另外一个代表是xgboost,下面重点介绍一下xgboost</p>
-<h3 id="损失函数定义">损失函数定义</h3>
-<p>先看看，xgboost怎么定义ensemble tree的 损失函数：</p>
-<p><span class="math display">\[\begin{array}{l}{\mathcal{L}(\phi)=\sum\limits_{i} l\left(\hat{y}_{i}, y_{i}\right)+\sum\limits_{k} \Omega\left(f_{k}\right)}\end{array}\]</span> <span class="math display">\[ \\{\Omega(f)=\gamma T+\frac{1}{2} \lambda\|w\|^{2}} \]</span></p>
-<ul>
-<li><span class="math inline">\(\hat{y}_{i}=\phi\left(\mathbf{x}_{i}\right)=\sum^{K} f_{k}\left(\mathbf{x}_{i}\right), \quad f_{k} \in \mathcal{F}\)</span></li>
-<li>l是一个可谓的图函数</li>
-<li>k表示第k棵树</li>
-<li>i表示第i个样本</li>
-<li>T is the number of leaves in the tree.</li>
-<li><span class="math inline">\(f_k\)</span>表示第k棵树的预测函数，</li>
-<li>q代表的书的结构，w代表叶子节点的权重</li>
-<li><span class="math inline">\(\Omega(f_k)\)</span>表示第k棵树的复杂度</li>
-</ul>
-<h3 id="reformulate目标函数">reformulate目标函数</h3>
-<p>上面的优化问题的解，近似求一系列优化问题的解，如下</p>
-<p><span class="math inline">\(\mathcal{L}^{(t)}=\sum\limits_{i=1}^{n} l\left(y_{i}, \hat{y}_{i}^{(t-1)}+f_{t}\left(\mathbf{x}_{i}\right)\right)+\Omega\left(f_{t}\right)\)</span></p>
-<ul>
-<li><span class="math inline">\(\mathcal{L}^{(t)}\)</span>表示第t棵树的训练目标，也就是通过依次求解最优的树来逼近最开始的损失函数。</li>
-</ul>
-<h3 id="损失函数-二阶展开">损失函数-二阶展开</h3>
-<p>而为了方便计算，上面的损失函数还可以进一步简化（利用二阶展开）</p>
-<p><span class="math inline">\(\mathcal{L}^{(t)} \simeq\sum\limits_{i=1}^{n}\left[l\left(y_{i}, \hat{y}^{(t-1)}\right)+g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
-<p>这里：</p>
-<p><span class="math inline">\(g_{i}=\partial_{\hat{y}^{(t-1) }}l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span></p>
-<p><span class="math inline">\(h_{i}=\partial_{\hat y^{(t-1)}}^{2} l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span></p>
-<p>进一步，我们remove常数项，得到</p>
-<p><span class="math inline">\(\tilde{\mathcal{L}}^{(t)}=\sum\limits_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
-<h3 id="基于样本集重新定义损失函数">基于样本集重新定义损失函数</h3>
-<p>更进一步，我们将<span class="math inline">\(I_{j}=\left\{i | q\left(\mathbf{x}_{i}\right)=j\right\}\)</span>定义为落入叶子j的样本集, 那么可以更进一步formulate模型为</p>
-<p><span class="math inline">\(\begin{aligned} \tilde{\mathcal{L}}^{(t)} &amp;=\sum_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\gamma T+\frac{1}{2} \lambda \sum_{j=1}^{T} w_{j}^{2} \\ &amp;=\sum_{j=1}^{T}\left[\left(\sum_{i \in I_{j}} g_{i}\right) w_{j}+\frac{1}{2}\left(\sum_{i \in I_{j}} h_{i}+\lambda\right) w_{j}^{2}\right]+\gamma T \end{aligned}\)</span></p>
-<p>对于一个固定的结构q(x),我们可以算出叶子j的最佳权重为</p>
-<p><span class="math inline">\(w_{j}^{*}=-\frac{\sum\limits_{i \in I_{j}} g_{i}}{\sum\limits_{i \in I_{j}} h_{i}+\lambda}\)</span> 以及最优函数值为:</p>
-<p><span class="math inline">\(\tilde{\mathcal{L}}^{(t)}(q)=-\frac{1}{2} \sum_{j=1}^{T} \frac{\left(\sum_{i \in I_{j}} g_{i}\right)^{2}}{\sum_{i \in I_{j}} h_{i}+\lambda}+\gamma T\)</span> （6）</p>
-<p>公式（6）可以用来衡量树结构q的质量，类似决策树中的impurity得分。</p>
-<p>枚举所有的树结构不现实，best practice是使用一个贪婪算法：</p>
-<ul>
-<li><p>从1个叶子结点出发</p></li>
-<li><p>迭代式的添加branch</p>
-<p>令<span class="math inline">\(I=I_{L} \cup I_{R}\)</span>, 可以使用下面的公式（7）去评估切分后带来的损失下降</p>
-<p><span class="math inline">\(\mathcal{L}_{s p l i t}=\frac{1}{2}\left[\frac{\left(\sum_{i \in I_{L}} g_{i}\right)^{2}}{\sum_{i \in I_{L}} h_{i}+\lambda}+\frac{\left(\sum_{i \in I_{R}} g_{i}\right)^{2}}{\sum_{i \in I_{R}} h_{i}+\lambda}-\frac{\left(\sum_{i \in I} g_{i}\right)^{2}}{\sum_{i \in I} h_{i}+\lambda}\right]-\gamma\)</span> (7)</p></li>
-</ul>
-<h3 id="切分点查找算法">切分点查找算法</h3>
-<p>最朴素的算法，遍历所有特征的所有的切分值，找出最佳的。</p>
-<p>目前大部分单机的机器学习库都是采用的这种算法。</p>
-<figure>
-<img src="./image-20200107161207967.png" alt="image-20200107161207967" /><figcaption aria-hidden="true">image-20200107161207967</figcaption>
-</figure>
-<h2 id="最佳实践">最佳实践</h2>
-<p>number of trees:太大会造成过拟合，一般用cross validation去挑最好的参数 shrinkage parameter:迭代步长，通常取0.01或者0.001，较小的lambda会需要很大的B来取得较好的效果。 number of split d:通常d=1效果就比较好了。d表示的interation depth，就是交叉项的深度。</p>
-<h2 id="参考资料">参考资料</h2>
-<ol start="2" type="1">
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
+          <blockquote>
+<p>NAS是auto-ml的一个子领域，相关的技术有随机搜索，强化学习，基于微分的方法，如DARTS 和 FBNet。</p>
+<p>DARTS 和 FBNet是目前做NAS的the state of arts方法</p>
+<p>下面简单介绍FBNet的思路</p>
+</blockquote>
+<h2 id="fbnet的基本idea">FBNet的基本idea</h2>
+<ol type="1">
+<li><p>定义候选block, eg10个</p></li>
+<li><p>定义神经网络的层数,eg20，神经网络的每一层都是从9个候选block中选一个，搜索空间9^20</p></li>
+<li><p>构建一个很大的神经网络--supernet，每一层由9个候选block并联而成。supernet的待估参数包括9个候选block✖️20层，以及长度为9的权重向量✖️20。</p>
+<blockquote>
+<p>人工调参，可以看成是，指定supernet中的一条路径，然后灌入数据，来估计路径上20个blcock的参数。使用FBNet就不用人为指定其中某条路径，而是这个大网络supernet从训练数据中，学习出9个block✖️20（层）个参数，以及9✖️20（层）个权重。训练完之后，选择每一层权重最大的block并且连成一条路径，就是机器选定的20层的网络结构。</p>
+</blockquote></li>
+<li><p>模型要落地，还要考虑计算效率。具体的做法，事先算好候选block各自的latency(做一次推断平均耗时多久，block的权重随机给，跑多组数据求平均时延），然后将latency信息加入损失函数中，作为错误率之外的另外的一个惩罚项。</p></li>
+</ol>
+<h2 id="chiechies-reflection">chiechie's reflection</h2>
+<p>联想到之前构建的通用异常检测模型，整体流程大概是这样：定义多个检测器，曲线特征，并用一个随机森林去做集成。希望随机森林可以将不同的曲线路由到适合的检测器上去。</p>
+<p>FBNet的思路跟上面的流程有点像，都是数据驱动去选择适配的组件。不同的地方在于，FBNet最终会减枝，即从9✖️20个可能的路径中，裁剪成一条路径。</p>
+<p>FBNet要解决的任务更简单，给一个小任务找到适配的解决方案；通用异常检测更难，要给n个小任务找解决方案，并且用一套复合的解决方案。</p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=D9m9-CXw_HY">Differentiable Neural Architecture Search-youtube</a></li>
 </ol>
 
       
@@ -377,7 +365,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/81/">81</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -443,20 +431,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">187</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

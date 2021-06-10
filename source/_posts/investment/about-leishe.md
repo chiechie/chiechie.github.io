@@ -39,7 +39,7 @@ categories:
 
 两种原因导致显卡涨价，但是雷蛇会受到什么影响？
 
-![英伟达股价](./img.png)
+![英伟达股价](about-cryptocurrency/img.png)
 
 ![AMD股价](./img_1.png)
 

@@ -70,7 +70,7 @@ categories:
 1. 智能合约拓展了btc的去中心化货币的功能，合约可以用代码来定义，代码制药符合特定的编程规范即可。 
 2. 现实中的合同执行要法院判决，警察强力保证执行。智能合约本质就是一个合同，只不过比现实中的合同更好执行，code is law。
 
-![img.png](img.png)
+![img.png](about-cryptocurrency/img.png)
 
 
 ## 第三代应用-DeFi和NFT
@@ -78,17 +78,13 @@ categories:
 2. NFT的概念其实很早就出现了，就是腾讯的Q币，只是中心化的。现在不管是名人、宣传还是NFT都是在为市场扩圈，币圈与非币圈之间也已经没有明显的界限了，而 NFT会把这个现象推向更高的高潮。
 
 
-## chiechie的猜测
+## chiechie的预测
 
 1. 全世界范围内，政府（除美国）短期不会打压数字货币，甚至还会推动数字货币的发展，直到世界格局改变。
    
    > 2021年6月9日，萨尔瓦多正式通过立法将BTC做为法定货币。这标志着数字资产进入一个新的纪元。
-2. 各种去中心化数字货币成为国际流通货币的可能性很小，但是，不要失望，有较大可能演变成一个收藏品，比特币会成为其中的顶级收藏品。
-3. 狗狗币?帮助加速加密货币出圈。不论是动物币、狗狗币还是shib，都成功用娱乐的形式把外面的客户引流进来。如果只是一本正经地推广比特币，人们可能会觉得没有意思，到那时一提到狗币，shib大家都很感兴趣。马克斯也为币圈带来了一些热度，我们可以把这个价值等同于娱乐圈的IP价值，是对人们生活的调剂。
-
-
-
-先就这些吧，想到再补
+2. 各种去中心化数字货币成为国际流通货币的可能性很小，但是有较大可能演变成一个收藏品，比特币会成为其中的顶级收藏品。
+3. 狗狗币?帮助加速加密货币出圈。不论是动物币、狗狗币还是shib，都成功用娱乐的形式把外面的客户引流进来。如果只是一本正经地推广比特币，人们可能会觉得没有意思.这些动物币有点像娱乐圈的IP。
 
 
 
@@ -96,16 +92,5 @@ categories:
 
 1. [对话 DODO 雷达熊：DeFi 有太多反逻辑，应创造无需许可的产品并发挥价值](https://www.chainnews.com/articles/503060403039.htm)
 2. [How_to_DeFi-中文](https://assets.coingecko.com/books/how-to-defi/How_to_DeFi_Chinese.pdf)
-3. [王川: 入门以太坊](https://mp.weixin.qq.com/s/hGh0cwRR8DkuWe2NpKkH6A)
-4. [王川：以太坊的费用，为什么这么高](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672247422&idx=1&sn=28ac3ca342cc6e0454a710b6c32d28b4&chksm=85a124bab2d6adac3fee8c3569b91485c5e796dbea4cf35b9443a7fbcf911e7621dc25e4bf3d&scene=21#wechat_redirect)
-3. [王川: 公众号-历史文章](https://mp.weixin.qq.com/s/JTwjtUM1qaoifqJlHNxCtw)
-5. [王川: 关于比特币的rtfm](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672247421&idx=1&sn=d817389613f098feca94bd93b869f081&chksm=85a124b9b2d6adaf64132760465d7d9a4976a3c0ede83dbc3a65c8af0f560bc13f05cfe2f9fb&scene=21#wechat_redirect)
-4. [王川: naval的区块链断言](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672246704&idx=1&sn=c38edcdc74282d13771f78b047cd802e&chksm=85a15974b2d6d0620230b7a5145a8dfc33e8419e3a3a3111469adf21ba568dea94cfd505b2ad&scene=21#wechat_redirect)
-5. [王川: 关于区块链随想](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672246708&idx=1&sn=7558d34e23d5713cf59f069698a8f7d6&chksm=85a15970b2d6d066c7c654017b697566ef0ed23a3308728e79b6b019b66738638ad3f297347c&scene=21#wechat_redirect)
-6. [王川: 区块链技术的终局是什么](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672246779&idx=1&sn=3eb31aba31da622e598063f84ed28c3d&chksm=85a1593fb2d6d0298ec62e1f733997970030001fea90e0ff22a271b4970dda0033f7e3e41a35&scene=21#wechat_redirect)
-8. [王川：关于区块链投资的七个猜测
-](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672246948&idx=1&sn=6c7b36184fabeabd095bd649342f0598&chksm=85a12660b2d6af76fe53bcc7feb656550858be7b99ce9094a67d65db8a27f454dc50cb04328b&scene=21#wechat_redirect)
-9. [王川：去中心化的流动性黑洞, 和区块链第一法则](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672247406&idx=1&sn=55316a2d422c033ca214ad843fd25a02&chksm=85a124aab2d6adbc02041db1ba3d0e8b4e1b813578035dbeecb48fb1b3021c74dacfb752692c&scene=21#wechat_redirect)
-10. [王川: 比特币的支付费用为什么这么高](https://mp.weixin.qq.com/s?__biz=MzA3MzE5MjM2Mw==&mid=2672246775&idx=1&sn=206bf28f6091d4e2c06a0b2a5c3eb1b7&chksm=85a15933b2d6d025d33e12e76fb12c8f6c563e0f1f3ffaf477335e8dec1c60eb65de8fdde0a9&scene=21#wechat_redirect)
 11. [report](https://tokeninsight.com/zh/report/2708)
 12. [youtube-nft](https://www.youtube.com/watch?v=Oz9zw7-_vhM)

@@ -5,7 +5,7 @@ mathjax: true
 date: 2021-04-06 22:58:17
 tags: 
 - taleb
-- 人生哲学
+- 哲学
 - 概率哲学
 categories: 
 - 阅读

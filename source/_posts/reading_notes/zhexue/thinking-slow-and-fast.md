@@ -5,6 +5,7 @@ mathjax: true
 date: 2021-04-10 22:33:30
 tags:
 - 心理学
+- 哲学
 categories:
 - 阅读
 ---

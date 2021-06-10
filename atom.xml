@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-06-09T03:30:01.871Z</updated>
+  <updated>2021-06-10T01:17:36.990Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://chiechie.github.io/2021/06/08/reading_notes/computer/coding/"/>
     <id>https://chiechie.github.io/2021/06/08/reading_notes/computer/coding/</id>
     <published>2021-06-08T01:09:12.000Z</published>
-    <updated>2021-06-09T03:30:01.871Z</updated>
+    <updated>2021-06-10T01:17:36.990Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="二进制加法器">12 二进制加法器</h2><ol type="1"><li>电路中的逻辑门能实现二进制加法。</li></ol><blockquote><p>逻辑门是认为设计的一种电路走线，为了映射到逻辑上的加法运算。</p><p>逻辑门是链接物理世界和信息世界的桥梁，信息世界以逻辑求和为根基，开始构建信息世界的高楼大厦。</p></blockquote><h2 id="从算盘到芯片">18 从算盘到芯片</h2><h2 id="两种微处理器">20 两种微处理器</h2><ol type="1"><li><p>微处理器将中央处理器的所有组建整合到一个硅芯片上。</p></li><li><p>第一个微处理器，intel 4004，包含了2300个晶体管</p></li><li><p>三十年过去了，一个微处理器中的晶体管数量逼近1000w个。</p></li><li><p>摩托罗拉公司，从20实际50年代生产半导体和晶体管，在1974年8月推出了6800处理器。</p></li><li><p>得克萨斯仪器在1974年，推处4位的处理器TMS1000，</p></li><li><p>英特尔为8080最初定的价格为360美元，8080是一个8位的微处理器，它包括6000个晶体管，运行的时钟频率为2 MHz，寻址空间为64 KB。</p></li><li><p>这些芯片被称为“单芯片微处理器”（single-chip microprocessors</p></li><li><p>除了处理器之外，计算机还需要其他一些设备，至少要包括存储器（RAM），输入设备（键盘），输出设备（显示屏），以及其他一些能把所有构件连接在一块的芯片（主板，机箱）。</p></li><li><p>通过观测芯片的输入、输出信号，特别是芯片的指令集来理解微处理器的工作原理。</p></li><li><p>微处理器通过管脚提供了处理器的输入和输出访问接入点 <img src="img.png" alt="img.png" /></p></li><li><p>所有电气或电子设备都需要某种电源来供电</p></li><li><p>8080的一个特殊的地方就是它需要三种电源电压：管脚20必须接到5V的电压；管脚11需要接到-5V的电压；管脚28需接12V的电压；管脚2接地。（英特尔在1976年发布了8085芯片，目的就是简化对这些电源的要求）.</p><ul><li>从芯片引出的箭头表明这是一个输出（output）信号，这种信号由微处理器控制，计算机的其他芯片对该信号响应。</li><li>指向芯片的箭头表明该信号是一个输入（input）信号，该信号由其他芯片发出，并由8080芯片对其响应。还一些管脚既是输入又是输出。</li></ul></li><li><p>8080有16个用于寻址的输出信号，标记为A0～A15，因此它的可寻址空间大小为<span class="math inline">\(2^16\)</span></p></li><li><p>在计算机中，所有的指令都是3个字节长（1个字节=8个bit），包括1字节的操作码和2字节的地址，指令长什么样？：</p><ul><li>有些指令使8080从存储器的一个特定地址读取字节到微处理器，</li><li>有些指令使8080将一个字节从微处理器写入存储器的特定地址；</li><li>还有些指令使8080在其内部执行而不需要访问RAM</li></ul><p>8080执行完第一条指令后，接着从「存储器」读取第二条指令，并依此类推。这些指令组合在一起构成了计算机程序</p></li><li><p>计算机的指令集包括两条非常重要的指令，我们称之为加载（Load）和保存（Store），每条指令占3个字节</p><ul><li>在Load指令中，第一个字节是操作码，其后的两个字节是要加载的操作数的16位地址。当处理器执行加载指令时，会把该指定地址中的字节加载到累加器。</li><li>当Store指令被执行时，累加器中的内容被保存到该指令指定的地址中。</li></ul></li><li><p>8080芯片的微处理器的内部除累加器外还设置了6个寄存器（register），每个寄存器可以存放一个8位的数。这些寄存器和累加器非常相似，事实上累加器被视为一种特殊的寄存器。</p></li><li><p>寄存器是计算机必不可少的部件吗？理论上不是。很多计算机程序都同时用到多个数据，将这些数据存放在寄存器比存放在存储器更便于访问，因为程序访问内存的次数越少其执行速度就越快。</p></li><li><p>利用指令，可以方便地把一个寄存器存放的数据转移到另一个寄存器</p></li><li><p>有一种存储器叫堆栈：以从底部到顶部的顺序把数据存入存储器，并以相反的顺序把数据从堆栈中取出，因此该技术也称作后进先出存储器（last-in-first-out，LIFO）。在计算机中使用堆栈技术是十分方便的。通常把将数据存入堆栈的过程称作压入（push），把从堆栈取出数据的过程称作弹出（pop）。</p></li><li><p>堆栈的功能是怎样实现的呢？首先，堆栈其实就是一段普通的RAM存储空间，只是这段空间相对独立不另作他用。8080微处理器设置了一个专门的16位寄存器对这段存储空间寻址，这个特殊的寄存器称为堆栈指针（SP，Stack Pointer）。</p></li><li><p>在8080中，执行PUSH指令实际上是把16位的数据保存到堆栈，执行POP指令是把这些数据从堆栈中取回至寄存器。</p></li><li><p>每执行一条PUSH指令，堆栈都会增加两个字节，这可能会导致程序出现一些小错误——堆栈可能会不断增大，最终覆盖掉存储器中保存的程序所必需的代码或数据。这种错误被称作堆栈上溢（stackoverflow）。类似的，如果在程序中过多地使用了POP指令，则会过早地取完堆栈中的数据从而导致类似的错误，这种情况称为堆栈下溢（stack underflow）。</p></li><li><p>根据摩尔定律（Moore’s Law），微处理器中的晶体管数量每18个月翻一倍，增加的这些大量的晶体管用来做什么呢？</p><ul><li>一些晶体管用来适应处理器不断增加的数据宽度——从4位、8位、16位到32位；</li><li>另一些新增的晶体管用来应对新的指令。</li></ul></li><li><p>现代处理器主要使用2种策略来提高运行速度:</p><ul><li>一种就是流水线技术（pipelining），即处理器在执行一条指令的同时读取下一条指令，</li><li>还有一种是Cache（高速缓冲存储器），它是一个设置在处理器内部，访问速度非常快的RAM阵列，用来存放处理器最近要执行的指令</li></ul><p>这两种策略都需要在处理器内部增加更多的逻辑组件和晶体管。</p></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://weread.qq.com/web/reader/64e32bf071fd5a9164ece6b">编程：隐匿在计算机硬件背后的语言</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="二进制加法器">12 二进制加法器</h2><ol type="1"><li>电路中的逻辑门能实现二进制加法。</li></ol><blockquote><p>逻辑门是认为设计的一种电路走线，为了映射到逻辑上的加法运算。</p><p>逻辑门是链接物理世界和信息世界的桥梁，信息世界以逻辑求和为根基，开始构建信息世界的高楼大厦。</p></blockquote><h2 id="存储器组织">16 存储器组织</h2><ol type="1"><li>我们习惯于将可能用到的事物先存起来，在需要时将它们取出。从技术角度来讲，这个过程称为先存储后访问。存储器的职责和作用就在于此，它负责保障这两个过程之间信息完好无损。</li><li>存储信息都要利用不同种类的存储器。比如，保存文本信息的不二之选就是纸张，而磁带则更适于存储音乐和电影。</li><li>电报继电器（Telegraph Relays）——以一定形式组织起来构成逻辑门，然后再形成触发器——同样具备保存信息的能力</li></ol><h2 id="从算盘到芯片">18 从算盘到芯片</h2><h2 id="两种微处理器">19 两种微处理器</h2><ol type="1"><li><p>微处理器将中央处理器的所有组建整合到一个硅芯片上。</p></li><li><p>第一个微处理器，intel 4004，包含了2300个晶体管</p></li><li><p>三十年过去了，一个微处理器中的晶体管数量逼近1000w个。</p></li><li><p>摩托罗拉公司，从20实际50年代生产半导体和晶体管，在1974年8月推出了6800处理器。</p></li><li><p>得克萨斯仪器在1974年，推处4位的处理器TMS1000，</p></li><li><p>英特尔为8080最初定的价格为360美元，8080是一个8位的微处理器，它包括6000个晶体管，运行的时钟频率为2 MHz，寻址空间为64 KB。</p></li><li><p>这些芯片被称为“单芯片微处理器”（single-chip microprocessors</p></li><li><p>除了处理器之外，计算机还需要其他一些设备，至少要包括存储器（RAM），输入设备（键盘），输出设备（显示屏），以及其他一些能把所有构件连接在一块的芯片（主板，机箱）。</p></li><li><p>通过观测芯片的输入、输出信号，特别是芯片的指令集来理解微处理器的工作原理。</p></li><li><p>微处理器通过管脚提供了处理器的输入和输出访问接入点 <img src="img.png" alt="img.png" /></p></li><li><p>所有电气或电子设备都需要某种电源来供电</p></li><li><p>8080的一个特殊的地方就是它需要三种电源电压：管脚20必须接到5V的电压；管脚11需要接到-5V的电压；管脚28需接12V的电压；管脚2接地。（英特尔在1976年发布了8085芯片，目的就是简化对这些电源的要求）.</p><ul><li>从芯片引出的箭头表明这是一个输出（output）信号，这种信号由微处理器控制，计算机的其他芯片对该信号响应。</li><li>指向芯片的箭头表明该信号是一个输入（input）信号，该信号由其他芯片发出，并由8080芯片对其响应。还一些管脚既是输入又是输出。</li></ul></li><li><p>8080有16个用于寻址的输出信号，标记为A0～A15，因此它的可寻址空间大小为<span class="math inline">\(2^16\)</span></p></li><li><p>在计算机中，所有的指令都是3个字节长（1个字节=8个bit），包括1字节的操作码和2字节的地址，指令长什么样？：</p><ul><li>有些指令使8080从存储器的一个特定地址读取字节到微处理器，</li><li>有些指令使8080将一个字节从微处理器写入存储器的特定地址；</li><li>还有些指令使8080在其内部执行而不需要访问RAM</li></ul><p>8080执行完第一条指令后，接着从「存储器」读取第二条指令，并依此类推。这些指令组合在一起构成了计算机程序</p></li><li><p>计算机的指令集包括两条非常重要的指令，我们称之为加载（Load）和保存（Store），每条指令占3个字节</p><ul><li>在Load指令中，第一个字节是操作码，其后的两个字节是要加载的操作数的16位地址。当处理器执行加载指令时，会把该指定地址中的字节加载到累加器。</li><li>当Store指令被执行时，累加器中的内容被保存到该指令指定的地址中。</li></ul></li><li><p>8080芯片的微处理器的内部除累加器外还设置了6个寄存器（register），每个寄存器可以存放一个8位的数。这些寄存器和累加器非常相似，事实上累加器被视为一种特殊的寄存器。</p></li><li><p>寄存器是计算机必不可少的部件吗？理论上不是。很多计算机程序都同时用到多个数据，将这些数据存放在寄存器比存放在存储器更便于访问，因为程序访问内存的次数越少其执行速度就越快。</p></li><li><p>利用指令，可以方便地把一个寄存器存放的数据转移到另一个寄存器</p></li><li><p>有一种存储器叫堆栈：以从底部到顶部的顺序把数据存入存储器，并以相反的顺序把数据从堆栈中取出，因此该技术也称作后进先出存储器（last-in-first-out，LIFO）。在计算机中使用堆栈技术是十分方便的。通常把将数据存入堆栈的过程称作压入（push），把从堆栈取出数据的过程称作弹出（pop）。</p></li><li><p>堆栈的功能是怎样实现的呢？首先，堆栈其实就是一段普通的RAM存储空间，只是这段空间相对独立不另作他用。8080微处理器设置了一个专门的16位寄存器对这段存储空间寻址，这个特殊的寄存器称为堆栈指针（SP，Stack Pointer）。</p></li><li><p>在8080中，执行PUSH指令实际上是把16位的数据保存到堆栈，执行POP指令是把这些数据从堆栈中取回至寄存器。</p></li><li><p>每执行一条PUSH指令，堆栈都会增加两个字节，这可能会导致程序出现一些小错误——堆栈可能会不断增大，最终覆盖掉存储器中保存的程序所必需的代码或数据。这种错误被称作堆栈上溢（stackoverflow）。类似的，如果在程序中过多地使用了POP指令，则会过早地取完堆栈中的数据从而导致类似的错误，这种情况称为堆栈下溢（stack underflow）。</p></li><li><p>根据摩尔定律（Moore’s Law），微处理器中的晶体管数量每18个月翻一倍，增加的这些大量的晶体管用来做什么呢？</p><ul><li>一些晶体管用来适应处理器不断增加的数据宽度——从4位、8位、16位到32位；</li><li>另一些新增的晶体管用来应对新的指令。</li></ul></li><li><p>现代处理器主要使用2种策略来提高运行速度:</p><ul><li>一种就是流水线技术（pipelining），即处理器在执行一条指令的同时读取下一条指令，</li><li>还有一种是Cache（高速缓冲存储器），它是一个设置在处理器内部，访问速度非常快的RAM阵列，用来存放处理器最近要执行的指令</li></ul><p>这两种策略都需要在处理器内部增加更多的逻辑组件和晶体管。</p></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://weread.qq.com/web/reader/64e32bf071fd5a9164ece6b">编程：隐匿在计算机硬件背后的语言</a></li></ol>]]></content>
     
     
       
@@ -246,9 +246,9 @@
     <link href="https://chiechie.github.io/2021/05/28/investment/about-leishe/"/>
     <id>https://chiechie.github.io/2021/05/28/investment/about-leishe/</id>
     <published>2021-05-28T05:31:24.000Z</published>
-    <updated>2021-06-03T09:29:47.197Z</updated>
+    <updated>2021-06-10T01:53:17.988Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>试着分析下</p><p>行业--&gt;护城河--&gt;未来增长--&gt;风险</p><p>分析不出啥？？？电脑主机？</p></blockquote><h2 id="行业分析">行业分析</h2><p>雷蛇属于电子消费行业，在2017-11-13 在港交所上市。</p><p>雷蛇卖什么？卖游戏周边，包括：</p><ul><li>硬件：游戏周边设备，鼠标键盘耳机，游戏笔记本</li><li>软件：？？</li><li>服务：支付服务。</li></ul><p>雷蛇的竞争对手，罗技</p><h3 id="关于显卡的产业链">关于显卡的产业链</h3><p>显卡供应商：AMD(AMD),英伟达(NVDA)</p><p>显卡消费者：矿工和游戏玩家</p><p>近半年，受到疫情影响，显卡供应减少，同时需求增多（主要是加密货币火爆行情刺激了矿机需求）</p><p>两种原因导致显卡涨价，但是雷蛇会受到什么影响？</p><figure><img src="./img.png" alt="英伟达股价" /><figcaption aria-hidden="true">英伟达股价</figcaption></figure><figure><img src="./img_1.png" alt="AMD股价" /><figcaption aria-hidden="true">AMD股价</figcaption></figure><figure><img src="./img_2.png" alt="雷蛇股价" /><figcaption aria-hidden="true">雷蛇股价</figcaption></figure><h2 id="未来增长">未来增长</h2><p>集團更進一步拓展移動╱雲端遊戲、主機遊戲、直播產品及電競椅等增長領域</p><h2 id="其他新闻">其他新闻</h2><ol type="1"><li>雷蛇于5月12日在联交所回购855万股，每股价格介乎2.62至2.66846元，涉资约2,281.53万元。</li><li>2021年初至今雷蛇已回购约1.71亿股，占已发行股本约1.9229%。</li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://doc.irasia.com/listco/hk/razer/annual/2020/crespress.pdf">雷蛇2020年财报</a></li><li><a href="https://news.futunn.com/post/9452174?lang=zh-cn&amp;src=2&amp;report_type=stock&amp;report_id=17625226&amp;level=1&amp;data_ticket=1615555035779921">雷蛇(01337.HK)斥约2,281万元回购855万股</a></li><li><a href="https://news.futunn.com/report/821714?lang=zh-cn&amp;src=43&amp;level=1&amp;data_ticket=1615555035779921">广发证券</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>试着分析下</p><p>行业--&gt;护城河--&gt;未来增长--&gt;风险</p><p>分析不出啥？？？电脑主机？</p></blockquote><h2 id="行业分析">行业分析</h2><p>雷蛇属于电子消费行业，在2017-11-13 在港交所上市。</p><p>雷蛇卖什么？卖游戏周边，包括：</p><ul><li>硬件：游戏周边设备，鼠标键盘耳机，游戏笔记本</li><li>软件：？？</li><li>服务：支付服务。</li></ul><p>雷蛇的竞争对手，罗技</p><h3 id="关于显卡的产业链">关于显卡的产业链</h3><p>显卡供应商：AMD(AMD),英伟达(NVDA)</p><p>显卡消费者：矿工和游戏玩家</p><p>近半年，受到疫情影响，显卡供应减少，同时需求增多（主要是加密货币火爆行情刺激了矿机需求）</p><p>两种原因导致显卡涨价，但是雷蛇会受到什么影响？</p><figure><img src="about-cryptocurrency/img.png" alt="英伟达股价" /><figcaption aria-hidden="true">英伟达股价</figcaption></figure><figure><img src="./img_1.png" alt="AMD股价" /><figcaption aria-hidden="true">AMD股价</figcaption></figure><figure><img src="./img_2.png" alt="雷蛇股价" /><figcaption aria-hidden="true">雷蛇股价</figcaption></figure><h2 id="未来增长">未来增长</h2><p>集團更進一步拓展移動╱雲端遊戲、主機遊戲、直播產品及電競椅等增長領域</p><h2 id="其他新闻">其他新闻</h2><ol type="1"><li>雷蛇于5月12日在联交所回购855万股，每股价格介乎2.62至2.66846元，涉资约2,281.53万元。</li><li>2021年初至今雷蛇已回购约1.71亿股，占已发行股本约1.9229%。</li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://doc.irasia.com/listco/hk/razer/annual/2020/crespress.pdf">雷蛇2020年财报</a></li><li><a href="https://news.futunn.com/post/9452174?lang=zh-cn&amp;src=2&amp;report_type=stock&amp;report_id=17625226&amp;level=1&amp;data_ticket=1615555035779921">雷蛇(01337.HK)斥约2,281万元回购855万股</a></li><li><a href="https://news.futunn.com/report/821714?lang=zh-cn&amp;src=43&amp;level=1&amp;data_ticket=1615555035779921">广发证券</a></li></ol>]]></content>
     
     
       
@@ -309,9 +309,9 @@
     <link href="https://chiechie.github.io/2021/05/26/reading_notes/zhexue/daojia/daodejing1/"/>
     <id>https://chiechie.github.io/2021/05/26/reading_notes/zhexue/daojia/daodejing1/</id>
     <published>2021-05-26T01:23:01.000Z</published>
-    <updated>2021-06-07T03:17:52.148Z</updated>
+    <updated>2021-06-10T01:43:51.586Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>道德经有多个版本：王弼/马王堆帛书，从时间来看，帛书本距离老子的年代更近, 可信度更高。但是内容有缺失。</p><p>倒是无大碍，得其意即可，不必咬文嚼字</p></blockquote><h2 id="有无之相生">2 有，无之相生</h2><blockquote><p>王：故有无相生，难易相成，长短相较，高下相倾，音声相和，前后相随。</p><p>帛：有，无之相生；难，易之相成；长，短之相形；高，下之相盈；音，声之相和；先，后之相随，恒也。</p></blockquote><p>“有，无之相生”是说，无是有的根本。 与“贵以贱为本，高以下为基”相呼应。</p><p>以光学中色散现象为例，棱镜可以把白光分解成七色光谱。白光类似"无"，七色光谱代表"有"。</p><p>"无"代表一种混沌态，包含"有"中的元素。</p><p>"有"是"无"的一个子集。</p><h2 id="多闻数穷不如守中">5 多闻数穷，不如守中</h2><blockquote><p>王：“天地之间，其犹橐龠乎？虚而不屈，动而愈出。多言数穷，不如守中。”</p><p>帛：“天地之间，其犹橐龠乎？虚而不屈，动而愈出。多闻数穷，不如守中。”</p></blockquote><p>橐龠(tuó yuè): 古代鼓风吹火用的器.</p><p>儒家提倡“读万卷书，不如行万里路”，道家却提倡“不出户，知天下”，“其出弥远，其知弥少”，“博者不知，知者不博”，“塞其兑，闭其门”。</p><p>老子的意思是：不要被外物复杂的声色变化迷惑而去追逐表象。为什么？因为它们是无穷无尽的。</p><p>比如现在的AI领域，追着最新的fancy的论文看，看的再多也没法把握技术发展的趋势。</p><h2 id="水利万物而有静">8 水利万物而有静</h2><blockquote><p>王：上善若水，水利万物而不争</p><p>帛：上善若水，水利万物而有静</p></blockquote><p>不到万不得已，不要去争。不是没有能力，而是自己选择保持"静"。</p><p>不然白白消耗了时间体力，收益没有那么大，就好像狮子捕食，</p><blockquote><p>王：居善地，心善渊，与善仁，言善信，正善治，事善能，动善时。”</p><p>帛：“居善地，心善渊，予善信，正善治，事善能，动善时。”</p></blockquote><p>此处“予善信”的意义：像天一样“损有余而补不足”的去“予人”，方可谓之“善”。</p><p>何为善？得道曰善。</p><h2 id="故有之以为利无之以为用">11 故有之以为利，无之以为用</h2><blockquote><p>王： 三十辐共一毂，当其无，有车之用。埏埴以为器，当其无，有器之用。凿户牖以为室，当其无，有室之用。故有之以为利，无之以为用。</p></blockquote><p>任何器具、房室、或机械要发生作用，都要有一「容纳」其他事物之「空间」，老子以此「空间」喻道之「无」，而容万物之性使万物发生作用。</p><h2 id="难得之物令人行妨">12 难得之物令人行妨</h2><blockquote><p>王： 五色令人目盲，五音令人耳聋，五味令人口爽，驰骋攻猎令人心发狂。难得之物令人行妨。</p></blockquote><blockquote><p>王：是以圣人为腹不为目，故去彼取此。</p></blockquote><h2 id="执今之道以御今之有">14 执今之道，以御今之有</h2><blockquote><p>王：执古之道，以御今之有，能知古始，是谓道纪。</p><p>帛：执今之道，以御今之有，能知古始，是谓道纪。</p></blockquote><p>庄子进一步的解释：“今子之所言，犹迹也。夫迹，履之所出，而迹岂履哉!”你学习的这些东西，都是先王留下来的遗迹，又哪里是他们的真实内涵呢？脚印是脚踩出来的，但脚印又哪里是脚呢！”</p><p>很像现在社会的浮躁教条之风.比如搞中台，也不管自己业务适合不适合。追求速成，不思索别人的决策路径，是否符合自己当前的situation，盲目照搬。</p><h2 id="天地尚不能久而况于人乎">23 天地尚不能久，而况于人乎</h2><blockquote><p>王：希言自然。故飘风不终朝，骤雨不终日。孰为此者?天地。天地尚不能久，而况于人乎。</p></blockquote><p>以飘风骤雨为天候中「阴」「阳」不调之例子。这就隐喻到「雷厉风行」，偏执一「仁」一「义」之治事方法是不能长久的;无论在当事人看来他的「政治理想」是多么完美或吸引人。</p><p>守弱：如婴儿般的柔和与可塑。</p><p>任何属性，操性，仁则都有其正负两面，也就是阴与阳。而属性明显曰「强」，属性混沌曰「弱」。如果根据一己之经验，认为一种属性，操性，仁则只有好处，没有缺陷，而拼命发展，必致「阴」「阳」失调而进入危境。</p><h2 id="物壮则老是谓不道">33 物壮则老，是谓不道</h2><blockquote><p>王: 果而勿矜，果而勿伐，果而勿骄。果而不得已，果而勿强。物壮则老，是谓不道，不道早巳。</p></blockquote><p>人之「老」在躯体也在头脑，最大的特征在失去思想之柔韧与变通---这些都是过分发展某一属性之「果」。人会变得过于执着固定事物，或过于刚猛，或过于退怯;百象皆有，不一而足;總之，都不合道。从老子之道来看就是失去「负阴抱阳」之特性。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.aisixiang.com/data/37674.html">反者道之动, 弱者道之用”之詮釋</a></li><li>帛书老子校注-高明</li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>道德经有多个版本：王弼/马王堆帛书，从时间来看，帛书本距离老子的年代更近, 可信度更高。但是内容有缺失。</p><p>倒是无大碍，得其意即可，不必咬文嚼字</p></blockquote><h2 id="有无之相生">2 有，无之相生</h2><blockquote><p>王：故有无相生，难易相成，长短相较，高下相倾，音声相和，前后相随。</p><p>帛：有，无之相生；难，易之相成；长，短之相形；高，下之相盈；音，声之相和；先，后之相随，恒也。</p></blockquote><p>“有，无之相生”是说，无是有的根本。 与“贵以贱为本，高以下为基”相呼应。</p><p>以光学中色散现象为例，棱镜可以把白光分解成七色光谱。白光类似"无"，七色光谱代表"有"。</p><p>"无"代表一种混沌态，包含"有"中的元素。</p><p>"有"是"无"的一个子集。</p><h2 id="多闻数穷不如守中">5 多闻数穷，不如守中</h2><blockquote><p>王：“天地之间，其犹橐龠乎？虚而不屈，动而愈出。多言数穷，不如守中。”</p><p>帛：“天地之间，其犹橐龠乎？虚而不屈，动而愈出。多闻数穷，不如守中。”</p></blockquote><p>橐龠(tuó yuè): 古代鼓风吹火用的器.</p><p>儒家提倡“读万卷书，不如行万里路”，道家却提倡“不出户，知天下”，“其出弥远，其知弥少”，“博者不知，知者不博”，“塞其兑，闭其门”。</p><p>老子的意思是：不要被外物复杂的声色变化迷惑而去追逐表象。为什么？因为它们是无穷无尽的。</p><p>比如现在的AI领域，追着最新的fancy的论文看，看的再多也没法把握技术发展的趋势。</p><h2 id="水利万物而有静">8 水利万物而有静</h2><blockquote><p>王：上善若水，水利万物而不争</p><p>帛：上善若水，水利万物而有静</p></blockquote><p>不到万不得已，不要去争。不是没有能力，而是自己选择保持"静"。</p><p>不然白白消耗了时间体力，收益没有那么大，就好像狮子捕食，</p><blockquote><p>王：居善地，心善渊，与善仁，言善信，正善治，事善能，动善时。”</p><p>帛：居善地，心善渊，予善信，正善治，事善能，动善时。</p></blockquote><p>此处“予善信”的意义：像天一样“损有余而补不足”的去“予人”，方可谓之“善”。</p><p>何为善？得道曰善。</p><h2 id="故有之以为利无之以为用">11 故有之以为利，无之以为用</h2><blockquote><p>王： 三十辐共一毂，当其无，有车之用。埏埴以为器，当其无，有器之用。凿户牖以为室，当其无，有室之用。故有之以为利，无之以为用。</p></blockquote><p>任何器具、房室、或机械要发生作用，都要有一「容纳」其他事物之「空间」，老子以此「空间」喻道之「无」，而容万物之性使万物发生作用。</p><h2 id="难得之物令人行妨">12 难得之物令人行妨</h2><blockquote><p>王： 五色令人目盲，五音令人耳聋，五味令人口爽，驰骋攻猎令人心发狂。难得之物令人行妨。</p></blockquote><blockquote><p>王：是以圣人为腹不为目，故去彼取此。</p></blockquote><h2 id="执今之道以御今之有">14 执今之道，以御今之有</h2><blockquote><p>王：执古之道，以御今之有，能知古始，是谓道纪。</p><p>帛：执今之道，以御今之有，能知古始，是谓道纪。</p></blockquote><p>庄子进一步的解释：“今子之所言，犹迹也。夫迹，履之所出，而迹岂履哉!”你学习的这些东西，都是先王留下来的遗迹，又哪里是他们的真实内涵呢？脚印是脚踩出来的，但脚印又哪里是脚呢！”</p><p>很像现在社会的浮躁教条之风.比如搞中台，也不管自己业务适合不适合。追求速成，不思索别人的决策路径，是否符合自己当前的situation，盲目照搬。</p><h2 id="天地尚不能久而况于人乎">23 天地尚不能久，而况于人乎</h2><blockquote><p>王：希言自然。故飘风不终朝，骤雨不终日。孰为此者?天地。天地尚不能久，而况于人乎。</p></blockquote><p>以飘风骤雨为天候中「阴」「阳」不调之例子。这就隐喻到「雷厉风行」，偏执一「仁」一「义」之治事方法是不能长久的;无论在当事人看来他的「政治理想」是多么完美或吸引人。</p><p>守弱：如婴儿般的柔和与可塑。</p><p>任何属性，操性，仁则都有其正负两面，也就是阴与阳。而属性明显曰「强」，属性混沌曰「弱」。如果根据一己之经验，认为一种属性，操性，仁则只有好处，没有缺陷，而拼命发展，必致「阴」「阳」失调而进入危境。</p><h2 id="物壮则老是谓不道">33 物壮则老，是谓不道</h2><blockquote><p>王: 果而勿矜，果而勿伐，果而勿骄。果而不得已，果而勿强。物壮则老，是谓不道，不道早巳。</p></blockquote><p>人之「老」在躯体也在头脑，最大的特征在失去思想之柔韧与变通---这些都是过分发展某一属性之「果」。人会变得过于执着固定事物，或过于刚猛，或过于退怯;百象皆有，不一而足;總之，都不合道。从老子之道来看就是失去「负阴抱阳」之特性。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.aisixiang.com/data/37674.html">反者道之动, 弱者道之用”之詮釋</a></li><li>帛书老子校注-高明</li></ol>]]></content>
     
     
       
@@ -400,15 +400,15 @@
     <category term="技术" scheme="https://chiechie.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-    <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
-    
-    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
-    
-    <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
+    <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
     
     <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
     
-    <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
+    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    
+    <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
+    
+    <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
     
   </entry>
   
@@ -467,9 +467,9 @@
     <category term="AIOps" scheme="https://chiechie.github.io/categories/AIOps/"/>
     
     
-    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
-    
     <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
+    
+    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
     
     <category term="微服务" scheme="https://chiechie.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
@@ -501,17 +501,17 @@
     <category term="AIOps" scheme="https://chiechie.github.io/categories/AIOps/"/>
     
     
-    <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
-    
-    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
     
     <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
-    
-    <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
     
     <category term="微服务" scheme="https://chiechie.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     
     <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
+    
+    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    
+    <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
     
   </entry>
   
@@ -569,9 +569,9 @@
     <category term="AIOps" scheme="https://chiechie.github.io/categories/AIOps/"/>
     
     
-    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
-    
     <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
+    
+    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
     
     <category term="微服务" scheme="https://chiechie.github.io/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
     

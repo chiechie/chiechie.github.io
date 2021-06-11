@@ -8,7 +8,7 @@ tags:
 - 人工智障
 - 人工智能
 categories:
-- 人工智能
+- AI
 ---
 
 

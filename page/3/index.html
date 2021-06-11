@@ -190,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-06-10 16:35:36 / 修改时间：17:10:15" itemprop="dateCreated datePublished" datetime="2021-06-10T16:35:36+08:00">2021-06-10</time>
+              <time title="创建时间：2021-06-10 16:35:36 / 修改时间：18:15:24" itemprop="dateCreated datePublished" datetime="2021-06-10T16:35:36+08:00">2021-06-10</time>
             </span>
 
           
@@ -204,7 +204,88 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="深度学习中集中归一化的方法">深度学习中集中归一化的方法</h2>
+          <h2 id="layers的基本类型">layers的基本类型</h2>
+<ul>
+<li>keras中layer的基本类型：
+<ul>
+<li>卷积：Conv1D</li>
+<li>池化：MaxPooling1D/GlobalAveragePooling1D</li>
+<li>dropout：Dropout</li>
+<li>线性全联接层：Dense</li>
+<li>high-level层：LSTM，</li>
+</ul></li>
+<li>卷积的维度有1Ｄ，2Ｄ，3D, 区别在于输入数据的shape以及卷积核如何滑动
+<ul>
+<li><img src="https://miro.medium.com/max/1621/1*aBN2Ir7y2E-t2AbekOtEIw.png" title="fig:" alt="I１维卷积和２维卷积的区别" /></li>
+<li>1维卷积（Conv1D）：只有1个维度可以滑动，但是另一维度也是有待估参数的</li>
+<li>2维卷积（Conv2D）：有两个维度可以滑动，</li>
+<li>相同点：从参数视角都是2维的，每一个卷积kernel，参数个数是 height × width +１　（off_ set）</li>
+</ul></li>
+<li>什么情况下，1d比2d好用呢？
+<ul>
+<li>其中2个维度上，做卷积没有意义(high,close,open,close)</li>
+</ul></li>
+<li>神经网络中每一层的输入输出shape，以及参数个数解析： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model_m = Sequential()</span><br><span class="line">model_m.add(Reshape((TIME_PERIODS, num_sensors),</span><br><span class="line">                    input_shape=(input_shape,)))</span><br><span class="line">model_m.add(Conv1D(<span class="number">100</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>,</span><br><span class="line">                   input_shape=(TIME_PERIODS, num_sensors)))</span><br><span class="line">model_m.add(Conv1D(<span class="number">100</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model_m.add(MaxPooling1D(<span class="number">3</span>))</span><br><span class="line">model_m.add(Conv1D(<span class="number">160</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model_m.add(Conv1D(<span class="number">160</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model_m.add(GlobalAveragePooling1D())</span><br><span class="line">model_m.add(Dropout(<span class="number">0.5</span>))</span><br><span class="line">model_m.add(Dense(num_classes, activation=<span class="string">&#x27;softmax&#x27;</span>))</span><br></pre></td></tr></table></figure></li>
+<li><img src="https://miro.medium.com/max/2073/1*Y117iNR_CnBtBh8MWVtUDg.png" title="fig:" alt="Image for post" /></li>
+<li>Conv1D：　model_m.add(Conv1D(100, 10, activation='relu', input_shape=(TIME_PERIODS, num_sensors)))：
+<ul>
+<li>输入：(timesteps, num_series)</li>
+<li>输出：(timesteps - kerner_size+1, num_kernels)</li>
+<li>参数个数：(kernel_size * num_sensors + 1) * num_kernels</li>
+</ul></li>
+<li>MaxPooling1D: model_m.add(MaxPooling1D(3))
+<ul>
+<li>输入：(timesteps, num_series)</li>
+<li>输出：(timesteps//3, num_series)</li>
+<li>备注：书的页数（channel）没变，但是每页的字数变成了1/3</li>
+<li><img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" title="fig:" alt="Image for post" /></li>
+</ul></li>
+<li>GlobalAveragePooling1D：model_m.add(GlobalAveragePooling1D())
+<ul>
+<li>输入：　(timesteps, num_series) 或者（feature_values, feature_detectors）</li>
+<li>输出：　（１，num_series）或者（１, feature_detectors）</li>
+<li>备注： 书的页数（channel）没变，但是每页的字数变成了1</li>
+</ul></li>
+<li>Dropout: model_m.add(Dropout(0.5))： 形状不变 输入：（１，num_series） 输出：（１，num_series）</li>
+<li>LSTM：model.add(LSTM(units=128, dropout=0.5, return_sequences=True, input_shape=input_shape))
+<ul>
+<li>输入： (timestep, series)</li>
+<li>输出：(timestep, units)</li>
+</ul></li>
+<li>Dense： model_m.add(Dense(num_classes, activation='softmax'))
+<ul>
+<li>输入：（１，num_series）</li>
+<li>输出：（１，num_classes　×　２）</li>
+</ul></li>
+<li>BatchNormalization：
+<ul>
+<li>输入: (timestep, series)</li>
+<li>输出：(timestep, series)</li>
+<li>参数个数：４ * series (channel)
+<ul>
+<li><span class="math display">\[y=\gamma\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\beta \]</span></li>
+<li>参考[[深度学习中几种归一化方法]]</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>keras中对dropout的处理，因为训练阶段需要dropout ，但是inference阶段不需要dropout，那么keras需要在推断阶段怎么特殊设置吗？ - Keras does this by default. In Keras dropout is disabled in test mode. You can look at the code <a target="_blank" rel="noopener" href="https://github.com/keras-team/keras/blob/dc95ceca57cbfada596a10a72f0cb30e1f2ed53b/keras/layers/core.py#L109">here</a> and see that they use the dropped input in training and the actual input while testing. - As far as I know you have to build your own training function from the layers and specify the training flag to predict with dropout (e.g. its not possible to specify a training flag for the predict functions). This is a problem in case you want to do GANs, which use the intermediate output for training and also train the network as a whole, due to a divergence between generated training images and generated test images. - https://stackoverflow.com/questions/47787011/how-to-disable-dropout-while-prediction-in-keras</p>
+<h2 id="损失函数">损失函数</h2>
+<p>tensorflow中的损失函数:</p>
+<ul>
+<li>sparse_categorical_crossentropy: target是interger list，形状n*1；</li>
+<li>categorical_crossentropy: target 是one-hot vector，target的shape跟模型输出一致，是n*k(类)。
+<ul>
+<li><span class="math display">\[C E(x)=-\sum\limits_{i=1}^{C} y_{i} \log f_{i}(x)\]</span></li>
+</ul></li>
+<li>binary_crossentropy: target 是interger list。 <span class="math display">\[B C E(x)_{i}=-\left[y_{i} \log f_{i}(x)+\left(1-y_{i}\right) \log \left(1-f_{i}(x)\right)\right]\]</span></li>
+<li>如果输出标签维度为1，只能使用binary_crossentropy，否则程序会报错。不能直接使用categorical_crossentropy 或者sparse_categorical_crossentropy</li>
+<li>如果输出标签维度为K：使用categorical_crossentropy 或者sparse_categorical_crossentropy</li>
+<li>单标签多分类（multi-class）：softmax + CE</li>
+<li>二分类：sigmoid + BCE</li>
+<li>多标签多分类（multi-label）的情况：sigmoid + BCE</li>
+<li>最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</li>
+</ul>
+<h2 id="深度学习中集中归一化的方法">深度学习中集中归一化的方法</h2>
 <p>归一化层，目前主要有这几个方法：</p>
 <ul>
 <li>Batch Normalization（2015年）</li>
@@ -280,6 +361,7 @@
 <li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/05de1f989790">用书比喻图像很好理解</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/61248211">Conditional Batch Normalization 详解</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/57875010">从Style的角度理解Instance Normalization</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.goodaudience.com/introduction-to-1d-convolutional-neural-networks-in-keras-for-time-sequences-3a7ff801a2cf">在时序数据上应用conv1D</a></li>
 </ol>
 
       
@@ -323,10 +405,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-10 16:25:08 / 修改时间：16:31:41" itemprop="dateCreated datePublished" datetime="2021-06-10T16:25:08+08:00">2021-06-10</time>
+              <time title="创建时间：2021-06-10 16:25:08" itemprop="dateCreated datePublished" datetime="2021-06-10T16:25:08+08:00">2021-06-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-11 09:03:18" itemprop="dateModified" datetime="2021-06-11T09:03:18+08:00">2021-06-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -623,13 +711,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-count">191</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

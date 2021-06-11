@@ -20,26 +20,28 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="基本概念  概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它是 用图结构 来描述 多个随机变量之间条件独立关系。概率图模型 是研究 高维空间中的概率模型的 一种有用工具。 概率图模型有三个基本问题: 表示问题，学习问题和推断问题  1. 表示问题:对于一个概率模型，如何通过图结构来描述">
+  <meta name="description" content="基本概念 概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它用图结构描述多个随机变量之间的依赖关系，它是研究高维空间中的概率模型的一种有用工具。 概率图模型有三个基本问题: 表示问题，学习问题和推断问题  1. 表示问题 表示问题，即对于一个概率模型，如何通过图结构来描述变量之间的依赖关">
 <meta property="og:type" content="article">
 <meta property="og:title" content="概率图模型">
 <meta property="og:url" content="https://chiechie.github.io/2021/06/10/AI/machine_learning/gailvtu/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="基本概念  概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它是 用图结构 来描述 多个随机变量之间条件独立关系。概率图模型 是研究 高维空间中的概率模型的 一种有用工具。 概率图模型有三个基本问题: 表示问题，学习问题和推断问题  1. 表示问题:对于一个概率模型，如何通过图结构来描述">
+<meta property="og:description" content="基本概念 概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它用图结构描述多个随机变量之间的依赖关系，它是研究高维空间中的概率模型的一种有用工具。 概率图模型有三个基本问题: 表示问题，学习问题和推断问题  1. 表示问题 表示问题，即对于一个概率模型，如何通过图结构来描述变量之间的依赖关">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.mubu.com/document_image/e3036b4e-18d3-4e73-b996-eafe4a4c08d1-3380623.jpg">
 <meta property="og:image" content="https://img.mubu.com/document_image/75c9420a-058f-4005-a4b2-4609e7987c1b-3380623.jpg">
 <meta property="og:image" content="https://img.mubu.com/document_image/85a18510-051c-4339-a808-4d3759095432-3380623.jpg">
 <meta property="og:image" content="https://img.mubu.com/document_image/bd0b3e40-76a5-42e2-8716-799247eddc32-3380623.jpg">
 <meta property="og:image" content="https://img.mubu.com/document_image/f6ae17af-597a-4445-abbf-2c2b0a5bce67-3380623.jpg">
 <meta property="og:image" content="https://img.mubu.com/document_image/3476923c-5528-4dd4-aa4d-ae10183bf377-3380623.jpg">
 <meta property="og:image" content="https://img.mubu.com/document_image/28d53640-0eb6-4a17-81c6-ffa8e4dbb289-3380623.jpg">
-<meta property="og:image" content="https://img.mubu.com/document_image/e3036b4e-18d3-4e73-b996-eafe4a4c08d1-3380623.jpg">
 <meta property="article:published_time" content="2021-06-10T08:52:21.000Z">
-<meta property="article:modified_time" content="2021-06-10T08:58:25.178Z">
+<meta property="article:modified_time" content="2021-06-11T01:19:42.404Z">
 <meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="贝叶斯网络">
 <meta property="article:tag" content="概率图模型">
+<meta property="article:tag" content="贝叶斯优化">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img.mubu.com/document_image/75c9420a-058f-4005-a4b2-4609e7987c1b-3380623.jpg">
+<meta name="twitter:image" content="https://img.mubu.com/document_image/e3036b4e-18d3-4e73-b996-eafe4a4c08d1-3380623.jpg">
 
 <link rel="canonical" href="https://chiechie.github.io/2021/06/10/AI/machine_learning/gailvtu/">
 
@@ -198,17 +200,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-10 16:52:21 / 修改时间：16:58:25" itemprop="dateCreated datePublished" datetime="2021-06-10T16:52:21+08:00">2021-06-10</time>
+              <time title="创建时间：2021-06-10 16:52:21" itemprop="dateCreated datePublished" datetime="2021-06-10T16:52:21+08:00">2021-06-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-11 09:19:42" itemprop="dateModified" datetime="2021-06-11T09:19:42+08:00">2021-06-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">人工智能</span></a>
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
                 </span>
             </span>
 
@@ -231,11 +239,11 @@
 
       
         <h2 id="基本概念">基本概念</h2>
-<ul>
-<li>概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它是 用图结构 来描述 多个随机变量之间条件独立关系。概率图模型 是研究 高维空间中的概率模型的 一种有用工具。</li>
-<li>概率图模型有三个基本问题: 表示问题，学习问题和推断问题</li>
-</ul>
-<h3 id="表示问题对于一个概率模型如何通过图结构来描述变量之间的依赖关系">1. 表示问题:对于一个概率模型，如何通过图结构来描述变量之间的依赖关系。</h3>
+<p>概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它用图结构描述多个随机变量之间的依赖关系，它是研究高维空间中的概率模型的一种有用工具。</p>
+<p>概率图模型有三个基本问题: 表示问题，学习问题和推断问题</p>
+<p><img src="https://img.mubu.com/document_image/e3036b4e-18d3-4e73-b996-eafe4a4c08d1-3380623.jpg" /></p>
+<h3 id="表示问题">1. 表示问题</h3>
+<p>表示问题，即对于一个概率模型，如何通过图结构来描述变量之间的依赖关系。</p>
 <h4 id="有向图模型directed-graphical-model">有向图模型(Directed Graphical model)</h4>
 <p>有向图模型(Directed Graphical model)，也称为贝叶斯网络(Bayesian Network)，或信念网络(Belief Network，BN)，是指用有向图来表示概率分布的图模型。</p>
 <figure>
@@ -268,7 +276,8 @@
 <li>无向图模型不能表示有向图模型能够表示的某些关系，比如因果关系。</li>
 </ul></li>
 </ul>
-<h3 id="推断问题在已知部分变量时计算其它变量的后验概率分布">2. 推断问题:在已知部分变量时，计算其它变量的后验概率分布。</h3>
+<h3 id="推断问题">2. 推断问题</h3>
+<p>推断问题，即在已知部分变量时，计算其它变量的后验概率分布。</p>
 <p>图模型的推断问题可以转换为求任意一个变量子集的边际概率分布问题。</p>
 <h4 id="精确推断">精确推断</h4>
 <ul>
@@ -288,10 +297,8 @@
 <h4 id="近似推断">近似推断</h4>
 <p>环路信念传播</p>
 <h5 id="变分法">变分法</h5>
-<ul>
-<li>图模型中有些变量的局部条件分布可能非常复杂，或其积分无法 计算。</li>
-<li>变分法(Variational Method)是引入一个变分分布(通常是比较 简单的分布)来近似这些条件概率，然后通过迭代的方法进行计算。</li>
-</ul>
+<p>图模型中有些变量的局部条件分布可能非常复杂，或其积分无法计算。</p>
+<p>变分法(Variational Method)是引入一个变分分布(通常是比较 简单的分布)来近似这些条件概率，然后通过迭代的方法进行计算。</p>
 <h5 id="采样法">采样法</h5>
 <p>采样法(SamplingMethod) 是通过模拟的方式来采集符合某个 分布 p(x) 的一些样本，并通过这些样本来估计和这个分布有关的运算，比 如期望等。 - 蒙特卡罗方法： - 基本思想可以归结为根据一个已知概率密度函数为 p(x) 的 分布来计算函数 f (x) 的期望 - 拒绝采样(Rejection Sampling)，也叫接受-拒绝采样(Acceptance-RejectionSampling) - <img src="https://img.mubu.com/document_image/f6ae17af-597a-4445-abbf-2c2b0a5bce67-3380623.jpg" /> - 假设原始分布 p(x) 难以直接采样，我们可以引入一个容易采样的分布 q(x)， 一般称为提议分布(Proposal Distribution)，然后以某个标准来拒绝一部分的 样本使得最终采集的样本服从分布 p(x)。 - 重要性采样 - 如果采样的目的是计算分布 p(x) 下函数 f (x) 的期望，那么实际上抽取的样 本不需要严格服从分布 p(x)。也可以通过另一个分布，即提议分布 q(x)，直接 采样并估计。 - 重要性采样(Importance Sampling)是通过引入重要性权重，将分布p(x) 下 f (x) 的期望变为在分布 q(x) 下 f (x)w(x) 的期望</p>
 <h5 id="马尔可夫链蒙特卡罗markov-chain-monte-carlomcmc">马尔可夫链蒙特卡罗(Markov Chain Monte Carlo，MCMC)</h5>
@@ -313,10 +320,9 @@
 </ul></li>
 </ul></li>
 </ul>
-<h3 id="学习问题图模型的学习包括">3. 学习问题:图模型的学习包括</h3>
-<ul>
-<li>图结构的学习</li>
-<li>参数的学习，即参数估计问题。
+<h3 id="学习问题">3. 学习问题</h3>
+<p>图模型的学习包括：图结构的学习和参数的学习</p>
+<p>参数的学习，即参数估计问题，可分为含隐变量的参数估计和不含因变量的参数估计：</p>
 <ul>
 <li>不含隐变量的参数估计：
 <ul>
@@ -331,18 +337,15 @@
 <li><img src="https://img.mubu.com/document_image/3476923c-5528-4dd4-aa4d-ae10183bf377-3380623.jpg" /></li>
 <li><img src="https://img.mubu.com/document_image/28d53640-0eb6-4a17-81c6-ffa8e4dbb289-3380623.jpg" /></li>
 </ul></li>
-</ul></li>
 </ul>
 <h2 id="图模型与机器学习">图模型与机器学习</h2>
 <ul>
 <li>很多机器学习模型都可以归结为概率模型，即建模输入和输 出之间的条件概率分布。</li>
 <li>图模型提供了一种新的角度来解释机器学习模 型，并且这种角度有很多优点，比如了解不同机器学习模型之间的联系，方便设计新模型等。</li>
-<li><img src="https://img.mubu.com/document_image/e3036b4e-18d3-4e73-b996-eafe4a4c08d1-3380623.jpg" /></li>
 <li>概率图模型中最基本的假设是条件独立性。图形化表示直观地描述了随机 变量之间的条件独立性，有利于将复杂的概率模型分解为简单模型的组合，并 更好地理解概率模型的表示、推断、学习等方法。</li>
 </ul>
 <h2 id="概率图模型与神经网络的关系">概率图模型与神经网络的关系</h2>
-<ul>
-<li>概率图模型和神经网络有着类似的网络结构，但两者也有 很大的不同。
+<p>概率图模型和神经网络有着类似的网络结构，但两者也有很大的不同。</p>
 <ul>
 <li>节点
 <ul>
@@ -364,8 +367,8 @@
 <li>神经网络参数学习的目标为交叉熵或平方误差等损失函数。</li>
 <li>图模型的参数学习的目标函数为似然函数或条件似然函数，若包含隐变量则通常通过 EM 算法来求解。</li>
 </ul></li>
-</ul></li>
-<li>神经网络和概率图模型的结合：
+</ul>
+<p>神经网络和概率图模型的结合：</p>
 <ul>
 <li>用神经网络强大的表示能力来建模图模型中的
 <ul>
@@ -377,7 +380,6 @@
 <ul>
 <li>图结构神 经网络(Graph Neural Network)</li>
 </ul></li>
-</ul></li>
 </ul>
 
     </div>
@@ -388,7 +390,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C/" rel="tag"># 贝叶斯网络</a>
               <a href="/tags/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" rel="tag"># 概率图模型</a>
+              <a href="/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%98%E5%8C%96/" rel="tag"># 贝叶斯优化</a>
           </div>
 
         
@@ -462,7 +466,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E7%A4%BA%E9%97%AE%E9%A2%98%E5%AF%B9%E4%BA%8E%E4%B8%80%E4%B8%AA%E6%A6%82%E7%8E%87%E6%A8%A1%E5%9E%8B%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%9B%BE%E7%BB%93%E6%9E%84%E6%9D%A5%E6%8F%8F%E8%BF%B0%E5%8F%98%E9%87%8F%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB"><span class="nav-number">1.1.</span> <span class="nav-text">1. 表示问题:对于一个概率模型，如何通过图结构来描述变量之间的依赖关系。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%89%E5%90%91%E5%9B%BE%E6%A8%A1%E5%9E%8Bdirected-graphical-model"><span class="nav-number">1.1.1.</span> <span class="nav-text">有向图模型(Directed Graphical model)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E5%90%91%E5%9B%BE%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.2.</span> <span class="nav-text">无向图模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E6%96%AD%E9%97%AE%E9%A2%98%E5%9C%A8%E5%B7%B2%E7%9F%A5%E9%83%A8%E5%88%86%E5%8F%98%E9%87%8F%E6%97%B6%E8%AE%A1%E7%AE%97%E5%85%B6%E5%AE%83%E5%8F%98%E9%87%8F%E7%9A%84%E5%90%8E%E9%AA%8C%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83"><span class="nav-number">1.2.</span> <span class="nav-text">2. 推断问题:在已知部分变量时，计算其它变量的后验概率分布。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B2%BE%E7%A1%AE%E6%8E%A8%E6%96%AD"><span class="nav-number">1.2.1.</span> <span class="nav-text">精确推断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%91%E4%BC%BC%E6%8E%A8%E6%96%AD"><span class="nav-number">1.2.2.</span> <span class="nav-text">近似推断</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%98%E5%88%86%E6%B3%95"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">变分法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%87%87%E6%A0%B7%E6%B3%95"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">采样法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE%E8%92%99%E7%89%B9%E5%8D%A1%E7%BD%97markov-chain-monte-carlomcmc"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">马尔可夫链蒙特卡罗(Markov Chain Monte Carlo，MCMC)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E9%97%AE%E9%A2%98%E5%9B%BE%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AD%A6%E4%B9%A0%E5%8C%85%E6%8B%AC"><span class="nav-number">1.3.</span> <span class="nav-text">3. 学习问题:图模型的学习包括</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="nav-number">2.</span> <span class="nav-text">图模型与机器学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B%E4%B8%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">概率图模型与神经网络的关系</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E7%A4%BA%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">1. 表示问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%89%E5%90%91%E5%9B%BE%E6%A8%A1%E5%9E%8Bdirected-graphical-model"><span class="nav-number">1.1.1.</span> <span class="nav-text">有向图模型(Directed Graphical model)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E5%90%91%E5%9B%BE%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.2.</span> <span class="nav-text">无向图模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E6%96%AD%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">2. 推断问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B2%BE%E7%A1%AE%E6%8E%A8%E6%96%AD"><span class="nav-number">1.2.1.</span> <span class="nav-text">精确推断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%91%E4%BC%BC%E6%8E%A8%E6%96%AD"><span class="nav-number">1.2.2.</span> <span class="nav-text">近似推断</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%98%E5%88%86%E6%B3%95"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">变分法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%87%87%E6%A0%B7%E6%B3%95"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">采样法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE%E8%92%99%E7%89%B9%E5%8D%A1%E7%BD%97markov-chain-monte-carlomcmc"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">马尔可夫链蒙特卡罗(Markov Chain Monte Carlo，MCMC)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.</span> <span class="nav-text">3. 学习问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="nav-number">2.</span> <span class="nav-text">图模型与机器学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B%E4%B8%8E%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">概率图模型与神经网络的关系</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -483,13 +487,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-count">191</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

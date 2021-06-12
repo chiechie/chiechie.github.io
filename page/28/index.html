@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_1/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/bootstrap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/15/AI/machine_learning/tree_model/trees_1/" class="post-title-link" itemprop="url">树模型1_常用树模型介绍</a>
+            <a href="/2021/05/15/AI/machine_learning/bootstrap/" class="post-title-link" itemprop="url">一种重采样方法-resampling</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-15 14:59:29" itemprop="dateCreated datePublished" datetime="2021-05-15T14:59:29+08:00">2021-05-15</time>
+              <time title="创建时间：2021-05-15 16:29:28" itemprop="dateCreated datePublished" datetime="2021-05-15T16:29:28+08:00">2021-05-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-18 08:24:23" itemprop="dateModified" datetime="2021-05-18T08:24:23+08:00">2021-05-18</time>
+                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,17 +219,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="树模型">树模型</h2>
-<p>最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</p>
-<p>回一下机器学习的三个要素： 1. 假设函数的空间： 2. 学习策略or目标函数 3. 优化算法</p>
-<p>bootstrap是统计学中一种抽样的方法，为了获得样本方差或者均值，采取多次有放回的抽样，获得统计量。 针对单个决策树方差过大的问题。 bagging trees 利用bootstrap的思想，提取B份独立的样本集，分别估计出预测值<span class="math inline">\(\hat{f}^{1}(x), \hat{f}^{2}(x), \ldots, \hat{f}^{B}(x)\)</span> ，然后将结果取平均，就可以得到一个方差更小的预测模型，通过多次实验获得多个regression tree或者classification tree，对每一个input，会产生多个输出，regression tree的输出是K个树的输出取average。classification tree是采用投票的方法，大多数相同的那一类就是输出的那一类 。 bagging involves creating multiple copies of the original training data set using the bootstrap, fitting a separate decision tree to each copy, and then combining all of the trees in order to create a single predictive model.</p>
-<p>random forest是bagging tree的加强版本，因为他考虑到了tree之间的de correlates，使得组合后结果的variance更小。构造树过程如下：consider 每一个split的时候，会从p个predictors中<strong>随机</strong>的挑<span class="math inline">\(m = \sqrt p\)</span>）个作为split candidate，</p>
-<p>boosting是另外一种提升决策树效果的方法，Boosting works in a similar way,也是杨原始样本复制n份，然后构建n个模型，跟bagging tree不一样的地方在于，trees are grown sequentially: each tree is grown using information from previously grown trees. Boosting does not involve bootstrap sampling; instead each tree is fit on a modified version of the original data set.</p>
-<p><img src="trees_1/img.png" alt="img.png" /> xgboost是一种boosting tree的一种，其他的还是有gbdt，catboost</p>
-<h2 id="参考资料">参考资料</h2>
+          <h2 id="bootstrap的假设">bootstrap的假设</h2>
+<ul>
+<li>当前的数据资料是最能反映population信息的一批资料</li>
+<li>绝大部分样本跟population中的个体很相似</li>
+</ul>
+<figure>
+<img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<h2 id="为什么bootstrap比一般的参数估计方法更有效">为什么bootstrap比一般的参数估计方法更有效？</h2>
+<figure>
+<img src="./img_1.png" alt="bootstrap比一般的参数估计方法更有效" /><figcaption aria-hidden="true">bootstrap比一般的参数估计方法更有效</figcaption>
+</figure>
+<p>bootstrap本质上是一种外推法（extrapolating to the population），更有想象力，当让也更有出错的可能</p>
+<figure>
+<img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
+</figure>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=gcPIyeqymOU">Resampling methods-bootstrapping--youtube</a></li>
 </ol>
 
       
@@ -443,7 +451,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">167</span>
+          <span class="site-state-item-count">168</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

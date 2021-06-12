@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-06-11T01:12:23.635Z</updated>
+  <updated>2021-06-12T10:41:45.253Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://chiechie.github.io/2021/06/12/reading_notes/zhexue/%E6%9C%AA%E5%8F%91%E7%8E%B0%E7%9A%84%E8%87%AA%E6%88%91/"/>
+    <id>https://chiechie.github.io/2021/06/12/reading_notes/zhexue/%E6%9C%AA%E5%8F%91%E7%8E%B0%E7%9A%84%E8%87%AA%E6%88%91/</id>
+    <published>2021-06-12T07:15:08.541Z</published>
+    <updated>2021-06-12T10:41:45.253Z</updated>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+      
+      
+    <summary type="html">
+</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>通用无人驾驶还有多远？</title>
@@ -627,37 +648,6 @@
     <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
     
     <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PageRank算法</title>
-    <link href="https://chiechie.github.io/2021/05/22/AI/pagerank/"/>
-    <id>https://chiechie.github.io/2021/05/22/AI/pagerank/</id>
-    <published>2021-05-22T10:07:11.000Z</published>
-    <updated>2021-06-07T00:47:27.605Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>最近需要对图数据进行分析，了解下PageRank的原理</p><p>BTW, PageRank还可以做社区划分？</p></blockquote><h2 id="总结一下">总结一下</h2><p>pagerank: 假设，网上冲浪的人都是漫无目的的人，他们在网页一个链接接一个链接点下去，但是，整个互联网的节点，最终流量可能的分布能达到一个稳态。 也就是说，随机分布于各网页的流量经过次数足够多的转移之后，会达到一个稳定的状态，这个也代表每个网页的信息度。</p><p>基于这个假设，可以构建一个模型， <span class="math display">\[V_n = M ^n * V_0\]</span></p><p>一般来说，可以拿到网页之间调用拓扑，经过转换，可以将这个拓扑变为概率转移矩阵M，最终算出稳定态的V_n</p><p>给定点之间的连接关系，输出每个节点的分数，</p><p>补充下，最naive的方法存在终止点问题，也就是说，一个网站它不链接任何别的网站，或者一个微服务，它不调用其他任何微服务 按照上面的思路很可能出现一种情况，最终的流量全到这个自大狂网页那里去了，所以有一个改进的思路，假设冲浪着有一点点聪明，他并不是一味的接受灌输的链接，而是有一定概率，主动跳出去，到达一个新的站点，这个方式可以用下面的式子建模：</p><p><span class="math display">\[V_n = d * M * V_{n-1} + (1-d) * e \]</span></p><p>e = [1/n,...1/n]</p><p>d表示按照当前页面推荐的链接继续点下去的概率 1-d表示从当前网页跳出来，主动输入一个新网页重新开始的概率</p><h2 id="代码">代码</h2><p>用代码验证一下，理解没有问题</p><p>https://github.com/chiechie/BasicAlgo/blob/main/pagerank.py</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ground truth</span><br><span class="line"> [[0.25419178], [0.13803151], [0.13803151], [0.20599017], [0.26375504]]</span><br><span class="line">result</span><br><span class="line"> [0.25419178 0.13803151 0.13803151 0.20599017 0.26375504]</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://blog.csdn.net/gamer_gyt/article/details/47443877">pagerank-csdn</a></li><li><a href="https://scikit-network.readthedocs.io/en/latest/tutorials/ranking/pagerank.html">scikit-network-pagerank</a></li><li><a href="https://zh.wikipedia.org/wiki/PageRank">wiki-PageRank</a></li><li>https://blog.csdn.net/google19890102/article/details/48660239</li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;最近需要对图数据进行分析，了解下PageRank的原理&lt;/p&gt;
-&lt;p&gt;BTW, PageRank还可以做社区划分？&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;总结一下&quot;&gt;总结一下&lt;/h2&gt;
-&lt;p&gt;pagerank: 假设，网上冲浪的人都是</summary>
-      
-    
-    
-    
-    <category term="实践" scheme="https://chiechie.github.io/categories/%E5%AE%9E%E8%B7%B5/"/>
-    
-    
-    <category term="图算法" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E7%AE%97%E6%B3%95/"/>
-    
-    <category term="拓扑数据" scheme="https://chiechie.github.io/tags/%E6%8B%93%E6%89%91%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   

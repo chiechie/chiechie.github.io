@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1_1-GAN/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/AI/AIOps/AIOps-1_1_1-GAN/" class="post-title-link" itemprop="url">chapter1.1 使用GAN做异常检测</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/" class="post-title-link" itemprop="url">chapter1.1 单指标异常检测</a>
         </h2>
 
         <div class="post-meta">
@@ -219,7 +219,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="目录">目录</h2>
+          <h1 id="目录">目录</h1>
 <ul>
 <li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
 <li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
@@ -250,57 +250,235 @@
 </ul></li>
 <li>chapter3 故障恢复</li>
 </ul>
-<blockquote>
-<p>使用gnn做异常检测</p>
-</blockquote>
-<h1 id="不仅仅生成图片用gan做无监督的异常检测">不仅仅生成图片，用GAN做无监督的异常检测</h1>
-<p>代码：https://github.com/chiechie/wgan-gp-anomaly</p>
-<p>GAN被LeCun赞为继CNN之后最为重要的一个工作，其原因在于让各位惊呼“这才有点人工智能的样子”。相比于CNN或者RNN而言，GAN是一种完全不一样的思路。CNN或者RNN，其本质都是一种有监督的学习方式，相比于传统的方式而言，得益于网络强大的表达能力和自动学习特征的end-to-end的学习能力，CNN和RNN在很多任务上实现了巨大提升从而引领了这一次的人工智能的兴起。但是有监督学习的缺陷在于需要大量的数据进行学习，所以很多人工智能公司都是花了大量的资金和人力来收集和标注数据。记得在学校听“驭势科技”的黄波博士的一次技术分享，他就谈到数据的问题，笑称其实现在最赚钱的不是做人工智能技术的公司，而是那些做数据标注的公司。如果我没有记错的话，似乎买一张给自动驾驶标注的<strong>精细的语义分割</strong>的标签图需要1块人民币左右（敲黑板！商机啊！同学们）。</p>
-<p>GAN是一种对抗学习网络，通过生成器G和判别器D的对抗学习来学习训练集的数据分布从而学会生成图片（<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1406.2661.pdf">Goodfellow的paper</a>）。GAN一出来就被大家广泛的讨论，并且大量的人开始研究GAN，2017年以来arxiv上GAN的paper数量如同火箭一般的速度上升。原因就是GAN给做unsupervised learning提供一种很好的思路，最直接的应用在于我们可以用GAN学习真实的数据分布，从而生成图片可以给各种任务做<strong>数据增强</strong>。然后GAN也被应用在其他领域取得了非常不错的效果，有名的比如Twitter的那篇做超分辨的<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1609.04802">SRGAN</a>，最近最火的GAN应该是Berkeley的<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1611.07004">Pix2Pix GAN</a>和<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1703.10593">Cycle GAN</a>。</p>
-<p><strong>Pix2Pix GAN和普通的GAN的区别是实现图片域的转换（Image Translation）</strong>， 比如从手绘画到实物图的转换，而不是从一个噪声生成图片，效果非常之好。但是<strong>Pix2Pix GAN要求需要pair的数据训练</strong>，即两个图片域之间要有对应好的训练数据。Cycle GAN和Pix2Pix GAN一脉相承，加入了cycle consistency loss从而不需要像Pix2Pix GAN一样需要不同图片域里面pair的数据才能训练GAN，实现了unpair的训练就可以完成不同图片域之间的转换。由于开源代码写的非常好（特别是<a href="https://link.zhihu.com/?target=https%3A//github.com/junyanz/pytorch-CycleGAN-and-pix2pix">Pytorch版的代码</a>，简直是Pytoch的良心模板，强推），实验效果也好，并且Image Translation本来就有很多的应用场景（除了刚提到的手绘图还有什么场景？），估计今年的CVPR里面应该会有很多魔改Cycle GAN和Pix2Pix GAN来做各种应用的paper出现。</p>
-<h2 id="把gan应用于做异常检测">把GAN应用于做异常检测</h2>
-<p>这篇文章要讲的不是用GAN来做图片的生成，而是一个非常有意思的应用方向-把GAN应用于做异常检测。首先解释一下什么是异常检测，顾名思义，异常检测就是<strong>检测出异常情况</strong>并且<strong>定位出异常位置</strong>。异常检测有着非常广泛的应用，例如在监控中，人行道中行人正常行走是正常情况，但是一旦出现车、自行车甚至滑板等等就是异常情况；或者在工厂生产产品中，正常外形的产品是合格的，但是也有出现一些瑕疵的产品。一般异常检测任务意味着<strong>异常的复杂性和异常数据的少量性</strong>：</p>
+<h1 id="异常检测背景">异常检测背景</h1>
+<p>运维场景的指标监控就是对时序数据做异常检测。但是，很难通过构建一个异常检测策略一劳永逸搞定所有监控需求。因为异常各异，监控指标各异（正常模式各异）。</p>
+<p>先看一下异常有哪些。</p>
+<h2 id="异常分类">异常分类</h2>
+<p>有几类异常：全局异常，条件异常，联合异常</p>
 <ul>
-<li>1、复杂性：异常检测不同于分类任务，分类任务是有确定的类别个数，所有的结果都在确定的分类标签中，但是对于异常检测而言，只要是和正常情况有出入就是异常情况，所以异常情况非常多而且事先无法预知，所以如果用分类的方式来做异常检测有很大的局限性。</li>
-<li>2、异常数据的少量性：异常情况往往不常出现，所以导致异常情况的数据不是很方便收集，但是正常情况的数据通常是很多的。</li>
-</ul>
-<p>有很多正常的数据，但是没有很多异常的数据，那我们可不可以通过一个model来学习正常数据的分布，然后需要检测的异常图通过前面学习到的model找到它应该的正常图的样子，这样一对比不是可以找到异常吗？这样的思路简直完美契合GAN的思想！这篇文章里面我将会介绍一篇相关的paper：Unsupervised Anomaly Detection with Generative Adversarial Networks to Guide Marker Discovery， arxiv传送门：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1703.05921">https://arxiv.org/abs/1703.05921</a>。</p>
-<p>这篇paper是把GAN用在医学图像里面做异常检测，我们可以先看下整体的框架图：</p>
-<p><img src="https://pic4.zhimg.com/80/v2-3afb9ef54ee08b8983abcec88975ff17_hd.jpg" alt="img" />Fig.1 图中使用的数据是眼部的SD-OCT图像，这种图像信噪比比较高，然后眼部结构相比于其他部位又比较简单一点。眼部OCT图像需要经过一些预处理：视网膜区域的提取，展平，还有给GAN输入的图像patch的提取和normalization。</p>
-<p>这个框架图基本已经解释了这篇paper的方法，其实就是用正常的图片去训练GAN，然后通过GAN生成与异常图对应的正常图来对比找到异常。</p>
-<p><img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/v2-592e8ddc687eda45212d8ddf70853aeb_hd.png" alt="img" />Fig.2 (a)是网络结构图，(b)是指正常和异常数据的分布</p>
-<p>Fig.2 是paper中使用的GAN的结构图，</p>
-<p>其实在这篇paper里面使用的GAN就是普通的DCGAN，从一个噪声向量Z学习生成一张图片。我们可以看到正常的眼部OCT图的纹理是一种比较正常的过渡，但是异常的OCT图明显纹理产生了变化。DCGAN只用正常的OCT图像训练，这样DCGAN就只能从噪声生成正常纹理的OCT图像。当输入一个异常图时，通过比较DCGAN的生成图和异常图的差异去更新输入的噪声Z，从而生成一个与异常图尽可能相似的正常图。通过这样的方式，可以认为重建出了异常区域的理想的正常情况，这样两张图一对比不仅仅可以认定异常情况，同时还可以找到异常区域。</p>
-<p>这样paper的重点是如何更新GAN的输入噪声Z，最直接的想法就是把在正常图中训练得到的生成器G的参数固定，然后通过计算生成图和输入的L1 loss或者L2 loss来更新输入的噪声Z。这篇paper中同样也是使用了L1 loss，在paper中作者命名为Residual loss，但是本质就是算pixel-wise的L1 loss：</p>
-<figure>
-<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/v2-77779aba2e1a63a5ef312c0de9c38e2e_hd.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>Fig.3 更新噪声Z的Residual loss</p>
-<p>在这篇paper中作者还加了一个loss去迭代噪声Z，An improved discrimination loss based on feature matching：</p>
-<p><img src="https://pic1.zhimg.com/80/v2-13c9d37e5f19a28390fc17de03097cf4_hd.jpg" alt="img" />Fig.4 更新噪声Z的Improved discrimination loss</p>
-<p>加入这个loss目的是希望同时利用到训练好的判别器D，取判别器D中一个layer的输出，对比生成图和输入图之间在这层layer上feature map的差异，从而更新噪声Z。这样的目的在于加入了一个更high level的对比，希望生成图和输入尽量靠近。最后总体的loss是这两个loss的加权和：</p>
-<p><img src="https://pic1.zhimg.com/80/v2-8b08b59f3a23aa990b2fb63bf65b3acc_hd.jpg" alt="img" />Fig.5 Final loss fuction</p>
-<p>下面是作者贴出来的一些实验结果图，可以看到对于异常区域都可以比较明显的找到。</p>
-<p><img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/v2-9dbf3f09ea6ba47de03569ad1ad0bd6e_hd.png" alt="img" />Fig.6</p>
-<p>第一行：真实的输入图；第二行：迭代噪声Z之后的生成器G的生成图；第三行：计算生成与输入直接差异找到的异常区域；第四行：异常区域的heatmap图。图中的红色和黄色标注分别表示通过Residual loss和Improved discriminator loss认定的异常图片。</p>
-<p>这篇paper提出了一个GAN很有意思的应用方向，对于异常情况，通过这样使用GAN就可以不需要任何异常数据而仅通过正常数据的训练就可以找到异常，相当于是一种无监督的异常检测方法。</p>
-<p>但是这篇paper并没有开源代码，同时数据也没有给下载的link，我自己用Pytorch重现了这篇paper，github传送门：<a href="https://link.zhihu.com/?target=https%3A//github.com/oyxhust/wgan-gp-anomaly">oyxhust/wgan-gp-anomaly</a>（来都来了，点个star再走吧）。和原始的paper不同的是我用了wgan-gp实现，而没有用DCGAN，wgan-gp应该是目前gan训练最稳定的一种方式之一。并且我也没有下载到paper中的眼部OCT数据集，目前是在MNIST在做的测试，我选择数字“0”的图像当成正常图像，然后其他数字图就是异常图。WGAN-gp只用数字“0”的图像进行训练，在测试中我用所有数字的图来测试model。</p>
-<p>下面是我复现的效果图：</p>
-<figure>
-<img src="https://pic1.zhimg.com/80/v2-c66190ea550aee83736e30e8e0ff02d0_hd.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>可以看到GAN只能生成数字“0”（相当于正常情况），对于“0”的测试图，GAN可以生成几乎一样的输出。对于其他数字（相当于异常情况），GAN只能生成形状非常类似的“0”的图像。在我自己的实验中，对于“0”的测试图，L1 loss可以降低0.02左右，但是其他数字的测试图最低也是大概0.05左右，所以还是可以很明显地检测出异常。</p>
-<p>我觉得GAN用来做异常检测是一个非常有意思的方向，但是目前还有很多问题，这篇paper里面的做法我认为只能检测出一些比较大的异常。对于比较小的异常，因为GAN生成图并不能做到细节非常明显，所以很难检测。</p>
-<figure>
-<img src="../_image/image-20191113125624723.png" alt="image-20191113125624723" /><figcaption aria-hidden="true">image-20191113125624723</figcaption>
-</figure>
-<figure>
-<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20191113125714058.png" alt="image-20191113125714058" /><figcaption aria-hidden="true">image-20191113125714058</figcaption>
-</figure>
-<h2 id="参考资料">参考资料</h2>
+<li><p>全局异常点：单个点跟历史所有的数据点比，差异很大，有点像黑天鹅事件。 <img src="./global_anomalie.png" /></p></li>
+<li><p>条件异常： 条件异常(contextual or conditional anomalies)：即相对异常，跟剩下的数据点比比较异常。举个例子：</p>
 <ol type="1">
-<li>https://www.youtube.com/watch?v=pXGqDiE4N0I</li>
+<li>我们办公室出现了一个穿西装打领带的人，会很引人注目。但是放到另外一个context中，比如房屋中介行业很正常。</li>
+<li>凌晨销量突然升高 <img src="./img.png" /></li>
+</ol></li>
+<li><p>联合异常：单个点不异常，但是群体表现出某种特殊模式，就可疑了，例如，一个小区中，有人去医院很正常，但是整个小区的人同时去医院就不正常了。 <img src="./img78.png" alt="img.png" /></p></li>
+</ul>
+<h1 id="异常检测方案">异常检测方案</h1>
+<p>时序异常检测原理，由于异常的判断依据是context，所以如何表达context信息是一个重点：</p>
+<h2 id="曲线分类">曲线分类</h2>
+<p>如何构建曲线类型特征？</p>
+<ol type="1">
+<li>周期性： autocorrelation</li>
+<li>周期offset：高斯核函数拟合分布极值</li>
+<li>趋势判断：指数滑动平均</li>
+<li>极值分析方法: 假设检验。</li>
 </ol>
+<h2 id="异常检测算法">异常检测算法</h2>
+<ul>
+<li>基于预测（sequence based）
+<ul>
+<li>ARIMA/STL/Holt-winters</li>
+<li>Regression
+<ul>
+<li>SVM</li>
+<li>Random Forest</li>
+<li>Neural Network
+<ul>
+<li>DNN</li>
+<li>Recurrent Neural Networks (RNN/LSTM)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>无监督（iid）
+<ul>
+<li>Isolation Forest</li>
+<li>One-class SVM</li>
+<li>LOF</li>
+<li>PCA</li>
+<li>Autoencoder</li>
+<li>vae</li>
+</ul></li>
+<li>统计分布
+<ul>
+<li>N-sigma</li>
+<li>Grubb TEST</li>
+<li>ESD TEST</li>
+<li>t-test</li>
+</ul></li>
+<li>有监督-分类
+<ul>
+<li>LR</li>
+<li>xgboost（增量学习）</li>
+<li>random forest</li>
+<li>svm</li>
+<li>CNN</li>
+</ul></li>
+</ul>
+<h2 id="根据不同业务适配不同的检测策略">根据不同业务适配不同的检测策略</h2>
+<p>针对不同的业务需求，构建检测策略。</p>
+<p>一般来说，突变点检测+上升下降屏蔽+时间收敛的策略已经可以覆盖80%的检测指标了。</p>
+<p>对于特别重要的指标-业务核心KPI，还是有必要手动配置的。</p>
+<table>
+<thead>
+<tr class="header">
+<th>案例</th>
+<th>指标</th>
+<th>策略</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>历史数据有中断</td>
+<td>在线数据或者其他数据，入库失败</td>
+<td>先使用基于插值的方法填充后再检测。</td>
+</tr>
+<tr class="even">
+<td>趋势漂移是正常模式</td>
+<td>游戏收入在开学季趋势漂移[1]</td>
+<td>学习并且剔除这个趋势漂移，检测残差。</td>
+</tr>
+<tr class="odd">
+<td>周期性有数据</td>
+<td>定时任务日志数；礼包成交数量[2]</td>
+<td>检测规律行为数据缺失</td>
+</tr>
+<tr class="even">
+<td>合理范围的突变异常</td>
+<td>登录在线等周期性曲线</td>
+<td>检测突变点</td>
+</tr>
+<tr class="odd">
+<td>历史数据无规律</td>
+<td>刚上线的游戏和测试服</td>
+<td>相对历史分布的极端异常值。</td>
+</tr>
+<tr class="even">
+<td>周期性毛刺点</td>
+<td>由于数据质量导致的监控指标周期性毛刺，并且间隔不固定</td>
+<td>先剔除极值再检测</td>
+</tr>
+<tr class="odd">
+<td>周期性陡增/降[3]</td>
+<td>业务活动特性导致</td>
+<td>1.按时间收敛；2. 模式识别[4]:</td>
+</tr>
+<tr class="even">
+<td>无历史数据</td>
+<td>新接业务</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>历史数据无异常</td>
+<td>新接业务</td>
+<td>无监督</td>
+</tr>
+<tr class="even">
+<td>不同业务曲线对告警的敏感度不一样</td>
+<td>在线和cpu</td>
+<td>敏感度</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>[1]游戏收入在开学季趋势漂移: 进入开学季之后会，游戏在线人数持续走低，业务觉得正常，但是一般算法会告警</li>
+<li>[2]礼包成交数据，礼包只在周末某个固定时间段上架。</li>
+<li>[3]周期性凸起：定时启动任务导致日志数指标定时凸起，业务觉得正常，但是一般算法会告警</li>
+<li>[4]模式识别： 1. 使用dtw衡量两个窗口的距离，兼容偏差； 2 在历史数据中使用滚动窗口的方法，找到一个最近的窗口。</li>
+</ul>
+<h1 id="产品运营">产品运营</h1>
+<h2 id="如何让用户认可告警">1. 如何让用户认可告警？</h2>
+<ul>
+<li>解释异常</li>
+<li>解释正常是什么样----&gt;上下界</li>
+</ul>
+<h2 id="怎么解决标记成本高然而又想针对自己的业务定制化">2. 怎么解决标记成本高，然而又想针对自己的业务定制化？</h2>
+<ul>
+<li>方案1--人工注异常，可行吗？
+<ul>
+<li>前期： 采用自监督的方法训练一个rnn，注入异常的方法来评估；提供公共样本集，用户调整模型 + auto-ml。</li>
+<li>后期：标记样本积累足够多，用有监督方法来训练。</li>
+</ul></li>
+<li>方案2--使用小样本学习，可行吗？
+<ul>
+<li>用户标记小样本</li>
+</ul></li>
+<li>方案3-使用无监督 + 有监督调超参的方式，
+<ul>
+<li>前者是 大量样本（训练集），后者只用 少量的样本（调参集）</li>
+</ul></li>
+</ul>
+<h1 id="一些未经验证的自己的思考">一些未经验证的自己的思考</h1>
+<h2 id="选无监督-or-有监督算法">1. 选无监督 or 有监督算法？</h2>
+<ul>
+<li>有监督算法的优势：
+<ul>
+<li>如果原始的样本池子 包含 全部模式的样本，那么 很轻易在训练数据和验证集上达到一个很高的准确率。</li>
+<li>如果原始的样本池子 只包含部分模式的样本，
+<ul>
+<li>线上数据的模式没有出现在样本池子中，这个模型对线上样本来说就是过拟合，效果不好，可以继续加样本，让模型去学习。但是如果 没法源源不断地 低成本地 获取到新标记样本，那么这个有监督算法就没用了。</li>
+</ul></li>
+</ul></li>
+<li>无监督（或者自监督）的优势？
+<ul>
+<li>有监督算法 虽然 轻易可以达到一个很高的准确率，但是往往也<strong>很容易过度拟合样本数据</strong>，导致只要应用数据的模式跟 样本集模式(&lt;x, y&gt;的联合分布)有些许区别，就会差之毫里，谬以千里。</li>
+<li>无监督的优势就是，就算过拟合（只可能<x >的分布了），也没关系，因为样本多的是再把线上样本加进来就好了</li>
+</ul></li>
+<li>无监督（或者自监督） 是否能 完全替代 有监督算法？
+<ul>
+<li>除了用作评估的那部分样本，目前觉得可以诶。</li>
+</ul></li>
+<li>为什么要用无监督？
+<ul>
+<li>异常是无法枚举or获取成本很高，那么我想尝试 使用反向方法，把注意力放到正常上面来。（无监督的方法 都是要基于 正常的方法，当然为了适当的放宽弹性，会容忍一些噪声，比如高斯噪声）</li>
+</ul></li>
+</ul>
+<h2 id="为什么推荐系统这种有监督的场景能够落地">2. 为什么推荐系统这种有监督的场景能够落地？</h2>
+<p>推荐场景可以<strong>零成本地</strong> <strong>持续不断的获取到新的标记样本</strong>。</p>
+<h2 id="如果要落地一个有监督的算法需要具备什么条件">3. 如果要落地一个有监督的算法，需要具备什么条件？</h2>
+<ul>
+<li>持续不断地，低成本（包含零成本）地 获取到新的标记样本。</li>
+</ul>
+<h2 id="关于曲线分类异常检测">4. 关于曲线分类+异常检测</h2>
+<p>通用的异常检测方案中，曲线分类 是不是必须的？ 或者说有没有什么场景，只用预测搞不定呢？</p>
+<ul>
+<li>用户1：
+<ul>
+<li>光滑的有周期性的KPI--使用预测算法；</li>
+<li>成功率类型的曲线--使用多指标异常检测。</li>
+<li>将可以搞定的曲线 和 模式混乱的 曲线分开。</li>
+</ul></li>
+<li>chiechie：分很粗糙的大类</li>
+</ul>
+<h2 id="曲线分类的可预见的坑-和-已经踩过的坑">5. 曲线分类的可预见的坑 和 已经踩过的坑？</h2>
+<ul>
+<li>已经踩过的坑
+<ul>
+<li>开发过程痛苦，按着葫芦起了瓢</li>
+<li>实际上，很多曲线都落入了无法识别那一类，因为说不清它的正常模式是什么（btw，这部分曲线只能通过3-sigma这样的策略粗暴解决，那么曲线分类的价值在哪里？）</li>
+</ul></li>
+<li>可预见的坑：
+<ul>
+<li>流程太长，曲线分类和异常检测一定是配套的，不好拓展和维护</li>
+<li>风险暴露因子太多了，这两步只要1个有问题就整体都会有问题</li>
+<li>工程化风险：搞一个复杂度高的模型，对调试和定位问题的压力会很大。</li>
+</ul></li>
+</ul>
+<h2 id="关于分组训练">6. 关于分组训练</h2>
+<ul>
+<li>使用生成模型（时序预测），需要对 正常模式相近 的曲线 聚成一类，比如某个类型或者某个品牌的商品放到一起训练，</li>
+<li>使用判别模型（有监督异常检测）， 需要把 异常模型 相近的 曲线聚成一类，比如异常判断规则一致的曲线。</li>
+</ul>
+<h2 id="sigma的局限性是什么">7. 3-sigma的局限性是什么？</h2>
+<ul>
+<li>相当于从时空二维空间 降维 到 空间这么一个空间： 把时间轴上不同时刻对应的观测值，全部挤到了t=0时刻，得到了一个bin，可以得到value的分布。</li>
+<li>二维空间的连续性捕捉不到： 在二维空间来看，样本之间是有 更复杂的 依赖模式的，也就是，x轴（时间轴）上相近的 点，在y轴（space轴）也会更相近，并且一般来说，这种相近的模式 是 顺着x轴 具有延续性。（</li>
+</ul>
+<h2 id="做多指标异常检测能不能替代多个单指标异常检测">8. 做多指标异常检测能不能替代多个单指标异常检测？</h2>
+<p>不行，举个例子：</p>
+<p>单从体重这个维度来描述人的肥胖程度，没法区分胖子和瘦子，因为胖瘦还跟身高有关。体重超过200kg肯定是个胖子，但是如果体重200kg以内的话，还要看另外一个指标就是身高（类似这里的时间），要知道跟他身高差不多的同伴的 体重的范围，才能知道正常不正常。</p>
+<h2 id="深度模型-是否能-完全替代-传统的机器学习模型">9. 深度模型 是否能 完全替代 传统的机器学习模型 ？</h2>
+<p>不管是ml or dl本质都是用样本数据来拟合出一个函数，至于这个函数族是 简单的好 还是 复杂的好，取决的具体的应用数据。</p>
 
       
     </div>

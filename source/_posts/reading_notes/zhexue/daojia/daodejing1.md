@@ -187,3 +187,4 @@ categories:
 1. [反者道之动, 弱者道之用”之詮釋](https://www.aisixiang.com/data/37674.html)
 2. 帛书老子校注-高明
 3. 苏辙《老子解》
+4. https://www.5000yan.com/81.html

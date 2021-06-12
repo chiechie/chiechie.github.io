@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-11 09:29:52" itemprop="dateModified" datetime="2021-06-11T09:29:52+08:00">2021-06-11</time>
+                <time title="修改时间：2021-06-11 10:39:26" itemprop="dateModified" datetime="2021-06-11T10:39:26+08:00">2021-06-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -296,11 +296,23 @@
 <li>莫尔斯码: 常用字符的编码较短，而不常用字符的编码较长。这样的编码非常适合电报系统，但并不适用于计算机.</li>
 <li>对一个句子进行编码后得到的连续字符通常被称为文本字符串（string）</li>
 <li>电传打字机键盘上的每一个键实质上都起到了转换器的作用，它负责产生二进制编码并且通过输出电缆逐位传输出去</li>
-<li></li>
+<li>尽管ASCII码是计算机领域最重要的标准,但是它是太美国化了，在其他国家ASCII码并不适用。</li>
+<li>近几十年来出现了许多不同版本的扩展的ASCII码，多个不同的版本严重影响了编码的一致性，导致了混淆和不兼容。ASCII码被扩展到极致，有的甚至可以对中文、日文和韩文进行编码</li>
+<li>从1988年开始，几大著名计算机公司合作研究出一种用来替代ASCII码的编码系统，取名为Unicode（统一化字符编码标准）。相对于ASCII的7位编码，Unicode采用了16位编码，每一个字符需要2个字节。</li>
+<li>Unicode编码不是从零开始设计的，前128个字符编码——即0000h～007Fh——与ASCII码是一致的</li>
+<li>对于Unicode来讲，它唯一的问题，就是它改变了字符与存储空间之间“单字符，单字节”的等价对应关系。采用ASCII编码方式存储的著作《怒火之花》，其所占据的存储空间约为1 MB。而如果采用Unicode编码，约占2 MB。为了使编码系统兼容，Unicode在存储空间上付出了相应的代价。</li>
 </ol>
-<h2 id="参考">参考</h2>
+<blockquote>
+<p>UTF-8是unicode的升级版，减少存储空间。</p>
+</blockquote>
+<p>你看到的unicode字符集是这样的编码表： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">I 0049</span><br><span class="line">t 0074</span><br><span class="line">&#x27; 0027</span><br><span class="line">s 0073</span><br><span class="line">  0020</span><br><span class="line">知 77e5</span><br><span class="line">乎 4e4e</span><br><span class="line">日 65e5</span><br><span class="line">报 62a5</span><br></pre></td></tr></table></figure></p>
+<p>每一个字符对应一个十六进制数字。计算机只懂二进制，因此，严格按照unicode的方式(UCS-2)，应该这样存储： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">I 00000000 01001001</span><br><span class="line">t 00000000 01110100</span><br><span class="line">&#x27; 00000000 00100111</span><br><span class="line">s 00000000 01110011</span><br><span class="line">  00000000 00100000</span><br><span class="line">知 01110111 11100101</span><br><span class="line">乎 01001110 01001110</span><br><span class="line">日 01100101 11100101</span><br><span class="line">报 01100010 10100101</span><br></pre></td></tr></table></figure></p>
+<p>这个字符串总共占用了18个字节，但是对比中英文的二进制码，可以发现，英文前9位都是0！浪费啊，浪费硬盘，浪费流量。怎么办？UTF。</p>
+<p>于是，”It's 知乎日报“就变成了： <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">I 01001001</span><br><span class="line">t 01110100</span><br><span class="line">&#x27; 00100111</span><br><span class="line">s 01110011</span><br><span class="line">  00100000</span><br><span class="line">知 11100111 10011111 10100101</span><br><span class="line">乎 11100100 10111001 10001110</span><br><span class="line">日 11100110 10010111 10100101</span><br><span class="line">报 11100110 10001010 10100101</span><br></pre></td></tr></table></figure> 和上边的方案对比一下，英文短了，每个中文字符却多用了一个字节。但是整个字符串只用了17个字节，比上边的18个短了一点点。</p>
+<p><img src="img_1.png" alt="img_1.png" /> ## 参考</p>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/64e32bf071fd5a9164ece6b">编程：隐匿在计算机硬件背后的语言</a></li>
+<li>https://www.zhihu.com/question/23374078/answer/65352538</li>
 </ol>
 
       
@@ -321,7 +333,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/05/practice/quantml-practice/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/05/AI/timeseries/quantml-practice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -335,7 +347,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/05/practice/quantml-practice/" class="post-title-link" itemprop="url">时序预测最佳实践</a>
+            <a href="/2021/06/05/AI/timeseries/quantml-practice/" class="post-title-link" itemprop="url">时序预测最佳实践</a>
         </h2>
 
         <div class="post-meta">
@@ -352,7 +364,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:47:27" itemprop="dateModified" datetime="2021-06-07T08:47:27+08:00">2021-06-07</time>
+                <time title="修改时间：2021-06-11 09:47:17" itemprop="dateModified" datetime="2021-06-11T09:47:17+08:00">2021-06-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -420,10 +432,18 @@
 <li>因为1min的股指期货数据平滑，噪声少，而1min的商品期货毛刺非常多</li>
 <li>将1min的商品期货聚合成5min之后，再使用过去1h的数据预测未来1h的数据，准确率非常之高</li>
 </ul>
+<p>数据颗粒度太细时 噪声很大， 直接丢给模型，也可能造成模型学不好。（这个已经在quantML实践上面得到了证实）</p>
 <h2 id="问题8直接用回归模型预测价格可能有负数怎么处理">问题8：直接用回归模型预测价格，可能有负数怎么处理</h2>
 <p>预测增长率</p>
 <h2 id="问题9除了直接回归还有哪些方法">问题9：除了直接回归，还有哪些方法？</h2>
 <p>转化为分类问题，换预测涨跌幅</p>
+<h1 id="其他经验">其他经验</h1>
+<ol type="1">
+<li><p>不同品种的训练数据，分组训练 比 汇总训练 效果好。</p>
+<blockquote>
+<p>一定要汇总训练的话，要加入每个品种的静态特征，不然会学到混乱的模式。</p>
+</blockquote></li>
+</ol>
 
       
     </div>

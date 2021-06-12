@@ -20,21 +20,28 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="最近需要对图数据进行分析，了解下PageRank的原理 BTW, PageRank还可以做社区划分？  总结一下 pagerank: 假设，网上冲浪的人都是漫无目的的人，他们在网页一个链接接一个链接点下去，但是，整个互联网的节点，最终流量可能的分布能达到一个稳态。 也就是说，随机分布于各网页的流量经过次数足够多的转移之后，会达到一个稳定的状态，这个也代表每个网页的信息度。 基于这个假设，可以构建">
+  <meta name="description" content="layers的基本类型 keras中layer的基本类型：  卷积(Conv1D) 池化(MaxPooling1D&#x2F;GlobalAveragePooling1D) dropout(Dropout) 线性全连接层(Dense) high-level层(LSTM)  卷积层  卷积的维度有1Ｄ，2Ｄ，3D, 区别在于?  输入数据的shape以及卷积核如何滑动   1维卷积（Conv1D）：只有1个维">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PageRank算法">
-<meta property="og:url" content="https://chiechie.github.io/2021/05/22/practice/pagerank/index.html">
+<meta property="og:title" content="深度学习基础1">
+<meta property="og:url" content="https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="最近需要对图数据进行分析，了解下PageRank的原理 BTW, PageRank还可以做社区划分？  总结一下 pagerank: 假设，网上冲浪的人都是漫无目的的人，他们在网页一个链接接一个链接点下去，但是，整个互联网的节点，最终流量可能的分布能达到一个稳态。 也就是说，随机分布于各网页的流量经过次数足够多的转移之后，会达到一个稳定的状态，这个也代表每个网页的信息度。 基于这个假设，可以构建">
+<meta property="og:description" content="layers的基本类型 keras中layer的基本类型：  卷积(Conv1D) 池化(MaxPooling1D&#x2F;GlobalAveragePooling1D) dropout(Dropout) 线性全连接层(Dense) high-level层(LSTM)  卷积层  卷积的维度有1Ｄ，2Ｄ，3D, 区别在于?  输入数据的shape以及卷积核如何滑动   1维卷积（Conv1D）：只有1个维">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-05-22T10:07:11.000Z">
-<meta property="article:modified_time" content="2021-06-07T00:47:27.605Z">
+<meta property="og:image" content="https://miro.medium.com/max/1621/1*aBN2Ir7y2E-t2AbekOtEIw.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/img_1.png">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-235433127838fca762ebd10511de9ca7_b.jpg">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4_fjPJ90ir.png?alt=media&amp;token=9fb9e321-aed2-4c7b-bb6b-4762b7a38c81">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FADUH_mebAQ.png?alt=media&amp;token=65efc150-0f7b-42f9-8657-1ca131bfd8b5">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&amp;token=55bc24ce-0531-4702-8d3d-394595bd4d6e">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&amp;token=d7421445-afca-439e-85be-8631db133a41">
+<meta property="article:published_time" content="2021-06-10T08:35:36.000Z">
+<meta property="article:modified_time" content="2021-06-11T01:50:23.824Z">
 <meta property="article:author" content="Chiechie">
-<meta property="article:tag" content="图算法">
-<meta property="article:tag" content="拓扑数据">
+<meta property="article:tag" content="博客, AI, 互联网">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/1621/1*aBN2Ir7y2E-t2AbekOtEIw.png">
 
-<link rel="canonical" href="https://chiechie.github.io/2021/05/22/practice/pagerank/">
+<link rel="canonical" href="https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/">
 
 
 <script id="page-configurations">
@@ -47,7 +54,7 @@
   };
 </script>
 
-  <title>PageRank算法 | Chiechie's Mini World</title>
+  <title>深度学习基础1 | Chiechie's Mini World</title>
   
 
 
@@ -169,7 +176,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/22/practice/pagerank/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -182,7 +189,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          PageRank算法<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/practice/pagerank.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          深度学习基础1<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AI/machine_learning/deeplearning/dl-basic0.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -192,24 +199,15 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-22 18:07:11" itemprop="dateCreated datePublished" datetime="2021-05-22T18:07:11+08:00">2021-05-22</time>
+              <time title="创建时间：2021-06-10 16:35:36" itemprop="dateCreated datePublished" datetime="2021-06-10T16:35:36+08:00">2021-06-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:47:27" itemprop="dateModified" datetime="2021-06-07T08:47:27+08:00">2021-06-07</time>
+                <time title="修改时间：2021-06-11 09:50:23" itemprop="dateModified" datetime="2021-06-11T09:50:23+08:00">2021-06-11</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">实践</span></a>
-                </span>
-            </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -229,29 +227,93 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <blockquote>
-<p>最近需要对图数据进行分析，了解下PageRank的原理</p>
-<p>BTW, PageRank还可以做社区划分？</p>
-</blockquote>
-<h2 id="总结一下">总结一下</h2>
-<p>pagerank: 假设，网上冲浪的人都是漫无目的的人，他们在网页一个链接接一个链接点下去，但是，整个互联网的节点，最终流量可能的分布能达到一个稳态。 也就是说，随机分布于各网页的流量经过次数足够多的转移之后，会达到一个稳定的状态，这个也代表每个网页的信息度。</p>
-<p>基于这个假设，可以构建一个模型， <span class="math display">\[V_n = M ^n * V_0\]</span></p>
-<p>一般来说，可以拿到网页之间调用拓扑，经过转换，可以将这个拓扑变为概率转移矩阵M，最终算出稳定态的V_n</p>
-<p>给定点之间的连接关系，输出每个节点的分数，</p>
-<p>补充下，最naive的方法存在终止点问题，也就是说，一个网站它不链接任何别的网站，或者一个微服务，它不调用其他任何微服务 按照上面的思路很可能出现一种情况，最终的流量全到这个自大狂网页那里去了，所以有一个改进的思路，假设冲浪着有一点点聪明，他并不是一味的接受灌输的链接，而是有一定概率，主动跳出去，到达一个新的站点，这个方式可以用下面的式子建模：</p>
-<p><span class="math display">\[V_n = d * M * V_{n-1} + (1-d) * e \]</span></p>
-<p>e = [1/n,...1/n]</p>
-<p>d表示按照当前页面推荐的链接继续点下去的概率 1-d表示从当前网页跳出来，主动输入一个新网页重新开始的概率</p>
-<h2 id="代码">代码</h2>
-<p>用代码验证一下，理解没有问题</p>
-<p>https://github.com/chiechie/BasicAlgo/blob/main/pagerank.py</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ground truth</span><br><span class="line"> [[0.25419178], [0.13803151], [0.13803151], [0.20599017], [0.26375504]]</span><br><span class="line">result</span><br><span class="line"> [0.25419178 0.13803151 0.13803151 0.20599017 0.26375504]</span><br></pre></td></tr></table></figure>
-<h2 id="参考">参考</h2>
+        <h2 id="layers的基本类型">layers的基本类型</h2>
+<p>keras中layer的基本类型：</p>
+<ul>
+<li>卷积(Conv1D)</li>
+<li>池化(MaxPooling1D/GlobalAveragePooling1D)</li>
+<li>dropout(Dropout)</li>
+<li>线性全连接层(Dense)</li>
+<li>high-level层(LSTM)</li>
+</ul>
+<h3 id="卷积层">卷积层</h3>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/gamer_gyt/article/details/47443877">pagerank-csdn</a></li>
-<li><a target="_blank" rel="noopener" href="https://scikit-network.readthedocs.io/en/latest/tutorials/ranking/pagerank.html">scikit-network-pagerank</a></li>
-<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/PageRank">wiki-PageRank</a></li>
-<li>https://blog.csdn.net/google19890102/article/details/48660239</li>
+<li>卷积的维度有1Ｄ，2Ｄ，3D, 区别在于?</li>
+</ol>
+<p>输入数据的shape以及卷积核如何滑动</p>
+<ul>
+<li><img src="https://miro.medium.com/max/1621/1*aBN2Ir7y2E-t2AbekOtEIw.png" title="fig:" alt="I１维卷积和２维卷积的区别" /></li>
+<li>1维卷积（Conv1D）：只有1个维度可以滑动，但是另一维度也是有待估参数的</li>
+<li>2维卷积（Conv2D）：有两个维度可以滑动，</li>
+<li>相同点：从参数视角都是2维的，每一个卷积kernel，参数个数是 height × width +１　（off_ set）</li>
+</ul>
+<ol start="2" type="1">
+<li>什么情况下，1d比2d好用呢？其中2个维度上，做卷积没有意义(high,close,open,close)</li>
+</ol>
+<h3 id="关于dropout">关于dropout</h3>
+<p>keras中对dropout的处理，因为训练阶段需要dropout ，但是inference阶段不需要dropout，keras中如何设置？</p>
+<p>Keras does this by default. In Keras dropout is disabled in test mode. You can look at the code<a target="_blank" rel="noopener" href="https://github.com/keras-team/keras/blob/dc95ceca57cbfada596a10a72f0cb30e1f2ed53b/keras/layers/core.py#L109">here</a> and see that they use the dropped input in training and the actual input while testing.</p>
+<p>As far as I know you have to build your own training function from the layers and specify the training flag to predict with dropout (e.g. its not possible to specify a training flag for the predict functions). This is a problem in case you want to do GANs, which use the intermediate output for training and also train the network as a whole, due to a divergence between generated training images and generated test images.</p>
+<h2 id="损失函数">损失函数</h2>
+<p>tensorflow中的损失函数:</p>
+<ul>
+<li>sparse_categorical_crossentropy: target是interger list，形状n*1；</li>
+<li>categorical_crossentropy: target 是one-hot vector，target的shape跟模型输出一致，是n*k(类)。
+<ul>
+<li><span class="math display">\[C E(x)=-\sum\limits_{i=1}^{C} y_{i} \log f_{i}(x)\]</span></li>
+</ul></li>
+<li>binary_crossentropy: target 是interger list。 <span class="math display">\[B C E(x)_{i}=-\left[y_{i} \log f_{i}(x)+\left(1-y_{i}\right) \log \left(1-f_{i}(x)\right)\right]\]</span></li>
+<li>如果输出标签维度为1，只能使用binary_crossentropy，否则程序会报错。不能直接使用categorical_crossentropy 或者sparse_categorical_crossentropy</li>
+<li>如果输出标签维度为K：使用categorical_crossentropy 或者sparse_categorical_crossentropy</li>
+<li>单标签多分类（multi-class）：softmax + CE</li>
+<li>二分类：sigmoid + BCE</li>
+<li>多标签多分类（multi-label）的情况：sigmoid + BCE</li>
+<li>最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</li>
+</ul>
+<h2 id="归一化">归一化</h2>
+<p>归一化层，目前主要有这几个方法：</p>
+<ul>
+<li>Batch Normalization（BN， 2015年）</li>
+<li>Layer Normalization（LN， 2016年）</li>
+<li>Instance Normalization（IN， 2017年）</li>
+<li>Group Normalization（GN， 2018年）</li>
+<li>Switchable Normalization（SN， 2018年）；</li>
+</ul>
+<figure>
+<img src="img_1.png" alt="几种归一化方法g" /><figcaption aria-hidden="true">几种归一化方法g</figcaption>
+</figure>
+<h3 id="问题1-transformer-为什么要使用ln而不是-bn">问题1 transformer 为什么要使用LN而不是 BN？</h3>
+<p>在<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.07845.pdf">paper: Rethinking Batch Normalization in Transformers</a>中, 作者对比了cv和nlp的BN, 得出的结论是在nlp数据上基于batch的统计信息不稳定性过大(相比cv的数据)，导致bn在nlp上效果差。相比之下layer norm能够带来更稳定的统计信息，有利于模型学习</p>
+<p>Batch Normalization主要的问题是计算归一化统计量时计算的样本数太少，在RNN等动态模型中不能很好的反映全局统计分布信息，而Layer Normalization根据样本的特征数做归一化，是batch size无关的，只取决于隐层节点的数量，较多的隐层节点数量能保证Layer Normalization归一化统计分布信息的代表性。</p>
+<h3 id="问题2.-in直观上怎么理解">问题2. IN直观上怎么理解？</h3>
+<p>在计算机视觉中，IN本质上是一种Style Normalization，它的作用相当于把不同的图片统一成一种风格。另外，既然IN和BN都会统一图片的风格，那么在Generator里加IN或BN应该是不利于生成风格多样的图片的，论文中也进行了展示：</p>
+<p><img src="https://pic2.zhimg.com/v2-235433127838fca762ebd10511de9ca7_b.jpg" /></p>
+<p>图e是在generator中加了BN的结果，图f是在generator中加了IN的结果。果然崩了，IN崩得尤其厉害。</p>
+<h2 id="激活函数">激活函数</h2>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4_fjPJ90ir.png?alt=media&amp;token=9fb9e321-aed2-4c7b-bb6b-4762b7a38c81" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FADUH_mebAQ.png?alt=media&amp;token=65efc150-0f7b-42f9-8657-1ca131bfd8b5" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&amp;token=55bc24ce-0531-4702-8d3d-394595bd4d6e" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&amp;token=d7421445-afca-439e-85be-8631db133a41" /></li>
+<li>https://missinglink.ai/guides/neural-network-concepts/7-types-neural-network-activation-functions-right/</li>
+</ul>
+<h2 id="其他实践">其他实践</h2>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1502.03167.pdf">Batch Normalization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1607.06450v1.pdf">Layer Normalizaiton</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1607.08022.pdf">Instance Normalization</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/DmitryUlyanov/texture_nets">code</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1803.08494.pdf">Group Normalization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1806.10779.pdf">Switchable Normalization</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/switchablenorms/Switchable-Normalization">code</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/liuxiao214/article/details/81037416">有公式推导，写的很棒</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/05de1f989790">用书比喻图像很好理解</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/61248211">Conditional Batch Normalization 详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/57875010">从Style的角度理解Instance Normalization</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.goodaudience.com/introduction-to-1d-convolutional-neural-networks-in-keras-for-time-sequences-3a7ff801a2cf">在时序数据上应用conv1D</a></li>
+<li>https://zhuanlan.zhihu.com/p/57875010</li>
+<li>https://stackoverflow.com/questions/47787011/how-to-disable-dropout-while-prediction-in-keras</li>
 </ol>
 
     </div>
@@ -261,10 +323,6 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag"># 图算法</a>
-              <a href="/tags/%E6%8B%93%E6%89%91%E6%95%B0%E6%8D%AE/" rel="tag"># 拓扑数据</a>
-          </div>
 
         
 
@@ -272,12 +330,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/" rel="prev" title="chapter2.1.2 基于拓扑的根因定位-CauseInfer2">
-      <i class="fa fa-chevron-left"></i> chapter2.1.2 基于拓扑的根因定位-CauseInfer2
+    <a href="/2021/06/10/reading_notes/reality/caiwujiangyi/" rel="prev" title="《财务讲义》读书笔记">
+      <i class="fa fa-chevron-left"></i> 《财务讲义》读书笔记
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/05/23/AI/cause-effect/randomwalking/" rel="next" title="随机游走">
-      随机游走 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/06/10/AI/machine_learning/gailvtu/" rel="next" title="概率图模型">
+      概率图模型 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -337,7 +395,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="nav-number">1.</span> <span class="nav-text">总结一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#layers%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">layers的基本类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="nav-number">1.1.</span> <span class="nav-text">卷积层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Edropout"><span class="nav-number">1.2.</span> <span class="nav-text">关于dropout</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">归一化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%981-transformer-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8ln%E8%80%8C%E4%B8%8D%E6%98%AF-bn"><span class="nav-number">3.1.</span> <span class="nav-text">问题1 transformer 为什么要使用LN而不是 BN？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%982.-in%E7%9B%B4%E8%A7%82%E4%B8%8A%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3"><span class="nav-number">3.2.</span> <span class="nav-text">问题2. IN直观上怎么理解？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">激活函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%AE%9E%E8%B7%B5"><span class="nav-number">5.</span> <span class="nav-text">其他实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

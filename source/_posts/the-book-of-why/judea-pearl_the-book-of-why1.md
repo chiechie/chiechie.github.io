@@ -10,7 +10,7 @@ tags:
 - 贝叶斯
 - 因果推断
 categories: 
-- 阅读
+- 因果分析
 ---
 > 《the book of why》是一本关于因果关系的科普书，作者是judea pearl，该书于2019年出版。
 >

@@ -11,7 +11,7 @@ tags:
 - 因果推断
 - 根因分析
 categories: 
-- 阅读
+- 因果分析
 ---
 
 > the book of why 的第四章-去混杂

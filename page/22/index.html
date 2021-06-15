@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_2-fault-prediction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/AI/AIOps/AIOps-1_5_1-log-analysis_logmine/" class="post-title-link" itemprop="url">chapter1.5.1 使用logmine加强版做日志聚类</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-1_2-fault-prediction/" class="post-title-link" itemprop="url">chapter1.2 故障预测</a>
         </h2>
 
         <div class="post-meta">
@@ -251,111 +251,35 @@
 <li>chapter3 故障恢复</li>
 </ul>
 <blockquote>
-<p>日志聚类本质上是在简洁性和信息丰富性之间trade-off。</p>
-<p>原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。</p>
+<p>硬盘故障预测实战</p>
 </blockquote>
-<h1 id="问题描述">问题描述</h1>
-<p>将不同来源的日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。</p>
-<h1 id="解决方案">解决方案</h1>
-<p>logmine使用的是基于聚类的方法，做日志摘要生成。</p>
-<p>主要思路是，一边构建cluster，一边提取pattern</p>
-<h2 id="找cluster">找cluster</h2>
+<h1 id="背景">背景</h1>
+<p>最近10年，随着服务器数量快速增长, 服务器老化的问题（商家超过5）日趋严重。越老的服务器发生故障的概率越高，这个会带了不小的负面影响，从而提高运营成本。</p>
+<p>服务器的所有故障中，占比最高的类型属于磁盘故障，达到70%。第二名是主板故障。 因为磁盘生命周期短，一般只有3到5年，而整个服务器使用和年限一般都会超过5年，所以一台服务器的生命周期中几乎必然会发生磁盘故障。</p>
+<p>如何降低磁盘故障带来的影响？业务的方案是，实施监控以及事后自动修复，修复不了就更换磁盘，并且做业务迁移。</p>
+<p>但是这个时候损失已经发生，如果能够在磁盘故障之前，就预测到即将到来的故障，并且提前做预案，是可以避免业务损失的。</p>
+<p>下面就介绍一下，如何预测磁盘故障，从而减少业务损失。</p>
+<h1 id="方案">方案</h1>
+<h2 id="搜集数据">搜集数据</h2>
+<p>范围：即将故障的硬盘以及其宿主的信息 根据经验可以提取如下指标：磁盘负载，磁盘I/O，具体来说</p>
 <ul>
-<li><p>先定义一个参数MaxDist， 表示cluster的半径</p></li>
-<li><p>对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就以他为中心创建一个新的cluster。</p>
-<blockquote>
-<p>为了提升效率，判断是否属于某个cluster时使用early abandon的策略，如果已对比的字段累计距离超过了半径，就可以提前停止了，因为距离只会越来越大。</p>
-</blockquote></li>
+<li>每秒磁盘读写块数： 902-读，903-写</li>
+<li>每秒中用于I/O操作的CPU时间占的比例：即999，</li>
 </ul>
-<h2 id="对于每个cluster提取pattern">对于每个cluster，提取pattern</h2>
-<figure>
-<img src="./image-20210226000021042.png" alt="图2-日志分析流程" /><figcaption aria-hidden="true">图2-日志分析流程</figcaption>
-</figure>
-<ul>
-<li>step1. 字段类型检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date。这个模式和正则表达式可以让用户定义。</li>
-<li>step2. 分词，每条日志都得到一个word vector.</li>
-<li>step3. 一边聚类 一边提取pattern</li>
-</ul>
-<p><img src="./img.png" /></p>
-<h2 id="怎么设置level">怎么设置level？</h2>
-<figure>
-<img src="./cost_function.png" alt="图3-评价当前pattern的信息含量" /><figcaption aria-hidden="true">图3-评价当前pattern的信息含量</figcaption>
-</figure>
-<p>怎么设置level？看每个level的信息损失程度，这里用cost function表示损耗的信息，值越大，表示丢失的信息越多</p>
-<p><span class="math display">\[\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times\left(a_{1} W C_{i}+a_{2} V a r_{i}+a_{3} F V_{i}\right)\]</span></p>
-<ul>
-<li><span class="math inline">\({Size}_i\)</span>: 第i个pattern包含的日志个数，</li>
-<li><span class="math inline">\({WC}_i\)</span>: 第i个pattern，**的个数，对应权重a1，默认取1</li>
-<li><span class="math inline">\({Var}_i\)</span>:第i个pattern，变量的个数，对应权重a2，默认取0</li>
-<li><span class="math inline">\({FV}_i\)</span>: 第i个pattern，固定值的个数，对应权重a3，默认取0</li>
-</ul>
-<p>提取层次化模式，参考下图</p>
-<figure>
-<img src="./logmine_image-20210225214320632.png" alt="图1-层次化地提取日志模式" /><figcaption aria-hidden="true">图1-层次化地提取日志模式</figcaption>
-</figure>
-<figure>
-<img src="./logmin-result.png" alt="图2-logmine-result" /><figcaption aria-hidden="true">图2-logmine-result</figcaption>
-</figure>
-<h2 id="衡量两条日志的相似性">衡量两条日志的相似性</h2>
-<p>衡量两条日志相似性的函数：</p>
-<p><span class="math display">\[\operatorname{Dist}(P, Q)=1-\sum\limits_{i=1}^{\operatorname{Min}(\operatorname{len}(P), \operatorname{len}(Q))} \frac{\operatorname{Score}\left(P_{i}, Q_{i}\right)}{\operatorname{Max}(\operatorname{len}(P), \operatorname{len}(Q))}\]</span></p>
-<p><span class="math display">\[\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
-<ul>
-<li><span class="math inline">\(P_i\)</span>：日志P的第i个字段，len(P): 日志P的字段的个数。</li>
-<li><span class="math inline">\(k_1\)</span>: 如果两个字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1。</li>
-</ul>
-<p>###衡量两个pattern的相似性</p>
-<p>pattern包含三类字段：fixed value， Variable 和 Wildcard</p>
-<ul>
-<li>固定值（fixed value field ）：如www, httpd, INFO，固化的。</li>
-<li>可变字段（A variable field）：需要用户定义name和regex，如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的，</li>
-<li>Wildcards ：就是**。</li>
-</ul>
-<p>衡量两个pattern相似性的函数（不同类型的word给的权重不一样）：</p>
-<p><span class="math display">\[\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are fixed value } \\ k_{2} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are variable } \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
-<ul>
-<li><span class="math inline">\(k_1\)</span>: 如果两个fixed value字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1</li>
-<li><span class="math inline">\(k_2\)</span>: 如果两个变量字段一样，得<span class="math inline">\(k_2\)</span>分，默认值为2</li>
-</ul>
-<h2 id="怎么评估效果">怎么评估效果？</h2>
-<p>整个问题的评估可以拆分为两个小评估:</p>
-<ul>
-<li>评估聚类的准确率？</li>
-<li>评估模式的准确率？</li>
-</ul>
-<p>因为没有标签，所以聚类和评估都是跟baseline比</p>
-<blockquote>
-<p>都有了baseline，还要logmine的必要性在于：可能logmine有性能优势？</p>
-</blockquote>
-<ul>
-<li><p>聚类效果跟baseline--OPTICS对比: 看最大公共子集的比例（原文中的agreement score）。</p></li>
-<li><p>模式效果跟baseline--UPGMA比：UPGMA的结果作为ground truth，比较recall和precision.</p>
-<blockquote>
-<p>UPGMA算法的输入一批原始日志，输出是一个patten</p>
-</blockquote></li>
-</ul>
-<p><span class="math inline">\(\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}\)</span></p>
-<h1 id="chiechies对logmine的总结">chiechie's对logmine的总结</h1>
-<p>论文看完了，代码也跑了一遍，发现有几个问题：</p>
+<p>其中，I/O指标差分，简称为IO跳变跟故障相关度较高</p>
+<p>此外考虑了磁盘SMART（Self-Monitoring Analysis and Reporting Technology——自我检测、分析及报告技术）。之所以考虑用SMART作为核心数据，因其相关技术发展比较成熟，至今20年了，业界对其认可度较高。</p>
+<h2 id="预测模型">预测模型</h2>
+<p>使用一个分类器（SVM），搜集历史故障样本和非故障样本，</p>
+<h2 id="总结">总结</h2>
 <ol type="1">
-<li><p>所谓的不需要人工干预，没有做到。很重要的一个功能就是从原始文本中提取variable类型的字段（field），需要人指定variable的name以及正则匹配规则。否则代码是不会主动帮你探测的。 <img src="./c2.png" /></p></li>
-<li><p>不同的cluster的pattern可能存在如下的父子关系 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pattern36 : datetime dms<span class="emphasis">_frontend_</span>mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern50:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern53:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp 1c7c49d5 11024333 from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern64:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>聚类时，比的是原始日志log_signature和类中心log_signature的距离，<br />
-这有一个问题，有一些日志虽然跟该cluster的中心相距较远，但是提取出的pattern可能又很接近.</p>
-</blockquote></li>
-<li><p>2的解决方案：</p>
-<ol type="1">
-<li>对于每个cluster提取pattern时，只保留最抽象的一层</li>
-<li>所有的cluster构建完之后，将存在父子pattern的cluster手动合并。</li>
-</ol></li>
+<li>现已完成希捷SATA硬盘预测，各型号预测正确率和故障覆盖率如表3所示。其中前六种型号达到运营要求，已进入推广，具体覆盖65%的SATA盘</li>
+<li>关于正样本数据的搜集：刚开始我们把预测单与实际故障单作对比时，得到的准确率很低。因为模型报出来的预故障单都是从SMART上看，属于“亚健康”甚至“病危”状态的硬盘。而实际故障单是以磁盘自检失败并且不可在线修复和系统dmesg信息中的错误关键字（主要包括SCSI设备掉线，ATA设备超时和设备故障）为准发起故障处理流程，并且结单故障类型为硬盘故障，也就是说一定要有实际换盘的，这个定义其实是相当严苛的，会漏掉很多情况。因为结单故障类型是现场去确认后填写的，如果没有换盘或者没有填写结单故障类型就会算是我们的误报。 并且，实际故障单更多的侧重于依赖OS层面的判断，一定程度漏掉了一些健康堪忧但并未报障的硬盘。我们把这部分「误报」的部分提供给厂商确认，的确被确诊为病态盘甚至于高危盘。所以是否故障的判断，不能仅依赖结单故障类型，还要关注单块硬盘自身的健康状态--如果它的SMART核心指标远离安全阈值，也应判断为故障。</li>
+<li>下一步工作-现在核心主要侧重于SATA盘的故障预测，后续二期我们会把SAS、SSD作为核心，希望能有更大的作为。</li>
 </ol>
-<h1 id="参考资料">参考资料</h1>
+<h1 id="参考">参考</h1>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf">logmine-paper</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/trungdq88/logmine/tree/master/src">logmine-github</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">数据-apache_2k.log</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">logmine加强版-chiechie's github</a></li>
+<li><a target="_blank" rel="noopener" href="http://km.oa.com/group/23255/articles/show/251071">部件故障预测初论</a></li>
+<li><a target="_blank" rel="noopener" href="https://km.woa.com/group/11783/articles/show/170959?sessionKey=Q3i7YOn2ZcLaDSNohaOIZgxO5ztyEuU8">磁盘IO与磁盘故障率研究</a></li>
 </ol>
 
       
@@ -531,7 +455,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

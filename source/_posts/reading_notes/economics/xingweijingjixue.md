@@ -3,6 +3,7 @@ title: 《行为经济学》读书笔记
 author: chiechie
 mathjax: true
 date: 2021-06-15 09:26:37
+categories:
 - 经济学
 - 行为经济学
 - 幂律

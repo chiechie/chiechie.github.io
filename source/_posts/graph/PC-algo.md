@@ -8,8 +8,8 @@ tags:
 - 因果分析
 - 贝叶斯
 - 根因分析
-categories:
-- 技术
+categories: 
+- 图
 ---
 
 # 背景

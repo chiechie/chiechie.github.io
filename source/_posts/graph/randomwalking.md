@@ -9,8 +9,8 @@ tags:
 - 贝叶斯
 - 根因分析
 - AIOps
-categories:
-- 技术
+categories: 
+- 图
 ---
 
 ## 介绍

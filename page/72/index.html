@@ -165,6 +165,139 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/AI/machine_learning/deeplearning/dl-basic1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/08/AI/machine_learning/deeplearning/dl-basic1/" class="post-title-link" itemprop="url">深度学习基础2 神经网络训练的一些小tricks</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-08 10:17:31" itemprop="dateCreated datePublished" datetime="2021-03-08T10:17:31+08:00">2021-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-11 09:50:23" itemprop="dateModified" datetime="2021-06-11T09:50:23+08:00">2021-06-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">实践</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="layer的输入输出">layer的输入输出</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model_m = Sequential()</span><br><span class="line">model_m.add(Reshape((TIME_PERIODS, num_sensors),</span><br><span class="line">                    input_shape=(input_shape,)))</span><br><span class="line">model_m.add(Conv1D(<span class="number">100</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>,</span><br><span class="line">                   input_shape=(TIME_PERIODS, num_sensors)))</span><br><span class="line">model_m.add(Conv1D(<span class="number">100</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model_m.add(MaxPooling1D(<span class="number">3</span>))</span><br><span class="line">model_m.add(Conv1D(<span class="number">160</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model_m.add(Conv1D(<span class="number">160</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model_m.add(GlobalAveragePooling1D())</span><br><span class="line">model_m.add(Dropout(<span class="number">0.5</span>))</span><br><span class="line">model_m.add(Dense(num_classes, activation=<span class="string">&#x27;softmax&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://miro.medium.com/max/2073/1*Y117iNR_CnBtBh8MWVtUDg.png" alt="Image for post" /><figcaption aria-hidden="true">Image for post</figcaption>
+</figure>
+<ul>
+<li>Conv1D：　model_m.add(Conv1D(100, 10, activation='relu', input_shape=(TIME_PERIODS, num_sensors)))：
+<ul>
+<li>输入：(timesteps, num_series)</li>
+<li>输出：(timesteps - kerner_size+1, num_kernels)</li>
+<li>参数个数：(kernel_size * num_sensors + 1) * num_kernels</li>
+</ul></li>
+<li>MaxPooling1D: model_m.add(MaxPooling1D(3))
+<ul>
+<li>输入：(timesteps, num_series)</li>
+<li>输出：(timesteps//3, num_series)</li>
+<li>备注：书的页数（channel）没变，但是每页的字数变成了1/3</li>
+<li><img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" title="fig:" alt="Image for post" /></li>
+</ul></li>
+<li>GlobalAveragePooling1D：model_m.add(GlobalAveragePooling1D())
+<ul>
+<li>输入：　(timesteps, num_series) 或者（feature_values, feature_detectors）</li>
+<li>输出：　（１，num_series）或者（１, feature_detectors）</li>
+<li>备注： 书的页数（channel）没变，但是每页的字数变成了1</li>
+</ul></li>
+<li>Dropout: model_m.add(Dropout(0.5))： 形状不变 输入：（１，num_series） 输出：（１，num_series）</li>
+<li>LSTM：model.add(LSTM(units=128, dropout=0.5, return_sequences=True, input_shape=input_shape))
+<ul>
+<li>输入： (timestep, series)</li>
+<li>输出：(timestep, units)</li>
+</ul></li>
+<li>Dense： model_m.add(Dense(num_classes, activation='softmax'))
+<ul>
+<li>输入：（１，num_series）</li>
+<li>输出：（１，num_classes　×　２）</li>
+</ul></li>
+<li>BatchNormalization：
+<ul>
+<li>输入: (timestep, series)</li>
+<li>输出：(timestep, series)</li>
+<li>参数个数：４ * series (channel)
+<ul>
+<li><span class="math display">\[y=\gamma\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\beta \]</span></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="layer如何设置初始化权重">layer如何设置初始化权重？</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.layers.Dense(<span class="number">10</span>, activation=<span class="string">&quot;relu&quot;</span>, kernel_initializer=<span class="string">&quot;he_normal&quot;</span>)</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="./img.png" alt="3种初始化方法" /><figcaption aria-hidden="true">3种初始化方法</figcaption>
+</figure>
+<h2 id="训练过程太长">训练过程太长？</h2>
+<p>保存训练结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 设置loss，优化算法</span></span><br><span class="line">model.<span class="built_in">compile</span>(loss=..., optimizer=...,</span><br><span class="line">              metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br><span class="line"></span><br><span class="line">EPOCHS = <span class="number">10</span></span><br><span class="line">checkpoint_filepath = <span class="string">&#x27;/tmp/checkpoint&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 定义回调函数</span></span><br><span class="line">model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(</span><br><span class="line">    filepath=checkpoint_filepath,</span><br><span class="line">    save_weights_only=<span class="literal">True</span>,</span><br><span class="line">    monitor=<span class="string">&#x27;val_accuracy&#x27;</span>,</span><br><span class="line">    mode=<span class="string">&#x27;max&#x27;</span>,</span><br><span class="line">    save_best_only=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model weights are saved at the end of every epoch, if it&#x27;s the best seen</span></span><br><span class="line"><span class="comment"># so far.</span></span><br><span class="line"><span class="comment"># 3.在fit中传入回调函数，模型会一边训练一边存储</span></span><br><span class="line">model.fit(epochs=EPOCHS, callbacks=[model_checkpoint_callback])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 从缓存路径中加载模型</span></span><br><span class="line"><span class="comment"># The model weights (that are considered the best) are loaded into the model.</span></span><br><span class="line">model.load_weights(checkpoint_filepath)</span><br></pre></td></tr></table></figure>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>Hands-On Machine Learning with Scikit-Learn and TensorFlow, P334</li>
+<li><a target="_blank" rel="noopener" href="https://keras.io/api/callbacks/model_checkpoint/">keras-model_checkpoint-官网文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://keras.io/api/layers/merging_layers/concatenate/">concatenate</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/reading_notes/zhexue/podcast_natural-sciences-and-economy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -234,108 +367,6 @@
 </ol>
 <h2 id="参考">参考</h2>
 <p>1.<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/OOZabR5vQgmQzFIPrkJyoA">微信公众号-RandomWalk Theory-许成钢教授谈治学</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/07/reading_notes/computer/virtual-machine/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/07/reading_notes/computer/virtual-machine/" class="post-title-link" itemprop="url">思考工具--虚拟机</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-07 12:02:36" itemprop="dateCreated datePublished" datetime="2021-03-07T12:02:36+08:00">2021-03-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>以虚拟机为原型的一个学习方法, 即「层层嵌套」，先使用high-level的视角：「只见森林不见树木」，再使用low-level的视角。</p>
-<p>虚拟机的设计范式，将逻辑复杂度从硬件转移到软件，当服务出现故障时，需要在多层次的软件层中找原因，隐隐有种不安。</p>
-</blockquote>
-<h1 id="总结">总结</h1>
-<ol type="1">
-<li>设计者一般会根据实体机的功能和用途去给实体取名字。</li>
-<li>计算机也类似，不同的是，他被要求做成千上万件事情。用户只用点开不同的程序，就能够让计算机内部实现切换，从而转换成不同的装置去完成不同的工作。每套装置都是一个单独的小机器，这就是虚拟机。</li>
-<li>对计算机来说，指令就是齿轮和滑轮。所有的信息都要转换成二进制代码0和1。他们是计算能够读写的唯一语言。芯片上的电路会分流0/1代码，逻辑门不断开合，将信息流输送到某条电路，并且以这种方式来下达指令。计算机上唯一可移动的部件--是硬件上百万个的小空位，可以在1态和0态之间切换。计算机在某个时刻具有什么功能，取决于百万个微型元件的设置。</li>
-<li>若一台实体机的各组件相互配合，呈现不同状态，具备极强可塑性，只需施加一套特殊指令，就能把它变成虚拟机。虚拟机处理的是信息，它能够跟实体计算机做一样的工作：实体计算机中的可移动部件只是硬件中的状态变化；虚拟机可以直接操纵状态变化，来代表那些"可移动部件"。举个例子，你可以在草稿纸上演算除法，也可以在头脑中演算。两者都可以得出结果，因为我们的目标是得到一种信息--除法的结果。计算机十分擅长在头脑中演算，我们用计算机的时候，很难分清楚，自己操作的是一个专用的硬连线机器，还是一部多用途芯片上运行的虚拟机。</li>
-<li>几乎所有的电梯，空调，汽车都使用廉价的计算机芯片，它能运行PC的所有程序，但是我们却选择让他们只运行一个简单的程序--刻录在只读存储器上的代码，例如点火控制或者周期除霜。为什么呢？多功能芯片生产成本更低。</li>
-<li>虚拟机最初表示的是"实体机的一种独立有效的复制品"，实体机是实在的硬件，由硅芯片和芯片组成，称为A。而虚拟机是运行在另外一台实体机B上的计算机程序，他能完美地模拟计算机A；速度可能会慢点，毕竟他要先保障自己硬件B上的基本操作有效运行（通用操作），才能组织其硬件A上的那些操作。（基于linux开发的程序想要运行在window上，需要在windows机器上开发一个虚拟机；在开发阶段开发的程序要部署到生产环境，可以在生产环境安装一个容器，然后将生产环境的程序安插在容器内）</li>
-<li>虚拟机带来的好处是，避免资源浪费：假设有很多只能在MAC上运行的软件，你没有mac，他们就没法用，如果可以在PC上编写一个模拟MAC的虚拟机，然后这些mac软件就可以使用了。你的电脑会认定自己是真的mac，而且那些软件更加浑然不知。</li>
-<li>目前，绝大多数程序都需要专门的操作系统而不是专门的硬件，相同的硬件可以运行不同的操作系统。一种操作系统本身就是一个虚拟机，它能够让一个程序在略有差异的两台机器上同样有效运行。但是一个操作系统毕竟没有模拟任何实际存在的硬件，他只是按照要求创建出虚构的机器，接受待定的输入。</li>
-<li>JAVA虚拟机（JVM）是当今最流行的一种虚拟机，它比较像一个操作系统。用Java语言编写的web应用可以跨平台使用，不管是用windows还是安卓还是macOS。why？因为java程序的运行环境只依赖JVM，而每个操作系统都有专门的JVM，当运行某个java程序时时，跟你设备匹配的JVM会自动下载到你的电脑，几秒就装好了。然后，各种java小程序就可以运行了。</li>
-<li>可以看到，几乎所有的计算机程序都是虚拟机--由指令构成的软件，一旦运行，将通用计算机变成了专用计算机，这种专用计算机本可以专门设计和创建专门的硬件（例如AI芯片）。只需要在通用计算机上简单安装和运行程序，就可以得到一台功能清晰的计算机。</li>
-<li>图灵机或者笔记本，只能一条条执行指令，再次基础上扩展除了"并行"计算机的概念，可以一次执行数百万条指令。</li>
-<li>考虑一个在国际象棋的程序，它由common lisp这种高级语言写成，在一台pc上运行的windows操作系统上运行。实际上，这台pc伪装成了一台windows机器，这台windows机器又伪装成了一台lisp机器，这台lisp机器又伪装成了一台国际象棋游戏机。</li>
-<li>无论在哪个level上，我们总是只见森林不见树木，low-level的细节总是很容易忽略。计算机上虚拟机的层层嵌套和「小人儿功能主义」中小人儿的层层嵌套，两者之间的雷同并非巧合。虚拟机推动人类的创造和理解，完成了很多创造性任务。这些计算机的成就也给人类带来了启发：如果对大脑也实施类似的逆向工程，或许也能有所收获。</li>
-<li>所有说法语的人 都具备某种版本的法语虚拟机，说英语的人大脑里面也有一套固定模式的系统--英语虚拟机，如何在大脑中建立语言虚拟机？尚未有答案，不过可以看看计算机是怎么做的：编译器将高层指令翻译成可以在硬件上执行的代码，只需程序员在high-level设计出一个想法，它就有把握生成一个可执行的程序。</li>
-</ol>
-<blockquote>
-<p>概念验证：无需动用神奇组织，我们找到了一种方法，能够清楚地说出"具有数万亿活动部件的计算机，它的那种高等能力到底是什么?"--编译器。</p>
-</blockquote>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/21532330716e9c7a215e76c">直觉泵和其他思考工具-丹尼尔·丹尼特-微信读书</a></li>
-<li><a href="https://chiechie.github.io/2021/03/18/technology/dive-into-JVM/">关于JVM的延伸笔记-chiechie</a></li>
-</ol>
 
       
     </div>
@@ -427,13 +458,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

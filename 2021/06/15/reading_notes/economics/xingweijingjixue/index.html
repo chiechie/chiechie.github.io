@@ -20,21 +20,20 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="最近需要对图数据进行分析，了解下PageRank的原理 BTW, PageRank还可以做社区划分？  总结一下 pagerank: 假设，网上冲浪的人都是漫无目的的人，他们在网页一个链接接一个链接点下去，但是，整个互联网的节点，最终流量可能的分布能达到一个稳态。 也就是说，随机分布于各网页的流量经过次数足够多的转移之后，会达到一个稳定的状态，这个也代表每个网页的信息度。 基于这个假设，可以构建">
+  <meta name="description" content="第二部分 社会网络研究 选择选择什么？  “群体选择”:群体之间的竞争可能使内部合作的群体最终胜出并淘汰那些内部不合作的群体.群体选择这一主题兼具个体视角和群体视角。 &quot;利他行为&quot;：体为增加群体的适存度而降低自己的适存度，它的行为是利他行为。适存度，fitness。 生物学家怎样测度呢？他们用后代与母代之比，来测度适存度。如果一个人的生存策略有利于增加自己的适存度，那么在一名旁观者看来，他的后代的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PageRank算法">
-<meta property="og:url" content="https://chiechie.github.io/2021/05/22/AI/pagerank/index.html">
+<meta property="og:title" content="《行为经济学》读书笔记">
+<meta property="og:url" content="https://chiechie.github.io/2021/06/15/reading_notes/economics/xingweijingjixue/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="最近需要对图数据进行分析，了解下PageRank的原理 BTW, PageRank还可以做社区划分？  总结一下 pagerank: 假设，网上冲浪的人都是漫无目的的人，他们在网页一个链接接一个链接点下去，但是，整个互联网的节点，最终流量可能的分布能达到一个稳态。 也就是说，随机分布于各网页的流量经过次数足够多的转移之后，会达到一个稳定的状态，这个也代表每个网页的信息度。 基于这个假设，可以构建">
+<meta property="og:description" content="第二部分 社会网络研究 选择选择什么？  “群体选择”:群体之间的竞争可能使内部合作的群体最终胜出并淘汰那些内部不合作的群体.群体选择这一主题兼具个体视角和群体视角。 &quot;利他行为&quot;：体为增加群体的适存度而降低自己的适存度，它的行为是利他行为。适存度，fitness。 生物学家怎样测度呢？他们用后代与母代之比，来测度适存度。如果一个人的生存策略有利于增加自己的适存度，那么在一名旁观者看来，他的后代的">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-05-22T10:07:11.000Z">
-<meta property="article:modified_time" content="2021-06-07T00:47:27.605Z">
+<meta property="article:published_time" content="2021-06-15T01:26:37.000Z">
+<meta property="article:modified_time" content="2021-06-16T00:43:43.482Z">
 <meta property="article:author" content="Chiechie">
-<meta property="article:tag" content="图算法">
-<meta property="article:tag" content="拓扑数据">
+<meta property="article:tag" content="经济学">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://chiechie.github.io/2021/05/22/AI/pagerank/">
+<link rel="canonical" href="https://chiechie.github.io/2021/06/15/reading_notes/economics/xingweijingjixue/">
 
 
 <script id="page-configurations">
@@ -47,7 +46,7 @@
   };
 </script>
 
-  <title>PageRank算法 | Chiechie's Mini World</title>
+  <title>《行为经济学》读书笔记 | Chiechie's Mini World</title>
   
 
 
@@ -169,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/22/AI/pagerank/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/15/reading_notes/economics/xingweijingjixue/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -182,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          PageRank算法<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AI/pagerank.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          《行为经济学》读书笔记<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/reading_notes/economics/xingweijingjixue.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -192,14 +191,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-22 18:07:11" itemprop="dateCreated datePublished" datetime="2021-05-22T18:07:11+08:00">2021-05-22</time>
+              <time title="创建时间：2021-06-15 09:26:37" itemprop="dateCreated datePublished" datetime="2021-06-15T09:26:37+08:00">2021-06-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:47:27" itemprop="dateModified" datetime="2021-06-07T08:47:27+08:00">2021-06-07</time>
+                <time title="修改时间：2021-06-16 08:43:43" itemprop="dateModified" datetime="2021-06-16T08:43:43+08:00">2021-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -207,7 +206,23 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">实践</span></a>
+                  <a href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">经济学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">行为经济学</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E5%B9%82%E5%BE%8B/" itemprop="url" rel="index"><span itemprop="name">幂律</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E5%B9%82%E5%BE%8B/%E5%93%88%E8%80%B6%E5%85%8B/" itemprop="url" rel="index"><span itemprop="name">哈耶克</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E5%B9%82%E5%BE%8B/%E5%93%88%E8%80%B6%E5%85%8B/%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9/" itemprop="url" rel="index"><span itemprop="name">群体选择</span></a>
                 </span>
             </span>
 
@@ -229,29 +244,51 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <blockquote>
-<p>最近需要对图数据进行分析，了解下PageRank的原理</p>
-<p>BTW, PageRank还可以做社区划分？</p>
-</blockquote>
-<h2 id="总结一下">总结一下</h2>
-<p>pagerank: 假设，网上冲浪的人都是漫无目的的人，他们在网页一个链接接一个链接点下去，但是，整个互联网的节点，最终流量可能的分布能达到一个稳态。 也就是说，随机分布于各网页的流量经过次数足够多的转移之后，会达到一个稳定的状态，这个也代表每个网页的信息度。</p>
-<p>基于这个假设，可以构建一个模型， <span class="math display">\[V_n = M ^n * V_0\]</span></p>
-<p>一般来说，可以拿到网页之间调用拓扑，经过转换，可以将这个拓扑变为概率转移矩阵M，最终算出稳定态的V_n</p>
-<p>给定点之间的连接关系，输出每个节点的分数，</p>
-<p>补充下，最naive的方法存在终止点问题，也就是说，一个网站它不链接任何别的网站，或者一个微服务，它不调用其他任何微服务 按照上面的思路很可能出现一种情况，最终的流量全到这个自大狂网页那里去了，所以有一个改进的思路，假设冲浪着有一点点聪明，他并不是一味的接受灌输的链接，而是有一定概率，主动跳出去，到达一个新的站点，这个方式可以用下面的式子建模：</p>
-<p><span class="math display">\[V_n = d * M * V_{n-1} + (1-d) * e \]</span></p>
-<p>e = [1/n,...1/n]</p>
-<p>d表示按照当前页面推荐的链接继续点下去的概率 1-d表示从当前网页跳出来，主动输入一个新网页重新开始的概率</p>
-<h2 id="代码">代码</h2>
-<p>用代码验证一下，理解没有问题</p>
-<p>https://github.com/chiechie/BasicAlgo/blob/main/pagerank.py</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ground truth</span><br><span class="line"> [[0.25419178], [0.13803151], [0.13803151], [0.20599017], [0.26375504]]</span><br><span class="line">result</span><br><span class="line"> [0.25419178 0.13803151 0.13803151 0.20599017 0.26375504]</span><br></pre></td></tr></table></figure>
+        <h2 id="第二部分-社会网络研究">第二部分 社会网络研究</h2>
+<h3 id="选择选择什么">选择选择什么？</h3>
+<ol type="1">
+<li>“群体选择”:群体之间的竞争可能使内部合作的群体最终胜出并淘汰那些内部不合作的群体.群体选择这一主题兼具个体视角和群体视角。</li>
+<li>"利他行为"：体为增加群体的适存度而降低自己的适存度，它的行为是利他行为。适存度，fitness。</li>
+<li>生物学家怎样测度呢？他们用后代与母代之比，来测度适存度。如果一个人的生存策略有利于增加自己的适存度，那么在一名旁观者看来，他的后代的数目必须逐渐超过母代的数目，这就是繁衍，否则就是消亡</li>
+<li>行为模式是可观测的，行为动机是不可观测的。策略是对行为模式的一种描述，所以是可观测的。心理学描述心理事实，包括动机，通常是不可观测的。如生物学家那样，行为经济学试图做的，是从可观测的“显型”策略，推测那些不可观测的“基因型”行为动机。</li>
+<li>什么是传统：：一切经过长期历史的检验有利于生存和繁衍的知识。其中可交流的传统就是常识。传统的大部分不能交流，只能模仿。</li>
+<li>为什么蚂蚁懂得合作没有淘汰人类？蚂蚁行为的驱动力量是族群惯性，但是他没有灵活性。人的行为驱动力量一部分是族群惯性，一部分是灵活性，这样就使得可以保持创新的同时，又能够保持一定的合作秩序。</li>
+<li>在古尔德看来，漫长的地球演化史，首先由一些漫长的稳态构成，其次，这些稳态之间有一些瞬间的黑天鹅事件打破既有的均衡态，然后陷入新的均衡态，再等待新的黑天鹅事件</li>
+<li>人类的出现，就是其中一个黑天鹅事件，它只占演化史的一个瞬间，是大约900万年以内的事情</li>
+<li>古尔德的结论是：历史从来不是决定论的，由许多偶然因素决定历史路径，只在事后才可能知道 自然选择的力量从来不是惟一的演化力量，类似地，为什么最优越的物种只在以往漫长历史的最后一秒之内发生呢？</li>
+<li>在多因多果的网络里，科学家怎样令人信服地指出哪一条因果链条是最重要的呢？理想方法是通过实验，在实验中，我们可以只让一条因果链发生作用，我们控制所有其他因果关系不许它们起作用</li>
+</ol>
+<h3 id="社会网络研究什么">社会网络研究什么？</h3>
+<ol type="1">
+<li>如何界定一项知识的重要性？用途。手段的质，依赖于目的本身。</li>
+</ol>
+<h3 id="爱因斯坦的自由论">爱因斯坦的自由论</h3>
+<ol type="1">
+<li>整体论可爱，但不可信，因为它缺少可行的研究方法。个体论可信，却不可爱。</li>
+<li>爱因斯坦:创造是个体的，从来就是个体行为。但是自由，却是整体的. 没有宽容的社会，个人自由也将消失。</li>
+</ol>
+<h3 id="哈耶克的涌现秩序">哈耶克的涌现秩序</h3>
+<ol type="1">
+<li><p>马克思理论的逻辑矛盾在第一卷里尚未出现，非要在第二卷和第三卷才成为无法挣脱的内在矛盾。</p></li>
+<li><p>马克思主义和哈耶克：哈耶克论证，没有一个微观主体（个体或群体），不论多么聪明，有能力预先知道从大量哪怕是极简单的微观主体的相互作用中涌现出来的宏观秩序是怎样的。这当然意味着社会计划的不可能和理性的狂妄。理性实在很渺小，不可能完成社会主义者赋予它的资源有效配置任务。</p></li>
+<li><p>人类互动问题的复杂性，时间与结构的复制以及涌现，宏观秩序的涌现</p></li>
+<li><p>哈耶克的“涌现秩序"：演化理论，假以时日，从大量的简单局部结构之间的相互作用中必能涌现更复杂的结构。</p>
+<blockquote>
+<p>涌现秩序的思想，可以溯源至柏格森和怀特海。</p>
+</blockquote></li>
+<li><p>哈耶克使用的关键词：简单结构、复制过程、优胜劣汰、适应性。</p></li>
+<li><p>哈耶克的社会演化基本原理：单子复杂交往涌现宏观秩序的不可预见性。</p>
+<ul>
+<li>“单子”，是莱布尼茨的概念，它们如“素数”那样单纯，具有不可再分性。只不过，莱布尼茨假设单子之间没有交往，而哈耶克假设单子之间的交往是事物演化的原因。</li>
+</ul></li>
+<li><p>多主体仿真（multi-agent simuiation）:一种模拟不确定性的环境与社会变迁的程序.哈佛的诺瓦克小组在使用软件仿真时，将每一个agent都设置为具有最简单的行为规则。然后，一个环境中有数千个agent，相互作用之后，宏观秩序涌现出来，这个宏观秩序是不可预期的。最初研究这样的仿真程序的，是2005年与奥曼分享诺贝尔经济学奖的谢林，这一程序称为“谢林程序”。</p></li>
+<li><p>《解释的程度》中，哈耶克的论述十分接近“社会现象是多因多果”这一见解。</p></li>
+<li><p>《复杂现象论》中，哈耶克全面论述了他设想的演化理论的各要素。目前，社会网络的研究方法，是最适合研究哈耶克涌现秩序的实证方法。</p></li>
+<li><p>对于统计学的看法：本质上是通过消除复杂性来处理大量数据的。</p></li>
+</ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/gamer_gyt/article/details/47443877">pagerank-csdn</a></li>
-<li><a target="_blank" rel="noopener" href="https://scikit-network.readthedocs.io/en/latest/tutorials/ranking/pagerank.html">scikit-network-pagerank</a></li>
-<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/PageRank">wiki-PageRank</a></li>
-<li>https://blog.csdn.net/google19890102/article/details/48660239</li>
+<li>https://weread.qq.com/web/reader/b48321a058a8aeb48d182ac</li>
 </ol>
 
     </div>
@@ -262,8 +299,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag"># 图算法</a>
-              <a href="/tags/%E6%8B%93%E6%89%91%E6%95%B0%E6%8D%AE/" rel="tag"># 拓扑数据</a>
+              <a href="/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/" rel="tag"># 经济学</a>
           </div>
 
         
@@ -272,13 +308,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/05/21/AI/AIOps/AIOps-2_1_2-topo-rca-causeinfer-notes2/" rel="prev" title="chapter2.1.2 基于拓扑的根因定位-CauseInfer2">
-      <i class="fa fa-chevron-left"></i> chapter2.1.2 基于拓扑的根因定位-CauseInfer2
+    <a href="/2021/06/10/meditation/about-AGI/" rel="prev" title="关于AGI？">
+      <i class="fa fa-chevron-left"></i> 关于AGI？
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/05/23/AI/cause-effect/randomwalking/" rel="next" title="随机游走">
-      随机游走 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -337,7 +370,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="nav-number">1.</span> <span class="nav-text">总结一下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86-%E7%A4%BE%E4%BC%9A%E7%BD%91%E7%BB%9C%E7%A0%94%E7%A9%B6"><span class="nav-number">1.</span> <span class="nav-text">第二部分 社会网络研究</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E9%80%89%E6%8B%A9%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">选择选择什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BE%E4%BC%9A%E7%BD%91%E7%BB%9C%E7%A0%94%E7%A9%B6%E4%BB%80%E4%B9%88"><span class="nav-number">1.2.</span> <span class="nav-text">社会网络研究什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6%E7%9A%84%E8%87%AA%E7%94%B1%E8%AE%BA"><span class="nav-number">1.3.</span> <span class="nav-text">爱因斯坦的自由论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E8%80%B6%E5%85%8B%E7%9A%84%E6%B6%8C%E7%8E%B0%E7%A7%A9%E5%BA%8F"><span class="nav-number">1.4.</span> <span class="nav-text">哈耶克的涌现秩序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -358,13 +391,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

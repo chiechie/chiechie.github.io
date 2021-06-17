@@ -17,6 +17,6 @@ categories:
 > the book of why 的第7章-一些悖论
 
 
-## 参考
 
+## 参考
 1. [the book of why-微信读书](http://bayes.cs.ucla.edu/WHY/why-intro.pdf)

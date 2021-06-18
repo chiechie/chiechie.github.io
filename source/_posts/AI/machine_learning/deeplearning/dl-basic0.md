@@ -4,8 +4,67 @@ author: chiechie
 mathjax: true
 date: 2021-06-10 16:35:36
 tags:
-categories:
+- 深度学习
+- low level
+- 最佳实践
+categories: 
+- AI
+
 ---
+
+## 中英文对照
+
+- 网络结构：
+    - unit：单元
+    - hidden_layers: 隐藏层
+    - cell：单元
+    - **dropout_rate**： 丢弃率
+- 优化算法
+    - epochs： **迭代周期个数** :  迭代周期个数，int类型，默认值为10.
+    - batch_size： **批量大小**:   int类型，默认值为128。
+
+## 数据表示
+
+
+### Real-world examples of data tensors
+
+Let’s make data tensors more concrete with a few examples similar to what you’ll encounter later. The data you’ll manipulate will almost always fall into one of the following categories:
+
+- Vector data—2D tensors of shape(samples,  features)
+- Timeseries data or sequence data—3D tensors of shape (samples, timesteps, features)
+- Images—4D tensors of shape(samples,height,width,channels)or(samples,channels, height, width)
+- Video —5D tensors of shape (samples, frames, height, width, channels) or (samples, frames, channels, height, width)
+
+### 2-D 数据
+
+- 两个轴：samples axis 和 features axis.
+- 文本数据, 假设词典长度为2k，每一个doc可以表示为1个2k维的向量，位置的值代表词在文本中出现的次数。
+- 500个文件可以存储为(500, 20000).
+
+### 时间序列数据
+
+- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_vMGBboznU.png?alt=media&token=73c12f97-acdb-4680-b4eb-79a9a07581f9)
+- tf中使用3d张量存储，(samples, timestamp, features)
+- 每一个sample可以被编码成1系列的向量--2d张量
+- 具体的两个例子
+- 1. 股票数据：
+    - 每年有250个交易日，每个交易日的交易时长有390分钟，每个分钟可以抽取3个重要特征：当前价格，上一分钟最高成交价格，上一分钟最低价格
+    - 以每一天的交易数据为1个样本，构建的样本的shape为(250,390,3)
+- 2. TWEET数据：
+    - 一条twitter长度不超过256，每个位置的字符来自128个assical码中的一个
+    - 每一条twitter的shape为（256， 128），1 百万 tweets 的shape为(1000000, 280, 128)
+
+### 图像数据的表示
+
+- 4维tensor
+- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD24ghIvE2L.png?alt=media&token=4a68bc5a-7b95-46d2-8418-deed053d4301)
+    - tensorflow： (samples, height, width, color_depth)
+    - theano：(samples, color_depth, height, width). 
+    - keras两者都支持
+
+### 视频数据的表示
+
+- 5维张量：(samples, frames, height, width, color_depth).
 
 ## layers的基本类型
 

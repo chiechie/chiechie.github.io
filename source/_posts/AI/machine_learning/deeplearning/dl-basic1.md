@@ -8,7 +8,7 @@ tags:
 - low level
 - 最佳实践
 categories: 
-- 实践
+- AI
 ---
 
 

@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-06-16T00:43:43.482Z</updated>
+  <updated>2021-06-18T09:53:13.550Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>人为什么需要工作？</title>
+    <link href="https://chiechie.github.io/2021/06/18/meditation/why-do-We-work/"/>
+    <id>https://chiechie.github.io/2021/06/18/meditation/why-do-We-work/</id>
+    <published>2021-06-18T09:28:02.000Z</published>
+    <updated>2021-06-18T09:53:13.550Z</updated>
+    
+    <content type="html"><![CDATA[<p>类似的问题， 还有我们为了高考为什么要学数理化，还有文言文阅读理解？工作和学习中并没有用上。</p><p>面试的时候为什么要考一些甲骨文？工作中也用不上。</p><p>想了一下，除了挣钱，好像还有点别的作用，只是这个作用跟我们最开始设想的目标不一样，而是做完了之后意外发现的。</p><p>就好像我现在的工作本来想磨练算法技术，结果没有什么磨炼的机会，但是转去做产品设计了，结果越做越困惑，于是迫切想要找到答案，后面产生了对哲学，社会科学，心理学，经济学的兴趣，因为我发现一些问题追问到本质，似乎在很多个领域都是相通的。在这份工作中，思考问题的反思也潜移默化的发生了改变，从追求触手可及的结果，到追求更本质的更深层次的问题。同时，通过学习，我提升了对学习新领域的自信，以及良好的阅读taste。</p><p>最重要的一点，从之前的教条转变为现在的怀疑论信徒：谁都别想忽悠我，谁都不可能绝对正确，我的认知永远是有局限的。</p><p>得知东隅，失之西隅。</p><p>再想一想高中学习的那些东西，可能真的没有什么直接的实际的用处，而是磨练了我们的意志力的，吃苦耐劳的能力，可能还有其他什么对我们的性格上的潜在的影响，当然这个影响不是设计高考制度的人想出来的，而是这当成人生的一段经历，总结出来的，</p><p>得到的教训，事件A和事件B在部分样本中存在若隐若现的关联性，背后可能存在着某个混杂因子，并且状态是不可见的，我们很多情况下都不知道这个变量是个什么，但是用心去做，投入去做的话，大概率会是有好结果的吧，这个结果很可能跟我们当初设想的不一样。想到了禅宗说的「因缘际会」。</p><p>以前听别人说，"做之前想的再多没用，做着做着就知道意义了"。我现在似乎有点明白这个意思了，人的能力太有限了，世界变幻莫测，哪里有可能预测到所有事情的演化方向，直到走完这条路，并且回过头来看这条路，才直到我们的终点是什么，才能总结出这一路的意义是什么。</p><blockquote><p>莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻胜马，谁怕？ 一蓑烟雨任平生。</p><p>料峭春风吹酒醒，微冷，山头斜照却相迎。回首向来萧瑟处，归去，也无风雨也无晴。</p><p>-- 定风波 苏轼</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;类似的问题， 还有我们为了高考为什么要学数理化，还有文言文阅读理解？工作和学习中并没有用上。&lt;/p&gt;
+&lt;p&gt;面试的时候为什么要考一些甲骨文？工作中也用不上。&lt;/p&gt;
+&lt;p&gt;想了一下，除了挣钱，好像还有点别的作用，只是这个作用跟我们最开始设想的目标不一样，而是做完了之后意外发</summary>
+      
+    
+    
+    
+    <category term="沉思录" scheme="https://chiechie.github.io/categories/%E6%B2%89%E6%80%9D%E5%BD%95/"/>
+    
+    
+    <category term="阅读" scheme="https://chiechie.github.io/tags/%E9%98%85%E8%AF%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>《社会心理学》读书笔记</title>
+    <link href="https://chiechie.github.io/2021/06/18/reading_notes/shehuixinlixue/"/>
+    <id>https://chiechie.github.io/2021/06/18/reading_notes/shehuixinlixue/</id>
+    <published>2021-06-18T01:24:54.000Z</published>
+    <updated>2021-06-18T07:57:28.885Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="社会中的自我">1. 社会中的自我</h2><h3 id="焦点效应">焦点效应</h3><ol type="1"><li>人总是高估他们内在状态外露的程度，但是事实上，他人并没有你想象的那样注意你。</li><li>焦点效应（spotlight effect）：把自己看作世界中心，直觉地高估别人对我们的关注程度。几个例子：</li></ol><ul><li>会聚焦在自我与当前社会环境的差异性，会关注差别最大的那个维度。</li><li>自我服务：当关系出现问题时，个体通常会把责任更多推到配偶身上，情况好转时，确认为自己起了更重要的作用。</li><li>自我关注引发的很多行为：我们关注他人的行为和期望，并随之调整自己的行为。</li><li>在不同的关系中，自我也在发生变化。</li></ul><ol start="2" type="1"><li><p>透明度错觉（illusion of transoarency）：我们能敏锐觉察到自己的情绪，很自然地表现出来，并且直觉的认为别人会通过我们的表情觉察到我们的情绪。</p><blockquote><p>其实不是的，1是我们的表现可能模糊不清，2是别人的关注点可能在他自己。</p></blockquote></li><li><p>公众心理疏忽（public mental slips）：如果我们五一冒犯了别人，我们可能懊恼，但是别人经常注意不到，即使注意到也可能很快就会忘记。</p></li><li><p>我们的大多数行为不受意识控制，是自动的无意识的，然而自我的确会制定长期计划，设定目标和进行约束，他设想各种可能，将自己和他们相比较，管理自己的reputation和社会关系，但是更多时候可能成为幸福的障碍。</p></li></ol><h3 id="我是谁">我是谁</h3><ol type="1"><li>自我范式（self-schemas）：对自己的认识，比如聪明，自省，勤奋，怀疑，个人主义。</li><li>self-schemas影响我们对社会信息的加工，也影响我们感知会议和评价他人/自己。</li><li>对跟self-schemas相关的信息会特别关注。</li><li>可能的自我（possible selfves）：梦想中自我的样子，比如富有，充满激情，自信，丛容，智慧。</li><li>可能的自我会激发出一种我们渴望的生活愿景，对我们产生巨大的激励作用，或促进我们避免成为自己害怕的样子。</li></ol><h3 id="社会自我">社会自我</h3><ol type="1"><li>基因对人格和自我概念有重要的影响，社会经验也有：扮演的角色，社会同一性，和别人的比较，成功和失败，他人如何评价我们，周围的文化。</li><li>扮演的角色：我们为这个角色说了很多好话，不知不觉，我们会越来越相信这些话，为这些话提供证据。就这样，角色扮演变成了事实。</li><li>社会比较：判断自己是否聪明/智慧？通过社会比较。生活的大部分是围绕比较进行的，因此人们可能会因为别人的失败而暗自高兴。当人嗯攀爬成功的阶梯时，通常会向上看，将自己与做的更好的人比。面对竞争时，常常认为竞争对手本来就有一些优势，以此来保护我们业已动摇的自尊。</li><li>别人的评价：镜像自我--别人对我们的看法，我们把别人作为镜子，我们认为的别人眼中的我，据此来认识自己。换句话说，重要的不是别人实际上如何评价我们，而是我们想象中他们如何评价我们。</li></ol><h3 id="自我与文化">自我与文化</h3><ol type="1"><li>对于部分群体，“个人主义”十分盛行，他们的额经历大部分是这样：青春期与负米分离，各异开始依靠自己，定义独立的自我。即使个体来到一片陌生的土地上，他的特性：有特殊能力，特点，价值和梦想的个体也会保留。当经历过富裕，地位改变，城市化和大众传媒后，个人主义开始迅速发展，</li><li>亚洲文化则更重视集体主义（collectivism）。</li><li>保守派，经济上的个人主义（不要征税）和道德上的集体主义（制定法律来约束不道德）</li><li>自由主义者，经济上的集体主义（支持全民健康保障）和道德上的个人主义（不要用法律来约束我）</li><li>许多文化似乎正在走向个人主义。</li><li>究竟是人们更加关注自我，所以喜欢听关注自我的歌曲，还是反过来？还是存在混杂因子？</li></ol><h3 id="文化与认知">文化与认知</h3><ol type="1"><li>东亚人的思维更具有整体性，从人际关系和环境的角度思考人和物。</li><li>西方的文化：强调个体的力量，个体的价值。东方人不太重视表达自己的独特性，更重视分享，很少强调个人的选择和自由。</li><li>一个具有相互依赖自我的人会有更强烈的归属感，当跟相互依赖的组织玩去哪分开之后，会失去那些定义自我的社会联系。相互依赖性的自我并非一个单独的自我，而是多个自我的组合，为人子女的我，职场中的我，作为朋友的我。</li><li>相互依赖的自我存在于社会关系中，袒露心声的交流少，大多是礼貌交谈，聚焦寻求社会支持。比独立自我更深入地融入他人。</li><li>在相互依赖的文化中，社会生活的目标不是提升个体自我，或独立做出选择，而是协调和支持群体。</li><li>“无论你去哪儿，你就是你”</li><li>自我概念似乎会适应环境，如果一生都与一群人交往，身边人对你的影响很重要；反之，如果每几年换一个环境，就没有那么重要，而自我变成忠实伙伴。</li></ol><h3 id="文化和自尊">文化和自尊</h3><ol type="1"><li>在集体主义中，自尊与“别人怎么评价我和群体”。？？？？</li><li>在个人主义中，个体的自尊更多是个人的，对个人特性的威胁会比对群体的威胁更让人气愤和郁闷。</li><li>集体主义文化中，冲突发生在集体之间，个人主义的重提则是个体之间。</li></ol><h3 id="自我认识">自我认识</h3><ol type="1"><li>我们对自己行为的解释，在原因有点微妙时候，通常答案都是错误的，我们会忽视依稀额重要因素，而夸大一些无关因素。</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;社会中的自我&quot;&gt;1. 社会中的自我&lt;/h2&gt;
+&lt;h3 id=&quot;焦点效应&quot;&gt;焦点效应&lt;/h3&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;人总是高估他们内在状态外露的程度，但是事实上，他人并没有你想象的那样注意你。&lt;/li&gt;
+&lt;li&gt;焦点效应（spotlight effe</summary>
+      
+    
+    
+    
+    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="心理学" scheme="https://chiechie.github.io/tags/%E5%BF%83%E7%90%86%E5%AD%A6/"/>
+    
+  </entry>
   
   <entry>
     <title>《行为经济学》读书笔记</title>
@@ -140,23 +194,33 @@
     <link href="https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/"/>
     <id>https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/</id>
     <published>2021-06-10T08:35:36.000Z</published>
-    <updated>2021-06-11T01:50:23.824Z</updated>
+    <updated>2021-06-18T06:53:57.880Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="layers的基本类型">layers的基本类型</h2><p>keras中layer的基本类型：</p><ul><li>卷积(Conv1D)</li><li>池化(MaxPooling1D/GlobalAveragePooling1D)</li><li>dropout(Dropout)</li><li>线性全连接层(Dense)</li><li>high-level层(LSTM)</li></ul><h3 id="卷积层">卷积层</h3><ol type="1"><li>卷积的维度有1Ｄ，2Ｄ，3D, 区别在于?</li></ol><p>输入数据的shape以及卷积核如何滑动</p><ul><li><img src="https://miro.medium.com/max/1621/1*aBN2Ir7y2E-t2AbekOtEIw.png" title="fig:" alt="I１维卷积和２维卷积的区别" /></li><li>1维卷积（Conv1D）：只有1个维度可以滑动，但是另一维度也是有待估参数的</li><li>2维卷积（Conv2D）：有两个维度可以滑动，</li><li>相同点：从参数视角都是2维的，每一个卷积kernel，参数个数是 height × width +１　（off_ set）</li></ul><ol start="2" type="1"><li>什么情况下，1d比2d好用呢？其中2个维度上，做卷积没有意义(high,close,open,close)</li></ol><h3 id="关于dropout">关于dropout</h3><p>keras中对dropout的处理，因为训练阶段需要dropout ，但是inference阶段不需要dropout，keras中如何设置？</p><p>Keras does this by default. In Keras dropout is disabled in test mode. You can look at the code<a href="https://github.com/keras-team/keras/blob/dc95ceca57cbfada596a10a72f0cb30e1f2ed53b/keras/layers/core.py#L109">here</a> and see that they use the dropped input in training and the actual input while testing.</p><p>As far as I know you have to build your own training function from the layers and specify the training flag to predict with dropout (e.g. its not possible to specify a training flag for the predict functions). This is a problem in case you want to do GANs, which use the intermediate output for training and also train the network as a whole, due to a divergence between generated training images and generated test images.</p><h2 id="损失函数">损失函数</h2><p>tensorflow中的损失函数:</p><ul><li>sparse_categorical_crossentropy: target是interger list，形状n*1；</li><li>categorical_crossentropy: target 是one-hot vector，target的shape跟模型输出一致，是n*k(类)。<ul><li><span class="math display">\[C E(x)=-\sum\limits_{i=1}^{C} y_{i} \log f_{i}(x)\]</span></li></ul></li><li>binary_crossentropy: target 是interger list。 <span class="math display">\[B C E(x)_{i}=-\left[y_{i} \log f_{i}(x)+\left(1-y_{i}\right) \log \left(1-f_{i}(x)\right)\right]\]</span></li><li>如果输出标签维度为1，只能使用binary_crossentropy，否则程序会报错。不能直接使用categorical_crossentropy 或者sparse_categorical_crossentropy</li><li>如果输出标签维度为K：使用categorical_crossentropy 或者sparse_categorical_crossentropy</li><li>单标签多分类（multi-class）：softmax + CE</li><li>二分类：sigmoid + BCE</li><li>多标签多分类（multi-label）的情况：sigmoid + BCE</li><li>最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</li></ul><h2 id="归一化">归一化</h2><p>归一化层，目前主要有这几个方法：</p><ul><li>Batch Normalization（BN， 2015年）</li><li>Layer Normalization（LN， 2016年）</li><li>Instance Normalization（IN， 2017年）</li><li>Group Normalization（GN， 2018年）</li><li>Switchable Normalization（SN， 2018年）；</li></ul><figure><img src="img_1.png" alt="几种归一化方法g" /><figcaption aria-hidden="true">几种归一化方法g</figcaption></figure><h3 id="问题1-transformer-为什么要使用ln而不是-bn">问题1 transformer 为什么要使用LN而不是 BN？</h3><p>在<a href="https://arxiv.org/pdf/2003.07845.pdf">paper: Rethinking Batch Normalization in Transformers</a>中, 作者对比了cv和nlp的BN, 得出的结论是在nlp数据上基于batch的统计信息不稳定性过大(相比cv的数据)，导致bn在nlp上效果差。相比之下layer norm能够带来更稳定的统计信息，有利于模型学习</p><p>Batch Normalization主要的问题是计算归一化统计量时计算的样本数太少，在RNN等动态模型中不能很好的反映全局统计分布信息，而Layer Normalization根据样本的特征数做归一化，是batch size无关的，只取决于隐层节点的数量，较多的隐层节点数量能保证Layer Normalization归一化统计分布信息的代表性。</p><h3 id="问题2.-in直观上怎么理解">问题2. IN直观上怎么理解？</h3><p>在计算机视觉中，IN本质上是一种Style Normalization，它的作用相当于把不同的图片统一成一种风格。另外，既然IN和BN都会统一图片的风格，那么在Generator里加IN或BN应该是不利于生成风格多样的图片的，论文中也进行了展示：</p><p><img src="https://pic2.zhimg.com/v2-235433127838fca762ebd10511de9ca7_b.jpg" /></p><p>图e是在generator中加了BN的结果，图f是在generator中加了IN的结果。果然崩了，IN崩得尤其厉害。</p><h2 id="激活函数">激活函数</h2><ul><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4_fjPJ90ir.png?alt=media&amp;token=9fb9e321-aed2-4c7b-bb6b-4762b7a38c81" /></li><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FADUH_mebAQ.png?alt=media&amp;token=65efc150-0f7b-42f9-8657-1ca131bfd8b5" /></li><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&amp;token=55bc24ce-0531-4702-8d3d-394595bd4d6e" /></li><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&amp;token=d7421445-afca-439e-85be-8631db133a41" /></li><li>https://missinglink.ai/guides/neural-network-concepts/7-types-neural-network-activation-functions-right/</li></ul><h2 id="其他实践">其他实践</h2><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://arxiv.org/pdf/1502.03167.pdf">Batch Normalization</a></li><li><a href="https://arxiv.org/pdf/1607.06450v1.pdf">Layer Normalizaiton</a></li><li><a href="https://arxiv.org/pdf/1607.08022.pdf">Instance Normalization</a></li><li><a href="https://github.com/DmitryUlyanov/texture_nets">code</a></li><li><a href="https://arxiv.org/pdf/1803.08494.pdf">Group Normalization</a></li><li><a href="https://arxiv.org/pdf/1806.10779.pdf">Switchable Normalization</a></li><li><a href="https://github.com/switchablenorms/Switchable-Normalization">code</a></li><li><a href="https://blog.csdn.net/liuxiao214/article/details/81037416">有公式推导，写的很棒</a></li><li><a href="https://www.jianshu.com/p/05de1f989790">用书比喻图像很好理解</a></li><li><a href="https://zhuanlan.zhihu.com/p/61248211">Conditional Batch Normalization 详解</a></li><li><a href="https://zhuanlan.zhihu.com/p/57875010">从Style的角度理解Instance Normalization</a></li><li><a href="https://blog.goodaudience.com/introduction-to-1d-convolutional-neural-networks-in-keras-for-time-sequences-3a7ff801a2cf">在时序数据上应用conv1D</a></li><li>https://zhuanlan.zhihu.com/p/57875010</li><li>https://stackoverflow.com/questions/47787011/how-to-disable-dropout-while-prediction-in-keras</li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="中英文对照">中英文对照</h2><ul><li>网络结构：<ul><li>unit：单元</li><li>hidden_layers: 隐藏层</li><li>cell：单元</li><li><strong>dropout_rate</strong>： 丢弃率</li></ul></li><li>优化算法<ul><li>epochs： <strong>迭代周期个数</strong> : 迭代周期个数，int类型，默认值为10.</li><li>batch_size： <strong>批量大小</strong>: int类型，默认值为128。</li></ul></li></ul><h2 id="数据表示">数据表示</h2><h3 id="real-world-examples-of-data-tensors">Real-world examples of data tensors</h3><p>Let’s make data tensors more concrete with a few examples similar to what you’ll encounter later. The data you’ll manipulate will almost always fall into one of the following categories:</p><ul><li>Vector data—2D tensors of shape(samples, features)</li><li>Timeseries data or sequence data—3D tensors of shape (samples, timesteps, features)</li><li>Images—4D tensors of shape(samples,height,width,channels)or(samples,channels, height, width)</li><li>Video —5D tensors of shape (samples, frames, height, width, channels) or (samples, frames, channels, height, width)</li></ul><h3 id="d-数据">2-D 数据</h3><ul><li>两个轴：samples axis 和 features axis.</li><li>文本数据, 假设词典长度为2k，每一个doc可以表示为1个2k维的向量，位置的值代表词在文本中出现的次数。</li><li>500个文件可以存储为(500, 20000).</li></ul><h3 id="时间序列数据">时间序列数据</h3><ul><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_vMGBboznU.png?alt=media&amp;token=73c12f97-acdb-4680-b4eb-79a9a07581f9" /></li><li>tf中使用3d张量存储，(samples, timestamp, features)</li><li>每一个sample可以被编码成1系列的向量--2d张量</li><li>具体的两个例子</li><li><ol type="1"><li>股票数据：</li></ol><ul><li>每年有250个交易日，每个交易日的交易时长有390分钟，每个分钟可以抽取3个重要特征：当前价格，上一分钟最高成交价格，上一分钟最低价格</li><li>以每一天的交易数据为1个样本，构建的样本的shape为(250,390,3)</li></ul></li><li><ol start="2" type="1"><li>TWEET数据：</li></ol><ul><li>一条twitter长度不超过256，每个位置的字符来自128个assical码中的一个</li><li>每一条twitter的shape为（256， 128），1 百万 tweets 的shape为(1000000, 280, 128)</li></ul></li></ul><h3 id="图像数据的表示">图像数据的表示</h3><ul><li>4维tensor</li><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD24ghIvE2L.png?alt=media&amp;token=4a68bc5a-7b95-46d2-8418-deed053d4301" /><ul><li>tensorflow： (samples, height, width, color_depth)</li><li>theano：(samples, color_depth, height, width).</li><li>keras两者都支持</li></ul></li></ul><h3 id="视频数据的表示">视频数据的表示</h3><ul><li>5维张量：(samples, frames, height, width, color_depth).</li></ul><h2 id="layers的基本类型">layers的基本类型</h2><p>keras中layer的基本类型：</p><ul><li>卷积(Conv1D)</li><li>池化(MaxPooling1D/GlobalAveragePooling1D)</li><li>dropout(Dropout)</li><li>线性全连接层(Dense)</li><li>high-level层(LSTM)</li></ul><h3 id="卷积层">卷积层</h3><ol type="1"><li>卷积的维度有1Ｄ，2Ｄ，3D, 区别在于?</li></ol><p>输入数据的shape以及卷积核如何滑动</p><ul><li><img src="https://miro.medium.com/max/1621/1*aBN2Ir7y2E-t2AbekOtEIw.png" title="fig:" alt="I１维卷积和２维卷积的区别" /></li><li>1维卷积（Conv1D）：只有1个维度可以滑动，但是另一维度也是有待估参数的</li><li>2维卷积（Conv2D）：有两个维度可以滑动，</li><li>相同点：从参数视角都是2维的，每一个卷积kernel，参数个数是 height × width +１　（off_ set）</li></ul><ol start="2" type="1"><li>什么情况下，1d比2d好用呢？其中2个维度上，做卷积没有意义(high,close,open,close)</li></ol><h3 id="关于dropout">关于dropout</h3><p>keras中对dropout的处理，因为训练阶段需要dropout ，但是inference阶段不需要dropout，keras中如何设置？</p><p>Keras does this by default. In Keras dropout is disabled in test mode. You can look at the code<a href="https://github.com/keras-team/keras/blob/dc95ceca57cbfada596a10a72f0cb30e1f2ed53b/keras/layers/core.py#L109">here</a> and see that they use the dropped input in training and the actual input while testing.</p><p>As far as I know you have to build your own training function from the layers and specify the training flag to predict with dropout (e.g. its not possible to specify a training flag for the predict functions). This is a problem in case you want to do GANs, which use the intermediate output for training and also train the network as a whole, due to a divergence between generated training images and generated test images.</p><h2 id="损失函数">损失函数</h2><p>tensorflow中的损失函数:</p><ul><li>sparse_categorical_crossentropy: target是interger list，形状n*1；</li><li>categorical_crossentropy: target 是one-hot vector，target的shape跟模型输出一致，是n*k(类)。<ul><li><span class="math display">\[C E(x)=-\sum\limits_{i=1}^{C} y_{i} \log f_{i}(x)\]</span></li></ul></li><li>binary_crossentropy: target 是interger list。 <span class="math display">\[B C E(x)_{i}=-\left[y_{i} \log f_{i}(x)+\left(1-y_{i}\right) \log \left(1-f_{i}(x)\right)\right]\]</span></li><li>如果输出标签维度为1，只能使用binary_crossentropy，否则程序会报错。不能直接使用categorical_crossentropy 或者sparse_categorical_crossentropy</li><li>如果输出标签维度为K：使用categorical_crossentropy 或者sparse_categorical_crossentropy</li><li>单标签多分类（multi-class）：softmax + CE</li><li>二分类：sigmoid + BCE</li><li>多标签多分类（multi-label）的情况：sigmoid + BCE</li><li>最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</li></ul><h2 id="归一化">归一化</h2><p>归一化层，目前主要有这几个方法：</p><ul><li>Batch Normalization（BN， 2015年）</li><li>Layer Normalization（LN， 2016年）</li><li>Instance Normalization（IN， 2017年）</li><li>Group Normalization（GN， 2018年）</li><li>Switchable Normalization（SN， 2018年）；</li></ul><figure><img src="img_1.png" alt="几种归一化方法g" /><figcaption aria-hidden="true">几种归一化方法g</figcaption></figure><h3 id="问题1-transformer-为什么要使用ln而不是-bn">问题1 transformer 为什么要使用LN而不是 BN？</h3><p>在<a href="https://arxiv.org/pdf/2003.07845.pdf">paper: Rethinking Batch Normalization in Transformers</a>中, 作者对比了cv和nlp的BN, 得出的结论是在nlp数据上基于batch的统计信息不稳定性过大(相比cv的数据)，导致bn在nlp上效果差。相比之下layer norm能够带来更稳定的统计信息，有利于模型学习</p><p>Batch Normalization主要的问题是计算归一化统计量时计算的样本数太少，在RNN等动态模型中不能很好的反映全局统计分布信息，而Layer Normalization根据样本的特征数做归一化，是batch size无关的，只取决于隐层节点的数量，较多的隐层节点数量能保证Layer Normalization归一化统计分布信息的代表性。</p><h3 id="问题2.-in直观上怎么理解">问题2. IN直观上怎么理解？</h3><p>在计算机视觉中，IN本质上是一种Style Normalization，它的作用相当于把不同的图片统一成一种风格。另外，既然IN和BN都会统一图片的风格，那么在Generator里加IN或BN应该是不利于生成风格多样的图片的，论文中也进行了展示：</p><p><img src="https://pic2.zhimg.com/v2-235433127838fca762ebd10511de9ca7_b.jpg" /></p><p>图e是在generator中加了BN的结果，图f是在generator中加了IN的结果。果然崩了，IN崩得尤其厉害。</p><h2 id="激活函数">激活函数</h2><ul><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4_fjPJ90ir.png?alt=media&amp;token=9fb9e321-aed2-4c7b-bb6b-4762b7a38c81" /></li><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FADUH_mebAQ.png?alt=media&amp;token=65efc150-0f7b-42f9-8657-1ca131bfd8b5" /></li><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&amp;token=55bc24ce-0531-4702-8d3d-394595bd4d6e" /></li><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&amp;token=d7421445-afca-439e-85be-8631db133a41" /></li><li>https://missinglink.ai/guides/neural-network-concepts/7-types-neural-network-activation-functions-right/</li></ul><h2 id="其他实践">其他实践</h2><h2 id="参考资料">参考资料</h2><ol type="1"><li><a href="https://arxiv.org/pdf/1502.03167.pdf">Batch Normalization</a></li><li><a href="https://arxiv.org/pdf/1607.06450v1.pdf">Layer Normalizaiton</a></li><li><a href="https://arxiv.org/pdf/1607.08022.pdf">Instance Normalization</a></li><li><a href="https://github.com/DmitryUlyanov/texture_nets">code</a></li><li><a href="https://arxiv.org/pdf/1803.08494.pdf">Group Normalization</a></li><li><a href="https://arxiv.org/pdf/1806.10779.pdf">Switchable Normalization</a></li><li><a href="https://github.com/switchablenorms/Switchable-Normalization">code</a></li><li><a href="https://blog.csdn.net/liuxiao214/article/details/81037416">有公式推导，写的很棒</a></li><li><a href="https://www.jianshu.com/p/05de1f989790">用书比喻图像很好理解</a></li><li><a href="https://zhuanlan.zhihu.com/p/61248211">Conditional Batch Normalization 详解</a></li><li><a href="https://zhuanlan.zhihu.com/p/57875010">从Style的角度理解Instance Normalization</a></li><li><a href="https://blog.goodaudience.com/introduction-to-1d-convolutional-neural-networks-in-keras-for-time-sequences-3a7ff801a2cf">在时序数据上应用conv1D</a></li><li>https://zhuanlan.zhihu.com/p/57875010</li><li>https://stackoverflow.com/questions/47787011/how-to-disable-dropout-while-prediction-in-keras</li></ol>]]></content>
     
     
       
       
-    <summary type="html">&lt;h2 id=&quot;layers的基本类型&quot;&gt;layers的基本类型&lt;/h2&gt;
-&lt;p&gt;keras中layer的基本类型：&lt;/p&gt;
+    <summary type="html">&lt;h2 id=&quot;中英文对照&quot;&gt;中英文对照&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;卷积(Conv1D)&lt;/li&gt;
-&lt;li&gt;池化(MaxPooling1D/GlobalAveragePooling1D)&lt;/li&gt;
-&lt;li</summary>
+&lt;li&gt;网络结构：
+&lt;ul&gt;
+&lt;li&gt;unit：单元&lt;/li&gt;
+&lt;li&gt;hidden_layers: 隐藏层&lt;/li&gt;
+&lt;li&gt;cell：单元&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;dropout_rate&lt;/strong</summary>
       
     
     
     
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
+    
+    
+    <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="最佳实践" scheme="https://chiechie.github.io/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
+    
+    <category term="low level" scheme="https://chiechie.github.io/tags/low-level/"/>
     
   </entry>
   
@@ -184,11 +248,11 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
-    
     <category term="平台" scheme="https://chiechie.github.io/tags/%E5%B9%B3%E5%8F%B0/"/>
     
     <category term="平台治理" scheme="https://chiechie.github.io/tags/%E5%B9%B3%E5%8F%B0%E6%B2%BB%E7%90%86/"/>
+    
+    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
     <category term="商业模式" scheme="https://chiechie.github.io/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/"/>
     
@@ -229,23 +293,23 @@
   </entry>
   
   <entry>
-    <title>《the book of why》读书笔记-7</title>
-    <link href="https://chiechie.github.io/2021/06/10/the-book-of-why/judea-pearl_the-book-of-why7/"/>
-    <id>https://chiechie.github.io/2021/06/10/the-book-of-why/judea-pearl_the-book-of-why7/</id>
+    <title>《the book of why》读书笔记-6</title>
+    <link href="https://chiechie.github.io/2021/06/10/the-book-of-why/judea-pearl_the-book-of-why6/"/>
+    <id>https://chiechie.github.io/2021/06/10/the-book-of-why/judea-pearl_the-book-of-why6/</id>
     <published>2021-06-10T00:33:38.000Z</published>
-    <updated>2021-06-15T00:28:10.651Z</updated>
+    <updated>2021-06-15T00:28:10.647Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>the book of why 的第7章-一些悖论</p></blockquote><h2 id="参考">参考</h2><ol type="1"><li><a href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>the book of why 的第6章-一些悖论</p></blockquote><h2 id="悖论1-蒙提-霍尔">悖论1-蒙提 霍尔</h2><h3 id="背景">背景</h3><p>一个竞猜游戏中，有三个用幕布遮住的们，其中有2个门后面是山羊，1个是汽车。有两种游戏规则，分别是：</p><ol type="1"><li>观众先选择三个门中的一个，然后主持人从另外两个门中选择一个没有汽车的们打开，然后这个观众可以选择要不要换门？</li><li>观众先选择三个门中的一个，然后主持人从另外两个门中随便选一个打开，然后这个观众可以选择要不要换门？</li></ol><p>第一种强况下，选择换门的话，赢到车车的概率是2/3， 第二种情况下，选择换门的话，赢到的车车的概率是1/2</p><figure><img src="./img789.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><h3 id="悖论的原因">悖论的原因</h3><ol type="1"><li><p>贝叶斯公式可以解释信息在非因果关系上的流动，也就是规则1，主持人选择了没有汽车的之后，第三个门的不确定性降低了（沿着门后有车的概率变大的方向），而整个空间的概率之和为1，所以第一个门有车的概率变小了。</p><blockquote><p>主持人的这个决策带来了系统的熵减，系统坍塌到2号门某个确定状态的子空间去了。</p></blockquote></li><li><p>为什么直觉上很难接受规则1的结论，反而会认为比赛的机制不公平？这个跟人类大脑结构有关系：</p><ul><li>大脑不擅长处理概率问题，</li><li>大脑自发抵制非因果关系的信息传递，这个是贝叶斯式变量控制的产物。</li><li>习惯将相关性等同于因果性</li><li>大脑天生难以接受</li></ul></li></ol><h2 id="悖论2-伯克森悖论">悖论2-伯克森悖论</h2><ol type="1"><li>生物统计学家约瑟夫.伯克森在医院做实验时，观察到了一个现象：两种疾病本来在一般人群中毫无关联，但是在住院人群中却会观察到似是而非的相关性。</li><li>医院样本实际上是一个冲撞模型，即，当一个人同时患了两种疾病时，一定会住院。</li><li>所以，「医院样本」就好像一个经过精心挑选过的样本，体现出来的相关关系是控制了「住院」变量之后，疾病1和疾病2的伪相关性。 <img src="img7890.png" alt="img.png" /></li><li>1956年，哲学家赖欣巴提出了一个猜想「共因原则」（common cause principle），他认为没有不含因果关系的相关关系，即，X和Y的相关不是偶然发生的，要么是一个变量导致另一个变量，要么是第三个变量，比如说出现在两个变量之前的Z变量，导致两者发生。</li><li>设计一个抛硬币的实验就可以推翻「共因原则」：假设同时抛两枚硬币，抛100次，只记录其中至少又一枚硬币为正面的结果，实验结束，发现记录的75条记录中，发现只要硬币1反面，硬币2就是正面，是因为两个硬币互通消息了吗？不是的，是因为人为记录改变了测度空间。</li><li>还有一个社会现象就是，在一些调查中发现，跟你约会的人中，哪些又魅力的人往往是混蛋。这个也是因为测度空间被你亲手改变了，因为长得丑的渣男最开始就被你过滤了。过滤之前，有魅力的渣男的概率是1/4，过滤之后有魅力的渣男概率是1/3。所以感觉这个比例增加了。</li></ol><h2 id="悖论3-辛普森悖论">悖论3-辛普森悖论</h2><ol type="1"><li>辛普森逆转：一个叫辛普森的医生，在文献上发现了一种新药D，可以治疗心脏病。论文的实验数据显示，女性患者服用药物之后，心脏病发作比例升高；男性患者服用药物之后，心脏病发作比例也升高。但是，在整体人群上，心脏病发作比例却降低了，因此该药物也被归为BBG（BAD/BAD/GOOD）型药物。然而，实际上这种药物不存在，虽然说在数学上没有什么问题。 <img src="./img.png" alt="辛普森" /></li><li>对整体人群来说，正确的结论应该是什么呢？可以这么操作，先控制性别：<ul><li>do（性别）=女性，计算女性服药之后心脏病发作比例的变化 r1。</li><li>do（性别）=男性，计算男性服药之后心脏病发作比例的变化 r2。</li><li>假设整体人群中，男女比例为1：1，那么可以推断出整体人群，服药之后，心脏比发作比例的变化为（r1+r2）/2</li></ul></li><li>辛普森悖论是因为混杂因子的存在。</li><li>当我们考察两个变量的因果效应时：<ul><li>如果存在混在因子，只能用分层数据计算因果效应，采用控制混杂因子的方式，case by case，计算每个混在因子取值的情况下，两个变量的因果关系，然后按照混杂因子每个取值的概率汇总，得到整体上，两个变量之间的因果关系。 <img src="./img_2.png" alt="img_2.png" /></li><li>如果不存在混杂因子（有可能存在中介物），可以用聚合数据计算因果效应 <img src="./img_1.png" alt="中介物" /></li></ul></li><li>混杂因子存在的警告：根据聚合数据估计出来的因果效应大于，根据分层数据估计出来的因果效应。</li></ol><h2 id="关于悖论">关于悖论</h2><ol type="1"><li><p>什么是悖论？绝大部分人深信不疑的两个信念之间的冲突。</p><blockquote><p>辛普森逆转并不算悖论，只是纠正了不懂数学的人，对"平均表现"的错误认识。</p></blockquote></li><li><p>如何解决悖论？</p><ol type="1"><li>理解为什么大多数人会把它看成一个悖论？or大家对世界的直观看法到底在哪里存在重大缺陷？eg生理结构原因：大部分人不擅长处理概率问题；「过分擅长」处理因果问题</li><li>如何纠正：刻意训练，完成大脑重塑。</li></ol></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li></ol>]]></content>
     
     
       
       
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;the book of why 的第7章-一些悖论&lt;/p&gt;
+&lt;p&gt;the book of why 的第6章-一些悖论&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&quot;参考&quot;&gt;参考&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;http://bayes.cs.ucla.edu/WHY/why-</summary>
+&lt;h2 id=&quot;悖论1-蒙提-霍尔&quot;&gt;悖论1-蒙提 霍尔&lt;/h2&gt;
+&lt;h3 id=&quot;背景&quot;&gt;背景&lt;/h3&gt;
+&lt;p&gt;一个竞猜游戏中，有三个用幕布遮住的们，其中有2</summary>
       
     
     
@@ -268,23 +332,23 @@
   </entry>
   
   <entry>
-    <title>《the book of why》读书笔记-6</title>
-    <link href="https://chiechie.github.io/2021/06/10/the-book-of-why/judea-pearl_the-book-of-why6/"/>
-    <id>https://chiechie.github.io/2021/06/10/the-book-of-why/judea-pearl_the-book-of-why6/</id>
+    <title>《the book of why》读书笔记-7</title>
+    <link href="https://chiechie.github.io/2021/06/10/the-book-of-why/judea-pearl_the-book-of-why7/"/>
+    <id>https://chiechie.github.io/2021/06/10/the-book-of-why/judea-pearl_the-book-of-why7/</id>
     <published>2021-06-10T00:33:38.000Z</published>
-    <updated>2021-06-15T00:28:10.647Z</updated>
+    <updated>2021-06-15T00:28:10.651Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>the book of why 的第6章-一些悖论</p></blockquote><h2 id="悖论1-蒙提-霍尔">悖论1-蒙提 霍尔</h2><h3 id="背景">背景</h3><p>一个竞猜游戏中，有三个用幕布遮住的们，其中有2个门后面是山羊，1个是汽车。有两种游戏规则，分别是：</p><ol type="1"><li>观众先选择三个门中的一个，然后主持人从另外两个门中选择一个没有汽车的们打开，然后这个观众可以选择要不要换门？</li><li>观众先选择三个门中的一个，然后主持人从另外两个门中随便选一个打开，然后这个观众可以选择要不要换门？</li></ol><p>第一种强况下，选择换门的话，赢到车车的概率是2/3， 第二种情况下，选择换门的话，赢到的车车的概率是1/2</p><figure><img src="./img789.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><h3 id="悖论的原因">悖论的原因</h3><ol type="1"><li><p>贝叶斯公式可以解释信息在非因果关系上的流动，也就是规则1，主持人选择了没有汽车的之后，第三个门的不确定性降低了（沿着门后有车的概率变大的方向），而整个空间的概率之和为1，所以第一个门有车的概率变小了。</p><blockquote><p>主持人的这个决策带来了系统的熵减，系统坍塌到2号门某个确定状态的子空间去了。</p></blockquote></li><li><p>为什么直觉上很难接受规则1的结论，反而会认为比赛的机制不公平？这个跟人类大脑结构有关系：</p><ul><li>大脑不擅长处理概率问题，</li><li>大脑自发抵制非因果关系的信息传递，这个是贝叶斯式变量控制的产物。</li><li>习惯将相关性等同于因果性</li><li>大脑天生难以接受</li></ul></li></ol><h2 id="悖论2-伯克森悖论">悖论2-伯克森悖论</h2><ol type="1"><li>生物统计学家约瑟夫.伯克森在医院做实验时，观察到了一个现象：两种疾病本来在一般人群中毫无关联，但是在住院人群中却会观察到似是而非的相关性。</li><li>医院样本实际上是一个冲撞模型，即，当一个人同时患了两种疾病时，一定会住院。</li><li>所以，「医院样本」就好像一个经过精心挑选过的样本，体现出来的相关关系是控制了「住院」变量之后，疾病1和疾病2的伪相关性。 <img src="img7890.png" alt="img.png" /></li><li>1956年，哲学家赖欣巴提出了一个猜想「共因原则」（common cause principle），他认为没有不含因果关系的相关关系，即，X和Y的相关不是偶然发生的，要么是一个变量导致另一个变量，要么是第三个变量，比如说出现在两个变量之前的Z变量，导致两者发生。</li><li>设计一个抛硬币的实验就可以推翻「共因原则」：假设同时抛两枚硬币，抛100次，只记录其中至少又一枚硬币为正面的结果，实验结束，发现记录的75条记录中，发现只要硬币1反面，硬币2就是正面，是因为两个硬币互通消息了吗？不是的，是因为人为记录改变了测度空间。</li><li>还有一个社会现象就是，在一些调查中发现，跟你约会的人中，哪些又魅力的人往往是混蛋。这个也是因为测度空间被你亲手改变了，因为长得丑的渣男最开始就被你过滤了。过滤之前，有魅力的渣男的概率是1/4，过滤之后有魅力的渣男概率是1/3。所以感觉这个比例增加了。</li></ol><h2 id="悖论3-辛普森悖论">悖论3-辛普森悖论</h2><ol type="1"><li>辛普森逆转：一个叫辛普森的医生，在文献上发现了一种新药D，可以治疗心脏病。论文的实验数据显示，女性患者服用药物之后，心脏病发作比例升高；男性患者服用药物之后，心脏病发作比例也升高。但是，在整体人群上，心脏病发作比例却降低了，因此该药物也被归为BBG（BAD/BAD/GOOD）型药物。然而，实际上这种药物不存在，虽然说在数学上没有什么问题。 <img src="./img.png" alt="辛普森" /></li><li>对整体人群来说，正确的结论应该是什么呢？可以这么操作，先控制性别：<ul><li>do（性别）=女性，计算女性服药之后心脏病发作比例的变化 r1。</li><li>do（性别）=男性，计算男性服药之后心脏病发作比例的变化 r2。</li><li>假设整体人群中，男女比例为1：1，那么可以推断出整体人群，服药之后，心脏比发作比例的变化为（r1+r2）/2</li></ul></li><li>辛普森悖论是因为混杂因子的存在。</li><li>当我们考察两个变量的因果效应时：<ul><li>如果存在混在因子，只能用分层数据计算因果效应，采用控制混杂因子的方式，case by case，计算每个混在因子取值的情况下，两个变量的因果关系，然后按照混杂因子每个取值的概率汇总，得到整体上，两个变量之间的因果关系。 <img src="./img_2.png" alt="img_2.png" /></li><li>如果不存在混杂因子（有可能存在中介物），可以用聚合数据计算因果效应 <img src="./img_1.png" alt="中介物" /></li></ul></li><li>混杂因子存在的警告：根据聚合数据估计出来的因果效应大于，根据分层数据估计出来的因果效应。</li></ol><h2 id="关于悖论">关于悖论</h2><ol type="1"><li><p>什么是悖论？绝大部分人深信不疑的两个信念之间的冲突。</p><blockquote><p>辛普森逆转并不算悖论，只是纠正了不懂数学的人，对"平均表现"的错误认识。</p></blockquote></li><li><p>如何解决悖论？</p><ol type="1"><li>理解为什么大多数人会把它看成一个悖论？or大家对世界的直观看法到底在哪里存在重大缺陷？eg生理结构原因：大部分人不擅长处理概率问题；「过分擅长」处理因果问题</li><li>如何纠正：刻意训练，完成大脑重塑。</li></ol></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>the book of why 的第7章-一些悖论</p></blockquote><h2 id="参考">参考</h2><ol type="1"><li><a href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li></ol>]]></content>
     
     
       
       
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;the book of why 的第6章-一些悖论&lt;/p&gt;
+&lt;p&gt;the book of why 的第7章-一些悖论&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&quot;悖论1-蒙提-霍尔&quot;&gt;悖论1-蒙提 霍尔&lt;/h2&gt;
-&lt;h3 id=&quot;背景&quot;&gt;背景&lt;/h3&gt;
-&lt;p&gt;一个竞猜游戏中，有三个用幕布遮住的们，其中有2</summary>
+&lt;h2 id=&quot;参考&quot;&gt;参考&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;http://bayes.cs.ucla.edu/WHY/why-</summary>
       
     
     
@@ -591,79 +655,6 @@
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="强化学习" scheme="https://chiechie.github.io/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>道德经(上) 1-37</title>
-    <link href="https://chiechie.github.io/2021/05/26/daojia/daodejing1/"/>
-    <id>https://chiechie.github.io/2021/05/26/daojia/daodejing1/</id>
-    <published>2021-05-26T01:23:01.000Z</published>
-    <updated>2021-06-15T01:05:04.004Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>道德经有多个版本：王弼注释/马王堆帛书等，帛书本距离老子的年代更近, 可信度更高。但是内容有缺失。</p><p>得其意即可，不必咬文嚼字</p></blockquote><h2 id="chiechies-总结">chiechie's 总结</h2><ol type="1"><li>道德经是给谁看的？古代是给君王和圣人看的。能力弱者，或受到挫折的人，容易误把道德经当作自己消极避世的借口。道德经中提到的"知者不博学"，"善者不辨"，"信言不美"，"利而不害"，"为而不争"，之所以可以不争，不辨，不博学，不美，都是有前提的，先要居其厚，居其实，才有资格"不争"，"不辩"。</li></ol><h2 id="道可道也非恒道">1 道可道也，非恒道</h2><blockquote><p>帛：道可道也，非恒道也。名可名也，非恒名也。无名万物之始也，有名万物之母也。故恒无欲也，以观其眇，恒有欲也，以观其徼。两者同出，异名同谓。玄之又玄，众妙之门。</p></blockquote><h2 id="有无之相生">2 有，无之相生</h2><blockquote><p>帛：天下皆知美之为美，恶矣，皆知善之为善，斯不善矣。有无之相生也，难易之相成也，长短之相形也，高下之相盈也，音声之相和也，先后之相随也。是以圣人居无为之事，行不言之教。万物作而弗始也，为而弗恃也，成功而弗居也，夫唯弗居，是以弗去。</p></blockquote><h2 id="使民无知无欲使夫知不敢弗为">3 使民无知无欲，使夫知不敢弗为</h2><blockquote><p>王：不尚贤，使民不争。不贵难得之货，使民不为盗；不见可欲，使民心不乱。是以圣人之治，虚其心，实其腹，弱其志，强其骨。常使民无知无欲，使夫智者不敢为也。为无为，则无不治。</p><p>帛：不上贤，使民不争。不贵难得之货，使民不为盗。不见可欲，使民不乱。是以圣人之治也，虚其心，实其腹，弱其志，强其骨，恒使民无知无欲也，使夫知不敢弗为而已，则无不治矣。</p></blockquote><p>苏辙《老子解》</p><p>尚贤，则民耻于不若而至于争；贵难得之货，则民病于无有而至于盗；见可欲，则民患于不得而至于乱。虽然，天下知三者之为患，而欲举而废之，则惑矣。圣人不然，未尝不用贤也，独不尚之耳；未尝弃难得之货也，独不贵之耳；未尝去可欲也，独不见之耳。夫是以贤者 用而民不争，难得之货、可欲之事毕效于前，而盗贼祸乱不起。是不亦虚其心而不害腹之实，弱其志而不害骨之强也哉！</p><p>「多元价值观」</p><p>今将举贤而尚之，宝货而贵之，眩可欲以示之，则是心与腹皆实也；若举而废之，则是志与骨皆弱也。心与腹皆实则民争，志与骨皆弱则无以立矣。不以三者眩之，则民不知所慕，淡然无欲。虽有智者，无所用巧矣。因三者之自然，而不尚、不贵、不见，所谓为无为也。</p><h2 id="挫其锐解其纷和其光同其尘">4 挫其锐，解其纷，和其光，同其尘</h2><blockquote><p>王： 道冲，而用之或不盈。渊兮，似万物之宗；挫其锐，解其纷，和其光，同其尘，湛兮，似或存。吾不知谁之子，象帝之先。 帛：道中，而用之又弗盈也，渊呵，似万物之宗。挫其锐，解其纷，和其光，同其尘，湛呵，似或存。吾不知谁之子，象帝之先。</p></blockquote><p>苏辙《老子解》</p><p>夫道冲然至无耳，然以之适众有，虽天地之大，山河之广，无所不遍。以其无形，故似不盈者。渊兮深眇，吾知其为万物宗也，而不敢正言之，故曰似万物之宗。</p><p>人莫不有道也，而圣人能全之。挫其锐，恐其流于妄也；解其纷，恐其与物搆也。不流于妄，不搆于物，外患已去而光生焉。又从而和之，恐其与物异也。光至洁也，尘至杂也。虽尘无所不同，恐其弃万物也。如是而后全，则湛然常存矣。</p><p>虽存而人莫之识，故曰似或存耳。道虽常存，终莫得而名，然亦不可谓无也，故曰此岂帝之先。帝先矣，而又先于帝，则莫或先之者矣。</p><p>搆，读音gòu，是一个汉字。 同“构”。 指构怨，结怨之意。</p><h2 id="多闻数穷不如守中">5 多闻数穷，不如守中</h2><blockquote><p>王：天地不仁，以万物为刍狗。圣人不仁，以百姓为刍狗。天地之间，其犹橐龠乎？虚而不屈，动而愈出。多言数穷，不如守中。</p><p>帛：天地不仁，以万物为刍狗。圣人不仁，以百姓为刍狗。天地之间，其犹橐龠乎？虚而不屈，动而愈出。多闻数穷，不如守中。</p></blockquote><p>橐龠(tuó yuè): 古代鼓风吹火用的器.</p><p>儒家提倡“读万卷书，不如行万里路”，道家却提倡“不出户，知天下”，“其出弥远，其知弥少”，“博者不知，知者不博”，“塞其兑，闭其门”。</p><p>老子的意思是：不要被外物复杂的声色变化迷惑而去追逐表象。为什么？因为它们是无穷无尽的。</p><p>比如现在的AI领域，追着最新的fancy的论文看，看的再多也没法把握技术发展的趋势。</p><h2 id="谷神不死是谓玄牝">6 谷神不死，是谓玄牝</h2><blockquote><p>帛：谷神不死，是谓玄牝。玄牝之门，是谓天地之根。绵绵呵若存，用之不堇。</p></blockquote><p>玄，原义是深黑色， 牝(pin)：是雌性的兽类动物 玄牝：指孕育和生养出天地万物的母体。 玄牝之門，言萬物自是出也。天地根，言天地自是生也。</p><h2 id="外其身而身存">7 外其身而身存</h2><blockquote><p>帛：天长地久。天地之所以能长且久者，以其不自生也，故能长生。是以圣人后其身而身先，外其身而身存，不以其无私邪，故能成其私。</p></blockquote><h2 id="水利万物而有静">8 水利万物而有静</h2><blockquote><p>帛：上善若水。水善利万物而有静，居众人之所恶，故几于道矣。居善地，心善渊，予善天，言善信，政善治，事善能，动善时。夫唯不争，故无尤。</p></blockquote><p>尤：怨咎、过失、罪过。</p><p>何为善？得道曰善。</p><p>居善地，。。。：避高趨下，未嘗有所逆，善地也。空虛靜默，深不可測，善淵也。利澤萬物，施而不求報，善仁也。圓必旋，方必折，塞必止，次爻流，善信也。洗滌群穢，平準高下，善治也。遇物賦形，而不留於一，善能也。冬凝春伴，涸溢不失節，善時也。</p><p>夫唯不争，故无尤：有善而不免於人非者，以其爭也。水惟不爭，故兼七善而無尤。</p><h2 id="功遂身退天之道也">9 功遂身退，天之道也。</h2><blockquote><p>帛：持而盈之，不如其已。揣而锐之，不可长葆之。金玉盈室，莫之守也，富贵而骄，自遗咎也。功遂身退，天之道也。</p></blockquote><p>已：止。</p><h2 id="明白四達能無知乎">10 明白四達，能無知乎？</h2><blockquote><p>帛：营魄抱一，能毋离乎?抟气致柔，能婴儿乎?修除玄览，能无疵乎?爱民治国，能毋以为乎?天门启阖，能为雌乎?明白四达，能毋以知乎?生之，畜之，生而弗有，长而弗宰也，是谓玄德。</p></blockquote><p>生之畜之，生而不有，為而不恃，長而不宰，是謂玄德:</p><p>圣人性定而神凝，不为物迁，虽以魄为舍，而神所欲行，魄无不从，则神常载魄矣。众人以物役性，神昏而不治，则神听于魄耳。目困以声色，鼻口劳于臭味，魄所欲行而神从之，则魄常载神矣。故教之以抱神载魄，使两者不相离。此固圣人所以修身之要。至于古之真人，深根固蒂，长生久视，其道亦由是也。</p><p>神不治则气乱，强者好斗，弱者喜畏，不自知也。神治则气不妄作，喜怒各以其类，是之谓专气。神虚之至也，气实之始也，虚之极为柔，实之极为刚。纯性而亡气，是之谓致柔。婴儿不知好恶，是以性全。性全而气微，气微而体柔，专气致柔如婴儿，极矣。圣人<strong>外不为魄所载，内不为气所使</strong>，则其涤除尘垢尽矣。于是其神廓然玄览，万物知其皆出于性，等观净秽而无所瑕疵矣。</p><p>内以治身，外以治国，至于临变，莫不有道也。非明白四达而能之乎？明白四达，心也，是心无所不知，然而未尝有能知之心也。夫心一而已，苟又有知之者，则是二也。自一而二，蔽之所自生，而愚之所自始也。今夫镜之于物，来而应之则已，又安得知应物者乎？本则无有而以意加之，此妄之源也。其道既足以生畜万物，又能不有不恃不宰，虽有大德，而物莫之知也，故曰玄德。</p><p>“涤除玄鉴，能无疵乎?”只有除却心头偏见，才能洞悉事物的本源，</p><h2 id="故有之以为利无之以为用">11 故有之以为利，无之以为用</h2><blockquote><p>王： 三十辐共一毂，当其无，有车之用。埏埴以为器，当其无，有器之用。凿户牖以为室，当其无，有室之用。故有之以为利，无之以为用。</p></blockquote><p>毂（gǔ）：是车轮中心的木制圆圈，中有圆孔，即插轴的地方。 埏（yàn）埴（zhì）：即用抟土和陶土做成饮食用的器皿 牖（yǒu）：窗户。</p><p>任何器具、房室、或机械要发生作用，都要有一「容纳」其他事物之「空间」，老子以此「空间」喻道之「无」，而容万物之性使万物发生作用。</p><p>竭知盡物以為器，而器之用常在無有中。非有，則無無以致其用，非無，則有无以施其利，是以聖人常無以觀其妙，常有以觀其徹。知兩者之為一而不可分，則至矣。</p><p>用尽智力和物力来制成器物，而器物发挥作用常常靠它空洞不实的部分。没有实际存在的物质部分就无法使用，没有空洞不实的部分就没法施展器物的功能。所以圣人常常从无概念、无称谓、无特征、不可辨的、无目的、无局限的宏观角度，来观察世界和万物的奥妙；常常从有概念、有称谓、有特征、可区分、有目的、受局限的微观角度，来观察某一特定事物与其他事物的边际，即万物的复杂差异和千变万化。人知道有与无是事物不可分割的两个方面，就完满极致了。</p><p>老子强调有无共重还是无更加重要，见仁见智，说法不一。但在现实生活中的确需要有无并重。对于自身修养来说既不能太过功利化，也不能成为一个空想家，立足于实际地生活在理想之中才是最好的处世方式;对于外部事物来说，要同时认识到它“有”的一面和“无”的一面，有时候正如庄子所说的“无用之用，方为大用”， eg做平台。</p><h2 id="难得之物令人行妨">12 难得之物令人行妨</h2><blockquote><p>王：五色令人目盲，五音令人耳聋，五味令人口爽，驰骋畋猎，令人心发狂，难得之货，令人行妨。是以圣人为腹不为目，故去彼取此。</p></blockquote><p>苏辙《老子解》</p><p>视色、听音、尝味，其本皆出于性。方其有性，而未有物也，至矣；及目缘五色、耳缘五音、口缘五味，夺于所缘而忘其本，则虽见而实盲，虽闻而实聋，虽尝而实爽也。</p><p>圣人视色、听音、尝味皆与人同，至于驰聘田猎未尝不为，而难得之货未尝不用也。然人皆以为病，而圣人独以为福，何也？圣人为腹，而众人为目，目贪而不能受，腹受而未尝贪故也。彼物之自外至者也，此性之凝于内者也。</p><h2 id="宠辱不惊">13 宠辱不惊</h2><blockquote><p>王：宠辱若惊，贵大患若身。何谓宠辱若惊？宠为下，得之若惊，失之若惊，是谓宠辱若惊。何谓贵大患若身？吾所以有大患者，为吾有身，及吾无身，吾有何患。故贵以身为天下，若可寄天下。爱以身为天下，若可托天下。</p></blockquote><p>苏辙《老子解》</p><p>古之达人，惊宠如惊辱，知宠之为辱先也。贵身如贵大患，知身之为患本也。是以遗宠而辱不及，忘身而患不至。所谓宠、辱，非两物也。辱生于宠，而世不悟，以宠为上而以辱为下者，皆是也。若知辱生于宠，则宠固为下矣。故古之达人，得宠若惊，失宠若惊，未尝安宠而惊辱也。所谓若惊者，非实惊也，若惊而已。</p><p>贵之为言难也，有身，大患之本，而世之士难于履大患，不难于有其身。故圣人因其难于履患，而教之以难于有身，知有身之为难，而大患去矣。性之于人，生不能加，死不能损，其大可以充塞天地，其精可以蹈水火、入金玉，凡物莫能患也。</p><p>然天下常患亡失本性，而惟身之为见，爱身之情笃，而物始能患之矣。生死病疾之变攻之于内，宠辱得失之交撄之于外，未有一物而非患也。夫惟达人知性之无坏，而身之非实，忽然忘身，而天下之患尽去，然后可以涉世而无累矣。</p><p>人之所以惊于权利、溺于富贵，犯难而不悔者，将以厚其身耳。今也禄之以天下，而重以身任之，则其忘身也至矣。如此而以天下予之，虽天下之大不能患之矣。</p><h2 id="执今之道以御今之有">14 执今之道，以御今之有</h2><blockquote><p>王：视之不见，名曰夷；听之不闻，名曰希；搏之不得，名日微。此三者不可致诘，故混而为一。其上不皦？其下不昧，绳绳兮不可名，复归于无物。是谓无状之状，无物之象，是谓惚恍⑨。迎之不见其首，随之不见其后。执古之道，以御今之有。能知古始，是谓道纪。</p></blockquote><blockquote><p>帛：执今之道，以御今之有，能知古始，是谓道纪。</p></blockquote><p>皦：jiǎo</p><p>庄子进一步的解释：“今子之所言，犹迹也。夫迹，履之所出，而迹岂履哉!”你学习的这些东西，都是先王留下来的遗迹，又哪里是他们的真实内涵呢？脚印是脚踩出来的，但脚印又哪里是脚呢！”</p><p>很像现在社会的浮躁教条之风.比如搞中台，也不管自己业务适合不适合。追求速成，不思索别人的决策路径，是否符合自己当前的situation，盲目照搬。</p><p>苏辙《老子解》</p><p>视之而见者色也，所以见色者不可见也。听之而闻者声也，所以闻声者不可闻也。搏之而得者触也，所以得触者不可得也。此三者，虽智者莫能诘也，要必混而归于一而可耳。所谓一者，性也，三者性之用也。人始有性而已，及其与搆，然后分裂四出，为视、为听、为触，日用而不知。反其本，非复混而为一则日远矣。若推广之，则佛氏所谓“六人皆然”矣。《首楞严》有云：“反流全一，六用不行。”此之谓也。</p><p>物之有形者，皆丽于阴阳，故上皦下昧，不可逃也。道虽在上而不皎，虽在下而不昧，难以形数推也。绳绳，运而不绝也，人见其运而不绝，则以为有物矣，不知为，卒归于无也。状其著也，象其微也。无状之状，无象之象，皆非无也。道无所不在，故无前后可见。古者物之所从生也，有者物之今，则无者物之古也。执其所从生，则进退疾徐在我矣。</p><h2 id="微妙玄通">15 微妙玄通</h2><blockquote><p>王：古之善为士者，微妙玄通，深不可识。夫唯不可识，故强为之容；豫兮若冬涉川；犹兮若畏四邻；俨兮其若客；涣兮其若凌释；敦兮其若朴；旷兮其若谷；混兮其若浊；澹兮其若海；飂兮若无止。孰能浊以静之徐清。孰能安以动之徐生。保此道者，不欲盈。夫唯不盈，故能蔽而新成。</p></blockquote><p>苏辙《老子解》</p><p>粗尽而微，微而妙，妙极而玄，玄则无所不通而深不可识矣。戒而后动曰豫，其所欲为，犹迫而后应。豫然若冬涉川，逡巡如不得已也。疑而不行曰犹，其所不欲，迟而难之，犹然如畏四邻之见之也。俨兮其若客，无所不敬，未尝惰也。涣兮若冰之将释，知万物之出于妄，未尝有所留也。敦兮其若朴，人伪已尽，复其性也。旷兮其若谷，虚而无所不受也。浑兮其若浊，和其光，同其尘，不与物异也。</p><p>世俗之士，以物汩性，则浊而不复清；枯槁之士以定灭性，则安而不复生。今知浊之乱性也则静之，静之而徐自清矣。知灭性之非道也，则动之，动之而徐自生矣。《易》曰：“寂然不动，感而遂通天下之故。”今所谓动者，亦若是耳。盈生于极，浊而不能清，安而不能生，所以盈也。物未有不蔽者也，夫惟不盈，故其弊不待新成而自去。</p><h2 id="致虚极守静">16 致虚极，守静</h2><blockquote><p>王: 致虚极，守静。万物并作，吾以观复。夫物芸芸，各复归其根。归根曰静，静曰复命。复命曰常，知常曰明。不知常，妄作凶。知常容，容乃公，公乃全，全乃天，天乃道，乃久，没身不殆。</p></blockquote><ul><li>笃（dǔ）</li></ul><p>苏辙《老子解》</p><p>致虚不极，则有未亡也；守静不笃，则动未亡也。丘山虽去，而微尘未尽，未为极与笃也。盖致虚存虚犹未离有，守静存静犹限于动，而况于他乎？不极不笃，而责虚静之用，难也！</p><p>虚极静笃，以观万物之变，然后不为变之所乱，知凡作之未有不复也。苟吾方且与万物皆作，则不足以知之矣。万物皆作于性，皆复于性，譬如华叶之生于根而归于根，涛澜之生于水而归于水。</p><p>苟未能自复于性，虽止动息念以求静，非静也。故惟归根，然后为静。命者，性之妙也。性可言，至于命则不可言矣。《易》曰：“穷理尽性以至于命。”圣人之学道，必始于穷理，中于尽性，终于复命。仁义礼乐，圣人之所以接物也，而仁义礼乐之用必有所以然者，不知其所以然而为之，世俗之士也，知其所以然而后行之，君子也。此之谓穷理。</p><p>虽然，尽性必穷理而后得之，不求则不得也。事物日构于前，必求而后能应，则其为力也劳，而其为功也少。圣人外不为物所蔽，其性湛然，不勉而中，不思而得，物至而能应，此之谓尽性。虽然，此吾性也，犹有物我之辨焉，则几于妄矣。君之命曰命，天之命曰命，以性接物而不知其为我，是以寄之命也。此之谓复命。</p><p>方其作也，虽天地山河之大，未有不变坏、不常者。惟复于性，而后湛然常存矣。不以复性为明，则皆世俗之智，虽自谓明，非明也。不知复性，则缘物而动，无作而非凶。虽得于一时，而失之远矣。方迷于妄，则自是而非彼，物皆吾敌，吾何以容？</p><p>苟知其皆妄，则虽仇雠犹将哀而怜之，何所不容哉！无所不容，则彼我之情尽，而尚谁私乎？无所不公，则天下将往而归之矣。无所不怀，虽天何以加之？天犹有形，至于道则极矣。然而虽道亦不能复进于此矣。</p><h2 id="信不足焉有不信焉">17 信不足焉，有不信焉</h2><blockquote><p>王: 太上，下知有之；其次，亲而誉之。其次，畏之。其次，侮之。信不足焉，有不信焉。悠兮其贵言。功成事遂，百姓皆谓：我自然。</p></blockquote><p>苏辙《老子解》</p><p>以道化育天下，而未尝治之，民不知其所以然，故亦有之而已。以仁义治天下，其德可怀，其功可见，故民得而亲誉之。其名虽美，而厚薄自是始矣。以政齐民，民非不畏也，然力之所不及，则侮之矣。</p><p>吾诚自信，则以道御天下足矣。唯不自信，以加之仁义，而重之刑政，而民始不信。圣人自信有余，其于言也犹然。贵之不轻出诸口，而民信之矣。及其功成事遂也，则民日迁善远罪而不自知矣。</p><h2 id="大道废有仁义">18 大道废，有仁义</h2><blockquote><p>王: 大道废，有仁义；慧智出，有大伪；六亲不和，有孝慈；国家昏乱，有忠臣。</p></blockquote><p>苏辙《老子解》</p><p>大道之隆也，仁义行于其中而民不知。大道废，而后仁义见矣。世不知道之足以统御万物也，而以智慧加之，于是民始以伪报之矣。六亲方和，孰非孝慈？国家方治，孰非忠臣？尧非不孝也，而独称舜，无瞽瞍也。伊尹周公，非不忠也，而独称龙逢、比干，无桀纣也。涸泽之鱼，相呴以沫，相濡以湿，不如相忘于江湖。</p><h2 id="绝圣弃智">19 绝圣弃智</h2><blockquote><p>王：绝圣弃智，民利百倍；绝仁弃义，民复孝慈；绝巧弃利，盗贼无有；此三者以为文不足。故令有所属，见素抱朴，少私寡欲，绝学无忧。</p></blockquote><p>苏辙《老子解》</p><p>非圣智不足以知道，使圣智为天下，其有不以道御物者乎？然世之人不足以知圣智之本而见其末，以为巧胜物者也，于是驰聘于其末流，而民始不胜其害矣。故“绝圣弃智，民利百倍”。</p><p>未有仁而遗其亲者也，未有义而后其君者也。仁义所以为孝慈矣，然及其衰也，窃仁义之名以要利于世，于是子有违父，而父有虐子，此则仁义之迹为之也。故“绝仁弃义，则民复孝慈”。巧所以便事也，利所以济物也。二者非以为盗，而盗贼不得则不行，故“绝巧弃利，盗贼无有”也。</p><p>世之贵此三者，以为天下之不安，由文之不足故也。是或属之圣知，或属之仁义，或属之巧利，盖将以文治之也。然而天下益以不安，曷不反其本乎？见素抱朴，少私寡欲，而天下各复其性，虽有三者，无所用之矣。故曰“我无为而民自化，我好静而民自正，我无事而民自富，我无欲而民自朴”，此则圣智之大、仁义之至、巧利之极也。</p><p>然孔子以仁义礼乐治天下，老子绝而弃之，或者以为不同。《易》曰：“形而上者谓之道，形而下者谓之器。”孔子之虑后世也深，故示人以器而晦其道，使中人以下守其器，不为道之所眩，以不失为君子。而中人以上，自是以上达也。</p><p>老子则不然，志于明道，而急于开人心，故示人以道而薄于器，以为学者惟器之知则道隐矣，故绝仁义、弃礼乐以明道。夫道不可言，可言皆其似者也。达者因似以识真，而昧者执似以陷于伪。故后世执老子之言，以乱天下者有之，而学孔子者无大过，因老子之言以达道者不少，而求之于孔子者常苦其无所从入。二圣人者皆不得已也，全于此必略于彼矣。</p><h2 id="俗人昭昭我独昏昏">20 俗人昭昭，我独昏昏</h2><blockquote><p>王：唯之与阿，相去几何？善之与恶，相去若何？人之所畏，不可不畏。荒兮，其未央哉！众人熙熙，如享太牢，如春登台。我独泊兮，其未兆；沌沌兮，如婴儿之未孩；儽儽兮，若无所归。众人皆有余，而我独若遗。我愚人之心也哉！俗人昭昭，我独昏昏。俗人察察，我独闷闷。澹兮其若海，飂兮若无止。众人皆有以，而我独顽且鄙。我独异于人，而贵食母。</p></blockquote><ul><li>唯：是唯诺顺从，“阿”是呵斥，引申为反对的意思</li><li>熙熙：快乐的样子。</li><li>太牢：古代代帝王祭祀时丰盛的筵席（有牛、羊、猪）。</li><li>泊兮：浑朴、淡泊的意思。</li><li>兆：征兆，迹象的意思。</li><li>沌沌(dùn)：不清楚。</li><li>孩：婴儿的笑声。</li><li>儽儽(liǎo)：疲倦的样子。儽，通“累”。</li><li>察察：苛刻之意。</li><li>闷闷：昏浊，不清楚的意思。</li><li>澹（dàn）：辽阔、辽远的意思。</li><li>飂(liǎo)：狂暴的风。</li><li>以：在这里作“用”字解。也有“能耐”意。</li></ul><p>苏辙《老子解》</p><p>为学日益，为道日损，不知性命之正，而以学求益增所未闻，积之未已，而无以一之。则以圆害方，以直害曲，其中纷然不胜其忧矣。患夫学者之至此，故曰“绝学无忧”。若夫圣人，未尝不学，而以道为主，不学而不少，多学而不乱，廓然无忧，安用绝学邪？</p><p>学者溺于所闻而无以一之，则唯之为恭，阿之为慢，不可同日言矣。而况夫善恶之相反乎？夫惟圣人知万物同出于性，而皆成于妄，如画马牛，如刻虎彘，皆非其实，泯焉无是非同异之辨，孰知其相去几何哉！苟如此矣，则万物并育而不相害，道并行而不相悖，无足怪矣。</p><p>圣人均彼我，一同异，其心无所复留，然岂以是忽遗世法、犯分乱理而不顾哉？人之所畏，吾亦畏之；人之所为，吾亦为之。虽列于君臣父子之间，行于礼乐刑政之域，而天下不知其异也。其所以不撄于物者，惟心而已。人皆徇其所知，故介然不出畦畛；圣人兼涉有无，无入而不可，则“荒兮其未可央”也。</p><p>人各溺于所好，其美如享太牢，其乐如春登台，嚣然从之而不知其非。唯圣人深究其妄，遇之泊然不动，如婴儿之未能孩也。乘万物之理而不自私，故若无所归。众人守其所知，各自以为有余；圣人包举万物，而不主于一，超然其若遗也。</p><p>沌沌，若愚而非愚也。世俗以分别为智，圣人知群妄之不足辨也，故其外若昏，其中若闷。忽然若海，不见其津涯；漂然无定，不见其止宿。人各有能，故世皆得而用之；圣人才全德备，若无所施，故疑于顽鄙。道者万物之母，众人徇物忘道，而圣人脱遗万物，以道为宗。譬如婴儿，无所杂食，食于母而已。</p><h2 id="孔德之容">21 孔德之容</h2><blockquote><p>王：孔德之容，惟道是从。道之为物，惟恍惟惚。惚兮恍兮，其中有象；恍兮惚兮，其中有物。窈兮冥兮，其中有精；其精甚真，其中有信。自今及古，其名不去，以阅众甫。吾何以知众甫之状哉！以此。</p></blockquote><ul><li>孔： 大</li><li>冥(mǐng)：暗昧不清楚</li><li>精：是极细微的物质性实体。</li><li>阅：认识。</li><li>甫：同“父”。</li></ul><p>道无形也，及其运而为德，则有容矣。故德者道之见，自是推之，则众有之容，皆道之见于物者也。道非有无，故以恍惚言之，然极其运而成象，著而成物，未有不出于恍惚者也。</p><p>方无有之未定，恍惚而不可见；及夫有无之交，则见其窈冥深眇，虽未成形，而精存乎其中矣。物至于成形，则真伪杂矣。方其有精，不容伪也。真伪既杂，自一而为二，自二而为三，纷然错出，不可复信矣。方其有精，不吾欺也。古今虽异，而道则不去，故以不去名之，惟未尝去，故能以阅众有之变矣。甫，美也。虽万物之美，不免于变也。圣人之所以知万物之所以然者，以能体道而不去故也。</p><h2 id="曲则全枉则直">22 曲则全，枉则直</h2><blockquote><p>王：曲则全，枉则直，洼则盈，敝则新，少则得，多则惑。是以圣人抱一为天下式。不自见，故明；不自是，故彰；不自伐，故有功；不自矜，故长。夫唯不争，故天下莫能与之争。古之所谓“曲则全”者，岂虚言哉！诚全而归之</p></blockquote><p>①式：法则。 ②伐：夸耀。 ③矜(jīn)：自高自大的意思。 ④莫：没有谁。</p><p>苏辙《老子解》</p><p>圣人动必循理，理之所在，或直或曲，要于通而已。通故与物不迕，不迕故全也。直而非理则非直也，循理虽枉，而天下之至直也。众之所归者下也，虽欲不盈，不可得矣。昭昭、察察，非道也；闷闷若将敝矣，而日新之所自出也。道一而已，得一则无不得矣。多学而无以一之，则惑矣。</p><p>迕：wǔ， 违背，冒犯。</p><p>抱一者，复性者也。盖曲则全，枉则直，洼则盈，弊则新，少则得，多则惑，皆抱一之余也，故以抱一终之。目不自见故能见物，镜不自照故能照物。如使自见自照，则自为之不暇，而何暇及物哉！不自见、不自是、不自伐、不自矜，皆不争之余也，故以不争终之。</p><p>抱一： 守道 复性：恢复本性</p><p>世以直为是，以曲为非，将循理而行于世，则有不免于曲者矣。故终篇复言之，曰此岂虚言哉，诚全而归之。夫所谓全者，非独全身也，内以全身，外以全物，物我兼全，而复于性，则其为直也大矣。</p><h2 id="天地尚不能久而况于人乎">23 天地尚不能久，而况于人乎</h2><blockquote><p>王：希言自然。故飘风不终朝，骤雨不终日。孰为此者?天地。天地尚不能久，而况于人乎。</p></blockquote><p>以飘风骤雨为天候中「阴」「阳」不调之例子。这就隐喻到「雷厉风行」，偏执一「仁」一「义」之治事方法是不能长久的;无论在当事人看来他的「政治理想」是多么完美或吸引人。</p><p>守弱：如婴儿般的柔和与可塑。</p><p>任何属性，操性，仁则都有其正负两面，也就是阴与阳。而属性明显曰「强」，属性混沌曰「弱」。如果根据一己之经验，认为一种属性，操性，仁则只有好处，没有缺陷，而拼命发展，必致「阴」「阳」失调而进入危境。</p><h2 id="自见者不明">24 自见者不明</h2><blockquote><p>王：企者不立；跨者不行；自见者不明；自是者不彰；自伐者无功；自矜者不长。其在道也．曰：余食赘形。物或恶之，故有道者不处。</p></blockquote><ul><li>赘（zhuì）: 多余的</li></ul><p>人未有不能立且行者也，苟以立为未足，而加之以跂，以行为未足，而加之以跨，未有不丧失其行立者。彼其自见自是、自矜自伐者，亦若是矣。譬如饮食，适饱则已，有余则病。譬如四体，适完则已，有赘则累。</p><h2 id="道法自然">25 道法自然</h2><blockquote><p>王： 有物混成，先天地生。寂兮寥兮，独立而不改，周行而不殆，可以为天地母。吾不知其名，强字之日道，强为之名曰大。大曰逝，逝曰远，远曰反。故道大，天大，地大，人亦大。域中有四大，而人居其一焉。人法地，地法天，天法道，道法自然。</p></blockquote><p>夫道非清非浊，非高非下，非去非来，非善非恶，混然而成体。其于人为性，故曰“有物混成”，此未有知其生者。盖湛然常存，而天地生于其中耳。寂兮无声，寥兮无形，独立无匹，而未尝变行于群。有而未尝殆，俯以化育万物，则皆其母矣。道本无名，圣人见万物之无不由也，故字之曰道。见万物之莫能加也，故强为之名曰大。然其实则无得而称之也。</p><p>自大而求之，则逝而往矣。自往而求之，则远不及矣。虽逝虽远，然反而求之一心足矣。由道言之，则虽天地与王皆未足大也。然世之人习知三者之大，而不信道之大也，故以实告之。人不若地，地不若天，天不若道，道不若自然。然使人一日复性，则此三者，人皆足以尽之矣。</p><h2 id="轻则失臣躁则失君">26 轻则失臣，躁则失君</h2><blockquote><p>王: 重为轻根，静为躁君。是以君子终日行不离辎重。虽有荣观，燕处超然。奈何万乘之主，而以身轻天下？轻则失根，躁则失君。</p></blockquote><p>凡物轻不能载重，小不能镇大，不行者使行，不动者制动，故轻以重为根，躁以静为君。行欲轻而不离辎重，荣观虽乐，而必有燕处，重静之不可失如此。人主以身任天下，而轻其身则不足以任天下矣。轻与躁无施而可，然君轻则臣知其不足赖，臣躁则君知其志于利，故曰“轻则失臣，躁则失君”。</p><h2 id="常善救人">27 常善救人</h2><blockquote><p>王: 善行无辙迹；善言无瑕谪；善数不用筹策；善闭无关楗而不可开；善结无绳约而不可解。是以圣人常善救人，故无弃人；常善救物，故无弃物。是谓袭明。故善人者，不善人之师；不善人者，善人之资。不贵其师，不爱其资，虽智大迷，是谓要妙。</p></blockquote><ul><li>瑕（xiá）谪（zhé）</li></ul><p>乘理而行，故无迹。时然后言，故言满天下无口过。万物之数，毕陈于前，不计而知，安用筹算？全德之人，其于万物如母之于子，虽纵之而不去。故无关而能闭，无绳而能约。彼方执策以计，设关以闭，持绳以结，其力之所及者少矣。圣人之于人，非特容之，又善救之，我不弃人，而人安得不归我乎？</p><p>救人于危难之中，非救之大者也。方其流转生死，为物所蔽，而推吾至明以与之，使暗者皆明，如灯相传相袭而不绝，则谓善救人矣。圣人无心于教，故不爱其资；天下无心于学，故不贵其师。圣人非独吾忘天下，能使天下忘我故也。圣人之妙，虽智者有所不谕也。</p><h2 id="物壮则老是谓不道">33 物壮则老，是谓不道</h2><blockquote><p>王: 果而勿矜，果而勿伐，果而勿骄。果而不得已，果而勿强。物壮则老，是谓不道，不道早巳。</p></blockquote><p>人之「老」在躯体也在头脑，最大的特征在失去思想之柔韧与变通---这些都是过分发展某一属性之「果」。人会变得过于执着固定事物，或过于刚猛，或过于退怯;百象皆有，不一而足;總之，都不合道。从老子之道来看就是失去「负阴抱阳」之特性。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.aisixiang.com/data/37674.html">反者道之动, 弱者道之用”之詮釋</a></li><li>帛书老子校注-高明</li><li>苏辙《老子解》</li><li>https://www.5000yan.com/81.html</li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;道德经有多个版本：王弼注释/马王堆帛书等，帛书本距离老子的年代更近, 可信度更高。但是内容有缺失。&lt;/p&gt;
-&lt;p&gt;得其意即可，不必咬文嚼字&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;chiechies-总结&quot;&gt;chiechie&#39;s 总结&lt;</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="道家" scheme="https://chiechie.github.io/tags/%E9%81%93%E5%AE%B6/"/>
-    
-    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
-    
-    <category term="老子" scheme="https://chiechie.github.io/tags/%E8%80%81%E5%AD%90/"/>
-    
-    <category term="道德经" scheme="https://chiechie.github.io/tags/%E9%81%93%E5%BE%B7%E7%BB%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>风控领域的图挖掘场景</title>
-    <link href="https://chiechie.github.io/2021/05/24/reading_notes/computer/visualize-graph/"/>
-    <id>https://chiechie.github.io/2021/05/24/reading_notes/computer/visualize-graph/</id>
-    <published>2021-05-24T01:08:21.000Z</published>
-    <updated>2021-06-07T00:17:56.791Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="几个场景">几个场景</h1><h2 id="攻防对抗">攻防对抗</h2><p>一般都会有下述风控规则：</p><ul><li>7天内在注册账户数超过**的设备号</li><li>1天内某IP关联超过xx个账户</li></ul><p>虽然规则简单，但由于实时性和贴近业务的特点，可以拦截不少黑产, 但也会造成一定误杀，特别是IP类的规则。</p><p>同时因为风控是攻防对抗的过程，黑产也会升级，比如通过伪造设备、LBS、频繁更换IP等手段尽可能伪装成一个真人，隐蔽聚集性等显性特征，绕过风控规则。</p><p>相应风控技术也在进化，如使用设备指纹、IP画像、验证码对抗等。</p><h2 id="基于关联关系识别团伙">基于关联关系识别团伙</h2><p>可以定义设备-账户的Graph如下：</p><ul><li>节点：账户 + 设备</li><li>边：近xx天账户与设备出现在同一事件中，则它们之间有一条边。</li></ul><p>识别方法：</p><ul><li>无监督方法：通过「连通子图算法」识别出一个个连通的社区，如果社区规模较大，可能背后业务含义是黑产控制一批账户。定义社区规模为score，通过调节阈值来控制误杀、召回。</li><li>有监督方法-传统：等价为节点分类问题，通过提取节点业务特征、拓扑特征、所属社区特征，训练一个分类器去预测。</li><li>有监督方法-图神经网络：将节点业务特征X与网络拓扑结构A作为输入学习函数，用于对未知数据的预测.相比规则来说，此类方法不仅用到了更复杂的关系，同时也考虑了节点业务和拓扑特征。故防控能力会更强一些。</li></ul><h2 id="基于相似度识别团伙">基于相似度识别团伙</h2><p>如果黑产成功避开设备指纹、聚集性规则等风控措施，把自己伪装成一个真人，如何检测？——只要作案了，总会留下蛛丝马迹。</p><ul><li>垃圾文本：比如留下了垃圾文本，那么利用文本之间相似度（Jaccard、semi-hash）构建账户之间相似关系，然后使用图分割+连通子图查找技术识别，具体可<a href="https://zhuanlan.zhihu.com/p/23385044">参考这里</a></li><li>行为相似度：facebook针对刷量的行为，通过计算账户之间行为度来构建graph，<a href="https://zhuanlan.zhihu.com/p/58334765">详见这里</a>.此类方法最大问题是, 两两节点相似度计算性能问题。一般会做下约束，如限制在某个事件场景下、限制在某段事件内以及如何分段计算+合并，并且往往是通过spark分布式计算。</li></ul><h2 id="基于共享特征识别团伙">基于共享特征识别团伙</h2><p>因为黑产控制大量的账户通过软件进行攻击，而不是手工操作，故这些账户某些共同属性上会有Pattern。</p><p>大概的解题思路是“搜集证据”，将共享的某特征/字段作为，判断证据强弱，如共享设备是强证据，可以仅凭此条直接断案。 但是像共用某品牌手机是弱证据，需要多个弱证据结合一起断案。</p><p>再抽象一点是有点像「层次社区划分算法」：</p><ol type="1"><li>定义证据：通过业务经验定义共享特征集，不通场景特征集应该是不同的。</li><li>找证据：分别对每个/每组特征进行聚类/社区划分算法，得到一个个簇.</li><li>组合证据：将2得到的簇作为节点，簇之间共有账户数作为连边，构建graph，再进一步划分得到最终的社区，每个社区中的节点共享多个特征。</li></ol><h1 id="总结">总结</h1><ol type="1"><li>上述三种类型方法的主要区别在于graph的不同，在整个图挖掘体系中最核心也最难一点在于，如何将业务经验抽象成Graph。</li><li>社区发现算法以图分割+连通子图查找为主，一方面可解释强，另外可以通过调节阈值权衡召回和误差，以满足运营人员需要。这也是 "拿算法适配业务，而不是业务适配算法"的工作准则。</li></ol><h1 id="参考">参考</h1><ol type="1"><li><a href="https://scikit-network.readthedocs.io/en/latest/">scikit-network的doc</a></li><li><a href="https://www.zhihu.com/search?type=content&amp;q=%E5%9B%BE%E6%8C%96%E6%8E%98">zhihu-风控</a></li><li><a href="https://zhuanlan.zhihu.com/p/62750137">GCN</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;几个场景&quot;&gt;几个场景&lt;/h1&gt;
-&lt;h2 id=&quot;攻防对抗&quot;&gt;攻防对抗&lt;/h2&gt;
-&lt;p&gt;一般都会有下述风控规则：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;7天内在注册账户数超过**的设备号&lt;/li&gt;
-&lt;li&gt;1天内某IP关联超过xx个账户&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;虽然规则简单</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
-    
-    <category term="图挖掘" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%8C%96%E6%8E%98/"/>
-    
-    <category term="连通子图算法" scheme="https://chiechie.github.io/tags/%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E7%AE%97%E6%B3%95/"/>
-    
-    <category term="层次社区划分算法" scheme="https://chiechie.github.io/tags/%E5%B1%82%E6%AC%A1%E7%A4%BE%E5%8C%BA%E5%88%92%E5%88%86%E7%AE%97%E6%B3%95/"/>
-    
-    <category term="社区发现算法" scheme="https://chiechie.github.io/tags/%E7%A4%BE%E5%8C%BA%E5%8F%91%E7%8E%B0%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   

@@ -9,20 +9,13 @@ tags:
 - 最佳实践
 categories: 
 - AI
-
 ---
 
-## 中英文对照
+
+# 数据表示
 
 
-- 优化算法
-    - epochs： **迭代周期个数** :  迭代周期个数，int类型，默认值为10.
-    - batch_size： **批量大小**:   int类型，默认值为128。
-
-## 数据表示
-
-
-### 在深度学习中如何表示现实中的事物？
+在深度学习中如何表示现实中的事物？
 
 Let’s make data tensors more concrete with a few examples similar to what you’ll encounter later. The data you’ll manipulate will almost always fall into one of the following categories:
 
@@ -31,13 +24,13 @@ Let’s make data tensors more concrete with a few examples similar to what you�
 - Images—4D tensors of shape(samples,height,width,channels)or(samples,channels, height, width)
 - Video —5D tensors of shape (samples, frames, height, width, channels) or (samples, frames, channels, height, width)
 
-### 表数据
+## 表数据
 
 - 两个轴：samples axis 和 features axis.
 - 文本数据, 假设词典长度为2k，每一个doc可以表示为1个2k维的向量，位置的值代表词在文本中出现的次数。
 - 500个文件可以存储为(500, 20000).
 
-### 时间序列数据
+## 时间序列数据
 
 - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_vMGBboznU.png?alt=media&token=73c12f97-acdb-4680-b4eb-79a9a07581f9)
   
@@ -48,7 +41,7 @@ Let’s make data tensors more concrete with a few examples similar to what you�
     - 以每一天的交易数据为1个样本，构建的样本的shape为(250,390,3)
 2. TWEET数据：一条twitter长度不超过256，每个位置的字符来自128个assical码中的一个。每一条twitter的shape为（256， 128），1 百万 tweets 的shape为(1000000, 280, 128)
 
-### 图像数据
+## 图像数据
 
 图像数据一般表示成4维tensor，一个图像数据就是一个3d张量
 
@@ -58,7 +51,7 @@ Let’s make data tensors more concrete with a few examples similar to what you�
 - theano：(samples, color_depth, height, width). 
 - keras两者都支持
 
-### 视频数据的表示
+## 视频数据的表示
 
 视频数据表示成5维张量：(samples, frames, height, width, color_depth).
 
@@ -104,8 +97,7 @@ As far as I know you have to build your own training function from the layers an
 
 ## 算法超参数
 
-算法超参数包括学习率 (learning rate)、批大小 (batch size)、epoch数量、正则，损失，激活函数等。由于神经网络的非凸性，用不同的算法超参数会得到不同的解。
-
+算法超参数包括学习率 (learning rate),批量大小 (batch size)、epoch数量(迭代周期个数)、正则，损失，激活函数等。由于神经网络的非凸性，用不同的算法超参数会得到不同的解。
 
 ### 归一化
 
@@ -160,6 +152,9 @@ tensorflow中的损失函数:
 - 二分类：sigmoid + BCE
 - 多标签多分类（multi-label）的情况：sigmoid + BCE
 - 最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。
+
+
+#### 优化算法
 
 
 

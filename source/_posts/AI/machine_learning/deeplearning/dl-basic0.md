@@ -1,5 +1,5 @@
 ---
-title: 深度学习基础1 
+title: 深度学习基础1 数据表示和神经网络基础
 author: chiechie
 mathjax: true
 date: 2021-06-10 16:35:36

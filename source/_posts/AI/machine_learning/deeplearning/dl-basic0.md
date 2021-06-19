@@ -14,11 +14,7 @@ categories:
 
 ## 中英文对照
 
-- 网络结构：
-    - unit：单元
-    - hidden_layers: 隐藏层
-    - cell：单元
-    - **dropout_rate**： 丢弃率
+
 - 优化算法
     - epochs： **迭代周期个数** :  迭代周期个数，int类型，默认值为10.
     - batch_size： **批量大小**:   int类型，默认值为128。
@@ -26,7 +22,7 @@ categories:
 ## 数据表示
 
 
-### Real-world examples of data tensors
+### 在深度学习中如何表示现实中的事物？
 
 Let’s make data tensors more concrete with a few examples similar to what you’ll encounter later. The data you’ll manipulate will almost always fall into one of the following categories:
 
@@ -35,7 +31,7 @@ Let’s make data tensors more concrete with a few examples similar to what you�
 - Images—4D tensors of shape(samples,height,width,channels)or(samples,channels, height, width)
 - Video —5D tensors of shape (samples, frames, height, width, channels) or (samples, frames, channels, height, width)
 
-### 2-D 数据
+### 表数据
 
 - 两个轴：samples axis 和 features axis.
 - 文本数据, 假设词典长度为2k，每一个doc可以表示为1个2k维的向量，位置的值代表词在文本中出现的次数。
@@ -44,29 +40,35 @@ Let’s make data tensors more concrete with a few examples similar to what you�
 ### 时间序列数据
 
 - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_vMGBboznU.png?alt=media&token=73c12f97-acdb-4680-b4eb-79a9a07581f9)
-- tf中使用3d张量存储，(samples, timestamp, features)
-- 每一个sample可以被编码成1系列的向量--2d张量
-- 具体的两个例子
-- 1. 股票数据：
-    - 每年有250个交易日，每个交易日的交易时长有390分钟，每个分钟可以抽取3个重要特征：当前价格，上一分钟最高成交价格，上一分钟最低价格
+  
+时间序列数据一般表示成3-d的张亮，tf中使用3d张量存储，(samples, timestamp, features)
+每一个sample可以被编码成一个2d张量， 具体的两个例子
+
+1. 股票数据：每年有250个交易日，每个交易日的交易时长有390分钟，每个分钟可以抽取3个重要特征：当前价格，上一分钟最高成交价格，上一分钟最低价格
     - 以每一天的交易数据为1个样本，构建的样本的shape为(250,390,3)
-- 2. TWEET数据：
-    - 一条twitter长度不超过256，每个位置的字符来自128个assical码中的一个
-    - 每一条twitter的shape为（256， 128），1 百万 tweets 的shape为(1000000, 280, 128)
+2. TWEET数据：一条twitter长度不超过256，每个位置的字符来自128个assical码中的一个。每一条twitter的shape为（256， 128），1 百万 tweets 的shape为(1000000, 280, 128)
 
-### 图像数据的表示
+### 图像数据
 
-- 4维tensor
-- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD24ghIvE2L.png?alt=media&token=4a68bc5a-7b95-46d2-8418-deed053d4301)
-    - tensorflow： (samples, height, width, color_depth)
-    - theano：(samples, color_depth, height, width). 
-    - keras两者都支持
+图像数据一般表示成4维tensor，一个图像数据就是一个3d张量
+
+![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD24ghIvE2L.png?alt=media&token=4a68bc5a-7b95-46d2-8418-deed053d4301)
+
+- tensorflow： (samples, height, width, color_depth)
+- theano：(samples, color_depth, height, width). 
+- keras两者都支持
 
 ### 视频数据的表示
 
-- 5维张量：(samples, frames, height, width, color_depth).
+视频数据表示成5维张量：(samples, frames, height, width, color_depth).
 
-## layers的基本类型
+# 模型超参
+
+## 结构超参数
+
+结构超参数包括层数、层的类别、层的大小等数值。以一个卷积层为例，其中的超参数包括卷积核 (filter) 的大小，卷积核的数量，步长 (stride) 的大小，unit：单元，hidden_layers: 隐藏层，cell：单元 ，dropout_rate丢弃率。这些超参数决定了神经网络的结构。
+
+### layers的基本类型
 
 keras中layer的基本类型：
 
@@ -100,9 +102,50 @@ Keras does this by default. In Keras dropout is disabled in test mode. You can l
 As far as I know you have to build your own training function from the layers and specify the training flag to predict with dropout (e.g. its not possible to specify a training flag for the predict functions). This is a problem in case you want to do GANs, which use the intermediate output for training and also train the network as a whole, due to a divergence between generated training images and generated test images.
 
 
+## 算法超参数
 
-## 损失函数
+算法超参数包括学习率 (learning rate)、批大小 (batch size)、epoch数量、正则，损失，激活函数等。由于神经网络的非凸性，用不同的算法超参数会得到不同的解。
 
+
+### 归一化
+
+归一化层，目前主要有这几个方法：
+
+- Batch Normalization（BN， 2015年）
+- Layer Normalization（LN， 2016年）
+- Instance Normalization（IN， 2017年）
+- Group Normalization（GN， 2018年）
+- Switchable Normalization（SN， 2018年）；
+  
+![几种归一化方法g](img_1.png)
+
+#### 问题1 transformer 为什么要使用LN而不是 BN？
+
+   
+ 在[paper: Rethinking Batch Normalization in Transformers](https://arxiv.org/pdf/2003.07845.pdf)中, 作者对比了cv和nlp的BN, 得出的结论是在nlp数据上基于batch的统计信息不稳定性过大(相比cv的数据)，导致bn在nlp上效果差。相比之下layer norm能够带来更稳定的统计信息，有利于模型学习
+
+Batch Normalization主要的问题是计算归一化统计量时计算的样本数太少，在RNN等动态模型中不能很好的反映全局统计分布信息，而Layer Normalization根据样本的特征数做归一化，是batch size无关的，只取决于隐层节点的数量，较多的隐层节点数量能保证Layer Normalization归一化统计分布信息的代表性。
+
+#### 问题2. IN直观上怎么理解？
+   
+在计算机视觉中，IN本质上是一种Style Normalization，它的作用相当于把不同的图片统一成一种风格。另外，既然IN和BN都会统一图片的风格，那么在Generator里加IN或BN应该是不利于生成风格多样的图片的，论文中也进行了展示：
+
+![](https://pic2.zhimg.com/v2-235433127838fca762ebd10511de9ca7_b.jpg)
+
+图e是在generator中加了BN的结果，图f是在generator中加了IN的结果。果然崩了，IN崩得尤其厉害。
+
+
+### 激活函数
+
+- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4_fjPJ90ir.png?alt=media&token=9fb9e321-aed2-4c7b-bb6b-4762b7a38c81)
+- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FADUH_mebAQ.png?alt=media&token=65efc150-0f7b-42f9-8657-1ca131bfd8b5)
+- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&token=55bc24ce-0531-4702-8d3d-394595bd4d6e)
+- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&token=d7421445-afca-439e-85be-8631db133a41)
+- https://missinglink.ai/guides/neural-network-concepts/7-types-neural-network-activation-functions-right/
+
+
+
+### 损失函数
 
 tensorflow中的损失函数:
 
@@ -119,48 +162,9 @@ tensorflow中的损失函数:
 - 最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。
 
 
-## 归一化
-
-归一化层，目前主要有这几个方法：
-
-- Batch Normalization（BN， 2015年）
-- Layer Normalization（LN， 2016年）
-- Instance Normalization（IN， 2017年）
-- Group Normalization（GN， 2018年）
-- Switchable Normalization（SN， 2018年）；
-  
-![几种归一化方法g](img_1.png)
-
-### 问题1 transformer 为什么要使用LN而不是 BN？
-
-   
- 在[paper: Rethinking Batch Normalization in Transformers](https://arxiv.org/pdf/2003.07845.pdf)中, 作者对比了cv和nlp的BN, 得出的结论是在nlp数据上基于batch的统计信息不稳定性过大(相比cv的数据)，导致bn在nlp上效果差。相比之下layer norm能够带来更稳定的统计信息，有利于模型学习
-
-Batch Normalization主要的问题是计算归一化统计量时计算的样本数太少，在RNN等动态模型中不能很好的反映全局统计分布信息，而Layer Normalization根据样本的特征数做归一化，是batch size无关的，只取决于隐层节点的数量，较多的隐层节点数量能保证Layer Normalization归一化统计分布信息的代表性。
-
-### 问题2. IN直观上怎么理解？
-   
-在计算机视觉中，IN本质上是一种Style Normalization，它的作用相当于把不同的图片统一成一种风格。另外，既然IN和BN都会统一图片的风格，那么在Generator里加IN或BN应该是不利于生成风格多样的图片的，论文中也进行了展示：
-
-![](https://pic2.zhimg.com/v2-235433127838fca762ebd10511de9ca7_b.jpg)
-
-图e是在generator中加了BN的结果，图f是在generator中加了IN的结果。果然崩了，IN崩得尤其厉害。
 
 
-## 激活函数
-
-- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4_fjPJ90ir.png?alt=media&token=9fb9e321-aed2-4c7b-bb6b-4762b7a38c81)
-- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FADUH_mebAQ.png?alt=media&token=65efc150-0f7b-42f9-8657-1ca131bfd8b5)
-- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&token=55bc24ce-0531-4702-8d3d-394595bd4d6e)
-- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&token=d7421445-afca-439e-85be-8631db133a41)
-- https://missinglink.ai/guides/neural-network-concepts/7-types-neural-network-activation-functions-right/
-
-
-
-## 其他实践
-
-
-## 参考资料
+# 参考资料
 
 1. [Batch Normalization](https://arxiv.org/pdf/1502.03167.pdf)
 2. [Layer Normalizaiton](https://arxiv.org/pdf/1607.06450v1.pdf)

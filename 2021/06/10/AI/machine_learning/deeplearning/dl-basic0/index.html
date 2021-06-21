@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="中英文对照  网络结构：  unit：单元 hidden_layers: 隐藏层 cell：单元 dropout_rate： 丢弃率  优化算法  epochs： 迭代周期个数 : 迭代周期个数，int类型，默认值为10. batch_size： 批量大小: int类型，默认值为128。   数据表示 Real-world examples of data tensors Let’s make d">
+  <meta name="description" content="数据表示 在深度学习中如何表示现实中的事物？ Let’s make data tensors more concrete with a few examples similar to what you’ll encounter later. The data you’ll manipulate will almost always fall into one of the following ca">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深度学习基础1">
+<meta property="og:title" content="深度学习基础1 数据表示和神经网络基础">
 <meta property="og:url" content="https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="中英文对照  网络结构：  unit：单元 hidden_layers: 隐藏层 cell：单元 dropout_rate： 丢弃率  优化算法  epochs： 迭代周期个数 : 迭代周期个数，int类型，默认值为10. batch_size： 批量大小: int类型，默认值为128。   数据表示 Real-world examples of data tensors Let’s make d">
+<meta property="og:description" content="数据表示 在深度学习中如何表示现实中的事物？ Let’s make data tensors more concrete with a few examples similar to what you’ll encounter later. The data you’ll manipulate will almost always fall into one of the following ca">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_vMGBboznU.png?alt=media&amp;token=73c12f97-acdb-4680-b4eb-79a9a07581f9">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD24ghIvE2L.png?alt=media&amp;token=4a68bc5a-7b95-46d2-8418-deed053d4301">
@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&amp;token=55bc24ce-0531-4702-8d3d-394595bd4d6e">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&amp;token=d7421445-afca-439e-85be-8631db133a41">
 <meta property="article:published_time" content="2021-06-10T08:35:36.000Z">
-<meta property="article:modified_time" content="2021-06-18T06:53:57.880Z">
+<meta property="article:modified_time" content="2021-06-21T00:22:08.134Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="最佳实践">
@@ -58,7 +58,7 @@
   };
 </script>
 
-  <title>深度学习基础1 | Chiechie's Mini World</title>
+  <title>深度学习基础1 数据表示和神经网络基础 | Chiechie's Mini World</title>
   
 
 
@@ -193,7 +193,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          深度学习基础1<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AI/machine_learning/deeplearning/dl-basic0.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          深度学习基础1 数据表示和神经网络基础<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AI/machine_learning/deeplearning/dl-basic0.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -210,7 +210,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-18 14:53:57" itemprop="dateModified" datetime="2021-06-18T14:53:57+08:00">2021-06-18</time>
+                <time title="修改时间：2021-06-21 08:22:08" itemprop="dateModified" datetime="2021-06-21T08:22:08+08:00">2021-06-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,23 +240,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="中英文对照">中英文对照</h2>
-<ul>
-<li>网络结构：
-<ul>
-<li>unit：单元</li>
-<li>hidden_layers: 隐藏层</li>
-<li>cell：单元</li>
-<li><strong>dropout_rate</strong>： 丢弃率</li>
-</ul></li>
-<li>优化算法
-<ul>
-<li>epochs： <strong>迭代周期个数</strong> : 迭代周期个数，int类型，默认值为10.</li>
-<li>batch_size： <strong>批量大小</strong>: int类型，默认值为128。</li>
-</ul></li>
-</ul>
-<h2 id="数据表示">数据表示</h2>
-<h3 id="real-world-examples-of-data-tensors">Real-world examples of data tensors</h3>
+        <h1 id="数据表示">数据表示</h1>
+<p>在深度学习中如何表示现实中的事物？</p>
 <p>Let’s make data tensors more concrete with a few examples similar to what you’ll encounter later. The data you’ll manipulate will almost always fall into one of the following categories:</p>
 <ul>
 <li>Vector data—2D tensors of shape(samples, features)</li>
@@ -264,48 +249,38 @@
 <li>Images—4D tensors of shape(samples,height,width,channels)or(samples,channels, height, width)</li>
 <li>Video —5D tensors of shape (samples, frames, height, width, channels) or (samples, frames, channels, height, width)</li>
 </ul>
-<h3 id="d-数据">2-D 数据</h3>
+<h2 id="表数据">表数据</h2>
 <ul>
 <li>两个轴：samples axis 和 features axis.</li>
 <li>文本数据, 假设词典长度为2k，每一个doc可以表示为1个2k维的向量，位置的值代表词在文本中出现的次数。</li>
 <li>500个文件可以存储为(500, 20000).</li>
 </ul>
-<h3 id="时间序列数据">时间序列数据</h3>
+<h2 id="时间序列数据">时间序列数据</h2>
 <ul>
 <li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_vMGBboznU.png?alt=media&amp;token=73c12f97-acdb-4680-b4eb-79a9a07581f9" /></li>
-<li>tf中使用3d张量存储，(samples, timestamp, features)</li>
-<li>每一个sample可以被编码成1系列的向量--2d张量</li>
-<li>具体的两个例子</li>
-<li><ol type="1">
-<li>股票数据：</li>
-</ol>
+</ul>
+<p>时间序列数据一般表示成3-d的张亮，tf中使用3d张量存储，(samples, timestamp, features) 每一个sample可以被编码成一个2d张量， 具体的两个例子</p>
+<ol type="1">
+<li>股票数据：每年有250个交易日，每个交易日的交易时长有390分钟，每个分钟可以抽取3个重要特征：当前价格，上一分钟最高成交价格，上一分钟最低价格
 <ul>
-<li>每年有250个交易日，每个交易日的交易时长有390分钟，每个分钟可以抽取3个重要特征：当前价格，上一分钟最高成交价格，上一分钟最低价格</li>
 <li>以每一天的交易数据为1个样本，构建的样本的shape为(250,390,3)</li>
 </ul></li>
-<li><ol start="2" type="1">
-<li>TWEET数据：</li>
+<li>TWEET数据：一条twitter长度不超过256，每个位置的字符来自128个assical码中的一个。每一条twitter的shape为（256， 128），1 百万 tweets 的shape为(1000000, 280, 128)</li>
 </ol>
-<ul>
-<li>一条twitter长度不超过256，每个位置的字符来自128个assical码中的一个</li>
-<li>每一条twitter的shape为（256， 128），1 百万 tweets 的shape为(1000000, 280, 128)</li>
-</ul></li>
-</ul>
-<h3 id="图像数据的表示">图像数据的表示</h3>
-<ul>
-<li>4维tensor</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD24ghIvE2L.png?alt=media&amp;token=4a68bc5a-7b95-46d2-8418-deed053d4301" />
+<h2 id="图像数据">图像数据</h2>
+<p>图像数据一般表示成4维tensor，一个图像数据就是一个3d张量</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD24ghIvE2L.png?alt=media&amp;token=4a68bc5a-7b95-46d2-8418-deed053d4301" /></p>
 <ul>
 <li>tensorflow： (samples, height, width, color_depth)</li>
 <li>theano：(samples, color_depth, height, width).</li>
 <li>keras两者都支持</li>
-</ul></li>
 </ul>
-<h3 id="视频数据的表示">视频数据的表示</h3>
-<ul>
-<li>5维张量：(samples, frames, height, width, color_depth).</li>
-</ul>
-<h2 id="layers的基本类型">layers的基本类型</h2>
+<h2 id="视频数据的表示">视频数据的表示</h2>
+<p>视频数据表示成5维张量：(samples, frames, height, width, color_depth).</p>
+<h1 id="模型超参">模型超参</h1>
+<h2 id="结构超参数">结构超参数</h2>
+<p>结构超参数包括层数、层的类别、层的大小等数值。以一个卷积层为例，其中的超参数包括卷积核 (filter) 的大小，卷积核的数量，步长 (stride) 的大小，unit：单元，hidden_layers: 隐藏层，cell：单元 ，dropout_rate丢弃率。这些超参数决定了神经网络的结构。</p>
+<h3 id="layers的基本类型">layers的基本类型</h3>
 <p>keras中layer的基本类型：</p>
 <ul>
 <li>卷积(Conv1D)</li>
@@ -332,7 +307,36 @@
 <p>keras中对dropout的处理，因为训练阶段需要dropout ，但是inference阶段不需要dropout，keras中如何设置？</p>
 <p>Keras does this by default. In Keras dropout is disabled in test mode. You can look at the code<a target="_blank" rel="noopener" href="https://github.com/keras-team/keras/blob/dc95ceca57cbfada596a10a72f0cb30e1f2ed53b/keras/layers/core.py#L109">here</a> and see that they use the dropped input in training and the actual input while testing.</p>
 <p>As far as I know you have to build your own training function from the layers and specify the training flag to predict with dropout (e.g. its not possible to specify a training flag for the predict functions). This is a problem in case you want to do GANs, which use the intermediate output for training and also train the network as a whole, due to a divergence between generated training images and generated test images.</p>
-<h2 id="损失函数">损失函数</h2>
+<h2 id="算法超参数">算法超参数</h2>
+<p>算法超参数包括学习率 (learning rate),批量大小 (batch size)、epoch数量(迭代周期个数)、正则，损失，激活函数等。由于神经网络的非凸性，用不同的算法超参数会得到不同的解。</p>
+<h3 id="归一化">归一化</h3>
+<p>归一化层，目前主要有这几个方法：</p>
+<ul>
+<li>Batch Normalization（BN， 2015年）</li>
+<li>Layer Normalization（LN， 2016年）</li>
+<li>Instance Normalization（IN， 2017年）</li>
+<li>Group Normalization（GN， 2018年）</li>
+<li>Switchable Normalization（SN， 2018年）；</li>
+</ul>
+<figure>
+<img src="img_1.png" alt="几种归一化方法g" /><figcaption aria-hidden="true">几种归一化方法g</figcaption>
+</figure>
+<h4 id="问题1-transformer-为什么要使用ln而不是-bn">问题1 transformer 为什么要使用LN而不是 BN？</h4>
+<p>在<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.07845.pdf">paper: Rethinking Batch Normalization in Transformers</a>中, 作者对比了cv和nlp的BN, 得出的结论是在nlp数据上基于batch的统计信息不稳定性过大(相比cv的数据)，导致bn在nlp上效果差。相比之下layer norm能够带来更稳定的统计信息，有利于模型学习</p>
+<p>Batch Normalization主要的问题是计算归一化统计量时计算的样本数太少，在RNN等动态模型中不能很好的反映全局统计分布信息，而Layer Normalization根据样本的特征数做归一化，是batch size无关的，只取决于隐层节点的数量，较多的隐层节点数量能保证Layer Normalization归一化统计分布信息的代表性。</p>
+<h4 id="问题2.-in直观上怎么理解">问题2. IN直观上怎么理解？</h4>
+<p>在计算机视觉中，IN本质上是一种Style Normalization，它的作用相当于把不同的图片统一成一种风格。另外，既然IN和BN都会统一图片的风格，那么在Generator里加IN或BN应该是不利于生成风格多样的图片的，论文中也进行了展示：</p>
+<p><img src="https://pic2.zhimg.com/v2-235433127838fca762ebd10511de9ca7_b.jpg" /></p>
+<p>图e是在generator中加了BN的结果，图f是在generator中加了IN的结果。果然崩了，IN崩得尤其厉害。</p>
+<h3 id="激活函数">激活函数</h3>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4_fjPJ90ir.png?alt=media&amp;token=9fb9e321-aed2-4c7b-bb6b-4762b7a38c81" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FADUH_mebAQ.png?alt=media&amp;token=65efc150-0f7b-42f9-8657-1ca131bfd8b5" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&amp;token=55bc24ce-0531-4702-8d3d-394595bd4d6e" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&amp;token=d7421445-afca-439e-85be-8631db133a41" /></li>
+<li>https://missinglink.ai/guides/neural-network-concepts/7-types-neural-network-activation-functions-right/</li>
+</ul>
+<h3 id="损失函数">损失函数</h3>
 <p>tensorflow中的损失函数:</p>
 <ul>
 <li>sparse_categorical_crossentropy: target是interger list，形状n*1；</li>
@@ -348,35 +352,8 @@
 <li>多标签多分类（multi-label）的情况：sigmoid + BCE</li>
 <li>最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</li>
 </ul>
-<h2 id="归一化">归一化</h2>
-<p>归一化层，目前主要有这几个方法：</p>
-<ul>
-<li>Batch Normalization（BN， 2015年）</li>
-<li>Layer Normalization（LN， 2016年）</li>
-<li>Instance Normalization（IN， 2017年）</li>
-<li>Group Normalization（GN， 2018年）</li>
-<li>Switchable Normalization（SN， 2018年）；</li>
-</ul>
-<figure>
-<img src="img_1.png" alt="几种归一化方法g" /><figcaption aria-hidden="true">几种归一化方法g</figcaption>
-</figure>
-<h3 id="问题1-transformer-为什么要使用ln而不是-bn">问题1 transformer 为什么要使用LN而不是 BN？</h3>
-<p>在<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.07845.pdf">paper: Rethinking Batch Normalization in Transformers</a>中, 作者对比了cv和nlp的BN, 得出的结论是在nlp数据上基于batch的统计信息不稳定性过大(相比cv的数据)，导致bn在nlp上效果差。相比之下layer norm能够带来更稳定的统计信息，有利于模型学习</p>
-<p>Batch Normalization主要的问题是计算归一化统计量时计算的样本数太少，在RNN等动态模型中不能很好的反映全局统计分布信息，而Layer Normalization根据样本的特征数做归一化，是batch size无关的，只取决于隐层节点的数量，较多的隐层节点数量能保证Layer Normalization归一化统计分布信息的代表性。</p>
-<h3 id="问题2.-in直观上怎么理解">问题2. IN直观上怎么理解？</h3>
-<p>在计算机视觉中，IN本质上是一种Style Normalization，它的作用相当于把不同的图片统一成一种风格。另外，既然IN和BN都会统一图片的风格，那么在Generator里加IN或BN应该是不利于生成风格多样的图片的，论文中也进行了展示：</p>
-<p><img src="https://pic2.zhimg.com/v2-235433127838fca762ebd10511de9ca7_b.jpg" /></p>
-<p>图e是在generator中加了BN的结果，图f是在generator中加了IN的结果。果然崩了，IN崩得尤其厉害。</p>
-<h2 id="激活函数">激活函数</h2>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4_fjPJ90ir.png?alt=media&amp;token=9fb9e321-aed2-4c7b-bb6b-4762b7a38c81" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FADUH_mebAQ.png?alt=media&amp;token=65efc150-0f7b-42f9-8657-1ca131bfd8b5" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&amp;token=55bc24ce-0531-4702-8d3d-394595bd4d6e" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&amp;token=d7421445-afca-439e-85be-8631db133a41" /></li>
-<li>https://missinglink.ai/guides/neural-network-concepts/7-types-neural-network-activation-functions-right/</li>
-</ul>
-<h2 id="其他实践">其他实践</h2>
-<h2 id="参考资料">参考资料</h2>
+<h4 id="优化算法">优化算法</h4>
+<h1 id="参考资料">参考资料</h1>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1502.03167.pdf">Batch Normalization</a></li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1607.06450v1.pdf">Layer Normalizaiton</a></li>
@@ -478,7 +455,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7"><span class="nav-number">1.</span> <span class="nav-text">中英文对照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">数据表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#real-world-examples-of-data-tensors"><span class="nav-number">2.1.</span> <span class="nav-text">Real-world examples of data tensors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-%E6%95%B0%E6%8D%AE"><span class="nav-number">2.2.</span> <span class="nav-text">2-D 数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%B0%E6%8D%AE"><span class="nav-number">2.3.</span> <span class="nav-text">时间序列数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.4.</span> <span class="nav-text">图像数据的表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E9%A2%91%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.5.</span> <span class="nav-text">视频数据的表示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layers%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">layers的基本类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="nav-number">3.1.</span> <span class="nav-text">卷积层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Edropout"><span class="nav-number">3.2.</span> <span class="nav-text">关于dropout</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">归一化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%981-transformer-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8ln%E8%80%8C%E4%B8%8D%E6%98%AF-bn"><span class="nav-number">5.1.</span> <span class="nav-text">问题1 transformer 为什么要使用LN而不是 BN？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%982.-in%E7%9B%B4%E8%A7%82%E4%B8%8A%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3"><span class="nav-number">5.2.</span> <span class="nav-text">问题2. IN直观上怎么理解？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">激活函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%AE%9E%E8%B7%B5"><span class="nav-number">7.</span> <span class="nav-text">其他实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.</span> <span class="nav-text">数据表示</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.</span> <span class="nav-text">表数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.</span> <span class="nav-text">时间序列数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">图像数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E9%A2%91%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.4.</span> <span class="nav-text">视频数据的表示</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%B6%85%E5%8F%82"><span class="nav-number">2.</span> <span class="nav-text">模型超参</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E8%B6%85%E5%8F%82%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">结构超参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#layers%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.1.</span> <span class="nav-text">layers的基本类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="nav-number">2.1.2.</span> <span class="nav-text">卷积层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Edropout"><span class="nav-number">2.1.3.</span> <span class="nav-text">关于dropout</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E8%B6%85%E5%8F%82%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">算法超参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96"><span class="nav-number">2.2.1.</span> <span class="nav-text">归一化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%981-transformer-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8ln%E8%80%8C%E4%B8%8D%E6%98%AF-bn"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">问题1 transformer 为什么要使用LN而不是 BN？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%982.-in%E7%9B%B4%E8%A7%82%E4%B8%8A%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">问题2. IN直观上怎么理解？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.2.</span> <span class="nav-text">激活函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.3.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">优化算法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -492,7 +469,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">170</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -505,7 +482,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">190</span>
+        <span class="site-state-item-count">191</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

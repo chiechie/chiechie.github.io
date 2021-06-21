@@ -165,6 +165,105 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/06/the-book-of-why/judea-pearl_the-book-of-why4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/06/the-book-of-why/judea-pearl_the-book-of-why4/" class="post-title-link" itemprop="url">《the book of why》读书笔记-4</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-06 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-06T08:33:38+08:00">2021-03-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-15 08:28:10" itemprop="dateModified" datetime="2021-06-15T08:28:10+08:00">2021-06-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">因果分析</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>the book of why 的第四章-去混杂</p>
+</blockquote>
+<h2 id="do算子">do算子</h2>
+<ol type="1">
+<li><p>消除混杂因子的方法：随机对照试验。</p></li>
+<li><p>贝叶斯网络中的箭头，可以看成是信息的流动。这个信息传递是双向的，既可以在因果方向传递，也可以在非因果方向传递。</p></li>
+<li><p>混杂的定义：任何使P（Y｜do（X））和 P（Y｜X）不一样的额因素。</p></li>
+<li><p>非因果路径是混杂的根源。</p></li>
+<li><p>回忆一下三种链接形式：链结合，叉连接，对撞连接</p>
+<ul>
+<li>链连接：控制B可以防止A的信息流向C或者C的信息流向A</li>
+<li>叉连接: 控制B可以防止有关A的信息流量C</li>
+<li>对撞连接:A和C是独立的，但是，如果控制了B，由于辩解效应的存在，信息就会开始在"管道"中流通。</li>
+<li>控制一个变量的后代节点，就如同部分地控制了变量本身。控制一个中介物的某个后代节点，意味着，部分地关闭了信息管道。控制一个对撞变量的某个后代节点，意味着部分打开了信息管道。 &gt; 抛开观测者，有因果关系吗？</li>
+</ul></li>
+<li><p>我们应该如何阻断信息的流通？如果这条路径中的一个连接被阻断，那么J就无法找到A。有很多当时来阻止A和J之间的交流，我们只用找到其中任何一项就好了。</p></li>
+<li><p>所以，统计过程，是有误导的，因为它只是假设其中的一条可观测的因果链存在，实际了忽视了不可观测的跟多的链路。</p></li>
+<li><p>如何去除X和Y的混杂，我们只要阻断他们之间的每个非因果路径，而不干扰因果路径。</p></li>
+<li><p>后门路径就是，所有X和Y之间，以指向X的箭头为开始的路径。这些后们路径，允许X和Y之间的伪相关信息在管道中流通。</p></li>
+<li><p>如果阻断了所有的后门路径，就完成了X和Y的去混杂。</p></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/05/meditation/about-problem-Definition-and-info-collection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -258,126 +357,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/graph/cause-inference-learning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/04/graph/cause-inference-learning/" class="post-title-link" itemprop="url">因果推断</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-04 23:23:02" itemprop="dateCreated datePublished" datetime="2021-03-04T23:23:02+08:00">2021-03-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-16 10:39:29" itemprop="dateModified" datetime="2021-06-16T10:39:29+08:00">2021-06-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%9B%BE/" itemprop="url" rel="index"><span itemprop="name">图</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="因果推断和因果发现">因果推断和因果发现</h1>
-<p>因果问题分为两种：一种是因果推断，另一种是因果发现</p>
-<ul>
-<li>因果推断（causal inf erence）：比如给定两个变量 X、Y，希望找到一个衡量它们之间因果关系的参数 theta；</li>
-<li>因果发现（causal discovery）：即给定一组变量，找到他们之间的因果关系，这个在统计上是不可能的。</li>
-</ul>
-<h1 id="两种数据产生途径">两种数据产生途径</h1>
-<p>数据有两种产生途径：</p>
-<ul>
-<li>一种是通过有意控制、随机化的实验得到的:例如拨测,能够直接做因果推断</li>
-<li>一种是通过观测数据得到的: 需要另外知道一些先验知识，才能做因果推断。</li>
-</ul>
-<h1 id="用数学语言表达因果模型">用数学语言表达因果模型</h1>
-<p>因果模型有三种表达方式： - 反事实（counterfactuals） - 因果图（causal graph） - 结构方程模型（structural equation models）</p>
-<p>一个简单的例子『睡眠超过 7 小时的人』（X）『生病少』（Y)，只是代表 X 和 Y 之间有关联性，并不代表如果强制一个人睡眠超过 7 小时，ta 就能够生病少。因为可能『身体好的人』容易『睡眠超过 7 小时』，同时 ta 也『生病少』；但是一个本来身体不好的人，强制 ta 睡眠多，ta 可能也生病不会少。</p>
-<p>因果关系可以从随机化的实验中得到；但是很难从观察到的数据中得到。</p>
-<h2 id="反事实counterfactuals">反事实（Counterfactuals）</h2>
-<p>考虑一个 treatment X，和一个 outcome Y。我们能观察到的是一些数据 <span class="math inline">\(\left\{\left(X_{i}, Y_{i}\right)\right\}\)</span> ，但是我们无法知道如果对于某一个数据点 <span class="math inline">\(\left(X_{i}, Y_{i}\right)\)</span> ，如果改变 X 的值，Y 会怎么变。这件事情就叫做反事实（counterfactual）。</p>
-<p>Notes 里面给了一个图（下图），从数据上看，X 和 Y 是正相关的，但其实对于每一个 样本来说，如果增大 X，会引起 Y 的减小。这一点最开始看的时候并不好理解。举一个例子。研究航空公司票价（X）对销量（Y）的影响，显然，对于某一个客户来说，增加票价（X 变大）会降低客户购买意愿，即使得销量将达（Y 变小）。但是实际中的情况是，在节假日人们出行意愿大导致销量高（Y 大），定价也会相应变高（X 大），从而从数据上看，形成左边图的情形。</p>
-<figure>
-<img src="dl-framework/img.png" alt="反事实举例" /><figcaption aria-hidden="true">反事实举例</figcaption>
-</figure>
-<h2 id="因果图causal-graph">因果图（causal graph）</h2>
-<p>因果图是一个DAG，表明各变量之间的联合概率分布。</p>
-<p><span class="math inline">\(p\left(y_{1}, \ldots, y_{k}\right)=\prod p\left(y_{j} \mid \operatorname{parents}\left(y_{j}\right)\right)\)</span></p>
-<p>下面举例说明，在给定一个因果图之后，如何做因果推断。 考虑下面一个因果图，目标是求<span class="math inline">\(p(y \mid \operatorname{set} X=x)\)</span></p>
-<ul>
-<li><p>首先，可以看出该 causal graph 提供的信息为 <span class="math inline">\(p(x, y, z)=p(z) p(x \mid z) p(y \mid x, z)\)</span></p></li>
-<li><p>接下来，由于考虑的是给定 X的影响，因此构建一个新图<span class="math inline">\(G_{*}\)</span>, 移除掉所有指向 X 的边，得到新的联合概率分布: <span class="math inline">\(p_{*}(y, z)=p(z) p(y \mid x, z)\)</span></p></li>
-<li><p>最后，该概率分布下的数值就是因果推断的结果: <span class="math inline">\(p(y \mid \text { set } X=x) \equiv p_{*}(y)=\int p_{*}(y, z) d z=\int p(z) p(y \mid x, z) d z\)</span></p></li>
-</ul>
-<h2 id="因果图-和-概率图-的区别">因果图 和 概率图 的区别</h2>
-<p>举例说明，比如下雨（Rain，R）和湿草坪（Wet Lawn，W）是不相互独立的 对于下两种 DAG，它们都是合理的 probability graph。即对于任意的联合概率分布 <span class="math inline">\(p(w, r)\)</span>，都可以写成 <span class="math inline">\(p(w) p(r \mid w)\)</span> 或者 <span class="math inline">\(p(r) p(w \mid r)\)</span>. 但显然下雨是因、草坪湿是果，只有左边的图才是正确的 causal graph。</p>
-<figure>
-<img src="right_causal_graph.png" alt="right_causal_graph" /><figcaption aria-hidden="true">right_causal_graph</figcaption>
-</figure>
-<h1 id="因果发现是不可能的">因果发现是不可能的</h1>
-<p>总存在一个 faithful 的分布使得在样本足够多的时候，产生足够大的 type I error。</p>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/88173582">zhihu-关于因果推断公开课翻译</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.stat.cmu.edu/~larry/=sml/Causation.pdf">英文原文</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/75/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/75/">75</a><span class="page-number current">76</span><a class="page-number" href="/page/77/">77</a><span class="space">&hellip;</span><a class="page-number" href="/page/85/">85</a><a class="extend next" rel="next" href="/page/77/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/75/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/75/">75</a><span class="page-number current">76</span><a class="page-number" href="/page/77/">77</a><span class="space">&hellip;</span><a class="page-number" href="/page/86/">86</a><a class="extend next" rel="next" href="/page/77/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -443,7 +426,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">170</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -456,7 +439,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">190</span>
+        <span class="site-state-item-count">191</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

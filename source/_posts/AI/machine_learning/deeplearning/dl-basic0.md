@@ -19,10 +19,10 @@ categories:
 
 Let’s make data tensors more concrete with a few examples similar to what you’ll encounter later. The data you’ll manipulate will almost always fall into one of the following categories:
 
-- Vector data—2D tensors of shape(samples,  features)
-- Timeseries data or sequence data—3D tensors of shape (samples, timesteps, features)
-- Images—4D tensors of shape(samples,height,width,channels)or(samples,channels, height, width)
-- Video —5D tensors of shape (samples, frames, height, width, channels) or (samples, frames, channels, height, width)
+- Vector data:2D tensors of shape(samples,  features)
+- Timeseries data or sequence data:3D tensors of shape (samples, timesteps, features)
+- Images:4D tensors of shape(samples,height,width,channels) or (samples,channels, height, width)
+- Video:5D tensors of shape (samples, frames, height, width, channels) or (samples, frames, channels, height, width)
 
 ## 表数据
 

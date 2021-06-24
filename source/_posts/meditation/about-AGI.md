@@ -36,9 +36,10 @@ categories:
 5. 在计算机中模拟agent的演化过程，和自然界的演化类似，需要忍受长期的无秩序无进展。
 6. 如果全世界的资源往这方面倾斜，可能可以加快黑天鹅事件出现。
 7. 理论突破不是AGI成熟的必要条件，有可能是2者互相促进发展。
-
+8. 目前收到关注较多的公司--自动标注样本公司scale
 
 ## 参考
 1. https://www.zhihu.com/question/404870865/answer/1324577689
 2. https://www.zhihu.com/question/464616760/answer/1940847401
 3. [reward is enough ,david silver](https://www.sciencedirect.com/science/article/pii/S0004370221000862)
+4. [not boring](https://www.notboring.co/p/scale-rational-in-the-fullness-of?token=eyJ1c2VyX2lkIjoxNzY2NjQ2OSwicG9zdF9pZCI6Mzc4NDY2MzEsIl8iOiJrTHFWcCIsImlhdCI6MTYyNDQyNDU4NCwiZXhwIjoxNjI0NDI4MTg0LCJpc3MiOiJwdWItMTAwMjUiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.zWmuXLn35R720iDVtX7yTuTpM4kCMk25457XzZN8_Ks)

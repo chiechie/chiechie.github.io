@@ -9,7 +9,7 @@ tags:
 - 贝叶斯
 - 复杂网络
 categories: 
-- 人工智能
+- AI
 ---
 
 

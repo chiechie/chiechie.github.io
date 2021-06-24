@@ -9,7 +9,7 @@ tags:
 - 贝叶斯
 - 根因分析
 categories: 
-- 图
+- AI
 ---
 
 # 背景

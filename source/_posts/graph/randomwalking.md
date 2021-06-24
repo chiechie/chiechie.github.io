@@ -10,7 +10,7 @@ tags:
 - 根因分析
 - AIOps
 categories: 
-- 图
+- AI
 ---
 
 ## 介绍

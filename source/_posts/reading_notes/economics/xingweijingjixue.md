@@ -3,13 +3,13 @@ title: 《行为经济学》读书笔记
 author: chiechie
 mathjax: true
 date: 2021-06-15 09:26:37
-categories:
+tags:
 - 经济学
 - 行为经济学
 - 幂律
 - 哈耶克
-- 群体选择
-tags:
+- 群体选择 
+categories:
 - 经济学
 ---
 

@@ -22,8 +22,8 @@
 
   <meta name="description" content="基本概念 概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它用图结构描述多个随机变量之间的依赖关系，它是研究高维空间中的概率模型的一种有用工具。 概率图模型有三个基本问题: 表示问题，学习问题和推断问题  1. 表示问题 表示问题，即对于一个概率模型，如何通过图结构来描述变量之间的依赖关">
 <meta property="og:type" content="article">
-<meta property="og:title" content="概率图模型">
-<meta property="og:url" content="https://chiechie.github.io/2021/06/10/AI/machine_learning/gailvtu/index.html">
+<meta property="og:title" content="概率图简介">
+<meta property="og:url" content="https://chiechie.github.io/2021/06/10/graph/gailvtu/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
 <meta property="og:description" content="基本概念 概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它用图结构描述多个随机变量之间的依赖关系，它是研究高维空间中的概率模型的一种有用工具。 概率图模型有三个基本问题: 表示问题，学习问题和推断问题  1. 表示问题 表示问题，即对于一个概率模型，如何通过图结构来描述变量之间的依赖关">
 <meta property="og:locale" content="zh_CN">
@@ -35,15 +35,15 @@
 <meta property="og:image" content="https://img.mubu.com/document_image/3476923c-5528-4dd4-aa4d-ae10183bf377-3380623.jpg">
 <meta property="og:image" content="https://img.mubu.com/document_image/28d53640-0eb6-4a17-81c6-ffa8e4dbb289-3380623.jpg">
 <meta property="article:published_time" content="2021-06-10T08:52:21.000Z">
-<meta property="article:modified_time" content="2021-06-11T01:19:42.404Z">
+<meta property="article:modified_time" content="2021-06-24T06:39:24.339Z">
 <meta property="article:author" content="Chiechie">
-<meta property="article:tag" content="概率图模型">
+<meta property="article:tag" content="概率图">
 <meta property="article:tag" content="贝叶斯网络">
 <meta property="article:tag" content="贝叶斯优化">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img.mubu.com/document_image/e3036b4e-18d3-4e73-b996-eafe4a4c08d1-3380623.jpg">
 
-<link rel="canonical" href="https://chiechie.github.io/2021/06/10/AI/machine_learning/gailvtu/">
+<link rel="canonical" href="https://chiechie.github.io/2021/06/10/graph/gailvtu/">
 
 
 <script id="page-configurations">
@@ -56,7 +56,7 @@
   };
 </script>
 
-  <title>概率图模型 | Chiechie's Mini World</title>
+  <title>概率图简介 | Chiechie's Mini World</title>
   
 
 
@@ -178,7 +178,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/10/AI/machine_learning/gailvtu/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/10/graph/gailvtu/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -191,7 +191,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          概率图模型<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AI/machine_learning/gailvtu.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          概率图简介<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/graph/gailvtu.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -208,7 +208,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-11 09:19:42" itemprop="dateModified" datetime="2021-06-11T09:19:42+08:00">2021-06-11</time>
+                <time title="修改时间：2021-06-24 14:39:24" itemprop="dateModified" datetime="2021-06-24T14:39:24+08:00">2021-06-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -250,7 +250,12 @@
 <img src="https://img.mubu.com/document_image/75c9420a-058f-4005-a4b2-4609e7987c1b-3380623.jpg" alt="贝叶斯网络" /><figcaption aria-hidden="true">贝叶斯网络</figcaption>
 </figure>
 <p>条件独立性在贝叶斯网络中，如果两个节点是直接连接的，它们肯定是非条件独立的，是直接因果关系。父节点是“因”，子节点是“果”。</p>
-<p>很多经典的机器学习模型可以使用有向图模型来描述，比如 - 朴素贝叶斯分类器 - 隐马尔可夫模型 - 深度信念网络(sigmoid 信念网络)</p>
+<p>很多经典的机器学习模型可以使用有向图模型来描述，比如</p>
+<ul>
+<li>朴素贝叶斯分类器</li>
+<li>隐马尔可夫模型</li>
+<li>深度信念网络(sigmoid 信念网络)</li>
+</ul>
 <h4 id="无向图模型">无向图模型</h4>
 <p>无向图模型也称为马尔可夫随机场(Markov Random Field，MRF)或 马尔可夫网络(Markov Network)，是一类用无向图来描述一组具有局部马尔 可夫性质的随机向量 X 的联合概率分布的模型。</p>
 <figure>
@@ -390,7 +395,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" rel="tag"># 概率图模型</a>
+              <a href="/tags/%E6%A6%82%E7%8E%87%E5%9B%BE/" rel="tag"># 概率图</a>
               <a href="/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C/" rel="tag"># 贝叶斯网络</a>
               <a href="/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%98%E5%8C%96/" rel="tag"># 贝叶斯优化</a>
           </div>
@@ -487,7 +492,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

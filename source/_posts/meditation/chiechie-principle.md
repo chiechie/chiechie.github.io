@@ -1,5 +1,4 @@
 ---
-top: true
 title: Chiechie's belief
 author: chiechie
 mathjax: true

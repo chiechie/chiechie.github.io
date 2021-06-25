@@ -111,7 +111,7 @@
     <link href="https://chiechie.github.io/2021/06/15/reading_notes/economics/xingweijingjixue/"/>
     <id>https://chiechie.github.io/2021/06/15/reading_notes/economics/xingweijingjixue/</id>
     <published>2021-06-15T01:26:37.000Z</published>
-    <updated>2021-06-19T02:27:29.847Z</updated>
+    <updated>2021-06-24T06:46:45.269Z</updated>
     
     <content type="html"><![CDATA[<h1 id="第二讲">第二讲</h1><h2 id="第二部分-社会网络研究">第二部分 社会网络研究</h2><h3 id="选择选择什么">选择选择什么？</h3><ol type="1"><li>“群体选择”:群体之间的竞争可能使内部合作的群体最终胜出并淘汰那些内部不合作的群体.群体选择这一主题兼具个体视角和群体视角。</li><li>"利他行为"：体为增加群体的适存度而降低自己的适存度，它的行为是利他行为。适存度，fitness。</li><li>生物学家怎样测度呢？他们用后代与母代之比，来测度适存度。如果一个人的生存策略有利于增加自己的适存度，那么在一名旁观者看来，他的后代的数目必须逐渐超过母代的数目，这就是繁衍，否则就是消亡</li><li>行为模式是可观测的，行为动机是不可观测的。策略是对行为模式的一种描述，所以是可观测的。心理学描述心理事实，包括动机，通常是不可观测的。如生物学家那样，行为经济学试图做的，是从可观测的“显型”策略，推测那些不可观测的“基因型”行为动机。</li><li>什么是传统：：一切经过长期历史的检验有利于生存和繁衍的知识。其中可交流的传统就是常识。传统的大部分不能交流，只能模仿。</li><li>为什么蚂蚁懂得合作没有淘汰人类？蚂蚁行为的驱动力量是族群惯性，但是他没有灵活性。人的行为驱动力量一部分是族群惯性，一部分是灵活性，这样就使得可以保持创新的同时，又能够保持一定的合作秩序。</li><li>在古尔德看来，漫长的地球演化史，首先由一些漫长的稳态构成，其次，这些稳态之间有一些瞬间的黑天鹅事件打破既有的均衡态，然后陷入新的均衡态，再等待新的黑天鹅事件</li><li>人类的出现，就是其中一个黑天鹅事件，它只占演化史的一个瞬间，是大约900万年以内的事情</li><li>古尔德的结论是：历史从来不是决定论的，由许多偶然因素决定历史路径，只在事后才可能知道 自然选择的力量从来不是惟一的演化力量，类似地，为什么最优越的物种只在以往漫长历史的最后一秒之内发生呢？</li><li>在多因多果的网络里，科学家怎样令人信服地指出哪一条因果链条是最重要的呢？理想方法是通过实验，在实验中，我们可以只让一条因果链发生作用，我们控制所有其他因果关系不许它们起作用</li></ol><h3 id="社会网络研究什么">社会网络研究什么？</h3><ol type="1"><li>如何界定一项知识的重要性？用途。手段的质，依赖于目的本身。</li></ol><h3 id="爱因斯坦的自由论">爱因斯坦的自由论</h3><ol type="1"><li>整体论可爱，但不可信，因为它缺少可行的研究方法。个体论可信，却不可爱。</li><li>爱因斯坦:创造是个体的，从来就是个体行为。但是自由，却是整体的. 没有宽容的社会，个人自由也将消失。</li></ol><h3 id="哈耶克的涌现秩序">哈耶克的涌现秩序</h3><ol type="1"><li><p>马克思理论的逻辑矛盾在第一卷里尚未出现，非要在第二卷和第三卷才成为无法挣脱的内在矛盾。</p></li><li><p>马克思主义和哈耶克：哈耶克论证，没有一个微观主体（个体或群体），不论多么聪明，有能力预先知道从大量哪怕是极简单的微观主体的相互作用中涌现出来的宏观秩序是怎样的。这当然意味着社会计划的不可能和理性的狂妄。理性实在很渺小，不可能完成社会主义者赋予它的资源有效配置任务。</p></li><li><p>人类互动问题的复杂性，时间与结构的复制以及涌现，宏观秩序的涌现</p></li><li><p>哈耶克的“涌现秩序"：演化理论，假以时日，从大量的简单局部结构之间的相互作用中必能涌现更复杂的结构。</p><blockquote><p>涌现秩序的思想，可以溯源至柏格森和怀特海。</p></blockquote></li><li><p>哈耶克使用的关键词：简单结构、复制过程、优胜劣汰、适应性。</p></li><li><p>哈耶克的社会演化基本原理：单子复杂交往涌现宏观秩序的不可预见性。</p><ul><li>“单子”，是莱布尼茨的概念，它们如“素数”那样单纯，具有不可再分性。只不过，莱布尼茨假设单子之间没有交往，而哈耶克假设单子之间的交往是事物演化的原因。</li></ul></li><li><p>多主体仿真（multi-agent simuiation）:一种模拟不确定性的环境与社会变迁的程序.哈佛的诺瓦克小组在使用软件仿真时，将每一个agent都设置为具有最简单的行为规则。然后，一个环境中有数千个agent，相互作用之后，宏观秩序涌现出来，这个宏观秩序是不可预期的。最初研究这样的仿真程序的，是2005年与奥曼分享诺贝尔经济学奖的谢林，这一程序称为“谢林程序”。</p></li><li><p>《解释的程度》中，哈耶克的论述十分接近“社会现象是多因多果”这一见解。</p></li><li><p>《复杂现象论》中，哈耶克全面论述了他设想的演化理论的各要素。目前，社会网络的研究方法，是最适合研究哈耶克涌现秩序的实证方法。</p></li><li><p>哈耶克对于统计学的看法：通过消除复杂性来处理大量数据。</p></li></ol><h3 id="多因多果模型">多因多果模型</h3><ol type="1"><li><p>多因多果网络中，那一条因果链条是重要的？以及如何论证出这个结论是对的？前者靠直觉，或者说taste/判断力。后者用控制变量的方法。</p><blockquote><p>社会心理学和行为经济学都会用到控制变量的方法来确定因果关系。</p><p>判断力哪里来？靠日积月累的实践。</p></blockquote></li><li></li></ol><h1 id="第三讲">第三讲</h1><ol type="1"><li>杨格的“策略学习的不可能性定理”：</li></ol><h1 id="参考">参考</h1><ol type="1"><li><a href="https://weread.qq.com/web/reader/b48321a058a8aeb48d182ac">行为经济学讲义-演化论视角</a></li></ol>]]></content>
     
@@ -129,16 +129,16 @@
     
     <category term="经济学" scheme="https://chiechie.github.io/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
     
-    <category term="行为经济学" scheme="https://chiechie.github.io/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
-    
-    <category term="幂律" scheme="https://chiechie.github.io/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E5%B9%82%E5%BE%8B/"/>
-    
-    <category term="哈耶克" scheme="https://chiechie.github.io/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E5%B9%82%E5%BE%8B/%E5%93%88%E8%80%B6%E5%85%8B/"/>
-    
-    <category term="群体选择" scheme="https://chiechie.github.io/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/%E5%B9%82%E5%BE%8B/%E5%93%88%E8%80%B6%E5%85%8B/%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9/"/>
-    
     
     <category term="经济学" scheme="https://chiechie.github.io/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
+    
+    <category term="行为经济学" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
+    
+    <category term="幂律" scheme="https://chiechie.github.io/tags/%E5%B9%82%E5%BE%8B/"/>
+    
+    <category term="哈耶克" scheme="https://chiechie.github.io/tags/%E5%93%88%E8%80%B6%E5%85%8B/"/>
+    
+    <category term="群体选择" scheme="https://chiechie.github.io/tags/%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9/"/>
     
   </entry>
   
@@ -147,9 +147,9 @@
     <link href="https://chiechie.github.io/2021/06/10/meditation/about-AGI/"/>
     <id>https://chiechie.github.io/2021/06/10/meditation/about-AGI/</id>
     <published>2021-06-10T09:04:32.000Z</published>
-    <updated>2021-06-16T00:43:43.481Z</updated>
+    <updated>2021-06-24T06:55:22.295Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="chiechies-reflection">chiechie's reflection</h2><ol type="1"><li>理论突破不是技术爆发的必经之路，很多技术都没有理论，比如古代时候的发明，造船，造纸，造火药，爱迪森发明电灯泡，还有现代的量子计算机和深度学习，理论完备个P。</li><li>大部分发明都是做实验，通过试错迭代而产生的,而很多情况下理论都是滞后的。</li></ol><h2 id="无人驾驶现状">无人驾驶现状</h2><ol type="1"><li>一个技术在工业化生产之前，一般要经历三个阶段, 理论突破，技术验证，工程化<ol type="1"><li>理论突破，科学家在理论上证明其可行性，即产品要达到一个什么样的性能，在技术上是一定可以实现的；</li><li>技术突破，研究机构突破技术实现上壁垒，做出来达到预期的Demo；</li><li>工程化，主要解决产品设计，方案优化，功能完备，性能提升，良品率，鲁棒性，可用性提升，大规模复制的技术准备，成本降低等工程问题。</li></ol></li><li>通用无人驾驶在第一，第二阶段还彻底整明白的情况下，由资本驱动直接进入第三阶段.</li></ol><h2 id="agi的理论先行者">AGI的理论先行者</h2><ol type="1"><li>目前强化学习是最被看好的方向。</li><li>强化学习本质上是演化论的思路，跟自然界一样，给定一个reward，让机器放肆的学习探索。</li><li>目前还需要解决的问题是计算资源的问题。</li><li>自然界的演化大部分时间是平稳状态，只有极少数黑天鹅事件决定了演化的方向。</li><li>在计算机中模拟agent的演化过程，和自然界的演化类似，需要忍受长期的无秩序无进展。</li><li>如果全世界的资源往这方面倾斜，可能可以加快黑天鹅事件出现。</li><li>理论突破不是AGI成熟的必要条件，有可能是2者互相促进发展。</li></ol><h2 id="参考">参考</h2><ol type="1"><li>https://www.zhihu.com/question/404870865/answer/1324577689</li><li>https://www.zhihu.com/question/464616760/answer/1940847401</li><li><a href="https://www.sciencedirect.com/science/article/pii/S0004370221000862">reward is enough ,david silver</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="chiechies-reflection">chiechie's reflection</h2><ol type="1"><li>理论突破不是技术爆发的必经之路，很多技术都没有理论，比如古代时候的发明，造船，造纸，造火药，爱迪森发明电灯泡，还有现代的量子计算机和深度学习，理论完备个P。</li><li>大部分发明都是做实验，通过试错迭代而产生的,而很多情况下理论都是滞后的。</li></ol><h2 id="无人驾驶现状">无人驾驶现状</h2><ol type="1"><li>一个技术在工业化生产之前，一般要经历三个阶段, 理论突破，技术验证，工程化<ol type="1"><li>理论突破，科学家在理论上证明其可行性，即产品要达到一个什么样的性能，在技术上是一定可以实现的；</li><li>技术突破，研究机构突破技术实现上壁垒，做出来达到预期的Demo；</li><li>工程化，主要解决产品设计，方案优化，功能完备，性能提升，良品率，鲁棒性，可用性提升，大规模复制的技术准备，成本降低等工程问题。</li></ol></li><li>通用无人驾驶在第一，第二阶段还彻底整明白的情况下，由资本驱动直接进入第三阶段.</li></ol><h2 id="agi的理论先行者">AGI的理论先行者</h2><ol type="1"><li>目前强化学习是最被看好的方向。</li><li>强化学习本质上是演化论的思路，跟自然界一样，给定一个reward，让机器放肆的学习探索。</li><li>目前还需要解决的问题是计算资源的问题。</li><li>自然界的演化大部分时间是平稳状态，只有极少数黑天鹅事件决定了演化的方向。</li><li>在计算机中模拟agent的演化过程，和自然界的演化类似，需要忍受长期的无秩序无进展。</li><li>如果全世界的资源往这方面倾斜，可能可以加快黑天鹅事件出现。</li><li>理论突破不是AGI成熟的必要条件，有可能是2者互相促进发展。</li><li>目前收到关注较多的公司--自动标注样本公司scale</li></ol><h2 id="参考">参考</h2><ol type="1"><li>https://www.zhihu.com/question/404870865/answer/1324577689</li><li>https://www.zhihu.com/question/464616760/answer/1940847401</li><li><a href="https://www.sciencedirect.com/science/article/pii/S0004370221000862">reward is enough ,david silver</a></li><li><a href="https://www.notboring.co/p/scale-rational-in-the-fullness-of?token=eyJ1c2VyX2lkIjoxNzY2NjQ2OSwicG9zdF9pZCI6Mzc4NDY2MzEsIl8iOiJrTHFWcCIsImlhdCI6MTYyNDQyNDU4NCwiZXhwIjoxNjI0NDI4MTg0LCJpc3MiOiJwdWItMTAwMjUiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.zWmuXLn35R720iDVtX7yTuTpM4kCMk25457XzZN8_Ks">not boring</a></li></ol>]]></content>
     
     
       
@@ -329,7 +329,7 @@
     <link href="https://chiechie.github.io/2021/06/10/the-book-of-why/judea-pearl_the-book-of-why6/"/>
     <id>https://chiechie.github.io/2021/06/10/the-book-of-why/judea-pearl_the-book-of-why6/</id>
     <published>2021-06-10T00:33:38.000Z</published>
-    <updated>2021-06-21T00:22:08.144Z</updated>
+    <updated>2021-06-24T07:10:06.039Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>the book of why 的第6章-一些悖论</p></blockquote><h2 id="悖论1-蒙提-霍尔">悖论1-蒙提 霍尔</h2><h3 id="背景">背景</h3><p>一个竞猜游戏中，有三个用幕布遮住的们，其中有2个门后面是山羊，1个是汽车。有两种游戏规则，分别是：</p><ol type="1"><li>观众先选择三个门中的一个，然后主持人从另外两个门中选择一个没有汽车的们打开，然后这个观众可以选择要不要换门？</li><li>观众先选择三个门中的一个，然后主持人从另外两个门中随便选一个打开，然后这个观众可以选择要不要换门？</li></ol><p>第一种强况下，选择换门的话，赢到车车的概率是2/3， 第二种情况下，选择换门的话，赢到的车车的概率是1/2</p><figure><img src="./img789.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><h3 id="悖论的原因">悖论的原因</h3><ol type="1"><li><p>贝叶斯公式可以解释信息在非因果关系上的流动，也就是规则1，主持人选择了没有汽车的之后，第三个门的不确定性降低了（沿着门后有车的概率变大的方向），而整个空间的概率之和为1，所以第一个门有车的概率变小了。</p><blockquote><p>主持人的这个决策带来了系统的熵减，系统坍塌到2号门某个确定状态的子空间去了。</p></blockquote></li><li><p>为什么直觉上很难接受规则1的结论，反而会认为比赛的机制不公平？这个跟人类大脑结构有关系：</p><ul><li>大脑不擅长处理概率问题，</li><li>大脑自发抵制非因果关系的信息传递，这个是贝叶斯式变量控制的产物。</li><li>习惯将相关性等同于因果性</li><li>大脑天生难以接受</li></ul></li></ol><h2 id="悖论2-伯克森悖论">悖论2-伯克森悖论</h2><ol type="1"><li>生物统计学家约瑟夫.伯克森在医院做实验时，观察到了一个现象：两种疾病本来在一般人群中毫无关联，但是在住院人群中却会观察到似是而非的相关性。</li><li>医院样本实际上是一个冲撞模型，即，当一个人同时患了两种疾病时，一定会住院。</li><li>所以，「医院样本」就好像一个经过精心挑选过的样本，体现出来的相关关系是控制了「住院」变量之后，疾病1和疾病2的伪相关性。 <img src="img7890.png" alt="img.png" /></li><li>1956年，哲学家赖欣巴提出了一个猜想「共因原则」（common cause principle），他认为没有不含因果关系的相关关系，即，X和Y的相关不是偶然发生的，要么是一个变量导致另一个变量，要么是第三个变量，比如说出现在两个变量之前的Z变量，导致两者发生。</li><li>设计一个抛硬币的实验就可以推翻「共因原则」：假设同时抛两枚硬币，抛100次，只记录其中至少又一枚硬币为正面的结果，实验结束，发现记录的75条记录中，发现只要硬币1反面，硬币2就是正面，是因为两个硬币互通消息了吗？不是的，是因为人为记录改变了测度空间。</li><li>还有一个社会现象就是，在一些调查中发现，跟你约会的人中，哪些又魅力的人往往是混蛋。这个也是因为测度空间被你亲手改变了，因为长得丑的渣男最开始就被你过滤了。过滤之前，有魅力的渣男的概率是1/4，过滤之后有魅力的渣男概率是1/3。所以感觉这个比例增加了。</li></ol><h2 id="悖论3-辛普森悖论">悖论3-辛普森悖论</h2><ol type="1"><li>辛普森逆转：一个叫辛普森的医生，在文献上发现了一种新药D，可以治疗心脏病。论文的实验数据显示，女性患者服用药物之后，心脏病发作比例升高；男性患者服用药物之后，心脏病发作比例也升高。但是，在整体人群上，心脏病发作比例却降低了，因此该药物也被归为BBG（BAD/BAD/GOOD）型药物。然而，实际上这种药物不存在，虽然说在数学上没有什么问题。 <img src="judea-pearl_the-book-of-why7/img.png" alt="辛普森" /></li><li>对整体人群来说，正确的结论应该是什么呢？可以这么操作，先控制性别：<ul><li>do（性别）=女性，计算女性服药之后心脏病发作比例的变化 r1。</li><li>do（性别）=男性，计算男性服药之后心脏病发作比例的变化 r2。</li><li>假设整体人群中，男女比例为1：1，那么可以推断出整体人群，服药之后，心脏比发作比例的变化为（r1+r2）/2</li></ul></li><li>辛普森悖论是因为混杂因子的存在。</li><li>当我们考察两个变量的因果效应时：<ul><li>如果存在混在因子，只能用分层数据计算因果效应，采用控制混杂因子的方式，case by case，计算每个混在因子取值的情况下，两个变量的因果关系，然后按照混杂因子每个取值的概率汇总，得到整体上，两个变量之间的因果关系。 <img src="./img_2.png" alt="img_2.png" /></li><li>如果不存在混杂因子（有可能存在中介物），可以用聚合数据计算因果效应 <img src="./img_1.png" alt="中介物" /></li></ul></li><li>混杂因子存在的警告：根据聚合数据估计出来的因果效应大于，根据分层数据估计出来的因果效应。</li></ol><h2 id="关于悖论">关于悖论</h2><ol type="1"><li><p>什么是悖论？绝大部分人深信不疑的两个信念之间的冲突。</p><blockquote><p>辛普森逆转并不算悖论，只是纠正了不懂数学的人，对"平均表现"的错误认识。</p></blockquote></li><li><p>如何解决悖论？</p><ol type="1"><li>理解为什么大多数人会把它看成一个悖论？or大家对世界的直观看法到底在哪里存在重大缺陷？eg生理结构原因：大部分人不擅长处理概率问题；「过分擅长」处理因果问题</li><li>如何纠正：刻意训练，完成大脑重塑。</li></ol></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li></ol>]]></content>
     
@@ -346,12 +346,10 @@
     
     
     
-    <category term="因果分析" scheme="https://chiechie.github.io/categories/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
     
     
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
     
     <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
     
@@ -361,6 +359,8 @@
     
     <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
     
+    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
+    
   </entry>
   
   <entry>
@@ -368,7 +368,7 @@
     <link href="https://chiechie.github.io/2021/06/10/the-book-of-why/judea-pearl_the-book-of-why7/"/>
     <id>https://chiechie.github.io/2021/06/10/the-book-of-why/judea-pearl_the-book-of-why7/</id>
     <published>2021-06-10T00:33:38.000Z</published>
-    <updated>2021-06-21T00:22:08.144Z</updated>
+    <updated>2021-06-24T07:10:06.042Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>the book of why 的第7章 征服干预之峰</p></blockquote><h2 id="前门规则和后门调整">前门规则和后门调整</h2><ol type="1"><li>do条件概率和条件概率的区别是：当有混杂因子存在时，使用条件概率可能得出假的相关性。</li><li>那么除了随机对照试验，还有什么办法能够排除掉混杂因子带来的影响呢？后门调整和前门标准。后门调整即使用便相关系数代替相关系数，前门调整是，在特殊的因果模型的情况下，使用条件概率代替do算子。 <img src="./img.png" alt="img.png" /></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li></ol>]]></content>
     
@@ -385,12 +385,10 @@
     
     
     
-    <category term="因果分析" scheme="https://chiechie.github.io/categories/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
     
     
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
     
     <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
     
@@ -399,6 +397,8 @@
     <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
     
     <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
+    
+    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
     
   </entry>
   
@@ -489,9 +489,9 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
     <category term="未来趋势" scheme="https://chiechie.github.io/tags/%E6%9C%AA%E6%9D%A5%E8%B6%8B%E5%8A%BF/"/>
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="量子计算机" scheme="https://chiechie.github.io/tags/%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
     

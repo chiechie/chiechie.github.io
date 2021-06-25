@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/28/reading_notes/computer/principle-of-computer-network/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/26/reading_notes/computer/principle-of-zip/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/28/reading_notes/computer/principle-of-computer-network/" class="post-title-link" itemprop="url">计算机网络基本原理</a>
+            <a href="/2021/02/26/reading_notes/computer/principle-of-zip/" class="post-title-link" itemprop="url">文件压缩的原理是什么？</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-28 20:19:10" itemprop="dateCreated datePublished" datetime="2021-02-28T20:19:10+08:00">2021-02-28</time>
+              <time title="创建时间：2021-02-26 10:23:17" itemprop="dateCreated datePublished" datetime="2021-02-26T10:23:17+08:00">2021-02-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -219,38 +219,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="怎么学习">怎么学习？</h2>
-<p>直接看理论，觉得太抽象了。</p>
-<p>引用一个同事说的吧，可能多从实践出发理解会更深刻。 IDC机器上tcpdump，本地机器wireshark都用起来，看网络包究竟是怎样的。 写个网络编程的demo比如echo server 用iptables模拟一些异常再抓包看看。 linux 网络相关系统调用的各个参数，比如listen的backlog。 内核里面关于网络的参数，比如/proc/sys/net/core/rmem_max之类的。 甚至还可以看看最近几年相对比较新的东西比如DPDK，RDMA之类的，有兴趣自然会提升学习的热情。</p>
-<h2 id="基本概念">基本概念</h2>
-<p>什么是协议（protocol）？ 一堆定义好的标准集合没，每台电脑都要遵守，才能够正常通信</p>
-<p>什么是计算机网络？ 覆盖所有相关事物：电脑之间如何通信 网络的作用是，保证每台电脑都能倾听到彼此，并且每台电脑说的话，其他电脑也能听得懂</p>
-<p>什么是TCP/IP模型？ <img src="img_1.png" alt="图1-TCP/IP网络模型" /> 是一个5层的模型 ，每一层都有自己的协议，除了TCP还有，其他的模型如OSI。</p>
-<p>为什么要分层？ 为了让职能分化（specialization）？让不同的人做不同的事？</p>
-<p>TCP/IP模型中包含哪些东西？ - 物理层：即一些物理设备，跟电脑相互联系的，是通过网线（cable）连接的。物理层的几个核心元素是：cable，connectors，发送信号</p>
-<p><img src="img_2.png" alt="图2-物理层-使用网线将物理设备连接起来" /> - 数据层：也叫网络接口层（networklayer），这里是第一次涉及到协议（才开始跟内容有关，物理层仅跟cable有关） 数据连接层，负责定义如何解读这些信号。这一步之后，两边才能交流（communicate，不然就是鸡同鸭讲）。数据连接层有很多协议，最出名的叫"以太网"，尽管现在无线技术越来越popular， 在物理层之上，以太网标准定义了一个协议，负责从同一个网络的一个节点获取数据，accross a single link。</p>
+          <blockquote>
+<p>任何事务都可以分解为“一般性”和“特殊性”两部分。我们可以隐藏或者复用“一般性”，然后专家声明“特殊性”。我们也可以反过来，专家声明“一般性”，然后机器推导“特殊性”。</p>
+<p>最终的目的都是熵减，从复杂的现象中提取出规则的部分（regularity），减少信息编码表征的数据量</p>
+<p>和 zip 压缩文件，其实没啥区别</p>
+</blockquote>
+<p>几个G的文件用zip压缩之后，有时候可以变成十几兆，有时候又压缩不了多少，为什么呢？</p>
 <ul>
-<li><p>网络层，也叫internetwork层 允许不用的网络进行通信，当然，依靠的是路由器 这里涉及到一个的概念 internetwork ：一系列的网络，通过路由器，彼此相连接。 最有名的internetwork叫Internet。 这一层常用的协议叫：IP即 Internet Protocol IP是Internet和大部分更小的网络的核心，他的作用是将数据从一个节点传给另一个节点。 network software通常被分类为：client 和 server client应用初始化一个request， 并且通过netwrok发送给server应用 ， server将response通过network发送回来</p></li>
-<li><p>传输层，邮件的传输格式和网页的传输格式不一样，这个区别就是在这一层定义的。 会议一下， 网络层在两个node之间传输数据， 一个node，可以运行多个client应用或者server应用， 传输层sort out哪一个client和server 应该去获取数据。 第四层传输层用最常见的协议--TCP，Transmission Control Protocol。 虽然TCP和IP经常被放到一起说，但是要注意，TCP和IP网络模型的不同层的协议。 除了TCP，其他的传输层协议，也会利用IP先将数据送达， 例如UDP，user datagram protocol UDP和TCP的区别在于，TCP机制可确保数据安全被送达，但是UDP并不要求。</p>
-<p>TCP和UDP是用来确保数据被一个node上正确的程序所接受。 对比以下，IP只能保证数据传达到正确的node。 类似送快递，IP可以保证包括从武汉商店送到深圳的腾讯大厦， TCP可以保证包裹 送至 对应的员工手中。</p></li>
-<li><p>应用层，这一层的协议是跟具体的应用类型相关的 比如网页类型的应用要准手http协议 邮件类型的应用要准讯smtp协议。</p></li>
-</ul>
-<p>再用送快递打个比方</p>
+<li>压缩原理是 【通过寻找其中的规律，简化数字的排列】。
 <ul>
-<li>物理层，就是一个一运送快递的卡车和道路</li>
-<li>数据连接层：卡车将包裹从一个</li>
-<li>网络层：识别出 从A到B要走哪条路</li>
-<li>传输层：告诉A中哪个程序来收包裹。</li>
-<li>应用层：就是包裹的内容。</li>
+<li>每个文件都由各种不同代码组成。比如01代码，这类文件只有数字0与1组合。那么：</li>
+<li>"00000110001111111111" 可以简化成 "5个0,2个1,3个0,10个1的排列"</li>
+<li>"100000000000"可以简化成数学的 "10^10"</li>
+</ul></li>
+<li>压缩的极限，就是这文件的「熵」，即本身的无序程度。 根据香农的信息理论，任何一个文件被无损压缩后的结果不可能小于其 熵 (信息论) 。</li>
 </ul>
-<figure>
-<img src="img_4.png" alt="图3-用送快递类比TCP/IP网络模型的运行机制" /><figcaption aria-hidden="true">图3-用送快递类比TCP/IP网络模型的运行机制</figcaption>
-</figure>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/computer-networking/home/welcome">The Bits and Bytes of Computer Networking</a></li>
-<li><a target="_blank" rel="noopener" href="https://open.163.com/newview/movie/free?pid=ME74DFHFC&amp;mid=ME74E6NLA">西安交通大学公开课-计算机网络原理</a></li>
-</ol>
+<h2 id="参考">参考</h2>
+<p>https://www.zhihu.com/question/19925039</p>
 
       
     </div>
@@ -270,7 +255,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/28/reading_notes/zhexue/intuition_pumps_right-way-to-judge-others/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/26/meditation/how-to-read-paper/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -284,7 +269,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/28/reading_notes/zhexue/intuition_pumps_right-way-to-judge-others/" class="post-title-link" itemprop="url">《直觉泵》读书笔记1——如何正确地批评别人？</a>
+            <a href="/2021/02/26/meditation/how-to-read-paper/" class="post-title-link" itemprop="url">如何读专业文献?</a>
         </h2>
 
         <div class="post-meta">
@@ -294,14 +279,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-28 11:40:47" itemprop="dateCreated datePublished" datetime="2021-02-28T11:40:47+08:00">2021-02-28</time>
+              <time title="创建时间：2021-02-26 09:30:52" itemprop="dateCreated datePublished" datetime="2021-02-26T09:30:52+08:00">2021-02-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-10 17:29:43" itemprop="dateModified" datetime="2021-06-10T17:29:43+08:00">2021-06-10</time>
+                <time title="修改时间：2021-06-24 15:07:07" itemprop="dateModified" datetime="2021-06-24T15:07:07+08:00">2021-06-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -309,7 +294,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -324,49 +309,56 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>工作中验收产品/算法方案，审视自己的方案，去别人就某个观点进行argue，都需要这个技能。</p>
-<p>《直觉泵和其他思考工具》对于如何正确地批评别人以及批评那些方面，提出了指引--拉波波特法则和史特金定律，</p>
-<p>拉波波特法则是对「归谬法」的一个补充，是一个更温和的，更让人容易接受的方式。</p>
-<p>史特金定律告诉我们每个领域闪闪发光的知识只有10%或者更少，我们不应该浪费时间，批量一些毫无亮点的东西</p>
+          <h2 id="看文章的时候要注意啥">看文章的时候要注意啥？</h2>
+<blockquote>
+<p>文章太多看不过来？</p>
+<p>进入一个新领域，刚开始文章看不懂咋办？</p>
+<p>有些文章文笔晦涩，但是跟自己研究领域相关。如何用最少时间获取到有用的信息呢？</p>
+<p>看完之后，脑袋空空如也，怎么避免？</p>
 </blockquote>
-<h2 id="避免变成一个杠精">避免变成一个杠精！</h2>
-<p>我们在寻找对方说法中隐藏的矛盾时常常容易走过头，变成鸡蛋里挑骨头，变成彻头彻尾的嘲弄。这种认定对手的想法中一定藏有矛盾的冲动，给了你一个容易击中的靶子，怂恿你对别人的看法做出无情解读。</p>
-<p>然而，<strong>这个容易击中的靶子通常与我们真正关心的问题不是一回事儿</strong>，你只是在浪费大家的时间和耐心而已，最多是给支持你的观点的人提供了一点消遣。</p>
-<h2 id="拉波波特法则">拉波波特法则</h2>
-<p>拉波波特法则的内容如下：</p>
-<table>
-<tbody>
-<tr class="odd">
-<td>如何撰写一篇成功的批评性评论?</td>
-</tr>
-<tr class="even">
-<td>① 你应该非常清楚、生动、不偏不倚地重述对手的想法，使得你的对手说：“谢谢你，我刚才要是像你这么表述就好了。”</td>
-</tr>
-<tr class="odd">
-<td>② 你应该把对方观点中你所同意的部分都列出来，尤其是那种并非被人们广泛接受了的观点。</td>
-</tr>
-<tr class="even">
-<td>③ 你应该提到那些从你对手那里学到的东西。</td>
-</tr>
-<tr class="odd">
-<td>④ 只有完成了以上三点，你才能说一句反驳或批评的话。</td>
-</tr>
-</tbody>
-</table>
-<p>遵循此法则的一个直接的好处就是，你的对手会因此乐于倾听你的批评。因为，他们看到你已站在他们的立场上，理解了他们的想法，同时你也展示出了良好的判断力，在一些重要的事情上和他们达成了共识，甚至在有些地方还被他们说服了。</p>
-<p>遵循拉波波特法则，有时内心会有挣扎，因为有些对手不值得我们如此尊重。但对于值得尊重的对手，当我们用了这个方法，总是能有意外之喜。</p>
-<h2 id="史特金定律">史特金定律</h2>
-<p>科幻作家泰德·史特金（Ted Sturgeon）这个评价科幻小说，"百分之九十的科幻小说确实很渣。但是，任何事物当中的百分之九十都是渣滓，而其中那不是渣滓的百分之十才是有意义的。我敢说，那百分之十的科幻小说可以与人类从古至今写就的任何作品相媲美。"</p>
-<p>对史特金定律更通俗的一种表达是：“任何事物当中的百分之九十都是垃圾（crap）。” 百分之九十的分子生物学实验、百分之九十的诗歌、百分之九十的哲学书、数学系里百分之九十的同行评议文章，等等，都是垃圾。</p>
-<h2 id="不要把时间浪费在无意义的事情上">不要把时间浪费在无意义的事情上</h2>
-<p>从史特金定律中我们应该学到：每个领域，每个人身上都有一大堆愚蠢、平庸、糟糕透顶的东西存在。最伟大的思想家经过些许巧妙扭曲之后，他们最好的学说、最精妙的分析也会显得又臭又长，变成彻头彻尾的蠢话。</p>
-<p>为了不浪费你的时间和大家的耐心，请确保你关注的是你能找到的该领域或者个人身上最好的东西，比如获奖之作、杰出成果、大家都赞不绝口的精品，而非糟粕。</p>
-<h2 id="怎么用知乎">怎么用知乎？</h2>
-<p>知乎对我而言最大的意义是，它上面质量前 10% 的内容价值是相当大的，远超其他主流中文互联网平台——至于剩下的，本来互联网上绝大部分内容都是垃圾，知乎也只是体现了世界的常态而已。这也提醒我对于那些有争议的领域，在噪音中找到真正有价值的东西，比带着偏见全盘否定要好上太多。 --张潇雨</p>
+<p>总结一下，主动 + 克制。</p>
+<p>主动，即脑袋里面始终要带着问题；</p>
+<p>克制，对于一般的文章，解决自己的问题即可。打住！ 把精力放在更经典的文章上面！</p>
+<h2 id="如何快速地读懂一篇文献">如何快速地读懂一篇文献？</h2>
+<ol type="1">
+<li>看摘要--解决什么问题？主要思路是什么？</li>
+<li>看所有的图和图标题，按顺序看。脑补出作者想讲一个什么故事？</li>
+<li>对上面有疑问的地方，加以验证：
+<ul>
+<li>比如图中冒出来的新概念，去原文找定义</li>
+<li>脑补出的故事对不对？一般在论文的第二章会对论文的方法提出一个framework的说明 基本上一般的文章到这里就可以了，如果碰到了特别好的，或者经典的文章，要精读，进入第4步</li>
+</ul></li>
+<li>精度，主要原则就是揉碎了读，读完一个段落，trick，记录下来，记为一个段落。 全部读完之后，将碎片重组，按照自己的理解，讲一个故事。然后再读一遍文章，验证一下。</li>
+</ol>
+<h2 id="怎么样就算把文章读懂了">怎么样就算把文章读懂了？</h2>
+<blockquote>
+<p>“What I cannot create, I do not understand.” - Richard Feynman</p>
+</blockquote>
+<p>主要靠输出来检验自己，输出3个版本：</p>
+<ul>
+<li>1分钟类讲清楚，这个文章做了什么？目的是什么？</li>
+<li>5分钟内讲清楚，这个文章用的什么方法？做了什么事情？</li>
+<li>10分钟讲清楚，这个文章提出的方案的framework是什么？有哪些小trick？怎么评估的？应用局限是什么？还可以应用到哪些其他场景？</li>
+</ul>
+<h2 id="读文献的时候看不懂卡住怎么办">读文献的时候看不懂卡住怎么办？</h2>
+<ul>
+<li>给作者发邮件</li>
+<li>搜这篇文章相关的代码和数据，侧面理解</li>
+<li>网上搜别人写的论文笔记，看别人怎么理解</li>
+<li>看作者的早期文章（侧重找描述背景的），或者更有影响力的文章（文笔更好）</li>
+<li>上面的方法都不行，先放弃这篇文章，看一下解决该问题的其他文章</li>
+</ul>
+<blockquote>
+<p>chiechie一次读文献的经历:</p>
+<p>log3C的文章，看了半天，一头雾水，没有测试数据+给的代码不完整。 于是给作者发了邮件咨询。</p>
+<p>同时为了不浪费时间，去搜索作者主页，发现他16年发表的一篇“日志异常检测”的文章获得了“最有影响力paper“，思索着 文章质量应该不会差，恰好也是日志分析领域的。 于是决定，看下这篇文章来补充背景知识。 看完之后确实有收获 ，对一些基本概念这才算是搞清楚了（日志分析领域对算法/标记/样本的定义），同时也搞清楚了日志分析的流程是什么，日志解析器 可以 做什么事。 有种 意外之喜。</p>
+<p>然后满怀信心 回来再看一遍log3C，</p>
+<p>还是看不懂，要抑郁了。。。</p>
+<p>决定先放一放，看看其他做日志分析的文章</p>
+</blockquote>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>《直觉泵和其他思考工具》-丹尼尔·丹尼特</li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MTUyODU2NA==&amp;mid=2247496362&amp;idx=1&amp;sn=7542b88c1602a792156fc5e26bff1ba0&amp;source=41#wechat_redirect">科研新手该如何读文献？| 开启科研之路</a></li>
 </ol>
 
       
@@ -386,7 +378,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/78/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/78/">78</a><span class="page-number current">79</span><a class="page-number" href="/page/80/">80</a><span class="space">&hellip;</span><a class="page-number" href="/page/86/">86</a><a class="extend next" rel="next" href="/page/80/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/78/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/78/">78</a><span class="page-number current">79</span><a class="page-number" href="/page/80/">80</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><a class="extend next" rel="next" href="/page/80/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -452,20 +444,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

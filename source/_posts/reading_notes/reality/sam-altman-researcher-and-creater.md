@@ -11,8 +11,9 @@ categories:
 - 阅读
 ---
 
-> 原文是resercher和fouder，我根据内容修改了标题。
-> 优秀的研究员和企业创始人都具备什么特征呢？
+> 原文是reseacher和founder，我根据内容修改了标题。
+
+
 
 ## 优秀的研究员和创始人都具备什么特征呢？
 
@@ -22,7 +23,7 @@ categories:
 4. **他们对什么可以work以及什么不work，保持敏锐目光，以及极度坦诚。**（两个方向缺一不可）
 5. 他们是点子王，有一些点子可能很糟糕，但是从来不缺点子。
 
-## 备注
+## 其他
 
 1. Hamming question: what are the most important problems in your field, and why are you not working on them?
 2. the best people do it the most, and have the best ‘problem taste’, which is some combination of learning to think independently, reason about the future, and identify attack vectors

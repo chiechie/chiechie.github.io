@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-06-26T10:54:12.581Z</updated>
+  <updated>2021-06-26T07:40:39.057Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -15,35 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>关于图数据结构，图模型和图算法</title>
-    <link href="https://chiechie.github.io/2021/06/26/meditation/graph-summary/"/>
-    <id>https://chiechie.github.io/2021/06/26/meditation/graph-summary/</id>
-    <published>2021-06-26T10:42:27.000Z</published>
-    <updated>2021-06-26T10:54:12.581Z</updated>
-    
-    <content type="html"><![CDATA[<ol type="1"><li>图数据是一种数据结构，对于图数据有一些常见的任务，比如单源最短路径，等。</li><li>当图数据的点和边具备一定的含义，如边代表概率，这个时候就是一个概率图模型。通常用于对多个变量之间的因果关系或者相关关系进行建模。</li><li>概率图模型可以细分为有向图和无向图。有向图比如贝叶斯网络，无向图比条件随机场（CRF）。</li><li>有向图又可进一步细分，如果边的方向代表因果关系，就是一个因果图。通常因果图都是需要专家构建的。</li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;图数据是一种数据结构，对于图数据有一些常见的任务，比如单源最短路径，等。&lt;/li&gt;
-&lt;li&gt;当图数据的点和边具备一定的含义，如边代表概率，这个时候就是一个概率图模型。通常用于对多个变量之间的因果关系或者相关关系进行建模。&lt;/li&gt;
-&lt;li&gt;概率</summary>
-      
-    
-    
-    
-    <category term="沉思录" scheme="https://chiechie.github.io/categories/%E6%B2%89%E6%80%9D%E5%BD%95/"/>
-    
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
-    
-  </entry>
   
   <entry>
     <title>贝叶斯网络</title>
@@ -228,6 +199,35 @@
   </entry>
   
   <entry>
+    <title>关于图数据结构，图模型和图算法</title>
+    <link href="https://chiechie.github.io/2021/06/11/meditation/graph-summary/"/>
+    <id>https://chiechie.github.io/2021/06/11/meditation/graph-summary/</id>
+    <published>2021-06-11T10:42:27.000Z</published>
+    <updated>2021-06-26T10:56:35.487Z</updated>
+    
+    <content type="html"><![CDATA[<ol type="1"><li>图数据是一种数据结构，对于图数据有一些常见的任务，比如单源最短路径，等。</li><li>当图数据的点和边具备一定的含义，如边代表概率，这个时候就是一个概率图模型。通常用于对多个变量之间的因果关系或者相关关系进行建模。</li><li>概率图模型可以细分为有向图和无向图。有向图比如贝叶斯网络，无向图比条件随机场（CRF）。</li><li>有向图又可进一步细分，如果边的方向代表因果关系，就是一个因果图。通常因果图都是需要专家构建的。</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;图数据是一种数据结构，对于图数据有一些常见的任务，比如单源最短路径，等。&lt;/li&gt;
+&lt;li&gt;当图数据的点和边具备一定的含义，如边代表概率，这个时候就是一个概率图模型。通常用于对多个变量之间的因果关系或者相关关系进行建模。&lt;/li&gt;
+&lt;li&gt;概率</summary>
+      
+    
+    
+    
+    <category term="沉思录" scheme="https://chiechie.github.io/categories/%E6%B2%89%E6%80%9D%E5%BD%95/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>关于AGI？</title>
     <link href="https://chiechie.github.io/2021/06/10/meditation/about-AGI/"/>
     <id>https://chiechie.github.io/2021/06/10/meditation/about-AGI/</id>
@@ -365,11 +365,11 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
+    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
+    
     <category term="平台" scheme="https://chiechie.github.io/tags/%E5%B9%B3%E5%8F%B0/"/>
     
     <category term="平台治理" scheme="https://chiechie.github.io/tags/%E5%B9%B3%E5%8F%B0%E6%B2%BB%E7%90%86/"/>
-    
-    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
     <category term="商业模式" scheme="https://chiechie.github.io/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/"/>
     
@@ -401,11 +401,11 @@
     
     <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
     
+    <category term="薛定谔的猫猫" scheme="https://chiechie.github.io/tags/%E8%96%9B%E5%AE%9A%E8%B0%94%E7%9A%84%E7%8C%AB%E7%8C%AB/"/>
+    
     <category term="平行世界" scheme="https://chiechie.github.io/tags/%E5%B9%B3%E8%A1%8C%E4%B8%96%E7%95%8C/"/>
     
     <category term="自由意志" scheme="https://chiechie.github.io/tags/%E8%87%AA%E7%94%B1%E6%84%8F%E5%BF%97/"/>
-    
-    <category term="薛定谔的猫猫" scheme="https://chiechie.github.io/tags/%E8%96%9B%E5%AE%9A%E8%B0%94%E7%9A%84%E7%8C%AB%E7%8C%AB/"/>
     
   </entry>
   

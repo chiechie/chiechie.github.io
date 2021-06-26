@@ -1,5 +1,5 @@
 ---
-title: 关于未来的一点模糊的认知
+title: 关于未来的一点模糊的认知?
 author: chiechie
 mathjax: true
 date: 2021-05-20 07:13:07

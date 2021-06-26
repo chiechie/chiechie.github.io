@@ -165,6 +165,128 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/26/reading_notes/reality/about-scale/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/26/reading_notes/reality/about-scale/" class="post-title-link" itemprop="url">关于Scale AI</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-26 10:39:20 / 修改时间：12:58:09" itemprop="dateCreated datePublished" datetime="2021-06-26T10:39:20+08:00">2021-06-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>看到packy激情满满写了一篇关于Scale AI的公关文，比较好奇这个年轻的小公司有何特别之处，为什么会受到资本的一致认可。</p>
+<p>印象中scale就是一家硅谷的数据标注公司，主要靠外包给第三方国家，赚取中间费用，这种公司有什么竞争力呢？跟大厂比起来？</p>
+</blockquote>
+<h2 id="概要">概要</h2>
+<ol type="1">
+<li><p>AI这个市场未来20年还有很大的发展空间，当前只有8%的公司应用了AI技术。</p></li>
+<li><p>Scale AI创立至今5年，最近一次估值73亿$。它跟stripe有点像，在一个蓬勃发展的行业，找到一个关键但是不起眼的小地方，深耕细作。</p></li>
+<li><p>刚开始成立的时候，Scale AI专注做数据标注，但是他们的野心不限于此，他们想做更好用（可能是智能的方式）的数据标注工具。最理想的方式是让算法来标记，但是算法目前性能答不到，大部分时候都需要人参与（Human-in-the-Loop” ，HIL)</p></li>
+<li><p>Scale AI的故事是：随着标记数据越来越多，标注数据的边际成本会降低，因为标记样本越多，标记机器人的性能越好，能hold的事情就越多，需要分配出去的工作就越少。</p>
+<blockquote>
+<p>这里有一个问题，怎么确定，哪些是机器可以搞定的，哪些搞不定的？这个是不是又要多一层人工监督层了？</p>
+<p>可以从环境中获取到反馈，也可以人工抽查。</p>
+<p>总的来说，都不是很完善的方案。</p>
+</blockquote></li>
+<li><p>Scale AI还有一个亮点，他的客户群体很分散，从国防部到无人驾驶，eg OpenAI, Airbnb and Lyft。这有一个好处就是。AI公司去去留留，竞争之后，留下的是最有效的ml应用场景，但是Scale AI始终有机会，因为他不参与竞争，而是给赢家提供基础设施的。</p></li>
+<li><p>除了标注API，Scale AI还做了一个样本调试的产品--Nucleus，data debugging SaaS product。目的是做全链路基建嘛。 <img src="./img.png" alt="Nucleus" /></p></li>
+<li><p>Alexandr Wang 说的一段话</p>
+<blockquote>
+<p>At Scale, we’re building the foundation to enable organizations to manage the entire AI lifecycle. Whether they have an AI team in-house or need a fully managed models-as-a-service approach, we partner with our customers to build their strategy from the ground up and ensure they have the infrastructure in place to systematically deliver highly-performant models.</p>
+</blockquote></li>
+</ol>
+<p>简单点说，他们的方法是，帮助企业从0到1落地一个AI应用--不管这个企业内部有没有AI团队--企业能够使用这个基建更高效地构建模型. 就是win-win,后生可畏.</p>
+<ol start="10" type="1">
+<li><p>从刚开始的数据标注工具到后面管理建模过程，确保哪些没有内部AI团队的企业构建基于AI的产品，例如客户Brex和Flexport，他们使用的是Document产品，这个有点意思。Brex doesn’t have an AI team working on the model; they outsource it to Scale.</p>
+<figure>
+<img src="./img1.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure></li>
+<li><p>这里有一个小故事：Brex一开始找的是专门做OCR的大公司，帮他们做发票文本提取，但是效果一般（“they were all mediocre.” ）。后面找到scale，通过深入合作定制化了一个模型，效果100%。后面沉淀出了一个产品document</p></li>
+<li><p>scale的产品还有蛮多的：地图/语音/文档/图像。。 <img src="img2.png" alt="img.png" /></p></li>
+</ol>
+<p>btw, 知乎上有一个相关提问--如何评价Scale AI？大家似乎认识非常有限（只知道它是做数据标注的），还讨论的热火朝天。由此可见的，噪声膨胀的速度远远超过信息膨胀的速度。</p>
+<h2 id="reflection">reflection</h2>
+<ol type="1">
+<li>packy这篇文章的公司分析框架蛮好的，后面分析科技公司可以套用：</li>
+</ol>
+<ul>
+<li>行业介绍：The State of AI and ML</li>
+<li>公司介绍：Getting to Scale.</li>
+<li>相同模式的成功案例对比：Scaling Like Stripe.</li>
+<li>关于公司的负面观点：The Bear Case for Scale.</li>
+<li>关于公司的正面观点：The Bull Case for Scale.</li>
+<li>前景展望：Scale’s Compounding Vision.</li>
+</ul>
+<ol start="2" type="1">
+<li>AI市场未来还有这么大的成长空间，看到这个数字有点吃惊。但是，即便如此，AI从业人员的需求也不用过分乐观估计。</li>
+<li>AI应用目前还在探索期。Scale AI比较鸡贼，让AI公司在前面探路，把有价值可落地的场景摸索清楚，他在后面提供军火库，妥妥的赢家。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.notboring.co/p/scale-rational-in-the-fullness-of">Packy not boring</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/384012257">吴恩达发起新型竞赛范式！模型固定，只调数据？</a></li>
+<li><a target="_blank" rel="noopener" href="https://scale.com/blog/series-e">Scale AI’s Series E: Deploying AI Across Every Industry</a></li>
+<li><a target="_blank" rel="noopener" href="https://dashboard.scale.com/nucleus/">nucleus</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/21/reading_notes/zhexue/hongloumengxishuo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -281,97 +403,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/18/meditation/why-do-We-work/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/18/meditation/why-do-We-work/" class="post-title-link" itemprop="url">为什么要工作？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-18 17:28:02" itemprop="dateCreated datePublished" datetime="2021-06-18T17:28:02+08:00">2021-06-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-21 08:46:57" itemprop="dateModified" datetime="2021-06-21T08:46:57+08:00">2021-06-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>类似的问题，</p>
-<ul>
-<li>我们高中为什么要学数理化和文言文？长大之后并没有用上。</li>
-<li>面试造火箭工作拧螺丝。</li>
-</ul>
-<p>工作除了挣钱，还能带来点别的东西，这个东西是什么呢？似乎做完了才知道。</p>
-<p>最近的一份工作，本来是想提升技术，但是事实上，并没有磨练技术的机会，大部分时间是在做产品设计。做产品设计的过程中，越做越困惑，本能地想要找到答案，先在本领域里面寻找，但是大部分所谓的专家，写的文章都是空洞的方法论，言之无物。我不满意，遂去寻找其他领域的文章，比如哲学，社会科学，心理学，经济学。我发现，产品设计上遇到的一些问题，追问到其本质，似乎跟其他领域也想通，原来大家都在研究差不多的问题。</p>
-<p>潜移默化，思考问题的方式发生了改变，从追求触手可及的答案（捷径往往不是正确的道路），到追求更深层次的更本质的问题，当然也更花时间和精力。 从之前迷信权威，到现在delay judgement。</p>
-<p>得知东隅，失之西隅。</p>
-<p>再想一想高中学习的那些东西，可能真不见得有什么实际收益，但是在不可见的维度，可能还是有收获的。比如磨练了我们的意志力，让我们做事情能够吃苦耐劳，或者对性格的其他方面有一些潜在的影响。这个影响显然不是设计高考制度的人想出来的，而是人在做事，在实践的过程中，意外得到的，可能去种地也会起到同样的作用。只有事后，自己才可以总结出来。</p>
-<p>一些联想：观察到事件A和事件B在现实中存在某种若隐若现的关联时，不一定A和B就有直接的因果关系。背后可能存在着某个状态不可见的混杂因子。很多情况下，因为我们没有足够的人生经验，所以做事之前，我们都不知道这个混杂因子是个什么，做完之后才恍然大悟。</p>
-<p>因缘际会，凡事用心投入，大概率会是有好结果的吧，这个结果可能发生在另外一件事情上。</p>
-<p>"做之前想的再多没用，做着做着就知道意义了"。现在似乎有点明白这个意思，人的能力太有限，世界变幻莫测，哪有可能预测到事情的演化方向。直到走完这条路，并且回过头来看这条路，才知道终点是什么，才能总结出这一路的意义是什么。</p>
-<blockquote>
-<p>莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻胜马，谁怕？ 一蓑烟雨任平生。</p>
-<p>料峭春风吹酒醒，微冷，山头斜照却相迎。回首向来萧瑟处，归去，也无风雨也无晴。</p>
-<p>-- 定风波 苏轼</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -441,7 +472,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">167</span>
+          <span class="site-state-item-count">168</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

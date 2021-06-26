@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-06-22T06:21:25.475Z</updated>
+  <updated>2021-06-26T04:58:09.783Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于Scale AI</title>
+    <link href="https://chiechie.github.io/2021/06/26/reading_notes/reality/about-scale/"/>
+    <id>https://chiechie.github.io/2021/06/26/reading_notes/reality/about-scale/</id>
+    <published>2021-06-26T02:39:20.000Z</published>
+    <updated>2021-06-26T04:58:09.783Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>看到packy激情满满写了一篇关于Scale AI的公关文，比较好奇这个年轻的小公司有何特别之处，为什么会受到资本的一致认可。</p><p>印象中scale就是一家硅谷的数据标注公司，主要靠外包给第三方国家，赚取中间费用，这种公司有什么竞争力呢？跟大厂比起来？</p></blockquote><h2 id="概要">概要</h2><ol type="1"><li><p>AI这个市场未来20年还有很大的发展空间，当前只有8%的公司应用了AI技术。</p></li><li><p>Scale AI创立至今5年，最近一次估值73亿$。它跟stripe有点像，在一个蓬勃发展的行业，找到一个关键但是不起眼的小地方，深耕细作。</p></li><li><p>刚开始成立的时候，Scale AI专注做数据标注，但是他们的野心不限于此，他们想做更好用（可能是智能的方式）的数据标注工具。最理想的方式是让算法来标记，但是算法目前性能答不到，大部分时候都需要人参与（Human-in-the-Loop” ，HIL)</p></li><li><p>Scale AI的故事是：随着标记数据越来越多，标注数据的边际成本会降低，因为标记样本越多，标记机器人的性能越好，能hold的事情就越多，需要分配出去的工作就越少。</p><blockquote><p>这里有一个问题，怎么确定，哪些是机器可以搞定的，哪些搞不定的？这个是不是又要多一层人工监督层了？</p><p>可以从环境中获取到反馈，也可以人工抽查。</p><p>总的来说，都不是很完善的方案。</p></blockquote></li><li><p>Scale AI还有一个亮点，他的客户群体很分散，从国防部到无人驾驶，eg OpenAI, Airbnb and Lyft。这有一个好处就是。AI公司去去留留，竞争之后，留下的是最有效的ml应用场景，但是Scale AI始终有机会，因为他不参与竞争，而是给赢家提供基础设施的。</p></li><li><p>除了标注API，Scale AI还做了一个样本调试的产品--Nucleus，data debugging SaaS product。目的是做全链路基建嘛。 <img src="./img.png" alt="Nucleus" /></p></li><li><p>Alexandr Wang 说的一段话</p><blockquote><p>At Scale, we’re building the foundation to enable organizations to manage the entire AI lifecycle. Whether they have an AI team in-house or need a fully managed models-as-a-service approach, we partner with our customers to build their strategy from the ground up and ensure they have the infrastructure in place to systematically deliver highly-performant models.</p></blockquote></li></ol><p>简单点说，他们的方法是，帮助企业从0到1落地一个AI应用--不管这个企业内部有没有AI团队--企业能够使用这个基建更高效地构建模型. 就是win-win,后生可畏.</p><ol start="10" type="1"><li><p>从刚开始的数据标注工具到后面管理建模过程，确保哪些没有内部AI团队的企业构建基于AI的产品，例如客户Brex和Flexport，他们使用的是Document产品，这个有点意思。Brex doesn’t have an AI team working on the model; they outsource it to Scale.</p><figure><img src="./img1.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure></li><li><p>这里有一个小故事：Brex一开始找的是专门做OCR的大公司，帮他们做发票文本提取，但是效果一般（“they were all mediocre.” ）。后面找到scale，通过深入合作定制化了一个模型，效果100%。后面沉淀出了一个产品document</p></li><li><p>scale的产品还有蛮多的：地图/语音/文档/图像。。 <img src="img2.png" alt="img.png" /></p></li></ol><p>btw, 知乎上有一个相关提问--如何评价Scale AI？大家似乎认识非常有限（只知道它是做数据标注的），还讨论的热火朝天。由此可见的，噪声膨胀的速度远远超过信息膨胀的速度。</p><h2 id="reflection">reflection</h2><ol type="1"><li>packy这篇文章的公司分析框架蛮好的，后面分析科技公司可以套用：</li></ol><ul><li>行业介绍：The State of AI and ML</li><li>公司介绍：Getting to Scale.</li><li>相同模式的成功案例对比：Scaling Like Stripe.</li><li>关于公司的负面观点：The Bear Case for Scale.</li><li>关于公司的正面观点：The Bull Case for Scale.</li><li>前景展望：Scale’s Compounding Vision.</li></ul><ol start="2" type="1"><li>AI市场未来还有这么大的成长空间，看到这个数字有点吃惊。但是，即便如此，AI从业人员的需求也不用过分乐观估计。</li><li>AI应用目前还在探索期。Scale AI比较鸡贼，让AI公司在前面探路，把有价值可落地的场景摸索清楚，他在后面提供军火库，妥妥的赢家。</li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.notboring.co/p/scale-rational-in-the-fullness-of">Packy not boring</a></li><li><a href="https://zhuanlan.zhihu.com/p/384012257">吴恩达发起新型竞赛范式！模型固定，只调数据？</a></li><li><a href="https://scale.com/blog/series-e">Scale AI’s Series E: Deploying AI Across Every Industry</a></li><li><a href="https://dashboard.scale.com/nucleus/">nucleus</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;看到packy激情满满写了一篇关于Scale AI的公关文，比较好奇这个年轻的小公司有何特别之处，为什么会受到资本的一致认可。&lt;/p&gt;
+&lt;p&gt;印象中scale就是一家硅谷的数据标注公司，主要靠外包给第三方国家，赚取中间费用，这种公司有什么竞争力呢？</summary>
+      
+    
+    
+    
+    <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
+    
+    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>细说红楼梦</title>
@@ -351,6 +381,8 @@
     
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
+    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
+    
     <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
     
     <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
@@ -358,8 +390,6 @@
     <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
     
     <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
-    
-    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
     
   </entry>
   
@@ -390,6 +420,8 @@
     
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
+    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
+    
     <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
     
     <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
@@ -397,8 +429,6 @@
     <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
     
     <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
-    
-    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
     
   </entry>
   
@@ -489,9 +519,9 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="未来趋势" scheme="https://chiechie.github.io/tags/%E6%9C%AA%E6%9D%A5%E8%B6%8B%E5%8A%BF/"/>
-    
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="未来趋势" scheme="https://chiechie.github.io/tags/%E6%9C%AA%E6%9D%A5%E8%B6%8B%E5%8A%BF/"/>
     
     <category term="量子计算机" scheme="https://chiechie.github.io/tags/%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
     
@@ -624,38 +654,6 @@
     <category term="十三邀" scheme="https://chiechie.github.io/tags/%E5%8D%81%E4%B8%89%E9%82%80/"/>
     
     <category term="访谈录" scheme="https://chiechie.github.io/tags/%E8%AE%BF%E8%B0%88%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于雷蛇的个股研究</title>
-    <link href="https://chiechie.github.io/2021/05/28/investment/about-leishe/"/>
-    <id>https://chiechie.github.io/2021/05/28/investment/about-leishe/</id>
-    <published>2021-05-28T05:31:24.000Z</published>
-    <updated>2021-06-10T02:28:55.644Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>试着分析下</p><p>行业--&gt;护城河--&gt;未来增长--&gt;风险</p><p>分析不出啥？？？电脑主机？</p></blockquote><h2 id="行业分析">行业分析</h2><p>雷蛇属于电子消费行业，在2017-11-13 在港交所上市。</p><p>雷蛇卖什么？卖游戏周边，包括：</p><ul><li>硬件：游戏周边设备，鼠标键盘耳机，游戏笔记本</li><li>软件：？？</li><li>服务：支付服务。</li></ul><p>雷蛇的竞争对手，罗技</p><h3 id="关于显卡的产业链">关于显卡的产业链</h3><p>显卡供应商：AMD(AMD),英伟达(NVDA)</p><p>显卡消费者：矿工和游戏玩家</p><p>近半年，受到疫情影响，显卡供应减少，同时需求增多（主要是加密货币火爆行情刺激了矿机需求）</p><p>两种原因导致显卡涨价，但是雷蛇会受到什么影响？</p><figure><img src="about-cryptocurrency/img.png" alt="英伟达股价" /><figcaption aria-hidden="true">英伟达股价</figcaption></figure><figure><img src="./img_1.png" alt="AMD股价" /><figcaption aria-hidden="true">AMD股价</figcaption></figure><figure><img src="./img_2.png" alt="雷蛇股价" /><figcaption aria-hidden="true">雷蛇股价</figcaption></figure><h2 id="未来增长">未来增长</h2><p>集團更進一步拓展移動╱雲端遊戲、主機遊戲、直播產品及電競椅等增長領域</p><h2 id="新闻">新闻</h2><ol type="1"><li>雷蛇于5月12日在联交所回购855万股，每股价格介乎2.62至2.66846元，涉资约2,281.53万元。</li><li>2021年初至今雷蛇已回购约1.71亿股，占已发行股本约1.9229%。</li><li>2021年6月，大股东折价卖出大手笔股票，割韭菜了。</li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://doc.irasia.com/listco/hk/razer/annual/2020/crespress.pdf">雷蛇2020年财报</a></li><li><a href="https://news.futunn.com/post/9452174?lang=zh-cn&amp;src=2&amp;report_type=stock&amp;report_id=17625226&amp;level=1&amp;data_ticket=1615555035779921">雷蛇(01337.HK)斥约2,281万元回购855万股</a></li><li><a href="https://news.futunn.com/report/821714?lang=zh-cn&amp;src=43&amp;level=1&amp;data_ticket=1615555035779921">广发证券</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;试着分析下&lt;/p&gt;
-&lt;p&gt;行业--&amp;gt;护城河--&amp;gt;未来增长--&amp;gt;风险&lt;/p&gt;
-&lt;p&gt;分析不出啥？？？电脑主机？&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;行业分析&quot;&gt;行业分析&lt;/h2&gt;
-&lt;p&gt;雷蛇属于电子消费行业，在201</summary>
-      
-    
-    
-    
-    <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
-    
-    
-    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
-    
-    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
   </entry>
   

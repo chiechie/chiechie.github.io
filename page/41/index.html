@@ -165,6 +165,136 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/20/AI/dl-framework-from-view-of-compression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/20/AI/dl-framework-from-view-of-compression/" class="post-title-link" itemprop="url">深度学习理论的统一框架-基于压缩视角</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-20 18:39:48" itemprop="dateCreated datePublished" datetime="2021-04-20T18:39:48+08:00">2021-04-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-31 08:24:44" itemprop="dateModified" datetime="2021-05-31T08:24:44+08:00">2021-05-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>马毅老师的ppt看不懂，一度放弃了了</p>
+<p>最近看到另外一篇工业界的人讲深度学习的第一性原理，铺垫了该主题的很多背景，我才算看懂了</p>
+<p>尤其是联想到中国哲学中的"名实之争"，有点意思，在这里记录一下</p>
+</blockquote>
+<h2 id="学术界的进展">学术界的进展</h2>
+<p>马毅老师的文章和袁进辉和文章都是想探索一种通用的方法，对任何数据找到其最优的神经网络。</p>
+<p>都知道图像数据可能更适合cnn，序列数据更适合GPT-3，这些网络都是具有某个特殊的结构的DNN，这些奇奇怪怪的结构是无数次试错，人工设计出来的。</p>
+<p>那么，有没有可能有一种脱离人的设计方法呢？即，不管是对图像数据，还是序列数据，统一的模型训练方法呢？更甚至，不管是有监督还是无监督，都能找到统一的模型训练方法呢？</p>
+<p>这个问题很宏大，涵盖了NAS这个方向。</p>
+<h3 id="计算神经科学">计算神经科学</h3>
+<ol type="1">
+<li><p>计算神经科学领域对这个问题已经研究很多年了，有一些非常经典的研究成果譬如ICA(独立成分分析）以及Sparse coding方法，这些方法的背后是一种基于信息论的原则，称之为efficient coding principle。</p></li>
+<li><p>这个理论认为，大脑的结构源自亿万年的进化，进化的目标是形成外界物理环境的一种“最经济”的表达，这种表达是适应于（adapt to)自然界的统计规律，而且这种结构基本上是无监督的。这种理论已经能非常好的解释视网膜、侧膝体、初级视皮层神经元感受野的形成机理，近些年的研究开始向理解V2, V4等更高级的视皮层进发。</p></li>
+<li><p>用efficient coding原则来理解卷积神经网络的一些关键技巧</p>
+<ul>
+<li>卷积: 在计算神经科学里，相当于初级视皮层神经元的局部感受野</li>
+<li>非线性的激活函数：计算神经科学里通过信息论角度，通过过非线性映射，可以把取值范围很大的activation映射到一个区间，比较重要的输入值编码的分辨率高一些，而不重要的输入不需要消耗太多能量去编码，就被映射到“饱和区”。</li>
+</ul></li>
+<li><p>efficient coding准则认为，神经元的感受野是用来表示输入刺激的统计规律，把输入转化成神经元的响应有助于去除输入之间的冗余性（redudancy）,也就是神经元的响应之间应该比输入 “统计上更接近于独立”。</p></li>
+</ol>
+<h3 id="信息瓶颈-和-mcr2">信息瓶颈 和 MCR^2</h3>
+<p>针对这个问题，学术界已有的研究方向主要是从信息论角度出发，有两项工作比较知名，一个是受Hinton推崇的“信息瓶颈”（Information bottleneck）理论，一个是马老师团队提出的MCR^2理论。</p>
+<p>以x，z，y 分别表示输入数据，学到的特征以及标签：</p>
+<ul>
+<li>信息瓶颈要解决有监督问题的目标是最大化z和y之间的互信息，而最小化x和z之间的互信息。</li>
+<li>MCR^2则一方面在最大化x和z之间的互信息，也在最大化z和y之间的互信息。</li>
+</ul>
+<p>信息瓶颈那篇论文里论述了这样一个结论:特征条件独立，最优分类器就是线性的。此外，Andrew Ng在论述Naive bayes和Logistic regression等价关系时讨论过.</p>
+<h3 id="mcr2细节">MCR^2细节</h3>
+<ol type="1">
+<li>用压缩的视角看clustering：聚成两类后是否比原来散开，占用空间小。</li>
+<li>对混合分布的数据进行分类，传统方法基于最大化后验概率（MAP），难点在于后验概率很难estimate和定义，当分布退化时。(所以svm和deep networks赢了)</li>
+<li>用压缩的角度看分类：记录每个类别中对每个样本编码的比特数，分类的原则--Minimum Incremental Coding Length (MICL)</li>
+</ol>
+<h3 id="有监督-vs-无监督之争">有监督 vs 无监督之争</h3>
+<ol type="1">
+<li>有监督or无监督？判别模型or生成模型？半监督学习有没有必要？本质上是在争论一个东西</li>
+<li>回看discriminative model和generative model之辩，前者直接学习用户关心的条件概率p(y|x)，但后者需要学习p(x|y)p(y)，也就是还要学习输入特征的概率分布。发明SVM的Vapnik 认为generative model做了一些和目标无关的、多余的事情，因此而更推崇前者，甚至抛出了奥卡姆剃刀“如无必要，勿增实体”。</li>
+<li>信息瓶颈处于一个极端，既然我们的目标是分类，那就直奔主题，它喜欢的特征就是对分类有效的特征，至于这个特征对最原始的输入的表示来说是不是好就不关心了，甚至要尽可能删除与分类无关的信息。</li>
+<li>MCR^2 的目标函数由两部分构成，第一部分与类别无关，实际上和InfoMax等价（InfoMax直接计算熵有缺陷，正如马老师论文提到的，熵在一些退化情况下没有良好的定义，所以他们用了率失真函数）。第二部分和类别相关，和信息瓶颈的目标一致。</li>
+<li>半监督学习到底成不成立？为什么不带标签的数据对训练分类模型也有帮助呢？比较一致的结论是，无标签数据相当于提供了一种正则化（regularization）,有助于更准确地学习到输入数据所分布的流形（manifold)，而这个低维流形就是数据的本质表示，它对分类有帮助。</li>
+<li>但这又带来一个问题：为什么数据的本质规律对预测它的标签有帮助？</li>
+<li>这又带来一个更本质的问题：数据的标签是怎么来的？</li>
+<li>要回答这些问题，就要和中国古代哲学里的”名实之论“有关系了。到底是先有”名“，还是先有”实“。一般认为是先有”实“，后有”名“，而”实“决定”名“。</li>
+<li>回到机器学习问题上，就是数据的标签是后天出现的，一个东西到底用什么标签去称呼，本质上是由这个东西自身的规律决定的。换句话说，label可能是后天”涌现“（emerge)的，因为一些东西本质一样，张的像，所以人们才会给他们相同的命名。因此要寻求最优的分类器，可能首先要从”无监督“的数据分析入手。</li>
+</ol>
+<h2 id="工业界的进展">工业界的进展</h2>
+<ol type="1">
+<li>项研究和今天很受关注的大规模预训练模型也很相似，而且也有研究发现，大规模预训练模型中真正有效的实际上是一个很小的“子网络”，也就是很多连接的权重是接近零的。最近恰好出现了一些 MLP is all your need相关的研究，也不无道理。</li>
+<li>最近除了自然语言处理，在图像和语音领域，无监督和自监督学习也取得了很大进展，譬如Facebook 的wave2vec 基于无标注的语料可以训练出来和几年前有监督学习的SOTA模型相匹配的结果。可以期待，无监督学习未来会出现更多的成绩。</li>
+</ol>
+<h2 id="参考文献">参考文献</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://cmsa.fas.harvard.edu/wp-content/uploads/2021/04/Deep_Networks_from_First_Principles.pdf">Deep_Networks_from_First_Principles</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/no0u_6m3Ima8YlmV7msGqQ">我对深度学习“第一性原理”的探索和理解 -袁进辉</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/AI/reinforcement_learning/rf1_summary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -355,134 +485,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reading_notes/zhexue/taleb-blackswan/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/reading_notes/zhexue/taleb-blackswan/" class="post-title-link" itemprop="url">黑天鹅</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-18 19:55:49" itemprop="dateCreated datePublished" datetime="2021-04-18T19:55:49+08:00">2021-04-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-10 17:29:43" itemprop="dateModified" datetime="2021-06-10T17:29:43+08:00">2021-06-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="序言">序言</h1>
-<ul>
-<li>黑天鹅举例子
-<ul>
-<li>能带来收益的：风险投资，科技发现</li>
-<li>能带来损失的：金融危机，失业</li>
-</ul></li>
-<li>关于学习，人性又一个弱点：习惯学习精确的东西，而不是从整体上把握
-<ul>
-<li>【马其诺防线的故事】第一次世界大战之后，为了避免德国人再次入侵，法国人沿德国人曾经入侵的路线修建了一条防御工事，而希特勒（几乎）毫不费力地绕过了它。</li>
-<li>问题产生于我们的思维结构：我们不学习规律，而是学习事实，而且只学习事实。。我们似乎不太善于认识到我们的超规律（即我们倾向于不学习规律的规律）。我们蔑视抽象的东西——疯狂地蔑视。</li>
-</ul></li>
-<li>这个问题为什么很重要？
-<ul>
-<li>这种直觉的方法论，对于现代复杂且越来越具循环性的环境来说是非常不切实际的。</li>
-</ul></li>
-<li>我们的生物基因决定了，我们其实不擅长思考。
-<ul>
-<li>我们的头脑似乎不是用来思考和内省的，远古时期，我进行反常规内省和努力思考的祖先会被老虎吃掉，而他不爱思考但身体反应迅速的表亲早已跑开躲了起来。</li>
-</ul></li>
-<li>因为钟形曲线忽（高斯曲线）略大的离差，无法解释它们，但还要让我们相信不确定性是可以控制的，我在本书中戏称它为“智力大骗局”。</li>
-<li>【关于模型】模型和结构并不永远是错的，它们只错在一些具体的运用上。困难在于你不可能事前知道哪里会错（而只能事后知道），也不可能知道错误会导致严重后果。这些模型就像某些可能有效，但同时也可能具有非常严重的副作用的药品。</li>
-<li>教室中的人从没有面对过在不确定性条件下进行决策的真实情况，意识不到什么是重要的，什么是不重要的，即使他们是关于不确定性问题的学者。我所说的不确定性实践，可以是当海盗、做商品投机、职业赌博、在黑手党的某个分部效力，或者是简单的持续创业</li>
-</ul>
-<h1 id="第一部分-极端斯坦-与-黑天鹅现象">第一部分 极端斯坦 与 黑天鹅现象</h1>
-<h2 id="第一章-自我欺骗的人类">第一章 自我欺骗的人类</h2>
-<ul>
-<li>面对历史，人类的思想会犯三个毛病：
-<ul>
-<li>第一宠迷雾：我们以为我们生活的这个世界比他实际上更加可理解，可解释，可预测</li>
-</ul></li>
-</ul>
-<h2 id="第三章-极端斯坦与平均斯坦">第三章 极端斯坦与平均斯坦</h2>
-<ul>
-<li>关于职业选择，有两类职业：
-<ul>
-<li>“一劳永逸型”：
-<ul>
-<li>录音师和电影演员也是一样：他们会让电影院的音效工程师调好播放器，而不必在每一次播放电影时都出现。</li>
-</ul></li>
-<li>“苦力活”
-<ul>
-<li>面包师必须为每一位新客户——烤出面包。</li>
-</ul></li>
-<li>假如我必须给出建议的话，我会建议选择一个收入不具有突破性的职业---面包师！收入具有突破性的职业只有在你成功的时候对你是有利的。这样的职业竞争更激烈，导致更大的不平均和不确定性，在努力和回报之间存在巨大差异，因为少数人获得蛋糕的大部分，其他人可能什么也得不到，而这怪不了别人</li>
-</ul></li>
-<li>可以这样陈述平均斯坦的最高法则：当你的样本量足够大时，任何个例都不会对整体产生重大影响。最大的观察值虽然令人吃惊，但对整体而言最终微不足道。</li>
-<li></li>
-</ul>
-<h1 id="第三部分-极端斯坦的灰天鹅">第三部分 极端斯坦的灰天鹅</h1>
-<h2 id="第十八章-骗子的不确定性">第十八章 骗子的不确定性</h2>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/40/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><span class="page-number current">41</span><a class="page-number" href="/page/42/">42</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><a class="extend next" rel="next" href="/page/42/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/40/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><span class="page-number current">41</span><a class="page-number" href="/page/42/">42</a><span class="space">&hellip;</span><a class="page-number" href="/page/85/">85</a><a class="extend next" rel="next" href="/page/42/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -548,7 +554,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">168</span>
+          <span class="site-state-item-count">169</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

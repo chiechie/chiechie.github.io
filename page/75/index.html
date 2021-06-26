@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/06/the-book-of-why/judea-pearl_the-book-of-why4/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/06/the-book-of-why/judea-pearl_the-book-of-why3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/06/the-book-of-why/judea-pearl_the-book-of-why4/" class="post-title-link" itemprop="url">《the book of why》读书笔记-4</a>
+            <a href="/2021/03/06/the-book-of-why/judea-pearl_the-book-of-why3/" class="post-title-link" itemprop="url">《the book of why》读书笔记-3</a>
         </h2>
 
         <div class="post-meta">
@@ -220,30 +220,31 @@
 
       
           <blockquote>
-<p>the book of why 的第四章-去混杂</p>
+<p>the book of why 的第三章-从证据到原因</p>
 </blockquote>
-<h2 id="do算子">do算子</h2>
+<h2 id="贝叶斯公式">贝叶斯公式</h2>
 <ol type="1">
-<li><p>消除混杂因子的方法：随机对照试验。</p></li>
-<li><p>贝叶斯网络中的箭头，可以看成是信息的流动。这个信息传递是双向的，既可以在因果方向传递，也可以在非因果方向传递。</p></li>
-<li><p>混杂的定义：任何使P（Y｜do（X））和 P（Y｜X）不一样的额因素。</p></li>
-<li><p>非因果路径是混杂的根源。</p></li>
-<li><p>回忆一下三种链接形式：链结合，叉连接，对撞连接</p>
+<li>因果图只是贝叶斯网络中的一个特例，不是所有的贝叶斯网络都是因果关系网络</li>
+<li>休谟的观点：不可靠的证据不能推翻可靠的自然法则。举个例子，自然法则说"凡人皆有一死"可推导出"基督难逃一死"，不可靠的证人的言论是不能推翻这个结论的。</li>
+<li>人的直觉思维很容易推算出前向概率，但是逆向概率，即执果说因，很难通过直觉算出来。</li>
+<li>贝叶斯将休谟提出的问题往前推一步：到底需要多少证据才能推翻已有的自然法则？具体来说，贝叶斯公式给出了逆向概率的推导方法，也就是说，不可靠的证人的前提下基督是上帝儿子的概率。</li>
+<li>科学方法的步骤：提出假设；推断假设的可检验结果；做实验；利用实验结论更新假设信念。通常来说检测和更新只有正确和错误两种结果，贝叶斯公式却可以定量地处理不确定性。</li>
+<li>贝叶斯概率的另外一个应用，先沿着一个方向估计条件概率，根据贝叶斯公式推导另外一个方向的条件概率 &gt; 如何估算女程序员中练瑜伽的比例？ &gt; 搜集几个数据：女性中练习瑜伽的比例(10/100)，练习瑜伽的人中程序员的比例(1/1100)，女性中程序员的比例（1/10000）, &gt; 所以 女程序员中练瑜伽的比例为10/11</li>
+</ol>
+<h2 id="从贝叶斯公式到贝叶斯网络">从贝叶斯公式到贝叶斯网络</h2>
+<ol type="1">
+<li>贝叶斯网络中的箭头并不表示因果关系，只是表示条件概率（那岂不是可以有个环？）。</li>
+<li>贝叶斯网络中的三个基本机构: 链/叉/混杂因子
 <ul>
-<li>链连接：控制B可以防止A的信息流向C或者C的信息流向A</li>
-<li>叉连接: 控制B可以防止有关A的信息流量C</li>
-<li>对撞连接:A和C是独立的，但是，如果控制了B，由于辩解效应的存在，信息就会开始在"管道"中流通。</li>
-<li>控制一个变量的后代节点，就如同部分地控制了变量本身。控制一个中介物的某个后代节点，意味着，部分地关闭了信息管道。控制一个对撞变量的某个后代节点，意味着部分打开了信息管道。 &gt; 抛开观测者，有因果关系吗？</li>
+<li>链： A --&gt; B --&gt; C</li>
+<li>叉： A --&gt; B &lt;-- C</li>
+<li>混杂因子： A&lt;--B --&gt; C</li>
 </ul></li>
-<li><p>我们应该如何阻断信息的流通？如果这条路径中的一个连接被阻断，那么J就无法找到A。有很多当时来阻止A和J之间的交流，我们只用找到其中任何一项就好了。</p></li>
-<li><p>所以，统计过程，是有误导的，因为它只是假设其中的一条可观测的因果链存在，实际了忽视了不可观测的跟多的链路。</p></li>
-<li><p>如何去除X和Y的混杂，我们只要阻断他们之间的每个非因果路径，而不干扰因果路径。</p></li>
-<li><p>后门路径就是，所有X和Y之间，以指向X的箭头为开始的路径。这些后们路径，允许X和Y之间的伪相关信息在管道中流通。</p></li>
-<li><p>如果阻断了所有的后门路径，就完成了X和Y的去混杂。</p></li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">知乎-反事实和干预</a></li>
 </ol>
 
       

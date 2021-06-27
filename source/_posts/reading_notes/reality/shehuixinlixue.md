@@ -2,7 +2,7 @@
 title: 《社会心理学》读书笔记
 author: chiechie
 mathjax: true
-date: 2021-06-18 09:24:54
+date: 2021-06-13 09:24:54
 tags:
 - 心理学
 categories:

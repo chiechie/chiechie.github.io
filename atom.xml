@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-06-28T00:34:18.325Z</updated>
+  <updated>2021-06-28T02:07:25.208Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -17,13 +17,47 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>计算机的存储单元</title>
+    <link href="https://chiechie.github.io/2021/06/28/reading_notes/computer/cache-memory/"/>
+    <id>https://chiechie.github.io/2021/06/28/reading_notes/computer/cache-memory/</id>
+    <published>2021-06-28T01:47:32.000Z</published>
+    <updated>2021-06-28T02:07:25.208Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="概览">概览</h2><ol type="1"><li><p>计算机上的存储单元的处理速度从快到慢依次是： 寄存器&gt; L1&gt;L2&gt;L3&gt;内存&gt;固态硬盘&gt; 机械硬盘</p><figure><img src="./img_1.png" alt="存储单元" /><figcaption aria-hidden="true">存储单元</figcaption></figure></li><li><p>早期的计算机只有寄存器和内存，但是寄存器的处理速度远高于内存，所以大部分时间是寄存器在等内存，所以CPU是处于空转状态。 经过改进</p></li><li><p>除了寄存器，后面的计算机在CPU中又逐步加入了高速缓存--L1/L2/L3缓存，相当于让内存提前做功课，把数据提前取出来，在3个缓存中候着，等寄存器有空了就取来用。笨鸟先飞嘛。</p></li><li><p>L1/L2/L3缓存，每层速度递减、容量递增。L1缓存速度接近寄存器速度，大约1ns时延。</p></li><li><p>多核CPU的L3对诶个core是共享的，L2和L1是每个core私有的。</p></li></ol><p><img src="./img_2.png" alt="img_2.png" /> 6. CPU读取数据时，要从内存读取到L3，再读取到L2再读取到L1，同样写到内存时也会经过这些层次。</p><h2 id="参考">参考</h2><ol type="1"><li>https://www.junmajinlong.com/os/cpu_cache/</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;概览&quot;&gt;概览&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;&lt;p&gt;计算机上的存储单元的处理速度从快到慢依次是： 寄存器&amp;gt; L1&amp;gt;L2&amp;gt;L3&amp;gt;内存&amp;gt;固态硬盘&amp;gt; 机械硬盘&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&quot;./img_1</summary>
+      
+    
+    
+    
+    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="计算机原理" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    <category term="内存" scheme="https://chiechie.github.io/tags/%E5%86%85%E5%AD%98/"/>
+    
+    <category term="缓存" scheme="https://chiechie.github.io/tags/%E7%BC%93%E5%AD%98/"/>
+    
+    <category term="寄存器" scheme="https://chiechie.github.io/tags/%E5%AF%84%E5%AD%98%E5%99%A8/"/>
+    
+  </entry>
+  
+  <entry>
     <title>进程和线程</title>
     <link href="https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/"/>
     <id>https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/</id>
     <published>2021-06-27T04:16:07.000Z</published>
-    <updated>2021-06-28T00:34:18.325Z</updated>
+    <updated>2021-06-28T02:06:27.111Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="基本定义">基本定义</h2><h3 id="进程process">进程（process）</h3><p>我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。</p><p>编译器将它翻译成二进制代码--机器的语言。</p><p>但是此时不执行这段断码的话，就还是一段静态程序。</p><p>当执行起来的时候，就变成了一个进程。</p><p>进程（process）有时候也称做任务，是指一个程序运行的实例。</p><h3 id="线程threads">线程（threads）</h3><p>一个进程中的执行的单位。</p><p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p><h3 id="应用-vs-进程-vs-进程">应用 vs 进程 vs 进程</h3><p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p><p>进程和线程的区别：</p><p>• 进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉 • 线程（车厢）在进程（火车）下行进 • 一个进程（火车）可以包含多个线程（车厢） • 不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享 线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行 • 进程要比线程消耗更多的计算机资源 • 进程间不会相互影响，一个线程挂掉将导致整个进程挂掉 • 进程可以拓展到多机，线程最多适合多核 • 进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁" • 进程使用的内存地址可以限定使用量－“信号量”</p><h2 id="实践">实践</h2><h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3><p><a href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p><p>需求：实现一个任务管理/编排的机制，即，输入一堆任务，每个任务的计划执行时间/执行时长都有，现在有一台单线程CPU，如何安排这些任务的执行顺序？</p><p>分析：设计两个数据结构：1个是普通队列，存放每个任务的计划执行时间；还有1个是优先队列，存放候选执行任务，并且按照优先级排序。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tasks = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">4</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">1</span>]]</span><br><span class="line">n = <span class="built_in">len</span>(tasks)</span><br><span class="line">timestamp = <span class="number">1</span></span><br><span class="line">candidate_list = []</span><br><span class="line">new_task = []</span><br><span class="line">j = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) <span class="keyword">and</span> (tasks[j][<span class="number">0</span>] &lt;= timestamp):</span><br><span class="line">        heapq.heappush(candidate_list, (tasks[j][<span class="number">1</span>], j))</span><br><span class="line">        j+=<span class="number">1</span></span><br><span class="line">        print(j, n)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    process, index = heapq.heappop(candidate_list)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    new_task.append(index)</span><br><span class="line">    timestamp += process</span><br><span class="line">new_task</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/25532384/answer/411179772">biaodianfu-zhihu</a></li><li><a href="https://www.youtube.com/watch?v=usyg5vbni34">thred</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="基本定义">基本定义</h2><h3 id="进程process">进程（process）</h3><p>我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。</p><p>编译器将它翻译成二进制代码--机器的语言。</p><p>但是此时不执行这段断码的话，就还是一段静态程序。</p><p>当执行起来的时候，就变成了一个进程。</p><p>进程（process）有时候也称做任务，是指一个程序运行的实例。</p><h3 id="线程threads">线程（threads）</h3><p>一个进程中的执行的单位。</p><p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p><h2 id="应用-vs-线程-vs-进程">应用 vs 线程 vs 进程</h2><p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p><p>进程和线程的区别：</p><p>• 进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉 • 线程（车厢）在进程（火车）下行进 • 一个进程（火车）可以包含多个线程（车厢） • 不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享 线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行 • 进程要比线程消耗更多的计算机资源 • 进程间不会相互影响，一个线程挂掉将导致整个进程挂掉 • 进程可以拓展到多机，线程最多适合多核 • 进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁" • 进程使用的内存地址可以限定使用量－“信号量”</p><h2 id="硬件多线程vs软件多线程">硬件多线程vs软件多线程</h2><p>CPU架构演进路线： 多cpu---&gt;超线程--&gt;多core</p><p>https://stackoverflow.com/questions/680684/multi-cpu-multi-core-and-hyper-thread</p><p>其中的超线程（hyper thread）指的硬件多线程，如下图，相当于给一个core，虚拟化为2个core，可以更方便压榨计算机性能</p><h2 id="多进程-or-多线程">多进程 or 多线程？</h2><p>多进程更稳定，但是多线程能达到更高的计算效率</p><figure><img src="img_1.png" alt="左边是单线程，右边是多线程" /><figcaption aria-hidden="true">左边是单线程，右边是多线程</figcaption></figure><p>多线程的优势：</p><ul><li>响应性：比如启动一个网页（启动一个浏览器进程），可以同时并行做个事情，如浏览/下载/问答（并行启动多个线程）。</li><li>资源共享：一个进程上的所有线程共享同一份内存，这样能够让机器的使用效率更高，可以做更多的复杂的事情。---赋能/增效</li><li>更经济： 多进程浪费资源，因为创建1个进程需要分配很多内存和资源，相比之下，创建和切换线程的成本小的多。另外，完成一个复杂的任务，多线程共用一份底层资源，多进程就需要把资源复制几份。又浪费了一遍。--降本</li><li>充分压榨多处理器的架构：</li></ul><blockquote><p>大中台类似多线程，烟囱式开发类似多进程</p></blockquote><h2 id="实践">实践</h2><h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3><p><a href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p><p>需求：实现一个任务管理/编排的机制，即，输入一堆任务，每个任务的计划执行时间/执行时长都有，现在有一台单线程CPU，如何安排这些任务的执行顺序？</p><p>分析：设计两个数据结构：1个是普通队列，存放每个任务的计划执行时间；还有1个是优先队列，存放候选执行任务，并且按照优先级排序。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tasks = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">4</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">1</span>]]</span><br><span class="line">n = <span class="built_in">len</span>(tasks)</span><br><span class="line">timestamp = <span class="number">1</span></span><br><span class="line">candidate_list = []</span><br><span class="line">new_task = []</span><br><span class="line">j = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) <span class="keyword">and</span> (tasks[j][<span class="number">0</span>] &lt;= timestamp):</span><br><span class="line">        heapq.heappush(candidate_list, (tasks[j][<span class="number">1</span>], j))</span><br><span class="line">        j+=<span class="number">1</span></span><br><span class="line">        print(j, n)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    process, index = heapq.heappop(candidate_list)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    new_task.append(index)</span><br><span class="line">    timestamp += process</span><br><span class="line">new_task</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/25532384/answer/411179772">biaodianfu-zhihu</a></li><li><a href="https://www.youtube.com/watch?v=usyg5vbni34">thred</a></li><li><a href="https://www.junmajinlong.com/os/multi_cpu/">计算机原理系列-blog</a></li><li><a href="https://www.junmajinlong.com/os/cpu_cache/">关于CPU上的高速缓存</a></li></ol>]]></content>
     
     
       
@@ -49,32 +83,34 @@
   </entry>
   
   <entry>
-    <title>关于Scale AI</title>
-    <link href="https://chiechie.github.io/2021/06/26/reading_notes/reality/about-scale/"/>
-    <id>https://chiechie.github.io/2021/06/26/reading_notes/reality/about-scale/</id>
-    <published>2021-06-26T02:39:20.000Z</published>
-    <updated>2021-06-26T05:25:49.533Z</updated>
+    <title>数据结构基础</title>
+    <link href="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/"/>
+    <id>https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/</id>
+    <published>2021-06-25T01:17:29.000Z</published>
+    <updated>2021-06-28T02:08:34.886Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>看到packy激情满满写了一篇关于Scale AI的公关文，比较好奇这个年轻的小公司有何特别之处，为什么会受到资本的一致认可。</p><p>印象中scale就是一家硅谷的数据标注公司，主要靠外包给第三方国家，赚取中间费用，这种公司有什么竞争力呢？跟大厂比起来？</p></blockquote><h2 id="总结">总结</h2><ol type="1"><li><p>AI这个市场未来20年还有很大的发展空间，当前只有8%的公司应用了AI技术。</p></li><li><p>Scale AI创立至今5年，最近一次估值73亿$。它跟stripe有点像，在一个蓬勃发展的行业，找到一个关键但是不起眼的小地方，深耕细作。</p></li><li><p>刚开始成立的时候，Scale AI专注做数据标注，但是他们的野心不限于此，他们想做更好用的数据标注工具，即人机互助的方式，Human-in-the-Loop（HIL）。</p></li><li><p>Scale AI的故事是：随着标记数据越来越多，标注数据的边际成本会降低，因为标记样本越多，标记机器人的性能越好，能hold的事情就越多，需要分配出去的工作就越少。</p><blockquote><p>这里有一个问题，怎么确定，哪些是机器可以搞定的，哪些搞不定的？这个是不是又要多一层人工监督层了？</p><p>可以从环境中获取到反馈，也可以人工抽查。</p><p>总的来说，都不是很完善的方案。</p></blockquote></li><li><p>Scale AI还有一个亮点，他的客户群体很分散，从国防部到无人驾驶公司，eg OpenAI, Airbnb and Lyft。这有一个好处就是。AI公司去去留留，竞争之后，留下的是最有效的ml应用场景，但是Scale AI始终有机会，因为做的是基础设施的。</p></li><li><p>除了标注API，Scale AI还做了一个样本调试的产品--Nucleus，data debugging SaaS product。目的是做全链路基建嘛。 <img src="./img.png" alt="Nucleus" /></p></li><li><p>Alexandr Wang 说的一段话</p><blockquote><p>At Scale, we’re building the foundation to enable organizations to manage the entire AI lifecycle. Whether they have an AI team in-house or need a fully managed models-as-a-service approach, we partner with our customers to build their strategy from the ground up and ensure they have the infrastructure in place to systematically deliver highly-performant models.</p></blockquote></li></ol><p>简单点说，他们的方法是，帮助企业从0到1落地一个AI应用--不管这个企业内部有没有AI团队--企业能够使用这个基建更高效地构建模型. 就是win-win,后生可畏.</p><ol start="10" type="1"><li><p>对于没有AI团队的传统企业，Scale AI定制化合作（跟必示一样），客户例如Brex和Flexport。这个有点意思。Brex doesn’t have an AI team working on the model; they outsource it to Scale.</p><figure><img src="./img1.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure></li><li><p>这里有一个小故事：Brex一开始找的是专门做OCR的大公司，帮他们做发票文本提取，但是效果一般（“they were all mediocre.” ）。后面找到scale，通过深入合作定制化了一个模型，效果100%。后面沉淀出了一个产品document。</p></li><li><p>scale的产品还有蛮多的：地图/语音/文档/图像。。 <img src="img2.png" alt="img.png" /></p></li></ol><blockquote><p>btw, 知乎上有一个相关提问--如何评价Scale AI？大家似乎认识非常有限（只知道它是做数据标注的），还讨论的热火朝天。由此可见的，噪声膨胀的速度远远超过信息增长的速度。</p></blockquote><h2 id="chiechies-reflection">chiechie's reflection</h2><ol type="1"><li><p>packy这篇文章的公司分析框架蛮好的，后面分析科技公司可以套用：</p><ul><li>行业介绍：The State of AI and ML</li><li>公司介绍：Getting to Scale.</li><li>相同模式的成功案例对比：Scaling Like Stripe.</li><li>关于公司的负面观点：The Bear Case for Scale.</li><li>关于公司的正面观点：The Bull Case for Scale.</li><li>前景展望：Scale’s Compounding Vision.</li></ul></li><li><p>AI市场未来还有这么大的成长空间，看到这个数字有点吃惊。但是，即便如此，AI从业人员的需求也不用过分乐观估计。</p></li><li><p>AI应用目前还在探索期。Scale AI比较鸡贼，让AI公司在前面探路，让他们相互pk，把有价值可落地的场景摸索清楚，自己在后面提供军火库，妥妥的赢家。</p></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.notboring.co/p/scale-rational-in-the-fullness-of">not boring</a></li><li><a href="https://zhuanlan.zhihu.com/p/384012257">吴恩达发起新型竞赛范式！模型固定，只调数据？</a></li><li><a href="https://scale.com/blog/series-e">Scale AI’s Series E: Deploying AI Across Every Industry</a></li><li><a href="https://dashboard.scale.com/nucleus/">nucleus</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<ol type="1"><li><p>数据结构分为线性和非线性</p></li><li><p>线性包括数组列表栈队列</p><figure><img src="b3728c27302a8548fe9e8a87e619ca83.png" alt="线性数据结构" /><figcaption aria-hidden="true">线性数据结构</figcaption></figure></li><li><p>非线性包括树和图,树可以认为是图的special case <img src="e6d5a8d9a75587abe612dfef9abffc01.png" alt="非线性数据结构" /></p></li><li><p>图分有向图和无向图</p><figure><img src="18c651092d22c7204021d10a5a79b0ff.png" alt="有向图vs无向图" /><figcaption aria-hidden="true">有向图vs无向图</figcaption></figure></li><li><p>无向图的一个实例是fb的社交网络，边表示好友关系。</p><figure><img src="f3fc896014d62fb1ec1c96c93210f7ff.png" alt="社交网络" /><figcaption aria-hidden="true">社交网络</figcaption></figure></li><li><p>基于社交网络这个数据结构有什么应用呢？好友推荐, 推荐朋友的朋友,网络社会科学的小世界</p><blockquote><p>小世界网络的重要性质：“流行病学”、“合作”、“知识”</p></blockquote><figure><img src="d5fe57a166d6f2ee93457d0ea4b54cef0.png" alt="社交网路" /><figcaption aria-hidden="true">社交网路</figcaption></figure></li><li><p>有向图的一个实例是万维网,好有一个文章影响因子 <img src="b9b97250ce6e998045dcbb0d5b379724.png" alt="www" /></p></li><li><p>图还可以分有权图和无权图，无权图可认为是权图的special case，权重都为1。</p></li><li><p>有权图的一个实例是高速公路网,边代表距离 <img src="5b81b50b2d2b048ed3188b71af85a02f.png" alt="公路网" /></p></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=gXgEDyodOJU">youtube</a></li></ol>]]></content>
     
     
       
       
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;看到packy激情满满写了一篇关于Scale AI的公关文，比较好奇这个年轻的小公司有何特别之处，为什么会受到资本的一致认可。&lt;/p&gt;
-&lt;p&gt;印象中scale就是一家硅谷的数据标注公司，主要靠外包给第三方国家，赚取中间费用，这种公司有什么竞争力呢？</summary>
+    <summary type="html">&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;&lt;p&gt;数据结构分为线性和非线性&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;线性包括数组列表栈队列&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&quot;b3728c27302a8548fe9e8a87e619ca83.png&quot; alt=&quot;线性数据结构&quot; /&gt;&lt;f</summary>
       
     
     
     
-    <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
+    <category term="数据结构" scheme="https://chiechie.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
     
-    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
+    <category term="编程" scheme="https://chiechie.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
     
-    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
+    <category term="数据结构" scheme="https://chiechie.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
@@ -111,11 +147,125 @@
   </entry>
   
   <entry>
-    <title>贝叶斯网络</title>
-    <link href="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/"/>
-    <id>https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/</id>
+    <title>概率图简介</title>
+    <link href="https://chiechie.github.io/2021/06/19/data_structure/graph/gailvtu/"/>
+    <id>https://chiechie.github.io/2021/06/19/data_structure/graph/gailvtu/</id>
+    <published>2021-06-19T08:52:21.000Z</published>
+    <updated>2021-06-28T02:12:21.520Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="基本概念">基本概念</h2><p>概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它用图结构描述多个随机变量之间的依赖关系，它是研究高维空间中的概率模型的一种有用工具。</p><p>概率图模型有三个基本问题: 表示问题，学习问题和推断问题</p><p><img src="https://img.mubu.com/document_image/e3036b4e-18d3-4e73-b996-eafe4a4c08d1-3380623.jpg" /></p><h3 id="表示问题">1. 表示问题</h3><p>表示问题，即对于一个概率模型，如何通过图结构来描述变量之间的依赖关系。</p><h4 id="有向图模型directed-graphical-model">有向图模型(Directed Graphical model)</h4><p>有向图模型(Directed Graphical model)，也称为贝叶斯网络(Bayesian Network)，或信念网络(Belief Network，BN)，是指用有向图来表示概率分布的图模型。</p><figure><img src="https://img.mubu.com/document_image/75c9420a-058f-4005-a4b2-4609e7987c1b-3380623.jpg" alt="贝叶斯网络" /><figcaption aria-hidden="true">贝叶斯网络</figcaption></figure><p>很多机器学习模型可以用有向图模型来描述，比如</p><ul><li>朴素贝叶斯分类器</li><li>隐马尔可夫模型</li><li>深度信念网络(sigmoid 信念网络)</li></ul><h4 id="无向图模型">无向图模型</h4><p>无向图模型也称为马尔可夫随机场(Markov Random Field，MRF)或 马尔可夫网络(Markov Network)，是一类用无向图来描述一组具有局部马尔可夫性质的随机向量 X 的联合概率分布的模型。</p><figure><img src="https://img.mubu.com/document_image/85a18510-051c-4339-a808-4d3759095432-3380623.jpg" alt="无向图模型" /><figcaption aria-hidden="true">无向图模型</figcaption></figure><ul><li><p>如果(G,X)满足局部马尔可夫性质， 即一个变量 Xk 在给定它的邻居的情况下独立于所有其它变量，</p></li><li><p>无向图模型的概率分解</p><ul><li>因子分解 :无向图中的的联合概率可以分解为一系列定义在最大团上的非负函数的乘积形式。</li><li>吉布斯分布 :无向图模型和吉布斯分布是一致的。吉布斯分布一定满足马尔可夫随机场的条件独立性质，并且马尔可夫随机场的概率分布一定可以表示成吉布斯分布。</li></ul></li><li><p>常见的无向图模型:很多经典的机器学习模型可以使用无向图模型来描述，比如</p><ul><li>对数线性模型(Log-Linear Model)或最大熵模型(Maximum Entropy Model)</li><li>条件随机场(Conditional Random Field，CRF)</li><li>玻尔兹曼机</li><li>受限玻尔兹曼机等</li></ul></li><li><p>有向图和无向图之间的转换:</p><ul><li>无向图模型可以表示有向图模型无法表示的一些依赖关系，比如循环依赖;</li><li>无向图模型不能表示有向图模型能够表示的某些关系，比如因果关系。</li></ul></li></ul><h3 id="推断问题">2. 推断问题</h3><p>推断问题，即在已知部分变量时，计算其它变量的后验概率分布。</p><p>图模型的推断问题可以转换为求任意一个变量子集的边际概率分布问题。</p><h4 id="精确推断">精确推断</h4><p>精确推断的方法有变量消除法和信念传播方法</p><p>信念传播(Belief Propagation，BP)算法，也称为和积(Sum-Product)算法 或消息传递(Message Passing)算法，是将变量消除法中的和积(Sum-Product) 操作看作是消息，并保存起来，这样可以节省大量的计算资源。</p><p>链式结构上的的信念传播算法</p><p><img src="https://img.mubu.com/document_image/bd0b3e40-76a5-42e2-8716-799247eddc32-3380623.jpg" /></p><p>树结构上的信念传播算法：</p><ul><li>从叶子节点到根节点依次计算并传递 消息;</li><li>从根节点开始到叶子节点，依次计算并传递消息;</li><li>在每个节点上 计算所有接收消息的乘积(如果是无向图还需要归一化)，就得到了所有变量的 边际概率。</li></ul><p>环路信念传播</p><h4 id="近似推断">近似推断</h4><p>图模型中有些变量的局部条件分布可能非常复杂，或其积分无法计算。需要使用数值方法来近似，比如，变分法和采样法</p><h5 id="变分法">变分法</h5><p>变分法(Variational Method)是引入一个变分分布(通常是比较简单的分布)来近似复杂的局部条件概率，然后通过迭代的方法计算后验分布。</p><h5 id="采样法">采样法</h5><p>采样法(SamplingMethod) 是通过simulation的方式来采集符合某个分布 p(x) 的一些样本，并通过这些样本来估计和这个分布有关的运算，比如期望等。</p><ol type="1"><li>拒绝采样(Rejection Sampling):也叫接受-拒绝采样(Acceptance-RejectionSampling)：假设原始分布 p(x) 难以直接采样，可引入一个容易采样的分布 q(x)， 一般称为提议分布(Proposal Distribution)，然后以某个标准来拒绝一部分的样本使得最终采集的样本服从分布p(x)。</li></ol><p><img src="https://img.mubu.com/document_image/f6ae17af-597a-4445-abbf-2c2b0a5bce67-3380623.jpg" /></p><ol start="2" type="1"><li>重要性采样(Importance Sampling):通过引入重要性权重，将分布p(x)下f(x)的期望变为在分布q(x)下f(x)w(x)的期望.如果采样的目的是计算分布 p(x)下函数f(x)的期望，那么实际上抽取的样本不需要严格服从分布p(x)。也可以通过另一个分布，即提议分布q(x)，直接采样并估计。</li><li>马尔可夫链蒙特卡罗(Markov Chain Monte Carlo，MCMC): 在高维空间中拒绝采样和重要性采样效率低，<ul><li>Metropolis-Hastings算法，以及两个特例Metropolis算法和吉布斯采样(Gibbs Sampling)</li><li>Metropolis算法，假设MH算法中的提议分布是对称的</li><li>吉布斯采样(Gibbs Sampling)，用全条件概率(Full Conditional Probability)作为提议分布来依次对每个维度 进行采样，并设置接受率为A = 1。</li></ul></li></ol><blockquote><p>蒙特卡罗的基本思想可以归结为，根据一个已知概率密度函数为 p(x) 的 分布来计算函数 f (x) 的期望</p></blockquote><h3 id="学习问题">3. 学习问题</h3><p>概率图模型的学习包括：图结构的学习和参数的学习</p><p>参数的学习，即参数估计问题，可分为含隐变量的参数估计和不含因变量的参数估计：</p><ul><li><p>不含隐变量的参数估计：</p><ul><li>如果图模型中不包含隐变量，即所有变量都是可观测的，那么网络参数一般可以直接通过最大似然来进行估计。</li><li>有向图模型：所有变量x的联合概率分布可以分解为每个随机变量<span class="math inline">\(x_k\)</span>的局部条件概率 <span class="math inline">\(p(xk |xπk , \theta_k)\)</span> 的连乘形式，其中<span class="math inline">\(\theta_k\)</span>为第 k 个变量的局部 条件概率的参数。</li><li>无向图模型： 所有变量x的联合概率分布可以分解为定义在最 大团上的势能函数的连乘形式。</li></ul></li><li><p>含隐变量的参数估计：</p><ul><li>如果图模型中包含隐变量，即有部分变量是不可观测的，就需要用 EM 算法</li><li>EM 算法的应用例子:高斯混合模型。高斯混合模型(Gaussian Mixture Model，GMM)是由多个高斯分布组成的模型，其密度函数为多个高 斯密度函数的加权组合。 <img src="https://img.mubu.com/document_image/3476923c-5528-4dd4-aa4d-ae10183bf377-3380623.jpg" /> <img src="https://img.mubu.com/document_image/28d53640-0eb6-4a17-81c6-ffa8e4dbb289-3380623.jpg" /></li></ul></li></ul><h2 id="概率图模型与机器学习">概率图模型与机器学习</h2><ul><li>很多机器学习模型都可以归结为概率模型，即建模输入和输 出之间的条件概率分布。</li><li>图模型提供了一种新的角度来解释机器学习模 型，并且这种角度有很多优点，比如了解不同机器学习模型之间的联系，方便设计新模型等。</li><li>概率图模型中最基本的假设是条件独立性。图形化表示直观地描述了随机 变量之间的条件独立性，有利于将复杂的概率模型分解为简单模型的组合，并 更好地理解概率模型的表示、推断、学习等方法。</li></ul><h2 id="概率图模型与神经网络">概率图模型与神经网络</h2><p>概率图模型和神经网络有着类似的网络结构，但两者不同。</p><ul><li>节点<ul><li>概率图模型的节点是随机变量，其图结构的主要功能是用来描述变量 之间的依赖关系，一般是稀疏连接。使用图模型的好处是可以有效进行统计推 断。</li><li>神经网络中的节点是神经元，是一个计算节点。如果将神经网络中每个神经元看做是一个binary随机变量，那神经网络就变成一个sigmoid信念网络。</li></ul></li><li>变量的含义<ul><li>图模型中的每个变量一般有着明确的解释，<strong>变量之间依赖关系一般是人工来定义</strong>。</li><li>神经网络中的单个神经元则没有直观的解释</li></ul></li><li>生成模型与判别模型<ul><li>神经网络是判别模型，直接用来分类</li><li>图模型不但可以是判别模型，也可以是生成模型。生成模型不但可以用来生成样本，也可以通过贝叶斯公式用来做分类。</li></ul></li><li>学习方法<ul><li>神经网络参数学习的目标为交叉熵或平方误差等损失函数。</li><li>图模型的参数学习的目标函数为似然函数或条件似然函数，若包含隐变量则通常通过EM算法来求解。</li></ul></li></ul><p>神经网络和概率图模型的结合：</p><ul><li><p>用神经网络强大的表示能力来建模图模型中的</p><ul><li>推断问题：比如变分自编码器</li><li>生成问题：比如生成对抗网络，第</li><li>势能函数：比如 LSTM+CRF模型[Lample et al., 2016, Ma and Hovy, 2016]</li></ul></li><li><p>用图模型的算法来解决复杂结构神经网络中的学习和推断问题</p><ul><li>图结构神经网络(Graph Neural Network)</li></ul></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;基本概念&quot;&gt;基本概念&lt;/h2&gt;
+&lt;p&gt;概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它用图结构描述多个随机变量之间的依赖关系，它是研究高维空间中的概率</summary>
+      
+    
+    
+    
+    <category term="数据结构" scheme="https://chiechie.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    
+    <category term="贝叶斯网络" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="概率图" scheme="https://chiechie.github.io/tags/%E6%A6%82%E7%8E%87%E5%9B%BE/"/>
+    
+    <category term="贝叶斯优化" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>哲学导论</title>
+    <link href="https://chiechie.github.io/2021/06/18/reading_notes/zhexue/zhexue-summart/"/>
+    <id>https://chiechie.github.io/2021/06/18/reading_notes/zhexue/zhexue-summart/</id>
+    <published>2021-06-18T09:01:52.000Z</published>
+    <updated>2021-06-28T02:11:59.256Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="定义">定义</h1><p>哲学，就我对这个词的理解来说，乃是某种介乎神学与科学之间的东西。它和神学一样，包含着人类对于那些迄今仍为科学知识所不能肯定之事物的思考；但它又像科学一样，是诉之于人类的理性而不是诉之于权威的，不论是传统的权威还是启示的权威。一切确切的知识都属于科学；一切涉及超乎确切知识之外的教条都属于神学。但介乎神学与科学之间还有一片受到双方攻击的无人之域，这片无人之域就是哲学。---罗素</p><h1 id="哲学的主分支">哲学的主分支</h1><p>哲学的主分支：形而上学、知识论、伦理学、逻辑学和美学 - <a href="https://zh.wikipedia.org/wiki/%E9%82%8F%E8%BC%AF%E5%AD%B8">逻辑学</a> - <a href="https://zh.wikipedia.org/wiki/%E5%BD%A2%E8%80%8C%E4%B8%8A%E5%AD%B8">形而上学</a>/<a href="https://zh.wikipedia.org/wiki/%E5%AE%87%E5%AE%99%E8%AB%96">宇宙论</a> - <a href="https://zh.wikipedia.org/wiki/%E7%9F%A5%E8%AD%98%E8%AB%96">知识论</a> - <a href="https://zh.wikipedia.org/wiki/%E5%80%AB%E7%90%86%E5%AD%B8">伦理学</a>/<a href="https://zh.wikipedia.org/wiki/%E5%83%B9%E5%80%BC%E8%AB%96">价值论</a> - <a href="https://zh.wikipedia.org/wiki/%E7%BE%8E%E5%AD%B8">美学</a></p><h1 id="特殊分支">特殊分支</h1><p>哲学的特殊分支：是交叉学科的哲学研究</p><ul><li><a href="https://zh.wikipedia.org/wiki/%E5%85%83%E5%93%B2%E5%AD%A6">后设哲学</a></li><li><a href="https://zh.wikipedia.org/wiki/%E5%AE%97%E6%95%99%E5%93%B2%E5%AD%A6">宗教哲学</a></li><li><a href="https://zh.wikipedia.org/wiki/%E5%BF%83%E9%9D%88%E5%93%B2%E5%AD%B8">心灵哲学</a></li><li><a href="https://zh.wikipedia.org/wiki/%E8%AF%AD%E8%A8%80%E5%93%B2%E5%AD%A6">语言哲学</a></li><li><a href="https://zh.wikipedia.org/wiki/%E7%A7%91%E5%AD%A6%E5%93%B2%E5%AD%A6">科学哲学</a>： 现代西方科学哲学的中心是<strong>科学方法论</strong>问题，具体包括<ul><li>统计哲学：统计假设检验（证伪），贝叶斯</li><li>数学哲学：</li><li>物理哲学</li><li>化学哲学</li><li>生物哲学</li><li>医学哲学</li><li>心理学哲学</li><li>经济哲学</li><li>社会科学哲学：代表之一---马克思</li></ul></li><li><a href="https://zh.wikipedia.org/wiki/%E6%94%BF%E6%B2%BB%E5%93%B2%E5%AD%A6">政治哲学</a></li><li><a href="https://zh.wikipedia.org/wiki/%E6%B3%95%E5%BE%8B%E5%93%B2%E5%AD%B8">法律哲学</a></li></ul><h2 id="西方的-科学哲学发展路径">西方的 科学哲学发展路径</h2><ul><li>到50年代为止，一直是作为“正统科学哲学”的<strong>逻辑实证主义</strong>占主导地位</li><li>从50年代末兴起，在60年代发展和完成：波普尔的<strong>批判理性主义</strong>和库恩-拉卡托斯的<strong>历史主义</strong>科学哲学。</li><li>至70年代，出现了两股发展趋势。<ul><li>一股是<strong>复兴</strong>和发展“正统<strong>的”逻辑主义方法论</strong>，</li><li>另一股就是法伊尔阿本德的<strong>非理性主义</strong>，它在很大程度上是把<strong>历史主义</strong>中的非理性因素贯彻到极端程度的产物。</li></ul></li><li>本书对<strong>逻辑实证主义</strong>和波普尔、库恩与拉卡托斯的科学哲学等现代西方理性主义科学哲学学说一一作了批判，并在这个批判中阐发了自己的科学哲学——<strong>多元主义方法论</strong></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;定义&quot;&gt;定义&lt;/h1&gt;
+&lt;p&gt;哲学，就我对这个词的理解来说，乃是某种介乎神学与科学之间的东西。它和神学一样，包含着人类对于那些迄今仍为科学知识所不能肯定之事物的思考；但它又像科学一样，是诉之于人类的理性而不是诉之于权威的，不论是传统的权威还是启示的权威。一切确切的</summary>
+      
+    
+    
+    
+    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于AGI？</title>
+    <link href="https://chiechie.github.io/2021/06/17/meditation/about-AGI/"/>
+    <id>https://chiechie.github.io/2021/06/17/meditation/about-AGI/</id>
+    <published>2021-06-17T09:04:32.000Z</published>
+    <updated>2021-06-28T02:11:37.160Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="chiechies-reflection">chiechie's reflection</h2><ol type="1"><li>理论突破不是技术爆发的必经之路，很多技术都没有理论，比如古代时候的发明，造船，造纸，造火药，爱迪森发明电灯泡，还有现代的量子计算机和深度学习，理论完备个P。</li><li>大部分发明都是做实验，通过试错迭代而产生的,而很多情况下理论都是滞后的。</li></ol><h2 id="无人驾驶现状">无人驾驶现状</h2><ol type="1"><li>一个技术在工业化生产之前，一般要经历三个阶段, 理论突破，技术验证，工程化<ol type="1"><li>理论突破，科学家在理论上证明其可行性，即产品要达到一个什么样的性能，在技术上是一定可以实现的；</li><li>技术突破，研究机构突破技术实现上壁垒，做出来达到预期的Demo；</li><li>工程化，主要解决产品设计，方案优化，功能完备，性能提升，良品率，鲁棒性，可用性提升，大规模复制的技术准备，成本降低等工程问题。</li></ol></li><li>通用无人驾驶在第一，第二阶段还彻底整明白的情况下，由资本驱动直接进入第三阶段.</li></ol><h2 id="agi的理论先行者">AGI的理论先行者</h2><ol type="1"><li>目前强化学习是最被看好的方向。</li><li>强化学习本质上是演化论的思路，跟自然界一样，给定一个reward，让机器放肆的学习探索。</li><li>目前还需要解决的问题是计算资源的问题。</li><li>自然界的演化大部分时间是平稳状态，只有极少数黑天鹅事件决定了演化的方向。</li><li>在计算机中模拟agent的演化过程，和自然界的演化类似，需要忍受长期的无秩序无进展。</li><li>如果全世界的资源往这方面倾斜，可能可以加快黑天鹅事件出现。</li><li>理论突破不是AGI成熟的必要条件，有可能是2者互相促进发展。</li><li>目前收到关注较多的公司--自动标注样本公司scale</li></ol><h2 id="参考">参考</h2><ol type="1"><li>https://www.zhihu.com/question/404870865/answer/1324577689</li><li>https://www.zhihu.com/question/464616760/answer/1940847401</li><li><a href="https://www.sciencedirect.com/science/article/pii/S0004370221000862">reward is enough ,david silver</a></li><li><a href="https://www.notboring.co/p/scale-rational-in-the-fullness-of?token=eyJ1c2VyX2lkIjoxNzY2NjQ2OSwicG9zdF9pZCI6Mzc4NDY2MzEsIl8iOiJrTHFWcCIsImlhdCI6MTYyNDQyNDU4NCwiZXhwIjoxNjI0NDI4MTg0LCJpc3MiOiJwdWItMTAwMjUiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.zWmuXLn35R720iDVtX7yTuTpM4kCMk25457XzZN8_Ks">not boring</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;chiechies-reflection&quot;&gt;chiechie&#39;s reflection&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;理论突破不是技术爆发的必经之路，很多技术都没有理论，比如古代时候的发明，造船，造纸，造火药，爱迪森发明电灯泡，还有现代的量子计算机</summary>
+      
+    
+    
+    
+    <category term="沉思录" scheme="https://chiechie.github.io/categories/%E6%B2%89%E6%80%9D%E5%BD%95/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="科技史" scheme="https://chiechie.github.io/tags/%E7%A7%91%E6%8A%80%E5%8F%B2/"/>
+    
+    <category term="人工智障" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E9%9A%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于Scale AI</title>
+    <link href="https://chiechie.github.io/2021/06/16/reading_notes/reality/about-scale/"/>
+    <id>https://chiechie.github.io/2021/06/16/reading_notes/reality/about-scale/</id>
+    <published>2021-06-16T02:39:20.000Z</published>
+    <updated>2021-06-28T02:08:34.891Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>看到packy激情满满写了一篇关于Scale AI的公关文，比较好奇这个年轻的小公司有何特别之处，为什么会受到资本的一致认可。</p><p>印象中scale就是一家硅谷的数据标注公司，主要靠外包给第三方国家，赚取中间费用，这种公司有什么竞争力呢？跟大厂比起来？</p></blockquote><h2 id="总结">总结</h2><ol type="1"><li><p>Scale AI创立至今5年，最近一次估值73亿$。它跟stripe有点像，在一个蓬勃发展的行业，找到一个关键但是不起眼的小地方，深耕细作。</p></li><li><p>刚开始成立的时候，Scale AI专注做数据标注，但是他们的野心不限于此，他们想做更好用的数据标注工具，即人机互助的方式，Human-in-the-Loop（HIL）。</p></li><li><p>Scale AI的故事是：随着标记数据越来越多，标注数据的边际成本会降低，因为标记样本越多，标记机器人的性能越好，能hold的事情就越多，需要分配出去的工作就越少。</p><blockquote><p>这里有一个问题，怎么确定，哪些是机器可以搞定的，哪些是机器搞不定的？这个是不是又要多一层人工监督了？</p><p>可以从环境中获取到反馈，也可以人工抽查。</p><p>总的来说，都不是很完善的方案。</p></blockquote></li><li><p>Scale AI还有一个亮点，他的客户群体很分散，从国防部到无人驾驶公司，eg OpenAI, Airbnb and Lyft。这有一个好处就是。AI公司去去留留，竞争之后，留下了最有效的ml应用场景，但是Scale AI始终有机会，因为是做基础设施的。</p></li><li><p>除了标注API，Scale AI还做了一个样本调试的产品--Nucleus，data debugging SaaS product。目的是做全链路基建嘛。 <img src="./img.png" alt="Nucleus" /></p></li><li><p>Scale AI的CEO Alexandr Wang 说的一段话</p><blockquote><p>At Scale, we’re building the foundation to enable organizations to manage the entire AI lifecycle. Whether they have an AI team in-house or need a fully managed models-as-a-service approach, we partner with our customers to build their strategy from the ground up and ensure they have the infrastructure in place to systematically deliver highly-performant models.</p></blockquote></li></ol><p>简单点说，他们的方法是，帮助企业从0到1落地一个AI应用--不管这个企业内部有没有AI团队--企业能够使用这个基建更高效地构建模型. 就是win-win,后生可畏.</p><ol start="10" type="1"><li><p>对于没有AI团队的传统企业，Scale AI定制化合作（跟必示一样），客户例如Brex和Flexport。</p><figure><img src="./img1.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure></li><li><p>这里有一个小故事：Brex doesn’t have an AI team working on the model; they outsource it to Scale. .Brex一开始找的是专门做OCR的大公司，帮他们做发票文本提取，但是效果一般（“they were all mediocre.” ）。后面找到scale，通过深入合作定制化了一个模型，效果100%。后面沉淀出了一个产品document。</p></li><li><p>scale的产品还有蛮多的：地图/文档/图像。。 <img src="img2.png" alt="img.png" /></p></li></ol><blockquote><p>btw, 知乎上有一个相关提问--如何评价Scale AI？大家似乎认识非常有限（只知道它是做数据标注的），还讨论的热火朝天。由此可见的，噪声膨胀的速度远远超过信息增长的速度。</p></blockquote><h2 id="chiechies-reflection">chiechie's reflection</h2><ol type="1"><li><p>packy这篇文章的公司分析框架蛮好的，后面分析科技公司可以套用：</p><ul><li>行业介绍：The State of AI and ML</li><li>公司介绍：Getting to Scale.</li><li>相同模式的成功案例对比：Scaling Like Stripe.</li><li>关于公司的负面观点：The Bear Case for Scale.</li><li>关于公司的正面观点：The Bull Case for Scale.</li><li>前景展望：Scale’s Compounding Vision.</li></ul></li><li><p>AI市场未来还有这么大的成长空间，当前只有8%的公司应用了AI技术,看到这个数字有点吃惊。但是，即便如此，AI从业人员的需求也不用过分乐观估计。</p></li><li><p>AI应用目前还在探索期。Scale AI比较鸡贼，让AI公司在前面探路，让他们相互pk，把有价值可落地的场景摸索清楚，自己在后面提供军火库，妥妥的赢家。</p></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.notboring.co/p/scale-rational-in-the-fullness-of">not boring</a></li><li><a href="https://zhuanlan.zhihu.com/p/384012257">吴恩达发起新型竞赛范式！模型固定，只调数据？</a></li><li><a href="https://scale.com/blog/series-e">Scale AI’s Series E: Deploying AI Across Every Industry</a></li><li><a href="https://dashboard.scale.com/nucleus/">nucleus</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;看到packy激情满满写了一篇关于Scale AI的公关文，比较好奇这个年轻的小公司有何特别之处，为什么会受到资本的一致认可。&lt;/p&gt;
+&lt;p&gt;印象中scale就是一家硅谷的数据标注公司，主要靠外包给第三方国家，赚取中间费用，这种公司有什么竞争力呢？</summary>
+      
+    
+    
+    
+    <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
+    
+    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>贝叶斯网络推断</title>
+    <link href="https://chiechie.github.io/2021/06/15/data_structure/graph/bayesnetwork/"/>
+    <id>https://chiechie.github.io/2021/06/15/data_structure/graph/bayesnetwork/</id>
     <published>2021-06-15T06:28:18.000Z</published>
-    <updated>2021-06-28T00:33:05.524Z</updated>
+    <updated>2021-06-28T01:34:19.335Z</updated>
     
     <content type="html"><![CDATA[<p>如何应用贝叶斯网络来做决策？</p><ul><li>首先需要将先验知识表达成一个因果图--贝叶斯网络，（准确来说贝叶斯网络的边不仅仅表达因果关系，他表达所有的信息传播的方向）。</li><li>做推断</li></ul><ol type="1"><li><p>构造贝叶斯网络 <img src="img.png" alt="img.png" /></p></li><li><p>推断</p></li></ol><p>已知P(R,W,S,C）, 求P(r)</p><h3 id="枚举法">枚举法</h3><ol type="1"><li>先推到条件概率分布</li></ol><figure><img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption></figure><ol start="2" type="1"><li><img src="img_2.png" title="fig:" alt="img_2.png" /></li></ol><h3 id="变量消除法">变量消除法</h3><figure><img src="img_3.png" alt="img_3.png" /><figcaption aria-hidden="true">img_3.png</figcaption></figure><figure><img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption></figure><p>所有非query变量祖先的变量，都应该被消去，当然不是真的消去啦，是对该消去变量求和，然后变成一个新的因子f。</p><p>依次迭代，直到没有可以消除的变量。</p><figure><img src="img_5.png" alt="img_5.png" /><figcaption aria-hidden="true">img_5.png</figcaption></figure><h3 id="贝叶斯网络中的依赖性">贝叶斯网络中的依赖性</h3><ol type="1"><li>每一个随机变量都是条件独立于他的非后代节点，给定他的父母节点时，</li><li>如下，给定A，B时，C和D是独立的。</li></ol><figure><img src="img_6.png" alt="img_6.png" /><figcaption aria-hidden="true">img_6.png</figcaption></figure><ol start="3" type="1"><li>每个随机变量独立其他任何变量，当给定他的马尔可夫毯（Markov Blanket）<ul><li>父亲，孩子，以及孩子的父母亲（配偶）</li></ul></li></ol><figure><img src="img_7.png" alt="Markov Blanket" /><figcaption aria-hidden="true">Markov Blanket</figcaption></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=TuGDMj43ehw">Bayesian Networks-youtuybe</a></li></ol>]]></content>
     
@@ -133,6 +283,10 @@
     
     
     
+    <category term="数据结构" scheme="https://chiechie.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    
+    <category term="贝叶斯网络" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
@@ -260,90 +414,6 @@
   </entry>
   
   <entry>
-    <title>关于AGI？</title>
-    <link href="https://chiechie.github.io/2021/06/10/meditation/about-AGI/"/>
-    <id>https://chiechie.github.io/2021/06/10/meditation/about-AGI/</id>
-    <published>2021-06-10T09:04:32.000Z</published>
-    <updated>2021-06-24T06:55:22.295Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="chiechies-reflection">chiechie's reflection</h2><ol type="1"><li>理论突破不是技术爆发的必经之路，很多技术都没有理论，比如古代时候的发明，造船，造纸，造火药，爱迪森发明电灯泡，还有现代的量子计算机和深度学习，理论完备个P。</li><li>大部分发明都是做实验，通过试错迭代而产生的,而很多情况下理论都是滞后的。</li></ol><h2 id="无人驾驶现状">无人驾驶现状</h2><ol type="1"><li>一个技术在工业化生产之前，一般要经历三个阶段, 理论突破，技术验证，工程化<ol type="1"><li>理论突破，科学家在理论上证明其可行性，即产品要达到一个什么样的性能，在技术上是一定可以实现的；</li><li>技术突破，研究机构突破技术实现上壁垒，做出来达到预期的Demo；</li><li>工程化，主要解决产品设计，方案优化，功能完备，性能提升，良品率，鲁棒性，可用性提升，大规模复制的技术准备，成本降低等工程问题。</li></ol></li><li>通用无人驾驶在第一，第二阶段还彻底整明白的情况下，由资本驱动直接进入第三阶段.</li></ol><h2 id="agi的理论先行者">AGI的理论先行者</h2><ol type="1"><li>目前强化学习是最被看好的方向。</li><li>强化学习本质上是演化论的思路，跟自然界一样，给定一个reward，让机器放肆的学习探索。</li><li>目前还需要解决的问题是计算资源的问题。</li><li>自然界的演化大部分时间是平稳状态，只有极少数黑天鹅事件决定了演化的方向。</li><li>在计算机中模拟agent的演化过程，和自然界的演化类似，需要忍受长期的无秩序无进展。</li><li>如果全世界的资源往这方面倾斜，可能可以加快黑天鹅事件出现。</li><li>理论突破不是AGI成熟的必要条件，有可能是2者互相促进发展。</li><li>目前收到关注较多的公司--自动标注样本公司scale</li></ol><h2 id="参考">参考</h2><ol type="1"><li>https://www.zhihu.com/question/404870865/answer/1324577689</li><li>https://www.zhihu.com/question/464616760/answer/1940847401</li><li><a href="https://www.sciencedirect.com/science/article/pii/S0004370221000862">reward is enough ,david silver</a></li><li><a href="https://www.notboring.co/p/scale-rational-in-the-fullness-of?token=eyJ1c2VyX2lkIjoxNzY2NjQ2OSwicG9zdF9pZCI6Mzc4NDY2MzEsIl8iOiJrTHFWcCIsImlhdCI6MTYyNDQyNDU4NCwiZXhwIjoxNjI0NDI4MTg0LCJpc3MiOiJwdWItMTAwMjUiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.zWmuXLn35R720iDVtX7yTuTpM4kCMk25457XzZN8_Ks">not boring</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;chiechies-reflection&quot;&gt;chiechie&#39;s reflection&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;理论突破不是技术爆发的必经之路，很多技术都没有理论，比如古代时候的发明，造船，造纸，造火药，爱迪森发明电灯泡，还有现代的量子计算机</summary>
-      
-    
-    
-    
-    <category term="沉思录" scheme="https://chiechie.github.io/categories/%E6%B2%89%E6%80%9D%E5%BD%95/"/>
-    
-    
-    <category term="科技史" scheme="https://chiechie.github.io/tags/%E7%A7%91%E6%8A%80%E5%8F%B2/"/>
-    
-    <category term="人工智障" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E9%9A%9C/"/>
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>哲学导论</title>
-    <link href="https://chiechie.github.io/2021/06/10/reading_notes/zhexue/zhexue-summart/"/>
-    <id>https://chiechie.github.io/2021/06/10/reading_notes/zhexue/zhexue-summart/</id>
-    <published>2021-06-10T09:01:52.000Z</published>
-    <updated>2021-06-10T09:30:51.230Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="定义">定义</h1><p>哲学，就我对这个词的理解来说，乃是某种介乎神学与科学之间的东西。它和神学一样，包含着人类对于那些迄今仍为科学知识所不能肯定之事物的思考；但它又像科学一样，是诉之于人类的理性而不是诉之于权威的，不论是传统的权威还是启示的权威。一切确切的知识都属于科学；一切涉及超乎确切知识之外的教条都属于神学。但介乎神学与科学之间还有一片受到双方攻击的无人之域，这片无人之域就是哲学。---罗素</p><h1 id="哲学的主分支">哲学的主分支</h1><p>哲学的主分支：形而上学、知识论、伦理学、逻辑学和美学 - <a href="https://zh.wikipedia.org/wiki/%E9%82%8F%E8%BC%AF%E5%AD%B8">逻辑学</a> - <a href="https://zh.wikipedia.org/wiki/%E5%BD%A2%E8%80%8C%E4%B8%8A%E5%AD%B8">形而上学</a>/<a href="https://zh.wikipedia.org/wiki/%E5%AE%87%E5%AE%99%E8%AB%96">宇宙论</a> - <a href="https://zh.wikipedia.org/wiki/%E7%9F%A5%E8%AD%98%E8%AB%96">知识论</a> - <a href="https://zh.wikipedia.org/wiki/%E5%80%AB%E7%90%86%E5%AD%B8">伦理学</a>/<a href="https://zh.wikipedia.org/wiki/%E5%83%B9%E5%80%BC%E8%AB%96">价值论</a> - <a href="https://zh.wikipedia.org/wiki/%E7%BE%8E%E5%AD%B8">美学</a></p><h1 id="特殊分支">特殊分支</h1><p>哲学的特殊分支：是交叉学科的哲学研究</p><ul><li><a href="https://zh.wikipedia.org/wiki/%E5%85%83%E5%93%B2%E5%AD%A6">后设哲学</a></li><li><a href="https://zh.wikipedia.org/wiki/%E5%AE%97%E6%95%99%E5%93%B2%E5%AD%A6">宗教哲学</a></li><li><a href="https://zh.wikipedia.org/wiki/%E5%BF%83%E9%9D%88%E5%93%B2%E5%AD%B8">心灵哲学</a></li><li><a href="https://zh.wikipedia.org/wiki/%E8%AF%AD%E8%A8%80%E5%93%B2%E5%AD%A6">语言哲学</a></li><li><a href="https://zh.wikipedia.org/wiki/%E7%A7%91%E5%AD%A6%E5%93%B2%E5%AD%A6">科学哲学</a>： 现代西方科学哲学的中心是<strong>科学方法论</strong>问题，具体包括<ul><li>统计哲学：统计假设检验（证伪），贝叶斯</li><li>数学哲学：</li><li>物理哲学</li><li>化学哲学</li><li>生物哲学</li><li>医学哲学</li><li>心理学哲学</li><li>经济哲学</li><li>社会科学哲学：代表之一---马克思</li></ul></li><li><a href="https://zh.wikipedia.org/wiki/%E6%94%BF%E6%B2%BB%E5%93%B2%E5%AD%A6">政治哲学</a></li><li><a href="https://zh.wikipedia.org/wiki/%E6%B3%95%E5%BE%8B%E5%93%B2%E5%AD%B8">法律哲学</a></li></ul><h2 id="西方的-科学哲学发展路径">西方的 科学哲学发展路径</h2><ul><li>到50年代为止，一直是作为“正统科学哲学”的<strong>逻辑实证主义</strong>占主导地位</li><li>从50年代末兴起，在60年代发展和完成：波普尔的<strong>批判理性主义</strong>和库恩-拉卡托斯的<strong>历史主义</strong>科学哲学。</li><li>至70年代，出现了两股发展趋势。<ul><li>一股是<strong>复兴</strong>和发展“正统<strong>的”逻辑主义方法论</strong>，</li><li>另一股就是法伊尔阿本德的<strong>非理性主义</strong>，它在很大程度上是把<strong>历史主义</strong>中的非理性因素贯彻到极端程度的产物。</li></ul></li><li>本书对<strong>逻辑实证主义</strong>和波普尔、库恩与拉卡托斯的科学哲学等现代西方理性主义科学哲学学说一一作了批判，并在这个批判中阐发了自己的科学哲学——<strong>多元主义方法论</strong></li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;定义&quot;&gt;定义&lt;/h1&gt;
-&lt;p&gt;哲学，就我对这个词的理解来说，乃是某种介乎神学与科学之间的东西。它和神学一样，包含着人类对于那些迄今仍为科学知识所不能肯定之事物的思考；但它又像科学一样，是诉之于人类的理性而不是诉之于权威的，不论是传统的权威还是启示的权威。一切确切的</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>概率图简介</title>
-    <link href="https://chiechie.github.io/2021/06/10/reading_notes/graph/gailvtu/"/>
-    <id>https://chiechie.github.io/2021/06/10/reading_notes/graph/gailvtu/</id>
-    <published>2021-06-10T08:52:21.000Z</published>
-    <updated>2021-06-26T06:13:17.172Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="基本概念">基本概念</h2><p>概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它用图结构描述多个随机变量之间的依赖关系，它是研究高维空间中的概率模型的一种有用工具。</p><p>概率图模型有三个基本问题: 表示问题，学习问题和推断问题</p><p><img src="https://img.mubu.com/document_image/e3036b4e-18d3-4e73-b996-eafe4a4c08d1-3380623.jpg" /></p><h3 id="表示问题">1. 表示问题</h3><p>表示问题，即对于一个概率模型，如何通过图结构来描述变量之间的依赖关系。</p><h4 id="有向图模型directed-graphical-model">有向图模型(Directed Graphical model)</h4><p>有向图模型(Directed Graphical model)，也称为贝叶斯网络(Bayesian Network)，或信念网络(Belief Network，BN)，是指用有向图来表示概率分布的图模型。</p><figure><img src="https://img.mubu.com/document_image/75c9420a-058f-4005-a4b2-4609e7987c1b-3380623.jpg" alt="贝叶斯网络" /><figcaption aria-hidden="true">贝叶斯网络</figcaption></figure><p>很多机器学习模型可以用有向图模型来描述，比如</p><ul><li>朴素贝叶斯分类器</li><li>隐马尔可夫模型</li><li>深度信念网络(sigmoid 信念网络)</li></ul><h4 id="无向图模型">无向图模型</h4><p>无向图模型也称为马尔可夫随机场(Markov Random Field，MRF)或 马尔可夫网络(Markov Network)，是一类用无向图来描述一组具有局部马尔可夫性质的随机向量 X 的联合概率分布的模型。</p><figure><img src="https://img.mubu.com/document_image/85a18510-051c-4339-a808-4d3759095432-3380623.jpg" alt="无向图模型" /><figcaption aria-hidden="true">无向图模型</figcaption></figure><ul><li><p>如果(G,X)满足局部马尔可夫性质， 即一个变量 Xk 在给定它的邻居的情况下独立于所有其它变量，</p></li><li><p>无向图模型的概率分解</p><ul><li>因子分解 :无向图中的的联合概率可以分解为一系列定义在最大团上的非负函数的乘积形式。</li><li>吉布斯分布 :无向图模型和吉布斯分布是一致的。吉布斯分布一定满足马尔可夫随机场的条件独立性质，并且马尔可夫随机场的概率分布一定可以表示成吉布斯分布。</li></ul></li><li><p>常见的无向图模型:很多经典的机器学习模型可以使用无向图模型来描述，比如</p><ul><li>对数线性模型(Log-Linear Model)或最大熵模型(Maximum Entropy Model)</li><li>条件随机场(Conditional Random Field，CRF)</li><li>玻尔兹曼机</li><li>受限玻尔兹曼机等</li></ul></li><li><p>有向图和无向图之间的转换:</p><ul><li>无向图模型可以表示有向图模型无法表示的一些依赖关系，比如循环依赖;</li><li>无向图模型不能表示有向图模型能够表示的某些关系，比如因果关系。</li></ul></li></ul><h3 id="推断问题">2. 推断问题</h3><p>推断问题，即在已知部分变量时，计算其它变量的后验概率分布。</p><p>图模型的推断问题可以转换为求任意一个变量子集的边际概率分布问题。</p><h4 id="精确推断">精确推断</h4><p>精确推断的方法有变量消除法和信念传播方法</p><p>信念传播(Belief Propagation，BP)算法，也称为和积(Sum-Product)算法 或消息传递(Message Passing)算法，是将变量消除法中的和积(Sum-Product) 操作看作是消息，并保存起来，这样可以节省大量的计算资源。</p><p>链式结构上的的信念传播算法</p><p><img src="https://img.mubu.com/document_image/bd0b3e40-76a5-42e2-8716-799247eddc32-3380623.jpg" /></p><p>树结构上的信念传播算法：</p><ul><li>从叶子节点到根节点依次计算并传递 消息;</li><li>从根节点开始到叶子节点，依次计算并传递消息;</li><li>在每个节点上 计算所有接收消息的乘积(如果是无向图还需要归一化)，就得到了所有变量的 边际概率。</li></ul><p>环路信念传播</p><h4 id="近似推断">近似推断</h4><p>图模型中有些变量的局部条件分布可能非常复杂，或其积分无法计算。需要使用数值方法来近似，比如，变分法和采样法</p><h5 id="变分法">变分法</h5><p>变分法(Variational Method)是引入一个变分分布(通常是比较简单的分布)来近似复杂的局部条件概率，然后通过迭代的方法计算后验分布。</p><h5 id="采样法">采样法</h5><p>采样法(SamplingMethod) 是通过simulation的方式来采集符合某个分布 p(x) 的一些样本，并通过这些样本来估计和这个分布有关的运算，比如期望等。</p><ol type="1"><li>拒绝采样(Rejection Sampling):也叫接受-拒绝采样(Acceptance-RejectionSampling)：假设原始分布 p(x) 难以直接采样，可引入一个容易采样的分布 q(x)， 一般称为提议分布(Proposal Distribution)，然后以某个标准来拒绝一部分的样本使得最终采集的样本服从分布p(x)。</li></ol><p><img src="https://img.mubu.com/document_image/f6ae17af-597a-4445-abbf-2c2b0a5bce67-3380623.jpg" /></p><ol start="2" type="1"><li>重要性采样(Importance Sampling):通过引入重要性权重，将分布p(x)下f(x)的期望变为在分布q(x)下f(x)w(x)的期望.如果采样的目的是计算分布 p(x)下函数f(x)的期望，那么实际上抽取的样本不需要严格服从分布p(x)。也可以通过另一个分布，即提议分布q(x)，直接采样并估计。</li><li>马尔可夫链蒙特卡罗(Markov Chain Monte Carlo，MCMC): 在高维空间中拒绝采样和重要性采样效率低，<ul><li>Metropolis-Hastings算法，以及两个特例Metropolis算法和吉布斯采样(Gibbs Sampling)</li><li>Metropolis算法，假设MH算法中的提议分布是对称的</li><li>吉布斯采样(Gibbs Sampling)，用全条件概率(Full Conditional Probability)作为提议分布来依次对每个维度 进行采样，并设置接受率为A = 1。</li></ul></li></ol><blockquote><p>蒙特卡罗的基本思想可以归结为，根据一个已知概率密度函数为 p(x) 的 分布来计算函数 f (x) 的期望</p></blockquote><h3 id="学习问题">3. 学习问题</h3><p>概率图模型的学习包括：图结构的学习和参数的学习</p><p>参数的学习，即参数估计问题，可分为含隐变量的参数估计和不含因变量的参数估计：</p><ul><li><p>不含隐变量的参数估计：</p><ul><li>如果图模型中不包含隐变量，即所有变量都是可观测的，那么网络参数一般可以直接通过最大似然来进行估计。</li><li>有向图模型：所有变量x的联合概率分布可以分解为每个随机变量<span class="math inline">\(x_k\)</span>的局部条件概率 <span class="math inline">\(p(xk |xπk , \theta_k)\)</span> 的连乘形式，其中<span class="math inline">\(\theta_k\)</span>为第 k 个变量的局部 条件概率的参数。</li><li>无向图模型： 所有变量x的联合概率分布可以分解为定义在最 大团上的势能函数的连乘形式。</li></ul></li><li><p>含隐变量的参数估计：</p><ul><li>如果图模型中包含隐变量，即有部分变量是不可观测的，就需要用 EM 算法</li><li>EM 算法的应用例子:高斯混合模型。高斯混合模型(Gaussian Mixture Model，GMM)是由多个高斯分布组成的模型，其密度函数为多个高 斯密度函数的加权组合。 <img src="https://img.mubu.com/document_image/3476923c-5528-4dd4-aa4d-ae10183bf377-3380623.jpg" /> <img src="https://img.mubu.com/document_image/28d53640-0eb6-4a17-81c6-ffa8e4dbb289-3380623.jpg" /></li></ul></li></ul><h2 id="概率图模型与机器学习">概率图模型与机器学习</h2><ul><li>很多机器学习模型都可以归结为概率模型，即建模输入和输 出之间的条件概率分布。</li><li>图模型提供了一种新的角度来解释机器学习模 型，并且这种角度有很多优点，比如了解不同机器学习模型之间的联系，方便设计新模型等。</li><li>概率图模型中最基本的假设是条件独立性。图形化表示直观地描述了随机 变量之间的条件独立性，有利于将复杂的概率模型分解为简单模型的组合，并 更好地理解概率模型的表示、推断、学习等方法。</li></ul><h2 id="概率图模型与神经网络">概率图模型与神经网络</h2><p>概率图模型和神经网络有着类似的网络结构，但两者不同。</p><ul><li>节点<ul><li>概率图模型的节点是随机变量，其图结构的主要功能是用来描述变量 之间的依赖关系，一般是稀疏连接。使用图模型的好处是可以有效进行统计推 断。</li><li>神经网络中的节点是神经元，是一个计算节点。如果将神经网络中每个神经元看做是一个binary随机变量，那神经网络就变成一个sigmoid信念网络。</li></ul></li><li>变量的含义<ul><li>图模型中的每个变量一般有着明确的解释，<strong>变量之间依赖关系一般是人工来定义</strong>。</li><li>神经网络中的单个神经元则没有直观的解释</li></ul></li><li>生成模型与判别模型<ul><li>神经网络是判别模型，直接用来分类</li><li>图模型不但可以是判别模型，也可以是生成模型。生成模型不但可以用来生成样本，也可以通过贝叶斯公式用来做分类。</li></ul></li><li>学习方法<ul><li>神经网络参数学习的目标为交叉熵或平方误差等损失函数。</li><li>图模型的参数学习的目标函数为似然函数或条件似然函数，若包含隐变量则通常通过EM算法来求解。</li></ul></li></ul><p>神经网络和概率图模型的结合：</p><ul><li><p>用神经网络强大的表示能力来建模图模型中的</p><ul><li>推断问题：比如变分自编码器</li><li>生成问题：比如生成对抗网络，第</li><li>势能函数：比如 LSTM+CRF模型[Lample et al., 2016, Ma and Hovy, 2016]</li></ul></li><li><p>用图模型的算法来解决复杂结构神经网络中的学习和推断问题</p><ul><li>图结构神经网络(Graph Neural Network)</li></ul></li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;基本概念&quot;&gt;基本概念&lt;/h2&gt;
-&lt;p&gt;概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它用图结构描述多个随机变量之间的依赖关系，它是研究高维空间中的概率</summary>
-      
-    
-    
-    
-    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
-    
-    
-    <category term="贝叶斯网络" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C/"/>
-    
-    <category term="概率图" scheme="https://chiechie.github.io/tags/%E6%A6%82%E7%8E%87%E5%9B%BE/"/>
-    
-    <category term="贝叶斯优化" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%98%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
     <title>深度学习基础1 数据表示和神经网络基础</title>
     <link href="https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/"/>
     <id>https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/</id>
@@ -374,113 +444,6 @@
   </entry>
   
   <entry>
-    <title>《财务讲义》读书笔记</title>
-    <link href="https://chiechie.github.io/2021/06/10/reading_notes/reality/caiwujiangyi/"/>
-    <id>https://chiechie.github.io/2021/06/10/reading_notes/reality/caiwujiangyi/</id>
-    <published>2021-06-10T08:25:08.000Z</published>
-    <updated>2021-06-11T01:03:18.833Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>思考几个问题，选股的分析框架？看市盈率，看行业龙头股的baseline，跨版本的股票，看业务构成，找相应板块</p></blockquote><h2 id="第3章-花钱-投资与分配">第3章 花钱-投资与分配</h2><h3 id="chapter-21-固定资产">chapter 21 固定资产</h3><ul><li>固定资产：企业的大件资产，比如厂房，生产设备。不仅花费大，而且是企业准备长期 持有的资产。</li><li>与固定资产相对的 是流动资产，如 库存 ，短期投资 等</li><li>企业最大的开销是固定资产投资（类似搞基建，互联网公司可以弱化，但是实业公司不能弱化）</li><li>租赁的本质是债务融资（跟房贷一样）</li><li>财务决策中，在 同风险等级 的 投资决策 之间进行比较是一个重要原则。</li><li>投资的机会成本 是为了一个项目A 所放弃的 其他项目B 的收益，其他项目B的风险等级必须要和A一样。</li><li>所以，不应该考虑买还是租，而是考虑 租还是 借（钱）。也就是说 把 租赁这种 债务融资方式 和 借 这种债务融资方式 比较</li><li>如何降低租赁对负债率的影响<ul><li>在2018年 会计准则修改之前，将融资行负债 修改为 经营性负债</li><li>在2018年 会计准则修改之后，就没法专空子了。</li></ul></li><li>如何盘活租来的固定资产</li><li>融资性 售后回租：将固定资产 卖给 融资租赁公司，然后签订租赁合同，合同期满就可以买回来。</li></ul><h3 id="chapter-22-价值投资-用别人的错误赚钱">chapter 22 价值投资-用别人的错误赚钱</h3><h3 id="chapter-23-资本预算-项目之间是如何pk的">chapter 23 资本预算-项目之间是如何PK的</h3><ul><li>投资收益比较</li><li>（往上一层）投资的溢出效应：值新项目对企业其他项目 或者 外部事物的影响<ul><li>负向</li><li>正向-协同效应</li></ul></li><li>投资回收期平衡</li></ul><h3 id="chapter-24-风险量化">chapter 24 风险量化</h3><ul><li>点分析：项目的保本点是多少<ul><li>对美国上市公司的盈余公告进行研究：发现每一美元造成的股价下跌，几乎是每一美元盈利带来的股价上涨幅度的两倍</li><li>企业的盈利目标又三个层析：1. 保证不亏损 2 超过前一年同期的盈利 3 超过证券分析师的预期</li><li>局限：<ul><li>有的项目处于战略需要一定要投资，即时财务不赚钱</li><li>正向偏离也是一种风险</li></ul></li></ul></li><li>线分析：跟往年比是多少</li><li>面分析：分析师的预期是多少</li></ul><h3 id="chapter-25-实物期权-应对投资的不确定性">chapter 25 实物期权-应对投资的不确定性</h3><ul><li>案例：爱尔眼科怎样降低并购小诊所的风险？<ul><li>【道】增加投资的灵活性</li><li>【法】采用延迟期权，扩张期权，放弃期权策略</li><li>【术】联合PE成立 并购基金，联合孵化小型创业公司</li><li>https://www.pedata.cn/jsp/research.html</li></ul></li><li>互联网项目 的投资 适合实物期权投资 策略。</li></ul><h3 id="chapter-26-风险转移-保险和责任共担">chapter 26 风险转移-保险和责任共担</h3><ul><li>常见的企业风险转移方法：<ul><li>签订长期合同；利用金融工具；购买保险。</li></ul></li></ul><h3 id="chapter-27-并购策略-以小博大的智慧">chapter 27 并购策略-以小博大的智慧</h3><ul><li>基本概念：<ul><li>私有化：将一家上市公司从公众公司重新 变回 私人公司。</li><li>MBO： 管理层收购，manegement buy-out，指管理层要把公司其流通在市场上的股份全部回购。</li><li>LBO：杠杆收购，lenerage buy-out，企业用很少的自由资金，买下一家体谅比自己大很多的企业</li></ul></li><li>判断一家企业的复制扩张战略是否成功看两个指标：收入集中度，利润集中度</li><li>如何看待企业的并购活动？<ul><li>是企业实现规模和也业务扩张常用的一种方式</li><li>并购的效果与起亚的管理能力有关</li><li>杠杆收购的本质是利用财务杠杆以小博大，是一种高风险的资本运作方式</li></ul></li></ul><h3 id="chapter-28-并购隐患-商誉这只灰犀牛">chapter 28 并购隐患-商誉这只灰犀牛</h3><h3 id="chapter-29-减值时机">chapter 29 减值时机</h3><h3 id="chapter-30-分红政策-分红多就是好公司吗">chapter 30 分红政策-分红多就是好公司吗</h3><h2 id="第4章-精进-快速把脉一家上市公司">第4章 精进-快速把脉一家上市公司</h2><ul><li>我觉得这一章是 对所有 公司的 财务状况的 诊断，其中上市公司只是一个特例，并且上市公司暴露了更多的财务数据，也有公众对其未来盈利能力的估值（股价）</li></ul><h3 id="chapter-31-财务诊断-分析框架">chapter 31 财务诊断-分析框架</h3><ul><li>哈佛分析框架包括战略分析，会计分析，财务分析和前景分析。战略分析 和 会计分析都是比较 主观的分析，财务分析 和 前景分析是可以用量化的指标 分析出来的</li><li>战略分析：<ul><li>先看外部环境-“经营环境分析”<ul><li>宏观环境<ul><li>政治，经济，法律，社会文化</li></ul></li><li>行业环境<ul><li>行业规模，增长前景，利润空间，变革速度</li><li>增长前景，按照行业跟经济周期的关系可以将行业分类：<ul><li>增长型行业：如高科技行业</li><li>防御性行业：</li><li>周期性行业：如大宗原材料行业，房地产行业</li></ul></li><li>利润空间<ul><li>行业利润率估值方法-波特五力模型：<ul><li>行业内竞争的激烈程度</li><li>行业进入 壁垒的高低</li><li>供应商谈判能力的强弱</li><li>购买方谈判能力的强弱</li><li>替代产品威胁的大小</li></ul></li></ul></li><li>行业变革速度：哪些是核心驱动因素，以及核心因素的变化速度<ul><li>一个是客户群体以及消费偏好的变化：例如消费行业</li><li>一个是技术革新的速度：如新能源技术在汽车的应用</li></ul></li></ul></li></ul></li><li>再看自己-“企业自身战略”<ul><li>战略：差异化战略（星巴克），成本领先战略（沃尔玛）</li><li>前者毛利率是后者两倍</li></ul></li></ul></li><li>会计分析：检验财务指标的真实性，是否真实的反应了公司的运营状况，重点关注以下3个维度<ul><li>1， 对企业影响最大的<strong>会计政策</strong>是什么？<ul><li>高科技企业利润要重点关注对研发支出的处理</li><li>重资产企业利润要重点关注固定资产折旧的处理</li></ul></li><li>2 哪些会计政策发生了变化？<ul><li>比如某一年度钢铁公司<strong>突然</strong>调节了固定资产折旧政策--延长折旧时间，来降低档期折旧费用。那么就需要进一步了解是否“操纵利润”的嫌疑。（真实情况是，这个是为了避免退市的垂死挣扎）</li></ul></li><li>3，对标企业（同行，用一行业的其他公司）的会计政策有哪些不一样？<ul><li>如果发现一家高科技企业的研发支出资本化比例 明显超过同行，就要进一步分析背后的原因。</li></ul></li></ul></li><li>财务分析：从4个维度 用具体的数值 评价公司现在做的怎么样</li><li>前景分析：预测业绩的可持续性，以及未来的价值</li></ul><h3 id="chapter-32-财务分析-4个维度诊断公司健康">chapter 32 财务分析-4个维度诊断公司健康</h3><ul><li><p>我同可以通过建立一些核心的财务指标考察企业在偿债能力，营运能力，盈利能力，价值创造这4个维度的表现，这个分析方法被称为“比率分析”方法。偿债能力: 关注的是企业家必须守住的底线，其他三个指标考虑的是企业的发展问题。企业发展 要靠“开源节流”，也就是，一方面提升盈利，一方面提升管理效率（营运能力）。</p></li><li><p>偿债能力: 关注的是企业家必须守住的底线</p><ul><li>流动比率 = 流动资产 / 流动负债， 小于1说明有重大问题，a股平均值1.22</li><li>速动比率= （流动资产 - 存货） /流动负债，a股平均值0.5<ul><li>速冻比率 相对流动比率，剔除了资产中 变现能力 最差的 存货</li></ul></li><li>现金比率 = 货币资金 / 流动负债，a股平均值0.31<ul><li>现金比率相对速动比率剔除 了 应收帐款</li><li>这个比率不能过高，过高了虽然风险预防能力是具备了，但是也说明资金使用效率低了。</li></ul></li></ul></li><li><p>营运能力</p><ul><li>周转率：<ul><li>主要反应管理效率，</li></ul></li></ul></li><li><p>盈利能力</p></li><li><p>价值创造能力：市盈率 和 市净率 - ### chapter 33 财报工具-竖着比和横着比</p></li><li><p>竖着比就是跟自己往年业绩比</p></li><li><p>横着比就是跟同行业的竞争公司比</p></li></ul><h3 id="chapter-34-财务实战-哈佛分析框架的应用">chapter 34 财务实战-哈佛分析框架的应用</h3><ul><li>【chiechie】作业1-使用哈佛分析框架分析下腾讯</li><li>【chiechie】作业2-使用哈佛分析框架分析下现在在做的项目</li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;思考几个问题，选股的分析框架？看市盈率，看行业龙头股的baseline，跨版本的股票，看业务构成，找相应板块&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;第3章-花钱-投资与分配&quot;&gt;第3章 花钱-投资与分配&lt;/h2&gt;
-&lt;h3 id=&quot;cha</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
-    
-    <category term="平台" scheme="https://chiechie.github.io/tags/%E5%B9%B3%E5%8F%B0/"/>
-    
-    <category term="平台治理" scheme="https://chiechie.github.io/tags/%E5%B9%B3%E5%8F%B0%E6%B2%BB%E7%90%86/"/>
-    
-    <category term="商业模式" scheme="https://chiechie.github.io/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/"/>
-    
-    <category term="创业" scheme="https://chiechie.github.io/tags/%E5%88%9B%E4%B8%9A/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>多世界理论</title>
-    <link href="https://chiechie.github.io/2021/06/10/reading_notes/phisics/duoshijie/"/>
-    <id>https://chiechie.github.io/2021/06/10/reading_notes/phisics/duoshijie/</id>
-    <published>2021-06-10T06:26:46.000Z</published>
-    <updated>2021-06-11T01:03:18.830Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="总结">总结</h2><ol type="1"><li>多世界理论是埃弗里特（Hugh Everett III, 1930 - 1982）在1957年提出的. 这个理论的核心是：量子理论是一个自洽的理论，不需要借助经典概念和任何额外的假设就能描述和解释一切现象，包括我们日常生活感受的经典世界和量子测量。根据这个理论，波包永远也不会塌缩，任何物体无论大小都是量子的，都可以用波函数描述。 整个宇宙的波函数<span class="math inline">\(\Psi\)</span>可以写成很多个分量的叠加 <span class="math display">\[\Psi=\varphi_{1}+\varphi_{2}+\ldots+\varphi_{n}+\ldots\]</span></li><li>其中的每一个分量<span class="math inline">\(\varphi_{n}\)</span>代表一个平行世界，这些平行世界真实存在、平行演化、互不干扰，偶尔发生干涉。 3 对多世界理论持反对意见的人其实无法给出任何令人信服的理由，主要是心理上无法接受其他平行世界的存在。</li><li>埃弗里特一开始就指出了波包塌缩理论的逻辑缺陷：当存在两个或两个以上观察者的时候，观察者们会给出不同的波包塌缩时间。埃弗里特用了一个例子来说明这个逻辑缺陷，他的例子和维格纳朋友佯谬类似。</li></ol><h2 id="薛定谔的猫猫">薛定谔的猫猫</h2><ol type="1"><li>薛定谔猫是一个关于量子测量的思想实验。在薛定谔的最初设想中，被测量的是正在衰变的放射性元素，这里用光子的偏振代替。 <img src="img.png" alt="img.png" /></li><li>每一个光子有两个可能的偏振态，水平偏振和垂直偏振。一般情况下，光子既不是水平偏振也不是垂直偏振，而是处于它们的叠加态。（类似复数）</li><li>现在假设有一个封闭的实验室，里面有一只猫猫，和光子偏振的测量设备。实验开始时，一个光子入射穿方解石，出来后落在检测屏上。如果落在检测评上方，什么也不会发生，猫猫依然是活的，如果落在下方，会触发打开毒气瓶的开关，把猫猫毒死。</li><li>光子落在屏幕上之后，猫猫和光子发生了纠缠。</li><li>现在让我们用量子力学来描述这个实验。实验开始前，实验室的波函数可以写成: <span class="math display">\[\left|\Psi_{0}\right\rangle=(\alpha|H\rangle+\beta|V\rangle) \otimes \mid live cat \rangle\]</span> 这时猫和光子没有任何关联。实验结束后，实验室的波函数变成了: <span class="math display">\[\begin{aligned}\left|\Psi_{1}\right\rangle&gt;=\alpha &amp;|H\rangle \otimes \mid \text { live cat }\rangle+\\ &amp;\beta|V\rangle \otimes \mid \text { dead cat }\rangle \end{aligned}\]</span></li><li>现在的问题是，上面的波函数有两部分：在第一部分里，猫是活的；在第二部分里，猫是死的。那这猫究竟是活的还是死的呢？如果你重复这个实验1000次，每次实验结束后打开实验室查看猫的死活，那么你会发现大约有 1000 |α|2次猫是活的，大约1000 | β |2次猫是死的。你不会看到一只既活又死的猫。</li><li>这个实验的本质是，波函数里明明有两个实验结果，当我们去观察时，却只能看到一个。为什么会这样? <img src="img_1.png" alt="img_1.png" /></li><li>在量子力学的框架下，如何解释这个现象？波包塌缩理论：当我们打开实验室去观察时，波函数发生了塌缩。它有<span class="math inline">\(\alpha^2\)</span>的几率发生如下塌缩： <span class="math display">\[\left|\Psi_{0}\right\rangle=\alpha|H\rangle \otimes \mid live cat \rangle\]</span> <span class="math inline">\(\beta^2\)</span>的几率发生如下塌缩： <span class="math display">\[\left|\Psi_{0}\right\rangle=\beta|V\rangle \otimes \mid dead cat \rangle\]</span> 也就是说，有一部分波函数会神秘的消失。</li><li>虽然波包塌缩理论能解释实验结果，但有很多缺点，比如没有描述塌缩究竟怎样发生的，持续了多长时间</li><li>另外一种理论就是多世界理论，系统的波函数<span class="math inline">\(\Psi\)</span>中两个分量，分别代表两个不同世界：一种世界里面，猫猫是活的，另外一种世界，猫猫是死的。这两种世界一样真实，并行存在。由于量子力学的演化是线性的，这两种世界会独立演化，互不影响。当观测者打开实验室的门，在一种世界里，他会看到一直活着的猫猫，感觉不到死猫，这个时候，似乎波函数发生了公式描述的塌缩。在另外一个世界，他会看到相反的景象，这似乎象征着波函数发生了第二种塌缩。从这个角度看，波包塌缩其实是多世界理论的推论，迄今没有任何实验可以推翻多世界理论。</li><li>当一个世界一分为二时，多世界理论是不是预示着能量不守恒了？并没有，分裂之后，只是几率变化了。分类之后的<span class="math inline">\(\Psi_1\)</span>表示，一个实验室有两种状态，一种状态里光子是水品偏振和猫是活的，另外一种状态里，光子是垂直偏振，猫猫却死了。这时，仍然只有一个光子，和一只猫。测量，让猫猫和光子的状态发生了纠缠，并没有增加数量 11。 量子图灵机非常推崇多世界理论，这个宇宙有无限个世界，跟0到1之间的实数一样多，对于薛定谔猫猫实验，一开始有无限多个世界，他们都完全相同。光子偏振测量结束后，这无穷多个世界分成了两组，分别由<span class="math inline">\(\Psi_1\)</span>中的两个分量描述，两组所占的比重分别为</li><li>多世界理论的核心：整个宇宙都是由微观粒子构成，宏观物体和围观粒子没有本质区别，他们也由波函数描述。一个波函数的不同分量代表不同的世界，每个分量都同样真实的，他们并行存在。相对于其他量子力学的解释，多世界理论不需要在量子力学的基本框架之外的额外假设。</li></ol><h2 id="谁对谁错">谁对谁错?</h2><blockquote><p>以薛定谔猫为例介绍了波包塌缩理论和多世界理论，它们都能解释现有实验结果。而且迄今为止没有人能设计一个实验来区别这两种理论，比如直接观测到另外一个世界或波包塌缩过程。那么究竟哪一个理论是正确的呢？实验是科学理论的试金石，现在这块试金石失效了，我们该如何判断这两种理论的对错？埃弗里特在他长论文的最后一个附录里谈到了物理理论的对错优劣问题，他认为除了寻求实验的验证，我们还应该考查理论的逻辑性、有用性、简单性等。下面我们就从这些方面详细对比波包塌缩理论和多世界理论。</p></blockquote><h3 id="逻辑性">逻辑性</h3><p>埃弗里特指出波包塌缩理论的逻辑缺陷：当存在两个或两个以上观察者的时候，观察者们会给出不同的波包塌缩时间。埃弗里特用了一个例子来说明这个逻辑缺陷，他的例子和维格纳朋友佯谬类似。在图3描述的实验中，我们把猫换成观察者爱丽丝，同时移走毒气瓶。如果光子落在检测屏上方，她就记录“上”；如果光子落在检测屏下方，她就记录“下”。对于爱丽丝来说，波包塌缩在光子和检测屏碰撞的一刻就已经发生了，因为她每次都明确地观察到了光子落在了上方或下方。现在假设实验室外面还有一个观察者鲍勃，在实验完成前，他和实验室没有任何相互作用。对于鲍勃来说，在他打开实验室以前，实验室由如下波函数描述 <span class="math display">\[\left|\Psi_{3}\right\rangle=\alpha|H\rangle \otimes|\mathrm{Up}\rangle+\beta|V\rangle \otimes \mid Down \rangle \]</span> 波包还没塌缩。假设鲍勃在实验结束后一周打开了实验室，这时波包塌缩了。他对爱丽丝的记录没有任何异议，但他坚持说波包塌缩是在他进入实验室的一刻发生的，爱丽丝当然不同意。于是矛盾产生了。这就是波包塌缩理论的逻辑缺陷。文献[10]对这个逻辑问题有更详细的描述。</p><h3 id="简单性">简单性</h3><p>这里指的是概念和理论框架的简单。多世界理论显然在概念上更简单，除了量子力学的基本框架，它不需要任何额外的假设。而波包塌缩是量子力学基本框架之外的一个额外假设。在量子力学里，量子态都是随时间进行连续和幺正的演化；而波包塌缩是不连续和非幺正的。因此，波包塌缩必须是一个独立的假设，不可能从量子力学的基本框架推出来。这个假设非常的不物理：塌缩是怎样的物理过程？经历了多长时间？如何界定外部观察者？这些问题迄今没有令人满意的答案。当我们考虑整个宇宙时，波包塌缩假说显得更是不合理。一方面，宇宙的外部没有观察者，所以整个宇宙的波函数应该连续地随时间幺正演化，不会经历随机的波包塌缩；另一方面，我们人类又时时刻刻在进行类似图3的实验，波包在随机的塌缩。这样宇宙的波函数由于我们的观察不再随时间幺正演化。多世界理论则不会导致这样矛盾的结果。</p><h3 id="刚性">刚性</h3><p>如果一个理论不能随意改动，我们就说这个理论具有刚性。多世界理论在概念上更简单，因为它不需要任何额外的假设。这也使它具有了刚性。量子力学已经被大量实验证实，它的基本理论框架是不能随意改动的。如果你能改动量子力学的基本框架，那你一定在引导一场新的物理革命。与之相反，波包塌缩理论显然是可以随意改动的。比如，我可以假设波包塌缩有一个中间过程：任何波函数都先塌缩为一个等权重量子态然后再塌缩到目标态。根据这个假设，公式(6) 描述的塌缩应该改写为</p><p><span class="math display">\[\left|\Psi_{1}\right\rangle \rightarrow \frac{1}{\sqrt{2}}(|H\rangle \otimes \mid live cat \rangle+|V\rangle \otimes \mid dead cat \left.\rangle\right) \rightarrow|H\rangle \otimes \mid live cat \rangle\]</span></p><p>这个修改后的波包塌缩理论同样能解释图3中的实验结果和其他量子测量结果。更糟糕的是，我们可以对波包塌缩理论做任意类似的改动。所以波包塌缩理论刚性非常差，完全是一团可以被随意揉捏的面。笔者认为任何真理和美都具有类似的刚性。一首动听的乐曲具有刚性：它的每一个音符都不能随意改动；一首美的诗具有刚性：它的每一个字都不能随意改动；一朵漂亮的鲜花具有刚性：花瓣的颜色、形状等都不能随意变动，所以花店老板总是对她店里的鲜花小心呵护。由于篇幅限制，这里不展开讨论了。</p><h3 id="有用性">有用性</h3><p>波包塌缩理论似乎只能用来解释类似图3中的量子测量实验，笔者不清楚它还有什么其他用处。多世界理论则帮助笔者解开了一些长久的困惑。按照进化论，我们人类是由非常初级的化学分子一步一步进化而来。每一步进化都是一个小概率事件，所以最后一步一步进化成具有智慧的人，概率是非常、非常小的。即使整个进化过程的时间很长，依然让人觉得不好接受：这么小概率的事件居然发生了。按照多世界理论，这种进化则是必然的，因为在多世界理论中任何小概率事件都会实现。波函数|Ψ1〉中有两个分量：无论α多小，活猫的世界都存在；无论β多小，死猫的世界都存在。也就是说，宇宙从来都不做选择，它只是按照比重不停地分裂为更多的世界。基于这个认识，让我们再来看生物进化。每一步进化其实都是一个化学反应过程：早期的进化是小分子组合成大分子，后来则是基因突变。而任何化学反应都是一个量子演化过程。按照多世界理论，无论事件发生的概率多小它都会发生。概率小只是说明在众多的世界里只有很少一部分生活着我们这样的智慧生物，绝大多数世界里地球上没有生命或者生命处于极其初始的状态。</p><h2 id="自由意志和多世界">自由意志和多世界</h2><p>按照经典物理，一旦初始条件给定，系统随后的演化就是唯一确定的。形象点说就是你所做的一切都是命中注定的，你的一生在你出生的那个时刻就已经确定了，自由意志只是一种假象。从经典物理理论出发，这个观点真是难以辩驳。后来有了量子力学，理论框架里含有内禀的几率，自由意志似乎不再是假象。但仔细一想，即使有了量子力学，自由意志似乎依然是假象。按照波包塌缩理论，几率只发生在外部观察者进行观察时。整个宇宙并没有外部观察者，宇宙的波函数依然按照量子力学进行确定的演化，所以自由意志依然是假象。但是按照多世界理论，整个宇宙的波函数虽然在确定地演化，但是它却在不停地分裂成不同的世界，观察者究竟感受和经历哪一个特定的世界是随机的，他不确定自己的未来是属于哪一个世界。这样，对于每一个世界来说，人是有自由意志的。于是我们有了一个非常美妙的结论：在一个确定演化的宇宙里存在真正的自由意志。</p><h2 id="世界是量子的">世界是量子的</h2><p>量子力学是一场颠覆性的物理革命，彻底推翻了很多经典的概念。但是非常有意思的是，几乎所有的量子力学的创立者都始终没有彻底摆脱经典物理的枷锁。这个问题的根源是波函数。波函数是抽象的希尔伯特空间中的一个向量，它和我们感知的世界没有直接的联系。为了建立波函数和现实世界的联系，这些伟大的物理学家开始回头在经典物理中寻求答案。爱因斯坦认为波函数根本就不能完整地描述自然，最终的理论一定是一个经典的理论，即所谓的隐变量理论。以玻尔和海森伯为代表的哥本哈根学派虽然认为波函数完整地描述了自然，但波函数和现实世界的联系需要通过经典仪器来完成。但最令人迷惑的事情是，没有一篇文章或一本书清晰明确阐明哥本哈根学派，他们的观点弥散在玻尔和他门徒无穷的文章和讲话里，每次他们似乎在谈论同一个观点，仔细一读似乎又总是有些变化。朗道在他的《量子力学》第一节中写了这样一段话，量子力学在物理理论中占有一个很不平常的地位；它把经典力学作为一种极限情形而包含之，但在它的自身表述中，同时又需要这一极限情形。</p><p>这或许能概括哥本哈根学派关于量子力学和经典力学之间关系的模棱两可的态度吧。哥本哈根学派无论怎么表述他们的观点，有一点很明确，他们没有彻底摆脱经典力学的枷锁。德布罗意试图将波函数解释成一种经典波，发展了导波理论，后来玻姆独立发展这个理论。这个理论认为粒子本质上是经典的。薛定谔似乎是这些量子先贤中唯一一位不走回头路的。他曾经在1952年的一次演讲中批评了当时流行的哥本哈根学派，指出波函数中的每一个分量都可能同时存在[11]。这当然就是多世界理论的本质。但是很遗憾，薛定谔并没有进一步发展这个想法。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://weibo.com/ttarticle/p/show?id=2309404646458711212151#_0">埃弗里特和他的多世界理论-吴飙-weibo</a></li><li><a href="https://www.phy.pku.edu.cn/wubiao/dfiles/pw/aifulitehetadeduoshijielilun.pdf">埃弗里特和他的多世界理论-吴飙-paper</a></li><li><a href="https://www.phy.pku.edu.cn/wubiao/pxsj.htm">吴飙-主页</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;多世界理论是埃弗里特（Hugh Everett III, 1930 - 1982）在1957年提出的. 这个理论的核心是：量子理论是一个自洽的理论，不需要借助经典概念和任何额外的假设就能描述和解释一切现象</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
-    
-    <category term="平行世界" scheme="https://chiechie.github.io/tags/%E5%B9%B3%E8%A1%8C%E4%B8%96%E7%95%8C/"/>
-    
-    <category term="自由意志" scheme="https://chiechie.github.io/tags/%E8%87%AA%E7%94%B1%E6%84%8F%E5%BF%97/"/>
-    
-    <category term="薛定谔的猫猫" scheme="https://chiechie.github.io/tags/%E8%96%9B%E5%AE%9A%E8%B0%94%E7%9A%84%E7%8C%AB%E7%8C%AB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>《the book of why》读书笔记-6</title>
-    <link href="https://chiechie.github.io/2021/06/10/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/"/>
-    <id>https://chiechie.github.io/2021/06/10/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/</id>
-    <published>2021-06-10T00:33:38.000Z</published>
-    <updated>2021-06-24T07:10:06.039Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>the book of why 的第6章-一些悖论</p></blockquote><h2 id="悖论1-蒙提-霍尔">悖论1-蒙提 霍尔</h2><h3 id="背景">背景</h3><p>一个竞猜游戏中，有三个用幕布遮住的们，其中有2个门后面是山羊，1个是汽车。有两种游戏规则，分别是：</p><ol type="1"><li>观众先选择三个门中的一个，然后主持人从另外两个门中选择一个没有汽车的们打开，然后这个观众可以选择要不要换门？</li><li>观众先选择三个门中的一个，然后主持人从另外两个门中随便选一个打开，然后这个观众可以选择要不要换门？</li></ol><p>第一种强况下，选择换门的话，赢到车车的概率是2/3， 第二种情况下，选择换门的话，赢到的车车的概率是1/2</p><figure><img src="./img789.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><h3 id="悖论的原因">悖论的原因</h3><ol type="1"><li><p>贝叶斯公式可以解释信息在非因果关系上的流动，也就是规则1，主持人选择了没有汽车的之后，第三个门的不确定性降低了（沿着门后有车的概率变大的方向），而整个空间的概率之和为1，所以第一个门有车的概率变小了。</p><blockquote><p>主持人的这个决策带来了系统的熵减，系统坍塌到2号门某个确定状态的子空间去了。</p></blockquote></li><li><p>为什么直觉上很难接受规则1的结论，反而会认为比赛的机制不公平？这个跟人类大脑结构有关系：</p><ul><li>大脑不擅长处理概率问题，</li><li>大脑自发抵制非因果关系的信息传递，这个是贝叶斯式变量控制的产物。</li><li>习惯将相关性等同于因果性</li><li>大脑天生难以接受</li></ul></li></ol><h2 id="悖论2-伯克森悖论">悖论2-伯克森悖论</h2><ol type="1"><li>生物统计学家约瑟夫.伯克森在医院做实验时，观察到了一个现象：两种疾病本来在一般人群中毫无关联，但是在住院人群中却会观察到似是而非的相关性。</li><li>医院样本实际上是一个冲撞模型，即，当一个人同时患了两种疾病时，一定会住院。</li><li>所以，「医院样本」就好像一个经过精心挑选过的样本，体现出来的相关关系是控制了「住院」变量之后，疾病1和疾病2的伪相关性。 <img src="img7890.png" alt="img.png" /></li><li>1956年，哲学家赖欣巴提出了一个猜想「共因原则」（common cause principle），他认为没有不含因果关系的相关关系，即，X和Y的相关不是偶然发生的，要么是一个变量导致另一个变量，要么是第三个变量，比如说出现在两个变量之前的Z变量，导致两者发生。</li><li>设计一个抛硬币的实验就可以推翻「共因原则」：假设同时抛两枚硬币，抛100次，只记录其中至少又一枚硬币为正面的结果，实验结束，发现记录的75条记录中，发现只要硬币1反面，硬币2就是正面，是因为两个硬币互通消息了吗？不是的，是因为人为记录改变了测度空间。</li><li>还有一个社会现象就是，在一些调查中发现，跟你约会的人中，哪些又魅力的人往往是混蛋。这个也是因为测度空间被你亲手改变了，因为长得丑的渣男最开始就被你过滤了。过滤之前，有魅力的渣男的概率是1/4，过滤之后有魅力的渣男概率是1/3。所以感觉这个比例增加了。</li></ol><h2 id="悖论3-辛普森悖论">悖论3-辛普森悖论</h2><ol type="1"><li>辛普森逆转：一个叫辛普森的医生，在文献上发现了一种新药D，可以治疗心脏病。论文的实验数据显示，女性患者服用药物之后，心脏病发作比例升高；男性患者服用药物之后，心脏病发作比例也升高。但是，在整体人群上，心脏病发作比例却降低了，因此该药物也被归为BBG（BAD/BAD/GOOD）型药物。然而，实际上这种药物不存在，虽然说在数学上没有什么问题。 <img src="judea-pearl_the-book-of-why7/img.png" alt="辛普森" /></li><li>对整体人群来说，正确的结论应该是什么呢？可以这么操作，先控制性别：<ul><li>do（性别）=女性，计算女性服药之后心脏病发作比例的变化 r1。</li><li>do（性别）=男性，计算男性服药之后心脏病发作比例的变化 r2。</li><li>假设整体人群中，男女比例为1：1，那么可以推断出整体人群，服药之后，心脏比发作比例的变化为（r1+r2）/2</li></ul></li><li>辛普森悖论是因为混杂因子的存在。</li><li>当我们考察两个变量的因果效应时：<ul><li>如果存在混在因子，只能用分层数据计算因果效应，采用控制混杂因子的方式，case by case，计算每个混在因子取值的情况下，两个变量的因果关系，然后按照混杂因子每个取值的概率汇总，得到整体上，两个变量之间的因果关系。 <img src="./img_2.png" alt="img_2.png" /></li><li>如果不存在混杂因子（有可能存在中介物），可以用聚合数据计算因果效应 <img src="./img_1.png" alt="中介物" /></li></ul></li><li>混杂因子存在的警告：根据聚合数据估计出来的因果效应大于，根据分层数据估计出来的因果效应。</li></ol><h2 id="关于悖论">关于悖论</h2><ol type="1"><li><p>什么是悖论？绝大部分人深信不疑的两个信念之间的冲突。</p><blockquote><p>辛普森逆转并不算悖论，只是纠正了不懂数学的人，对"平均表现"的错误认识。</p></blockquote></li><li><p>如何解决悖论？</p><ol type="1"><li>理解为什么大多数人会把它看成一个悖论？or大家对世界的直观看法到底在哪里存在重大缺陷？eg生理结构原因：大部分人不擅长处理概率问题；「过分擅长」处理因果问题</li><li>如何纠正：刻意训练，完成大脑重塑。</li></ol></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;the book of why 的第6章-一些悖论&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;悖论1-蒙提-霍尔&quot;&gt;悖论1-蒙提 霍尔&lt;/h2&gt;
-&lt;h3 id=&quot;背景&quot;&gt;背景&lt;/h3&gt;
-&lt;p&gt;一个竞猜游戏中，有三个用幕布遮住的们，其中有2</summary>
-      
-    
-    
-    
-    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
-    
-    
-    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
-    
-    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
-    
-    <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
-    
-    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
-    
-  </entry>
-  
-  <entry>
     <title>《the book of why》读书笔记-7</title>
     <link href="https://chiechie.github.io/2021/06/10/reading_notes/the-book-of-why/judea-pearl_the-book-of-why7/"/>
     <id>https://chiechie.github.io/2021/06/10/reading_notes/the-book-of-why/judea-pearl_the-book-of-why7/</id>
@@ -505,17 +468,49 @@
     <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
     
     
-    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
-    
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
-    <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
+    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
+    
+    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
     
     <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
     
+    <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
+    
     <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
     
-    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
+  </entry>
+  
+  <entry>
+    <title>多世界理论</title>
+    <link href="https://chiechie.github.io/2021/06/09/reading_notes/phisics/duoshijie/"/>
+    <id>https://chiechie.github.io/2021/06/09/reading_notes/phisics/duoshijie/</id>
+    <published>2021-06-09T06:26:46.000Z</published>
+    <updated>2021-06-28T02:09:13.990Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="总结">总结</h2><ol type="1"><li>多世界理论是埃弗里特（Hugh Everett III, 1930 - 1982）在1957年提出的. 这个理论的核心是：量子理论是一个自洽的理论，不需要借助经典概念和任何额外的假设就能描述和解释一切现象，包括我们日常生活感受的经典世界和量子测量。根据这个理论，波包永远也不会塌缩，任何物体无论大小都是量子的，都可以用波函数描述。 整个宇宙的波函数<span class="math inline">\(\Psi\)</span>可以写成很多个分量的叠加 <span class="math display">\[\Psi=\varphi_{1}+\varphi_{2}+\ldots+\varphi_{n}+\ldots\]</span></li><li>其中的每一个分量<span class="math inline">\(\varphi_{n}\)</span>代表一个平行世界，这些平行世界真实存在、平行演化、互不干扰，偶尔发生干涉。 3 对多世界理论持反对意见的人其实无法给出任何令人信服的理由，主要是心理上无法接受其他平行世界的存在。</li><li>埃弗里特一开始就指出了波包塌缩理论的逻辑缺陷：当存在两个或两个以上观察者的时候，观察者们会给出不同的波包塌缩时间。埃弗里特用了一个例子来说明这个逻辑缺陷，他的例子和维格纳朋友佯谬类似。</li></ol><h2 id="薛定谔的猫猫">薛定谔的猫猫</h2><ol type="1"><li>薛定谔猫是一个关于量子测量的思想实验。在薛定谔的最初设想中，被测量的是正在衰变的放射性元素，这里用光子的偏振代替。 <img src="img.png" alt="img.png" /></li><li>每一个光子有两个可能的偏振态，水平偏振和垂直偏振。一般情况下，光子既不是水平偏振也不是垂直偏振，而是处于它们的叠加态。（类似复数）</li><li>现在假设有一个封闭的实验室，里面有一只猫猫，和光子偏振的测量设备。实验开始时，一个光子入射穿方解石，出来后落在检测屏上。如果落在检测评上方，什么也不会发生，猫猫依然是活的，如果落在下方，会触发打开毒气瓶的开关，把猫猫毒死。</li><li>光子落在屏幕上之后，猫猫和光子发生了纠缠。</li><li>现在让我们用量子力学来描述这个实验。实验开始前，实验室的波函数可以写成: <span class="math display">\[\left|\Psi_{0}\right\rangle=(\alpha|H\rangle+\beta|V\rangle) \otimes \mid live cat \rangle\]</span> 这时猫和光子没有任何关联。实验结束后，实验室的波函数变成了: <span class="math display">\[\begin{aligned}\left|\Psi_{1}\right\rangle&gt;=\alpha &amp;|H\rangle \otimes \mid \text { live cat }\rangle+\\ &amp;\beta|V\rangle \otimes \mid \text { dead cat }\rangle \end{aligned}\]</span></li><li>现在的问题是，上面的波函数有两部分：在第一部分里，猫是活的；在第二部分里，猫是死的。那这猫究竟是活的还是死的呢？如果你重复这个实验1000次，每次实验结束后打开实验室查看猫的死活，那么你会发现大约有 1000 |α|2次猫是活的，大约1000 | β |2次猫是死的。你不会看到一只既活又死的猫。</li><li>这个实验的本质是，波函数里明明有两个实验结果，当我们去观察时，却只能看到一个。为什么会这样? <img src="img_1.png" alt="img_1.png" /></li><li>在量子力学的框架下，如何解释这个现象？波包塌缩理论：当我们打开实验室去观察时，波函数发生了塌缩。它有<span class="math inline">\(\alpha^2\)</span>的几率发生如下塌缩： <span class="math display">\[\left|\Psi_{0}\right\rangle=\alpha|H\rangle \otimes \mid live cat \rangle\]</span> <span class="math inline">\(\beta^2\)</span>的几率发生如下塌缩： <span class="math display">\[\left|\Psi_{0}\right\rangle=\beta|V\rangle \otimes \mid dead cat \rangle\]</span> 也就是说，有一部分波函数会神秘的消失。</li><li>虽然波包塌缩理论能解释实验结果，但有很多缺点，比如没有描述塌缩究竟怎样发生的，持续了多长时间</li><li>另外一种理论就是多世界理论，系统的波函数<span class="math inline">\(\Psi\)</span>中两个分量，分别代表两个不同世界：一种世界里面，猫猫是活的，另外一种世界，猫猫是死的。这两种世界一样真实，并行存在。由于量子力学的演化是线性的，这两种世界会独立演化，互不影响。当观测者打开实验室的门，在一种世界里，他会看到一直活着的猫猫，感觉不到死猫，这个时候，似乎波函数发生了公式描述的塌缩。在另外一个世界，他会看到相反的景象，这似乎象征着波函数发生了第二种塌缩。从这个角度看，波包塌缩其实是多世界理论的推论，迄今没有任何实验可以推翻多世界理论。</li><li>当一个世界一分为二时，多世界理论是不是预示着能量不守恒了？并没有，分裂之后，只是几率变化了。分类之后的<span class="math inline">\(\Psi_1\)</span>表示，一个实验室有两种状态，一种状态里光子是水品偏振和猫是活的，另外一种状态里，光子是垂直偏振，猫猫却死了。这时，仍然只有一个光子，和一只猫。测量，让猫猫和光子的状态发生了纠缠，并没有增加数量 11。 量子图灵机非常推崇多世界理论，这个宇宙有无限个世界，跟0到1之间的实数一样多，对于薛定谔猫猫实验，一开始有无限多个世界，他们都完全相同。光子偏振测量结束后，这无穷多个世界分成了两组，分别由<span class="math inline">\(\Psi_1\)</span>中的两个分量描述，两组所占的比重分别为</li><li>多世界理论的核心：整个宇宙都是由微观粒子构成，宏观物体和围观粒子没有本质区别，他们也由波函数描述。一个波函数的不同分量代表不同的世界，每个分量都同样真实的，他们并行存在。相对于其他量子力学的解释，多世界理论不需要在量子力学的基本框架之外的额外假设。</li></ol><h2 id="谁对谁错">谁对谁错?</h2><blockquote><p>以薛定谔猫为例介绍了波包塌缩理论和多世界理论，它们都能解释现有实验结果。而且迄今为止没有人能设计一个实验来区别这两种理论，比如直接观测到另外一个世界或波包塌缩过程。那么究竟哪一个理论是正确的呢？实验是科学理论的试金石，现在这块试金石失效了，我们该如何判断这两种理论的对错？埃弗里特在他长论文的最后一个附录里谈到了物理理论的对错优劣问题，他认为除了寻求实验的验证，我们还应该考查理论的逻辑性、有用性、简单性等。下面我们就从这些方面详细对比波包塌缩理论和多世界理论。</p></blockquote><h3 id="逻辑性">逻辑性</h3><p>埃弗里特指出波包塌缩理论的逻辑缺陷：当存在两个或两个以上观察者的时候，观察者们会给出不同的波包塌缩时间。埃弗里特用了一个例子来说明这个逻辑缺陷，他的例子和维格纳朋友佯谬类似。在图3描述的实验中，我们把猫换成观察者爱丽丝，同时移走毒气瓶。如果光子落在检测屏上方，她就记录“上”；如果光子落在检测屏下方，她就记录“下”。对于爱丽丝来说，波包塌缩在光子和检测屏碰撞的一刻就已经发生了，因为她每次都明确地观察到了光子落在了上方或下方。现在假设实验室外面还有一个观察者鲍勃，在实验完成前，他和实验室没有任何相互作用。对于鲍勃来说，在他打开实验室以前，实验室由如下波函数描述 <span class="math display">\[\left|\Psi_{3}\right\rangle=\alpha|H\rangle \otimes|\mathrm{Up}\rangle+\beta|V\rangle \otimes \mid Down \rangle \]</span> 波包还没塌缩。假设鲍勃在实验结束后一周打开了实验室，这时波包塌缩了。他对爱丽丝的记录没有任何异议，但他坚持说波包塌缩是在他进入实验室的一刻发生的，爱丽丝当然不同意。于是矛盾产生了。这就是波包塌缩理论的逻辑缺陷。文献[10]对这个逻辑问题有更详细的描述。</p><h3 id="简单性">简单性</h3><p>这里指的是概念和理论框架的简单。多世界理论显然在概念上更简单，除了量子力学的基本框架，它不需要任何额外的假设。而波包塌缩是量子力学基本框架之外的一个额外假设。在量子力学里，量子态都是随时间进行连续和幺正的演化；而波包塌缩是不连续和非幺正的。因此，波包塌缩必须是一个独立的假设，不可能从量子力学的基本框架推出来。这个假设非常的不物理：塌缩是怎样的物理过程？经历了多长时间？如何界定外部观察者？这些问题迄今没有令人满意的答案。当我们考虑整个宇宙时，波包塌缩假说显得更是不合理。一方面，宇宙的外部没有观察者，所以整个宇宙的波函数应该连续地随时间幺正演化，不会经历随机的波包塌缩；另一方面，我们人类又时时刻刻在进行类似图3的实验，波包在随机的塌缩。这样宇宙的波函数由于我们的观察不再随时间幺正演化。多世界理论则不会导致这样矛盾的结果。</p><h3 id="刚性">刚性</h3><p>如果一个理论不能随意改动，我们就说这个理论具有刚性。多世界理论在概念上更简单，因为它不需要任何额外的假设。这也使它具有了刚性。量子力学已经被大量实验证实，它的基本理论框架是不能随意改动的。如果你能改动量子力学的基本框架，那你一定在引导一场新的物理革命。与之相反，波包塌缩理论显然是可以随意改动的。比如，我可以假设波包塌缩有一个中间过程：任何波函数都先塌缩为一个等权重量子态然后再塌缩到目标态。根据这个假设，公式(6) 描述的塌缩应该改写为</p><p><span class="math display">\[\left|\Psi_{1}\right\rangle \rightarrow \frac{1}{\sqrt{2}}(|H\rangle \otimes \mid live cat \rangle+|V\rangle \otimes \mid dead cat \left.\rangle\right) \rightarrow|H\rangle \otimes \mid live cat \rangle\]</span></p><p>这个修改后的波包塌缩理论同样能解释图3中的实验结果和其他量子测量结果。更糟糕的是，我们可以对波包塌缩理论做任意类似的改动。所以波包塌缩理论刚性非常差，完全是一团可以被随意揉捏的面。笔者认为任何真理和美都具有类似的刚性。一首动听的乐曲具有刚性：它的每一个音符都不能随意改动；一首美的诗具有刚性：它的每一个字都不能随意改动；一朵漂亮的鲜花具有刚性：花瓣的颜色、形状等都不能随意变动，所以花店老板总是对她店里的鲜花小心呵护。由于篇幅限制，这里不展开讨论了。</p><h3 id="有用性">有用性</h3><p>波包塌缩理论似乎只能用来解释类似图3中的量子测量实验，笔者不清楚它还有什么其他用处。多世界理论则帮助笔者解开了一些长久的困惑。按照进化论，我们人类是由非常初级的化学分子一步一步进化而来。每一步进化都是一个小概率事件，所以最后一步一步进化成具有智慧的人，概率是非常、非常小的。即使整个进化过程的时间很长，依然让人觉得不好接受：这么小概率的事件居然发生了。按照多世界理论，这种进化则是必然的，因为在多世界理论中任何小概率事件都会实现。波函数|Ψ1〉中有两个分量：无论α多小，活猫的世界都存在；无论β多小，死猫的世界都存在。也就是说，宇宙从来都不做选择，它只是按照比重不停地分裂为更多的世界。基于这个认识，让我们再来看生物进化。每一步进化其实都是一个化学反应过程：早期的进化是小分子组合成大分子，后来则是基因突变。而任何化学反应都是一个量子演化过程。按照多世界理论，无论事件发生的概率多小它都会发生。概率小只是说明在众多的世界里只有很少一部分生活着我们这样的智慧生物，绝大多数世界里地球上没有生命或者生命处于极其初始的状态。</p><h2 id="自由意志和多世界">自由意志和多世界</h2><p>按照经典物理，一旦初始条件给定，系统随后的演化就是唯一确定的。形象点说就是你所做的一切都是命中注定的，你的一生在你出生的那个时刻就已经确定了，自由意志只是一种假象。从经典物理理论出发，这个观点真是难以辩驳。后来有了量子力学，理论框架里含有内禀的几率，自由意志似乎不再是假象。但仔细一想，即使有了量子力学，自由意志似乎依然是假象。按照波包塌缩理论，几率只发生在外部观察者进行观察时。整个宇宙并没有外部观察者，宇宙的波函数依然按照量子力学进行确定的演化，所以自由意志依然是假象。但是按照多世界理论，整个宇宙的波函数虽然在确定地演化，但是它却在不停地分裂成不同的世界，观察者究竟感受和经历哪一个特定的世界是随机的，他不确定自己的未来是属于哪一个世界。这样，对于每一个世界来说，人是有自由意志的。于是我们有了一个非常美妙的结论：在一个确定演化的宇宙里存在真正的自由意志。</p><h2 id="世界是量子的">世界是量子的</h2><p>量子力学是一场颠覆性的物理革命，彻底推翻了很多经典的概念。但是非常有意思的是，几乎所有的量子力学的创立者都始终没有彻底摆脱经典物理的枷锁。这个问题的根源是波函数。波函数是抽象的希尔伯特空间中的一个向量，它和我们感知的世界没有直接的联系。为了建立波函数和现实世界的联系，这些伟大的物理学家开始回头在经典物理中寻求答案。爱因斯坦认为波函数根本就不能完整地描述自然，最终的理论一定是一个经典的理论，即所谓的隐变量理论。以玻尔和海森伯为代表的哥本哈根学派虽然认为波函数完整地描述了自然，但波函数和现实世界的联系需要通过经典仪器来完成。但最令人迷惑的事情是，没有一篇文章或一本书清晰明确阐明哥本哈根学派，他们的观点弥散在玻尔和他门徒无穷的文章和讲话里，每次他们似乎在谈论同一个观点，仔细一读似乎又总是有些变化。朗道在他的《量子力学》第一节中写了这样一段话，量子力学在物理理论中占有一个很不平常的地位；它把经典力学作为一种极限情形而包含之，但在它的自身表述中，同时又需要这一极限情形。</p><p>这或许能概括哥本哈根学派关于量子力学和经典力学之间关系的模棱两可的态度吧。哥本哈根学派无论怎么表述他们的观点，有一点很明确，他们没有彻底摆脱经典力学的枷锁。德布罗意试图将波函数解释成一种经典波，发展了导波理论，后来玻姆独立发展这个理论。这个理论认为粒子本质上是经典的。薛定谔似乎是这些量子先贤中唯一一位不走回头路的。他曾经在1952年的一次演讲中批评了当时流行的哥本哈根学派，指出波函数中的每一个分量都可能同时存在[11]。这当然就是多世界理论的本质。但是很遗憾，薛定谔并没有进一步发展这个想法。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://weibo.com/ttarticle/p/show?id=2309404646458711212151#_0">埃弗里特和他的多世界理论-吴飙-weibo</a></li><li><a href="https://www.phy.pku.edu.cn/wubiao/dfiles/pw/aifulitehetadeduoshijielilun.pdf">埃弗里特和他的多世界理论-吴飙-paper</a></li><li><a href="https://www.phy.pku.edu.cn/wubiao/pxsj.htm">吴飙-主页</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;多世界理论是埃弗里特（Hugh Everett III, 1930 - 1982）在1957年提出的. 这个理论的核心是：量子理论是一个自洽的理论，不需要借助经典概念和任何额外的假设就能描述和解释一切现象</summary>
+      
+    
+    
+    
+    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
+    
+    <category term="平行世界" scheme="https://chiechie.github.io/tags/%E5%B9%B3%E8%A1%8C%E4%B8%96%E7%95%8C/"/>
+    
+    <category term="自由意志" scheme="https://chiechie.github.io/tags/%E8%87%AA%E7%94%B1%E6%84%8F%E5%BF%97/"/>
+    
+    <category term="薛定谔的猫猫" scheme="https://chiechie.github.io/tags/%E8%96%9B%E5%AE%9A%E8%B0%94%E7%9A%84%E7%8C%AB%E7%8C%AB/"/>
     
   </entry>
   
@@ -550,6 +545,81 @@
   </entry>
   
   <entry>
+    <title>《the book of why》读书笔记-6</title>
+    <link href="https://chiechie.github.io/2021/06/07/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/"/>
+    <id>https://chiechie.github.io/2021/06/07/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/</id>
+    <published>2021-06-07T00:33:38.000Z</published>
+    <updated>2021-06-28T02:13:03.752Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>the book of why 的第6章-一些悖论</p></blockquote><h2 id="悖论1-蒙提-霍尔">悖论1-蒙提 霍尔</h2><h3 id="背景">背景</h3><p>一个竞猜游戏中，有三个用幕布遮住的们，其中有2个门后面是山羊，1个是汽车。有两种游戏规则，分别是：</p><ol type="1"><li>观众先选择三个门中的一个，然后主持人从另外两个门中选择一个没有汽车的们打开，然后这个观众可以选择要不要换门？</li><li>观众先选择三个门中的一个，然后主持人从另外两个门中随便选一个打开，然后这个观众可以选择要不要换门？</li></ol><p>第一种强况下，选择换门的话，赢到车车的概率是2/3， 第二种情况下，选择换门的话，赢到的车车的概率是1/2</p><figure><img src="./img789.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><h3 id="悖论的原因">悖论的原因</h3><ol type="1"><li><p>贝叶斯公式可以解释信息在非因果关系上的流动，也就是规则1，主持人选择了没有汽车的之后，第三个门的不确定性降低了（沿着门后有车的概率变大的方向），而整个空间的概率之和为1，所以第一个门有车的概率变小了。</p><blockquote><p>主持人的这个决策带来了系统的熵减，系统坍塌到2号门某个确定状态的子空间去了。</p></blockquote></li><li><p>为什么直觉上很难接受规则1的结论，反而会认为比赛的机制不公平？这个跟人类大脑结构有关系：</p><ul><li>大脑不擅长处理概率问题，</li><li>大脑自发抵制非因果关系的信息传递，这个是贝叶斯式变量控制的产物。</li><li>习惯将相关性等同于因果性</li><li>大脑天生难以接受</li></ul></li></ol><h2 id="悖论2-伯克森悖论">悖论2-伯克森悖论</h2><ol type="1"><li>生物统计学家约瑟夫.伯克森在医院做实验时，观察到了一个现象：两种疾病本来在一般人群中毫无关联，但是在住院人群中却会观察到似是而非的相关性。</li><li>医院样本实际上是一个冲撞模型，即，当一个人同时患了两种疾病时，一定会住院。</li><li>所以，「医院样本」就好像一个经过精心挑选过的样本，体现出来的相关关系是控制了「住院」变量之后，疾病1和疾病2的伪相关性。 <img src="img7890.png" alt="img.png" /></li><li>1956年，哲学家赖欣巴提出了一个猜想「共因原则」（common cause principle），他认为没有不含因果关系的相关关系，即，X和Y的相关不是偶然发生的，要么是一个变量导致另一个变量，要么是第三个变量，比如说出现在两个变量之前的Z变量，导致两者发生。</li><li>设计一个抛硬币的实验就可以推翻「共因原则」：假设同时抛两枚硬币，抛100次，只记录其中至少又一枚硬币为正面的结果，实验结束，发现记录的75条记录中，发现只要硬币1反面，硬币2就是正面，是因为两个硬币互通消息了吗？不是的，是因为人为记录改变了测度空间。</li><li>还有一个社会现象就是，在一些调查中发现，跟你约会的人中，哪些又魅力的人往往是混蛋。这个也是因为测度空间被你亲手改变了，因为长得丑的渣男最开始就被你过滤了。过滤之前，有魅力的渣男的概率是1/4，过滤之后有魅力的渣男概率是1/3。所以感觉这个比例增加了。</li></ol><h2 id="悖论3-辛普森悖论">悖论3-辛普森悖论</h2><ol type="1"><li>辛普森逆转：一个叫辛普森的医生，在文献上发现了一种新药D，可以治疗心脏病。论文的实验数据显示，女性患者服用药物之后，心脏病发作比例升高；男性患者服用药物之后，心脏病发作比例也升高。但是，在整体人群上，心脏病发作比例却降低了，因此该药物也被归为BBG（BAD/BAD/GOOD）型药物。然而，实际上这种药物不存在，虽然说在数学上没有什么问题。 <img src="judea-pearl_the-book-of-why7/img.png" alt="辛普森" /></li><li>对整体人群来说，正确的结论应该是什么呢？可以这么操作，先控制性别：<ul><li>do（性别）=女性，计算女性服药之后心脏病发作比例的变化 r1。</li><li>do（性别）=男性，计算男性服药之后心脏病发作比例的变化 r2。</li><li>假设整体人群中，男女比例为1：1，那么可以推断出整体人群，服药之后，心脏比发作比例的变化为（r1+r2）/2</li></ul></li><li>辛普森悖论是因为混杂因子的存在。</li><li>当我们考察两个变量的因果效应时：<ul><li>如果存在混在因子，只能用分层数据计算因果效应，采用控制混杂因子的方式，case by case，计算每个混在因子取值的情况下，两个变量的因果关系，然后按照混杂因子每个取值的概率汇总，得到整体上，两个变量之间的因果关系。 <img src="./img_2.png" alt="img_2.png" /></li><li>如果不存在混杂因子（有可能存在中介物），可以用聚合数据计算因果效应 <img src="./img_1.png" alt="中介物" /></li></ul></li><li>混杂因子存在的警告：根据聚合数据估计出来的因果效应大于，根据分层数据估计出来的因果效应。</li></ol><h2 id="关于悖论">关于悖论</h2><ol type="1"><li><p>什么是悖论？绝大部分人深信不疑的两个信念之间的冲突。</p><blockquote><p>辛普森逆转并不算悖论，只是纠正了不懂数学的人，对"平均表现"的错误认识。</p></blockquote></li><li><p>如何解决悖论？</p><ol type="1"><li>理解为什么大多数人会把它看成一个悖论？or大家对世界的直观看法到底在哪里存在重大缺陷？eg生理结构原因：大部分人不擅长处理概率问题；「过分擅长」处理因果问题</li><li>如何纠正：刻意训练，完成大脑重塑。</li></ol></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;the book of why 的第6章-一些悖论&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;悖论1-蒙提-霍尔&quot;&gt;悖论1-蒙提 霍尔&lt;/h2&gt;
+&lt;h3 id=&quot;背景&quot;&gt;背景&lt;/h3&gt;
+&lt;p&gt;一个竞猜游戏中，有三个用幕布遮住的们，其中有2</summary>
+      
+    
+    
+    
+    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
+    
+    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
+    
+    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    
+    <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
+    
+    <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>《财务讲义》读书笔记</title>
+    <link href="https://chiechie.github.io/2021/06/06/reading_notes/reality/caiwujiangyi/"/>
+    <id>https://chiechie.github.io/2021/06/06/reading_notes/reality/caiwujiangyi/</id>
+    <published>2021-06-06T08:25:08.000Z</published>
+    <updated>2021-06-28T02:13:25.889Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>思考几个问题，选股的分析框架？看市盈率，看行业龙头股的baseline，跨版本的股票，看业务构成，找相应板块</p></blockquote><h2 id="第3章-花钱-投资与分配">第3章 花钱-投资与分配</h2><h3 id="chapter-21-固定资产">chapter 21 固定资产</h3><ul><li>固定资产：企业的大件资产，比如厂房，生产设备。不仅花费大，而且是企业准备长期 持有的资产。</li><li>与固定资产相对的 是流动资产，如 库存 ，短期投资 等</li><li>企业最大的开销是固定资产投资（类似搞基建，互联网公司可以弱化，但是实业公司不能弱化）</li><li>租赁的本质是债务融资（跟房贷一样）</li><li>财务决策中，在 同风险等级 的 投资决策 之间进行比较是一个重要原则。</li><li>投资的机会成本 是为了一个项目A 所放弃的 其他项目B 的收益，其他项目B的风险等级必须要和A一样。</li><li>所以，不应该考虑买还是租，而是考虑 租还是 借（钱）。也就是说 把 租赁这种 债务融资方式 和 借 这种债务融资方式 比较</li><li>如何降低租赁对负债率的影响<ul><li>在2018年 会计准则修改之前，将融资行负债 修改为 经营性负债</li><li>在2018年 会计准则修改之后，就没法专空子了。</li></ul></li><li>如何盘活租来的固定资产</li><li>融资性 售后回租：将固定资产 卖给 融资租赁公司，然后签订租赁合同，合同期满就可以买回来。</li></ul><h3 id="chapter-22-价值投资-用别人的错误赚钱">chapter 22 价值投资-用别人的错误赚钱</h3><h3 id="chapter-23-资本预算-项目之间是如何pk的">chapter 23 资本预算-项目之间是如何PK的</h3><ul><li>投资收益比较</li><li>（往上一层）投资的溢出效应：值新项目对企业其他项目 或者 外部事物的影响<ul><li>负向</li><li>正向-协同效应</li></ul></li><li>投资回收期平衡</li></ul><h3 id="chapter-24-风险量化">chapter 24 风险量化</h3><ul><li>点分析：项目的保本点是多少<ul><li>对美国上市公司的盈余公告进行研究：发现每一美元造成的股价下跌，几乎是每一美元盈利带来的股价上涨幅度的两倍</li><li>企业的盈利目标又三个层析：1. 保证不亏损 2 超过前一年同期的盈利 3 超过证券分析师的预期</li><li>局限：<ul><li>有的项目处于战略需要一定要投资，即时财务不赚钱</li><li>正向偏离也是一种风险</li></ul></li></ul></li><li>线分析：跟往年比是多少</li><li>面分析：分析师的预期是多少</li></ul><h3 id="chapter-25-实物期权-应对投资的不确定性">chapter 25 实物期权-应对投资的不确定性</h3><ul><li>案例：爱尔眼科怎样降低并购小诊所的风险？<ul><li>【道】增加投资的灵活性</li><li>【法】采用延迟期权，扩张期权，放弃期权策略</li><li>【术】联合PE成立 并购基金，联合孵化小型创业公司</li><li>https://www.pedata.cn/jsp/research.html</li></ul></li><li>互联网项目 的投资 适合实物期权投资 策略。</li></ul><h3 id="chapter-26-风险转移-保险和责任共担">chapter 26 风险转移-保险和责任共担</h3><ul><li>常见的企业风险转移方法：<ul><li>签订长期合同；利用金融工具；购买保险。</li></ul></li></ul><h3 id="chapter-27-并购策略-以小博大的智慧">chapter 27 并购策略-以小博大的智慧</h3><ul><li>基本概念：<ul><li>私有化：将一家上市公司从公众公司重新 变回 私人公司。</li><li>MBO： 管理层收购，manegement buy-out，指管理层要把公司其流通在市场上的股份全部回购。</li><li>LBO：杠杆收购，lenerage buy-out，企业用很少的自由资金，买下一家体谅比自己大很多的企业</li></ul></li><li>判断一家企业的复制扩张战略是否成功看两个指标：收入集中度，利润集中度</li><li>如何看待企业的并购活动？<ul><li>是企业实现规模和也业务扩张常用的一种方式</li><li>并购的效果与起亚的管理能力有关</li><li>杠杆收购的本质是利用财务杠杆以小博大，是一种高风险的资本运作方式</li></ul></li></ul><h3 id="chapter-28-并购隐患-商誉这只灰犀牛">chapter 28 并购隐患-商誉这只灰犀牛</h3><h3 id="chapter-29-减值时机">chapter 29 减值时机</h3><h3 id="chapter-30-分红政策-分红多就是好公司吗">chapter 30 分红政策-分红多就是好公司吗</h3><h2 id="第4章-精进-快速把脉一家上市公司">第4章 精进-快速把脉一家上市公司</h2><ul><li>我觉得这一章是 对所有 公司的 财务状况的 诊断，其中上市公司只是一个特例，并且上市公司暴露了更多的财务数据，也有公众对其未来盈利能力的估值（股价）</li></ul><h3 id="chapter-31-财务诊断-分析框架">chapter 31 财务诊断-分析框架</h3><ul><li>哈佛分析框架包括战略分析，会计分析，财务分析和前景分析。战略分析 和 会计分析都是比较 主观的分析，财务分析 和 前景分析是可以用量化的指标 分析出来的</li><li>战略分析：<ul><li>先看外部环境-“经营环境分析”<ul><li>宏观环境<ul><li>政治，经济，法律，社会文化</li></ul></li><li>行业环境<ul><li>行业规模，增长前景，利润空间，变革速度</li><li>增长前景，按照行业跟经济周期的关系可以将行业分类：<ul><li>增长型行业：如高科技行业</li><li>防御性行业：</li><li>周期性行业：如大宗原材料行业，房地产行业</li></ul></li><li>利润空间<ul><li>行业利润率估值方法-波特五力模型：<ul><li>行业内竞争的激烈程度</li><li>行业进入 壁垒的高低</li><li>供应商谈判能力的强弱</li><li>购买方谈判能力的强弱</li><li>替代产品威胁的大小</li></ul></li></ul></li><li>行业变革速度：哪些是核心驱动因素，以及核心因素的变化速度<ul><li>一个是客户群体以及消费偏好的变化：例如消费行业</li><li>一个是技术革新的速度：如新能源技术在汽车的应用</li></ul></li></ul></li></ul></li><li>再看自己-“企业自身战略”<ul><li>战略：差异化战略（星巴克），成本领先战略（沃尔玛）</li><li>前者毛利率是后者两倍</li></ul></li></ul></li><li>会计分析：检验财务指标的真实性，是否真实的反应了公司的运营状况，重点关注以下3个维度<ul><li>1， 对企业影响最大的<strong>会计政策</strong>是什么？<ul><li>高科技企业利润要重点关注对研发支出的处理</li><li>重资产企业利润要重点关注固定资产折旧的处理</li></ul></li><li>2 哪些会计政策发生了变化？<ul><li>比如某一年度钢铁公司<strong>突然</strong>调节了固定资产折旧政策--延长折旧时间，来降低档期折旧费用。那么就需要进一步了解是否“操纵利润”的嫌疑。（真实情况是，这个是为了避免退市的垂死挣扎）</li></ul></li><li>3，对标企业（同行，用一行业的其他公司）的会计政策有哪些不一样？<ul><li>如果发现一家高科技企业的研发支出资本化比例 明显超过同行，就要进一步分析背后的原因。</li></ul></li></ul></li><li>财务分析：从4个维度 用具体的数值 评价公司现在做的怎么样</li><li>前景分析：预测业绩的可持续性，以及未来的价值</li></ul><h3 id="chapter-32-财务分析-4个维度诊断公司健康">chapter 32 财务分析-4个维度诊断公司健康</h3><ul><li><p>我同可以通过建立一些核心的财务指标考察企业在偿债能力，营运能力，盈利能力，价值创造这4个维度的表现，这个分析方法被称为“比率分析”方法。偿债能力: 关注的是企业家必须守住的底线，其他三个指标考虑的是企业的发展问题。企业发展 要靠“开源节流”，也就是，一方面提升盈利，一方面提升管理效率（营运能力）。</p></li><li><p>偿债能力: 关注的是企业家必须守住的底线</p><ul><li>流动比率 = 流动资产 / 流动负债， 小于1说明有重大问题，a股平均值1.22</li><li>速动比率= （流动资产 - 存货） /流动负债，a股平均值0.5<ul><li>速冻比率 相对流动比率，剔除了资产中 变现能力 最差的 存货</li></ul></li><li>现金比率 = 货币资金 / 流动负债，a股平均值0.31<ul><li>现金比率相对速动比率剔除 了 应收帐款</li><li>这个比率不能过高，过高了虽然风险预防能力是具备了，但是也说明资金使用效率低了。</li></ul></li></ul></li><li><p>营运能力</p><ul><li>周转率：<ul><li>主要反应管理效率，</li></ul></li></ul></li><li><p>盈利能力</p></li><li><p>价值创造能力：市盈率 和 市净率 - ### chapter 33 财报工具-竖着比和横着比</p></li><li><p>竖着比就是跟自己往年业绩比</p></li><li><p>横着比就是跟同行业的竞争公司比</p></li></ul><h3 id="chapter-34-财务实战-哈佛分析框架的应用">chapter 34 财务实战-哈佛分析框架的应用</h3><ul><li>【chiechie】作业1-使用哈佛分析框架分析下腾讯</li><li>【chiechie】作业2-使用哈佛分析框架分析下现在在做的项目</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;思考几个问题，选股的分析框架？看市盈率，看行业龙头股的baseline，跨版本的股票，看业务构成，找相应板块&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;第3章-花钱-投资与分配&quot;&gt;第3章 花钱-投资与分配&lt;/h2&gt;
+&lt;h3 id=&quot;cha</summary>
+      
+    
+    
+    
+    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
+    
+    <category term="平台" scheme="https://chiechie.github.io/tags/%E5%B9%B3%E5%8F%B0/"/>
+    
+    <category term="平台治理" scheme="https://chiechie.github.io/tags/%E5%B9%B3%E5%8F%B0%E6%B2%BB%E7%90%86/"/>
+    
+    <category term="商业模式" scheme="https://chiechie.github.io/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/"/>
+    
+    <category term="创业" scheme="https://chiechie.github.io/tags/%E5%88%9B%E4%B8%9A/"/>
+    
+  </entry>
+  
+  <entry>
     <title>时序预测最佳实践</title>
     <link href="https://chiechie.github.io/2021/06/05/AI/timeseries/quantml-practice/"/>
     <id>https://chiechie.github.io/2021/06/05/AI/timeseries/quantml-practice/</id>
@@ -580,69 +650,6 @@
     <category term="最佳实践" scheme="https://chiechie.github.io/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
     
     <category term="时序预测" scheme="https://chiechie.github.io/tags/%E6%97%B6%E5%BA%8F%E9%A2%84%E6%B5%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>量子计算机</title>
-    <link href="https://chiechie.github.io/2021/06/04/reading_notes/computer/liangzijisuanji/"/>
-    <id>https://chiechie.github.io/2021/06/04/reading_notes/computer/liangzijisuanji/</id>
-    <published>2021-06-04T01:05:44.000Z</published>
-    <updated>2021-06-04T01:32:47.631Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="why">why？</h2><ol type="1"><li>最早提出用量子体系来计算，或者说模拟量子物理问题的科学家是费曼，不过当时只是一个概念。</li><li>真正从数学上证明有效的算法，是20世纪90年代数学家提出的两类算法：Shor算法和Grover算法.</li><li>Shor算法解决质因数分解问题。用量子的逻辑电路，可以将大数分解问题的求解时间从指数级降低为准多项式级。大数不可分正是现在互联网上应用最广泛的非对称加密系统，也叫公钥加密系统的数学基础。用现在最好的算法破解2048位数的公钥密码，需要超过100万年时间，而用Shor算法只需要几分钟</li><li>Grover算法是一个搜索算法，它可以将无结构的数据搜索问题从N复杂度降低为根号N复杂度。虽然加速能力不如Shor算法，但搜索算法是一种非常基础的算法，可以映射到多种实际问题中去。当N非常大时，这种加速效应也非常显著。目前互联网中每时每刻产生的海量数据，要从中寻找有用信息，正对应着这种N非常大的情况。此外，搜索算法还可以用来进行密码破解。</li><li>此外，量子计算还可以通过模拟复杂系统的哈密顿量来进行量子化学计算，研究原来很难研究的复杂多体物理问题；通过量子纠缠特性，量子计算还可以快速计算多参量的代价函数，从而提高优化问题的求解效率，在人工智能方面也有潜在的应用价值。</li></ol><h2 id="量子计算可以解决什么问题">量子计算可以解决什么问题？</h2><ol type="1"><li>计算科学中，所有的计算问题可以分为可判定问题和不可判定问题。</li><li>计算机能够解决的只是可判定类问题，也就是可计算问题。</li><li>NP问题中还有一类NP完全问题，计算复杂度指数增长，其中包括非常经典的最大割问题、行商问题等等。量子计算目前无法解决。</li></ol><figure><img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><h2 id="怎么实现量子计算">怎么实现量子计算？</h2><ol type="1"><li><p>从理论上看，比较简单，先把问题用比特进行编码，算完之后观测结果 <img src="img_1.png" alt="img_1.png" /></p></li><li><p>从实现上看，比较有挑战，因为实现过程中会有噪声，并且量子不好操控和测量。</p><blockquote><p>量子计算的理论和算法研究早在上世纪八九十年代就出现了，而实验物理研究却一直到2000年以后才逐渐走上快车道。</p></blockquote></li><li><p>现实世界中，能够用来做量子计算的体系有很多，包括自然原子、离子阱、光子、二维电子气、NV-色心、核自旋、冷原子，以及超导量子比特，等等。哪些是优秀的“量子比特”，能成功构建出实用的量子计算机呢？要满足以下条件（Divincenzo准则”）：</p><ul><li>可以构建一组可扩展的大量量子比特，并且能够很好的表征它们</li><li>能够对量子比特进行初始化</li><li>量子比特必须具有足够长的退相干时间</li><li>能实现一组通用的量子门操作</li><li>能够很好地测量这些量子比特的最终状态</li></ul></li><li><p>基于超导量子比特的超导量子计算，满足上面五点，成为现在各大头部公司最看好的技术方案</p></li></ol><h2 id="现状以及未来展望">现状以及未来展望</h2><ol type="1"><li>2019年10月，Google在Science上刊出了一篇论文，介绍了他们验证了量子霸权的实验结果。个实验让全世界都备感兴奋，谷歌的CEO皮查伊评价这个实验的意义，就像当年莱特兄弟发明了第一驾飞机。不过，正如第一驾民用客机要到50多年后才诞生，量子计算机走入千家万户，仍有很长的路要走。 <img src="img_2.png" alt="img_2.png" /></li></ol><h2 id="参考">参考</h2><ol type="1"><li>https://weibo.com/ttarticle/x/m/show/id/2309404644282962411850?<em>wb_client</em>=1</li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;why&quot;&gt;why？&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;最早提出用量子体系来计算，或者说模拟量子物理问题的科学家是费曼，不过当时只是一个概念。&lt;/li&gt;
-&lt;li&gt;真正从数学上证明有效的算法，是20世纪90年代数学家提出的两类算法：Shor算法和Grove</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="未来趋势" scheme="https://chiechie.github.io/tags/%E6%9C%AA%E6%9D%A5%E8%B6%8B%E5%8A%BF/"/>
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="量子计算机" scheme="https://chiechie.github.io/tags/%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>汇率机制</title>
-    <link href="https://chiechie.github.io/2021/06/03/reading_notes/economics/huilv/"/>
-    <id>https://chiechie.github.io/2021/06/03/reading_notes/economics/huilv/</id>
-    <published>2021-06-03T00:28:28.000Z</published>
-    <updated>2021-06-03T00:58:35.711Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>中国可以无限印钞购买美国的东西吗？</p></blockquote><p>蒙代尔三角：本国货币政策的独立性（印钞权），汇率的稳定性，资本自由流动，3选2，必须放弃一个。</p><p>蒙代尔三角短期可以三种都实行，但是最终会提供套利机会，导致三者里面必须放弃一个。 例如92-98年的泰国，三者都要导致外汇掏空，固定汇率无法维持，引起亚洲金融危机。</p><table><thead><tr class="header"><th></th><th>货币主权</th><th>汇率的稳定性</th><th>资本自由流动</th></tr></thead><tbody><tr class="odd"><td>英国/希腊等欧盟国家</td><td>No</td><td>Yes</td><td>Yes</td></tr><tr class="even"><td>中国香港</td><td>No</td><td>Yes</td><td>Yes</td></tr><tr class="odd"><td>中国大陆</td><td>Yes</td><td>有限</td><td>有限</td></tr><tr class="even"><td>美国</td><td>有限</td><td>有限</td><td>Yes</td></tr></tbody></table><h2 id="香港政府怎么发币的">香港政府怎么发币的？</h2><p>法律规定，香港的发钞银行在发行钞票时，需要找7.8:1的汇率向金管局提交等值美元，并计入外汇基金账目，作为所发钞票的支持。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/21611592/answer/18777171">一种货币和美元挂钩是怎样实现的？-知乎</a></li><li><a href="https://www.zhihu.com/question/67928805/answer/257923560">中国为什么不直接印大量的人民币去买美国的东西?知乎</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;中国可以无限印钞购买美国的东西吗？&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;蒙代尔三角：本国货币政策的独立性（印钞权），汇率的稳定性，资本自由流动，3选2，必须放弃一个。&lt;/p&gt;
-&lt;p&gt;蒙代尔三角短期可以三种都实行，但是最终会提供套利机会，导致三</summary>
-      
-    
-    
-    
-    <category term="经济学" scheme="https://chiechie.github.io/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
-    
-    
-    <category term="经济学" scheme="https://chiechie.github.io/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
-    
-    <category term="货币" scheme="https://chiechie.github.io/tags/%E8%B4%A7%E5%B8%81/"/>
-    
-    <category term="汇率" scheme="https://chiechie.github.io/tags/%E6%B1%87%E7%8E%87/"/>
     
   </entry>
   

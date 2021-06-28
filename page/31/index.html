@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/reading_notes/zhexue/hanfeizi_shuolin/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/18/AI/machine_learning/automl/NAS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/15/reading_notes/zhexue/hanfeizi_shuolin/" class="post-title-link" itemprop="url">《韩非子-说林》读书笔记</a>
+            <a href="/2021/05/18/AI/machine_learning/automl/NAS/" class="post-title-link" itemprop="url">可微的NAS方法</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,111 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-15 22:46:04" itemprop="dateCreated datePublished" datetime="2021-05-15T22:46:04+08:00">2021-05-15</time>
+              <time title="创建时间：2021-05-18 08:32:24" itemprop="dateCreated datePublished" datetime="2021-05-18T08:32:24+08:00">2021-05-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-10 17:29:43" itemprop="dateModified" datetime="2021-06-10T17:29:43+08:00">2021-06-10</time>
+                <time title="修改时间：2021-05-19 10:55:05" itemprop="dateModified" datetime="2021-05-19T10:55:05+08:00">2021-05-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>NAS是auto-ml的一个子领域，相关的技术有随机搜索，强化学习，基于微分的方法，如DARTS 和 FBNet。</p>
+<p>DARTS 和 FBNet是目前做NAS的the state of arts方法</p>
+<p>下面简单介绍FBNet的思路</p>
+</blockquote>
+<h2 id="fbnet的基本idea">FBNet的基本idea</h2>
+<ol type="1">
+<li><p>定义候选block, eg10个</p></li>
+<li><p>定义神经网络的层数,eg20，神经网络的每一层都是从9个候选block中选一个，搜索空间9^20</p></li>
+<li><p>构建一个很大的神经网络--supernet，每一层由9个候选block并联而成。supernet的待估参数包括9个候选block✖️20层，以及长度为9的权重向量✖️20。</p>
+<blockquote>
+<p>人工调参，可以看成是，指定supernet中的一条路径，然后灌入数据，来估计路径上20个blcock的参数。使用FBNet就不用人为指定其中某条路径，而是这个大网络supernet从训练数据中，学习出9个block✖️20（层）个参数，以及9✖️20（层）个权重。训练完之后，选择每一层权重最大的block并且连成一条路径，就是机器选定的20层的网络结构。</p>
+</blockquote></li>
+<li><p>模型要落地，还要考虑计算效率。具体的做法，事先算好候选block各自的latency(做一次推断平均耗时多久，block的权重随机给，跑多组数据求平均时延），然后将latency信息加入损失函数中，作为错误率之外的另外的一个惩罚项。</p></li>
+</ol>
+<h2 id="chiechies-reflection">chiechie's reflection</h2>
+<p>联想到之前构建的通用异常检测模型，整体流程大概是这样：定义多个检测器，曲线特征，并用一个随机森林去做集成。希望随机森林可以将不同的曲线路由到适合的检测器上去。</p>
+<p>FBNet的思路跟上面的流程有点像，都是数据驱动去选择适配的组件。不同的地方在于，FBNet最终会减枝，即从9✖️20个可能的路径中，裁剪成一条路径。</p>
+<p>FBNet要解决的任务更简单，给一个小任务找到适配的解决方案；通用异常检测更难，要给n个小任务找解决方案，并且用一套复合的解决方案。</p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=D9m9-CXw_HY">Differentiable Neural Architecture Search-youtube</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/17/reading_notes/qukuailian/how-to-Defi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/17/reading_notes/qukuailian/how-to-Defi/" class="post-title-link" itemprop="url">《how to Defi》读书笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-17 09:20:02" itemprop="dateCreated datePublished" datetime="2021-05-17T09:20:02+08:00">2021-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-11 09:03:18" itemprop="dateModified" datetime="2021-06-11T09:03:18+08:00">2021-06-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -220,167 +317,31 @@
 
       
           <blockquote>
-<p>《说林》分上下两篇，共七十一则传说故事，这些故事应为韩非子为其论文写作而准备的材料。</p>
+<p>区块链技术的第一代应用是以比特币为全球支付货币，第二代应用是以太坊完成智能合约，第三代应用是defi和nft完成金融体系重构</p>
+<p>how to defi 讲的就是区块链技术的第三代应用之一--去中心化金融(DeFI)</p>
 </blockquote>
-<h1 id="上">上</h1>
-<h2 id="二">二</h2>
-<p>晋人伐邢，齐桓公将救之。鲍叔[1]曰：“太蚤。邢不亡，晋不敝；晋不敝，齐不重。且夫持危之功，不如存亡之德大。君不如晚救之以敝晋，齐实利。待邢亡而复存之，其名实美。”桓公乃弗救</p>
-<h2 id="三">三</h2>
-<p>智伯索地于魏宣子，魏宣子弗予。任章曰：“何故不予？”宣子曰：“无故请地，故弗予。”任章曰：“无故索地，邻国必恐。彼重欲无厌，天下必惧。君予之地，智伯必骄而轻敌，邻邦必惧而相亲。以相亲之兵待轻敌之国，则智伯之命不长矣。《周书》[1]曰：‘将欲败之，必姑辅之；将欲取之，必姑予之。’君不如予之以骄智伯。且君何释以天下图智氏，而独以吾国为智氏质乎？”君曰：“善。”乃与之万户之邑。智伯大悦，因索地于赵，弗与，因围晋阳。韩、魏反之外，赵氏应之内，智氏以亡。</p>
-<h1 id="下">下</h1>
-<h2 id="一">一</h2>
-<p>桓赫曰：“刻削[1]之道，鼻莫如大，目莫如小。鼻大可小，小不可大也；目小可大，大不可小也。”举事亦然。为其后可复者也，则事寡败矣。</p>
-<p>[1]刻削：雕刻。</p>
-<p>做事情跟雕刻一样要留有余地，就不容易失败。</p>
-<hr />
-<p>崇侯、恶来知不适纣之诛也，而不见武王之灭之也。比干、子胥知其君之必亡也，而不知身之死也。故曰：“崇候、恶来知心而不知事，比干、子胥知事而不知心。”圣人其备矣。</p>
-<p>最明智的人，眼观六路，耳听八方。</p>
-<blockquote>
-<p>六路：指上、下、四方；八方：指东、南、西、北、东南、西南、西北、东北。形容人机智灵活，遇事能多方观察分析。</p>
-</blockquote>
-<hr />
-<p>宋太宰贵而主断。季子将见宋君，梁子闻之曰：“语必可与太宰三坐乎，不然，将不免。”季子因说以贵主而轻国。</p>
-<p>宋国太宰地位尊贵但处事独断。季子想求见宋国国君，梁子听到后说：“你和宋国国君说话时，一定要像与国君、太宰坐在一起时那样，否则，你可能难逃杀身之祸。”季子因此进言了一些尊重君主而少问国事的话。</p>
-<p>言论可被公开。</p>
-<h2 id="二-1">二</h2>
-<p>杨朱之弟杨布衣素衣而出。天雨，解素衣，衣缁衣[1]而反，其狗不知而吠之。杨布怒，将击之。杨朱曰：“子勿击也，子亦犹是。曩[2]者使女狗白而往，黑而来，子岂能毋怪哉？”</p>
-<p>[1]缁衣：黑衣服。</p>
-<p>[2]曩（nǎng）：以往，从前。</p>
-<hr />
-<p>惠子曰：“羿执决[3]持扞[4]，操弓关[5]机，越人争为持的。弱子扞弓，慈母入室闭户。”故曰：“可必，则越人不疑羿；不可必，则慈母逃弱子。”</p>
-<p>[3]决：古代射箭的人戴在右手大拇指上用以拉弦的工具。</p>
-<p>[4]扞（hàn）：古代射箭的人往左手臂上戴的一种袖套，多为皮制。[5]关：牵引。</p>
-<p>事关自身生存的时候，还是会考虑用能力胜任的人，而不是用关系亲近的人。</p>
-<hr />
-<p>桓公问管仲：“富有涯乎？”答曰：“水之以涯，其无水者也；富之以涯，其富已足者也。人不能自止于足，而亡其富之涯乎！”</p>
-<p>人的欲望是没有尽头的，什么时候都不会认为自己已经足够成功，或者足够富裕了。</p>
-<h2 id="三-1">三</h2>
-<p>宋之富贾有监止子者，与人争买百金之璞玉，因佯失而毁之，负其百金，而理其毁瑕，得千溢[1]焉。事有举之而有败，而贤其毋举之者，负之时也。</p>
-<p>[1]溢：同“镒”。一镒相当于二十两。一说为二十四两。</p>
-<p>就好像创业，创业肯定有一定概率成功或者失败，但是很多人因为害怕失败，就不去做这个事情，是因为只看到了负面的效应。</p>
-<hr />
-<p>有欲以御见荆王者，众驺[2]妒之。因曰：“臣能撽[3]鹿。”见王。王为御，不及鹿；自御，及之。王善其御也，乃言众驺妒之。</p>
-<p>[2]驺（zōu）：马夫。 [3]撽（qiào）：打，击。</p>
-<p>先得证明自己的实力？</p>
-<hr />
-<p>荆令公子将伐陈。丈人送之曰：“晋强，不可不慎也。”公子曰：“丈人奚忧？吾为丈人破晋。”丈人曰：“可。吾方庐陈南门之外。”公子曰：“是何也？”曰：“我笑勾践也。为人之如是其易也，己独何为密密十年难乎？”</p>
-<p>年轻人容易把问题看的太容易</p>
-<h2 id="四">四</h2>
-<p>公子纠将为乱，桓公使使者视之。使者报曰：“笑不乐，视不见，必为乱。”乃使鲁人杀之。</p>
-<hr />
-<p>公孔弘断发而为越王骑，公孔喜使人绝[1]之，曰：“吾不与子为昆弟矣。”公孙弘曰：“我断发，子断颈而为人用兵，我将谓子何？”周南之战，公孙喜死焉。</p>
-<p>[1]绝：断绝关系。</p>
-<hr />
-<p>有与悍者邻，欲卖宅而避之。人曰：“是其贯将满矣，子姑待之。”答曰：“吾恐其以我满贯也。”遂去之。故曰：“物之几者，非所靡也。”</p>
-<p>事情如果到了紧急关头，就不要再拖拖拉拉、磨磨蹭蹭、犹豫不决的了，需当机立断！</p>
-<hr />
-<p>孔子谓弟子曰：“孰能导子西之钓名也？”子贡曰：“赐也能。”乃导之，不复疑也。孔子曰：“宽哉，不被于利！洁哉，民性有恒！曲为曲，直为直。”孔子曰：“子西不免。”白公之难，子西死焉。故曰：“直于行者曲于欲。”</p>
-<h2 id="五">五</h2>
-<p>靖郭君将城薛，客多以谏者。靖郭君谓谒者曰：“毋为客通。”齐人有请见者曰：“臣请三言而已。过三言，臣请烹。”靖郭君因见之。客趋进曰：“海大鱼。”因反走。靖郭君曰：“请闻其说。”客曰：“臣不敢以死为戏。”靖郭君曰：“原为寡人言之。”答曰：“君闻大鱼乎？网不能止，缴[2]不能□[3]也，荡而失水，蝼蚁得意焉。今夫齐亦君之海也。君长有齐，奚以薛为？君失齐，虽隆薛城至于天，犹无益也。”靖郭君曰：“善。”乃辍，不城薛。</p>
-<h2 id="六">六</h2>
-<p>荆王弟在秦，秦不出也。中射之士[1]曰：“资臣百金，臣能出之。”因载百金之晋，见叔向，曰：“荆王弟在秦，秦不出也。请以百金委叔向。”叔向受金，而以见之晋平公曰：“可以城壶丘矣。”平公曰：“何也？”对曰：“荆王弟在秦，秦不出也，是秦恶荆也，必不敢禁我城壶丘。若禁之，我曰：‘为我出荆王之弟，吾不城也。’彼如出之，可以德荆；彼不出，是卒恶也，必不敢禁我城壶丘矣。”公曰：“善。”乃城壶丘。谓秦公曰：“为我出荆王之弟，吾不城也。”秦因出之。荆王大说，以链金百镒遗晋。</p>
-<p>叔向收了楚国臣子的金子，并没有告诉晋平公，而是顺着晋国的角度，帮君主分析如何在秦国和楚国之间周旋，获得利益，得到的结论 也跟自己的利益相符合。</p>
-<hr />
-<p>阖庐攻郢，战三胜，问子胥曰：“可以退乎？”子胥对曰：“溺人者一饮而止，则无遂者，以其休也。不如乘之以沈[2]之。”</p>
-<hr />
-<p>郑人有一子，将宦，谓其家曰：“必筑坏墙，是不善，人将窃。”其巷人亦云。不时筑，而人果窃之。以其子为智，以巷人告者为盗。</p>
-<p>人本能会甩锅给关系疏远的人，而把功劳归给关系亲近的人。</p>
-<h2 id="参考">参考</h2>
+<h2 id="why-defi">why defi</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/0c332090718443e90c34969">韩非子-微信读书</a></li>
+<li>传统金融体系容易遭受与人相关的风险，比如腐败。defi试图通过创建一个更好的金融环境，来弥补现有金融系统的漏洞，主要对银行系统的三个关键部分进行了优化：支付&amp;清算系统；可获取性；中心化&amp;透明度。</li>
+<li>DeFi的最大优势在于能够消除中 介机构并在零审查的环境下运行。</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/bootstrap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/15/AI/machine_learning/bootstrap/" class="post-title-link" itemprop="url">一种重采样方法-resampling</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-15 16:29:28" itemprop="dateCreated datePublished" datetime="2021-05-15T16:29:28+08:00">2021-05-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="bootstrap的假设">bootstrap的假设</h2>
+<h2 id="what">what</h2>
+<ol type="1">
+<li><p>DeFi生态中有哪些应用？</p>
 <ul>
-<li>当前的数据资料是最能反映population信息的一批资料</li>
-<li>绝大部分样本跟population中的个体很相似</li>
-</ul>
-<figure>
-<img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
-<h2 id="为什么bootstrap比一般的参数估计方法更有效">为什么bootstrap比一般的参数估计方法更有效？</h2>
-<figure>
-<img src="./img_1.png" alt="bootstrap比一般的参数估计方法更有效" /><figcaption aria-hidden="true">bootstrap比一般的参数估计方法更有效</figcaption>
-</figure>
-<p>bootstrap本质上是一种外推法（extrapolating to the population），更有想象力，当让也更有出错的可能</p>
-<figure>
-<img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
-</figure>
+<li>稳定币：比如泰达币（Tether，USDT) ，稳定币作为稳定的价值存储手段使得DeFi应用对大众来说更加可用。</li>
+<li>借贷服务：传统金融体系要求用户有银行账户，良好的信用评分，以及足够的抵押品；去中心化借贷允许任何人抵押其数字资产，然后利用抵押资产获得贷款。</li>
+<li>交易所：中心化交易所egconbase，huobi，binance，存在被黑客攻击的危险；去中心化交易所更安全，不依赖交易所的偿付能力。</li>
+<li>衍生品：衍生品合约主要在中心化平台上进行交易。目前，许多DeFi平 台正开始构建去中心化衍生品市场。</li>
+<li>基金管理：基金管理主要有主动型和被动型两种，主动型基金管理会有一个管理团队负责投资 决策。被动型基金管理没有管理团队，而被设计为尽可能接近 某一特定基准的表现。</li>
+<li>彩票：结合DeFi的彩票可将资金池的托管转移到以太坊智能合约上。</li>
+<li>支付：通过将支付重置为流模式而非我们熟悉的交易来改变我们处理支付的方式。（比如云服务商，按照使用的流量收费）</li>
+<li>保险：智能合约的漏洞容易被黑客攻击，从而影响智能合约中锁定的代币。当用户在Defi上处理大量资金的时候，购买保险是必要的。</li>
+</ul></li>
+</ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=gcPIyeqymOU">Resampling methods-bootstrapping--youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://news.huoxing24.com/20200817195548945458.html">how to difi中文版</a></li>
 </ol>
 
       
@@ -400,7 +361,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/86/">86</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/87/">87</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -466,20 +427,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">194</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

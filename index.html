@@ -165,6 +165,89 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/28/reading_notes/computer/cache-memory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/28/reading_notes/computer/cache-memory/" class="post-title-link" itemprop="url">计算机的存储单元</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-28 09:47:32 / 修改时间：10:07:25" itemprop="dateCreated datePublished" datetime="2021-06-28T09:47:32+08:00">2021-06-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="概览">概览</h2>
+<ol type="1">
+<li><p>计算机上的存储单元的处理速度从快到慢依次是： 寄存器&gt; L1&gt;L2&gt;L3&gt;内存&gt;固态硬盘&gt; 机械硬盘</p>
+<figure>
+<img src="./img_1.png" alt="存储单元" /><figcaption aria-hidden="true">存储单元</figcaption>
+</figure></li>
+<li><p>早期的计算机只有寄存器和内存，但是寄存器的处理速度远高于内存，所以大部分时间是寄存器在等内存，所以CPU是处于空转状态。 经过改进</p></li>
+<li><p>除了寄存器，后面的计算机在CPU中又逐步加入了高速缓存--L1/L2/L3缓存，相当于让内存提前做功课，把数据提前取出来，在3个缓存中候着，等寄存器有空了就取来用。笨鸟先飞嘛。</p></li>
+<li><p>L1/L2/L3缓存，每层速度递减、容量递增。L1缓存速度接近寄存器速度，大约1ns时延。</p></li>
+<li><p>多核CPU的L3对诶个core是共享的，L2和L1是每个core私有的。</p></li>
+</ol>
+<p><img src="./img_2.png" alt="img_2.png" /> 6. CPU读取数据时，要从内存读取到L3，再读取到L2再读取到L1，同样写到内存时也会经过这些层次。</p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>https://www.junmajinlong.com/os/cpu_cache/</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -196,7 +279,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-28 08:34:18" itemprop="dateModified" datetime="2021-06-28T08:34:18+08:00">2021-06-28</time>
+                <time title="修改时间：2021-06-28 10:06:27" itemprop="dateModified" datetime="2021-06-28T10:06:27+08:00">2021-06-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,10 +312,29 @@
 <h3 id="线程threads">线程（threads）</h3>
 <p>一个进程中的执行的单位。</p>
 <p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p>
-<h3 id="应用-vs-进程-vs-进程">应用 vs 进程 vs 进程</h3>
+<h2 id="应用-vs-线程-vs-进程">应用 vs 线程 vs 进程</h2>
 <p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p>
 <p>进程和线程的区别：</p>
 <p>• 进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉 • 线程（车厢）在进程（火车）下行进 • 一个进程（火车）可以包含多个线程（车厢） • 不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享 线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行 • 进程要比线程消耗更多的计算机资源 • 进程间不会相互影响，一个线程挂掉将导致整个进程挂掉 • 进程可以拓展到多机，线程最多适合多核 • 进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁" • 进程使用的内存地址可以限定使用量－“信号量”</p>
+<h2 id="硬件多线程vs软件多线程">硬件多线程vs软件多线程</h2>
+<p>CPU架构演进路线： 多cpu---&gt;超线程--&gt;多core</p>
+<p>https://stackoverflow.com/questions/680684/multi-cpu-multi-core-and-hyper-thread</p>
+<p>其中的超线程（hyper thread）指的硬件多线程，如下图，相当于给一个core，虚拟化为2个core，可以更方便压榨计算机性能</p>
+<h2 id="多进程-or-多线程">多进程 or 多线程？</h2>
+<p>多进程更稳定，但是多线程能达到更高的计算效率</p>
+<figure>
+<img src="img_1.png" alt="左边是单线程，右边是多线程" /><figcaption aria-hidden="true">左边是单线程，右边是多线程</figcaption>
+</figure>
+<p>多线程的优势：</p>
+<ul>
+<li>响应性：比如启动一个网页（启动一个浏览器进程），可以同时并行做个事情，如浏览/下载/问答（并行启动多个线程）。</li>
+<li>资源共享：一个进程上的所有线程共享同一份内存，这样能够让机器的使用效率更高，可以做更多的复杂的事情。---赋能/增效</li>
+<li>更经济： 多进程浪费资源，因为创建1个进程需要分配很多内存和资源，相比之下，创建和切换线程的成本小的多。另外，完成一个复杂的任务，多线程共用一份底层资源，多进程就需要把资源复制几份。又浪费了一遍。--降本</li>
+<li>充分压榨多处理器的架构：</li>
+</ul>
+<blockquote>
+<p>大中台类似多线程，烟囱式开发类似多进程</p>
+</blockquote>
 <h2 id="实践">实践</h2>
 <h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p>
@@ -243,128 +345,8 @@
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/25532384/answer/411179772">biaodianfu-zhihu</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=usyg5vbni34">thred</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/26/reading_notes/reality/about-scale/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/26/reading_notes/reality/about-scale/" class="post-title-link" itemprop="url">关于Scale AI</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-06-26 10:39:20 / 修改时间：13:25:49" itemprop="dateCreated datePublished" datetime="2021-06-26T10:39:20+08:00">2021-06-26</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>看到packy激情满满写了一篇关于Scale AI的公关文，比较好奇这个年轻的小公司有何特别之处，为什么会受到资本的一致认可。</p>
-<p>印象中scale就是一家硅谷的数据标注公司，主要靠外包给第三方国家，赚取中间费用，这种公司有什么竞争力呢？跟大厂比起来？</p>
-</blockquote>
-<h2 id="总结">总结</h2>
-<ol type="1">
-<li><p>AI这个市场未来20年还有很大的发展空间，当前只有8%的公司应用了AI技术。</p></li>
-<li><p>Scale AI创立至今5年，最近一次估值73亿$。它跟stripe有点像，在一个蓬勃发展的行业，找到一个关键但是不起眼的小地方，深耕细作。</p></li>
-<li><p>刚开始成立的时候，Scale AI专注做数据标注，但是他们的野心不限于此，他们想做更好用的数据标注工具，即人机互助的方式，Human-in-the-Loop（HIL）。</p></li>
-<li><p>Scale AI的故事是：随着标记数据越来越多，标注数据的边际成本会降低，因为标记样本越多，标记机器人的性能越好，能hold的事情就越多，需要分配出去的工作就越少。</p>
-<blockquote>
-<p>这里有一个问题，怎么确定，哪些是机器可以搞定的，哪些搞不定的？这个是不是又要多一层人工监督层了？</p>
-<p>可以从环境中获取到反馈，也可以人工抽查。</p>
-<p>总的来说，都不是很完善的方案。</p>
-</blockquote></li>
-<li><p>Scale AI还有一个亮点，他的客户群体很分散，从国防部到无人驾驶公司，eg OpenAI, Airbnb and Lyft。这有一个好处就是。AI公司去去留留，竞争之后，留下的是最有效的ml应用场景，但是Scale AI始终有机会，因为做的是基础设施的。</p></li>
-<li><p>除了标注API，Scale AI还做了一个样本调试的产品--Nucleus，data debugging SaaS product。目的是做全链路基建嘛。 <img src="./img.png" alt="Nucleus" /></p></li>
-<li><p>Alexandr Wang 说的一段话</p>
-<blockquote>
-<p>At Scale, we’re building the foundation to enable organizations to manage the entire AI lifecycle. Whether they have an AI team in-house or need a fully managed models-as-a-service approach, we partner with our customers to build their strategy from the ground up and ensure they have the infrastructure in place to systematically deliver highly-performant models.</p>
-</blockquote></li>
-</ol>
-<p>简单点说，他们的方法是，帮助企业从0到1落地一个AI应用--不管这个企业内部有没有AI团队--企业能够使用这个基建更高效地构建模型. 就是win-win,后生可畏.</p>
-<ol start="10" type="1">
-<li><p>对于没有AI团队的传统企业，Scale AI定制化合作（跟必示一样），客户例如Brex和Flexport。这个有点意思。Brex doesn’t have an AI team working on the model; they outsource it to Scale.</p>
-<figure>
-<img src="./img1.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure></li>
-<li><p>这里有一个小故事：Brex一开始找的是专门做OCR的大公司，帮他们做发票文本提取，但是效果一般（“they were all mediocre.” ）。后面找到scale，通过深入合作定制化了一个模型，效果100%。后面沉淀出了一个产品document。</p></li>
-<li><p>scale的产品还有蛮多的：地图/语音/文档/图像。。 <img src="img2.png" alt="img.png" /></p></li>
-</ol>
-<blockquote>
-<p>btw, 知乎上有一个相关提问--如何评价Scale AI？大家似乎认识非常有限（只知道它是做数据标注的），还讨论的热火朝天。由此可见的，噪声膨胀的速度远远超过信息增长的速度。</p>
-</blockquote>
-<h2 id="chiechies-reflection">chiechie's reflection</h2>
-<ol type="1">
-<li><p>packy这篇文章的公司分析框架蛮好的，后面分析科技公司可以套用：</p>
-<ul>
-<li>行业介绍：The State of AI and ML</li>
-<li>公司介绍：Getting to Scale.</li>
-<li>相同模式的成功案例对比：Scaling Like Stripe.</li>
-<li>关于公司的负面观点：The Bear Case for Scale.</li>
-<li>关于公司的正面观点：The Bull Case for Scale.</li>
-<li>前景展望：Scale’s Compounding Vision.</li>
-</ul></li>
-<li><p>AI市场未来还有这么大的成长空间，看到这个数字有点吃惊。但是，即便如此，AI从业人员的需求也不用过分乐观估计。</p></li>
-<li><p>AI应用目前还在探索期。Scale AI比较鸡贼，让AI公司在前面探路，让他们相互pk，把有价值可落地的场景摸索清楚，自己在后面提供军火库，妥妥的赢家。</p></li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.notboring.co/p/scale-rational-in-the-fullness-of">not boring</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/384012257">吴恩达发起新型竞赛范式！模型固定，只调数据？</a></li>
-<li><a target="_blank" rel="noopener" href="https://scale.com/blog/series-e">Scale AI’s Series E: Deploying AI Across Every Industry</a></li>
-<li><a target="_blank" rel="noopener" href="https://dashboard.scale.com/nucleus/">nucleus</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.junmajinlong.com/os/multi_cpu/">计算机原理系列-blog</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.junmajinlong.com/os/cpu_cache/">关于CPU上的高速缓存</a></li>
 </ol>
 
       
@@ -384,7 +366,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/86/">86</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/87/">87</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -450,20 +432,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">194</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

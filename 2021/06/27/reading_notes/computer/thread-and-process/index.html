@@ -27,13 +27,15 @@
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
 <meta property="og:description" content="基本定义 进程（process） 我们想要计算机要做一项任务（task），我们会写一段代码（python&#x2F;java等）。 编译器将它翻译成二进制代码--机器的语言。 但是此时不执行这段断码的话，就还是一段静态程序。 当执行起来的时候，就变成了一个进程。 进程（process）有时候也称做任务，是指一个程序运行的实例。 线程（threads） 一个进程中的执行的单位。 线程（thread）：能并行运">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/img_1.png">
 <meta property="article:published_time" content="2021-06-27T04:16:07.000Z">
-<meta property="article:modified_time" content="2021-06-28T00:34:18.325Z">
+<meta property="article:modified_time" content="2021-06-28T02:06:27.111Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="计算机原理">
 <meta property="article:tag" content="线程">
 <meta property="article:tag" content="进程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/img_1.png">
 
 <link rel="canonical" href="https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/">
 
@@ -200,7 +202,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-28 08:34:18" itemprop="dateModified" datetime="2021-06-28T08:34:18+08:00">2021-06-28</time>
+                <time title="修改时间：2021-06-28 10:06:27" itemprop="dateModified" datetime="2021-06-28T10:06:27+08:00">2021-06-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,10 +242,29 @@
 <h3 id="线程threads">线程（threads）</h3>
 <p>一个进程中的执行的单位。</p>
 <p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p>
-<h3 id="应用-vs-进程-vs-进程">应用 vs 进程 vs 进程</h3>
+<h2 id="应用-vs-线程-vs-进程">应用 vs 线程 vs 进程</h2>
 <p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p>
 <p>进程和线程的区别：</p>
 <p>• 进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉 • 线程（车厢）在进程（火车）下行进 • 一个进程（火车）可以包含多个线程（车厢） • 不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享 线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行 • 进程要比线程消耗更多的计算机资源 • 进程间不会相互影响，一个线程挂掉将导致整个进程挂掉 • 进程可以拓展到多机，线程最多适合多核 • 进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁" • 进程使用的内存地址可以限定使用量－“信号量”</p>
+<h2 id="硬件多线程vs软件多线程">硬件多线程vs软件多线程</h2>
+<p>CPU架构演进路线： 多cpu---&gt;超线程--&gt;多core</p>
+<p>https://stackoverflow.com/questions/680684/multi-cpu-multi-core-and-hyper-thread</p>
+<p>其中的超线程（hyper thread）指的硬件多线程，如下图，相当于给一个core，虚拟化为2个core，可以更方便压榨计算机性能</p>
+<h2 id="多进程-or-多线程">多进程 or 多线程？</h2>
+<p>多进程更稳定，但是多线程能达到更高的计算效率</p>
+<figure>
+<img src="img_1.png" alt="左边是单线程，右边是多线程" /><figcaption aria-hidden="true">左边是单线程，右边是多线程</figcaption>
+</figure>
+<p>多线程的优势：</p>
+<ul>
+<li>响应性：比如启动一个网页（启动一个浏览器进程），可以同时并行做个事情，如浏览/下载/问答（并行启动多个线程）。</li>
+<li>资源共享：一个进程上的所有线程共享同一份内存，这样能够让机器的使用效率更高，可以做更多的复杂的事情。---赋能/增效</li>
+<li>更经济： 多进程浪费资源，因为创建1个进程需要分配很多内存和资源，相比之下，创建和切换线程的成本小的多。另外，完成一个复杂的任务，多线程共用一份底层资源，多进程就需要把资源复制几份。又浪费了一遍。--降本</li>
+<li>充分压榨多处理器的架构：</li>
+</ul>
+<blockquote>
+<p>大中台类似多线程，烟囱式开发类似多进程</p>
+</blockquote>
 <h2 id="实践">实践</h2>
 <h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p>
@@ -254,6 +275,8 @@
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/25532384/answer/411179772">biaodianfu-zhihu</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=usyg5vbni34">thred</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.junmajinlong.com/os/multi_cpu/">计算机原理系列-blog</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.junmajinlong.com/os/cpu_cache/">关于CPU上的高速缓存</a></li>
 </ol>
 
     </div>
@@ -275,10 +298,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/06/26/reading_notes/reality/about-scale/" rel="prev" title="关于Scale AI">
-      <i class="fa fa-chevron-left"></i> 关于Scale AI
+    <a href="/2021/06/25/data_structure/data-structure-base/" rel="prev" title="数据结构基础">
+      <i class="fa fa-chevron-left"></i> 数据结构基础
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/28/reading_notes/computer/cache-memory/" rel="next" title="计算机的存储单元">
+      计算机的存储单元 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -337,7 +363,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">基本定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8Bprocess"><span class="nav-number">1.1.</span> <span class="nav-text">进程（process）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8Bthreads"><span class="nav-number">1.2.</span> <span class="nav-text">线程（threads）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8-vs-%E8%BF%9B%E7%A8%8B-vs-%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">应用 vs 进程 vs 进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%83%E4%B9%A01-%E6%A8%A1%E6%8B%9F%E5%8D%95%E7%BA%BF%E7%A8%8Bcpp%E7%9A%84%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">练习1-模拟单线程CPP的进程管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">基本定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8Bprocess"><span class="nav-number">1.1.</span> <span class="nav-text">进程（process）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8Bthreads"><span class="nav-number">1.2.</span> <span class="nav-text">线程（threads）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8-vs-%E7%BA%BF%E7%A8%8B-vs-%E8%BF%9B%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">应用 vs 线程 vs 进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E5%A4%9A%E7%BA%BF%E7%A8%8Bvs%E8%BD%AF%E4%BB%B6%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">硬件多线程vs软件多线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B-or-%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">多进程 or 多线程？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B5"><span class="nav-number">5.</span> <span class="nav-text">实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%83%E4%B9%A01-%E6%A8%A1%E6%8B%9F%E5%8D%95%E7%BA%BF%E7%A8%8Bcpp%E7%9A%84%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-number">5.1.</span> <span class="nav-text">练习1-模拟单线程CPP的进程管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -351,20 +377,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">194</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

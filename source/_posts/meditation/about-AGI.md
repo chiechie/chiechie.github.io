@@ -2,7 +2,7 @@
 title: 关于AGI？
 author: chiechie
 mathjax: true
-date: 2021-06-10 17:04:32
+date: 2021-06-17 17:04:32
 tags: 
 - 科技史
 - 人工智障

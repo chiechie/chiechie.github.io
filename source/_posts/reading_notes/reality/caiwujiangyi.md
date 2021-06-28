@@ -2,7 +2,7 @@
 title: 《财务讲义》读书笔记
 author: chiechie
 mathjax: true
-date: 2021-06-10 16:25:08
+date: 2021-06-06 16:25:08
 tags: 
 - 平台
 - 平台治理

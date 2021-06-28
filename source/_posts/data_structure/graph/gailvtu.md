@@ -2,7 +2,7 @@
 title: 概率图简介
 author: chiechie
 mathjax: true
-date: 2021-06-10 16:52:21
+date: 2021-06-19 16:52:21
 tags:
 - 概率图
 - 贝叶斯网络

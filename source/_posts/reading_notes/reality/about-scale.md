@@ -2,7 +2,7 @@
 title: 关于Scale AI
 author: chiechie
 mathjax: true
-date: 2021-06-26 10:39:20
+date: 2021-06-16 10:39:20
 tags:
 - 投资
 - 行业研究

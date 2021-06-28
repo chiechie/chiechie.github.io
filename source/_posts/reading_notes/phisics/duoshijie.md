@@ -2,7 +2,7 @@
 title: 多世界理论
 author: chiechie
 mathjax: true
-date: 2021-06-10 14:26:46
+date: 2021-06-09 14:26:46
 tags: 
 - 物理
 - 平行世界

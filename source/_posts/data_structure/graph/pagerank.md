@@ -7,7 +7,7 @@ tags:
 - 图算法
 - 拓扑数据
 categories: 
-- AI
+- 数据结构
 ---
 
 > 最近需要对图数据进行分析，了解下PageRank的原理

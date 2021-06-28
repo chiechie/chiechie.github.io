@@ -1,12 +1,13 @@
 ---
-title: 贝叶斯网络
+title: 贝叶斯网络推断
 author: chiechie
 mathjax: true
 date: 2021-06-15 14:28:18
 tags:
+- 贝叶斯网络
 categories:
+- 数据结构
 ---
-
 
 
 如何应用贝叶斯网络来做决策？
@@ -58,4 +59,5 @@ categories:
 
 
 ## 参考
+
 1. [Bayesian Networks-youtuybe](https://www.youtube.com/watch?v=TuGDMj43ehw)

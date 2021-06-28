@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="基于剃刀原则的几个思维模型，from Sahil Bloom的twitter  The Steve Jobs Quality Razor When building, take pride in carrying the quality all the way through.Would you be proud for your work to be seen from every angle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="几个思维模型">
+<meta property="og:url" content="https://chiechie.github.io/2021/06/28/reading_notes/reality/10-mental-model/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
+<meta property="og:description" content="基于剃刀原则的几个思维模型，from Sahil Bloom的twitter  The Steve Jobs Quality Razor When building, take pride in carrying the quality all the way through.Would you be proud for your work to be seen from every angle">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-28T04:50:00.000Z">
+<meta property="article:modified_time" content="2021-06-28T05:47:15.061Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="决策">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/06/28/reading_notes/reality/10-mental-model/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>几个思维模型 | Chiechie's Mini World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Mini World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/28/reading_notes/reality/10-mental-model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          几个思维模型<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/reading_notes/reality/10-mental-model.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-28 12:50:00 / 修改时间：13:47:15" itemprop="dateCreated datePublished" datetime="2021-06-28T12:50:00+08:00">2021-06-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>基于剃刀原则的几个思维模型，from Sahil Bloom的twitter</p>
+</blockquote>
+<h2 id="the-steve-jobs-quality-razor">The Steve Jobs Quality Razor</h2>
+<p>When building, take pride in carrying the quality all the way through.Would you be proud for your work to be seen from every angle and perspective? If not, keep working.</p>
+<h2 id="the-eli5-razor">The ELI5 Razor</h2>
+<ul>
+<li>Complexity and jargon are often used to mask a lack of true understanding.</li>
+<li>If you can’t explain it to a 5-year-old, you don’t really understand it.</li>
+<li>If someone uses a lot of complexity and jargon to explain something to you, they probably don’t understand it.</li>
+</ul>
+<h2 id="mungers-rule-of-opinions">Munger’s Rule of Opinions</h2>
+<p>“I never allow myself to have an opinion on anything that I don’t know the other side’s argument better than they do.” - Charlie Munger</p>
+<p>Opinions aren’t free. You have to work to earn the right to have them.</p>
+<h2 id="the-bezos-regret-minimization-framework">The Bezos Regret Minimization Framework</h2>
+<p>The goal is to minimize the number of regrets in life.</p>
+<p>When faced with a difficult decision: (1) Project yourself into the future (2) Look back on the decision (3) Ask "Will I regret not doing this?" (4) Take action</p>
+<h2 id="buffetts-rule-of-holes">Buffett’s Rule of Holes</h2>
+<p>“The most important thing to do if you find yourself in a hole is to stop digging." - Warren Buffett</p>
+<p>When things aren’t working, change course and try something different.</p>
+<p>When you find yourself at the bottom of a hole, stop digging and climb out of it.</p>
+<h2 id="pgs-crazy-idea-razor">PG's Crazy Idea Razor</h2>
+<p>If someone proposes a crazy idea, ask:</p>
+<ol type="1">
+<li>Are they a domain expert?</li>
+<li>Do I know them to be reasonable?</li>
+</ol>
+<p>If yes on (1) and (2), you should take the idea seriously, as it may be an asymmetric bet on the future.</p>
+<h2 id="the-boasters-razor">The Boaster’s Razor</h2>
+<p>Truly successful people rarely feel the need to boast about their success.</p>
+<p>If someone regularly boasts about their income, wealth, or success, it’s fair to assume the reality is a fraction of what they claim.</p>
+<h2 id="the-circle-of-competence">The Circle of Competence</h2>
+<p>Be ruthless in identifying your circle of competence (and its boundaries).</p>
+<p>When faced with a big decision, ask yourself whether you are qualified to handle it given your circle.</p>
+<p>If yes, proceed. If no, outsource it to someone who is.</p>
+<h2 id="the-duck-test">The Duck Test</h2>
+<p>If it looks like a duck, swims like a duck, and quacks like a duck, it’s probably a duck.</p>
+<p>You can determine a lot about a person by regularly observing their habitual characteristics.</p>
+<h2 id="buffetts-juicy-pitch">Buffett’s Juicy Pitch</h2>
+<p>“You don't have to swing at everything - you can wait for your pitch." - Warren Buffett</p>
+<p>Life doesn’t reward you for the number of swings you take.</p>
+<p>Slow down and focus on identifying the juiciest pitch.</p>
+<p>When it comes, swing hard and don’t miss it.</p>
+<h2 id="occams-razor">Occam’s Razor</h2>
+<p>The simplest explanation is often the best one.</p>
+<p>Simple assumptions &gt; complex assumptions.</p>
+<p>Simple is beautiful.</p>
+<h2 id="the-buffett-reputation-razor">The Buffett Reputation Razor</h2>
+<p>“It takes 20 years to build a reputation and five minutes to ruin it. If you think about that, you'll do things differently.” - Warren Buffett</p>
+<p>Remember that quote and act accordingly.</p>
+<p>Your character is your fate.</p>
+<h2 id="hanlons-razor">Hanlon’s Razor</h2>
+<p>Never attribute to malice that which can be adequately explained by stupidity.</p>
+<p>In assessing someone's actions, we should not assume negative intent if there is a viable alternative explanation, such as different beliefs, incompetence, or ignorance.</p>
+<p>汉隆的剃刀</p>
+<p>永远不要把可以用愚蠢充分解释的事情归咎于恶意。</p>
+<p>在评估某人的行为时，如果有可行的替代解释，例如不同的信念、无能或无知，我们不应假设消极意图。</p>
+<h2 id="nntalebs-the-look-the-part-razor">nntaleb's The “Look the Part” Razor</h2>
+<p>If forced to choose between two options of seemingly equal merit, choose the one that doesn’t look the part.</p>
+<p>The one who doesn’t look the part has had to overcome much more to achieve its status than the one who fit in perfectly.</p>
+<p>如果被迫在看似同等价值的两个选项之间做出选择，请选择一个看起来不合适的选项。</p>
+<p>与完美契合的人相比，看起来不合群的人必须克服更多才能获得地位。</p>
+<h2 id="newtons-flaming-laser-sword">Newton’s Flaming Laser Sword</h2>
+<p>If something cannot be settled by experiment or observation, it is not worth debating.</p>
+<p>This will save you from wasting a lot of time on pointless arguments.</p>
+<p>牛顿的火焰激光剑</p>
+<p>如果一些事情不能通过实验或观察来解决，那就不值得争论了。</p>
+<p>这将使您免于在无意义的争论上浪费大量时间。</p>
+<h2 id="machiavellis-razor">Machiavelli’s Razor</h2>
+<p>Never attribute to malice that which can be adequately explained by self-interest.</p>
+<p>In assessing someone's actions, we should not assume negative intent if there is a viable alternative explanation that they are acting on rooted self-interest.</p>
+<p>马基雅维利的剃刀</p>
+<p>永远不要将可以用自身利益充分解释的事情归咎于恶意。</p>
+<p>在评估某人的行为时，如果有一个可行的替代解释表明他们是根据根深蒂固的自身利益行事，我们不应该假设消极意图。</p>
+<h2 id="hitchens-razor">Hitchens’ Razor</h2>
+<p>What can be asserted without evidence can also be dismissed without evidence.</p>
+<p>The burden of proof regarding a claim lies with the one who makes the claim. If unmet, no argument is required to dismiss it.</p>
+<h2 id="sagans-standard">Sagan’s Standard</h2>
+<p>“Extraordinary claims require extraordinary evidence.”</p>
+<p>The more crazy and outrageous the claim, the more crazy and outrageous the body of evidence must be in order to prove it.</p>
+<p>萨根的标准</p>
+<p>“非凡的主张需要非凡的证据。”</p>
+<p>声称越疯狂和越离谱，为了证明它，证据主体就必须越疯狂和离谱。</p>
+<h2 id="the-eisenhower-decision-matrix">The Eisenhower Decision Matrix</h2>
+<p>When faced with a task, ask: “Is this urgent? Is this important?”</p>
+<p>An "urgent" task is one that requires immediate attention. An "important" task is one that promotes or furthers your long-term goals.</p>
+<p>Place it on a 2x2 matrix and act accordingly.</p>
+<h2 id="the-steve-jobs-settling-razor">The Steve Jobs Settling Razor</h2>
+<p>“The only way to do great work is to love what you do. If you haven’t found it yet, keep looking. Don’t settle.” - Steve Jobs</p>
+<p>It’s Monday morning. Did you wake up with energy or with dread?</p>
+<p>Your answer will tell you if you’re settling.</p>
+<h2 id="the-career-razor">The Career Razor</h2>
+<p>When deciding on a new job, choose the one that will challenge you the most (intellectually, physically, or emotionally).</p>
+<p>Challenge and discomfort forces growth.</p>
+<p>(P.S. Check out the job board below for challenging new roles!)</p>
+<h2 id="decisions">Decisions</h2>
+<p>• If you can’t decide, the answer is no.</p>
+<p>• If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).</p>
+<p>• Choose the path that leaves you more equanimous in the long term."</p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>https://pallet.xyz/list/thebloomboard/jobs</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%86%B3%E7%AD%96/" rel="tag"># 决策</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/27/reading_notes/computer/thread-and-process/" rel="prev" title="进程和线程">
+      <i class="fa fa-chevron-left"></i> 进程和线程
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-steve-jobs-quality-razor"><span class="nav-number">1.</span> <span class="nav-text">The Steve Jobs Quality Razor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-eli5-razor"><span class="nav-number">2.</span> <span class="nav-text">The ELI5 Razor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mungers-rule-of-opinions"><span class="nav-number">3.</span> <span class="nav-text">Munger’s Rule of Opinions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-bezos-regret-minimization-framework"><span class="nav-number">4.</span> <span class="nav-text">The Bezos Regret Minimization Framework</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buffetts-rule-of-holes"><span class="nav-number">5.</span> <span class="nav-text">Buffett’s Rule of Holes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pgs-crazy-idea-razor"><span class="nav-number">6.</span> <span class="nav-text">PG&#39;s Crazy Idea Razor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-boasters-razor"><span class="nav-number">7.</span> <span class="nav-text">The Boaster’s Razor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-circle-of-competence"><span class="nav-number">8.</span> <span class="nav-text">The Circle of Competence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-duck-test"><span class="nav-number">9.</span> <span class="nav-text">The Duck Test</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buffetts-juicy-pitch"><span class="nav-number">10.</span> <span class="nav-text">Buffett’s Juicy Pitch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#occams-razor"><span class="nav-number">11.</span> <span class="nav-text">Occam’s Razor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-buffett-reputation-razor"><span class="nav-number">12.</span> <span class="nav-text">The Buffett Reputation Razor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hanlons-razor"><span class="nav-number">13.</span> <span class="nav-text">Hanlon’s Razor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nntalebs-the-look-the-part-razor"><span class="nav-number">14.</span> <span class="nav-text">nntaleb&#39;s The “Look the Part” Razor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#newtons-flaming-laser-sword"><span class="nav-number">15.</span> <span class="nav-text">Newton’s Flaming Laser Sword</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#machiavellis-razor"><span class="nav-number">16.</span> <span class="nav-text">Machiavelli’s Razor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hitchens-razor"><span class="nav-number">17.</span> <span class="nav-text">Hitchens’ Razor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sagans-standard"><span class="nav-number">18.</span> <span class="nav-text">Sagan’s Standard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-eisenhower-decision-matrix"><span class="nav-number">19.</span> <span class="nav-text">The Eisenhower Decision Matrix</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-steve-jobs-settling-razor"><span class="nav-number">20.</span> <span class="nav-text">The Steve Jobs Settling Razor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-career-razor"><span class="nav-number">21.</span> <span class="nav-text">The Career Razor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#decisions"><span class="nav-number">22.</span> <span class="nav-text">Decisions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">23.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">195</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

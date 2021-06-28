@@ -165,6 +165,149 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/07/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/07/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/" class="post-title-link" itemprop="url">《the book of why》读书笔记-6</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-07 08:33:38" itemprop="dateCreated datePublished" datetime="2021-06-07T08:33:38+08:00">2021-06-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-28 10:13:03" itemprop="dateModified" datetime="2021-06-28T10:13:03+08:00">2021-06-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>the book of why 的第6章-一些悖论</p>
+</blockquote>
+<h2 id="悖论1-蒙提-霍尔">悖论1-蒙提 霍尔</h2>
+<h3 id="背景">背景</h3>
+<p>一个竞猜游戏中，有三个用幕布遮住的们，其中有2个门后面是山羊，1个是汽车。有两种游戏规则，分别是：</p>
+<ol type="1">
+<li>观众先选择三个门中的一个，然后主持人从另外两个门中选择一个没有汽车的们打开，然后这个观众可以选择要不要换门？</li>
+<li>观众先选择三个门中的一个，然后主持人从另外两个门中随便选一个打开，然后这个观众可以选择要不要换门？</li>
+</ol>
+<p>第一种强况下，选择换门的话，赢到车车的概率是2/3， 第二种情况下，选择换门的话，赢到的车车的概率是1/2</p>
+<figure>
+<img src="./img789.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<h3 id="悖论的原因">悖论的原因</h3>
+<ol type="1">
+<li><p>贝叶斯公式可以解释信息在非因果关系上的流动，也就是规则1，主持人选择了没有汽车的之后，第三个门的不确定性降低了（沿着门后有车的概率变大的方向），而整个空间的概率之和为1，所以第一个门有车的概率变小了。</p>
+<blockquote>
+<p>主持人的这个决策带来了系统的熵减，系统坍塌到2号门某个确定状态的子空间去了。</p>
+</blockquote></li>
+<li><p>为什么直觉上很难接受规则1的结论，反而会认为比赛的机制不公平？这个跟人类大脑结构有关系：</p>
+<ul>
+<li>大脑不擅长处理概率问题，</li>
+<li>大脑自发抵制非因果关系的信息传递，这个是贝叶斯式变量控制的产物。</li>
+<li>习惯将相关性等同于因果性</li>
+<li>大脑天生难以接受</li>
+</ul></li>
+</ol>
+<h2 id="悖论2-伯克森悖论">悖论2-伯克森悖论</h2>
+<ol type="1">
+<li>生物统计学家约瑟夫.伯克森在医院做实验时，观察到了一个现象：两种疾病本来在一般人群中毫无关联，但是在住院人群中却会观察到似是而非的相关性。</li>
+<li>医院样本实际上是一个冲撞模型，即，当一个人同时患了两种疾病时，一定会住院。</li>
+<li>所以，「医院样本」就好像一个经过精心挑选过的样本，体现出来的相关关系是控制了「住院」变量之后，疾病1和疾病2的伪相关性。 <img src="img7890.png" alt="img.png" /></li>
+<li>1956年，哲学家赖欣巴提出了一个猜想「共因原则」（common cause principle），他认为没有不含因果关系的相关关系，即，X和Y的相关不是偶然发生的，要么是一个变量导致另一个变量，要么是第三个变量，比如说出现在两个变量之前的Z变量，导致两者发生。</li>
+<li>设计一个抛硬币的实验就可以推翻「共因原则」：假设同时抛两枚硬币，抛100次，只记录其中至少又一枚硬币为正面的结果，实验结束，发现记录的75条记录中，发现只要硬币1反面，硬币2就是正面，是因为两个硬币互通消息了吗？不是的，是因为人为记录改变了测度空间。</li>
+<li>还有一个社会现象就是，在一些调查中发现，跟你约会的人中，哪些又魅力的人往往是混蛋。这个也是因为测度空间被你亲手改变了，因为长得丑的渣男最开始就被你过滤了。过滤之前，有魅力的渣男的概率是1/4，过滤之后有魅力的渣男概率是1/3。所以感觉这个比例增加了。</li>
+</ol>
+<h2 id="悖论3-辛普森悖论">悖论3-辛普森悖论</h2>
+<ol type="1">
+<li>辛普森逆转：一个叫辛普森的医生，在文献上发现了一种新药D，可以治疗心脏病。论文的实验数据显示，女性患者服用药物之后，心脏病发作比例升高；男性患者服用药物之后，心脏病发作比例也升高。但是，在整体人群上，心脏病发作比例却降低了，因此该药物也被归为BBG（BAD/BAD/GOOD）型药物。然而，实际上这种药物不存在，虽然说在数学上没有什么问题。 <img src="judea-pearl_the-book-of-why7/img.png" alt="辛普森" /></li>
+<li>对整体人群来说，正确的结论应该是什么呢？可以这么操作，先控制性别：
+<ul>
+<li>do（性别）=女性，计算女性服药之后心脏病发作比例的变化 r1。</li>
+<li>do（性别）=男性，计算男性服药之后心脏病发作比例的变化 r2。</li>
+<li>假设整体人群中，男女比例为1：1，那么可以推断出整体人群，服药之后，心脏比发作比例的变化为（r1+r2）/2</li>
+</ul></li>
+<li>辛普森悖论是因为混杂因子的存在。</li>
+<li>当我们考察两个变量的因果效应时：
+<ul>
+<li>如果存在混在因子，只能用分层数据计算因果效应，采用控制混杂因子的方式，case by case，计算每个混在因子取值的情况下，两个变量的因果关系，然后按照混杂因子每个取值的概率汇总，得到整体上，两个变量之间的因果关系。 <img src="./img_2.png" alt="img_2.png" /></li>
+<li>如果不存在混杂因子（有可能存在中介物），可以用聚合数据计算因果效应 <img src="./img_1.png" alt="中介物" /></li>
+</ul></li>
+<li>混杂因子存在的警告：根据聚合数据估计出来的因果效应大于，根据分层数据估计出来的因果效应。</li>
+</ol>
+<h2 id="关于悖论">关于悖论</h2>
+<ol type="1">
+<li><p>什么是悖论？绝大部分人深信不疑的两个信念之间的冲突。</p>
+<blockquote>
+<p>辛普森逆转并不算悖论，只是纠正了不懂数学的人，对"平均表现"的错误认识。</p>
+</blockquote></li>
+<li><p>如何解决悖论？</p>
+<ol type="1">
+<li>理解为什么大多数人会把它看成一个悖论？or大家对世界的直观看法到底在哪里存在重大缺陷？eg生理结构原因：大部分人不擅长处理概率问题；「过分擅长」处理因果问题</li>
+<li>如何纠正：刻意训练，完成大脑重塑。</li>
+</ol></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/06/reading_notes/reality/caiwujiangyi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -418,136 +561,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/05/AI/timeseries/quantml-practice/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/05/AI/timeseries/quantml-practice/" class="post-title-link" itemprop="url">时序预测最佳实践</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-05 00:06:21" itemprop="dateCreated datePublished" datetime="2021-06-05T00:06:21+08:00">2021-06-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-11 09:47:17" itemprop="dateModified" datetime="2021-06-11T09:47:17+08:00">2021-06-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">实践</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="建模pipeline">建模pipeline</h1>
-<ol type="1">
-<li>搜集原始数据: 过去十年的成交数据</li>
-<li>数据筛选: 选择交易日，固定时间段（９:30~15:30)的数据</li>
-<li>对选好的数据进行采样，并不能保证每天都有整数个点</li>
-<li>切分训练集 &amp; 验证集</li>
-<li>模型训练
-<ul>
-<li>归一化训练集，&lt;x， target&gt;</li>
-<li>训练</li>
-</ul></li>
-<li>模型评估
-<ul>
-<li>归一化验证集</li>
-<li>预测&amp;画图：</li>
-</ul></li>
-</ol>
-<p>实践过程中遇到的一些问题，需要逐一解决，下面记录其中一些</p>
-<h1 id="问题集合">问题集合</h1>
-<h2 id="问题1.-验证集的mse比训练集低但相关系数训练集远远大于调参集这是bug">问题1. 验证集的mse比训练集低，但相关系数训练集远远大于调参集，这是bug？</h2>
-<p>没有bug，mse和correlation评估的侧重点不一样。</p>
-<p>mse小，但是correlation也小的例子，如下图：</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNUSWvXNmWb.png?alt=media&amp;token=8c03a9f3-60e1-424d-879e-3371c1516623" /></p>
-<p>几个距离：</p>
-<ul>
-<li>欧式距离（mse）量化的 是两个实体（或者两个群体）之间的绝对物理距离</li>
-<li>余弦距离（correlation）量化的是 两个实体（或者两个群体）相对原点的角度的距离</li>
-<li>pearson衡量的是 两个变量 之间的 线性相关性，具体做法是使用一个直线去拟合多组样本点&lt;变量1，变量2&gt; ，直线斜率就是相关性大小。</li>
-</ul>
-<h2 id="问题3怎么解决分布漂移的问题">问题3：怎么解决分布漂移的问题？</h2>
-<p>分布漂移在时序预测中尤其常见，使用滑动窗口的均值来 做中心化</p>
-<h2 id="问题4还有哪些措能提升实验效果">问题4：还有哪些措能提升实验效果？</h2>
-<p>取效果好和效果差的两组实验进行对比，观察到1个现象：使用短期趋势中心化后，在使用长期趋势归一化，能使效果变好，背后的理论依据是什么？</p>
-<p>分析下：因为用到了更长的历史数据作为参考,本身模型是记不住那么长的历史信息的。（输入才半个小时）</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fg6FAdLzkOj.png?alt=media&amp;token=362ed41e-1773-4ff5-ac41-a3095f75bb86" /></p>
-<p>参考: <a target="_blank" rel="noopener" href="https://github.com/Arturus/kaggle-web-traffic/blob/master/how_it_works.md">doc</a></p>
-<h2 id="问题5-过拟合的原因">问题5： 过拟合的原因</h2>
-<p>训练集 的比例远大于 验证集 和测试集</p>
-<h2 id="问题6-是不是预测的准就能挣钱了">问题6： 是不是预测的准就能挣钱了？</h2>
-<p>不是，回测的时候要考虑滑点，交易费用，爆仓风险</p>
-<h2 id="问题7同样一个预测模型lstm商品期货准确率比股指差这么多">问题7：同样一个预测模型（LSTM），商品期货准确率比股指差这么多？</h2>
-<ul>
-<li>因为1min的股指期货数据平滑，噪声少，而1min的商品期货毛刺非常多</li>
-<li>将1min的商品期货聚合成5min之后，再使用过去1h的数据预测未来1h的数据，准确率非常之高</li>
-</ul>
-<p>数据颗粒度太细时 噪声很大， 直接丢给模型，也可能造成模型学不好。（这个已经在quantML实践上面得到了证实）</p>
-<h2 id="问题8直接用回归模型预测价格可能有负数怎么处理">问题8：直接用回归模型预测价格，可能有负数怎么处理</h2>
-<p>预测增长率</p>
-<h2 id="问题9除了直接回归还有哪些方法">问题9：除了直接回归，还有哪些方法？</h2>
-<p>转化为分类问题，换预测涨跌幅</p>
-<h1 id="其他经验">其他经验</h1>
-<ol type="1">
-<li><p>不同品种的训练数据，分组训练 比 汇总训练 效果好。</p>
-<blockquote>
-<p>一定要汇总训练的话，要加入每个品种的静态特征，不然会学到混乱的模式。</p>
-</blockquote></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -617,7 +630,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">173</span>
+          <span class="site-state-item-count">174</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -630,7 +643,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">194</span>
+        <span class="site-state-item-count">195</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

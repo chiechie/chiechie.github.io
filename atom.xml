@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-06-28T02:07:25.208Z</updated>
+  <updated>2021-06-28T05:47:15.061Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -17,13 +17,72 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>计算机的存储单元</title>
-    <link href="https://chiechie.github.io/2021/06/28/reading_notes/computer/cache-memory/"/>
-    <id>https://chiechie.github.io/2021/06/28/reading_notes/computer/cache-memory/</id>
-    <published>2021-06-28T01:47:32.000Z</published>
-    <updated>2021-06-28T02:07:25.208Z</updated>
+    <title>几个思维模型</title>
+    <link href="https://chiechie.github.io/2021/06/28/reading_notes/reality/10-mental-model/"/>
+    <id>https://chiechie.github.io/2021/06/28/reading_notes/reality/10-mental-model/</id>
+    <published>2021-06-28T04:50:00.000Z</published>
+    <updated>2021-06-28T05:47:15.061Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="概览">概览</h2><ol type="1"><li><p>计算机上的存储单元的处理速度从快到慢依次是： 寄存器&gt; L1&gt;L2&gt;L3&gt;内存&gt;固态硬盘&gt; 机械硬盘</p><figure><img src="./img_1.png" alt="存储单元" /><figcaption aria-hidden="true">存储单元</figcaption></figure></li><li><p>早期的计算机只有寄存器和内存，但是寄存器的处理速度远高于内存，所以大部分时间是寄存器在等内存，所以CPU是处于空转状态。 经过改进</p></li><li><p>除了寄存器，后面的计算机在CPU中又逐步加入了高速缓存--L1/L2/L3缓存，相当于让内存提前做功课，把数据提前取出来，在3个缓存中候着，等寄存器有空了就取来用。笨鸟先飞嘛。</p></li><li><p>L1/L2/L3缓存，每层速度递减、容量递增。L1缓存速度接近寄存器速度，大约1ns时延。</p></li><li><p>多核CPU的L3对诶个core是共享的，L2和L1是每个core私有的。</p></li></ol><p><img src="./img_2.png" alt="img_2.png" /> 6. CPU读取数据时，要从内存读取到L3，再读取到L2再读取到L1，同样写到内存时也会经过这些层次。</p><h2 id="参考">参考</h2><ol type="1"><li>https://www.junmajinlong.com/os/cpu_cache/</li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>基于剃刀原则的几个思维模型，from Sahil Bloom的twitter</p></blockquote><h2 id="the-steve-jobs-quality-razor">The Steve Jobs Quality Razor</h2><p>When building, take pride in carrying the quality all the way through.Would you be proud for your work to be seen from every angle and perspective? If not, keep working.</p><h2 id="the-eli5-razor">The ELI5 Razor</h2><ul><li>Complexity and jargon are often used to mask a lack of true understanding.</li><li>If you can’t explain it to a 5-year-old, you don’t really understand it.</li><li>If someone uses a lot of complexity and jargon to explain something to you, they probably don’t understand it.</li></ul><h2 id="mungers-rule-of-opinions">Munger’s Rule of Opinions</h2><p>“I never allow myself to have an opinion on anything that I don’t know the other side’s argument better than they do.” - Charlie Munger</p><p>Opinions aren’t free. You have to work to earn the right to have them.</p><h2 id="the-bezos-regret-minimization-framework">The Bezos Regret Minimization Framework</h2><p>The goal is to minimize the number of regrets in life.</p><p>When faced with a difficult decision: (1) Project yourself into the future (2) Look back on the decision (3) Ask "Will I regret not doing this?" (4) Take action</p><h2 id="buffetts-rule-of-holes">Buffett’s Rule of Holes</h2><p>“The most important thing to do if you find yourself in a hole is to stop digging." - Warren Buffett</p><p>When things aren’t working, change course and try something different.</p><p>When you find yourself at the bottom of a hole, stop digging and climb out of it.</p><h2 id="pgs-crazy-idea-razor">PG's Crazy Idea Razor</h2><p>If someone proposes a crazy idea, ask:</p><ol type="1"><li>Are they a domain expert?</li><li>Do I know them to be reasonable?</li></ol><p>If yes on (1) and (2), you should take the idea seriously, as it may be an asymmetric bet on the future.</p><h2 id="the-boasters-razor">The Boaster’s Razor</h2><p>Truly successful people rarely feel the need to boast about their success.</p><p>If someone regularly boasts about their income, wealth, or success, it’s fair to assume the reality is a fraction of what they claim.</p><h2 id="the-circle-of-competence">The Circle of Competence</h2><p>Be ruthless in identifying your circle of competence (and its boundaries).</p><p>When faced with a big decision, ask yourself whether you are qualified to handle it given your circle.</p><p>If yes, proceed. If no, outsource it to someone who is.</p><h2 id="the-duck-test">The Duck Test</h2><p>If it looks like a duck, swims like a duck, and quacks like a duck, it’s probably a duck.</p><p>You can determine a lot about a person by regularly observing their habitual characteristics.</p><h2 id="buffetts-juicy-pitch">Buffett’s Juicy Pitch</h2><p>“You don't have to swing at everything - you can wait for your pitch." - Warren Buffett</p><p>Life doesn’t reward you for the number of swings you take.</p><p>Slow down and focus on identifying the juiciest pitch.</p><p>When it comes, swing hard and don’t miss it.</p><h2 id="occams-razor">Occam’s Razor</h2><p>The simplest explanation is often the best one.</p><p>Simple assumptions &gt; complex assumptions.</p><p>Simple is beautiful.</p><h2 id="the-buffett-reputation-razor">The Buffett Reputation Razor</h2><p>“It takes 20 years to build a reputation and five minutes to ruin it. If you think about that, you'll do things differently.” - Warren Buffett</p><p>Remember that quote and act accordingly.</p><p>Your character is your fate.</p><h2 id="hanlons-razor">Hanlon’s Razor</h2><p>Never attribute to malice that which can be adequately explained by stupidity.</p><p>In assessing someone's actions, we should not assume negative intent if there is a viable alternative explanation, such as different beliefs, incompetence, or ignorance.</p><p>汉隆的剃刀</p><p>永远不要把可以用愚蠢充分解释的事情归咎于恶意。</p><p>在评估某人的行为时，如果有可行的替代解释，例如不同的信念、无能或无知，我们不应假设消极意图。</p><h2 id="nntalebs-the-look-the-part-razor">nntaleb's The “Look the Part” Razor</h2><p>If forced to choose between two options of seemingly equal merit, choose the one that doesn’t look the part.</p><p>The one who doesn’t look the part has had to overcome much more to achieve its status than the one who fit in perfectly.</p><p>如果被迫在看似同等价值的两个选项之间做出选择，请选择一个看起来不合适的选项。</p><p>与完美契合的人相比，看起来不合群的人必须克服更多才能获得地位。</p><h2 id="newtons-flaming-laser-sword">Newton’s Flaming Laser Sword</h2><p>If something cannot be settled by experiment or observation, it is not worth debating.</p><p>This will save you from wasting a lot of time on pointless arguments.</p><p>牛顿的火焰激光剑</p><p>如果一些事情不能通过实验或观察来解决，那就不值得争论了。</p><p>这将使您免于在无意义的争论上浪费大量时间。</p><h2 id="machiavellis-razor">Machiavelli’s Razor</h2><p>Never attribute to malice that which can be adequately explained by self-interest.</p><p>In assessing someone's actions, we should not assume negative intent if there is a viable alternative explanation that they are acting on rooted self-interest.</p><p>马基雅维利的剃刀</p><p>永远不要将可以用自身利益充分解释的事情归咎于恶意。</p><p>在评估某人的行为时，如果有一个可行的替代解释表明他们是根据根深蒂固的自身利益行事，我们不应该假设消极意图。</p><h2 id="hitchens-razor">Hitchens’ Razor</h2><p>What can be asserted without evidence can also be dismissed without evidence.</p><p>The burden of proof regarding a claim lies with the one who makes the claim. If unmet, no argument is required to dismiss it.</p><h2 id="sagans-standard">Sagan’s Standard</h2><p>“Extraordinary claims require extraordinary evidence.”</p><p>The more crazy and outrageous the claim, the more crazy and outrageous the body of evidence must be in order to prove it.</p><p>萨根的标准</p><p>“非凡的主张需要非凡的证据。”</p><p>声称越疯狂和越离谱，为了证明它，证据主体就必须越疯狂和离谱。</p><h2 id="the-eisenhower-decision-matrix">The Eisenhower Decision Matrix</h2><p>When faced with a task, ask: “Is this urgent? Is this important?”</p><p>An "urgent" task is one that requires immediate attention. An "important" task is one that promotes or furthers your long-term goals.</p><p>Place it on a 2x2 matrix and act accordingly.</p><h2 id="the-steve-jobs-settling-razor">The Steve Jobs Settling Razor</h2><p>“The only way to do great work is to love what you do. If you haven’t found it yet, keep looking. Don’t settle.” - Steve Jobs</p><p>It’s Monday morning. Did you wake up with energy or with dread?</p><p>Your answer will tell you if you’re settling.</p><h2 id="the-career-razor">The Career Razor</h2><p>When deciding on a new job, choose the one that will challenge you the most (intellectually, physically, or emotionally).</p><p>Challenge and discomfort forces growth.</p><p>(P.S. Check out the job board below for challenging new roles!)</p><h2 id="decisions">Decisions</h2><p>• If you can’t decide, the answer is no.</p><p>• If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).</p><p>• Choose the path that leaves you more equanimous in the long term."</p><h2 id="参考">参考</h2><ol type="1"><li>https://pallet.xyz/list/thebloomboard/jobs</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;基于剃刀原则的几个思维模型，from Sahil Bloom的twitter&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;the-steve-jobs-quality-razor&quot;&gt;The Steve Jobs Quality Razor&lt;</summary>
+      
+    
+    
+    
+    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="决策" scheme="https://chiechie.github.io/tags/%E5%86%B3%E7%AD%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>进程和线程</title>
+    <link href="https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/"/>
+    <id>https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/</id>
+    <published>2021-06-27T04:16:07.000Z</published>
+    <updated>2021-06-28T05:56:10.038Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="基本定义">基本定义</h2><h3 id="进程process">进程（process）</h3><p>我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。</p><p>编译器将它翻译成二进制代码--机器的语言。</p><p>但是此时不执行这段断码的话，就还是一段静态程序。</p><p>当执行起来的时候，就变成了一个进程。</p><p>进程（process）有时候也称做任务，是指一个程序运行的实例。</p><h3 id="线程threads">线程（threads）</h3><p>一个进程中的执行的单位。</p><p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p><h2 id="应用-vs-线程-vs-进程">应用 vs 线程 vs 进程</h2><p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p><p>进程和线程的区别：</p><p>• 进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉 • 线程（车厢）在进程（火车）下行进 • 一个进程（火车）可以包含多个线程（车厢） • 不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享 线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行 • 进程要比线程消耗更多的计算机资源 • 进程间不会相互影响，一个线程挂掉将导致整个进程挂掉 • 进程可以拓展到多机，线程最多适合多核 • 进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁" • 进程使用的内存地址可以限定使用量－“信号量”</p><h2 id="硬件多线程vs软件多线程">硬件多线程vs软件多线程</h2><p>CPU架构演进路线： 多cpu---&gt;超线程--&gt;多core</p><p>https://stackoverflow.com/questions/680684/multi-cpu-multi-core-and-hyper-thread</p><p>其中的超线程（hyper thread）指的硬件多线程，如下图，相当于给一个core，虚拟化为2个core，可以更方便压榨计算机性能</p><h2 id="多进程-or-多线程">多进程 or 多线程？</h2><p>多进程更稳定，但是多线程能达到更高的计算效率</p><figure><img src="img_1.png" alt="左边是单线程，右边是多线程" /><figcaption aria-hidden="true">左边是单线程，右边是多线程</figcaption></figure><p>多线程的优势：</p><ul><li>响应性：比如启动一个网页（启动一个浏览器进程），可以同时并行做个事情，如浏览/下载/问答（并行启动多个线程）。</li><li>资源共享：一个进程上的所有线程共享同一份内存，这样能够让机器的使用效率更高，可以做更多的复杂的事情。---赋能/增效</li><li>更经济： 多进程浪费资源，因为创建1个进程需要分配很多内存和资源，相比之下，创建和切换线程的成本小的多。另外，完成一个复杂的任务，多线程共用一份底层资源，多进程就需要把资源复制几份。又浪费了一遍。--降本</li><li>充分压榨多处理器的架构：</li></ul><blockquote><p>大中台类似多线程，烟囱式开发类似多进程</p></blockquote><h2 id="实践">实践</h2><h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3><p><a href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p><p>需求：实现一个任务管理/编排的机制，即，输入一堆任务，每个任务的计划执行时间/执行时长都有，现在有一台单线程CPU，如何安排这些任务的执行顺序？</p><p>分析： 设想应用场景，医院的排队系统/有一堆任务要排期。</p><p>一遍在执行已有的任务，一边有源源不断的接到新的任务，</p><p>每执行完一个任务，check一下距离上次检查，有多少新任务进来了，加到任务池里面，从里面选出最容易的。</p><p>设计1个数据结构：</p><p>1个是优先队列，存放候选任务，并且按照执行时间长短从小到到排序。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tasks = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">4</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">1</span>]]</span><br><span class="line">n = <span class="built_in">len</span>(tasks)</span><br><span class="line">timestamp = <span class="number">1</span></span><br><span class="line">candidate_list = []</span><br><span class="line">new_task = []</span><br><span class="line">j = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) <span class="keyword">and</span> (tasks[j][<span class="number">0</span>] &lt;= timestamp):</span><br><span class="line">        heapq.heappush(candidate_list, (tasks[j][<span class="number">1</span>], j))</span><br><span class="line">        j+=<span class="number">1</span></span><br><span class="line">        print(j, n)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    process, index = heapq.heappop(candidate_list)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    new_task.append(index)</span><br><span class="line">    timestamp += process</span><br><span class="line">new_task</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/25532384/answer/411179772">biaodianfu-zhihu</a></li><li><a href="https://www.youtube.com/watch?v=usyg5vbni34">thred</a></li><li><a href="https://www.junmajinlong.com/os/multi_cpu/">计算机原理系列-blog</a></li><li><a href="https://www.junmajinlong.com/os/cpu_cache/">关于CPU上的高速缓存</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;基本定义&quot;&gt;基本定义&lt;/h2&gt;
+&lt;h3 id=&quot;进程process&quot;&gt;进程（process）&lt;/h3&gt;
+&lt;p&gt;我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。&lt;/p&gt;
+&lt;p&gt;编译器将它翻译成二进制代码--机器的语言。&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="计算机原理" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    <category term="线程" scheme="https://chiechie.github.io/tags/%E7%BA%BF%E7%A8%8B/"/>
+    
+    <category term="进程" scheme="https://chiechie.github.io/tags/%E8%BF%9B%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机的存储单元</title>
+    <link href="https://chiechie.github.io/2021/06/26/reading_notes/computer/cache-memory/"/>
+    <id>https://chiechie.github.io/2021/06/26/reading_notes/computer/cache-memory/</id>
+    <published>2021-06-26T01:47:32.000Z</published>
+    <updated>2021-06-28T05:56:10.034Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="概览">概览</h2><ol type="1"><li><p>计算机上的存储单元的处理速度从快到慢依次是： 寄存器&gt; L1&gt;L2&gt;L3&gt;内存&gt;固态硬盘&gt; 机械硬盘</p><figure><img src="./img_1.png" alt="存储单元" /><figcaption aria-hidden="true">存储单元</figcaption></figure></li><li><p>早期的计算机只有寄存器和内存，但是寄存器的处理速度远高于内存，所以大部分时间是寄存器在等内存，所以CPU是处于空转状态。 经过改进</p></li><li><p>除了寄存器，后面的计算机在CPU中又逐步加入了高速缓存--L1/L2/L3缓存，相当于让内存提前做功课，把数据提前取出来，在3个缓存中候着，等寄存器有空了就取来用。笨鸟先飞嘛。</p></li><li><p>L1/L2/L3缓存，每层速度递减、容量递增。L1缓存速度接近寄存器速度，大约1ns时延。</p></li><li><p>多核CPU的L3对诶个core是共享的，L2和L1是每个core私有的。</p></li></ol><figure><img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption></figure><ol start="6" type="1"><li>CPU读取数据时，要从内存读取到L3，再读取到L2再读取到L1，同样写到内存时也会经过这些层次。</li></ol><h2 id="参考">参考</h2><ol type="1"><li>https://www.junmajinlong.com/os/cpu_cache/</li></ol>]]></content>
     
     
       
@@ -47,38 +106,6 @@
     <category term="缓存" scheme="https://chiechie.github.io/tags/%E7%BC%93%E5%AD%98/"/>
     
     <category term="寄存器" scheme="https://chiechie.github.io/tags/%E5%AF%84%E5%AD%98%E5%99%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>进程和线程</title>
-    <link href="https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/"/>
-    <id>https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/</id>
-    <published>2021-06-27T04:16:07.000Z</published>
-    <updated>2021-06-28T02:06:27.111Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="基本定义">基本定义</h2><h3 id="进程process">进程（process）</h3><p>我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。</p><p>编译器将它翻译成二进制代码--机器的语言。</p><p>但是此时不执行这段断码的话，就还是一段静态程序。</p><p>当执行起来的时候，就变成了一个进程。</p><p>进程（process）有时候也称做任务，是指一个程序运行的实例。</p><h3 id="线程threads">线程（threads）</h3><p>一个进程中的执行的单位。</p><p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p><h2 id="应用-vs-线程-vs-进程">应用 vs 线程 vs 进程</h2><p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p><p>进程和线程的区别：</p><p>• 进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉 • 线程（车厢）在进程（火车）下行进 • 一个进程（火车）可以包含多个线程（车厢） • 不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享 线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行 • 进程要比线程消耗更多的计算机资源 • 进程间不会相互影响，一个线程挂掉将导致整个进程挂掉 • 进程可以拓展到多机，线程最多适合多核 • 进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁" • 进程使用的内存地址可以限定使用量－“信号量”</p><h2 id="硬件多线程vs软件多线程">硬件多线程vs软件多线程</h2><p>CPU架构演进路线： 多cpu---&gt;超线程--&gt;多core</p><p>https://stackoverflow.com/questions/680684/multi-cpu-multi-core-and-hyper-thread</p><p>其中的超线程（hyper thread）指的硬件多线程，如下图，相当于给一个core，虚拟化为2个core，可以更方便压榨计算机性能</p><h2 id="多进程-or-多线程">多进程 or 多线程？</h2><p>多进程更稳定，但是多线程能达到更高的计算效率</p><figure><img src="img_1.png" alt="左边是单线程，右边是多线程" /><figcaption aria-hidden="true">左边是单线程，右边是多线程</figcaption></figure><p>多线程的优势：</p><ul><li>响应性：比如启动一个网页（启动一个浏览器进程），可以同时并行做个事情，如浏览/下载/问答（并行启动多个线程）。</li><li>资源共享：一个进程上的所有线程共享同一份内存，这样能够让机器的使用效率更高，可以做更多的复杂的事情。---赋能/增效</li><li>更经济： 多进程浪费资源，因为创建1个进程需要分配很多内存和资源，相比之下，创建和切换线程的成本小的多。另外，完成一个复杂的任务，多线程共用一份底层资源，多进程就需要把资源复制几份。又浪费了一遍。--降本</li><li>充分压榨多处理器的架构：</li></ul><blockquote><p>大中台类似多线程，烟囱式开发类似多进程</p></blockquote><h2 id="实践">实践</h2><h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3><p><a href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p><p>需求：实现一个任务管理/编排的机制，即，输入一堆任务，每个任务的计划执行时间/执行时长都有，现在有一台单线程CPU，如何安排这些任务的执行顺序？</p><p>分析：设计两个数据结构：1个是普通队列，存放每个任务的计划执行时间；还有1个是优先队列，存放候选执行任务，并且按照优先级排序。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tasks = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">4</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">1</span>]]</span><br><span class="line">n = <span class="built_in">len</span>(tasks)</span><br><span class="line">timestamp = <span class="number">1</span></span><br><span class="line">candidate_list = []</span><br><span class="line">new_task = []</span><br><span class="line">j = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) <span class="keyword">and</span> (tasks[j][<span class="number">0</span>] &lt;= timestamp):</span><br><span class="line">        heapq.heappush(candidate_list, (tasks[j][<span class="number">1</span>], j))</span><br><span class="line">        j+=<span class="number">1</span></span><br><span class="line">        print(j, n)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    process, index = heapq.heappop(candidate_list)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    new_task.append(index)</span><br><span class="line">    timestamp += process</span><br><span class="line">new_task</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/25532384/answer/411179772">biaodianfu-zhihu</a></li><li><a href="https://www.youtube.com/watch?v=usyg5vbni34">thred</a></li><li><a href="https://www.junmajinlong.com/os/multi_cpu/">计算机原理系列-blog</a></li><li><a href="https://www.junmajinlong.com/os/cpu_cache/">关于CPU上的高速缓存</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;基本定义&quot;&gt;基本定义&lt;/h2&gt;
-&lt;h3 id=&quot;进程process&quot;&gt;进程（process）&lt;/h3&gt;
-&lt;p&gt;我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。&lt;/p&gt;
-&lt;p&gt;编译器将它翻译成二进制代码--机器的语言。&lt;/p&gt;
-</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="计算机原理" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
-    
-    <category term="线程" scheme="https://chiechie.github.io/tags/%E7%BA%BF%E7%A8%8B/"/>
-    
-    <category term="进程" scheme="https://chiechie.github.io/tags/%E8%BF%9B%E7%A8%8B/"/>
     
   </entry>
   
@@ -374,11 +401,11 @@
     
     <category term="经济学" scheme="https://chiechie.github.io/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
     
+    <category term="哈耶克" scheme="https://chiechie.github.io/tags/%E5%93%88%E8%80%B6%E5%85%8B/"/>
+    
     <category term="行为经济学" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%BA%E7%BB%8F%E6%B5%8E%E5%AD%A6/"/>
     
     <category term="幂律" scheme="https://chiechie.github.io/tags/%E5%B9%82%E5%BE%8B/"/>
-    
-    <category term="哈耶克" scheme="https://chiechie.github.io/tags/%E5%93%88%E8%80%B6%E5%85%8B/"/>
     
     <category term="群体选择" scheme="https://chiechie.github.io/tags/%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9/"/>
     
@@ -616,40 +643,6 @@
     <category term="商业模式" scheme="https://chiechie.github.io/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/"/>
     
     <category term="创业" scheme="https://chiechie.github.io/tags/%E5%88%9B%E4%B8%9A/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>时序预测最佳实践</title>
-    <link href="https://chiechie.github.io/2021/06/05/AI/timeseries/quantml-practice/"/>
-    <id>https://chiechie.github.io/2021/06/05/AI/timeseries/quantml-practice/</id>
-    <published>2021-06-04T16:06:21.000Z</published>
-    <updated>2021-06-11T01:47:17.437Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="建模pipeline">建模pipeline</h1><ol type="1"><li>搜集原始数据: 过去十年的成交数据</li><li>数据筛选: 选择交易日，固定时间段（９:30~15:30)的数据</li><li>对选好的数据进行采样，并不能保证每天都有整数个点</li><li>切分训练集 &amp; 验证集</li><li>模型训练<ul><li>归一化训练集，&lt;x， target&gt;</li><li>训练</li></ul></li><li>模型评估<ul><li>归一化验证集</li><li>预测&amp;画图：</li></ul></li></ol><p>实践过程中遇到的一些问题，需要逐一解决，下面记录其中一些</p><h1 id="问题集合">问题集合</h1><h2 id="问题1.-验证集的mse比训练集低但相关系数训练集远远大于调参集这是bug">问题1. 验证集的mse比训练集低，但相关系数训练集远远大于调参集，这是bug？</h2><p>没有bug，mse和correlation评估的侧重点不一样。</p><p>mse小，但是correlation也小的例子，如下图：</p><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNUSWvXNmWb.png?alt=media&amp;token=8c03a9f3-60e1-424d-879e-3371c1516623" /></p><p>几个距离：</p><ul><li>欧式距离（mse）量化的 是两个实体（或者两个群体）之间的绝对物理距离</li><li>余弦距离（correlation）量化的是 两个实体（或者两个群体）相对原点的角度的距离</li><li>pearson衡量的是 两个变量 之间的 线性相关性，具体做法是使用一个直线去拟合多组样本点&lt;变量1，变量2&gt; ，直线斜率就是相关性大小。</li></ul><h2 id="问题3怎么解决分布漂移的问题">问题3：怎么解决分布漂移的问题？</h2><p>分布漂移在时序预测中尤其常见，使用滑动窗口的均值来 做中心化</p><h2 id="问题4还有哪些措能提升实验效果">问题4：还有哪些措能提升实验效果？</h2><p>取效果好和效果差的两组实验进行对比，观察到1个现象：使用短期趋势中心化后，在使用长期趋势归一化，能使效果变好，背后的理论依据是什么？</p><p>分析下：因为用到了更长的历史数据作为参考,本身模型是记不住那么长的历史信息的。（输入才半个小时）</p><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fg6FAdLzkOj.png?alt=media&amp;token=362ed41e-1773-4ff5-ac41-a3095f75bb86" /></p><p>参考: <a href="https://github.com/Arturus/kaggle-web-traffic/blob/master/how_it_works.md">doc</a></p><h2 id="问题5-过拟合的原因">问题5： 过拟合的原因</h2><p>训练集 的比例远大于 验证集 和测试集</p><h2 id="问题6-是不是预测的准就能挣钱了">问题6： 是不是预测的准就能挣钱了？</h2><p>不是，回测的时候要考虑滑点，交易费用，爆仓风险</p><h2 id="问题7同样一个预测模型lstm商品期货准确率比股指差这么多">问题7：同样一个预测模型（LSTM），商品期货准确率比股指差这么多？</h2><ul><li>因为1min的股指期货数据平滑，噪声少，而1min的商品期货毛刺非常多</li><li>将1min的商品期货聚合成5min之后，再使用过去1h的数据预测未来1h的数据，准确率非常之高</li></ul><p>数据颗粒度太细时 噪声很大， 直接丢给模型，也可能造成模型学不好。（这个已经在quantML实践上面得到了证实）</p><h2 id="问题8直接用回归模型预测价格可能有负数怎么处理">问题8：直接用回归模型预测价格，可能有负数怎么处理</h2><p>预测增长率</p><h2 id="问题9除了直接回归还有哪些方法">问题9：除了直接回归，还有哪些方法？</h2><p>转化为分类问题，换预测涨跌幅</p><h1 id="其他经验">其他经验</h1><ol type="1"><li><p>不同品种的训练数据，分组训练 比 汇总训练 效果好。</p><blockquote><p>一定要汇总训练的话，要加入每个品种的静态特征，不然会学到混乱的模式。</p></blockquote></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;建模pipeline&quot;&gt;建模pipeline&lt;/h1&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;搜集原始数据: 过去十年的成交数据&lt;/li&gt;
-&lt;li&gt;数据筛选: 选择交易日，固定时间段（９:30~15:30)的数据&lt;/li&gt;
-&lt;li&gt;对选好的数据进行采样，并不能保证每</summary>
-      
-    
-    
-    
-    <category term="实践" scheme="https://chiechie.github.io/categories/%E5%AE%9E%E8%B7%B5/"/>
-    
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="量化交易" scheme="https://chiechie.github.io/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/"/>
-    
-    <category term="最佳实践" scheme="https://chiechie.github.io/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
-    
-    <category term="时序预测" scheme="https://chiechie.github.io/tags/%E6%97%B6%E5%BA%8F%E9%A2%84%E6%B5%8B/"/>
     
   </entry>
   

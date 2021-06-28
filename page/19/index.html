@@ -165,6 +165,339 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/21/AI/AIOps/AIOps-1_1-kpi-detector/" class="post-title-link" itemprop="url">chapter1.1 单指标异常检测</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-21 16:37:13" itemprop="dateCreated datePublished" datetime="2021-05-21T16:37:13+08:00">2021-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-05 08:42:57" itemprop="dateModified" datetime="2021-06-05T08:42:57+08:00">2021-06-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="目录">目录</h1>
+<ul>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
+</ul>
+<h1 id="异常检测背景">异常检测背景</h1>
+<p>运维场景的指标监控就是对时序数据做异常检测。但是，很难通过构建一个异常检测策略一劳永逸搞定所有监控需求。因为异常各异，监控指标各异（正常模式各异）。</p>
+<p>先看一下异常有哪些。</p>
+<h2 id="异常分类">异常分类</h2>
+<p>有几类异常：全局异常，条件异常，联合异常</p>
+<ul>
+<li><p>全局异常点：单个点跟历史所有的数据点比，差异很大，有点像黑天鹅事件。 <img src="./global_anomalie.png" /></p></li>
+<li><p>条件异常： 条件异常(contextual or conditional anomalies)：即相对异常，跟剩下的数据点比比较异常。举个例子：</p>
+<ol type="1">
+<li>我们办公室出现了一个穿西装打领带的人，会很引人注目。但是放到另外一个context中，比如房屋中介行业很正常。</li>
+<li>凌晨销量突然升高 <img src="./img.png" /></li>
+</ol></li>
+<li><p>联合异常：单个点不异常，但是群体表现出某种特殊模式，就可疑了，例如，一个小区中，有人去医院很正常，但是整个小区的人同时去医院就不正常了。 <img src="./img78.png" alt="img.png" /></p></li>
+</ul>
+<h1 id="异常检测方案">异常检测方案</h1>
+<p>时序异常检测原理，由于异常的判断依据是context，所以如何表达context信息是一个重点：</p>
+<h2 id="曲线分类">曲线分类</h2>
+<p>如何构建曲线类型特征？</p>
+<ol type="1">
+<li>周期性： autocorrelation</li>
+<li>周期offset：高斯核函数拟合分布极值</li>
+<li>趋势判断：指数滑动平均</li>
+<li>极值分析方法: 假设检验。</li>
+</ol>
+<h2 id="异常检测算法">异常检测算法</h2>
+<ul>
+<li>基于预测（sequence based）
+<ul>
+<li>ARIMA/STL/Holt-winters</li>
+<li>Regression
+<ul>
+<li>SVM</li>
+<li>Random Forest</li>
+<li>Neural Network
+<ul>
+<li>DNN</li>
+<li>Recurrent Neural Networks (RNN/LSTM)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>无监督（iid）
+<ul>
+<li>Isolation Forest</li>
+<li>One-class SVM</li>
+<li>LOF</li>
+<li>PCA</li>
+<li>Autoencoder</li>
+<li>vae</li>
+</ul></li>
+<li>统计分布
+<ul>
+<li>N-sigma</li>
+<li>Grubb TEST</li>
+<li>ESD TEST</li>
+<li>t-test</li>
+</ul></li>
+<li>有监督-分类
+<ul>
+<li>LR</li>
+<li>xgboost（增量学习）</li>
+<li>random forest</li>
+<li>svm</li>
+<li>CNN</li>
+</ul></li>
+</ul>
+<h2 id="根据不同业务适配不同的检测策略">根据不同业务适配不同的检测策略</h2>
+<p>针对不同的业务需求，构建检测策略。</p>
+<p>一般来说，突变点检测+上升下降屏蔽+时间收敛的策略已经可以覆盖80%的检测指标了。</p>
+<p>对于特别重要的指标-业务核心KPI，还是有必要手动配置的。</p>
+<table>
+<thead>
+<tr class="header">
+<th>案例</th>
+<th>指标</th>
+<th>策略</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>历史数据有中断</td>
+<td>在线数据或者其他数据，入库失败</td>
+<td>先使用基于插值的方法填充后再检测。</td>
+</tr>
+<tr class="even">
+<td>趋势漂移是正常模式</td>
+<td>游戏收入在开学季趋势漂移[1]</td>
+<td>学习并且剔除这个趋势漂移，检测残差。</td>
+</tr>
+<tr class="odd">
+<td>周期性有数据</td>
+<td>定时任务日志数；礼包成交数量[2]</td>
+<td>检测规律行为数据缺失</td>
+</tr>
+<tr class="even">
+<td>合理范围的突变异常</td>
+<td>登录在线等周期性曲线</td>
+<td>检测突变点</td>
+</tr>
+<tr class="odd">
+<td>历史数据无规律</td>
+<td>刚上线的游戏和测试服</td>
+<td>相对历史分布的极端异常值。</td>
+</tr>
+<tr class="even">
+<td>周期性毛刺点</td>
+<td>由于数据质量导致的监控指标周期性毛刺，并且间隔不固定</td>
+<td>先剔除极值再检测</td>
+</tr>
+<tr class="odd">
+<td>周期性陡增/降[3]</td>
+<td>业务活动特性导致</td>
+<td>1.按时间收敛；2. 模式识别[4]:</td>
+</tr>
+<tr class="even">
+<td>无历史数据</td>
+<td>新接业务</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>历史数据无异常</td>
+<td>新接业务</td>
+<td>无监督</td>
+</tr>
+<tr class="even">
+<td>不同业务曲线对告警的敏感度不一样</td>
+<td>在线和cpu</td>
+<td>敏感度</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>[1]游戏收入在开学季趋势漂移: 进入开学季之后会，游戏在线人数持续走低，业务觉得正常，但是一般算法会告警</li>
+<li>[2]礼包成交数据，礼包只在周末某个固定时间段上架。</li>
+<li>[3]周期性凸起：定时启动任务导致日志数指标定时凸起，业务觉得正常，但是一般算法会告警</li>
+<li>[4]模式识别： 1. 使用dtw衡量两个窗口的距离，兼容偏差； 2 在历史数据中使用滚动窗口的方法，找到一个最近的窗口。</li>
+</ul>
+<h1 id="产品运营">产品运营</h1>
+<h2 id="如何让用户认可告警">1. 如何让用户认可告警？</h2>
+<ul>
+<li>解释异常</li>
+<li>解释正常是什么样----&gt;上下界</li>
+</ul>
+<h2 id="怎么解决标记成本高然而又想针对自己的业务定制化">2. 怎么解决标记成本高，然而又想针对自己的业务定制化？</h2>
+<ul>
+<li>方案1--人工注异常，可行吗？
+<ul>
+<li>前期： 采用自监督的方法训练一个rnn，注入异常的方法来评估；提供公共样本集，用户调整模型 + auto-ml。</li>
+<li>后期：标记样本积累足够多，用有监督方法来训练。</li>
+</ul></li>
+<li>方案2--使用小样本学习，可行吗？
+<ul>
+<li>用户标记小样本</li>
+</ul></li>
+<li>方案3-使用无监督 + 有监督调超参的方式，
+<ul>
+<li>前者是 大量样本（训练集），后者只用 少量的样本（调参集）</li>
+</ul></li>
+</ul>
+<h1 id="一些未经验证的自己的思考">一些未经验证的自己的思考</h1>
+<h2 id="选无监督-or-有监督算法">1. 选无监督 or 有监督算法？</h2>
+<ul>
+<li>有监督算法的优势：
+<ul>
+<li>如果原始的样本池子 包含 全部模式的样本，那么 很轻易在训练数据和验证集上达到一个很高的准确率。</li>
+<li>如果原始的样本池子 只包含部分模式的样本，
+<ul>
+<li>线上数据的模式没有出现在样本池子中，这个模型对线上样本来说就是过拟合，效果不好，可以继续加样本，让模型去学习。但是如果 没法源源不断地 低成本地 获取到新标记样本，那么这个有监督算法就没用了。</li>
+</ul></li>
+</ul></li>
+<li>无监督（或者自监督）的优势？
+<ul>
+<li>有监督算法 虽然 轻易可以达到一个很高的准确率，但是往往也<strong>很容易过度拟合样本数据</strong>，导致只要应用数据的模式跟 样本集模式(&lt;x, y&gt;的联合分布)有些许区别，就会差之毫里，谬以千里。</li>
+<li>无监督的优势就是，就算过拟合（只可能<x >的分布了），也没关系，因为样本多的是再把线上样本加进来就好了</li>
+</ul></li>
+<li>无监督（或者自监督） 是否能 完全替代 有监督算法？
+<ul>
+<li>除了用作评估的那部分样本，目前觉得可以诶。</li>
+</ul></li>
+<li>为什么要用无监督？
+<ul>
+<li>异常是无法枚举or获取成本很高，那么我想尝试 使用反向方法，把注意力放到正常上面来。（无监督的方法 都是要基于 正常的方法，当然为了适当的放宽弹性，会容忍一些噪声，比如高斯噪声）</li>
+</ul></li>
+</ul>
+<h2 id="为什么推荐系统这种有监督的场景能够落地">2. 为什么推荐系统这种有监督的场景能够落地？</h2>
+<p>推荐场景可以<strong>零成本地</strong> <strong>持续不断的获取到新的标记样本</strong>。</p>
+<h2 id="如果要落地一个有监督的算法需要具备什么条件">3. 如果要落地一个有监督的算法，需要具备什么条件？</h2>
+<ul>
+<li>持续不断地，低成本（包含零成本）地 获取到新的标记样本。</li>
+</ul>
+<h2 id="关于曲线分类异常检测">4. 关于曲线分类+异常检测</h2>
+<p>通用的异常检测方案中，曲线分类 是不是必须的？ 或者说有没有什么场景，只用预测搞不定呢？</p>
+<ul>
+<li>用户1：
+<ul>
+<li>光滑的有周期性的KPI--使用预测算法；</li>
+<li>成功率类型的曲线--使用多指标异常检测。</li>
+<li>将可以搞定的曲线 和 模式混乱的 曲线分开。</li>
+</ul></li>
+<li>chiechie：分很粗糙的大类</li>
+</ul>
+<h2 id="曲线分类的可预见的坑-和-已经踩过的坑">5. 曲线分类的可预见的坑 和 已经踩过的坑？</h2>
+<ul>
+<li>已经踩过的坑
+<ul>
+<li>开发过程痛苦，按着葫芦起了瓢</li>
+<li>实际上，很多曲线都落入了无法识别那一类，因为说不清它的正常模式是什么（btw，这部分曲线只能通过3-sigma这样的策略粗暴解决，那么曲线分类的价值在哪里？）</li>
+</ul></li>
+<li>可预见的坑：
+<ul>
+<li>流程太长，曲线分类和异常检测一定是配套的，不好拓展和维护</li>
+<li>风险暴露因子太多了，这两步只要1个有问题就整体都会有问题</li>
+<li>工程化风险：搞一个复杂度高的模型，对调试和定位问题的压力会很大。</li>
+</ul></li>
+</ul>
+<h2 id="关于分组训练">6. 关于分组训练</h2>
+<ul>
+<li>使用生成模型（时序预测），需要对 正常模式相近 的曲线 聚成一类，比如某个类型或者某个品牌的商品放到一起训练，</li>
+<li>使用判别模型（有监督异常检测）， 需要把 异常模型 相近的 曲线聚成一类，比如异常判断规则一致的曲线。</li>
+</ul>
+<h2 id="sigma的局限性是什么">7. 3-sigma的局限性是什么？</h2>
+<ul>
+<li>相当于从时空二维空间 降维 到 空间这么一个空间： 把时间轴上不同时刻对应的观测值，全部挤到了t=0时刻，得到了一个bin，可以得到value的分布。</li>
+<li>二维空间的连续性捕捉不到： 在二维空间来看，样本之间是有 更复杂的 依赖模式的，也就是，x轴（时间轴）上相近的 点，在y轴（space轴）也会更相近，并且一般来说，这种相近的模式 是 顺着x轴 具有延续性。（</li>
+</ul>
+<h2 id="做多指标异常检测能不能替代多个单指标异常检测">8. 做多指标异常检测能不能替代多个单指标异常检测？</h2>
+<p>不行，举个例子：</p>
+<p>单从体重这个维度来描述人的肥胖程度，没法区分胖子和瘦子，因为胖瘦还跟身高有关。体重超过200kg肯定是个胖子，但是如果体重200kg以内的话，还要看另外一个指标就是身高（类似这里的时间），要知道跟他身高差不多的同伴的 体重的范围，才能知道正常不正常。</p>
+<h2 id="深度模型-是否能-完全替代-传统的机器学习模型">9. 深度模型 是否能 完全替代 传统的机器学习模型 ？</h2>
+<p>不管是ml or dl本质都是用样本数据来拟合出一个函数，至于这个函数族是 简单的好 还是 复杂的好，取决的具体的应用数据。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1_1-GAN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -316,214 +649,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1_2-feature/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/21/AI/AIOps/AIOps-1_1_2-feature/" class="post-title-link" itemprop="url">chapter1.1 单指标异常检测</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-21 16:37:13" itemprop="dateCreated datePublished" datetime="2021-05-21T16:37:13+08:00">2021-05-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-05 08:42:57" itemprop="dateModified" datetime="2021-06-05T08:42:57+08:00">2021-06-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="目录">目录</h2>
-<ul>
-<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
-<ul>
-<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
-<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
-<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
-<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
-</ul>
-<h2 id="概述">1. 概述</h2>
-<p>大型集群系统中，可能存在软件问题和硬件问题导致的系统故障，严重影响了系统的高可用性。这就要求7*24小时，对系统不间断监控。这就意味着需要不间断地监控大量时间序列数据，以便检测系统潜在的故障和异常现象。然而，实际当中的系统异常很多，且不容易发现；从而导致人工方式监控方式效率很低。</p>
-<p>异常场景本质上是一个或者多个数据点；数据点一般在系统运行过程中产生，且能反应系统的功能是否正常，多以日志形式呈现。当系统功能发生异常时，就会产生异常数据。快速高效地发现这些异常值，对于快速止损具有重要意义。对此，我们提出一种基于时间序列的异常识别模型，用来及时发现异常。</p>
-<p>对于多数系统，一般都有成功率、流量等指标，故障发生时，这些指标也会出现响应的异常。我们将系统成功率、流量统一称为特征值变量，并对其进行建模，从而方便后续其它特征变量的扩展。为了更好地感知这些特征变量的突变，需要对特征变量进行计算处理或者空间转换。那么异常识别问题就转换为以下两个问题：</p>
-<ul>
-<li>特征变量的计算处理和转换</li>
-<li>突变的判断</li>
-</ul>
-<p>针对这两个关键问题，我们将在下文中进行建模和分析。</p>
-<h2 id="异常识别">2. 异常识别</h2>
-<p>如下图，通过计算器进行特征变量的计算处理和转换，通过异常检测器来判断数值的突变，从而解决上面的两个问题。其中，异常检测器由比较器和决策器组成。</p>
-<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20180815093422131.png"><img src="http://www.datadriven.top/images/image-20180815093422131.png" alt="image-20180815093422131" /></a>image-20180815093422131</p>
-<p>对于给定时间序列二维矩阵X={xmt∈R：∀t≥0,∀m≥0}X={xtm∈R：∀t≥0,∀m≥0} ，xmtxtm为tt时刻的第m个指标的真实数据，umtutm表示时间tt的xmtxtm的计算值，ymtytm为第m个指标的输出结果，ytyt为整体预测结果。</p>
-<p>xmtxtm通过计算器得到计算值umtutm，然后xmtxtm 和 umtutm分别作为比较器的输入，得到第m个指标的输出ymtytm。y1tyt1,y2tyt2…ymtytm作为决策器的输入得到ytyt。ytyt是一个二元值，可以用<code>TRUE</code>（表示输出数据正常），<code>FALSE</code>（表示输入数据异常）表示。下面对计算器和检测器进行说明。</p>
-<h3 id="计算器">2.1 计算器</h3>
-<p><strong>计算器</strong>用来对输入值xmtxtm 进行计算或者空间转换，从而得到特征变量的计算值umtutm。一般情况下，特征变量具有趋势性、周期性等特征。基于这些特征，计算值的获取，可以使用以下三种方式：累计窗口均值计算器、基于趋势性的环比计算器、基于周期性的同比计算器。</p>
-<h4 id="累积窗口均值计算器">2.1.1 累积窗口均值计算器</h4>
-<p>输入值为xtxt（为了方便省略指标参数<code>m</code>），如果直接只用单个点xtxt的抖动来判断，受噪声影响较大。因此，使用累积窗口均值的方式：</p>
-<figure>
-<img src="../_image/image-20191012164029688.png" alt="image-20191012164029688" /><figcaption aria-hidden="true">image-20191012164029688</figcaption>
-</figure>
-<p>其中，ww为累计窗口的大小。通过窗口平滑之后，会过滤掉尖刺等噪声。</p>
-<h4 id="基于趋势性的计算器">2.1.2 基于趋势性的计算器</h4>
-<p>为了描述数据的趋势性，引入环比类算法。对<span class="math inline">\(x_t\)</span>进行空间转换，得到环比，再使用检测器进行检测。</p>
-<figure>
-<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20191012163924379.png" alt="image-20191012163924379" /><figcaption aria-hidden="true">image-20191012163924379</figcaption>
-</figure>
-<p>其中，分子为当前窗口w内的数据，分母为上一窗口w内数据。通过窗口w对数据进行平滑。</p>
-<h4 id="基于周期性的计算器">2.1.3 基于周期性的计算器</h4>
-<p>为了描述数据的周期性，引入同比算法。当同比值过大或者过小时，认为发生故障。同比公式如下：</p>
-<figure>
-<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20191012164057696.png" alt="image-20191012164057696" /><figcaption aria-hidden="true">image-20191012164057696</figcaption>
-</figure>
-<p>其中TT为周期，kk表示第几个周期。一般选取kk为<code>1</code>、<code>7</code>、<code>30</code>，来表示昨天、上周、上个月。</p>
-<h4 id="其他类型计算器">2.1.4 其他类型计算器</h4>
-<p>计算器还可以使用其他算法，包括：</p>
-<ul>
-<li>统计类算法：包括同比、环比算法的改进，或者其他统计算法。此时，计算器的输出结果为预测值，预测值和输入值进行比较即可。</li>
-<li>时序型算法：包含ARIMA、Holter-Winter等时序型算法。计算器的输出结果为预测值。</li>
-<li>机器学习：根据有监督、无监督、深度学习(LSTM)等算法，训练出的模型即为计算器。此时，计算器的输出结果一般为归一化的值，根据归一化的值进行比较。</li>
-</ul>
-<p>这些算法，在这里不再做深入研究和阐述。</p>
-<h3 id="异常检测器">2.2 异常检测器</h3>
-<p>当数据出现异常时，计算值会出现较大偏差，该偏差由<strong>异常检测器</strong>来判断。<strong>异常检测器</strong>由比较器和决策器组成，计算值和真实值通过该模块后，得到最终预测结果。</p>
-<h4 id="比较器">2.2.1 比较器</h4>
-<p>比较器的本质是求解如下公式的过程：</p>
-<p>f(xmt,umt;hm) = boolean(4)(4)f(xtm,utm;hm) = boolean</p>
-<p>其中，xmtxtm为真实值，uu为计算值，hmhm为阈值参数，booleanboolean为结果<code>TRUE/FALSE</code>。真实值已知，计算值通过计算器得到；剩下的阈值参数hmhm，则需要根据故障发生时的实际值进行参数估计。</p>
-<p>很多场景下，该公式还可以简化为：f(umt;hm) = booleanf(utm;hm) = boolean ，即计算值直接和阈值比较即可。</p>
-<h5 id="比较器种类">2.2.1.1 比较器种类</h5>
-<p>比较器有两种：相对值比较器和绝对值比较器。给定计算值umtutm和输入值xmtxtm，得到绝对值比较器：</p>
-<p>f=xmt−umt opretor hm(5)(5)f=xtm−utm opretor hm</p>
-<p>其中，opretoropretor为比较操作符，比如<code>&gt; &lt; &gt;= &lt;=</code>。由于utut由xtxt得到，所以很多情况下公式可以简化为 umtopretorhmtutmopretorhtm，即确定计算值的阈值即可。</p>
-<p>对于一些场景来说，需要捕获特征变量的相对性。因此，引入相对值比较器：</p>
-<p>f=xmt−umtumt opretor hm(6)(6)f=xtm−utmutm opretor hm</p>
-<p>通过对相对值比较器进行阈值处理，既可以检测异常值，同时还能对期望值进行归一化。</p>
-<h5 id="比较器阈值h的选取">2.2.1.2 比较器阈值h的选取</h5>
-<p>一般情况下，阈值参数决定了异常检测模块的敏感度。最优阈值的选择，取决于数据分布的性质以及先验数据。一般情况下，<strong>阈值的选取方法为</strong>：</p>
-<ul>
-<li>方法一：跟踪一组故障数据和正常数据，根据经验估计阈值。</li>
-<li>方法二：跟踪一组故障数据和正常数据，根据经验，并结合<code>3σ准则</code>确定，来确定阈值。（特征变量或者特征变量的组合，服从正态分布）</li>
-</ul>
-<h4 id="决策器">2.2.2 决策器</h4>
-<p>如下公式，基于逻辑操作符，对比较器结果进行合并.</p>
-<ul>
-<li>方式一：逻辑组合</li>
-</ul>
-<p>yt=y1t &amp;| y2t &amp;| y3t &amp;| ... ymt(7)(7)yt=yt1 &amp;| yt2 &amp;| yt3 &amp;| ... ytm</p>
-<p>其中，||表示逻辑或操作，&amp;&amp;表示逻辑与操作。</p>
-<ul>
-<li><p>方式二：权重设置法</p>
-<p>yt=k1∗y1t + k2∗y2t + k3∗y3t + ... km∗ymt(8)</p></li>
-</ul>
-<p>其中，kmkm为系数，这种方式一般适合基本无负样本的场景，参数的确定需要使用<code>层次分析法</code>，将在后面的文章进行说明。</p>
-<h2 id="故障止损">3. 故障止损</h2>
-<p>上面主要阐述了异常识别的方式。如果条件过于严格，刚开始并不容易被识别出来；如果条件过松，可能导致误识别。对此，我们将止损策略分为两级：</p>
-<ul>
-<li>级别一：预警。对于不能完全确定故障发生的场景，使用级别一。</li>
-<li>级别二：预警+止损（踢IDC）。对于能确定IDC故障的场景，使用级别二。</li>
-</ul>
-<h2 id="实际场景应用">4. 实际场景应用</h2>
-<p>下面通过一个规则的场景，进行举例说明。假如存在如下异常场景：</p>
-<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20181108211144340.png"><img src="http://www.datadriven.top/images/image-20181108211144340.png" alt="image-20181108211144340" /></a>image-20181108211144340</p>
-<p><strong>体现在模型中，则级别一（预警）的模型图</strong></p>
-<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20180815093336600.png"><img src="http://www.datadriven.top/images/image-20180815093336600.png" alt="image-20180815093336600" /></a>image-20180815093336600</p>
-<p><strong>级别二（预警+踢IDC）的模型图：</strong></p>
-<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20180815093352931.png"><img src="http://www.datadriven.top/images/image-20180815093352931.png" alt="image-20180815093352931" /></a>image-20180815093352931</p>
-<p>最终，得到故障识别规则：</p>
-<ul>
-<li>级别一触发条件: u1&lt;h1 | (u5&lt;h5 &amp; u6&lt;h6 &amp; u7&lt;h7)u1&lt;h1 | (u5&lt;h5 &amp; u6&lt;h6 &amp; u7&lt;h7)</li>
-<li>级别二触发条件：u1&lt;h2 &amp; u3&gt;h3u1&lt;h2 &amp; u3&gt;h3</li>
-</ul>
-<p>其中，h1,h2,h3,h5,h6,h7h1,h2,h3,h5,h6,h7为阈值参数。需要结合经验和实际数据估计得到。</p>
-<h2 id="小结">5. 小结</h2>
-<p>本文主要基于时间序列的数据，提出了异常场景识别模型，并重点对基于规则的识别进行了说明。</p>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://dl.acm.org/citation.cfm?id=2788611">Generic and Scalable Framework for Automated Time-series Anomaly Detection</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.datadriven.top/categories/数据驱动/">数据驱动应用（一）：整体概述</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/85/">85</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/86/">86</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -589,7 +718,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">170</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -602,7 +731,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-count">191</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

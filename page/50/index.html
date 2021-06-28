@@ -165,6 +165,254 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/07/AI/timeseries/timeseries-ziliao-huizong/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/07/AI/timeseries/timeseries-ziliao-huizong/" class="post-title-link" itemprop="url">时间序列资料汇总</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-07 11:36:11" itemprop="dateCreated datePublished" datetime="2021-04-07T11:36:11+08:00">2021-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-31 16:33:27" itemprop="dateModified" datetime="2021-05-31T16:33:27+08:00">2021-05-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="算法">算法</h1>
+<h2 id="深度学习算法">深度学习算法</h2>
+<ul>
+<li>DeepAR,2017, ref 146, p12
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1704.04110.pdf">paper</a> | <a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/tree/master/src/gluonts/model/deepar">code</a></li>
+</ul></li>
+<li>DeepFactor, 2019 ICML，ref 15,使用全局的RNN模型学习不同时序间共同的模式，以及对每一个时间序列学习一个局部模型
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.12417">paper</a></li>
+</ul></li>
+<li>Deep State Space Models,2018
+<ul>
+<li><a target="_blank" rel="noopener" href="https://papers.nips.cc/paper/8004-deep-state-space-models-for-time-series-forecasting.pdf">paper</a></li>
+</ul></li>
+<li>Spline Regression RNN , Gasthaus et. al., 2019</li>
+<li>TCN: ref08， p14，2018
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1803.01271.pdf">paper</a> | <a target="_blank" rel="noopener" href="https://github.com/locuslab/TCN">code</a></li>
+</ul></li>
+<li>TFT: ref 7次，p27，2019
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.09363.pdf">paper</a> | <a target="_blank" rel="noopener" href="https://github.com/google-research/google-research/tree/master/tft">code</a></li>
+</ul></li>
+<li>prophet, 2017,ref 370
+<ul>
+<li><a target="_blank" rel="noopener" href="https://peerj.com/preprints/3190.pdf">paper</a> | <a target="_blank" rel="noopener" href="https://github.com/facebook/prophet">code</a></li>
+</ul></li>
+<li>stock2vec
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2010.01197">paper</a></li>
+</ul></li>
+<li>Forecasting: Principles and Practic
+<ul>
+<li>https://otexts.com/fpp2/</li>
+</ul></li>
+<li>N-BEATS
+<ul>
+<li><a target="_blank" rel="noopener" href="http://arxiv.org/abs/1905.10437">paper</a></li>
+</ul></li>
+</ul>
+<h1 id="框架">框架</h1>
+<ul>
+<li>GluonTS: Probabilistic Time Series Models in Python.
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1906.05264.pdf">paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/blob/master/REFERENCES.md">支持的算法列表</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts">code</a> | <a target="_blank" rel="noopener" href="https://gluon-ts.mxnet.io/">doc</a></li>
+</ul></li>
+<li>Probabilistic Demand Forecasting at Scale
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.vldb.org/pvldb/vol10/p1694-schelter.pdf">paper</a></li>
+</ul></li>
+<li>Criteria for classifying forecasting methods,被引用次数：21 相关文章 所有 2 个版本,2020，p11
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S0169207019301529">paper</a></li>
+</ul></li>
+<li>Forecasting big time series: old and new,2019
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/abs/10.1145/3292500.3332289">paper</a></li>
+</ul></li>
+<li>Time Series Forecasting With Deep Learning: A Survey 被引用2次，2020
+<ul>
+<li><a href="/Users/stellazhao/Desktop/paper_2020时序预测综述.pdf">paper</a>:</li>
+</ul></li>
+<li>Neural forecasting: Introduction and literature overview，2020, 被引用5次
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2004.10240">paper</a></li>
+</ul></li>
+<li>Forecasting big time series: old and new, 被引用次数：23 相关文章 所有 5 个版本
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/abs/10.14778/3229863.3229878">paper</a></li>
+</ul></li>
+</ul>
+<h1 id="比赛">比赛</h1>
+<h2 id="商品销量预测">商品销量预测</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/walmart-recruiting-store-sales-forecasting">Walmart Store Sales Forecasting (2014)</a></p>
+<ul>
+<li>Use historical markdown data to predict store sales</li>
+<li>评估指标：weighted mean absolute error (WMAE) <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FLDPLxG_AsI.png?alt=media&amp;token=d615d942-e378-43d5-8fc4-a26d146bb0ac" /></li>
+<li>样本id： 商场id+部门id+日期（包含当天，未来一周） <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FATkOrisXUk.png?alt=media&amp;token=2dea8db9-d230-4266-9676-9e15bb2ed884" /></li>
+</ul>
+<h2 id="极端天气下的商品销量预测">极端天气下的商品销量预测</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/walmart-recruiting-sales-in-stormy-weather">Walmart Sales in Stormy Weather (2015)</a> - Predict how sales of weather-sensitive products are affected by snow and rain - 评估指标：Root Mean Squared Logarithmic Error (RMSLE) <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_jeBzeQgo1.png?alt=media&amp;token=45740607-7629-4005-bb27-773c8df4e9d2" /> - 样本id：商场id + 商品id + 日期 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD_Ba2ZU9Nw.png?alt=media&amp;token=09ce23f2-d4a1-425d-a23c-ee85efea58a4" /></p>
+<h2 id="营业收入预测">营业收入预测</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/rossmann-store-sales">Rossmann Store Sales (2015)</a></p>
+<ul>
+<li>Forecast sales using store, promotion, and competitor data</li>
+<li>tuneover：营业收入</li>
+<li>评估指标：rmspe <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FEA2frU1QNu.png?alt=media&amp;token=e8991a1c-d50f-4390-833c-3925da591c89" /></li>
+<li>样本id： 商场id+日期 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHbQ0SWOSpS.png?alt=media&amp;token=a01d1b85-c213-45a4-8a5f-d52f1aaf698b" /></li>
+</ul>
+<h2 id="肉类销量预测">肉类销量预测</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/favorita-grocery-sales-forecasting">Corporación Favorita Grocery Sales Forecasting (2018)</a></p>
+<ul>
+<li>accurately predict sales for a large grocery chain?</li>
+<li>评估指标： Root Mean Squared Logarithmic Error (NWRMSLE)
+<ul>
+<li>容易腐烂（Perishable）的品类给了更高的权重1.25, 其他品类给的1.</li>
+</ul></li>
+<li>样本id： 商品 id</li>
+</ul>
+<h2 id="餐厅人流量预测">餐厅人流量预测</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/recruit-restaurant-visitor-forecasting">Recruit Restaurant Visitor Forecasting (2018)</a>:</p>
+<ul>
+<li>Predict how many future visitors a restaurant will receive</li>
+<li>样本id为： 餐馆id+日期 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FM2vtlhu-kH.png?alt=media&amp;token=0042496a-1f4e-4800-a982-8f2c0e6a8de7" /></li>
+<li>评估指标：<a target="_blank" rel="noopener" href="https://www.kaggle.com/wiki/RootMeanSquaredLogarithmicError">root mean squared logarithmic error</a>. <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FkPPvo0OwMp.png?alt=media&amp;token=fd0cfe95-5a29-46ee-8ce6-905edfcf31c5" /></li>
+</ul>
+<h2 id="流行病人数预测">流行病人数预测</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/covid19-global-forecasting-week-5">COVID19 Global Forecasting (2020)</a>:</p>
+<p>预测新冠疫情世界各地，未来15天，每天确诊人数和死亡人数:</p>
+<ul>
+<li>输出：两个指标，3个分位数</li>
+<li>样本id：城市id + 日期 + 指标id <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FmBk7V4JsDj.png?alt=media&amp;token=39226fde-0ee6-4f72-bef0-8182809ae110" /></li>
+<li>评估指标： Weighted Pinball Loss. <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F6KVBbgq7pC.png?alt=media&amp;token=a5eb8da1-0f10-45d7-8caf-5119b3d8c46c" /></li>
+</ul>
+<h1 id="公开数据">公开数据</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014">electricity数据集--Electricity dataset from UCI</a>：
+<ul>
+<li>370 个 家庭的用电量 from 2011 to 2014， hourly数据</li>
+<li>训练数据（单位points）：30000 points * 370 = 1110 w
+<ul>
+<li>[from] 2011-01-01 00:00:00 [to] 2014-06-04 00:00:00</li>
+</ul></li>
+<li>测试数据（单位points）：5065 points * 370 = 187 w # need additional 7 days as given info
+<ul>
+<li>[from] 2014-06-04 00:00:00 [to] 2015-01-01 01:00:00</li>
+</ul></li>
+</ul></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/numenta/NAB/tree/master/data/realTweets">realTweets</a> :twitter上的品牌（如Apple，Amazon等）的热度，粒度为5min</li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/airplane-crashes">Airplane Crashes</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/us-air-pollution-data">U.S. Air Pollution Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/us-chronic-disease-data">U.S. Chronic Disease Data</a></li>
+<li><a target="_blank" rel="noopener" href="http://archive.ics.uci.edu/ml/datasets/Air+Quality">Air quality from UCI</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/zhiyongc/Seattle-Loop-Data">Seattle freeway traffic speed</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/youth-tobacco-survey-data">Youth Tobacco Survey Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/hxchua/populationsg">Singapore Population</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/airlines-delay">Airlines Delay</a></li>
+<li><a target="_blank" rel="noopener" href="https://archive.ics.uci.edu/ml/datasets/PEMS-SF">Traffic dataset from UCI</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/city-of-baltimore-crime-data">City of Baltimore Crime Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/discover-the-menu">Discover The Menu</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/global-climate-change-data">Global Climate Change Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/global-health-nutrition-data">Global Health Nutrition Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/jbrownlee/Datasets/master/pollution.csv">Beijing PM2.5 Data Set</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jbrownlee/Datasets/blob/master/airline-passengers.csv">Airline Passengers dataset</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/government-finance-statistics">Government Finance Statistics</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/historical-public-debt-data">Historical Public Debt Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/kansas-city-crime-data">Kansas City Crime Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/nyc-crime-data">NYC Crime Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/web-traffic-time-series-forecasting">Kaggle-Web Traffic Time Series Forecasting</a></li>
+</ul>
+<h1 id="练手项目">练手项目</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/tensorflow-sequences-time-series-and-prediction/ungradedLti/sFRBW/exercise-4-sunspots">coursera-使用tensorfow构建时间序列预测模型</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/forecasting/tree/master/fclib/fclib/models">微软-forcasting</a>:dilated_cnn/lightgbm/multiple_linear_regression</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Azure/DeepLearningForTimeSeriesForecasting">微软-example</a>：
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Azure/DeepLearningForTimeSeriesForecasting/blob/master/1_CNN_dilated.ipynb">1_cnn_dilated.ipynb</a>：值得学习的是--如何在keras中 构造空洞因果卷积？</li>
+<li>RNN_encoder_decoder</li>
+</ul></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Alro10/deep-learning-time-series/tree/master/notebooks">个人项目-基于深度学习的时间序列预测</a></li>
+<li>pytorch-forecasting
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pytorch-forecasting.readthedocs.io/en/latest/contribute.html">doc</a> | <a target="_blank" rel="noopener" href="https://github.com/jdb78/pytorch-forecasting">code</a></li>
+</ul></li>
+</ul>
+<h1 id="比赛-1">比赛</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/jbrownlee/Datasets">数据集</a></li>
+<li><a target="_blank" rel="noopener" href="https://mofc.unic.ac.cy/m5-competition/">M5 Competition</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Mcompetitions/M4-methods">M4 Competition</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cuge1995/awesome-time-series#Datasets">awesome time series--github</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/06/reading_notes/zhexue/wonderful-zibenlun/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -313,344 +561,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/06/reading_notes/reality/xuxiaonian-shangyedebenzhi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/06/reading_notes/reality/xuxiaonian-shangyedebenzhi/" class="post-title-link" itemprop="url">《商业的本质和互联网》读书笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-06 23:43:55" itemprop="dateCreated datePublished" datetime="2021-04-06T23:43:55+08:00">2021-04-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-31 08:24:44" itemprop="dateModified" datetime="2021-05-31T08:24:44+08:00">2021-05-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="第一卷-前世网络">第一卷 前世网络</h1>
-<h2 id="第1章-运输网">第1章 运输网</h2>
-<h3 id="铁路网发展历史">铁路网发展历史</h3>
-<ul>
-<li>18世纪下半叶，蒸汽机的应用拉开了工业革命的序幕，</li>
-<li>马车已无法满足运输煤炭、铁矿和重型机器的需要，英国人于是开挖了<strong>运河</strong>，随后又将运输的重心转移到<strong>铁路网</strong></li>
-<li>1825年9月27日，第一条蒸汽机驱动的公共<strong>铁路线</strong>在斯托克顿和达灵顿之间落成通车。由被称为“铁路之父”的乔治·斯蒂芬森（George Stephenson）设计，这一年亦被公认为铁路世纪的元年。
-<ul>
-<li>斯蒂芬森既是具有<strong>创新精神的工程师</strong>，也是出色的<strong>企业家</strong>，他和儿子以及另外两个合伙人成立了公司，专门生产<strong>机车车头</strong>。</li>
-</ul></li>
-<li>1829年，斯蒂芬森以“火箭号”<strong>牵引车头</strong>在技术竞赛中胜出，除了500英镑奖金，还赢得了从利物浦到曼彻斯特铁路线的设计与建筑合同</li>
-<li>1830年9月15日，利物浦到曼彻斯特 这条线路建成投入使用，开幕式成了新技术的盛大庆典，吸引了包括英国首相在内的政界和工业界要人到场，斯蒂芬森等人亲自驾驶8列火车从利物浦出发，在人们热情的欢呼声中抵达曼彻斯特。</li>
-<li>利物浦—曼彻斯特线的开通激发了英国人的投资热情，多条城际铁路接连开工。</li>
-<li>1845年 英国立法确定标准轨宽为1.435米，这个宽度后来成了世界标准。</li>
-</ul>
-<h3 id="电网发展历史">电网发展历史</h3>
-<ul>
-<li>继铁路网之后，下一个登台的运输网是电网。铁路运送煤炭，电网运送（比如煤炭燃烧转化成的）电能。</li>
-<li>电力让机器从工厂走进家庭，开创了家用电器的时代，</li>
-<li>与人们生活密切相关的<strong>服务业</strong>在制造业之后兴起，成为发达市场经济的主体</li>
-<li>电力也为<strong>后续的技术创新</strong>，如电话、电视、电脑、无线通信和互联网，<strong>奠定了基础</strong>。</li>
-</ul>
-<h3 id="公路网发展历史">公路网发展历史</h3>
-<p>世界（主要是美国）公路网发展历史</p>
-<ul>
-<li>铁路受到轨道的限制，电力传送需要架设高压线。有没有更为灵活的“运输工具”呢？</li>
-<li>1886年德国（Karl Benz）推出内燃机汽车的商业化产品，目的是发现灵活的“运输工具”</li>
-<li>1908年美国企业家亨利·福特（Henry Ford）采用流水线生产T型车，大幅度降低了汽车的成本和价格。汽车从奢侈品变成了中产阶级家庭的生活必需品。</li>
-<li>随着汽车的普及，<strong>公路再次兴盛</strong>，替代铁路成为区域性中短途交通运输的骨干。</li>
-<li>1965年前后美国动工修建连接各州的<strong>公路网</strong>，在长途运输上<strong>也将铁路边缘</strong>化了。</li>
-</ul>
-<h2 id="第2章-技术市场与经济增长">第2章 技术、市场与经济增长</h2>
-<ul>
-<li>英国实现可持续甚至是加速的经济增长，铁路功不可没。</li>
-<li>铁路对美国经济发展的促进作用更为显著，</li>
-<li>1875～1890年美国进入铁路的投资密集期，这一时期的GDP增长达到4.1%[插图]，铁路一度是除农业之外的最大<strong>就业部门。</strong></li>
-<li>从工业革命到今天的绝大部分时间里，供给侧涌现出的新技术是经济增长的根本和经久不衰的动力。新技术不仅创造了新的投资机会和就业机会，并且提高了劳动生产率，从而提高了人均收入，就业和收入的增加带来旺盛的消费需求</li>
-<li>铁路等新技术对于经济增长的意义在于，新技术引起了经济社会结构的改变，结构性变化带来<strong>资源使用和配置效率的</strong>飞跃</li>
-<li>早期工业化必需的大宗商品是煤炭和铁矿石，受到运输成本的限制，工厂一般都建设在煤矿和铁矿附近，铁路大幅度降低了运输成本，工业生产方式就此摆脱了矿产资源的地理位置局限，随着火车进入大小城镇乃至乡村。</li>
-<li>蒸汽机视为工业革命的心脏，铁路就是遍布全身的血管系统。</li>
-<li>仅有技术创新还不足以改变生产方式，<strong>市场规模</strong>才是变革的决定性推手。虽然机器的效率比手工高很多，但由于<strong>资本投入太大</strong>，生产批量过小会使分摊到单位产品上的机器成本过高。</li>
-<li>正是铁路将它所到之处的人口纳入统一的市场，造就了前所未有的市场规模。</li>
-<li>铁路网的出现促进了人口向城市的集中，特别是作为交通枢纽和商品集散地的大城市</li>
-<li>铁路运输具有快速、准时和成本低的特点，一方面吸引企业在城市开设工厂；另一方面也便利了人口从农村、郊区向城镇的迁移，满足了企业不断上涨的劳动力需求。</li>
-<li>人口聚集到城镇，社会分工进一步深化。</li>
-<li>城市里人口多、需求大，为专业的纺织和服装厂家提供了足够的市场空间，制衣于是从家庭劳动中分离出来。</li>
-<li>专业化分工越发达，对协作整合的要求越高</li>
-<li>铁路降低了运输成本，企业聚集在城镇，沟通便利，信息传播快，减少了交易成本</li>
-<li>就扩大市场规模、降低交易成本而言，今天的互联网和昔日的铁路网并无本质区别，人们一般认为的互联网创造的新业态，在历史上其实也有迹可循。</li>
-<li>凭借铁路邮购，西尔斯成长为美国乃至世界第一大零售商，</li>
-<li>直到20世纪70年代才让位于迅速崛起的沃尔玛，后者的商业模式优势同样来自网络技术—高速公路网，以及连接其遍布全球的商店和仓库的卫星通信网</li>
-<li>今天，沃尔玛又面临亚马逊的挑战，互联网使电商有可能直接触达数以亿计的个人消费者，因而有可能再次重塑零售业。</li>
-<li>新技术不仅催生新的商业模式，而且时常引发下一波的创新浪潮，技术进步呈现出自我繁衍和收益递增的趋势.</li>
-<li>为了通报和调度列车的运行，英国人1838年在西部铁路线上架设了世界上第一条商业电报线路</li>
-<li>不知不觉之中，伴随着四通八达的铁路网，历史上第一张<strong>通信网</strong>形成了.</li>
-</ul>
-<h2 id="第3章-通信网">第3章 通信网</h2>
-<ul>
-<li>有交换机之前: 无论电报或电话，人们只能做点对点的单线联系</li>
-<li>有了交换机之后：节省了电话网络的建设费用，而且用户数量越多，人均成本就越低</li>
-<li>AT&amp;T的兴衰史
-<ul>
-<li>1915年，AT&amp;T开通了东西海岸的长途电话服务。</li>
-<li>1921年，全美共有1400万部电话，几乎覆盖了城镇和农村的每一个家庭，其中AT&amp;T占有64%的市场份额，长途电话完全为其垄断</li>
-<li>1926年，跨越大西洋的伦敦—纽约电话电缆铺设完成，世界性的通信网初现端倪。</li>
-<li>1982年，AT&amp;T被迫分拆，原因之一是这个巨无霸在华尔街的支持下，不断收购独立的运营商，大树底下寸草不生，就像今天的大型互联网公司。</li>
-</ul></li>
-<li>移动技术的兴衰历史
-<ul>
-<li>1918年，德国人在柏林到左森的军用火车上试验了无线通信。</li>
-<li>第二次世界大战期间，各主要交战国广泛使用了肩载、车载、舰载和机载的无线通信设备，战后移动通信进入民用领域。</li>
-<li>1948年，AT&amp;T建立了第一个移动通信网，覆盖圣路易斯市和周边的100个城镇及铁路沿线的车站，这个系统被称为移动通信的第零代（0G）</li>
-<li>1973年4月3号，摩托罗拉的工程师马丁·库珀（Martin Cooper）拨打了世界上第一个手机电话</li>
-<li>1979年，一代（1G）模拟技术移动通信网络在日本东京建成。</li>
-<li>20世纪90年代出现第二代（2G）的数字化移动通信网，欧洲的标准是GSM，美国则采用CDMA标准。</li>
-<li>在1999年，日本电话电报公司（NTT DoCoMo）引入互联网服务，由此开始了移动通信和互联网的融合。
-<ul>
-<li>2G移动通信的应用很快从电话语音扩展到数据，特别是与互联网相关的数据，2G的数据传输速度和容量无法满足新的需求</li>
-</ul></li>
-<li>2001年5月日本电话电报公司开发的第一个商用3G系统投入使用，采用新的数据打包传送方法（packetswitching），大大提高了网络传输的效率
-<ul>
-<li>技术可能性的扩展刺激了应用的迅速增长，不久即达到3G网络的能力上限，</li>
-<li>新一代技术的开发势在必行</li>
-</ul></li>
-<li>2009年美国和斯堪的纳维亚的国家开发了基于IP[插图]的第四代移动通信技术（4G），一举将传输速度提高10倍以上，更重要的是，4G无线通信实现了和互联网的完全对接。
-<ul>
-<li>过去十年间，互联网移动通信飞速发展，接入网络的设备和服务应用急剧增加，数据流量暴涨，4G通信系统的容量很快将不敷使用。</li>
-<li>在这样的形势下，国际组织和各国政府启动了5G标准的制定工作，厂商纷纷投入资源研发5G的软硬件技术</li>
-</ul></li>
-<li>2018年6月，国际电信联盟批准了首个完整的5G国际标准
-<ul>
-<li>同年12月，韩国三大电信运营商在韩国部分地区推出5G服务；</li>
-<li>几天后，美国电话电报公司宣布在美国12个城市开放5G网络；</li>
-<li>2019年6月，中国工信部向中国电信等四家运营商发放了5G商用牌照</li>
-</ul></li>
-<li>蒸汽机使人类从农耕文明跨入现代工商文明，铁路将工商文明传播至世界五洲。
-<ul>
-<li>电力网、电话网和移动通信网继续了铁路的故事，创造了更大规模的市场，不断深化社会分工与协作，便利和丰富了人们的生活。</li>
-</ul></li>
-</ul></li>
-</ul>
-<h1 id="第二卷-今生互联网">第二卷 今生互联网</h1>
-<ul>
-<li>第4章 大学玉研究所阶段</li>
-<li>第5章 解除管制，商用爆发</li>
-<li>第6章 社交媒体 与 互联网新技术</li>
-</ul>
-<h1 id="第三卷-规模经济效应和协同效应">第三卷 规模经济效应和协同效应</h1>
-<ul>
-<li>第7章 多多以上</li>
-<li>第8章 从百货大楼到万物商店</li>
-<li>第9章 知彼知己， 错位竞争
-<ul>
-<li>脸书 vs linkedin</li>
-<li>如果不能差异化，公司的实力再强也难以动摇先发者的优势，失败的案例
-<ul>
-<li>新浪微博vs腾讯微博</li>
-<li>微信 vs 来往 # 第四卷 梅特卡夫效应和双边市场效应</li>
-</ul></li>
-</ul></li>
-<li>梅特卡夫效应</li>
-<li>双边市场效应</li>
-<li>似是而非的互联网</li>
-<li>经济学有什么用</li>
-</ul>
-<h1 id="第五卷-新旧零售都是零售">第五卷 新旧零售都是零售</h1>
-<ul>
-<li>电商？店商？</li>
-<li>长尾的致命诱惑</li>
-<li>企业为什么必须盈利</li>
-<li>错在盲目模仿</li>
-<li>不只是购物体验</li>
-</ul>
-<h1 id="第六卷-金融的本质与p2p的崩塌">第六卷 金融的本质与P2P的崩塌</h1>
-<ul>
-<li>背景
-<ul>
-<li>互联网进入金融行业的因缘：电商的发展迫切需要线上支付手段</li>
-<li>P2P（peer-to-peer）：在网上撮合资金的供给方（creditor）和需求方（debtor），不经过传统的线下金融中介（如商业银行）而完成融资的活动。</li>
-<li>大型金融机构占据主导地位，小微金融服务的供给严重不足，给了P2P非常大的市场空间，正像传统零售的低效成就了电商，线下支付手段的落后让电子支付大行其道一样。</li>
-<li>就P2P商业模式而论，它相当于没有牌照、没有线下网点和人员的商业银行，其功能却和常规银行一样：将储蓄资金转化为贷款。</li>
-</ul></li>
-<li>痛定思痛
-<ul>
-<li>金融业务的本质是减少资金提供者（出借人、理财人，以下统称“出借人”）和资金使用者（借款人）之间的信息不对称，控制逾期、坏账等违约风险，在确保资金安全的前提下，实现适度的收益。</li>
-<li>不少P2P公司的创始人和他们的投资人没有金融业的经验，秉持“互联网思维”，一味追求客户数和平台资产规模的快速增长，从一开始就违反了金融业“风控第一”的原则。</li>
-</ul></li>
-<li>金融的本质</li>
-<li>线下金融+互联网</li>
-<li>社区互联网</li>
-</ul>
-<h1 id="第七卷-平台无栏不成圈">第七卷 平台：无栏不成圈</h1>
-<h2 id="要害是壁垒而非规模">要害是壁垒而非规模</h2>
-<h2 id="得技术者得天下">得技术者得天下</h2>
-<h1 id="第八卷-共享公路还是租赁">第八卷 共享：公路还是租赁</h1>
-<ul>
-<li>线上出租</li>
-<li>情怀和利益
-<ul>
-<li>自由开源软件（free and open source software，FOSS） 被是为共享经济的典范。
-<ul>
-<li>free强调自由和权利，而非免费，即得到授权的使用者可以自由拷贝、修改和转发软件给他人，拥有这些权利，软件的免费或基本免费是个自然的结果</li>
-</ul></li>
-<li>人是生而自由的，却无往不在枷锁之中--卢梭</li>
-<li>自由开源的理想自诞生那天起，就无法挣脱商业利益的枷锁
-<ul>
-<li>现实为证，托瓦尔兹在发布Linux Kernel之初，网上响应者寥寥。半年之后，托瓦尔兹不得不放松限制，允许基于Linux软件的商业性开发与销售，很快用户数就从1991年的100人左右增加到1994年的50万人</li>
-<li>营利性公司参与开发，对开源软件的推广发挥了巨大的作用
-<ul>
-<li>2008～2010年，Linux Kernel核心代码的75%是由戴尔、IBM、惠普、甲骨文等大公司的程序员完成的</li>
-</ul></li>
-<li>Linux的宗旨，也从最初单纯的自由软件，转变为共享和商业应用并举</li>
-</ul></li>
-<li>诺奖得主梯若尔等人的一项研究（Lerner and Tirole,2002）表明，软件工程师之所以愿意学雷锋，
-<ul>
-<li>第一，是因为多种软件的开发可以提高他们的技能，有助于在公司的提职加薪。</li>
-<li>第二，在开源领域中的贡献增加了他们的市场知名度，从而增加他们未来的就业机会，例如进入其他的软件公司或风投行业。</li>
-<li>第三，开源软件比自己的常规性本职工作更富挑战，更“酷”，名声在外而获得同行的认可，满足个人的社会地位或得到尊重的心理需求。</li>
-</ul></li>
-<li>【无形的手】商业软件公司补贴自己的技术人员，鼓励他们参与开源软件的开发，用迂回的方式，解决了公共品供应激励不足的问题。市场这只无形之手，真是精妙无比！</li>
-<li>开源共享不会成为软件行业的主流模式，而是会和专有营利形成互补和相互促进的关系。</li>
-<li>底层基础软件的共性大于个性，<strong>易于进行跨公司、跨空间的开源研发</strong>。</li>
-<li>在直接面对终端客户的地方，应用场景差异化程度高，共同开发从技术上来讲是非常困难的，只能由软件公司针对具体需求做商业性的开发，而且只有利润驱动，软件公司才能对市场需求快速反应，才能长期补贴和支持开源项目。</li>
-</ul></li>
-<li>错的离谱的经济分析</li>
-</ul>
-<h1 id="第九卷-物联网和工业4.0">第九卷 物联网和工业4.0</h1>
-<ul>
-<li>工业互联网的逻辑</li>
-<li>工业互联网之难</li>
-<li>从工业1.0到工业4.0</li>
-<li>大数据+云计算=计划经济？</li>
-</ul>
-<h1 id="第十卷-数字化企业的组织变革">第十卷 数字化企业的组织变革</h1>
-<ul>
-<li>引言
-<ul>
-<li>企业是什么？
-<ul>
-<li>企业是个生产组织，在这个组织内，不同技能的人从事不同的工作，努力实现一个共同的目标—<strong>为客户</strong>提供<strong>高性价比</strong>的产品和服务。</li>
-</ul></li>
-<li>【企业管理模式】20世纪20年代，通用汽车公司董事长阿尔弗雷德·斯隆（Alfred Sloan）创建了<strong>集权—分权式</strong>的管理结构，成为工业3.0时代大公司的标准管理模式。
-<ul>
-<li>斯隆体系中有多个业务单元（BU），每个BU拥有相对完整的对本事业部的管理权，除了来自公司CEO的指令，不受公司其他BU和职能部门的干扰</li>
-<li>公司每年确定总体经营目标，再将销售额和利润等指标逐层分解落实到BU、工厂……，根据全年实际执行和目标之差，决定各级管理者和员工的奖惩，作为完成总体业绩目标的激励和保障机制</li>
-</ul></li>
-<li><strong>等级和职责分明</strong>，<strong>命令与控制型的科层组织</strong>主导了20世纪的管理思想和实际操作。</li>
-</ul></li>
-<li>解决方案变成问题本身
-<ul>
-<li>科层制解决了管理幅度和公司规模之间的矛盾，但是也会产生新的问题，不仅自上而下的指令传递和执行打了折扣，自下而上汇集的信息也随着层级的增加而产生越来越大的扭曲</li>
-<li>科层制本来是为了解决信息不对称的问题，现在却成了问题的本身，创造出各种新的信息不对称。</li>
-</ul></li>
-<li>层级压缩和职能简化
-<ul>
-<li>科层制源于克服信息不对称的需要，但又创造了新的信息不对称。</li>
-<li>数字化在相当大的程度上减少了信息不对称，应该有助于解决科层制的问题</li>
-</ul></li>
-<li>自驱动和自适应组织的兴起</li>
-<li>管理学的与时俱进</li>
-</ul>
-<h1 id="第十一卷-价值几许">第十一卷 价值几许</h1>
-<ul>
-<li>泡沫与网络起飞
-<ul>
-<li>像所有的新技术一样，互联网带来的秦所未有的可能性，引发了人们的无限想象，投资大钞随之汹涌而来。（跟铁路网的建设一样）</li>
-<li>但是也有被泡沫压垮的例子-woldcom。</li>
-<li>投资人从迷梦中醒来，注意到很多互联网公司依然没有利润，市场于是怀疑高股价的合理性与可持续性。</li>
-<li>在没有明显触发因素的情况下，股价调整开始了，纳斯达克指数迅速从高位下跌。</li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fok-oe_p7IV.png?alt=media&amp;token=03d9a094-4380-436d-b7b1-8a384a565437" /></li>
-<li>泡沫的逻辑很简单：一个动人的故事加上资金。</li>
-<li>互联网重复着技术创新的悲喜剧，人类的贪婪与恐惧从未改变过，舞台上更换的只是演员和道具。</li>
-</ul></li>
-<li>理性分析非理性繁荣
-<ul>
-<li>公司价值多少，取决于它的赢利能力以及投资者对赢利能力的估算。</li>
-<li>从投资者的角度看问题，拥有一家公司的终极目的是赚钱。</li>
-<li>赚钱有两个途径，分红或资本增值，</li>
-<li>盈利是公司价值的唯一源泉。</li>
-</ul></li>
-<li>梅特卡夫效应和估值
-<ul>
-<li>苹果是一家世界领先的科技公司，它的市盈率近年来只有15倍左右，其产品虽然技术含量很高，但是销售手机、电脑等硬件，商业模式既不具备梅特卡夫效应，也没有双边市场效应。虽然苹果有个巨大的App生态圈，经历了高增长，目前已趋于平稳。评价公司的赢利能力，主要看它能否推出热销的新产品，销量越大，则研发的规模经济效益越好。换句话说，从估值的角度看苹果公司，它更像传统的制造企业而不是互联网公司。</li>
-<li>社交网络节点的互动最多也最为频繁，产生了最强的梅特卡夫效应，理论上应该具有最高的估值，双边市场效应次之，</li>
-<li>在其他条件相同的情况下，仅用互联网做销售工具的企业如零售、共享单车、P2P等类型的估值最低。</li>
-<li>估值取决于多种因素，网络节点互动的效应仅为其中之一，梅特卡夫效应和双边市场效应能否转化为公司的收入，归根结底要看公司的产品和服务。</li>
-<li>“理性”的含义是投资收益最大化，这个词在金融学中通常和基本面投资等价，而基本面就是按照未来盈利估算的公司价值。</li>
-</ul></li>
-<li>另类理性
-<ul>
-<li>理性投资者根据公司的赢利能力买卖股票，这并不是说基于盈利的投资是市场上的唯一理性</li>
-<li>在很多情况下，忽略甚至完全不看基本面的趋势投资可以是理性的。</li>
-</ul></li>
-<li>理性很少能作为探索未知领域的指路明灯。</li>
-<li>严密的演绎逻辑是理性的一种的达方式，看上去松散的、不那么可靠的和不那么“科学”的归纳法也属于理性的范畴。</li>
-<li>市场是复杂的，演绎逻辑的推理只能提供极有限的答案，基于简单规则的决策虽然谈不上“最优”，却是可行的且经常产生不错的效果。</li>
-</ul>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/62e321a071a486b862ee729">商业的本质和互联网-许小年-微信读书</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/49/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><span class="page-number current">50</span><a class="page-number" href="/page/51/">51</a><span class="space">&hellip;</span><a class="page-number" href="/page/85/">85</a><a class="extend next" rel="next" href="/page/51/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/49/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><span class="page-number current">50</span><a class="page-number" href="/page/51/">51</a><span class="space">&hellip;</span><a class="page-number" href="/page/86/">86</a><a class="extend next" rel="next" href="/page/51/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -716,7 +630,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">170</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -729,7 +643,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-count">191</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

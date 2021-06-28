@@ -165,6 +165,217 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/10/reading_notes/graph/gailvtu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/10/reading_notes/graph/gailvtu/" class="post-title-link" itemprop="url">概率图简介</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-10 16:52:21" itemprop="dateCreated datePublished" datetime="2021-06-10T16:52:21+08:00">2021-06-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-26 14:13:17" itemprop="dateModified" datetime="2021-06-26T14:13:17+08:00">2021-06-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="基本概念">基本概念</h2>
+<p>概率图模型(Probabilistic Graphical Model，PGM)，简称图模型(Graphical Model，GM)，首先是一种概率模型，其次，它用图结构描述多个随机变量之间的依赖关系，它是研究高维空间中的概率模型的一种有用工具。</p>
+<p>概率图模型有三个基本问题: 表示问题，学习问题和推断问题</p>
+<p><img src="https://img.mubu.com/document_image/e3036b4e-18d3-4e73-b996-eafe4a4c08d1-3380623.jpg" /></p>
+<h3 id="表示问题">1. 表示问题</h3>
+<p>表示问题，即对于一个概率模型，如何通过图结构来描述变量之间的依赖关系。</p>
+<h4 id="有向图模型directed-graphical-model">有向图模型(Directed Graphical model)</h4>
+<p>有向图模型(Directed Graphical model)，也称为贝叶斯网络(Bayesian Network)，或信念网络(Belief Network，BN)，是指用有向图来表示概率分布的图模型。</p>
+<figure>
+<img src="https://img.mubu.com/document_image/75c9420a-058f-4005-a4b2-4609e7987c1b-3380623.jpg" alt="贝叶斯网络" /><figcaption aria-hidden="true">贝叶斯网络</figcaption>
+</figure>
+<p>很多机器学习模型可以用有向图模型来描述，比如</p>
+<ul>
+<li>朴素贝叶斯分类器</li>
+<li>隐马尔可夫模型</li>
+<li>深度信念网络(sigmoid 信念网络)</li>
+</ul>
+<h4 id="无向图模型">无向图模型</h4>
+<p>无向图模型也称为马尔可夫随机场(Markov Random Field，MRF)或 马尔可夫网络(Markov Network)，是一类用无向图来描述一组具有局部马尔可夫性质的随机向量 X 的联合概率分布的模型。</p>
+<figure>
+<img src="https://img.mubu.com/document_image/85a18510-051c-4339-a808-4d3759095432-3380623.jpg" alt="无向图模型" /><figcaption aria-hidden="true">无向图模型</figcaption>
+</figure>
+<ul>
+<li><p>如果(G,X)满足局部马尔可夫性质， 即一个变量 Xk 在给定它的邻居的情况下独立于所有其它变量，</p></li>
+<li><p>无向图模型的概率分解</p>
+<ul>
+<li>因子分解 :无向图中的的联合概率可以分解为一系列定义在最大团上的非负函数的乘积形式。</li>
+<li>吉布斯分布 :无向图模型和吉布斯分布是一致的。吉布斯分布一定满足马尔可夫随机场的条件独立性质，并且马尔可夫随机场的概率分布一定可以表示成吉布斯分布。</li>
+</ul></li>
+<li><p>常见的无向图模型:很多经典的机器学习模型可以使用无向图模型来描述，比如</p>
+<ul>
+<li>对数线性模型(Log-Linear Model)或最大熵模型(Maximum Entropy Model)</li>
+<li>条件随机场(Conditional Random Field，CRF)</li>
+<li>玻尔兹曼机</li>
+<li>受限玻尔兹曼机等</li>
+</ul></li>
+<li><p>有向图和无向图之间的转换:</p>
+<ul>
+<li>无向图模型可以表示有向图模型无法表示的一些依赖关系，比如循环依赖;</li>
+<li>无向图模型不能表示有向图模型能够表示的某些关系，比如因果关系。</li>
+</ul></li>
+</ul>
+<h3 id="推断问题">2. 推断问题</h3>
+<p>推断问题，即在已知部分变量时，计算其它变量的后验概率分布。</p>
+<p>图模型的推断问题可以转换为求任意一个变量子集的边际概率分布问题。</p>
+<h4 id="精确推断">精确推断</h4>
+<p>精确推断的方法有变量消除法和信念传播方法</p>
+<p>信念传播(Belief Propagation，BP)算法，也称为和积(Sum-Product)算法 或消息传递(Message Passing)算法，是将变量消除法中的和积(Sum-Product) 操作看作是消息，并保存起来，这样可以节省大量的计算资源。</p>
+<p>链式结构上的的信念传播算法</p>
+<p><img src="https://img.mubu.com/document_image/bd0b3e40-76a5-42e2-8716-799247eddc32-3380623.jpg" /></p>
+<p>树结构上的信念传播算法：</p>
+<ul>
+<li>从叶子节点到根节点依次计算并传递 消息;</li>
+<li>从根节点开始到叶子节点，依次计算并传递消息;</li>
+<li>在每个节点上 计算所有接收消息的乘积(如果是无向图还需要归一化)，就得到了所有变量的 边际概率。</li>
+</ul>
+<p>环路信念传播</p>
+<h4 id="近似推断">近似推断</h4>
+<p>图模型中有些变量的局部条件分布可能非常复杂，或其积分无法计算。需要使用数值方法来近似，比如，变分法和采样法</p>
+<h5 id="变分法">变分法</h5>
+<p>变分法(Variational Method)是引入一个变分分布(通常是比较简单的分布)来近似复杂的局部条件概率，然后通过迭代的方法计算后验分布。</p>
+<h5 id="采样法">采样法</h5>
+<p>采样法(SamplingMethod) 是通过simulation的方式来采集符合某个分布 p(x) 的一些样本，并通过这些样本来估计和这个分布有关的运算，比如期望等。</p>
+<ol type="1">
+<li>拒绝采样(Rejection Sampling):也叫接受-拒绝采样(Acceptance-RejectionSampling)：假设原始分布 p(x) 难以直接采样，可引入一个容易采样的分布 q(x)， 一般称为提议分布(Proposal Distribution)，然后以某个标准来拒绝一部分的样本使得最终采集的样本服从分布p(x)。</li>
+</ol>
+<p><img src="https://img.mubu.com/document_image/f6ae17af-597a-4445-abbf-2c2b0a5bce67-3380623.jpg" /></p>
+<ol start="2" type="1">
+<li>重要性采样(Importance Sampling):通过引入重要性权重，将分布p(x)下f(x)的期望变为在分布q(x)下f(x)w(x)的期望.如果采样的目的是计算分布 p(x)下函数f(x)的期望，那么实际上抽取的样本不需要严格服从分布p(x)。也可以通过另一个分布，即提议分布q(x)，直接采样并估计。</li>
+<li>马尔可夫链蒙特卡罗(Markov Chain Monte Carlo，MCMC): 在高维空间中拒绝采样和重要性采样效率低，
+<ul>
+<li>Metropolis-Hastings算法，以及两个特例Metropolis算法和吉布斯采样(Gibbs Sampling)</li>
+<li>Metropolis算法，假设MH算法中的提议分布是对称的</li>
+<li>吉布斯采样(Gibbs Sampling)，用全条件概率(Full Conditional Probability)作为提议分布来依次对每个维度 进行采样，并设置接受率为A = 1。</li>
+</ul></li>
+</ol>
+<blockquote>
+<p>蒙特卡罗的基本思想可以归结为，根据一个已知概率密度函数为 p(x) 的 分布来计算函数 f (x) 的期望</p>
+</blockquote>
+<h3 id="学习问题">3. 学习问题</h3>
+<p>概率图模型的学习包括：图结构的学习和参数的学习</p>
+<p>参数的学习，即参数估计问题，可分为含隐变量的参数估计和不含因变量的参数估计：</p>
+<ul>
+<li><p>不含隐变量的参数估计：</p>
+<ul>
+<li>如果图模型中不包含隐变量，即所有变量都是可观测的，那么网络参数一般可以直接通过最大似然来进行估计。</li>
+<li>有向图模型：所有变量x的联合概率分布可以分解为每个随机变量<span class="math inline">\(x_k\)</span>的局部条件概率 <span class="math inline">\(p(xk |xπk , \theta_k)\)</span> 的连乘形式，其中<span class="math inline">\(\theta_k\)</span>为第 k 个变量的局部 条件概率的参数。</li>
+<li>无向图模型： 所有变量x的联合概率分布可以分解为定义在最 大团上的势能函数的连乘形式。</li>
+</ul></li>
+<li><p>含隐变量的参数估计：</p>
+<ul>
+<li>如果图模型中包含隐变量，即有部分变量是不可观测的，就需要用 EM 算法</li>
+<li>EM 算法的应用例子:高斯混合模型。高斯混合模型(Gaussian Mixture Model，GMM)是由多个高斯分布组成的模型，其密度函数为多个高 斯密度函数的加权组合。 <img src="https://img.mubu.com/document_image/3476923c-5528-4dd4-aa4d-ae10183bf377-3380623.jpg" /> <img src="https://img.mubu.com/document_image/28d53640-0eb6-4a17-81c6-ffa8e4dbb289-3380623.jpg" /></li>
+</ul></li>
+</ul>
+<h2 id="概率图模型与机器学习">概率图模型与机器学习</h2>
+<ul>
+<li>很多机器学习模型都可以归结为概率模型，即建模输入和输 出之间的条件概率分布。</li>
+<li>图模型提供了一种新的角度来解释机器学习模 型，并且这种角度有很多优点，比如了解不同机器学习模型之间的联系，方便设计新模型等。</li>
+<li>概率图模型中最基本的假设是条件独立性。图形化表示直观地描述了随机 变量之间的条件独立性，有利于将复杂的概率模型分解为简单模型的组合，并 更好地理解概率模型的表示、推断、学习等方法。</li>
+</ul>
+<h2 id="概率图模型与神经网络">概率图模型与神经网络</h2>
+<p>概率图模型和神经网络有着类似的网络结构，但两者不同。</p>
+<ul>
+<li>节点
+<ul>
+<li>概率图模型的节点是随机变量，其图结构的主要功能是用来描述变量 之间的依赖关系，一般是稀疏连接。使用图模型的好处是可以有效进行统计推 断。</li>
+<li>神经网络中的节点是神经元，是一个计算节点。如果将神经网络中每个神经元看做是一个binary随机变量，那神经网络就变成一个sigmoid信念网络。</li>
+</ul></li>
+<li>变量的含义
+<ul>
+<li>图模型中的每个变量一般有着明确的解释，<strong>变量之间依赖关系一般是人工来定义</strong>。</li>
+<li>神经网络中的单个神经元则没有直观的解释</li>
+</ul></li>
+<li>生成模型与判别模型
+<ul>
+<li>神经网络是判别模型，直接用来分类</li>
+<li>图模型不但可以是判别模型，也可以是生成模型。生成模型不但可以用来生成样本，也可以通过贝叶斯公式用来做分类。</li>
+</ul></li>
+<li>学习方法
+<ul>
+<li>神经网络参数学习的目标为交叉熵或平方误差等损失函数。</li>
+<li>图模型的参数学习的目标函数为似然函数或条件似然函数，若包含隐变量则通常通过EM算法来求解。</li>
+</ul></li>
+</ul>
+<p>神经网络和概率图模型的结合：</p>
+<ul>
+<li><p>用神经网络强大的表示能力来建模图模型中的</p>
+<ul>
+<li>推断问题：比如变分自编码器</li>
+<li>生成问题：比如生成对抗网络，第</li>
+<li>势能函数：比如 LSTM+CRF模型[Lample et al., 2016, Ma and Hovy, 2016]</li>
+</ul></li>
+<li><p>用图模型的算法来解决复杂结构神经网络中的学习和推断问题</p>
+<ul>
+<li>图结构神经网络(Graph Neural Network)</li>
+</ul></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -364,267 +575,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/10/reading_notes/reality/caiwujiangyi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/10/reading_notes/reality/caiwujiangyi/" class="post-title-link" itemprop="url">《财务讲义》读书笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-10 16:25:08" itemprop="dateCreated datePublished" datetime="2021-06-10T16:25:08+08:00">2021-06-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-11 09:03:18" itemprop="dateModified" datetime="2021-06-11T09:03:18+08:00">2021-06-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>思考几个问题，选股的分析框架？看市盈率，看行业龙头股的baseline，跨版本的股票，看业务构成，找相应板块</p>
-</blockquote>
-<h2 id="第3章-花钱-投资与分配">第3章 花钱-投资与分配</h2>
-<h3 id="chapter-21-固定资产">chapter 21 固定资产</h3>
-<ul>
-<li>固定资产：企业的大件资产，比如厂房，生产设备。不仅花费大，而且是企业准备长期 持有的资产。</li>
-<li>与固定资产相对的 是流动资产，如 库存 ，短期投资 等</li>
-<li>企业最大的开销是固定资产投资（类似搞基建，互联网公司可以弱化，但是实业公司不能弱化）</li>
-<li>租赁的本质是债务融资（跟房贷一样）</li>
-<li>财务决策中，在 同风险等级 的 投资决策 之间进行比较是一个重要原则。</li>
-<li>投资的机会成本 是为了一个项目A 所放弃的 其他项目B 的收益，其他项目B的风险等级必须要和A一样。</li>
-<li>所以，不应该考虑买还是租，而是考虑 租还是 借（钱）。也就是说 把 租赁这种 债务融资方式 和 借 这种债务融资方式 比较</li>
-<li>如何降低租赁对负债率的影响
-<ul>
-<li>在2018年 会计准则修改之前，将融资行负债 修改为 经营性负债</li>
-<li>在2018年 会计准则修改之后，就没法专空子了。</li>
-</ul></li>
-<li>如何盘活租来的固定资产</li>
-<li>融资性 售后回租：将固定资产 卖给 融资租赁公司，然后签订租赁合同，合同期满就可以买回来。</li>
-</ul>
-<h3 id="chapter-22-价值投资-用别人的错误赚钱">chapter 22 价值投资-用别人的错误赚钱</h3>
-<h3 id="chapter-23-资本预算-项目之间是如何pk的">chapter 23 资本预算-项目之间是如何PK的</h3>
-<ul>
-<li>投资收益比较</li>
-<li>（往上一层）投资的溢出效应：值新项目对企业其他项目 或者 外部事物的影响
-<ul>
-<li>负向</li>
-<li>正向-协同效应</li>
-</ul></li>
-<li>投资回收期平衡</li>
-</ul>
-<h3 id="chapter-24-风险量化">chapter 24 风险量化</h3>
-<ul>
-<li>点分析：项目的保本点是多少
-<ul>
-<li>对美国上市公司的盈余公告进行研究：发现每一美元造成的股价下跌，几乎是每一美元盈利带来的股价上涨幅度的两倍</li>
-<li>企业的盈利目标又三个层析：1. 保证不亏损 2 超过前一年同期的盈利 3 超过证券分析师的预期</li>
-<li>局限：
-<ul>
-<li>有的项目处于战略需要一定要投资，即时财务不赚钱</li>
-<li>正向偏离也是一种风险</li>
-</ul></li>
-</ul></li>
-<li>线分析：跟往年比是多少</li>
-<li>面分析：分析师的预期是多少</li>
-</ul>
-<h3 id="chapter-25-实物期权-应对投资的不确定性">chapter 25 实物期权-应对投资的不确定性</h3>
-<ul>
-<li>案例：爱尔眼科怎样降低并购小诊所的风险？
-<ul>
-<li>【道】增加投资的灵活性</li>
-<li>【法】采用延迟期权，扩张期权，放弃期权策略</li>
-<li>【术】联合PE成立 并购基金，联合孵化小型创业公司</li>
-<li>https://www.pedata.cn/jsp/research.html</li>
-</ul></li>
-<li>互联网项目 的投资 适合实物期权投资 策略。</li>
-</ul>
-<h3 id="chapter-26-风险转移-保险和责任共担">chapter 26 风险转移-保险和责任共担</h3>
-<ul>
-<li>常见的企业风险转移方法：
-<ul>
-<li>签订长期合同；利用金融工具；购买保险。</li>
-</ul></li>
-</ul>
-<h3 id="chapter-27-并购策略-以小博大的智慧">chapter 27 并购策略-以小博大的智慧</h3>
-<ul>
-<li>基本概念：
-<ul>
-<li>私有化：将一家上市公司从公众公司重新 变回 私人公司。</li>
-<li>MBO： 管理层收购，manegement buy-out，指管理层要把公司其流通在市场上的股份全部回购。</li>
-<li>LBO：杠杆收购，lenerage buy-out，企业用很少的自由资金，买下一家体谅比自己大很多的企业</li>
-</ul></li>
-<li>判断一家企业的复制扩张战略是否成功看两个指标：收入集中度，利润集中度</li>
-<li>如何看待企业的并购活动？
-<ul>
-<li>是企业实现规模和也业务扩张常用的一种方式</li>
-<li>并购的效果与起亚的管理能力有关</li>
-<li>杠杆收购的本质是利用财务杠杆以小博大，是一种高风险的资本运作方式</li>
-</ul></li>
-</ul>
-<h3 id="chapter-28-并购隐患-商誉这只灰犀牛">chapter 28 并购隐患-商誉这只灰犀牛</h3>
-<h3 id="chapter-29-减值时机">chapter 29 减值时机</h3>
-<h3 id="chapter-30-分红政策-分红多就是好公司吗">chapter 30 分红政策-分红多就是好公司吗</h3>
-<h2 id="第4章-精进-快速把脉一家上市公司">第4章 精进-快速把脉一家上市公司</h2>
-<ul>
-<li>我觉得这一章是 对所有 公司的 财务状况的 诊断，其中上市公司只是一个特例，并且上市公司暴露了更多的财务数据，也有公众对其未来盈利能力的估值（股价）</li>
-</ul>
-<h3 id="chapter-31-财务诊断-分析框架">chapter 31 财务诊断-分析框架</h3>
-<ul>
-<li>哈佛分析框架包括战略分析，会计分析，财务分析和前景分析。战略分析 和 会计分析都是比较 主观的分析，财务分析 和 前景分析是可以用量化的指标 分析出来的</li>
-<li>战略分析：
-<ul>
-<li>先看外部环境-“经营环境分析”
-<ul>
-<li>宏观环境
-<ul>
-<li>政治，经济，法律，社会文化</li>
-</ul></li>
-<li>行业环境
-<ul>
-<li>行业规模，增长前景，利润空间，变革速度</li>
-<li>增长前景，按照行业跟经济周期的关系可以将行业分类：
-<ul>
-<li>增长型行业：如高科技行业</li>
-<li>防御性行业：</li>
-<li>周期性行业：如大宗原材料行业，房地产行业</li>
-</ul></li>
-<li>利润空间
-<ul>
-<li>行业利润率估值方法-波特五力模型：
-<ul>
-<li>行业内竞争的激烈程度</li>
-<li>行业进入 壁垒的高低</li>
-<li>供应商谈判能力的强弱</li>
-<li>购买方谈判能力的强弱</li>
-<li>替代产品威胁的大小</li>
-</ul></li>
-</ul></li>
-<li>行业变革速度：哪些是核心驱动因素，以及核心因素的变化速度
-<ul>
-<li>一个是客户群体以及消费偏好的变化：例如消费行业</li>
-<li>一个是技术革新的速度：如新能源技术在汽车的应用</li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li>再看自己-“企业自身战略”
-<ul>
-<li>战略：差异化战略（星巴克），成本领先战略（沃尔玛）</li>
-<li>前者毛利率是后者两倍</li>
-</ul></li>
-</ul></li>
-<li>会计分析：检验财务指标的真实性，是否真实的反应了公司的运营状况，重点关注以下3个维度
-<ul>
-<li>1， 对企业影响最大的<strong>会计政策</strong>是什么？
-<ul>
-<li>高科技企业利润要重点关注对研发支出的处理</li>
-<li>重资产企业利润要重点关注固定资产折旧的处理</li>
-</ul></li>
-<li>2 哪些会计政策发生了变化？
-<ul>
-<li>比如某一年度钢铁公司<strong>突然</strong>调节了固定资产折旧政策--延长折旧时间，来降低档期折旧费用。那么就需要进一步了解是否“操纵利润”的嫌疑。（真实情况是，这个是为了避免退市的垂死挣扎）</li>
-</ul></li>
-<li>3，对标企业（同行，用一行业的其他公司）的会计政策有哪些不一样？
-<ul>
-<li>如果发现一家高科技企业的研发支出资本化比例 明显超过同行，就要进一步分析背后的原因。</li>
-</ul></li>
-</ul></li>
-<li>财务分析：从4个维度 用具体的数值 评价公司现在做的怎么样</li>
-<li>前景分析：预测业绩的可持续性，以及未来的价值</li>
-</ul>
-<h3 id="chapter-32-财务分析-4个维度诊断公司健康">chapter 32 财务分析-4个维度诊断公司健康</h3>
-<ul>
-<li><p>我同可以通过建立一些核心的财务指标考察企业在偿债能力，营运能力，盈利能力，价值创造这4个维度的表现，这个分析方法被称为“比率分析”方法。偿债能力: 关注的是企业家必须守住的底线，其他三个指标考虑的是企业的发展问题。企业发展 要靠“开源节流”，也就是，一方面提升盈利，一方面提升管理效率（营运能力）。</p></li>
-<li><p>偿债能力: 关注的是企业家必须守住的底线</p>
-<ul>
-<li>流动比率 = 流动资产 / 流动负债， 小于1说明有重大问题，a股平均值1.22</li>
-<li>速动比率= （流动资产 - 存货） /流动负债，a股平均值0.5
-<ul>
-<li>速冻比率 相对流动比率，剔除了资产中 变现能力 最差的 存货</li>
-</ul></li>
-<li>现金比率 = 货币资金 / 流动负债，a股平均值0.31
-<ul>
-<li>现金比率相对速动比率剔除 了 应收帐款</li>
-<li>这个比率不能过高，过高了虽然风险预防能力是具备了，但是也说明资金使用效率低了。</li>
-</ul></li>
-</ul></li>
-<li><p>营运能力</p>
-<ul>
-<li>周转率：
-<ul>
-<li>主要反应管理效率，</li>
-</ul></li>
-</ul></li>
-<li><p>盈利能力</p></li>
-<li><p>价值创造能力：市盈率 和 市净率 - ### chapter 33 财报工具-竖着比和横着比</p></li>
-<li><p>竖着比就是跟自己往年业绩比</p></li>
-<li><p>横着比就是跟同行业的竞争公司比</p></li>
-</ul>
-<h3 id="chapter-34-财务实战-哈佛分析框架的应用">chapter 34 财务实战-哈佛分析框架的应用</h3>
-<ul>
-<li>【chiechie】作业1-使用哈佛分析框架分析下腾讯</li>
-<li>【chiechie】作业2-使用哈佛分析框架分析下现在在做的项目</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/85/">85</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/86/">86</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -690,7 +644,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">170</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -703,7 +657,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-count">191</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

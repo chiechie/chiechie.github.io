@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-06-26T05:25:49.533Z</updated>
+  <updated>2021-06-28T00:34:18.325Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>进程和线程</title>
+    <link href="https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/"/>
+    <id>https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/</id>
+    <published>2021-06-27T04:16:07.000Z</published>
+    <updated>2021-06-28T00:34:18.325Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="基本定义">基本定义</h2><h3 id="进程process">进程（process）</h3><p>我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。</p><p>编译器将它翻译成二进制代码--机器的语言。</p><p>但是此时不执行这段断码的话，就还是一段静态程序。</p><p>当执行起来的时候，就变成了一个进程。</p><p>进程（process）有时候也称做任务，是指一个程序运行的实例。</p><h3 id="线程threads">线程（threads）</h3><p>一个进程中的执行的单位。</p><p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p><h3 id="应用-vs-进程-vs-进程">应用 vs 进程 vs 进程</h3><p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p><p>进程和线程的区别：</p><p>• 进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉 • 线程（车厢）在进程（火车）下行进 • 一个进程（火车）可以包含多个线程（车厢） • 不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享 线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行 • 进程要比线程消耗更多的计算机资源 • 进程间不会相互影响，一个线程挂掉将导致整个进程挂掉 • 进程可以拓展到多机，线程最多适合多核 • 进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁" • 进程使用的内存地址可以限定使用量－“信号量”</p><h2 id="实践">实践</h2><h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3><p><a href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p><p>需求：实现一个任务管理/编排的机制，即，输入一堆任务，每个任务的计划执行时间/执行时长都有，现在有一台单线程CPU，如何安排这些任务的执行顺序？</p><p>分析：设计两个数据结构：1个是普通队列，存放每个任务的计划执行时间；还有1个是优先队列，存放候选执行任务，并且按照优先级排序。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tasks = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">4</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">1</span>]]</span><br><span class="line">n = <span class="built_in">len</span>(tasks)</span><br><span class="line">timestamp = <span class="number">1</span></span><br><span class="line">candidate_list = []</span><br><span class="line">new_task = []</span><br><span class="line">j = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) <span class="keyword">and</span> (tasks[j][<span class="number">0</span>] &lt;= timestamp):</span><br><span class="line">        heapq.heappush(candidate_list, (tasks[j][<span class="number">1</span>], j))</span><br><span class="line">        j+=<span class="number">1</span></span><br><span class="line">        print(j, n)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    process, index = heapq.heappop(candidate_list)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    new_task.append(index)</span><br><span class="line">    timestamp += process</span><br><span class="line">new_task</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/25532384/answer/411179772">biaodianfu-zhihu</a></li><li><a href="https://www.youtube.com/watch?v=usyg5vbni34">thred</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;基本定义&quot;&gt;基本定义&lt;/h2&gt;
+&lt;h3 id=&quot;进程process&quot;&gt;进程（process）&lt;/h3&gt;
+&lt;p&gt;我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。&lt;/p&gt;
+&lt;p&gt;编译器将它翻译成二进制代码--机器的语言。&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="计算机原理" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    <category term="线程" scheme="https://chiechie.github.io/tags/%E7%BA%BF%E7%A8%8B/"/>
+    
+    <category term="进程" scheme="https://chiechie.github.io/tags/%E8%BF%9B%E7%A8%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>关于Scale AI</title>
@@ -38,11 +70,11 @@
     <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
     
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
     <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
     
     <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
   </entry>
   
@@ -249,11 +281,11 @@
     <category term="沉思录" scheme="https://chiechie.github.io/categories/%E6%B2%89%E6%80%9D%E5%BD%95/"/>
     
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
     <category term="科技史" scheme="https://chiechie.github.io/tags/%E7%A7%91%E6%8A%80%E5%8F%B2/"/>
     
     <category term="人工智障" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E9%9A%9C/"/>
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
   </entry>
   
@@ -434,17 +466,17 @@
     <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
     
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
     <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
     
-    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
-    
-    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
     
+    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    
     <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
+    
+    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -473,17 +505,17 @@
     <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
     
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
     <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
     
-    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
-    
-    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
     
+    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    
     <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
+    
+    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -574,9 +606,9 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
     <category term="未来趋势" scheme="https://chiechie.github.io/tags/%E6%9C%AA%E6%9D%A5%E8%B6%8B%E5%8A%BF/"/>
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="量子计算机" scheme="https://chiechie.github.io/tags/%E9%87%8F%E5%AD%90%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
     
@@ -611,36 +643,6 @@
     <category term="货币" scheme="https://chiechie.github.io/tags/%E8%B4%A7%E5%B8%81/"/>
     
     <category term="汇率" scheme="https://chiechie.github.io/tags/%E6%B1%87%E7%8E%87/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>强化学习5 蒙特卡洛树搜索</title>
-    <link href="https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/rl5-monte-calo/"/>
-    <id>https://chiechie.github.io/2021/06/02/AI/reinforcement_learning/rl5-monte-calo/</id>
-    <published>2021-06-02T08:58:05.000Z</published>
-    <updated>2021-06-03T08:48:27.853Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="总结">总结</h1><ol type="1"><li>蒙特卡洛树搜索（MCTS）是一种基于模型的强化学习方法。</li><li>蒙特卡洛树搜索比价值学习和策略学习更难。</li><li>AlphaGp是一个围棋AI，依靠MCTS做决策，决策过程中需要策略网络和价值网络辅助。</li><li>AlphaGo真正跟人下棋的时候，做决策的不是策略网络或者价值网络，而是MCTS。</li><li>MCTS不需要训练，可以直接做决策，训练策略网络和价值网络的目的是辅助MCTS。</li></ol><h2 id="mcts的基本思想">MCTS的基本思想</h2><ol type="1"><li>高手是怎么下棋的？高手一般都会往前多看几步。</li><li>高手下棋，一般是动态看待局势，确保自己几步之后占据优势。如果只根据当前格局做判断，不考虑长远，肯定赢不了高手。</li><li>同理，AI下棋也应该跟高手一样，多往前看几步，枚举所有可能发生的情况，从而判断当前执行什么动作的胜算最大，这样远浩宇用策略网络输出一个动作。</li><li>AlphaGo每走一步，就要用MCTS做成千上万次模拟，基本思想如下：假设当前有3种可选的动作，每次模拟从三种动作中选出一种，然后将游戏进行到底，从而拿到最终结果。 重复成千上万次模拟，统计每种动作的胜负概率，发现胜率分别是48%、56%、52%。那么 AlphaGo 应当执行第二种动作，因为 它的胜算最大。然而实际做起来还有很多难点需要解决。</li></ol><h2 id="mcts的四个步骤">MCTS的四个步骤</h2><p>MCTS每次模拟都要经历四个步骤：选择（selection），扩展（expansion），估值（evaluation），回溯（backup）</p><h3 id="选择">选择</h3><ol type="1"><li><p>观察当前局势，找出符合规则的所有走位中最有胜算的那部分走位。 如何评估走位优劣？综合两方面：</p></li><li><p>看走位的胜率，就是动作价值</p></li><li><p>看策略网络给a的评分</p></li></ol><h3 id="扩展">扩展</h3><p>接下来，ALphaGo需要考虑：对方会怎么走？只能靠猜，使用"推己及人"的方式。使用策略网络模拟对手的策略， 策略网络站在对手角度，根据观测到的棋局，给出多个走位的概率，ALphaGo采样一个动作。 这个时候对手落下的子就是ALphaGo的新状态了。</p><p>上面的所有的走位都不是真实发生的，而是在AlphaGo的脑袋中推演的，</p><p>ALphaGo专门执行推演的模块就叫模拟器（就是环境，牛逼的很，自己构建出与现实平行的虚拟世界），</p><p>在模拟器中，ALphaGo每执行一个动作，模拟器就会返回一个新的状态。</p><p>如何搭建一个好的模拟器？关键在于构建的正确的状态转移函数，如果其跟事实偏离太远，那么模拟器就是一个废物。</p><p>AlphaGo如何构建好的模拟器呢？他利用了围棋的对称性：即我方视角的状态转移，等价于对方视角的真实策略--可以复用已经训练好的策略网络。</p><blockquote><p>有点类似理性市场假设，每个人都是同样聪明的人，市场不存在套利机会。</p></blockquote><p>在围棋场景，搭建模拟器很简单，但是其他场景就没有这么简单了。</p><p>比如机器人、无人车等应用，状态转移的构造需要物理模型，要考虑到力、运动、以及外部世界的干扰。 如果物理模型不够准确，导致状态转移函数偏离事实太远，那么 MCTS的模拟结果就不可靠。</p><h3 id="求值">求值</h3><p>AlphaGo在模拟器中交替落子，直到分出胜负，把结果记为r.但是r只是众多平行世界中的一个，把r就作为评判第一个走位的依据，未免过于随机。</p><p>有没有更加稳定的方法？AlphaGo的解决方案，把r与价值网络对下个状态的评价进行求和，得到了下一个状态的价值。</p><p>在实际实现的时候，AlphaGo在这一步训练了一个更小的策略网络。</p><p>为什么只在求值这一步使用小网络呢？因为这一步是连哥哥策略网络交替落子，并且通常要走一两百步，导致这步成为瓶颈。</p><p>用小的策略网络代替大的策略网络，可以大幅加速MCTS</p><h3 id="回溯">回溯</h3><p>对于下一步的每个状态，通过模拟都能得到多条记录--代表该状态的价值。</p><p>把假想走位的所有状态的所有价值记录，求平均，就能得到假想走位的价值。</p><p>将这个候选走位带回第一步，更新每个走位的分数，选出最高的，进行下一轮模拟</p><p><span class="math display">\[ \operatorname{score}(a) \triangleq Q(a)+\frac{\eta}{1+N(a)} \cdot \pi(a \mid s ; \boldsymbol{\theta}), \quad \forall a \]</span></p><h2 id="决策">决策</h2><p>一轮 选择-&gt;扩展-&gt;扩展-&gt;回溯只是执行了单次模拟。</p><p>实际上做一次决策之前，需要做成千上万次模拟。</p><p>每次模拟时，更新每个候选走位的score，选择最高分score，在模拟器执行。</p><p>经过成千上万次模拟后，最经常被选中的走位，就作为最终的决策依据。</p><p>注意，每次在真实世界走完一步，上一步存的分数都要清零。</p><p>总结下，AlphaGo下棋非常暴力：每走一步，都要在虚拟世界模拟几万局。</p><p>计算量是机器战胜柯洁的秘密武器。</p><h1 id="参考">参考</h1><ol type="1"><li><a href="https://netman.aiops.org/wp-content/uploads/2018/12/sunyq_IEEEAccess2018_HotSpot.pdf">HotSpot-英文paper</a></li><li><a href="https://mp.weixin.qq.com/s/Kj309bzifIv4j80nZbGVZw">HotSpot-中文</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;总结&quot;&gt;总结&lt;/h1&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;蒙特卡洛树搜索（MCTS）是一种基于模型的强化学习方法。&lt;/li&gt;
-&lt;li&gt;蒙特卡洛树搜索比价值学习和策略学习更难。&lt;/li&gt;
-&lt;li&gt;AlphaGp是一个围棋AI，依靠MCTS做决策，决策过程中需要策略</summary>
-      
-    
-    
-    
-    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
-    
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="强化学习" scheme="https://chiechie.github.io/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   

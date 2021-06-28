@@ -20,20 +20,29 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="1. 社会中的自我 焦点效应  人总是高估他们内在状态外露的程度，但是事实上，他人并没有你想象的那样注意你。 焦点效应（spotlight effect）：把自己看作世界中心，直觉地高估别人对我们的关注程度。几个例子：   会聚焦在自我与当前社会环境的差异性，会关注差别最大的那个维度。 自我服务：当关系出现问题时，个体通常会把责任更多推到配偶身上，情况好转时，确认为自己起了更重要的作用。 自我关注">
+  <meta name="description" content="如何应用贝叶斯网络来做决策？  首先需要将先验知识表达成一个因果图--贝叶斯网络，（准确来说贝叶斯网络的边不仅仅表达因果关系，他表达所有的信息传播的方向）。 做推断   构造贝叶斯网络  推断  已知P(R,W,S,C）, 求P(r) 枚举法  先推到条件概率分布   img_1.png     变量消除法  img_3.png   img_4.png  所有非query变量祖先的变量，都应该被消">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《社会心理学》读书笔记">
-<meta property="og:url" content="https://chiechie.github.io/2021/06/18/reading_notes/reality/shehuixinlixue/index.html">
+<meta property="og:title" content="贝叶斯网络">
+<meta property="og:url" content="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="1. 社会中的自我 焦点效应  人总是高估他们内在状态外露的程度，但是事实上，他人并没有你想象的那样注意你。 焦点效应（spotlight effect）：把自己看作世界中心，直觉地高估别人对我们的关注程度。几个例子：   会聚焦在自我与当前社会环境的差异性，会关注差别最大的那个维度。 自我服务：当关系出现问题时，个体通常会把责任更多推到配偶身上，情况好转时，确认为自己起了更重要的作用。 自我关注">
+<meta property="og:description" content="如何应用贝叶斯网络来做决策？  首先需要将先验知识表达成一个因果图--贝叶斯网络，（准确来说贝叶斯网络的边不仅仅表达因果关系，他表达所有的信息传播的方向）。 做推断   构造贝叶斯网络  推断  已知P(R,W,S,C）, 求P(r) 枚举法  先推到条件概率分布   img_1.png     变量消除法  img_3.png   img_4.png  所有非query变量祖先的变量，都应该被消">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-06-18T01:24:54.000Z">
-<meta property="article:modified_time" content="2021-06-21T07:18:09.278Z">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/img_1.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/img_2.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/img_3.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/img_4.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/img_5.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/img_6.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/img_7.png">
+<meta property="article:published_time" content="2021-06-15T06:28:18.000Z">
+<meta property="article:modified_time" content="2021-06-28T00:33:05.524Z">
 <meta property="article:author" content="Chiechie">
-<meta property="article:tag" content="心理学">
+<meta property="article:tag" content="博客, AI, 互联网">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/img.png">
 
-<link rel="canonical" href="https://chiechie.github.io/2021/06/18/reading_notes/reality/shehuixinlixue/">
+<link rel="canonical" href="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/">
 
 
 <script id="page-configurations">
@@ -46,7 +55,7 @@
   };
 </script>
 
-  <title>《社会心理学》读书笔记 | Chiechie's Mini World</title>
+  <title>贝叶斯网络 | Chiechie's Mini World</title>
   
 
 
@@ -168,7 +177,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/18/reading_notes/reality/shehuixinlixue/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/15/reading_notes/graph/bayesnetwork/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -181,7 +190,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          《社会心理学》读书笔记<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/reading_notes/reality/shehuixinlixue.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          贝叶斯网络<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/reading_notes/graph/bayesnetwork.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -191,24 +200,15 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-18 09:24:54" itemprop="dateCreated datePublished" datetime="2021-06-18T09:24:54+08:00">2021-06-18</time>
+              <time title="创建时间：2021-06-15 14:28:18" itemprop="dateCreated datePublished" datetime="2021-06-15T14:28:18+08:00">2021-06-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-21 15:18:09" itemprop="dateModified" datetime="2021-06-21T15:18:09+08:00">2021-06-21</time>
+                <time title="修改时间：2021-06-28 08:33:05" itemprop="dateModified" datetime="2021-06-28T08:33:05+08:00">2021-06-28</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -228,68 +228,58 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="社会中的自我">1. 社会中的自我</h2>
-<h3 id="焦点效应">焦点效应</h3>
-<ol type="1">
-<li>人总是高估他们内在状态外露的程度，但是事实上，他人并没有你想象的那样注意你。</li>
-<li>焦点效应（spotlight effect）：把自己看作世界中心，直觉地高估别人对我们的关注程度。几个例子：</li>
-</ol>
+        <p>如何应用贝叶斯网络来做决策？</p>
 <ul>
-<li>会聚焦在自我与当前社会环境的差异性，会关注差别最大的那个维度。</li>
-<li>自我服务：当关系出现问题时，个体通常会把责任更多推到配偶身上，情况好转时，确认为自己起了更重要的作用。</li>
-<li>自我关注引发的很多行为：我们关注他人的行为和期望，并随之调整自己的行为。</li>
-<li>在不同的关系中，自我也在发生变化。</li>
+<li>首先需要将先验知识表达成一个因果图--贝叶斯网络，（准确来说贝叶斯网络的边不仅仅表达因果关系，他表达所有的信息传播的方向）。</li>
+<li>做推断</li>
 </ul>
+<ol type="1">
+<li><p>构造贝叶斯网络 <img src="img.png" alt="img.png" /></p></li>
+<li><p>推断</p></li>
+</ol>
+<p>已知P(R,W,S,C）, 求P(r)</p>
+<h3 id="枚举法">枚举法</h3>
+<ol type="1">
+<li>先推到条件概率分布</li>
+</ol>
+<figure>
+<img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
 <ol start="2" type="1">
-<li><p>透明度错觉（illusion of transoarency）：我们能敏锐觉察到自己的情绪，很自然地表现出来，并且直觉的认为别人会通过我们的表情觉察到我们的情绪。</p>
-<blockquote>
-<p>其实不是的，1是我们的表现可能模糊不清，2是别人的关注点可能在他自己。</p>
-</blockquote></li>
-<li><p>公众心理疏忽（public mental slips）：如果我们五一冒犯了别人，我们可能懊恼，但是别人经常注意不到，即使注意到也可能很快就会忘记。</p></li>
-<li><p>我们的大多数行为不受意识控制，是自动。显示的自我会制定长期计划，设定目标和进行约束，设想各种可能，将自己和他们相比较，管理自己的reputation和社会关系，但是更多时候可能成为幸福的障碍。</p></li>
+<li><img src="img_2.png" title="fig:" alt="img_2.png" /></li>
 </ol>
-<h3 id="我是谁">我是谁</h3>
+<h3 id="变量消除法">变量消除法</h3>
+<figure>
+<img src="img_3.png" alt="img_3.png" /><figcaption aria-hidden="true">img_3.png</figcaption>
+</figure>
+<figure>
+<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
+</figure>
+<p>所有非query变量祖先的变量，都应该被消去，当然不是真的消去啦，是对该消去变量求和，然后变成一个新的因子f。</p>
+<p>依次迭代，直到没有可以消除的变量。</p>
+<figure>
+<img src="img_5.png" alt="img_5.png" /><figcaption aria-hidden="true">img_5.png</figcaption>
+</figure>
+<h3 id="贝叶斯网络中的依赖性">贝叶斯网络中的依赖性</h3>
 <ol type="1">
-<li>self-schemas：对自己的认识，比如聪明，自省，勤奋，怀疑，个人主义。</li>
-<li>self-schemas影响我们对社会信息的加工，也影响我们感知，回忆和评价他人/自己。</li>
-<li>我们对跟self-schemas相关的信息会特别关注。</li>
-<li>possible selves：可能的自我，梦想中自我的样子，比如富有，充满激情，自信，丛容，智慧。</li>
-<li>possible selves会激发一种我们渴望的生活愿景，对我们产生巨大的激励作用，或促进我们避免成为自己害怕的样子。</li>
+<li>每一个随机变量都是条件独立于他的非后代节点，给定他的父母节点时，</li>
+<li>如下，给定A，B时，C和D是独立的。</li>
 </ol>
-<h3 id="社会自我">社会自我</h3>
-<ol type="1">
-<li>基因对人格和自我概念有重要的影响，社会经验也有：扮演的角色，社会同一性，和别人的比较，成功和失败，他人如何评价我们，周围的文化。</li>
-<li>扮演的角色：我们为这个角色说了很多好话，不知不觉，我们会越来越相信这些话，为这些话提供证据。就这样，角色扮演变成了事实。</li>
-<li>社会比较：判断自己是否聪明/智慧？通过社会比较。生活的大部分是围绕比较进行的，因此人们可能会因为别人的失败而暗自高兴。当人嗯攀爬成功的阶梯时，通常会向上看，将自己与做的更好的人比。面对竞争时，常常认为竞争对手本来就有一些优势，以此来保护我们业已动摇的自尊。</li>
-<li>别人的评价：镜像自我--别人对我们的看法，我们把别人作为镜子，我们认为的别人眼中的我，据此来认识自己。换句话说，重要的不是别人实际上如何评价我们，而是我们想象中他们如何评价我们。</li>
+<figure>
+<img src="img_6.png" alt="img_6.png" /><figcaption aria-hidden="true">img_6.png</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>每个随机变量独立其他任何变量，当给定他的马尔可夫毯（Markov Blanket）
+<ul>
+<li>父亲，孩子，以及孩子的父母亲（配偶）</li>
+</ul></li>
 </ol>
-<h3 id="自我与文化">自我与文化</h3>
+<figure>
+<img src="img_7.png" alt="Markov Blanket" /><figcaption aria-hidden="true">Markov Blanket</figcaption>
+</figure>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li>对于部分群体，“个人主义”十分盛行，他们的额经历大部分是这样：青春期与负米分离，各异开始依靠自己，定义独立的自我。即使个体来到一片陌生的土地上，他的特性：有特殊能力，特点，价值和梦想的个体也会保留。当经历过富裕，地位改变，城市化和大众传媒后，个人主义开始迅速发展，</li>
-<li>亚洲文化则更重视集体主义（collectivism）。</li>
-<li>保守派，经济上的个人主义（不要征税）和道德上的集体主义（制定法律来约束不道德）</li>
-<li>自由主义者，经济上的集体主义（支持全民健康保障）和道德上的个人主义（不要用法律来约束我）</li>
-<li>许多文化似乎正在走向个人主义。</li>
-<li>究竟是人们更加关注自我，所以喜欢听关注自我的歌曲，还是反过来？还是存在混杂因子？</li>
-</ol>
-<h3 id="文化与认知">文化与认知</h3>
-<ol type="1">
-<li>东亚人的思维更具有整体性，从人际关系和环境的角度思考人和物。东方人不重视表达自己的独特性，更重视分享，很少强调个人的选择和自由。</li>
-<li>西方的文化强调个体的力量，个体的价值。</li>
-<li>相互依赖的自我是多个自我的组合，如为人子女的我，职场中的我，作为朋友的我。一个具有相互依赖自我的人会有强烈的归属感，当跟组织分开之后，会丢失掉自我定义。相互依赖的自我存在于社会关系中，社会生活的目标是协调和支持群体。相互依赖的自我聚焦寻求社会支持，比独立自我更深入地融入他人。在相互依赖的文化中，</li>
-<li>自我概念会适应环境，如果一生都与一群人交往，身边人对你的影响很重要；反之，如果每几年换一个环境，身边的人就没有那么重要，而「自我」变成忠实伙伴。“无论你去哪儿，你就是你”。</li>
-</ol>
-<h3 id="自我认识">自我认识</h3>
-<ol type="1">
-<li>我们对自己行为的解释，在原因有点微妙时候，通常答案都是错误的，我们会忽视重要因素，而夸大一些无关紧要的因素。</li>
-</ol>
-<h2 id="社会关系">社会关系</h2>
-<ol type="1">
-<li>内疚感：没有帮助别人或者说谎时，会产生内疚感，人会通过在其他方面的行动来弥补这一种感觉。</li>
-<li>经历过极度悲痛的人，会经历一种强烈的自我关注时期。</li>
-<li>悲痛并且自我关注的人，较少意愿去帮助他人；悲痛并且关注别人的人，较多意愿去帮助他人。</li>
-<li>快乐的人更愿意帮助别人。</li>
-<li>帮助行为可以缓解不好的情绪，也可以维持好的情绪。比如给某人指路之后，自我感觉会更好。接着，好的心情又回产生积极的思维，从而指导在其他事情上产生积极的行为。</li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=TuGDMj43ehw">Bayesian Networks-youtuybe</a></li>
 </ol>
 
     </div>
@@ -299,9 +289,6 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E5%BF%83%E7%90%86%E5%AD%A6/" rel="tag"># 心理学</a>
-          </div>
 
         
 
@@ -309,12 +296,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/06/15/reading_notes/economics/xingweijingjixue/" rel="prev" title="《行为经济学》读书笔记">
-      <i class="fa fa-chevron-left"></i> 《行为经济学》读书笔记
+    <a href="/2021/06/14/meditation/why-do-We-work/" rel="prev" title="为什么要工作？">
+      <i class="fa fa-chevron-left"></i> 为什么要工作？
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/06/18/meditation/why-do-We-work/" rel="next" title="为什么要工作？">
-      为什么要工作？ <i class="fa fa-chevron-right"></i>
+    <a href="/2021/06/21/reading_notes/zhexue/hongloumengxishuo/" rel="next" title="细说红楼梦">
+      细说红楼梦 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -374,7 +361,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BE%E4%BC%9A%E4%B8%AD%E7%9A%84%E8%87%AA%E6%88%91"><span class="nav-number">1.</span> <span class="nav-text">1. 社会中的自我</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%84%A6%E7%82%B9%E6%95%88%E5%BA%94"><span class="nav-number">1.1.</span> <span class="nav-text">焦点效应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E6%98%AF%E8%B0%81"><span class="nav-number">1.2.</span> <span class="nav-text">我是谁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BE%E4%BC%9A%E8%87%AA%E6%88%91"><span class="nav-number">1.3.</span> <span class="nav-text">社会自我</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E6%88%91%E4%B8%8E%E6%96%87%E5%8C%96"><span class="nav-number">1.4.</span> <span class="nav-text">自我与文化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E5%8C%96%E4%B8%8E%E8%AE%A4%E7%9F%A5"><span class="nav-number">1.5.</span> <span class="nav-text">文化与认知</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E6%88%91%E8%AE%A4%E8%AF%86"><span class="nav-number">1.6.</span> <span class="nav-text">自我认识</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BE%E4%BC%9A%E5%85%B3%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">社会关系</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">枚举法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E6%B6%88%E9%99%A4%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">变量消除法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E4%BE%9D%E8%B5%96%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">贝叶斯网络中的依赖性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
       </div>
       <!--/noindex-->
 

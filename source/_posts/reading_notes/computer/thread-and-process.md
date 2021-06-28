@@ -35,7 +35,7 @@ categories:
 线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程
 
 
-### 应用 vs 进程 vs 进程
+## 应用 vs 线程 vs 进程
 
 一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。
 
@@ -52,6 +52,15 @@ categories:
 • 进程可以拓展到多机，线程最多适合多核
 • 进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁"
 • 进程使用的内存地址可以限定使用量－“信号量”
+
+## 硬件多线程vs软件多线程
+
+CPU架构演进路线：
+多cpu--->超线程-->多core
+
+https://stackoverflow.com/questions/680684/multi-cpu-multi-core-and-hyper-thread
+
+其中的超线程（hyper thread）指的硬件多线程，如下图，相当于给一个core，虚拟化为2个core，可以更方便压榨计算机性能
 
 
 ## 实践
@@ -93,3 +102,5 @@ new_task
 ## 参考
 1. [biaodianfu-zhihu](https://www.zhihu.com/question/25532384/answer/411179772)
 2. [thred](https://www.youtube.com/watch?v=usyg5vbni34)
+3. [计算机原理系列-blog](https://www.junmajinlong.com/os/multi_cpu/)
+4. [关于CPU上的高速缓存](https://www.junmajinlong.com/os/cpu_cache/)

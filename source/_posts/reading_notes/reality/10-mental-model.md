@@ -11,6 +11,7 @@ categories:
 
 > 基于剃刀原则的几个思维模型，from Sahil Bloom的twitter 
 
+
 ## The Steve Jobs Quality Razor
 
 
@@ -177,6 +178,7 @@ An "urgent" task is one that requires immediate attention. An "important" task i
 
 Place it on a 2x2 matrix and act accordingly.
 
+
 ## The Steve Jobs Settling Razor
 
 “The only way to do great work is to love what you do. If you haven’t found it yet, keep looking. Don’t settle.” - Steve Jobs
@@ -185,6 +187,7 @@ It’s Monday morning. Did you wake up with energy or with dread?
 
 Your answer will tell you if you’re settling.
 
+
 ## The Career Razor
 
 When deciding on a new job, choose the one that will challenge you the most (intellectually, physically, or emotionally).
@@ -192,6 +195,7 @@ When deciding on a new job, choose the one that will challenge you the most (int
 Challenge and discomfort forces growth.
 
 (P.S. Check out the job board below for challenging new roles!)
+
 
 ## Decisions
 

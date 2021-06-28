@@ -2,7 +2,7 @@
 title: 计算机的存储单元
 author: chiechie
 mathjax: true
-date: 2021-06-28 09:47:32
+date: 2021-06-26 09:47:32
 tags:
 - 计算机原理
 - 内存
@@ -24,6 +24,7 @@ categories:
 5. 多核CPU的L3对诶个core是共享的，L2和L1是每个core私有的。
 
 ![img_2.png](./img_2.png)
+
 6. CPU读取数据时，要从内存读取到L3，再读取到L2再读取到L1，同样写到内存时也会经过这些层次。
 
 

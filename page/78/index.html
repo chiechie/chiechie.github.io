@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/06/reading_notes/the-book-of-why/judea-pearl_the-book-of-why4/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/06/reading_notes/the-book-of-why/judea-pearl_the-book-of-why1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/06/reading_notes/the-book-of-why/judea-pearl_the-book-of-why4/" class="post-title-link" itemprop="url">《the book of why》读书笔记-4</a>
+            <a href="/2021/03/06/reading_notes/the-book-of-why/judea-pearl_the-book-of-why1/" class="post-title-link" itemprop="url">《the book of why》读书笔记-1</a>
         </h2>
 
         <div class="post-meta">
@@ -220,30 +220,53 @@
 
       
           <blockquote>
-<p>the book of why 的第四章-去混杂</p>
+<p>《the book of why》是一本关于因果关系的科普书，作者是judea pearl，该书于2019年出版。</p>
+<p>最近工作正好涉及根因分析，加上我对因果推断领域比较感兴趣，所以将本书作为入门读物。打算以此为基础，再看技术paper。</p>
+<p>这个是第一篇-引言-思维胜于数据</p>
+<p>重新review了一下读书笔记，感觉还是没有消化里面的内容</p>
 </blockquote>
-<h2 id="do算子">do算子</h2>
-<ol type="1">
-<li><p>消除混杂因子的方法：随机对照试验。</p></li>
-<li><p>贝叶斯网络中的箭头，可以看成是信息的流动。这个信息传递是双向的，既可以在因果方向传递，也可以在非因果方向传递。</p></li>
-<li><p>混杂的定义：任何使P（Y｜do（X））和 P（Y｜X）不一样的额因素。</p></li>
-<li><p>非因果路径是混杂的根源。</p></li>
-<li><p>回忆一下三种链接形式：链结合，叉连接，对撞连接</p>
+<h2 id="因果推断流程图">因果推断流程图</h2>
+<figure>
+<img src="inference_engine.png" alt="图一--因果推断引擎" /><figcaption aria-hidden="true">图一--因果推断引擎</figcaption>
+</figure>
 <ul>
-<li>链连接：控制B可以防止A的信息流向C或者C的信息流向A</li>
-<li>叉连接: 控制B可以防止有关A的信息流量C</li>
-<li>对撞连接:A和C是独立的，但是，如果控制了B，由于辩解效应的存在，信息就会开始在"管道"中流通。</li>
-<li>控制一个变量的后代节点，就如同部分地控制了变量本身。控制一个中介物的某个后代节点，意味着，部分地关闭了信息管道。控制一个对撞变量的某个后代节点，意味着部分打开了信息管道。 &gt; 抛开观测者，有因果关系吗？</li>
+<li><p>【1号框-知识】「知识」（knowledge）指「推断主体」（reasoning agent）过去的经历（experience），包括过去的观察（observation），过去的行为（actions），教育和文化（hearsay）等跟目标问题有关的内容。「知识」的虚线框表示，它仍存在于推断主体（reasoning agent）的心智中，是隐式的，而不是显示地在表达在模型中。</p></li>
+<li><p>【2号框-假设】科学研究经常需要简化「假设」（assumptions），即值得显式表达的「陈述」（statements）。 虽然大部分研究人员的知识都隐式地存在于他脑中，只有「假设」得见天日，并且「封装」（encapsulated）在模型之中。「假设」可以从模型中读到，这让一些逻辑学家得出结论：模型不过是一堆「假设」而已。计算机专家对此观点持有异议，他们提出需注意「假设」呈现的方式，因为人的不同解读而产生很大区别。</p></li>
+<li><p>【3号框-因果模型】「因果模型」（causal model）有多种表达语言：「因果图」（causal graph），「结构方程」（structural equation），「逻辑陈述」等。以「因果图」为例，如果X是Y的因（cause），即Y听从X，就会在因果图中，画一个X到Y的箭头。</p></li>
+<li><p>【4号框-可测试蕴含】从「因果图」中推导出来的一些统计性质，可以使用数据去证伪</p></li>
+<li><p>【5号框-查询】提交到推荐引擎的查询（queries），是一个科学的问题我们要回答的，他们可以用一个因果词汇来表达，例如，P（L | do(D)）是多少，eg我努力了的话成功的概率是多少？因果革命的一个主要的成就，就是让因果语言在科学上容易理解，在数据上精确严谨。</p></li>
+<li><p>【6号框-被估量】「被估量」（estimand），是一个统计量，需要从数据中算出，可被写成概率公式，例如P（L｜ D，Z）* P（Z）。 &gt; 跟传统统计学不一样，在当前因果模型中，有些问题是没有答案的，即使收集了再多数据也没用。这个时候要做的是，回去修正「因果模型」--加入新「知识」，或者简化「假设」（注意吃出存在犯错风险）</p></li>
+<li><p>【7号框-数据】数据（data）是填充「被估量」的原料，需要认识到，数据本身不能表达因果关系。数据只能告诉我们P（L｜D），或者P（L｜D，Z）。而「被估量」将这些观测概率转为干预概率P(L|do(D))。</p></li>
+<li><p>【8号框-统计估计量】 「统计估计量」（statistical estimation）是一个新鲜出炉的东西，然而，它仅仅是一个估计值，因为基于事实：我们能获取到的仅仅是无限总体的有限样本。幸运的是，统计学给了我们很多方法来应对这些不确定性--最大似然估计，propensity分数，置信区间，显著性检验。</p></li>
+<li><p>【9号框-估计】「估计」（estimate）即为「查询」的答案。如果我们的「因果模型」是对的，并且我们的数据是充分的，我们可以得到「查询」的答案，例如 药物提升了糖尿病人的寿命30%+/-20%。 这样的回答，也会增加我们的科学的「知识」。如果这一答案与我们的生活常识不符，则说明我们需要对「因果模型」（3号框）做一些修正。</p></li>
+</ul>
+<p>这个流程图看起来很复杂，我们在日常生活和工作中处理因果问题时使用直觉就可以，而不用按照这个流程来。 但是如果我们要教会一个机器人懂得因果推断，我们就必须审视自己的因果推断的流程，并且形成一门科学语言，先模拟自己，再教会机器。</p>
+<h2 id="深度学习-和-因果推断">深度学习 和 因果推断</h2>
+<ol type="1">
+<li><p>人工智能和大数据和因果模型：当今很多人工智能的研究者只依赖数据解决所有的认知难题。他们希望在因果问题出现时，数据能指引他们找到答案。换句话说，他们坚信数据是万能的，也可以称这类人--信仰「数据教」。这种想法通常是秘而不宣。</p></li>
+<li><p>作者对"数据万能"的趋势表示质疑，因为，对因果关系的知识，数据没有发言权。举个例子，关于「行动」或「干预结果」的信息，根本无法从原始数据中获取，这些信息只能从对照实验中收集。</p></li>
+<li><p>反事实问题比如"如果当时我采取了相反的行动会发生什么"，是人工智能最具挑战性的问题。想要回答反事实问题，因果模型的作用很重要。</p></li>
+<li><p>因果模型相对深度学习的特有优势--适应性。 因果模型研究的是更本质，更稳固，适用范围更广的知识，相对来说深度学习是一个肤浅的学习者，和拙劣的模仿者:</p>
+<ul>
+<li>假设我们面临一个问题，新冠疫苗的药效的评估者，通过观察印度的情况--病患注射疫苗后的存活时间，得到了关于疫苗有效性的结论；接下来想评估疫苗在中国的有效性，但是中国和印度的卫生情况，饮食习惯，工作习惯，人均寿命寿命都不一样。</li>
+<li>「深度学习流派」的做法是：重新获取中国的病患数据，重新训练模型和做预测，本质上深度学习就是将函数和数据拟合。</li>
+<li>「因果推断流派」的做法是：该研究者首先掌握疫苗的作用机制（regime），如果中国疫苗作用机制跟印度一致，那么在印度得到的估计参数仍然有效，可生成一个新的中国总体的预测函数。</li>
 </ul></li>
-<li><p>我们应该如何阻断信息的流通？如果这条路径中的一个连接被阻断，那么J就无法找到A。有很多当时来阻止A和J之间的交流，我们只用找到其中任何一项就好了。</p></li>
-<li><p>所以，统计过程，是有误导的，因为它只是假设其中的一条可观测的因果链存在，实际了忽视了不可观测的跟多的链路。</p></li>
-<li><p>如何去除X和Y的混杂，我们只要阻断他们之间的每个非因果路径，而不干扰因果路径。</p></li>
-<li><p>后门路径就是，所有X和Y之间，以指向X的箭头为开始的路径。这些后们路径，允许X和Y之间的伪相关信息在管道中流通。</p></li>
-<li><p>如果阻断了所有的后门路径，就完成了X和Y的去混杂。</p></li>
+</ol>
+<h2 id="因果之梯">因果之梯</h2>
+<p>1.「反事实」和「干预」（intervention）区分的关键在于「事后来看」（hindsight）。即反事实强调在对结果已知观测的基础上再对反事实的问题进行解答：“假如当时发生的与实际情况不同，结果会怎样？”，这就要求一种对虚构世界的推理能力。另一方面，Intervention关注的更多是群体的总效应或者平均因果效应。而反事实更关注特定事件或个体层面的因果关系。举个栗子，比如Intervention解决的是“吸烟是否导致肺癌”，而counterfactual研究的是“我的外公30年来每天一支烟，假如他不曾吸烟的话，他会活多久”，这两者之间是具有很大差别的。</p>
+<h3 id="概率与因果关系">概率与因果关系</h3>
+<ol type="1">
+<li><p>20世纪中期的哲学家，使用"概率提高"的概念，来定义因果关系。 &gt; 如果事件X提高了Y的概率，那么就说X导致了Y &gt; &gt; 决策树生成算法，挑选节点的时候，有异曲同工之妙啊。</p>
+<figure>
+<img src="qiantan-ai/img.png" alt="决策树中的概率提高思想" /><figcaption aria-hidden="true">决策树中的概率提高思想</figcaption>
+</figure></li>
+<li></li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li>
+<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书-引言</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">知乎-反事实和干预</a></li>
 </ol>
 
       
@@ -264,7 +287,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/05/meditation/about-problem-Definition-and-info-collection/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/06/reading_notes/the-book-of-why/judea-pearl_the-book-of-why3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -278,7 +301,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/05/meditation/about-problem-Definition-and-info-collection/" class="post-title-link" itemprop="url">关于「问题的定义和搜集哪些数据」的一次实践</a>
+            <a href="/2021/03/06/reading_notes/the-book-of-why/judea-pearl_the-book-of-why3/" class="post-title-link" itemprop="url">《the book of why》读书笔记-3</a>
         </h2>
 
         <div class="post-meta">
@@ -288,14 +311,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-05 11:49:24" itemprop="dateCreated datePublished" datetime="2021-03-05T11:49:24+08:00">2021-03-05</time>
+              <time title="创建时间：2021-03-06 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-06T08:33:38+08:00">2021-03-06</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-14 15:29:02" itemprop="dateModified" datetime="2021-05-14T15:29:02+08:00">2021-05-14</time>
+                <time title="修改时间：2021-06-24 15:10:06" itemprop="dateModified" datetime="2021-06-24T15:10:06+08:00">2021-06-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -303,7 +326,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
                 </span>
             </span>
 
@@ -319,29 +342,32 @@
 
       
           <blockquote>
-<p>问题粗粒度定义--&gt;信息搜集--&gt;问题再定义--&gt;信息再搜集--&gt;...</p>
-<p>阶段1：problem formulation--&gt; collect information---&gt;demo validation</p>
-<p>阶段2：【reflection】：阶段1的demo验证结果 + collect more information---&gt;problem reformulation--&gt; collect information---&gt;demo validation</p>
-<p>阶段3：重复</p>
-<p>阶段4：重复</p>
-<p>。。。</p>
+<p>the book of why 的第三章-从证据到原因</p>
 </blockquote>
-<h2 id="问题定义和信息搜集一个反复迭代同时要验证的过程">问题定义和信息搜集一个反复迭代同时要验证的过程</h2>
+<h2 id="贝叶斯公式">贝叶斯公式</h2>
+<ol type="1">
+<li>因果图只是贝叶斯网络中的一个特例，不是所有的贝叶斯网络都是因果关系网络</li>
+<li>休谟的观点：不可靠的证据不能推翻可靠的自然法则。举个例子，自然法则说"凡人皆有一死"可推导出"基督难逃一死"，不可靠的证人的言论是不能推翻这个结论的。</li>
+<li>人的直觉思维很容易推算出前向概率，但是逆向概率，即执果说因，很难通过直觉算出来。</li>
+<li>贝叶斯将休谟提出的问题往前推一步：到底需要多少证据才能推翻已有的自然法则？具体来说，贝叶斯公式给出了逆向概率的推导方法，也就是说，不可靠的证人的前提下基督是上帝儿子的概率。</li>
+<li>科学方法的步骤：提出假设；推断假设的可检验结果；做实验；利用实验结论更新假设信念。通常来说检测和更新只有正确和错误两种结果，贝叶斯公式却可以定量地处理不确定性。</li>
+<li>贝叶斯概率的另外一个应用，先沿着一个方向估计条件概率，根据贝叶斯公式推导另外一个方向的条件概率 &gt; 如何估算女程序员中练瑜伽的比例？ &gt; 搜集几个数据：女性中练习瑜伽的比例(10/100)，练习瑜伽的人中程序员的比例(1/1100)，女性中程序员的比例（1/10000）, &gt; 所以 女程序员中练瑜伽的比例为10/11</li>
+</ol>
+<h2 id="从贝叶斯公式到贝叶斯网络">从贝叶斯公式到贝叶斯网络</h2>
+<ol type="1">
+<li>贝叶斯网络中的箭头并不表示因果关系，只是表示条件概率（那岂不是可以有个环？）。</li>
+<li>贝叶斯网络中的三个基本机构: 链/叉/混杂因子
 <ul>
-<li>做项目的时候，关于「问题定义」（「需求定义」也类似）和 「数据搜集」往往是一个迭代往复的过程。</li>
-<li>【formulation + demo + validation】认知是从模糊到清晰的：先基于模糊的认知，确定一个粗粒度的问题，以及相应的解决方案，然后使用「概念验证」（思想泵）的方法去验证。</li>
-<li>【reflection】方案中发现有重大缺陷，然后搜集更多信息，比如别人是怎么解决问题的，以及定义问题的关键信息漏了哪些，方案有哪些是我们没有想到的。</li>
-<li>【reformulation + demo + validation】接下来，根据搜集到的信息，重新定义问题，以及梳理方案，这一次的问题和方案 因为有了更多的信息，业务上的和技术上的， 认识更清晰是肯定的，理论上梳理出来的问题和方案粒度更细致，我们也更有把握。 总结下，就是 问题定义和信息搜集一个反复迭代同时要验证的过程</li>
-</ul>
-<h2 id="一次实践">一次实践</h2>
-<ul>
-<li>先有一个模糊认知 ：要日志型的数据（完全非结构化的），告警数据（指标或者日志经过人工规则生成的），事件型数据（第三方的公告或者舆情告警），拓扑数据</li>
-<li>聚焦到问题-"根因定位"-的时候：发现不管是日志型数据，还是告警数据，还是拓扑数据，他们都是围绕着"故障事件定义"展开的。即需要定义到的故障事件的粒度</li>
-</ul>
-<p>最开始的时候， 我是这么定义事件的： 资源类型 + 事件描述</p>
-<p>后面发现这个粒度定义是不行滴，</p>
-<p>举个例子 机器1的mysql服务指标异常，机器2的mysql服务指标异常，使用 「资源类型 + 事件描述」这种定义的还，不就是一个事件了吗？ 但是考虑到应用场景-根因定位，到底是「机器1的mysql服务的指标异常」还是「机器2的mysql服务异常」，这是两个需要区分的cause metric，因为，对应着不同的操作。 更进一步，这两个事件对应的是根因图 上的不同的节点。</p>
-<p>总结下，事件定义的粒度越粗糙，定位到的根因就越粗糙，起到的作用就越少。 参考别人的定义： 2元组&lt;ip：服务名称&gt; 或者 3元组 &lt;ip: 端口：传输协议类型&gt;</p>
+<li>链： A --&gt; B --&gt; C</li>
+<li>叉： A --&gt; B &lt;-- C</li>
+<li>混杂因子： A&lt;--B --&gt; C</li>
+</ul></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">知乎-反事实和干预</a></li>
+</ol>
 
       
     </div>
@@ -360,7 +386,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/77/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/77/">77</a><span class="page-number current">78</span><a class="page-number" href="/page/79/">79</a><span class="space">&hellip;</span><a class="page-number" href="/page/87/">87</a><a class="extend next" rel="next" href="/page/79/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/77/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/77/">77</a><span class="page-number current">78</span><a class="page-number" href="/page/79/">79</a><span class="space">&hellip;</span><a class="page-number" href="/page/88/">88</a><a class="extend next" rel="next" href="/page/79/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -426,7 +452,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">176</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -439,7 +465,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">195</span>
+        <span class="site-state-item-count">197</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/16/reading_notes/reality/about-scale/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/18/reading_notes/zhexue/zhexue-summart/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/16/reading_notes/reality/about-scale/" class="post-title-link" itemprop="url">关于Scale AI</a>
+            <a href="/2021/06/18/reading_notes/zhexue/zhexue-summart/" class="post-title-link" itemprop="url">哲学导论</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-16 10:39:20" itemprop="dateCreated datePublished" datetime="2021-06-16T10:39:20+08:00">2021-06-16</time>
+              <time title="创建时间：2021-06-18 17:01:52" itemprop="dateCreated datePublished" datetime="2021-06-18T17:01:52+08:00">2021-06-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-28 10:08:34" itemprop="dateModified" datetime="2021-06-28T10:08:34+08:00">2021-06-28</time>
+                <time title="修改时间：2021-06-28 10:11:59" itemprop="dateModified" datetime="2021-06-28T10:11:59+08:00">2021-06-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -219,60 +219,43 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>看到packy激情满满写了一篇关于Scale AI的公关文，比较好奇这个年轻的小公司有何特别之处，为什么会受到资本的一致认可。</p>
-<p>印象中scale就是一家硅谷的数据标注公司，主要靠外包给第三方国家，赚取中间费用，这种公司有什么竞争力呢？跟大厂比起来？</p>
-</blockquote>
-<h2 id="总结">总结</h2>
-<ol type="1">
-<li><p>Scale AI创立至今5年，最近一次估值73亿$。它跟stripe有点像，在一个蓬勃发展的行业，找到一个关键但是不起眼的小地方，深耕细作。</p></li>
-<li><p>刚开始成立的时候，Scale AI专注做数据标注，但是他们的野心不限于此，他们想做更好用的数据标注工具，即人机互助的方式，Human-in-the-Loop（HIL）。</p></li>
-<li><p>Scale AI的故事是：随着标记数据越来越多，标注数据的边际成本会降低，因为标记样本越多，标记机器人的性能越好，能hold的事情就越多，需要分配出去的工作就越少。</p>
-<blockquote>
-<p>这里有一个问题，怎么确定，哪些是机器可以搞定的，哪些是机器搞不定的？这个是不是又要多一层人工监督了？</p>
-<p>可以从环境中获取到反馈，也可以人工抽查。</p>
-<p>总的来说，都不是很完善的方案。</p>
-</blockquote></li>
-<li><p>Scale AI还有一个亮点，他的客户群体很分散，从国防部到无人驾驶公司，eg OpenAI, Airbnb and Lyft。这有一个好处就是。AI公司去去留留，竞争之后，留下了最有效的ml应用场景，但是Scale AI始终有机会，因为是做基础设施的。</p></li>
-<li><p>除了标注API，Scale AI还做了一个样本调试的产品--Nucleus，data debugging SaaS product。目的是做全链路基建嘛。 <img src="./img.png" alt="Nucleus" /></p></li>
-<li><p>Scale AI的CEO Alexandr Wang 说的一段话</p>
-<blockquote>
-<p>At Scale, we’re building the foundation to enable organizations to manage the entire AI lifecycle. Whether they have an AI team in-house or need a fully managed models-as-a-service approach, we partner with our customers to build their strategy from the ground up and ensure they have the infrastructure in place to systematically deliver highly-performant models.</p>
-</blockquote></li>
-</ol>
-<p>简单点说，他们的方法是，帮助企业从0到1落地一个AI应用--不管这个企业内部有没有AI团队--企业能够使用这个基建更高效地构建模型. 就是win-win,后生可畏.</p>
-<ol start="10" type="1">
-<li><p>对于没有AI团队的传统企业，Scale AI定制化合作（跟必示一样），客户例如Brex和Flexport。</p>
-<figure>
-<img src="./img1.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure></li>
-<li><p>这里有一个小故事：Brex doesn’t have an AI team working on the model; they outsource it to Scale. .Brex一开始找的是专门做OCR的大公司，帮他们做发票文本提取，但是效果一般（“they were all mediocre.” ）。后面找到scale，通过深入合作定制化了一个模型，效果100%。后面沉淀出了一个产品document。</p></li>
-<li><p>scale的产品还有蛮多的：地图/文档/图像。。 <img src="img2.png" alt="img.png" /></p></li>
-</ol>
-<blockquote>
-<p>btw, 知乎上有一个相关提问--如何评价Scale AI？大家似乎认识非常有限（只知道它是做数据标注的），还讨论的热火朝天。由此可见的，噪声膨胀的速度远远超过信息增长的速度。</p>
-</blockquote>
-<h2 id="chiechies-reflection">chiechie's reflection</h2>
-<ol type="1">
-<li><p>packy这篇文章的公司分析框架蛮好的，后面分析科技公司可以套用：</p>
+          <h1 id="定义">定义</h1>
+<p>哲学，就我对这个词的理解来说，乃是某种介乎神学与科学之间的东西。它和神学一样，包含着人类对于那些迄今仍为科学知识所不能肯定之事物的思考；但它又像科学一样，是诉之于人类的理性而不是诉之于权威的，不论是传统的权威还是启示的权威。一切确切的知识都属于科学；一切涉及超乎确切知识之外的教条都属于神学。但介乎神学与科学之间还有一片受到双方攻击的无人之域，这片无人之域就是哲学。---罗素</p>
+<h1 id="哲学的主分支">哲学的主分支</h1>
+<p>哲学的主分支：形而上学、知识论、伦理学、逻辑学和美学 - <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%82%8F%E8%BC%AF%E5%AD%B8">逻辑学</a> - <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%BD%A2%E8%80%8C%E4%B8%8A%E5%AD%B8">形而上学</a>/<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%AE%87%E5%AE%99%E8%AB%96">宇宙论</a> - <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%9F%A5%E8%AD%98%E8%AB%96">知识论</a> - <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%80%AB%E7%90%86%E5%AD%B8">伦理学</a>/<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%83%B9%E5%80%BC%E8%AB%96">价值论</a> - <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BE%8E%E5%AD%B8">美学</a></p>
+<h1 id="特殊分支">特殊分支</h1>
+<p>哲学的特殊分支：是交叉学科的哲学研究</p>
 <ul>
-<li>行业介绍：The State of AI and ML</li>
-<li>公司介绍：Getting to Scale.</li>
-<li>相同模式的成功案例对比：Scaling Like Stripe.</li>
-<li>关于公司的负面观点：The Bear Case for Scale.</li>
-<li>关于公司的正面观点：The Bull Case for Scale.</li>
-<li>前景展望：Scale’s Compounding Vision.</li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%85%83%E5%93%B2%E5%AD%A6">后设哲学</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%AE%97%E6%95%99%E5%93%B2%E5%AD%A6">宗教哲学</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%BF%83%E9%9D%88%E5%93%B2%E5%AD%B8">心灵哲学</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%AF%AD%E8%A8%80%E5%93%B2%E5%AD%A6">语言哲学</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%A7%91%E5%AD%A6%E5%93%B2%E5%AD%A6">科学哲学</a>： 现代西方科学哲学的中心是<strong>科学方法论</strong>问题，具体包括
+<ul>
+<li>统计哲学：统计假设检验（证伪），贝叶斯</li>
+<li>数学哲学：</li>
+<li>物理哲学</li>
+<li>化学哲学</li>
+<li>生物哲学</li>
+<li>医学哲学</li>
+<li>心理学哲学</li>
+<li>经济哲学</li>
+<li>社会科学哲学：代表之一---马克思</li>
 </ul></li>
-<li><p>AI市场未来还有这么大的成长空间，当前只有8%的公司应用了AI技术,看到这个数字有点吃惊。但是，即便如此，AI从业人员的需求也不用过分乐观估计。</p></li>
-<li><p>AI应用目前还在探索期。Scale AI比较鸡贼，让AI公司在前面探路，让他们相互pk，把有价值可落地的场景摸索清楚，自己在后面提供军火库，妥妥的赢家。</p></li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.notboring.co/p/scale-rational-in-the-fullness-of">not boring</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/384012257">吴恩达发起新型竞赛范式！模型固定，只调数据？</a></li>
-<li><a target="_blank" rel="noopener" href="https://scale.com/blog/series-e">Scale AI’s Series E: Deploying AI Across Every Industry</a></li>
-<li><a target="_blank" rel="noopener" href="https://dashboard.scale.com/nucleus/">nucleus</a></li>
-</ol>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%94%BF%E6%B2%BB%E5%93%B2%E5%AD%A6">政治哲学</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%B3%95%E5%BE%8B%E5%93%B2%E5%AD%B8">法律哲学</a></li>
+</ul>
+<h2 id="西方的-科学哲学发展路径">西方的 科学哲学发展路径</h2>
+<ul>
+<li>到50年代为止，一直是作为“正统科学哲学”的<strong>逻辑实证主义</strong>占主导地位</li>
+<li>从50年代末兴起，在60年代发展和完成：波普尔的<strong>批判理性主义</strong>和库恩-拉卡托斯的<strong>历史主义</strong>科学哲学。</li>
+<li>至70年代，出现了两股发展趋势。
+<ul>
+<li>一股是<strong>复兴</strong>和发展“正统<strong>的”逻辑主义方法论</strong>，</li>
+<li>另一股就是法伊尔阿本德的<strong>非理性主义</strong>，它在很大程度上是把<strong>历史主义</strong>中的非理性因素贯彻到极端程度的产物。</li>
+</ul></li>
+<li>本书对<strong>逻辑实证主义</strong>和波普尔、库恩与拉卡托斯的科学哲学等现代西方理性主义科学哲学学说一一作了批判，并在这个批判中阐发了自己的科学哲学——<strong>多元主义方法论</strong></li>
+</ul>
 
       
     </div>
@@ -292,7 +275,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/15/data_structure/graph/bayesnetwork/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/17/meditation/about-AGI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -306,7 +289,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/15/data_structure/graph/bayesnetwork/" class="post-title-link" itemprop="url">贝叶斯网络推断</a>
+            <a href="/2021/06/17/meditation/about-AGI/" class="post-title-link" itemprop="url">关于AGI？</a>
         </h2>
 
         <div class="post-meta">
@@ -316,14 +299,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-15 14:28:18" itemprop="dateCreated datePublished" datetime="2021-06-15T14:28:18+08:00">2021-06-15</time>
+              <time title="创建时间：2021-06-17 17:04:32" itemprop="dateCreated datePublished" datetime="2021-06-17T17:04:32+08:00">2021-06-17</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-28 09:34:19" itemprop="dateModified" datetime="2021-06-28T09:34:19+08:00">2021-06-28</time>
+                <time title="修改时间：2021-06-28 10:11:37" itemprop="dateModified" datetime="2021-06-28T10:11:37+08:00">2021-06-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -331,7 +314,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -346,58 +329,38 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>如何应用贝叶斯网络来做决策？</p>
-<ul>
-<li>首先需要将先验知识表达成一个因果图--贝叶斯网络，（准确来说贝叶斯网络的边不仅仅表达因果关系，他表达所有的信息传播的方向）。</li>
-<li>做推断</li>
-</ul>
+          <h2 id="chiechies-reflection">chiechie's reflection</h2>
 <ol type="1">
-<li><p>构造贝叶斯网络 <img src="img.png" alt="img.png" /></p></li>
-<li><p>推断</p></li>
+<li>理论突破不是技术爆发的必经之路，很多技术都没有理论，比如古代时候的发明，造船，造纸，造火药，爱迪森发明电灯泡，还有现代的量子计算机和深度学习，理论完备个P。</li>
+<li>大部分发明都是做实验，通过试错迭代而产生的,而很多情况下理论都是滞后的。</li>
 </ol>
-<p>已知P(R,W,S,C）, 求P(r)</p>
-<h3 id="枚举法">枚举法</h3>
+<h2 id="无人驾驶现状">无人驾驶现状</h2>
 <ol type="1">
-<li>先推到条件概率分布</li>
-</ol>
-<figure>
-<img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
-</figure>
-<ol start="2" type="1">
-<li><img src="img_2.png" title="fig:" alt="img_2.png" /></li>
-</ol>
-<h3 id="变量消除法">变量消除法</h3>
-<figure>
-<img src="img_3.png" alt="img_3.png" /><figcaption aria-hidden="true">img_3.png</figcaption>
-</figure>
-<figure>
-<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
-</figure>
-<p>所有非query变量祖先的变量，都应该被消去，当然不是真的消去啦，是对该消去变量求和，然后变成一个新的因子f。</p>
-<p>依次迭代，直到没有可以消除的变量。</p>
-<figure>
-<img src="img_5.png" alt="img_5.png" /><figcaption aria-hidden="true">img_5.png</figcaption>
-</figure>
-<h3 id="贝叶斯网络中的依赖性">贝叶斯网络中的依赖性</h3>
+<li>一个技术在工业化生产之前，一般要经历三个阶段, 理论突破，技术验证，工程化
 <ol type="1">
-<li>每一个随机变量都是条件独立于他的非后代节点，给定他的父母节点时，</li>
-<li>如下，给定A，B时，C和D是独立的。</li>
+<li>理论突破，科学家在理论上证明其可行性，即产品要达到一个什么样的性能，在技术上是一定可以实现的；</li>
+<li>技术突破，研究机构突破技术实现上壁垒，做出来达到预期的Demo；</li>
+<li>工程化，主要解决产品设计，方案优化，功能完备，性能提升，良品率，鲁棒性，可用性提升，大规模复制的技术准备，成本降低等工程问题。</li>
+</ol></li>
+<li>通用无人驾驶在第一，第二阶段还彻底整明白的情况下，由资本驱动直接进入第三阶段.</li>
 </ol>
-<figure>
-<img src="img_6.png" alt="img_6.png" /><figcaption aria-hidden="true">img_6.png</figcaption>
-</figure>
-<ol start="3" type="1">
-<li>每个随机变量独立其他任何变量，当给定他的马尔可夫毯（Markov Blanket）
-<ul>
-<li>父亲，孩子，以及孩子的父母亲（配偶）</li>
-</ul></li>
+<h2 id="agi的理论先行者">AGI的理论先行者</h2>
+<ol type="1">
+<li>目前强化学习是最被看好的方向。</li>
+<li>强化学习本质上是演化论的思路，跟自然界一样，给定一个reward，让机器放肆的学习探索。</li>
+<li>目前还需要解决的问题是计算资源的问题。</li>
+<li>自然界的演化大部分时间是平稳状态，只有极少数黑天鹅事件决定了演化的方向。</li>
+<li>在计算机中模拟agent的演化过程，和自然界的演化类似，需要忍受长期的无秩序无进展。</li>
+<li>如果全世界的资源往这方面倾斜，可能可以加快黑天鹅事件出现。</li>
+<li>理论突破不是AGI成熟的必要条件，有可能是2者互相促进发展。</li>
+<li>目前收到关注较多的公司--自动标注样本公司scale</li>
 </ol>
-<figure>
-<img src="img_7.png" alt="Markov Blanket" /><figcaption aria-hidden="true">Markov Blanket</figcaption>
-</figure>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=TuGDMj43ehw">Bayesian Networks-youtuybe</a></li>
+<li>https://www.zhihu.com/question/404870865/answer/1324577689</li>
+<li>https://www.zhihu.com/question/464616760/answer/1940847401</li>
+<li><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S0004370221000862">reward is enough ,david silver</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.notboring.co/p/scale-rational-in-the-fullness-of?token=eyJ1c2VyX2lkIjoxNzY2NjQ2OSwicG9zdF9pZCI6Mzc4NDY2MzEsIl8iOiJrTHFWcCIsImlhdCI6MTYyNDQyNDU4NCwiZXhwIjoxNjI0NDI4MTg0LCJpc3MiOiJwdWItMTAwMjUiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.zWmuXLn35R720iDVtX7yTuTpM4kCMk25457XzZN8_Ks">not boring</a></li>
 </ol>
 
       
@@ -417,7 +380,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/87/">87</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/88/">88</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -483,7 +446,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">176</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -496,7 +459,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">195</span>
+        <span class="site-state-item-count">197</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

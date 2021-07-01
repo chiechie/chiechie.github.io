@@ -292,7 +292,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-01 09:49:35" itemprop="dateModified" datetime="2021-07-01T09:49:35+08:00">2021-07-01</time>
+                <time title="修改时间：2021-07-01 10:32:20" itemprop="dateModified" datetime="2021-07-01T10:32:20+08:00">2021-07-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -347,13 +347,13 @@
 </ul></li>
 <li><p>下图是使用零知识证明的一般过程，在circuit中会执行一些约束，这些约束是与要解决的问题是相关的。Private input是不对外揭露的，只有prover自己知道这个值。public input是prover与Verifier之间共享的一个值。所以上面的过程可以总结为，prover 在不揭露Private input 的情况下向Verifier证明自己知道一个值能满足（x+3=5)。</p>
 <figure>
-<img src="img.png" alt="基于circuit的零知识证明" /><figcaption aria-hidden="true">基于circuit的零知识证明</figcaption>
+<img src="./img.png" alt="基于circuit的零知识证明" /><figcaption aria-hidden="true">基于circuit的零知识证明</figcaption>
 </figure></li>
 </ol>
 <h4 id="zk-snark的流程图">zk-SNARK的流程图</h4>
 <p>下图是，zk-SNARK不能直接用于解决任何计算问题，我们必须先把问题转换成正确的“形式”来处理，这种形式叫做 "quadratic arithmetic problem"(QAP)，在进行QAP 转换的同时，我们可以用Private input ，public input创建一个对应的解，称为QAP的witness。只有prover用这个witness来生成proof。</p>
 <figure>
-<img src="img_1.png" alt="zk-Snark流程图" /><figcaption aria-hidden="true">zk-Snark流程图</figcaption>
+<img src="./img_1.png" alt="zk-Snark流程图" /><figcaption aria-hidden="true">zk-Snark流程图</figcaption>
 </figure>
 <p>整个过程如下：</p>
 <ul>

@@ -19,14 +19,29 @@ categories:
 目前常用的聚类算法大概分为三类：
 
 - 层次聚类： nearest neigbour
-- partitional：Kmeans系列/FCM/图理论
+- 基于分区的聚类（partitional）：Kmeans系列/FCM/图理论
 - 密度：
 - 其他：ACODF
 
-![img.png](img.png)
+![img.png](./img.png)
 
 
 ## 层次聚类
+
+层次聚类算法,又称为树聚类算法,它使用数据的联接规则,透过一种层次架构方式,反复将数据进行分裂或聚合,以形成一个层次序列的聚类问题解.
+
+本文仅以层次聚类算法中的层次聚合算法为例进行介绍.
+
+层次聚合算法的时间复杂度为$O(n^2)$,适合于小数据集的分类. 
+
+该算法由树状结构的底部开始逐层向上进行聚合,假定样本集S={o1,o2,...,on}共有n个样本.
+
+1. 初始化：每个样本 $o_i$ 为一个类; 共形成 n 个类:$o_1,o_2,...,o_n$
+2. 找最近的两个类：从现有的所有类中找出距离最近(相似度最大)的两个类 $o_r$ 和 $o_k$
+   $$distance(o_r,o_k) = min_{\forall{o_u,o_v \in S,o_u \neq o_v}}distance(o_u,o_v)$$
+3. 合并$o_r$和$o_k$: 将类$o_r$和$o_k$合并成一个新类$o_{rk}$; 现有的cluster个数减1
+4. 若所有的样本都属于同一个类,则终止本算法;否则,返回步骤2.
+
 
 层次聚类最大的优点，它一次性地得到了整个聚类的过程，只要得到了上面那样的聚类树，想要分多少个cluster都可以直接根据树结构来得到结果，改变cluster数目不需要再次计算数据点的归属。
 
@@ -86,9 +101,13 @@ categories:
       - 如果$C_{i}^{q-1} \neq C_{j}^{q-1}$ 并且$w(o_q) \leq MInt(C_i^{q-1},C_j^{q-1})$，那么通过合并$C_{i}^{q-1}$和$C_{j}^{q-1}$得到了$S^q$；
       - 否则的话$S^q = S^{q-1}$，返回$S = S^m$
 
+图像分割结果如下
+
+![图像分割](img.png)
+
 # 参考
 
-1. https://patentimages.storage.googleapis.com/34/c0/df/3417293b1602a5/CN105468677A.pdf
+1. [一种基于图结构的日志聚类算法](https://patentimages.storage.googleapis.com/34/c0/df/3417293b1602a5/CN105468677A.pdf)
 2. [常用聚类算法综述](https://zhuanlan.zhihu.com/p/78382376)
 3. [从层次聚类到Graph-based图像分割](https://buptjz.github.io/2014/04/21/cluster)
 4. [聚类算法](http://www.jos.org.cn/1000-9825/19/48.pdf)

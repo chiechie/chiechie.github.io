@@ -1,5 +1,5 @@
 ---
-title: 进程和线程
+title: 进程和线程和协程
 author: chiechie
 mathjax: true
 date: 2021-06-27 12:16:07
@@ -15,6 +15,7 @@ categories:
 
 ## 基本定义
 
+
 ### 进程（process）
 
 我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。
@@ -28,12 +29,78 @@ categories:
 进程（process）有时候也称做任务，是指一个程序运行的实例。
 
 
+#### 进程的3种状态
+从程序员的角度，我们可以认为进程总是处于下面三种状态之一：
+
+- 运行。进程要么在CPU上执行，要么在等待被执行且最终会被内核调度
+- 停止。进程的执行被挂起（suspend），且不会被调度。当收到SIGSTOP、SIGTSTP、SIDTTIN或者SIGTTOU信号时，进程就停止，并且保持停止直到它收到一个SIGCONT信号，在这个时候，进程再次开始运行（信号是一种软件中断的形式，将在后文描述）
+- 终止。进程永远的停止了。进程会因为三种原因终止:
+  
+    1. 收到一个信号，该信号的默认行为是终止进程；
+    2. 从主程序返回；
+    3. 调用exit函数。
+
+#### 创建子进程
+
+1. 子进程得到与父进程用户级虚拟地址空间相同的（但是独立的）一份拷贝，包括文本、数据和bss段、堆以及用户栈。
+2. 子进程还获得与父进程任何打开文件描述符相同的拷贝。
+3. 父进程和新创建的子进程之间最大的区别在于它们有不同PID。
+4. fork函数调用一次，返回两次，父进程中，fork返回子进程的PID，子进程中fork返回0。
+
+#### 进程的地址空间
+
+
+
+我们一般都知道，每个程序都能看到一片完整连续的地址空间，这些空间并没有直接关联到物理内存，而是操作系统提供了内存的一种抽象概念，使得每个进程都有一个连续完整的地址空间，在程序的运行过程，再完成虚拟地址到物理地址的转换。我们同样知道，进程的地址空间是分段的，存在所谓的数据段，代码段，bbs段，堆，栈等等。每个段都有特定的作用，仔细看下面这张图，就对进程地址空间中的划分有了清楚的了解了。 
+
+1. 从0xc000000000到0xFFFFFFFF共1G的大小是内核地址空间（后面再探讨内核地址空间，先重点关注用户地址空间），余下的低地址3G空间则是用户地址空间。
+2. Code VMA: 即程序的代码段，CPU执行的机器指令部分。通常，这一段是可以共享的，即多线程共享进程的代码段。并且，此段是只读的，不能修改。
+3. Data VMA: 即程序的数据段，包含ELF文件在中的data段和bss段。
+4. 堆和栈: 这两个大家都十分熟悉了，new或者malloc分配的空间在堆上，需要程序猿维护，若没有主动释放堆上的空间，进程运行结束后会被释放。栈上的是函数栈临时的变量，还有程序的局部变量，自动释放。
+5. 共享库和mmap内容映射区：位于栈和堆之间，例如程序使用的printf，函数共享库printf.o固定在某个物理内存位置上，让许多进程映射共享。mmap是一个系统函数，可以把磁盘文件的一部分直接映射到内存，这样文件中的位置直接就有对应的内存地址。此处参考后面的第三条。
+6. 命令行参数: 程序的命令行参数
+7. 环境变量：类似于Linux下的PATH，HOME等环境变量，子进程会继承父进程的环境变量。
+
 ### 线程（threads）
 
 一个进程中的执行的单位。
 
 线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程
 
+
+### 协程（CoRoutines）
+
+
+Co：即corperation，Routines即函数。
+
+协程（CoRoutines）：即用来实现functions 即corperate with each other。
+
+![img_1.png](img_1.png)
+
+不同的编程语言有不同的实现协程的方式，在python和js里面，用的较多的就是yield
+
+用python实现一个协程
+
+```python
+def my_coroutine_body(*args):
+    while True:
+        # Do some funky stuff
+        *args = yield value_im_returning
+        # Do some more funky stuff
+
+my_coro = make_coroutine(my_coroutine_body)
+
+x = 0
+while True:
+   # The coroutine does some funky stuff to x, and returns a new value.
+   x = my_coro(x)
+   print x
+```
+### 生成器(generator)
+
+A generator is essentially a cut down (asymmetric) coroutine. 
+
+The difference between a coroutine and generator is that a coroutine can accept arguments after it's been initially called, whereas a generator can't.
 
 
 ## 应用 vs 线程 vs 进程
@@ -46,6 +113,7 @@ categories:
 • 线程（车厢）在进程（火车）下行进
 • 一个进程（火车）可以包含多个线程（车厢）
 • 不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享
+
 线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据，
 进程之间的通信需要以通信的方式（IPC)进行
 • 进程要比线程消耗更多的计算机资源
@@ -53,6 +121,11 @@ categories:
 • 进程可以拓展到多机，线程最多适合多核
 • 进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁"
 • 进程使用的内存地址可以限定使用量－“信号量”
+
+进程提供给应用程序关键的抽象：
+1. 一个独立的逻辑控制流，它提供一个假象，好像我们的程序独占地使用处理器
+2. 一个私有的地址空间，它提供一个假象，好像我们的程序独占地使用存储器系统
+
 
 ## 硬件多线程vs软件多线程
 
@@ -131,3 +204,8 @@ new_task
 2. [thred](https://www.youtube.com/watch?v=usyg5vbni34)
 3. [计算机原理系列-blog](https://www.junmajinlong.com/os/multi_cpu/)
 4. [关于CPU上的高速缓存](https://www.junmajinlong.com/os/cpu_cache/)
+5. [What are CoRoutines in Programming?YOUTUBE](https://www.youtube.com/watch?v=tqay-vzqSN0)
+6. [生成器和协程](https://stackoverflow.com/questions/715758/coroutine-vs-continuation-vs-generator
+)
+7. [进程、线程及其内存模型](https://buptjz.github.io/2014/04/23/processAndThreads)
+8. 深入理解操作系统

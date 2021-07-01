@@ -44,13 +44,13 @@ categories:
    - 不可互换的货币会给用户带来额外的负担，用户为了避免不小心买入“污点”货币，那么用户就会被迫检查他们购买的每笔货币的交易历史。
 8. 下图是使用零知识证明的一般过程，在circuit中会执行一些约束，这些约束是与要解决的问题是相关的。Private input是不对外揭露的，只有prover自己知道这个值。public input是prover与Verifier之间共享的一个值。所以上面的过程可以总结为，prover 在不揭露Private input 的情况下向Verifier证明自己知道一个值能满足（x+3=5)。
 
-    ![基于circuit的零知识证明](img.png)
+    ![基于circuit的零知识证明](./img.png)
 
 #### zk-SNARK的流程图
 
 下图是，zk-SNARK不能直接用于解决任何计算问题，我们必须先把问题转换成正确的“形式”来处理，这种形式叫做 "quadratic arithmetic problem"(QAP)，在进行QAP 转换的同时，我们可以用Private input ，public input创建一个对应的解，称为QAP的witness。只有prover用这个witness来生成proof。
    
-![zk-Snark流程图](img_1.png)
+![zk-Snark流程图](./img_1.png)
 
 整个过程如下：
 

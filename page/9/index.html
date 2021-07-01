@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/12/reading_notes/economics/xingweijingjixue/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/" class="post-title-link" itemprop="url">深度学习基础1 数据表示和神经网络基础</a>
+            <a href="/2021/06/12/reading_notes/economics/xingweijingjixue/" class="post-title-link" itemprop="url">《行为经济学》读书笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-10 16:35:36" itemprop="dateCreated datePublished" datetime="2021-06-10T16:35:36+08:00">2021-06-10</time>
+              <time title="创建时间：2021-06-12 09:26:37" itemprop="dateCreated datePublished" datetime="2021-06-12T09:26:37+08:00">2021-06-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-24 09:38:53" itemprop="dateModified" datetime="2021-06-24T09:38:53+08:00">2021-06-24</time>
+                <time title="修改时间：2021-06-28 08:33:05" itemprop="dateModified" datetime="2021-06-28T08:33:05+08:00">2021-06-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">经济学</span></a>
                 </span>
             </span>
 
@@ -219,135 +219,65 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="数据表示">数据表示</h1>
-<p>在深度学习中如何表示现实中的事物？</p>
-<p>Let’s make data tensors more concrete with a few examples similar to what you’ll encounter later. The data you’ll manipulate will almost always fall into one of the following categories:</p>
-<ul>
-<li>Vector data:2D tensors of shape(samples, features)</li>
-<li>Timeseries data or sequence data:3D tensors of shape (samples, timesteps, features)</li>
-<li>Images:4D tensors of shape(samples,height,width,channels) or (samples,channels, height, width)</li>
-<li>Video:5D tensors of shape (samples, frames, height, width, channels) or (samples, frames, channels, height, width)</li>
-</ul>
-<h2 id="表数据">表数据</h2>
-<ul>
-<li>两个轴：samples axis 和 features axis.</li>
-<li>文本数据, 假设词典长度为2k，每一个doc可以表示为1个2k维的向量，位置的值代表词在文本中出现的次数。</li>
-<li>500个文件可以存储为(500, 20000).</li>
-</ul>
-<h2 id="时间序列数据">时间序列数据</h2>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_vMGBboznU.png?alt=media&amp;token=73c12f97-acdb-4680-b4eb-79a9a07581f9" /></li>
-</ul>
-<p>时间序列数据一般表示成3-d的张亮，tf中使用3d张量存储，(samples, timestamp, features) 每一个sample可以被编码成一个2d张量， 具体的两个例子</p>
+          <h1 id="第二讲">第二讲</h1>
+<h2 id="第二部分-社会网络研究">第二部分 社会网络研究</h2>
+<h3 id="选择选择什么">选择选择什么？</h3>
 <ol type="1">
-<li>股票数据：每年有250个交易日，每个交易日的交易时长有390分钟，每个分钟可以抽取3个重要特征：当前价格，上一分钟最高成交价格，上一分钟最低价格
+<li>“群体选择”:群体之间的竞争可能使内部合作的群体最终胜出并淘汰那些内部不合作的群体.群体选择这一主题兼具个体视角和群体视角。</li>
+<li>"利他行为"：体为增加群体的适存度而降低自己的适存度，它的行为是利他行为。适存度，fitness。</li>
+<li>生物学家怎样测度呢？他们用后代与母代之比，来测度适存度。如果一个人的生存策略有利于增加自己的适存度，那么在一名旁观者看来，他的后代的数目必须逐渐超过母代的数目，这就是繁衍，否则就是消亡</li>
+<li>行为模式是可观测的，行为动机是不可观测的。策略是对行为模式的一种描述，所以是可观测的。心理学描述心理事实，包括动机，通常是不可观测的。如生物学家那样，行为经济学试图做的，是从可观测的“显型”策略，推测那些不可观测的“基因型”行为动机。</li>
+<li>什么是传统：：一切经过长期历史的检验有利于生存和繁衍的知识。其中可交流的传统就是常识。传统的大部分不能交流，只能模仿。</li>
+<li>为什么蚂蚁懂得合作没有淘汰人类？蚂蚁行为的驱动力量是族群惯性，但是他没有灵活性。人的行为驱动力量一部分是族群惯性，一部分是灵活性，这样就使得可以保持创新的同时，又能够保持一定的合作秩序。</li>
+<li>在古尔德看来，漫长的地球演化史，首先由一些漫长的稳态构成，其次，这些稳态之间有一些瞬间的黑天鹅事件打破既有的均衡态，然后陷入新的均衡态，再等待新的黑天鹅事件</li>
+<li>人类的出现，就是其中一个黑天鹅事件，它只占演化史的一个瞬间，是大约900万年以内的事情</li>
+<li>古尔德的结论是：历史从来不是决定论的，由许多偶然因素决定历史路径，只在事后才可能知道 自然选择的力量从来不是惟一的演化力量，类似地，为什么最优越的物种只在以往漫长历史的最后一秒之内发生呢？</li>
+<li>在多因多果的网络里，科学家怎样令人信服地指出哪一条因果链条是最重要的呢？理想方法是通过实验，在实验中，我们可以只让一条因果链发生作用，我们控制所有其他因果关系不许它们起作用</li>
+</ol>
+<h3 id="社会网络研究什么">社会网络研究什么？</h3>
+<ol type="1">
+<li>如何界定一项知识的重要性？用途。手段的质，依赖于目的本身。</li>
+</ol>
+<h3 id="爱因斯坦的自由论">爱因斯坦的自由论</h3>
+<ol type="1">
+<li>整体论可爱，但不可信，因为它缺少可行的研究方法。个体论可信，却不可爱。</li>
+<li>爱因斯坦:创造是个体的，从来就是个体行为。但是自由，却是整体的. 没有宽容的社会，个人自由也将消失。</li>
+</ol>
+<h3 id="哈耶克的涌现秩序">哈耶克的涌现秩序</h3>
+<ol type="1">
+<li><p>马克思理论的逻辑矛盾在第一卷里尚未出现，非要在第二卷和第三卷才成为无法挣脱的内在矛盾。</p></li>
+<li><p>马克思主义和哈耶克：哈耶克论证，没有一个微观主体（个体或群体），不论多么聪明，有能力预先知道从大量哪怕是极简单的微观主体的相互作用中涌现出来的宏观秩序是怎样的。这当然意味着社会计划的不可能和理性的狂妄。理性实在很渺小，不可能完成社会主义者赋予它的资源有效配置任务。</p></li>
+<li><p>人类互动问题的复杂性，时间与结构的复制以及涌现，宏观秩序的涌现</p></li>
+<li><p>哈耶克的“涌现秩序"：演化理论，假以时日，从大量的简单局部结构之间的相互作用中必能涌现更复杂的结构。</p>
+<blockquote>
+<p>涌现秩序的思想，可以溯源至柏格森和怀特海。</p>
+</blockquote></li>
+<li><p>哈耶克使用的关键词：简单结构、复制过程、优胜劣汰、适应性。</p></li>
+<li><p>哈耶克的社会演化基本原理：单子复杂交往涌现宏观秩序的不可预见性。</p>
 <ul>
-<li>以每一天的交易数据为1个样本，构建的样本的shape为(250,390,3)</li>
+<li>“单子”，是莱布尼茨的概念，它们如“素数”那样单纯，具有不可再分性。只不过，莱布尼茨假设单子之间没有交往，而哈耶克假设单子之间的交往是事物演化的原因。</li>
 </ul></li>
-<li>TWEET数据：一条twitter长度不超过256，每个位置的字符来自128个assical码中的一个。每一条twitter的shape为（256， 128），1 百万 tweets 的shape为(1000000, 280, 128)</li>
+<li><p>多主体仿真（multi-agent simuiation）:一种模拟不确定性的环境与社会变迁的程序.哈佛的诺瓦克小组在使用软件仿真时，将每一个agent都设置为具有最简单的行为规则。然后，一个环境中有数千个agent，相互作用之后，宏观秩序涌现出来，这个宏观秩序是不可预期的。最初研究这样的仿真程序的，是2005年与奥曼分享诺贝尔经济学奖的谢林，这一程序称为“谢林程序”。</p></li>
+<li><p>《解释的程度》中，哈耶克的论述十分接近“社会现象是多因多果”这一见解。</p></li>
+<li><p>《复杂现象论》中，哈耶克全面论述了他设想的演化理论的各要素。目前，社会网络的研究方法，是最适合研究哈耶克涌现秩序的实证方法。</p></li>
+<li><p>哈耶克对于统计学的看法：通过消除复杂性来处理大量数据。</p></li>
 </ol>
-<h2 id="图像数据">图像数据</h2>
-<p>图像数据一般表示成4维tensor，一个图像数据就是一个3d张量</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD24ghIvE2L.png?alt=media&amp;token=4a68bc5a-7b95-46d2-8418-deed053d4301" /></p>
-<ul>
-<li>tensorflow： (samples, height, width, color_depth)</li>
-<li>theano：(samples, color_depth, height, width).</li>
-<li>keras两者都支持</li>
-</ul>
-<h2 id="视频数据的表示">视频数据的表示</h2>
-<p>视频数据表示成5维张量：(samples, frames, height, width, color_depth).</p>
-<h1 id="模型超参">模型超参</h1>
-<h2 id="结构超参数">结构超参数</h2>
-<p>结构超参数包括层数、层的类别、层的大小等数值。以一个卷积层为例，其中的超参数包括卷积核 (filter) 的大小，卷积核的数量，步长 (stride) 的大小，unit：单元，hidden_layers: 隐藏层，cell：单元 ，dropout_rate丢弃率。这些超参数决定了神经网络的结构。</p>
-<h3 id="layers的基本类型">layers的基本类型</h3>
-<p>keras中layer的基本类型：</p>
-<ul>
-<li>卷积(Conv1D)</li>
-<li>池化(MaxPooling1D/GlobalAveragePooling1D)</li>
-<li>dropout(Dropout)</li>
-<li>线性全连接层(Dense)</li>
-<li>high-level层(LSTM)</li>
-</ul>
-<h3 id="卷积层">卷积层</h3>
+<h3 id="多因多果模型">多因多果模型</h3>
 <ol type="1">
-<li>卷积的维度有1Ｄ，2Ｄ，3D, 区别在于?</li>
+<li><p>多因多果网络中，那一条因果链条是重要的？以及如何论证出这个结论是对的？前者靠直觉，或者说taste/判断力。后者用控制变量的方法。</p>
+<blockquote>
+<p>社会心理学和行为经济学都会用到控制变量的方法来确定因果关系。</p>
+<p>判断力哪里来？靠日积月累的实践。</p>
+</blockquote></li>
+<li></li>
 </ol>
-<p>输入数据的shape以及卷积核如何滑动</p>
-<ul>
-<li><img src="https://miro.medium.com/max/1621/1*aBN2Ir7y2E-t2AbekOtEIw.png" title="fig:" alt="I１维卷积和２维卷积的区别" /></li>
-<li>1维卷积（Conv1D）：只有1个维度可以滑动，但是另一维度也是有待估参数的</li>
-<li>2维卷积（Conv2D）：有两个维度可以滑动，</li>
-<li>相同点：从参数视角都是2维的，每一个卷积kernel，参数个数是 height × width +１　（off_ set）</li>
-</ul>
-<ol start="2" type="1">
-<li>什么情况下，1d比2d好用呢？其中2个维度上，做卷积没有意义(high,close,open,close)</li>
-</ol>
-<h3 id="关于dropout">关于dropout</h3>
-<p>keras中对dropout的处理，因为训练阶段需要dropout ，但是inference阶段不需要dropout，keras中如何设置？</p>
-<p>Keras does this by default. In Keras dropout is disabled in test mode. You can look at the code<a target="_blank" rel="noopener" href="https://github.com/keras-team/keras/blob/dc95ceca57cbfada596a10a72f0cb30e1f2ed53b/keras/layers/core.py#L109">here</a> and see that they use the dropped input in training and the actual input while testing.</p>
-<p>As far as I know you have to build your own training function from the layers and specify the training flag to predict with dropout (e.g. its not possible to specify a training flag for the predict functions). This is a problem in case you want to do GANs, which use the intermediate output for training and also train the network as a whole, due to a divergence between generated training images and generated test images.</p>
-<h2 id="算法超参数">算法超参数</h2>
-<p>算法超参数包括学习率 (learning rate),批量大小 (batch size)、epoch数量(迭代周期个数)、正则，损失，激活函数等。由于神经网络的非凸性，用不同的算法超参数会得到不同的解。</p>
-<h3 id="归一化">归一化</h3>
-<p>归一化层，目前主要有这几个方法：</p>
-<ul>
-<li>Batch Normalization（BN， 2015年）</li>
-<li>Layer Normalization（LN， 2016年）</li>
-<li>Instance Normalization（IN， 2017年）</li>
-<li>Group Normalization（GN， 2018年）</li>
-<li>Switchable Normalization（SN， 2018年）；</li>
-</ul>
-<figure>
-<img src="img_1.png" alt="几种归一化方法g" /><figcaption aria-hidden="true">几种归一化方法g</figcaption>
-</figure>
-<h4 id="问题1-transformer-为什么要使用ln而不是-bn">问题1 transformer 为什么要使用LN而不是 BN？</h4>
-<p>在<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.07845.pdf">paper: Rethinking Batch Normalization in Transformers</a>中, 作者对比了cv和nlp的BN, 得出的结论是在nlp数据上基于batch的统计信息不稳定性过大(相比cv的数据)，导致bn在nlp上效果差。相比之下layer norm能够带来更稳定的统计信息，有利于模型学习</p>
-<p>Batch Normalization主要的问题是计算归一化统计量时计算的样本数太少，在RNN等动态模型中不能很好的反映全局统计分布信息，而Layer Normalization根据样本的特征数做归一化，是batch size无关的，只取决于隐层节点的数量，较多的隐层节点数量能保证Layer Normalization归一化统计分布信息的代表性。</p>
-<h4 id="问题2.-in直观上怎么理解">问题2. IN直观上怎么理解？</h4>
-<p>在计算机视觉中，IN本质上是一种Style Normalization，它的作用相当于把不同的图片统一成一种风格。另外，既然IN和BN都会统一图片的风格，那么在Generator里加IN或BN应该是不利于生成风格多样的图片的，论文中也进行了展示：</p>
-<p><img src="https://pic2.zhimg.com/v2-235433127838fca762ebd10511de9ca7_b.jpg" /></p>
-<p>图e是在generator中加了BN的结果，图f是在generator中加了IN的结果。果然崩了，IN崩得尤其厉害。</p>
-<h3 id="激活函数">激活函数</h3>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4_fjPJ90ir.png?alt=media&amp;token=9fb9e321-aed2-4c7b-bb6b-4762b7a38c81" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FADUH_mebAQ.png?alt=media&amp;token=65efc150-0f7b-42f9-8657-1ca131bfd8b5" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&amp;token=55bc24ce-0531-4702-8d3d-394595bd4d6e" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&amp;token=d7421445-afca-439e-85be-8631db133a41" /></li>
-<li>https://missinglink.ai/guides/neural-network-concepts/7-types-neural-network-activation-functions-right/</li>
-</ul>
-<h3 id="损失函数">损失函数</h3>
-<p>tensorflow中的损失函数:</p>
-<ul>
-<li>sparse_categorical_crossentropy: target是interger list，形状n*1；</li>
-<li>categorical_crossentropy: target 是one-hot vector，target的shape跟模型输出一致，是n*k(类)。
-<ul>
-<li><span class="math display">\[C E(x)=-\sum\limits_{i=1}^{C} y_{i} \log f_{i}(x)\]</span></li>
-</ul></li>
-<li>binary_crossentropy: target 是interger list。 <span class="math display">\[B C E(x)_{i}=-\left[y_{i} \log f_{i}(x)+\left(1-y_{i}\right) \log \left(1-f_{i}(x)\right)\right]\]</span></li>
-<li>如果输出标签维度为1，只能使用binary_crossentropy，否则程序会报错。不能直接使用categorical_crossentropy 或者sparse_categorical_crossentropy</li>
-<li>如果输出标签维度为K：使用categorical_crossentropy 或者sparse_categorical_crossentropy</li>
-<li>单标签多分类（multi-class）：softmax + CE</li>
-<li>二分类：sigmoid + BCE</li>
-<li>多标签多分类（multi-label）的情况：sigmoid + BCE</li>
-<li>最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</li>
-</ul>
-<h4 id="优化算法">优化算法</h4>
-<h1 id="参考资料">参考资料</h1>
+<h1 id="第三讲">第三讲</h1>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1502.03167.pdf">Batch Normalization</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1607.06450v1.pdf">Layer Normalizaiton</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1607.08022.pdf">Instance Normalization</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/DmitryUlyanov/texture_nets">code</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1803.08494.pdf">Group Normalization</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1806.10779.pdf">Switchable Normalization</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/switchablenorms/Switchable-Normalization">code</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/liuxiao214/article/details/81037416">有公式推导，写的很棒</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/05de1f989790">用书比喻图像很好理解</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/61248211">Conditional Batch Normalization 详解</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/57875010">从Style的角度理解Instance Normalization</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.goodaudience.com/introduction-to-1d-convolutional-neural-networks-in-keras-for-time-sequences-3a7ff801a2cf">在时序数据上应用conv1D</a></li>
-<li>https://zhuanlan.zhihu.com/p/57875010</li>
-<li>https://stackoverflow.com/questions/47787011/how-to-disable-dropout-while-prediction-in-keras</li>
+<li>杨格的“策略学习的不可能性定理”：</li>
+</ol>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/b48321a058a8aeb48d182ac">行为经济学讲义-演化论视角</a></li>
 </ol>
 
       
@@ -368,7 +298,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/10/reading_notes/the-book-of-why/judea-pearl_the-book-of-why7/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/11/meditation/graph-summary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -382,7 +312,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/10/reading_notes/the-book-of-why/judea-pearl_the-book-of-why7/" class="post-title-link" itemprop="url">《the book of why》读书笔记-7</a>
+            <a href="/2021/06/11/meditation/graph-summary/" class="post-title-link" itemprop="url">关于图数据结构，图模型和图算法</a>
         </h2>
 
         <div class="post-meta">
@@ -392,14 +322,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-10 08:33:38" itemprop="dateCreated datePublished" datetime="2021-06-10T08:33:38+08:00">2021-06-10</time>
+              <time title="创建时间：2021-06-11 18:42:27" itemprop="dateCreated datePublished" datetime="2021-06-11T18:42:27+08:00">2021-06-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-24 15:10:06" itemprop="dateModified" datetime="2021-06-24T15:10:06+08:00">2021-06-24</time>
+                <time title="修改时间：2021-06-26 18:56:35" itemprop="dateModified" datetime="2021-06-26T18:56:35+08:00">2021-06-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -407,7 +337,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -422,17 +352,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>the book of why 的第7章 征服干预之峰</p>
-</blockquote>
-<h2 id="前门规则和后门调整">前门规则和后门调整</h2>
-<ol type="1">
-<li>do条件概率和条件概率的区别是：当有混杂因子存在时，使用条件概率可能得出假的相关性。</li>
-<li>那么除了随机对照试验，还有什么办法能够排除掉混杂因子带来的影响呢？后门调整和前门标准。后门调整即使用便相关系数代替相关系数，前门调整是，在特殊的因果模型的情况下，使用条件概率代替do算子。 <img src="./img.png" alt="img.png" /></li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li>
+          <ol type="1">
+<li>图数据是一种数据结构，对于图数据有一些常见的任务，比如单源最短路径，等。</li>
+<li>当图数据的点和边具备一定的含义，如边代表概率，这个时候就是一个概率图模型。通常用于对多个变量之间的因果关系或者相关关系进行建模。</li>
+<li>概率图模型可以细分为有向图和无向图。有向图比如贝叶斯网络，无向图比条件随机场（CRF）。</li>
+<li>有向图又可进一步细分，如果边的方向代表因果关系，就是一个因果图。通常因果图都是需要专家构建的。</li>
 </ol>
 
       
@@ -452,7 +376,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/88/">88</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/89/">89</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -518,7 +442,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">176</span>
+          <span class="site-state-item-count">178</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -531,7 +455,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">197</span>
+        <span class="site-state-item-count">200</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

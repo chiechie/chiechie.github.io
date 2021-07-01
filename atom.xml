@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-06-30T07:30:46.231Z</updated>
+  <updated>2021-07-01T11:56:15.297Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -21,18 +21,18 @@
     <link href="https://chiechie.github.io/2021/06/30/reading_notes/computer/fenbushi/"/>
     <id>https://chiechie.github.io/2021/06/30/reading_notes/computer/fenbushi/</id>
     <published>2021-06-30T06:39:39.000Z</published>
-    <updated>2021-06-30T07:30:46.231Z</updated>
+    <updated>2021-07-01T11:56:15.297Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>看到阿里在2021发表的一个视频，《新一代的计算基础设施-对于Ray的融合计算》，做一些笔记</p></blockquote><ol type="1"><li>举一个复杂的业务的例子，用户支付流程，：</li></ol><ul><li>先选择支付场景--线上/线下/，</li><li>选择支付方式--</li><li>选择交易网络--银联/第三方</li><li>选择银行</li></ul><p><img src="./img_2.png" alt="img_2.png" /> 整个流程需要秒级响应。</p><ol start="2" type="1"><li>要是大家都开始用统一的计算平台，AIOps也可以用一套了</li></ol><figure><img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption></figure><ol start="3" type="1"><li>业务需求之一是，复杂的业务逻辑计算存在单机性能瓶颈，需要支持分布式无范式的分布式开发。</li><li>现在的基础设计在单一用途的组件上，已经做的比较成熟了，专门做流式计算的计算引擎有flink，专门做深度学习的计算引擎有tensorflow，专门做批处理的有spark。</li><li>但是，考虑到一个复杂的应用场景，完成1个任务需要用到多种计算模式，统一计算平台 能够让这几种计算模式实现状态共享，中间结果共享。在这种场景下，统一计算平台，相较于多个独立的计算组件 效率更高。</li><li>要不要搞统一计算平台，取决于需求的复杂性，如果是一个很 pure 很纯粹 的任务，搞这个 的意义就不大。但是可以作为预研嘛，万一以后业务变得越来越复杂，也提前有技术储备。</li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.bilibili.com/video/BV1gh411Y7qf?t=1">Ray Forward Meetup 2021-面向金融决策场景的在线计算系统-bilibili</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>看到阿里在2021发表的一个演讲--《新一代的计算基础设施-对于Ray的融合计算》，做一些笔记</p></blockquote><ol type="1"><li>举一个复杂的业务的例子，用户支付流程：</li></ol><ul><li>先选择支付场景--线上/线下/，</li><li>选择支付方式--</li><li>选择交易网络--银联/第三方</li><li>选择银行</li></ul><figure><img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption></figure><p>整个流程需要秒级响应。</p><ol start="2" type="1"><li>要是大家都开始用统一的计算平台，AIOps也可以用同一套方案了</li></ol><figure><img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption></figure><ol start="3" type="1"><li>业务需求之一是，复杂的业务逻辑计算存在单机性能瓶颈，需要支持分布式无范式的分布式开发。</li><li>现在的基础设计在单一用途的组件上，已经做的比较成熟了，专门做流式计算的计算引擎有flink，专门做深度学习的计算引擎有tensorflow，专门做批处理的有spark。</li><li>但是，考虑到一个复杂的应用场景，完成1个任务需要用到多种计算模式，统一计算平台 能够让这几种计算模式实现状态共享，中间结果共享。在这种场景下，统一计算平台，相较于多个独立的计算组件 效率更高。</li><li>要不要搞统一计算平台，取决于需求的复杂性，如果是一个很pure很纯粹的任务，搞这个的意义就不大。但是可以作为预研嘛，万一以后业务变得越来越复杂，也有准备。</li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.bilibili.com/video/BV1gh411Y7qf?t=1">Ray Forward Meetup 2021-面向金融决策场景的在线计算系统-bilibili</a></li></ol>]]></content>
     
     
       
       
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;看到阿里在2021发表的一个视频，《新一代的计算基础设施-对于Ray的融合计算》，做一些笔记&lt;/p&gt;
+&lt;p&gt;看到阿里在2021发表的一个演讲--《新一代的计算基础设施-对于Ray的融合计算》，做一些笔记&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;举一个复杂的业务的例子，用户支付流程，：&lt;/li&gt;
+&lt;li&gt;举一个复杂的业务的例子，用户支付流程：&lt;/li&gt;
 &lt;/ol&gt;
 &lt;ul&gt;
 &lt;li&gt;</summary>
@@ -43,20 +43,20 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="大数据" scheme="https://chiechie.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    <category term="计算机原理" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
     
     <category term="读书笔记" scheme="https://chiechie.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
-    <category term="计算机原理" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
-    
     <category term="分布式计算" scheme="https://chiechie.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/"/>
+    
+    <category term="大数据" scheme="https://chiechie.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
   <entry>
     <title>零知识量证明</title>
-    <link href="https://chiechie.github.io/2021/06/29/zkp/"/>
-    <id>https://chiechie.github.io/2021/06/29/zkp/</id>
+    <link href="https://chiechie.github.io/2021/06/29/reading_notes/qukuailian/zkp/"/>
+    <id>https://chiechie.github.io/2021/06/29/reading_notes/qukuailian/zkp/</id>
     <published>2021-06-29T15:54:57.000Z</published>
     <updated>2021-07-01T02:32:20.876Z</updated>
     
@@ -110,13 +110,13 @@
   </entry>
   
   <entry>
-    <title>进程和线程</title>
+    <title>进程和线程和协程</title>
     <link href="https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/"/>
     <id>https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/</id>
     <published>2021-06-27T04:16:07.000Z</published>
-    <updated>2021-06-28T05:56:10.038Z</updated>
+    <updated>2021-07-01T14:02:22.835Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="基本定义">基本定义</h2><h3 id="进程process">进程（process）</h3><p>我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。</p><p>编译器将它翻译成二进制代码--机器的语言。</p><p>但是此时不执行这段断码的话，就还是一段静态程序。</p><p>当执行起来的时候，就变成了一个进程。</p><p>进程（process）有时候也称做任务，是指一个程序运行的实例。</p><h3 id="线程threads">线程（threads）</h3><p>一个进程中的执行的单位。</p><p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p><h2 id="应用-vs-线程-vs-进程">应用 vs 线程 vs 进程</h2><p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p><p>进程和线程的区别：</p><p>• 进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉 • 线程（车厢）在进程（火车）下行进 • 一个进程（火车）可以包含多个线程（车厢） • 不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享 线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行 • 进程要比线程消耗更多的计算机资源 • 进程间不会相互影响，一个线程挂掉将导致整个进程挂掉 • 进程可以拓展到多机，线程最多适合多核 • 进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁" • 进程使用的内存地址可以限定使用量－“信号量”</p><h2 id="硬件多线程vs软件多线程">硬件多线程vs软件多线程</h2><p>CPU架构演进路线： 多cpu---&gt;超线程--&gt;多core</p><p>https://stackoverflow.com/questions/680684/multi-cpu-multi-core-and-hyper-thread</p><p>其中的超线程（hyper thread）指的硬件多线程，如下图，相当于给一个core，虚拟化为2个core，可以更方便压榨计算机性能</p><h2 id="多进程-or-多线程">多进程 or 多线程？</h2><p>多进程更稳定，但是多线程能达到更高的计算效率</p><figure><img src="img_1.png" alt="左边是单线程，右边是多线程" /><figcaption aria-hidden="true">左边是单线程，右边是多线程</figcaption></figure><p>多线程的优势：</p><ul><li>响应性：比如启动一个网页（启动一个浏览器进程），可以同时并行做个事情，如浏览/下载/问答（并行启动多个线程）。</li><li>资源共享：一个进程上的所有线程共享同一份内存，这样能够让机器的使用效率更高，可以做更多的复杂的事情。---赋能/增效</li><li>更经济： 多进程浪费资源，因为创建1个进程需要分配很多内存和资源，相比之下，创建和切换线程的成本小的多。另外，完成一个复杂的任务，多线程共用一份底层资源，多进程就需要把资源复制几份。又浪费了一遍。--降本</li><li>充分压榨多处理器的架构：</li></ul><blockquote><p>大中台类似多线程，烟囱式开发类似多进程</p></blockquote><h2 id="实践">实践</h2><h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3><p><a href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p><p>需求：实现一个任务管理/编排的机制，即，输入一堆任务，每个任务的计划执行时间/执行时长都有，现在有一台单线程CPU，如何安排这些任务的执行顺序？</p><p>分析： 设想应用场景，医院的排队系统/有一堆任务要排期。</p><p>一遍在执行已有的任务，一边有源源不断的接到新的任务，</p><p>每执行完一个任务，check一下距离上次检查，有多少新任务进来了，加到任务池里面，从里面选出最容易的。</p><p>设计1个数据结构：</p><p>1个是优先队列，存放候选任务，并且按照执行时间长短从小到到排序。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tasks = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">4</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">1</span>]]</span><br><span class="line">n = <span class="built_in">len</span>(tasks)</span><br><span class="line">timestamp = <span class="number">1</span></span><br><span class="line">candidate_list = []</span><br><span class="line">new_task = []</span><br><span class="line">j = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) <span class="keyword">and</span> (tasks[j][<span class="number">0</span>] &lt;= timestamp):</span><br><span class="line">        heapq.heappush(candidate_list, (tasks[j][<span class="number">1</span>], j))</span><br><span class="line">        j+=<span class="number">1</span></span><br><span class="line">        print(j, n)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    process, index = heapq.heappop(candidate_list)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    new_task.append(index)</span><br><span class="line">    timestamp += process</span><br><span class="line">new_task</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/25532384/answer/411179772">biaodianfu-zhihu</a></li><li><a href="https://www.youtube.com/watch?v=usyg5vbni34">thred</a></li><li><a href="https://www.junmajinlong.com/os/multi_cpu/">计算机原理系列-blog</a></li><li><a href="https://www.junmajinlong.com/os/cpu_cache/">关于CPU上的高速缓存</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="基本定义">基本定义</h2><h3 id="进程process">进程（process）</h3><p>我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。</p><p>编译器将它翻译成二进制代码--机器的语言。</p><p>但是此时不执行这段断码的话，就还是一段静态程序。</p><p>当执行起来的时候，就变成了一个进程。</p><p>进程（process）有时候也称做任务，是指一个程序运行的实例。</p><h4 id="进程的3种状态">进程的3种状态</h4><p>从程序员的角度，我们可以认为进程总是处于下面三种状态之一：</p><ul><li><p>运行。进程要么在CPU上执行，要么在等待被执行且最终会被内核调度</p></li><li><p>停止。进程的执行被挂起（suspend），且不会被调度。当收到SIGSTOP、SIGTSTP、SIDTTIN或者SIGTTOU信号时，进程就停止，并且保持停止直到它收到一个SIGCONT信号，在这个时候，进程再次开始运行（信号是一种软件中断的形式，将在后文描述）</p></li><li><p>终止。进程永远的停止了。进程会因为三种原因终止:</p><ol type="1"><li>收到一个信号，该信号的默认行为是终止进程；</li><li>从主程序返回；</li><li>调用exit函数。</li></ol></li></ul><h4 id="创建子进程">创建子进程</h4><ol type="1"><li>子进程得到与父进程用户级虚拟地址空间相同的（但是独立的）一份拷贝，包括文本、数据和bss段、堆以及用户栈。</li><li>子进程还获得与父进程任何打开文件描述符相同的拷贝。</li><li>父进程和新创建的子进程之间最大的区别在于它们有不同PID。</li><li>fork函数调用一次，返回两次，父进程中，fork返回子进程的PID，子进程中fork返回0。</li></ol><h4 id="进程的地址空间">进程的地址空间</h4><p>我们一般都知道，每个程序都能看到一片完整连续的地址空间，这些空间并没有直接关联到物理内存，而是操作系统提供了内存的一种抽象概念，使得每个进程都有一个连续完整的地址空间，在程序的运行过程，再完成虚拟地址到物理地址的转换。我们同样知道，进程的地址空间是分段的，存在所谓的数据段，代码段，bbs段，堆，栈等等。每个段都有特定的作用，仔细看下面这张图，就对进程地址空间中的划分有了清楚的了解了。</p><ol type="1"><li>从0xc000000000到0xFFFFFFFF共1G的大小是内核地址空间（后面再探讨内核地址空间，先重点关注用户地址空间），余下的低地址3G空间则是用户地址空间。</li><li>Code VMA: 即程序的代码段，CPU执行的机器指令部分。通常，这一段是可以共享的，即多线程共享进程的代码段。并且，此段是只读的，不能修改。</li><li>Data VMA: 即程序的数据段，包含ELF文件在中的data段和bss段。</li><li>堆和栈: 这两个大家都十分熟悉了，new或者malloc分配的空间在堆上，需要程序猿维护，若没有主动释放堆上的空间，进程运行结束后会被释放。栈上的是函数栈临时的变量，还有程序的局部变量，自动释放。</li><li>共享库和mmap内容映射区：位于栈和堆之间，例如程序使用的printf，函数共享库printf.o固定在某个物理内存位置上，让许多进程映射共享。mmap是一个系统函数，可以把磁盘文件的一部分直接映射到内存，这样文件中的位置直接就有对应的内存地址。此处参考后面的第三条。</li><li>命令行参数: 程序的命令行参数</li><li>环境变量：类似于Linux下的PATH，HOME等环境变量，子进程会继承父进程的环境变量。</li></ol><h3 id="线程threads">线程（threads）</h3><p>一个进程中的执行的单位。</p><p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p><h3 id="协程coroutines">协程（CoRoutines）</h3><p>Co：即corperation，Routines即函数。</p><p>协程（CoRoutines）：即用来实现functions 即corperate with each other。</p><figure><img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption></figure><p>不同的编程语言有不同的实现协程的方式，在python和js里面，用的较多的就是yield</p><p>用python实现一个协程</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_coroutine_body</span>(<span class="params">*args</span>):</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># Do some funky stuff</span></span><br><span class="line">        *args = <span class="keyword">yield</span> value_im_returning</span><br><span class="line">        <span class="comment"># Do some more funky stuff</span></span><br><span class="line"></span><br><span class="line">my_coro = make_coroutine(my_coroutine_body)</span><br><span class="line"></span><br><span class="line">x = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">   <span class="comment"># The coroutine does some funky stuff to x, and returns a new value.</span></span><br><span class="line">   x = my_coro(x)</span><br><span class="line">   <span class="built_in">print</span> x</span><br></pre></td></tr></table></figure><h3 id="生成器generator">生成器(generator)</h3><p>A generator is essentially a cut down (asymmetric) coroutine.</p><p>The difference between a coroutine and generator is that a coroutine can accept arguments after it's been initially called, whereas a generator can't.</p><h2 id="应用-vs-线程-vs-进程">应用 vs 线程 vs 进程</h2><p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p><p>进程和线程的区别：</p><p>• 进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉 • 线程（车厢）在进程（火车）下行进 • 一个进程（火车）可以包含多个线程（车厢） • 不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享</p><p>线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行 • 进程要比线程消耗更多的计算机资源 • 进程间不会相互影响，一个线程挂掉将导致整个进程挂掉 • 进程可以拓展到多机，线程最多适合多核 • 进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁" • 进程使用的内存地址可以限定使用量－“信号量”</p><p>进程提供给应用程序关键的抽象： 1. 一个独立的逻辑控制流，它提供一个假象，好像我们的程序独占地使用处理器 2. 一个私有的地址空间，它提供一个假象，好像我们的程序独占地使用存储器系统</p><h2 id="硬件多线程vs软件多线程">硬件多线程vs软件多线程</h2><p>CPU架构演进路线： 多cpu---&gt;超线程--&gt;多core</p><p>https://stackoverflow.com/questions/680684/multi-cpu-multi-core-and-hyper-thread</p><p>其中的超线程（hyper thread）指的硬件多线程，如下图，相当于给一个core，虚拟化为2个core，可以更方便压榨计算机性能</p><h2 id="多进程-or-多线程">多进程 or 多线程？</h2><p>多进程更稳定，但是多线程能达到更高的计算效率</p><figure><img src="img_1.png" alt="左边是单线程，右边是多线程" /><figcaption aria-hidden="true">左边是单线程，右边是多线程</figcaption></figure><p>多线程的优势：</p><ul><li>响应性：比如启动一个网页（启动一个浏览器进程），可以同时并行做个事情，如浏览/下载/问答（并行启动多个线程）。</li><li>资源共享：一个进程上的所有线程共享同一份内存，这样能够让机器的使用效率更高，可以做更多的复杂的事情。---赋能/增效</li><li>更经济： 多进程浪费资源，因为创建1个进程需要分配很多内存和资源，相比之下，创建和切换线程的成本小的多。另外，完成一个复杂的任务，多线程共用一份底层资源，多进程就需要把资源复制几份。又浪费了一遍。--降本</li><li>充分压榨多处理器的架构：</li></ul><blockquote><p>大中台类似多线程，烟囱式开发类似多进程</p></blockquote><h2 id="实践">实践</h2><h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3><p><a href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p><p>需求：实现一个任务管理/编排的机制，即，输入一堆任务，每个任务的计划执行时间/执行时长都有，现在有一台单线程CPU，如何安排这些任务的执行顺序？</p><p>分析： 设想应用场景，医院的排队系统/有一堆任务要排期。</p><p>一遍在执行已有的任务，一边有源源不断的接到新的任务，</p><p>每执行完一个任务，check一下距离上次检查，有多少新任务进来了，加到任务池里面，从里面选出最容易的。</p><p>设计1个数据结构：</p><p>1个是优先队列，存放候选任务，并且按照执行时间长短从小到到排序。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tasks = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">4</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">1</span>]]</span><br><span class="line">n = <span class="built_in">len</span>(tasks)</span><br><span class="line">timestamp = <span class="number">1</span></span><br><span class="line">candidate_list = []</span><br><span class="line">new_task = []</span><br><span class="line">j = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) <span class="keyword">and</span> (tasks[j][<span class="number">0</span>] &lt;= timestamp):</span><br><span class="line">        heapq.heappush(candidate_list, (tasks[j][<span class="number">1</span>], j))</span><br><span class="line">        j+=<span class="number">1</span></span><br><span class="line">        print(j, n)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    process, index = heapq.heappop(candidate_list)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    new_task.append(index)</span><br><span class="line">    timestamp += process</span><br><span class="line">new_task</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/25532384/answer/411179772">biaodianfu-zhihu</a></li><li><a href="https://www.youtube.com/watch?v=usyg5vbni34">thred</a></li><li><a href="https://www.junmajinlong.com/os/multi_cpu/">计算机原理系列-blog</a></li><li><a href="https://www.junmajinlong.com/os/cpu_cache/">关于CPU上的高速缓存</a></li><li><a href="https://www.youtube.com/watch?v=tqay-vzqSN0">What are CoRoutines in Programming?YOUTUBE</a></li><li><a href="https://stackoverflow.com/questions/715758/coroutine-vs-continuation-vs-generator">生成器和协程</a></li><li><a href="https://buptjz.github.io/2014/04/23/processAndThreads">进程、线程及其内存模型</a></li><li>深入理解操作系统</li></ol>]]></content>
     
     
       
@@ -180,7 +180,7 @@
     <link href="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/"/>
     <id>https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/</id>
     <published>2021-06-25T01:17:29.000Z</published>
-    <updated>2021-06-28T02:08:34.886Z</updated>
+    <updated>2021-07-01T03:42:01.716Z</updated>
     
     <content type="html"><![CDATA[<ol type="1"><li><p>数据结构分为线性和非线性</p></li><li><p>线性包括数组列表栈队列</p><figure><img src="b3728c27302a8548fe9e8a87e619ca83.png" alt="线性数据结构" /><figcaption aria-hidden="true">线性数据结构</figcaption></figure></li><li><p>非线性包括树和图,树可以认为是图的special case <img src="e6d5a8d9a75587abe612dfef9abffc01.png" alt="非线性数据结构" /></p></li><li><p>图分有向图和无向图</p><figure><img src="18c651092d22c7204021d10a5a79b0ff.png" alt="有向图vs无向图" /><figcaption aria-hidden="true">有向图vs无向图</figcaption></figure></li><li><p>无向图的一个实例是fb的社交网络，边表示好友关系。</p><figure><img src="f3fc896014d62fb1ec1c96c93210f7ff.png" alt="社交网络" /><figcaption aria-hidden="true">社交网络</figcaption></figure></li><li><p>基于社交网络这个数据结构有什么应用呢？好友推荐, 推荐朋友的朋友,网络社会科学的小世界</p><blockquote><p>小世界网络的重要性质：“流行病学”、“合作”、“知识”</p></blockquote><figure><img src="d5fe57a166d6f2ee93457d0ea4b54cef0.png" alt="社交网路" /><figcaption aria-hidden="true">社交网路</figcaption></figure></li><li><p>有向图的一个实例是万维网,好有一个文章影响因子 <img src="b9b97250ce6e998045dcbb0d5b379724.png" alt="www" /></p></li><li><p>图还可以分有权图和无权图，无权图可认为是权图的special case，权重都为1。</p></li><li><p>有权图的一个实例是高速公路网,边代表距离 <img src="5b81b50b2d2b048ed3188b71af85a02f.png" alt="公路网" /></p></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=gXgEDyodOJU">youtube</a></li></ol>]]></content>
     
@@ -204,6 +204,61 @@
     <category term="数据结构" scheme="https://chiechie.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
     <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一些聚类算法</title>
+    <link href="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/"/>
+    <id>https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/</id>
+    <published>2021-06-23T03:20:42.000Z</published>
+    <updated>2021-07-01T13:52:51.025Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。</p></blockquote><h1 id="目前常用聚类算法">目前常用聚类算法</h1><p>目前常用的聚类算法大概分为三类：</p><ul><li>层次聚类： nearest neigbour</li><li>基于分区的聚类（partitional）：Kmeans系列/FCM/图理论</li><li>密度：</li><li>其他：ACODF</li></ul><figure><img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><h2 id="层次聚类">层次聚类</h2><p>层次聚类算法,又称为树聚类算法,它使用数据的联接规则,透过一种层次架构方式,反复将数据进行分裂或聚合,以形成一个层次序列的聚类问题解.</p><p>本文仅以层次聚类算法中的层次聚合算法为例进行介绍.</p><p>层次聚合算法的时间复杂度为<span class="math inline">\(O(n^2)\)</span>,适合于小数据集的分类.</p><p>该算法由树状结构的底部开始逐层向上进行聚合,假定样本集S={o1,o2,...,on}共有n个样本.</p><ol type="1"><li>初始化：每个样本 <span class="math inline">\(o_i\)</span> 为一个类; 共形成 n 个类:<span class="math inline">\(o_1,o_2,...,o_n\)</span></li><li>找最近的两个类：从现有的所有类中找出距离最近(相似度最大)的两个类 <span class="math inline">\(o_r\)</span> 和 <span class="math inline">\(o_k\)</span> <span class="math display">\[distance(o_r,o_k) = min_{\forall{o_u,o_v \in S,o_u \neq o_v}}distance(o_u,o_v)\]</span></li><li>合并<span class="math inline">\(o_r\)</span>和<span class="math inline">\(o_k\)</span>: 将类<span class="math inline">\(o_r\)</span>和<span class="math inline">\(o_k\)</span>合并成一个新类<span class="math inline">\(o_{rk}\)</span>; 现有的cluster个数减1</li><li>若所有的样本都属于同一个类,则终止本算法;否则,返回步骤2.</li></ol><p>层次聚类最大的优点，它一次性地得到了整个聚类的过程，只要得到了上面那样的聚类树，想要分多少个cluster都可以直接根据树结构来得到结果，改变cluster数目不需要再次计算数据点的归属。</p><p>层次聚类的缺点是计算量比较大，因为要每次都要计算多个cluster内所有数据点的两两距离。</p><p>另外，由于层次聚类使用的是贪心算法，得到的显然只是局域最优，不一定就是全局最优，这可以通过加入随机效应解决，这就是另外的问题了。</p><h2 id="基于graph的聚类">基于Graph的聚类</h2><p>基于Graph的聚类算法，大致思路是，计算样本两两之间的相似度，并设定阈值，高于阈值就右边，低于阈值就无边，以此构造有权无向图，权重即为相似度。</p><h3 id="谱聚类">谱聚类</h3><p>谱聚类的流程是：</p><p>输入：n个样本, 类别k</p><ol type="1"><li>根据样本两两之间的相似度，构建有权无向图，以及邻接矩阵W。</li><li>计算出拉普拉斯矩阵L，对L做谱分解（相当于降维）：计算拉普拉斯矩阵L的最小的k个特征向量u1, u2,...,uk,将这些向量组成n*k维的矩阵U,</li><li>将U中的每一行作为一个样本，共n个样本，使用k-means对这n个样本进行聚类</li></ol><p>得到簇划分C(c1,c2,...ck).</p><h3 id="如何判断两个cluster之间的距离">如何判断两个cluster之间的距离？</h3><p>一开始每个数据点独自作为一个类，它们的距离就是这两个点之间的距离。而对于包含不止一个数据点的cluster，就可以选择多种方法了。最常用的，就是average-linkage，即计算两个cluster各自数据点的两两距离的平均值。类似的还有single-linkage/complete-linkage，选择两个cluster中距离最短/最长的一对数据点的距离作为类的距离。个人经验complete-linkage基本没用，single-linkage通过关注局域连接，可以得到一些形状奇特的cluster，但是因为太过极端，所以效果也不是太好。</p><h2 id="聚类应用">聚类应用</h2><p>从某种意义上说，层次聚类是一个大的框架，而基于图的图像分割是在图像分割上多加了骨头，使他更适用于图像分割的领域，而使用者可以在骨头上继续加肉来达到不同的分割效果。</p><h3 id="日志分析">日志分析</h3><h3 id="图像分割">图像分割</h3><p>图像的分割是图聚类的其中一个应用场景。把图像中的每一个像素点看成是一个item，那么图像分割的任务就是将所有的items进行聚类，属于一个类里面的所有像素就构成了一个区域，最终的分割结构就是若干个区域组成的。由此我们过渡到本文的第二部分，基于图的图像分割算法。</p><p>怎样利用上述的定义，在基于图的表示方法下，做出高效而准确的分割呢？主要流程如下</p><p>输入一个图<span class="math inline">\(G=(V,E)\)</span>，有n个点和m个边。输出是一个分割V，分割成<span class="math inline">\(S=(C_1,...,C_2).\)</span></p><ol type="1"><li><p>对边E进行排序，生成非递减的序列<span class="math inline">\(\pi = (o_1,...,o_m)\)</span></p></li><li><p>从初始分割<span class="math inline">\(S^0\)</span>开始，每一个点<span class="math inline">\(v_i\)</span>自己就是一个区域</p></li><li><p>对于每一个边<span class="math inline">\(q = 1,...,m\)</span>重复步骤3，通过<span class="math inline">\(S^{q-1}\)</span>构建<span class="math inline">\(S^q\)</span>，使用如下的方式</p><ul><li>令<span class="math inline">\(v_i\)</span>和<span class="math inline">\(v_j\)</span>表示按顺序排列的第q条边的两个点，比如<span class="math inline">\(o_q = (v_i,v_j)\)</span>。</li><li>如果<span class="math inline">\(v_i\)</span>和<span class="math inline">\(v_j\)</span>在<span class="math inline">\(S^{q-1}\)</span>中连个不同的区域下，并且<span class="math inline">\(w(o_q)\)</span>比两个区域的内部差异都小，那么合并这连个区域，否则什么也不做。</li><li>用公式来表达就是：<ul><li>令<span class="math inline">\(C_{i}^{q-1}\)是\(S^{q-1}\)</span>的一个区域，它包含点<span class="math inline">\(v_i\)</span>；令<span class="math inline">\(C_{j}^{q-1}\)是\(S^{q-1}\)</span>的一个区域，它包含点<span class="math inline">\(v_j\)</span>。</li><li>如果<span class="math inline">\(C_{i}^{q-1} \neq C_{j}^{q-1}\)</span> 并且<span class="math inline">\(w(o_q) \leq MInt(C_i^{q-1},C_j^{q-1})\)</span>，那么通过合并<span class="math inline">\(C_{i}^{q-1}\)</span>和<span class="math inline">\(C_{j}^{q-1}\)</span>得到了<span class="math inline">\(S^q\)</span>；</li><li>否则的话<span class="math inline">\(S^q = S^{q-1}\)</span>，返回<span class="math inline">\(S = S^m\)</span></li></ul></li></ul></li></ol><p>图像分割结果如下</p><figure><img src="img.png" alt="图像分割" /><figcaption aria-hidden="true">图像分割</figcaption></figure><h1 id="参考">参考</h1><ol type="1"><li><a href="https://patentimages.storage.googleapis.com/34/c0/df/3417293b1602a5/CN105468677A.pdf">一种基于图结构的日志聚类算法</a></li><li><a href="https://zhuanlan.zhihu.com/p/78382376">常用聚类算法综述</a></li><li><a href="https://buptjz.github.io/2014/04/21/cluster">从层次聚类到Graph-based图像分割</a></li><li><a href="http://www.jos.org.cn/1000-9825/19/48.pdf">聚类算法</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;目前常用聚类算法&quot;&gt;目前常用聚类算法&lt;/h1&gt;
+&lt;p&gt;目前常用的聚类算法大概分为三类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;层次聚类： </summary>
+      
+    
+    
+    
+    <category term="数据结构" scheme="https://chiechie.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    
+    <category term="图" scheme="https://chiechie.github.io/tags/%E5%9B%BE/"/>
+    
+    <category term="聚类" scheme="https://chiechie.github.io/tags/%E8%81%9A%E7%B1%BB/"/>
+    
+    <category term="日志聚类" scheme="https://chiechie.github.io/tags/%E6%97%A5%E5%BF%97%E8%81%9A%E7%B1%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>图数据基础</title>
+    <link href="https://chiechie.github.io/2021/06/22/data_structure/graph/graph-basic/"/>
+    <id>https://chiechie.github.io/2021/06/22/data_structure/graph/graph-basic/</id>
+    <published>2021-06-22T03:42:17.000Z</published>
+    <updated>2021-07-01T03:58:45.668Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="图的定义">图的定义</h2><p>传统的空间都是定义在欧几里得空间（Euclidean Space）的，在该空间定义的距离被称为欧式距离。 音频，图像，视频等都是定义在欧式空间下的欧几里得结构化数据，然而对于社交网络等数据，使用欧几里得空间进行定义并不合适，所以将这一类的数据所处的空间称为非欧几里得空间。</p><p>非欧空间下最有代表的结构就是图（Graph）结构， 其定义形式如下： [公式] , [公式] 表示顶点或节点，其中 [公式] 表示Graph中节点的个数。 [公式] 表示Graph中的边。</p><p>下面几个基本概念的定义</p><h3 id="邻接矩阵adjacency-matrix">邻接矩阵（Adjacency matrix）</h3><p>邻接矩阵是一个NxN的矩阵，对于有权图，其值为权重或0，对于无权图，其值为0和1，该矩阵定义如下： <span class="math display">\[A \in R^{N \times N}, A_{i j}=\left\{\begin{array}{ll}a_{i j} \neq 0 &amp; e_{i j} \in E \\ 0 &amp; \text { othersize }\end{array}\right.\]</span></p><h3 id="度矩阵degree-matrix">度矩阵（Degree matrix）</h3><p>度矩阵D是一个对角矩阵，其定义为：</p><p><span class="math display">\[D \in R^{N \times N}, D_{i i}=\sum_{j} A_{i j}\]</span></p><h3 id="邻域neighborhood">邻域（Neighborhood）</h3><p>邻域表示与某个顶点有连接的点集，其定义为：<span class="math display">\[N\left(v_{i}\right)=\left\{v_{j} \mid e_{i j} \in E\right\}\]</span></p><h3 id="谱spectral">谱（Spectral）</h3><p>只有方阵才有谱概念，方阵作为线性算子，其所有特征值的集合称为方阵的谱。方阵的谱半径为其最大的特征值，谱分解就是特征分解。</p><h3 id="拉普拉斯矩阵lapalcian-matrix">拉普拉斯矩阵（Lapalcian matrix）</h3><p>对于无向图，其拉普拉斯矩阵定义为 <span class="math inline">\(L=D-A\)</span>.</p><p>而大多数论文中使用的都是正规拉普拉斯矩阵（Symmetric Normalized Laplacian matrix）: <span class="math display">\[L^{s y s}=D^{-1 / 2} L D^{-1 / 2}=I-D^{-1 / 2} A D^{-1 / 2}\]</span></p><h3 id="谱分解spectral-factorization">谱分解(Spectral Factorization)</h3><p>谱分解又叫特征值分解，实际上就是对n维方阵做特征分解. 只有含有n个线性无关的特征向量的n维方阵才可以进行特征分解.</p><p>拉普拉斯矩阵是半正定矩阵,有如下的几个性质:</p><ol type="1"><li>实对称矩阵,有n个线性无关的特征向量;</li><li>其特征向量可以进行正交单位化;</li><li>所有的特征值非负;</li></ol><p><span class="math display">\[L=U\left(\begin{array}{ccc}\lambda_{1} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; \lambda_{n}\end{array}\right) U^{-1}=U\left(\begin{array}{ccc}\lambda_{1} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; \lambda_{n}\end{array}\right) U^{T}\]</span></p><h2 id="图的算法">图的算法</h2><h3 id="最小割">最小割</h3><p>最小割是指去掉图中的一些边，在使得图从连通图变为不连通图，并且尽可能保证去除的边对应的权重很小。</p><p>对于相似性图来说，最小割就是要去除一些很弱的相似性，把数据点从一个连通的大图切割成多个独立的连通小图。</p><h2 id="参考">参考</h2><ol type="1"><li>https://zhuanlan.zhihu.com/p/84271169</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;图的定义&quot;&gt;图的定义&lt;/h2&gt;
+&lt;p&gt;传统的空间都是定义在欧几里得空间（Euclidean Space）的，在该空间定义的距离被称为欧式距离。 音频，图像，视频等都是定义在欧式空间下的欧几里得结构化数据，然而对于社交网络等数据，使用欧几里得空间进行定义并不合适，所</summary>
+      
+    
+    
+    
     
   </entry>
   
@@ -500,9 +555,9 @@
     <category term="沉思录" scheme="https://chiechie.github.io/categories/%E6%B2%89%E6%80%9D%E5%BD%95/"/>
     
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
     <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
   </entry>
   
@@ -561,79 +616,17 @@
     <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
     
     
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
     <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
     
-    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
-    
-    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
     
+    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    
     <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
     
-  </entry>
-  
-  <entry>
-    <title>多世界理论</title>
-    <link href="https://chiechie.github.io/2021/06/09/reading_notes/phisics/duoshijie/"/>
-    <id>https://chiechie.github.io/2021/06/09/reading_notes/phisics/duoshijie/</id>
-    <published>2021-06-09T06:26:46.000Z</published>
-    <updated>2021-06-28T02:09:13.990Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="总结">总结</h2><ol type="1"><li>多世界理论是埃弗里特（Hugh Everett III, 1930 - 1982）在1957年提出的. 这个理论的核心是：量子理论是一个自洽的理论，不需要借助经典概念和任何额外的假设就能描述和解释一切现象，包括我们日常生活感受的经典世界和量子测量。根据这个理论，波包永远也不会塌缩，任何物体无论大小都是量子的，都可以用波函数描述。 整个宇宙的波函数<span class="math inline">\(\Psi\)</span>可以写成很多个分量的叠加 <span class="math display">\[\Psi=\varphi_{1}+\varphi_{2}+\ldots+\varphi_{n}+\ldots\]</span></li><li>其中的每一个分量<span class="math inline">\(\varphi_{n}\)</span>代表一个平行世界，这些平行世界真实存在、平行演化、互不干扰，偶尔发生干涉。 3 对多世界理论持反对意见的人其实无法给出任何令人信服的理由，主要是心理上无法接受其他平行世界的存在。</li><li>埃弗里特一开始就指出了波包塌缩理论的逻辑缺陷：当存在两个或两个以上观察者的时候，观察者们会给出不同的波包塌缩时间。埃弗里特用了一个例子来说明这个逻辑缺陷，他的例子和维格纳朋友佯谬类似。</li></ol><h2 id="薛定谔的猫猫">薛定谔的猫猫</h2><ol type="1"><li>薛定谔猫是一个关于量子测量的思想实验。在薛定谔的最初设想中，被测量的是正在衰变的放射性元素，这里用光子的偏振代替。 <img src="img.png" alt="img.png" /></li><li>每一个光子有两个可能的偏振态，水平偏振和垂直偏振。一般情况下，光子既不是水平偏振也不是垂直偏振，而是处于它们的叠加态。（类似复数）</li><li>现在假设有一个封闭的实验室，里面有一只猫猫，和光子偏振的测量设备。实验开始时，一个光子入射穿方解石，出来后落在检测屏上。如果落在检测评上方，什么也不会发生，猫猫依然是活的，如果落在下方，会触发打开毒气瓶的开关，把猫猫毒死。</li><li>光子落在屏幕上之后，猫猫和光子发生了纠缠。</li><li>现在让我们用量子力学来描述这个实验。实验开始前，实验室的波函数可以写成: <span class="math display">\[\left|\Psi_{0}\right\rangle=(\alpha|H\rangle+\beta|V\rangle) \otimes \mid live cat \rangle\]</span> 这时猫和光子没有任何关联。实验结束后，实验室的波函数变成了: <span class="math display">\[\begin{aligned}\left|\Psi_{1}\right\rangle&gt;=\alpha &amp;|H\rangle \otimes \mid \text { live cat }\rangle+\\ &amp;\beta|V\rangle \otimes \mid \text { dead cat }\rangle \end{aligned}\]</span></li><li>现在的问题是，上面的波函数有两部分：在第一部分里，猫是活的；在第二部分里，猫是死的。那这猫究竟是活的还是死的呢？如果你重复这个实验1000次，每次实验结束后打开实验室查看猫的死活，那么你会发现大约有 1000 |α|2次猫是活的，大约1000 | β |2次猫是死的。你不会看到一只既活又死的猫。</li><li>这个实验的本质是，波函数里明明有两个实验结果，当我们去观察时，却只能看到一个。为什么会这样? <img src="img_1.png" alt="img_1.png" /></li><li>在量子力学的框架下，如何解释这个现象？波包塌缩理论：当我们打开实验室去观察时，波函数发生了塌缩。它有<span class="math inline">\(\alpha^2\)</span>的几率发生如下塌缩： <span class="math display">\[\left|\Psi_{0}\right\rangle=\alpha|H\rangle \otimes \mid live cat \rangle\]</span> <span class="math inline">\(\beta^2\)</span>的几率发生如下塌缩： <span class="math display">\[\left|\Psi_{0}\right\rangle=\beta|V\rangle \otimes \mid dead cat \rangle\]</span> 也就是说，有一部分波函数会神秘的消失。</li><li>虽然波包塌缩理论能解释实验结果，但有很多缺点，比如没有描述塌缩究竟怎样发生的，持续了多长时间</li><li>另外一种理论就是多世界理论，系统的波函数<span class="math inline">\(\Psi\)</span>中两个分量，分别代表两个不同世界：一种世界里面，猫猫是活的，另外一种世界，猫猫是死的。这两种世界一样真实，并行存在。由于量子力学的演化是线性的，这两种世界会独立演化，互不影响。当观测者打开实验室的门，在一种世界里，他会看到一直活着的猫猫，感觉不到死猫，这个时候，似乎波函数发生了公式描述的塌缩。在另外一个世界，他会看到相反的景象，这似乎象征着波函数发生了第二种塌缩。从这个角度看，波包塌缩其实是多世界理论的推论，迄今没有任何实验可以推翻多世界理论。</li><li>当一个世界一分为二时，多世界理论是不是预示着能量不守恒了？并没有，分裂之后，只是几率变化了。分类之后的<span class="math inline">\(\Psi_1\)</span>表示，一个实验室有两种状态，一种状态里光子是水品偏振和猫是活的，另外一种状态里，光子是垂直偏振，猫猫却死了。这时，仍然只有一个光子，和一只猫。测量，让猫猫和光子的状态发生了纠缠，并没有增加数量 11。 量子图灵机非常推崇多世界理论，这个宇宙有无限个世界，跟0到1之间的实数一样多，对于薛定谔猫猫实验，一开始有无限多个世界，他们都完全相同。光子偏振测量结束后，这无穷多个世界分成了两组，分别由<span class="math inline">\(\Psi_1\)</span>中的两个分量描述，两组所占的比重分别为</li><li>多世界理论的核心：整个宇宙都是由微观粒子构成，宏观物体和围观粒子没有本质区别，他们也由波函数描述。一个波函数的不同分量代表不同的世界，每个分量都同样真实的，他们并行存在。相对于其他量子力学的解释，多世界理论不需要在量子力学的基本框架之外的额外假设。</li></ol><h2 id="谁对谁错">谁对谁错?</h2><blockquote><p>以薛定谔猫为例介绍了波包塌缩理论和多世界理论，它们都能解释现有实验结果。而且迄今为止没有人能设计一个实验来区别这两种理论，比如直接观测到另外一个世界或波包塌缩过程。那么究竟哪一个理论是正确的呢？实验是科学理论的试金石，现在这块试金石失效了，我们该如何判断这两种理论的对错？埃弗里特在他长论文的最后一个附录里谈到了物理理论的对错优劣问题，他认为除了寻求实验的验证，我们还应该考查理论的逻辑性、有用性、简单性等。下面我们就从这些方面详细对比波包塌缩理论和多世界理论。</p></blockquote><h3 id="逻辑性">逻辑性</h3><p>埃弗里特指出波包塌缩理论的逻辑缺陷：当存在两个或两个以上观察者的时候，观察者们会给出不同的波包塌缩时间。埃弗里特用了一个例子来说明这个逻辑缺陷，他的例子和维格纳朋友佯谬类似。在图3描述的实验中，我们把猫换成观察者爱丽丝，同时移走毒气瓶。如果光子落在检测屏上方，她就记录“上”；如果光子落在检测屏下方，她就记录“下”。对于爱丽丝来说，波包塌缩在光子和检测屏碰撞的一刻就已经发生了，因为她每次都明确地观察到了光子落在了上方或下方。现在假设实验室外面还有一个观察者鲍勃，在实验完成前，他和实验室没有任何相互作用。对于鲍勃来说，在他打开实验室以前，实验室由如下波函数描述 <span class="math display">\[\left|\Psi_{3}\right\rangle=\alpha|H\rangle \otimes|\mathrm{Up}\rangle+\beta|V\rangle \otimes \mid Down \rangle \]</span> 波包还没塌缩。假设鲍勃在实验结束后一周打开了实验室，这时波包塌缩了。他对爱丽丝的记录没有任何异议，但他坚持说波包塌缩是在他进入实验室的一刻发生的，爱丽丝当然不同意。于是矛盾产生了。这就是波包塌缩理论的逻辑缺陷。文献[10]对这个逻辑问题有更详细的描述。</p><h3 id="简单性">简单性</h3><p>这里指的是概念和理论框架的简单。多世界理论显然在概念上更简单，除了量子力学的基本框架，它不需要任何额外的假设。而波包塌缩是量子力学基本框架之外的一个额外假设。在量子力学里，量子态都是随时间进行连续和幺正的演化；而波包塌缩是不连续和非幺正的。因此，波包塌缩必须是一个独立的假设，不可能从量子力学的基本框架推出来。这个假设非常的不物理：塌缩是怎样的物理过程？经历了多长时间？如何界定外部观察者？这些问题迄今没有令人满意的答案。当我们考虑整个宇宙时，波包塌缩假说显得更是不合理。一方面，宇宙的外部没有观察者，所以整个宇宙的波函数应该连续地随时间幺正演化，不会经历随机的波包塌缩；另一方面，我们人类又时时刻刻在进行类似图3的实验，波包在随机的塌缩。这样宇宙的波函数由于我们的观察不再随时间幺正演化。多世界理论则不会导致这样矛盾的结果。</p><h3 id="刚性">刚性</h3><p>如果一个理论不能随意改动，我们就说这个理论具有刚性。多世界理论在概念上更简单，因为它不需要任何额外的假设。这也使它具有了刚性。量子力学已经被大量实验证实，它的基本理论框架是不能随意改动的。如果你能改动量子力学的基本框架，那你一定在引导一场新的物理革命。与之相反，波包塌缩理论显然是可以随意改动的。比如，我可以假设波包塌缩有一个中间过程：任何波函数都先塌缩为一个等权重量子态然后再塌缩到目标态。根据这个假设，公式(6) 描述的塌缩应该改写为</p><p><span class="math display">\[\left|\Psi_{1}\right\rangle \rightarrow \frac{1}{\sqrt{2}}(|H\rangle \otimes \mid live cat \rangle+|V\rangle \otimes \mid dead cat \left.\rangle\right) \rightarrow|H\rangle \otimes \mid live cat \rangle\]</span></p><p>这个修改后的波包塌缩理论同样能解释图3中的实验结果和其他量子测量结果。更糟糕的是，我们可以对波包塌缩理论做任意类似的改动。所以波包塌缩理论刚性非常差，完全是一团可以被随意揉捏的面。笔者认为任何真理和美都具有类似的刚性。一首动听的乐曲具有刚性：它的每一个音符都不能随意改动；一首美的诗具有刚性：它的每一个字都不能随意改动；一朵漂亮的鲜花具有刚性：花瓣的颜色、形状等都不能随意变动，所以花店老板总是对她店里的鲜花小心呵护。由于篇幅限制，这里不展开讨论了。</p><h3 id="有用性">有用性</h3><p>波包塌缩理论似乎只能用来解释类似图3中的量子测量实验，笔者不清楚它还有什么其他用处。多世界理论则帮助笔者解开了一些长久的困惑。按照进化论，我们人类是由非常初级的化学分子一步一步进化而来。每一步进化都是一个小概率事件，所以最后一步一步进化成具有智慧的人，概率是非常、非常小的。即使整个进化过程的时间很长，依然让人觉得不好接受：这么小概率的事件居然发生了。按照多世界理论，这种进化则是必然的，因为在多世界理论中任何小概率事件都会实现。波函数|Ψ1〉中有两个分量：无论α多小，活猫的世界都存在；无论β多小，死猫的世界都存在。也就是说，宇宙从来都不做选择，它只是按照比重不停地分裂为更多的世界。基于这个认识，让我们再来看生物进化。每一步进化其实都是一个化学反应过程：早期的进化是小分子组合成大分子，后来则是基因突变。而任何化学反应都是一个量子演化过程。按照多世界理论，无论事件发生的概率多小它都会发生。概率小只是说明在众多的世界里只有很少一部分生活着我们这样的智慧生物，绝大多数世界里地球上没有生命或者生命处于极其初始的状态。</p><h2 id="自由意志和多世界">自由意志和多世界</h2><p>按照经典物理，一旦初始条件给定，系统随后的演化就是唯一确定的。形象点说就是你所做的一切都是命中注定的，你的一生在你出生的那个时刻就已经确定了，自由意志只是一种假象。从经典物理理论出发，这个观点真是难以辩驳。后来有了量子力学，理论框架里含有内禀的几率，自由意志似乎不再是假象。但仔细一想，即使有了量子力学，自由意志似乎依然是假象。按照波包塌缩理论，几率只发生在外部观察者进行观察时。整个宇宙并没有外部观察者，宇宙的波函数依然按照量子力学进行确定的演化，所以自由意志依然是假象。但是按照多世界理论，整个宇宙的波函数虽然在确定地演化，但是它却在不停地分裂成不同的世界，观察者究竟感受和经历哪一个特定的世界是随机的，他不确定自己的未来是属于哪一个世界。这样，对于每一个世界来说，人是有自由意志的。于是我们有了一个非常美妙的结论：在一个确定演化的宇宙里存在真正的自由意志。</p><h2 id="世界是量子的">世界是量子的</h2><p>量子力学是一场颠覆性的物理革命，彻底推翻了很多经典的概念。但是非常有意思的是，几乎所有的量子力学的创立者都始终没有彻底摆脱经典物理的枷锁。这个问题的根源是波函数。波函数是抽象的希尔伯特空间中的一个向量，它和我们感知的世界没有直接的联系。为了建立波函数和现实世界的联系，这些伟大的物理学家开始回头在经典物理中寻求答案。爱因斯坦认为波函数根本就不能完整地描述自然，最终的理论一定是一个经典的理论，即所谓的隐变量理论。以玻尔和海森伯为代表的哥本哈根学派虽然认为波函数完整地描述了自然，但波函数和现实世界的联系需要通过经典仪器来完成。但最令人迷惑的事情是，没有一篇文章或一本书清晰明确阐明哥本哈根学派，他们的观点弥散在玻尔和他门徒无穷的文章和讲话里，每次他们似乎在谈论同一个观点，仔细一读似乎又总是有些变化。朗道在他的《量子力学》第一节中写了这样一段话，量子力学在物理理论中占有一个很不平常的地位；它把经典力学作为一种极限情形而包含之，但在它的自身表述中，同时又需要这一极限情形。</p><p>这或许能概括哥本哈根学派关于量子力学和经典力学之间关系的模棱两可的态度吧。哥本哈根学派无论怎么表述他们的观点，有一点很明确，他们没有彻底摆脱经典力学的枷锁。德布罗意试图将波函数解释成一种经典波，发展了导波理论，后来玻姆独立发展这个理论。这个理论认为粒子本质上是经典的。薛定谔似乎是这些量子先贤中唯一一位不走回头路的。他曾经在1952年的一次演讲中批评了当时流行的哥本哈根学派，指出波函数中的每一个分量都可能同时存在[11]。这当然就是多世界理论的本质。但是很遗憾，薛定谔并没有进一步发展这个想法。</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://weibo.com/ttarticle/p/show?id=2309404646458711212151#_0">埃弗里特和他的多世界理论-吴飙-weibo</a></li><li><a href="https://www.phy.pku.edu.cn/wubiao/dfiles/pw/aifulitehetadeduoshijielilun.pdf">埃弗里特和他的多世界理论-吴飙-paper</a></li><li><a href="https://www.phy.pku.edu.cn/wubiao/pxsj.htm">吴飙-主页</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;多世界理论是埃弗里特（Hugh Everett III, 1930 - 1982）在1957年提出的. 这个理论的核心是：量子理论是一个自洽的理论，不需要借助经典概念和任何额外的假设就能描述和解释一切现象</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="物理" scheme="https://chiechie.github.io/tags/%E7%89%A9%E7%90%86/"/>
-    
-    <category term="平行世界" scheme="https://chiechie.github.io/tags/%E5%B9%B3%E8%A1%8C%E4%B8%96%E7%95%8C/"/>
-    
-    <category term="自由意志" scheme="https://chiechie.github.io/tags/%E8%87%AA%E7%94%B1%E6%84%8F%E5%BF%97/"/>
-    
-    <category term="薛定谔的猫猫" scheme="https://chiechie.github.io/tags/%E8%96%9B%E5%AE%9A%E8%B0%94%E7%9A%84%E7%8C%AB%E7%8C%AB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>《编程:隐匿在计算机硬件背后的语言 》的读书笔记</title>
-    <link href="https://chiechie.github.io/2021/06/08/reading_notes/computer/coding/"/>
-    <id>https://chiechie.github.io/2021/06/08/reading_notes/computer/coding/</id>
-    <published>2021-06-08T01:09:12.000Z</published>
-    <updated>2021-06-11T02:39:26.044Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="二进制加法器">12 二进制加法器</h2><ol type="1"><li>电路中的逻辑门能实现二进制加法。</li></ol><blockquote><p>逻辑门是认为设计的一种电路走线，为了映射到逻辑上的加法运算。</p><p>逻辑门是链接物理世界和信息世界的桥梁，信息世界以逻辑求和为根基，开始构建信息世界的高楼大厦。</p></blockquote><h2 id="存储器组织">16 存储器组织</h2><ol type="1"><li><p>我们习惯于将可能用到的事物先存起来，在需要时将它们取出。从技术角度来讲，这个过程称为先存储后访问。存储器的职责和作用就在于此，它负责保障这两个过程之间信息完好无损。</p></li><li><p>存储信息都要利用不同种类的存储器。比如，保存文本信息的不二之选就是纸张，而磁带则更适于存储音乐和电影。</p></li><li><p>电报继电器（Telegraph Relays）——以一定形式组织起来构成逻辑门，然后再形成触发器——同样具备保存信息的能力</p></li><li><p>随机访问存储器（RAM）一断电，数据就消失了。因此随机访问存储器也叫易失性（volatile）存储器。</p><blockquote><p>一个辛辛苦苦装满65,536字节珍贵数据的64 K×8 RAM阵列，如果断掉电源，首先所有的电磁铁都将因为没有电流而失去磁性，随着“梆”的一声，金属片将弹回原位，所有继电器将还原到未触发状态。RAM中存储的数据呢？它们将如风中残烛般消失在黑暗中</p></blockquote></li></ol><h2 id="从算盘到芯片">18 从算盘到芯片</h2><h2 id="两种微处理器">19 两种微处理器</h2><ol type="1"><li><p>微处理器将中央处理器的所有组建整合到一个硅芯片上。</p></li><li><p>第一个微处理器，intel 4004，包含了2300个晶体管</p></li><li><p>三十年过去了，一个微处理器中的晶体管数量逼近1000w个。</p></li><li><p>摩托罗拉公司，从20实际50年代生产半导体和晶体管，在1974年8月推出了6800处理器。</p></li><li><p>得克萨斯仪器在1974年，推处4位的处理器TMS1000，</p></li><li><p>英特尔为8080最初定的价格为360美元，8080是一个8位的微处理器，它包括6000个晶体管，运行的时钟频率为2 MHz，寻址空间为64 KB。</p></li><li><p>这些芯片被称为“单芯片微处理器”（single-chip microprocessors</p></li><li><p>除了处理器之外，计算机还需要其他一些设备，至少要包括存储器（RAM），输入设备（键盘），输出设备（显示屏），以及其他一些能把所有构件连接在一块的芯片（主板，机箱）。</p></li><li><p>通过观测芯片的输入、输出信号，特别是芯片的指令集来理解微处理器的工作原理。</p></li><li><p>微处理器通过管脚提供了处理器的输入和输出访问接入点 <img src="img.png" alt="img.png" /></p></li><li><p>所有电气或电子设备都需要某种电源来供电</p></li><li><p>8080的一个特殊的地方就是它需要三种电源电压：管脚20必须接到5V的电压；管脚11需要接到-5V的电压；管脚28需接12V的电压；管脚2接地。（英特尔在1976年发布了8085芯片，目的就是简化对这些电源的要求）.</p><ul><li>从芯片引出的箭头表明这是一个输出（output）信号，这种信号由微处理器控制，计算机的其他芯片对该信号响应。</li><li>指向芯片的箭头表明该信号是一个输入（input）信号，该信号由其他芯片发出，并由8080芯片对其响应。还一些管脚既是输入又是输出。</li></ul></li><li><p>8080有16个用于寻址的输出信号，标记为A0～A15，因此它的可寻址空间大小为<span class="math inline">\(2^16\)</span></p></li><li><p>在计算机中，所有的指令都是3个字节长（1个字节=8个bit），包括1字节的操作码和2字节的地址，指令长什么样？：</p><ul><li>有些指令使8080从存储器的一个特定地址读取字节到微处理器，</li><li>有些指令使8080将一个字节从微处理器写入存储器的特定地址；</li><li>还有些指令使8080在其内部执行而不需要访问RAM</li></ul><p>8080执行完第一条指令后，接着从「存储器」读取第二条指令，并依此类推。这些指令组合在一起构成了计算机程序</p></li><li><p>计算机的指令集包括两条非常重要的指令，我们称之为加载（Load）和保存（Store），每条指令占3个字节</p><ul><li>在Load指令中，第一个字节是操作码，其后的两个字节是要加载的操作数的16位地址。当处理器执行加载指令时，会把该指定地址中的字节加载到累加器。</li><li>当Store指令被执行时，累加器中的内容被保存到该指令指定的地址中。</li></ul></li><li><p>8080芯片的微处理器的内部除累加器外还设置了6个寄存器（register），每个寄存器可以存放一个8位的数。这些寄存器和累加器非常相似，事实上累加器被视为一种特殊的寄存器。</p></li><li><p>寄存器是计算机必不可少的部件吗？理论上不是。很多计算机程序都同时用到多个数据，将这些数据存放在寄存器比存放在存储器更便于访问，因为程序访问内存的次数越少其执行速度就越快。</p></li><li><p>利用指令，可以方便地把一个寄存器存放的数据转移到另一个寄存器</p></li><li><p>有一种存储器叫堆栈：以从底部到顶部的顺序把数据存入存储器，并以相反的顺序把数据从堆栈中取出，因此该技术也称作后进先出存储器（last-in-first-out，LIFO）。在计算机中使用堆栈技术是十分方便的。通常把将数据存入堆栈的过程称作压入（push），把从堆栈取出数据的过程称作弹出（pop）。</p></li><li><p>堆栈的功能是怎样实现的呢？首先，堆栈其实就是一段普通的RAM存储空间，只是这段空间相对独立不另作他用。8080微处理器设置了一个专门的16位寄存器对这段存储空间寻址，这个特殊的寄存器称为堆栈指针（SP，Stack Pointer）。</p></li><li><p>在8080中，执行PUSH指令实际上是把16位的数据保存到堆栈，执行POP指令是把这些数据从堆栈中取回至寄存器。</p></li><li><p>每执行一条PUSH指令，堆栈都会增加两个字节，这可能会导致程序出现一些小错误——堆栈可能会不断增大，最终覆盖掉存储器中保存的程序所必需的代码或数据。这种错误被称作堆栈上溢（stackoverflow）。类似的，如果在程序中过多地使用了POP指令，则会过早地取完堆栈中的数据从而导致类似的错误，这种情况称为堆栈下溢（stack underflow）。</p></li><li><p>根据摩尔定律（Moore’s Law），微处理器中的晶体管数量每18个月翻一倍，增加的这些大量的晶体管用来做什么呢？</p><ul><li>一些晶体管用来适应处理器不断增加的数据宽度——从4位、8位、16位到32位；</li><li>另一些新增的晶体管用来应对新的指令。</li></ul></li><li><p>现代处理器主要使用2种策略来提高运行速度:</p><ul><li>一种就是流水线技术（pipelining），即处理器在执行一条指令的同时读取下一条指令，</li><li>还有一种是Cache（高速缓冲存储器），它是一个设置在处理器内部，访问速度非常快的RAM阵列，用来存放处理器最近要执行的指令</li></ul><p>这两种策略都需要在处理器内部增加更多的逻辑组件和晶体管。</p></li></ol><h2 id="ascii码和字符转换">20　ASCII码和字符转换</h2><ol type="1"><li>存储器中唯一可以存储的东西是bit</li><li>如果我们想把一段文本存下来该怎么办呢？将文本表示成数字。</li><li>可以为每一个字母赋予一个唯一的编码，具有这种功能的系统叫 字符编码集（Coded CharacterSet），系统内的每个独立编码称为字符编码（Character Codes）</li><li>莫尔斯码: 常用字符的编码较短，而不常用字符的编码较长。这样的编码非常适合电报系统，但并不适用于计算机.</li><li>对一个句子进行编码后得到的连续字符通常被称为文本字符串（string）</li><li>电传打字机键盘上的每一个键实质上都起到了转换器的作用，它负责产生二进制编码并且通过输出电缆逐位传输出去</li><li>尽管ASCII码是计算机领域最重要的标准,但是它是太美国化了，在其他国家ASCII码并不适用。</li><li>近几十年来出现了许多不同版本的扩展的ASCII码，多个不同的版本严重影响了编码的一致性，导致了混淆和不兼容。ASCII码被扩展到极致，有的甚至可以对中文、日文和韩文进行编码</li><li>从1988年开始，几大著名计算机公司合作研究出一种用来替代ASCII码的编码系统，取名为Unicode（统一化字符编码标准）。相对于ASCII的7位编码，Unicode采用了16位编码，每一个字符需要2个字节。</li><li>Unicode编码不是从零开始设计的，前128个字符编码——即0000h～007Fh——与ASCII码是一致的</li><li>对于Unicode来讲，它唯一的问题，就是它改变了字符与存储空间之间“单字符，单字节”的等价对应关系。采用ASCII编码方式存储的著作《怒火之花》，其所占据的存储空间约为1 MB。而如果采用Unicode编码，约占2 MB。为了使编码系统兼容，Unicode在存储空间上付出了相应的代价。</li></ol><blockquote><p>UTF-8是unicode的升级版，减少存储空间。</p></blockquote><p>你看到的unicode字符集是这样的编码表： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">I 0049</span><br><span class="line">t 0074</span><br><span class="line">&#x27; 0027</span><br><span class="line">s 0073</span><br><span class="line">  0020</span><br><span class="line">知 77e5</span><br><span class="line">乎 4e4e</span><br><span class="line">日 65e5</span><br><span class="line">报 62a5</span><br></pre></td></tr></table></figure></p><p>每一个字符对应一个十六进制数字。计算机只懂二进制，因此，严格按照unicode的方式(UCS-2)，应该这样存储： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">I 00000000 01001001</span><br><span class="line">t 00000000 01110100</span><br><span class="line">&#x27; 00000000 00100111</span><br><span class="line">s 00000000 01110011</span><br><span class="line">  00000000 00100000</span><br><span class="line">知 01110111 11100101</span><br><span class="line">乎 01001110 01001110</span><br><span class="line">日 01100101 11100101</span><br><span class="line">报 01100010 10100101</span><br></pre></td></tr></table></figure></p><p>这个字符串总共占用了18个字节，但是对比中英文的二进制码，可以发现，英文前9位都是0！浪费啊，浪费硬盘，浪费流量。怎么办？UTF。</p><p>于是，”It's 知乎日报“就变成了： <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">I 01001001</span><br><span class="line">t 01110100</span><br><span class="line">&#x27; 00100111</span><br><span class="line">s 01110011</span><br><span class="line">  00100000</span><br><span class="line">知 11100111 10011111 10100101</span><br><span class="line">乎 11100100 10111001 10001110</span><br><span class="line">日 11100110 10010111 10100101</span><br><span class="line">报 11100110 10001010 10100101</span><br></pre></td></tr></table></figure> 和上边的方案对比一下，英文短了，每个中文字符却多用了一个字节。但是整个字符串只用了17个字节，比上边的18个短了一点点。</p><p><img src="img_1.png" alt="img_1.png" /> ## 参考</p><ol type="1"><li><a href="https://weread.qq.com/web/reader/64e32bf071fd5a9164ece6b">编程：隐匿在计算机硬件背后的语言</a></li><li>https://www.zhihu.com/question/23374078/answer/65352538</li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;二进制加法器&quot;&gt;12 二进制加法器&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;电路中的逻辑门能实现二进制加法。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;blockquote&gt;
-&lt;p&gt;逻辑门是认为设计的一种电路走线，为了映射到逻辑上的加法运算。&lt;/p&gt;
-&lt;p&gt;逻辑门是链接物理世</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="编程" scheme="https://chiechie.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
     
   </entry>
   

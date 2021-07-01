@@ -188,10 +188,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-30 14:39:39 / 修改时间：15:30:46" itemprop="dateCreated datePublished" datetime="2021-06-30T14:39:39+08:00">2021-06-30</time>
+              <time title="创建时间：2021-06-30 14:39:39" itemprop="dateCreated datePublished" datetime="2021-06-30T14:39:39+08:00">2021-06-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-01 19:56:15" itemprop="dateModified" datetime="2021-07-01T19:56:15+08:00">2021-07-01</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -214,10 +220,10 @@
 
       
           <blockquote>
-<p>看到阿里在2021发表的一个视频，《新一代的计算基础设施-对于Ray的融合计算》，做一些笔记</p>
+<p>看到阿里在2021发表的一个演讲--《新一代的计算基础设施-对于Ray的融合计算》，做一些笔记</p>
 </blockquote>
 <ol type="1">
-<li>举一个复杂的业务的例子，用户支付流程，：</li>
+<li>举一个复杂的业务的例子，用户支付流程：</li>
 </ol>
 <ul>
 <li>先选择支付场景--线上/线下/，</li>
@@ -225,18 +231,21 @@
 <li>选择交易网络--银联/第三方</li>
 <li>选择银行</li>
 </ul>
-<p><img src="./img_2.png" alt="img_2.png" /> 整个流程需要秒级响应。</p>
-<ol start="2" type="1">
-<li>要是大家都开始用统一的计算平台，AIOps也可以用一套了</li>
-</ol>
 <figure>
 <img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<p>整个流程需要秒级响应。</p>
+<ol start="2" type="1">
+<li>要是大家都开始用统一的计算平台，AIOps也可以用同一套方案了</li>
+</ol>
+<figure>
+<img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
 </figure>
 <ol start="3" type="1">
 <li>业务需求之一是，复杂的业务逻辑计算存在单机性能瓶颈，需要支持分布式无范式的分布式开发。</li>
 <li>现在的基础设计在单一用途的组件上，已经做的比较成熟了，专门做流式计算的计算引擎有flink，专门做深度学习的计算引擎有tensorflow，专门做批处理的有spark。</li>
 <li>但是，考虑到一个复杂的应用场景，完成1个任务需要用到多种计算模式，统一计算平台 能够让这几种计算模式实现状态共享，中间结果共享。在这种场景下，统一计算平台，相较于多个独立的计算组件 效率更高。</li>
-<li>要不要搞统一计算平台，取决于需求的复杂性，如果是一个很 pure 很纯粹 的任务，搞这个 的意义就不大。但是可以作为预研嘛，万一以后业务变得越来越复杂，也提前有技术储备。</li>
+<li>要不要搞统一计算平台，取决于需求的复杂性，如果是一个很pure很纯粹的任务，搞这个的意义就不大。但是可以作为预研嘛，万一以后业务变得越来越复杂，也有准备。</li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
@@ -261,7 +270,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/29/zkp/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/29/reading_notes/qukuailian/zkp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -275,7 +284,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/29/zkp/" class="post-title-link" itemprop="url">零知识量证明</a>
+            <a href="/2021/06/29/reading_notes/qukuailian/zkp/" class="post-title-link" itemprop="url">零知识量证明</a>
         </h2>
 
         <div class="post-meta">
@@ -408,7 +417,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/88/">88</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/89/">89</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -474,7 +483,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">176</span>
+          <span class="site-state-item-count">178</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -487,7 +496,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">197</span>
+        <span class="site-state-item-count">200</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

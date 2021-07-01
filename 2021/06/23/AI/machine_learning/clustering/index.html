@@ -20,31 +20,25 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="知乎以后能扭亏为盈吗？ 在国内，知识付费的商业模式行得通吗？最大的阻碍是什么？ 知乎是一个中国的在线问单社区，类似国外的quora 知乎3月5号向美国证券交易委员会（SEC）递交了IPO（initial public offering），寻求在纽交所上市，股票代码为“ZH”，并确定由瑞信、高盛和摩根大通担任承销商。   下面是对知乎招股说明书的解读 知乎的财务数据和运营数据 FINANCIAL和">
+  <meta name="description" content="除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。  目前常用聚类算法 目前常用的聚类算法大概分为三类：  层次聚类： nearest neigbour 基于分区的聚类（partitional）：Kmeans系列&#x2F;FCM&#x2F;图理论 密度： 其他：ACODF   img.png  层次聚类 层次聚类算法,又称为树聚类算法,它使用数据的联接规则,透过一种层次架构方式,反复将数据进行分">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对知乎的个股分析">
-<meta property="og:url" content="https://chiechie.github.io/2021/03/14/investment/zhihu_prospectus/index.html">
+<meta property="og:title" content="一些聚类算法">
+<meta property="og:url" content="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="知乎以后能扭亏为盈吗？ 在国内，知识付费的商业模式行得通吗？最大的阻碍是什么？ 知乎是一个中国的在线问单社区，类似国外的quora 知乎3月5号向美国证券交易委员会（SEC）递交了IPO（initial public offering），寻求在纽交所上市，股票代码为“ZH”，并确定由瑞信、高盛和摩根大通担任承销商。   下面是对知乎招股说明书的解读 知乎的财务数据和运营数据 FINANCIAL和">
+<meta property="og:description" content="除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。  目前常用聚类算法 目前常用的聚类算法大概分为三类：  层次聚类： nearest neigbour 基于分区的聚类（partitional）：Kmeans系列&#x2F;FCM&#x2F;图理论 密度： 其他：ACODF   img.png  层次聚类 层次聚类算法,又称为树聚类算法,它使用数据的联接规则,透过一种层次架构方式,反复将数据进行分">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chiechie.github.io/2021/03/14/investment/zhihu_prospectus/caobao1.png">
-<meta property="og:image" content="https://chiechie.github.io/2021/03/14/investment/zhihu_prospectus/operation.png">
-<meta property="og:image" content="https://chiechie.github.io/2021/03/14/investment/zhihu_prospectus/img_3.png">
-<meta property="og:image" content="https://chiechie.github.io/2021/03/14/investment/zhihu_prospectus/img_4.png">
-<meta property="og:image" content="https://chiechie.github.io/2021/03/14/investment/zhihu_prospectus/img_1.png">
-<meta property="og:image" content="https://chiechie.github.io/2021/03/14/investment/zhihu_prospectus/img_2.png">
-<meta property="og:image" content="https://chiechie.github.io/2021/03/14/investment/zhihu_prospectus/weibo.png">
-<meta property="article:published_time" content="2021-03-14T04:07:21.000Z">
-<meta property="article:modified_time" content="2021-05-03T01:47:33.444Z">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/img.png">
+<meta property="article:published_time" content="2021-06-23T03:20:42.000Z">
+<meta property="article:modified_time" content="2021-07-01T13:52:51.025Z">
 <meta property="article:author" content="Chiechie">
-<meta property="article:tag" content="投资">
-<meta property="article:tag" content="行业研究">
-<meta property="article:tag" content="个股分析">
-<meta property="article:tag" content="知识付费">
+<meta property="article:tag" content="图">
+<meta property="article:tag" content="聚类">
+<meta property="article:tag" content="日志聚类">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chiechie.github.io/2021/03/14/investment/zhihu_prospectus/caobao1.png">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/img.png">
 
-<link rel="canonical" href="https://chiechie.github.io/2021/03/14/investment/zhihu_prospectus/">
+<link rel="canonical" href="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/">
 
 
 <script id="page-configurations">
@@ -57,7 +51,7 @@
   };
 </script>
 
-  <title>对知乎的个股分析 | Chiechie's Mini World</title>
+  <title>一些聚类算法 | Chiechie's Mini World</title>
   
 
 
@@ -179,7 +173,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/14/investment/zhihu_prospectus/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -192,7 +186,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          对知乎的个股分析<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/investment/zhihu_prospectus.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          一些聚类算法<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AI/machine_learning/clustering.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -202,14 +196,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-14 12:07:21" itemprop="dateCreated datePublished" datetime="2021-03-14T12:07:21+08:00">2021-03-14</time>
+              <time title="创建时间：2021-06-23 11:20:42" itemprop="dateCreated datePublished" datetime="2021-06-23T11:20:42+08:00">2021-06-23</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-03 09:47:33" itemprop="dateModified" datetime="2021-05-03T09:47:33+08:00">2021-05-03</time>
+                <time title="修改时间：2021-07-01 21:52:51" itemprop="dateModified" datetime="2021-07-01T21:52:51+08:00">2021-07-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,7 +211,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
                 </span>
             </span>
 
@@ -240,46 +234,78 @@
 
       
         <blockquote>
-<p>知乎以后能扭亏为盈吗？</p>
-<p>在国内，知识付费的商业模式行得通吗？最大的阻碍是什么？</p>
-<p>知乎是一个中国的在线问单社区，类似国外的quora</p>
-<p>知乎3月5号向美国证券交易委员会（SEC）递交了IPO（initial public offering），寻求在纽交所上市，股票代码为“ZH”，并确定由瑞信、高盛和摩根大通担任承销商。</p>
+<p>除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。</p>
 </blockquote>
-<hr />
-<p>下面是对知乎招股说明书的解读</p>
-<h2 id="知乎的财务数据和运营数据">知乎的财务数据和运营数据</h2>
-<p>FINANCIAL和OPERATING DATA</p>
-<ol type="1">
-<li>财务情况总结下，近一年营收翻倍（从6亿人民币到13亿人民币），但是仍然是亏损状态（从10亿到5亿）， <img src="caobao1.png" alt="图1-财务数据" /></li>
-<li>知乎月活有7500w用户，其中付费用户300w。付费会员比例是3.4% <img src="operation.png" alt="图2-运营数据" /></li>
-<li>营收构成，主要靠广告，其次是会员费，然后是基于内容的行业解决方案。2020年广告占比略微下降从86%下降到62%）， <img src="img_3.png" alt="img_3.png" /> 对于广告主来说，知乎的广告收入差不多每个用户可以卖12rmb。 <img src="img_4.png" alt="img_4.png" /></li>
-<li>知乎的员工有1651名，研发人员有671名。 <img src="img_1.png" alt="知乎的员工构成" /></li>
-<li>知乎的CEO是李源，占股8.2%，拥有46.6%的投票权。 <img src="img_2.png" alt="知乎的领导层" /></li>
-</ol>
-<h2 id="知乎的商业化">知乎的商业化</h2>
-<ol type="1">
-<li>商业化还是很困难的。知乎现在的风气像什么？一群乌合之众好为人师。建议是最廉价的东西，尤其对于不怎么要脸的人来说。站在知乎付费会员的角度，我交了钱让这些沙雕教我做人？这就很蠢。不过确实，如果知乎不提供小黄文这些功能，付费用户会觉得更加不值得。</li>
-<li>互联网中文社区的内容，99%都是垃圾，比例太大，如果放任自流，很有可能变成劣币驱逐良币的后果，戾气和攀比之风渐胜，恶劣的环境让本就稀少的高质量创作者如履薄冰。</li>
-<li>这个平台缺的是，对劣质信息的惩罚措施, 还有风险共担的机制。</li>
-</ol>
+<h1 id="目前常用聚类算法">目前常用聚类算法</h1>
+<p>目前常用的聚类算法大概分为三类：</p>
+<ul>
+<li>层次聚类： nearest neigbour</li>
+<li>基于分区的聚类（partitional）：Kmeans系列/FCM/图理论</li>
+<li>密度：</li>
+<li>其他：ACODF</li>
+</ul>
 <figure>
-<img src="weibo.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+<img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
 </figure>
-<h2 id="凤凰网的评论">凤凰网的评论</h2>
+<h2 id="层次聚类">层次聚类</h2>
+<p>层次聚类算法,又称为树聚类算法,它使用数据的联接规则,透过一种层次架构方式,反复将数据进行分裂或聚合,以形成一个层次序列的聚类问题解.</p>
+<p>本文仅以层次聚类算法中的层次聚合算法为例进行介绍.</p>
+<p>层次聚合算法的时间复杂度为<span class="math inline">\(O(n^2)\)</span>,适合于小数据集的分类.</p>
+<p>该算法由树状结构的底部开始逐层向上进行聚合,假定样本集S={o1,o2,...,on}共有n个样本.</p>
 <ol type="1">
-<li>2011年，知乎上线，成为一代互联网人的精神家园。刚开始的知乎是“小而美”的,邀请制之下门槛极高(现在的clubhouse)，不仅有李开复、徐小平等大佬入驻，还有各垂直专业人士提供的专业见解，都为知乎贴上精英的标签。</li>
-<li>随着用户体量的增长，在保持“小而美”和扩大用户规模上，作为知乎创始人的周源选择了后者。2013年4月1日，知乎正式开放个人用户注册，不到一年时间，注册用户迅速由40万攀升至400万；2017年9月，知乎进一步开放机构号注册。</li>
-<li>创新工场创始合伙人汪华留言称,不断扩圈过程中，包括他在内的老用户也感受到社区氛围的稀释。但是这个大方向是没有问题的，如果只停留在少数高端用户的圈子，最后会变成某种闭门造车，反而不利于产生更好更多元的内容。正因为知乎破圈，才有了更多的角度和丰富的内容，才有可能有更高质量的内容，所以在这个大方向下要做的深耕细作，而这次融资也会使得知乎有更多的资源和能力来解决这个问题。</li>
-<li>周源认为，当社区发展超过一定规模以后，平台方能做的事情一定是有限的，不可能去想着要管理或者说去控制每一个细节。“如果某种行为违背了国家法律规定或知乎社区规范，那么我们会毫不犹豫的把它“干掉”。如果没有，我们认为也不应当因噎废食。”</li>
-<li>对于知乎的未来，周源认为知乎不是乌托邦，也不是理想国。随着用户量级的提升，知乎会更加趋近于线下真实社会的投射。</li>
+<li>初始化：每个样本 <span class="math inline">\(o_i\)</span> 为一个类; 共形成 n 个类:<span class="math inline">\(o_1,o_2,...,o_n\)</span></li>
+<li>找最近的两个类：从现有的所有类中找出距离最近(相似度最大)的两个类 <span class="math inline">\(o_r\)</span> 和 <span class="math inline">\(o_k\)</span> <span class="math display">\[distance(o_r,o_k) = min_{\forall{o_u,o_v \in S,o_u \neq o_v}}distance(o_u,o_v)\]</span></li>
+<li>合并<span class="math inline">\(o_r\)</span>和<span class="math inline">\(o_k\)</span>: 将类<span class="math inline">\(o_r\)</span>和<span class="math inline">\(o_k\)</span>合并成一个新类<span class="math inline">\(o_{rk}\)</span>; 现有的cluster个数减1</li>
+<li>若所有的样本都属于同一个类,则终止本算法;否则,返回步骤2.</li>
 </ol>
-<h2 id="chiechies-说说知识付费">chiechie's 说说知识付费</h2>
-<p>观察到的几个现象</p>
+<p>层次聚类最大的优点，它一次性地得到了整个聚类的过程，只要得到了上面那样的聚类树，想要分多少个cluster都可以直接根据树结构来得到结果，改变cluster数目不需要再次计算数据点的归属。</p>
+<p>层次聚类的缺点是计算量比较大，因为要每次都要计算多个cluster内所有数据点的两两距离。</p>
+<p>另外，由于层次聚类使用的是贪心算法，得到的显然只是局域最优，不一定就是全局最优，这可以通过加入随机效应解决，这就是另外的问题了。</p>
+<h2 id="基于graph的聚类">基于Graph的聚类</h2>
+<p>基于Graph的聚类算法，大致思路是，计算样本两两之间的相似度，并设定阈值，高于阈值就右边，低于阈值就无边，以此构造有权无向图，权重即为相似度。</p>
+<h3 id="谱聚类">谱聚类</h3>
+<p>谱聚类的流程是：</p>
+<p>输入：n个样本, 类别k</p>
 <ol type="1">
-<li><p>调用人情绪的内容点击率高, like 观察者网，历史调研室，所长林超，回形针。</p></li>
-<li><p>引人思考的知识，是反人性的。人天生就是感性动物，情绪驱动，不爱思考，不喜欢用理性，依靠直觉。 ## 参考</p></li>
-<li><p><a target="_blank" rel="noopener" href="https://tech.ifeng.com/c/84OLbxuTeir">十年知乎IPO仍亏损：破圈争议与商业化难题凤凰网</a></p></li>
-<li><p><a target="_blank" rel="noopener" href="https://www.sec.gov/Archives/edgar/data/1835724/000119312521070815/d72883df1.htm">知乎-招股说明书</a></p></li>
+<li>根据样本两两之间的相似度，构建有权无向图，以及邻接矩阵W。</li>
+<li>计算出拉普拉斯矩阵L，对L做谱分解（相当于降维）：计算拉普拉斯矩阵L的最小的k个特征向量u1, u2,...,uk,将这些向量组成n*k维的矩阵U,</li>
+<li>将U中的每一行作为一个样本，共n个样本，使用k-means对这n个样本进行聚类</li>
+</ol>
+<p>得到簇划分C(c1,c2,...ck).</p>
+<h3 id="如何判断两个cluster之间的距离">如何判断两个cluster之间的距离？</h3>
+<p>一开始每个数据点独自作为一个类，它们的距离就是这两个点之间的距离。而对于包含不止一个数据点的cluster，就可以选择多种方法了。最常用的，就是average-linkage，即计算两个cluster各自数据点的两两距离的平均值。类似的还有single-linkage/complete-linkage，选择两个cluster中距离最短/最长的一对数据点的距离作为类的距离。个人经验complete-linkage基本没用，single-linkage通过关注局域连接，可以得到一些形状奇特的cluster，但是因为太过极端，所以效果也不是太好。</p>
+<h2 id="聚类应用">聚类应用</h2>
+<p>从某种意义上说，层次聚类是一个大的框架，而基于图的图像分割是在图像分割上多加了骨头，使他更适用于图像分割的领域，而使用者可以在骨头上继续加肉来达到不同的分割效果。</p>
+<h3 id="日志分析">日志分析</h3>
+<h3 id="图像分割">图像分割</h3>
+<p>图像的分割是图聚类的其中一个应用场景。把图像中的每一个像素点看成是一个item，那么图像分割的任务就是将所有的items进行聚类，属于一个类里面的所有像素就构成了一个区域，最终的分割结构就是若干个区域组成的。由此我们过渡到本文的第二部分，基于图的图像分割算法。</p>
+<p>怎样利用上述的定义，在基于图的表示方法下，做出高效而准确的分割呢？主要流程如下</p>
+<p>输入一个图<span class="math inline">\(G=(V,E)\)</span>，有n个点和m个边。输出是一个分割V，分割成<span class="math inline">\(S=(C_1,...,C_2).\)</span></p>
+<ol type="1">
+<li><p>对边E进行排序，生成非递减的序列<span class="math inline">\(\pi = (o_1,...,o_m)\)</span></p></li>
+<li><p>从初始分割<span class="math inline">\(S^0\)</span>开始，每一个点<span class="math inline">\(v_i\)</span>自己就是一个区域</p></li>
+<li><p>对于每一个边<span class="math inline">\(q = 1,...,m\)</span>重复步骤3，通过<span class="math inline">\(S^{q-1}\)</span>构建<span class="math inline">\(S^q\)</span>，使用如下的方式</p>
+<ul>
+<li>令<span class="math inline">\(v_i\)</span>和<span class="math inline">\(v_j\)</span>表示按顺序排列的第q条边的两个点，比如<span class="math inline">\(o_q = (v_i,v_j)\)</span>。</li>
+<li>如果<span class="math inline">\(v_i\)</span>和<span class="math inline">\(v_j\)</span>在<span class="math inline">\(S^{q-1}\)</span>中连个不同的区域下，并且<span class="math inline">\(w(o_q)\)</span>比两个区域的内部差异都小，那么合并这连个区域，否则什么也不做。</li>
+<li>用公式来表达就是：
+<ul>
+<li>令<span class="math inline">\(C_{i}^{q-1}\)是\(S^{q-1}\)</span>的一个区域，它包含点<span class="math inline">\(v_i\)</span>；令<span class="math inline">\(C_{j}^{q-1}\)是\(S^{q-1}\)</span>的一个区域，它包含点<span class="math inline">\(v_j\)</span>。</li>
+<li>如果<span class="math inline">\(C_{i}^{q-1} \neq C_{j}^{q-1}\)</span> 并且<span class="math inline">\(w(o_q) \leq MInt(C_i^{q-1},C_j^{q-1})\)</span>，那么通过合并<span class="math inline">\(C_{i}^{q-1}\)</span>和<span class="math inline">\(C_{j}^{q-1}\)</span>得到了<span class="math inline">\(S^q\)</span>；</li>
+<li>否则的话<span class="math inline">\(S^q = S^{q-1}\)</span>，返回<span class="math inline">\(S = S^m\)</span></li>
+</ul></li>
+</ul></li>
+</ol>
+<p>图像分割结果如下</p>
+<figure>
+<img src="img.png" alt="图像分割" /><figcaption aria-hidden="true">图像分割</figcaption>
+</figure>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://patentimages.storage.googleapis.com/34/c0/df/3417293b1602a5/CN105468677A.pdf">一种基于图结构的日志聚类算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78382376">常用聚类算法综述</a></li>
+<li><a target="_blank" rel="noopener" href="https://buptjz.github.io/2014/04/21/cluster">从层次聚类到Graph-based图像分割</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.jos.org.cn/1000-9825/19/48.pdf">聚类算法</a></li>
 </ol>
 
     </div>
@@ -290,10 +316,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%8A%95%E8%B5%84/" rel="tag"># 投资</a>
-              <a href="/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/" rel="tag"># 行业研究</a>
-              <a href="/tags/%E4%B8%AA%E8%82%A1%E5%88%86%E6%9E%90/" rel="tag"># 个股分析</a>
-              <a href="/tags/%E7%9F%A5%E8%AF%86%E4%BB%98%E8%B4%B9/" rel="tag"># 知识付费</a>
+              <a href="/tags/%E5%9B%BE/" rel="tag"># 图</a>
+              <a href="/tags/%E8%81%9A%E7%B1%BB/" rel="tag"># 聚类</a>
+              <a href="/tags/%E6%97%A5%E5%BF%97%E8%81%9A%E7%B1%BB/" rel="tag"># 日志聚类</a>
           </div>
 
         
@@ -302,12 +327,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/03/13/reading_notes/economics/classical-economy/" rel="prev" title="古典宏观经济模型">
-      <i class="fa fa-chevron-left"></i> 古典宏观经济模型
+    <a href="/2021/06/22/data_structure/graph/graph-basic/" rel="prev" title="图数据基础">
+      <i class="fa fa-chevron-left"></i> 图数据基础
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/03/15/reading_notes/reality/ray-dalio_coperation/" rel="next" title="原则-如何协作？">
-      原则-如何协作？ <i class="fa fa-chevron-right"></i>
+    <a href="/2021/06/25/data_structure/data-structure-base/" rel="next" title="数据结构基础">
+      数据结构基础 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -367,7 +392,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E4%B9%8E%E7%9A%84%E8%B4%A2%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%92%8C%E8%BF%90%E8%90%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">1.</span> <span class="nav-text">知乎的财务数据和运营数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E4%B9%8E%E7%9A%84%E5%95%86%E4%B8%9A%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">知乎的商业化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A4%E5%87%B0%E7%BD%91%E7%9A%84%E8%AF%84%E8%AE%BA"><span class="nav-number">3.</span> <span class="nav-text">凤凰网的评论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chiechies-%E8%AF%B4%E8%AF%B4%E7%9F%A5%E8%AF%86%E4%BB%98%E8%B4%B9"><span class="nav-number">4.</span> <span class="nav-text">chiechie&#39;s 说说知识付费</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%89%8D%E5%B8%B8%E7%94%A8%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">目前常用聚类算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB"><span class="nav-number">1.1.</span> <span class="nav-text">层次聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Egraph%E7%9A%84%E8%81%9A%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">基于Graph的聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%B1%E8%81%9A%E7%B1%BB"><span class="nav-number">1.2.1.</span> <span class="nav-text">谱聚类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AAcluster%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%9D%E7%A6%BB"><span class="nav-number">1.2.2.</span> <span class="nav-text">如何判断两个cluster之间的距离？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E7%B1%BB%E5%BA%94%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">聚类应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90"><span class="nav-number">1.3.1.</span> <span class="nav-text">日志分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2"><span class="nav-number">1.3.2.</span> <span class="nav-text">图像分割</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -381,7 +406,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">176</span>
+          <span class="site-state-item-count">178</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -394,7 +419,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">197</span>
+        <span class="site-state-item-count">200</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

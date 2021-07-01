@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/05/AI/timeseries/quantml-practice/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/07/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/05/AI/timeseries/quantml-practice/" class="post-title-link" itemprop="url">时序预测最佳实践</a>
+            <a href="/2021/06/07/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/" class="post-title-link" itemprop="url">《the book of why》读书笔记-6</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-05 00:06:21" itemprop="dateCreated datePublished" datetime="2021-06-05T00:06:21+08:00">2021-06-05</time>
+              <time title="创建时间：2021-06-07 08:33:38" itemprop="dateCreated datePublished" datetime="2021-06-07T08:33:38+08:00">2021-06-07</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-11 09:47:17" itemprop="dateModified" datetime="2021-06-11T09:47:17+08:00">2021-06-11</time>
+                <time title="修改时间：2021-06-28 10:13:03" itemprop="dateModified" datetime="2021-06-28T10:13:03+08:00">2021-06-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">实践</span></a>
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
                 </span>
             </span>
 
@@ -219,62 +219,75 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="建模pipeline">建模pipeline</h1>
+          <blockquote>
+<p>the book of why 的第6章-一些悖论</p>
+</blockquote>
+<h2 id="悖论1-蒙提-霍尔">悖论1-蒙提 霍尔</h2>
+<h3 id="背景">背景</h3>
+<p>一个竞猜游戏中，有三个用幕布遮住的们，其中有2个门后面是山羊，1个是汽车。有两种游戏规则，分别是：</p>
 <ol type="1">
-<li>搜集原始数据: 过去十年的成交数据</li>
-<li>数据筛选: 选择交易日，固定时间段（９:30~15:30)的数据</li>
-<li>对选好的数据进行采样，并不能保证每天都有整数个点</li>
-<li>切分训练集 &amp; 验证集</li>
-<li>模型训练
+<li>观众先选择三个门中的一个，然后主持人从另外两个门中选择一个没有汽车的们打开，然后这个观众可以选择要不要换门？</li>
+<li>观众先选择三个门中的一个，然后主持人从另外两个门中随便选一个打开，然后这个观众可以选择要不要换门？</li>
+</ol>
+<p>第一种强况下，选择换门的话，赢到车车的概率是2/3， 第二种情况下，选择换门的话，赢到的车车的概率是1/2</p>
+<figure>
+<img src="./img789.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<h3 id="悖论的原因">悖论的原因</h3>
+<ol type="1">
+<li><p>贝叶斯公式可以解释信息在非因果关系上的流动，也就是规则1，主持人选择了没有汽车的之后，第三个门的不确定性降低了（沿着门后有车的概率变大的方向），而整个空间的概率之和为1，所以第一个门有车的概率变小了。</p>
+<blockquote>
+<p>主持人的这个决策带来了系统的熵减，系统坍塌到2号门某个确定状态的子空间去了。</p>
+</blockquote></li>
+<li><p>为什么直觉上很难接受规则1的结论，反而会认为比赛的机制不公平？这个跟人类大脑结构有关系：</p>
 <ul>
-<li>归一化训练集，&lt;x， target&gt;</li>
-<li>训练</li>
-</ul></li>
-<li>模型评估
-<ul>
-<li>归一化验证集</li>
-<li>预测&amp;画图：</li>
+<li>大脑不擅长处理概率问题，</li>
+<li>大脑自发抵制非因果关系的信息传递，这个是贝叶斯式变量控制的产物。</li>
+<li>习惯将相关性等同于因果性</li>
+<li>大脑天生难以接受</li>
 </ul></li>
 </ol>
-<p>实践过程中遇到的一些问题，需要逐一解决，下面记录其中一些</p>
-<h1 id="问题集合">问题集合</h1>
-<h2 id="问题1.-验证集的mse比训练集低但相关系数训练集远远大于调参集这是bug">问题1. 验证集的mse比训练集低，但相关系数训练集远远大于调参集，这是bug？</h2>
-<p>没有bug，mse和correlation评估的侧重点不一样。</p>
-<p>mse小，但是correlation也小的例子，如下图：</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNUSWvXNmWb.png?alt=media&amp;token=8c03a9f3-60e1-424d-879e-3371c1516623" /></p>
-<p>几个距离：</p>
-<ul>
-<li>欧式距离（mse）量化的 是两个实体（或者两个群体）之间的绝对物理距离</li>
-<li>余弦距离（correlation）量化的是 两个实体（或者两个群体）相对原点的角度的距离</li>
-<li>pearson衡量的是 两个变量 之间的 线性相关性，具体做法是使用一个直线去拟合多组样本点&lt;变量1，变量2&gt; ，直线斜率就是相关性大小。</li>
-</ul>
-<h2 id="问题3怎么解决分布漂移的问题">问题3：怎么解决分布漂移的问题？</h2>
-<p>分布漂移在时序预测中尤其常见，使用滑动窗口的均值来 做中心化</p>
-<h2 id="问题4还有哪些措能提升实验效果">问题4：还有哪些措能提升实验效果？</h2>
-<p>取效果好和效果差的两组实验进行对比，观察到1个现象：使用短期趋势中心化后，在使用长期趋势归一化，能使效果变好，背后的理论依据是什么？</p>
-<p>分析下：因为用到了更长的历史数据作为参考,本身模型是记不住那么长的历史信息的。（输入才半个小时）</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fg6FAdLzkOj.png?alt=media&amp;token=362ed41e-1773-4ff5-ac41-a3095f75bb86" /></p>
-<p>参考: <a target="_blank" rel="noopener" href="https://github.com/Arturus/kaggle-web-traffic/blob/master/how_it_works.md">doc</a></p>
-<h2 id="问题5-过拟合的原因">问题5： 过拟合的原因</h2>
-<p>训练集 的比例远大于 验证集 和测试集</p>
-<h2 id="问题6-是不是预测的准就能挣钱了">问题6： 是不是预测的准就能挣钱了？</h2>
-<p>不是，回测的时候要考虑滑点，交易费用，爆仓风险</p>
-<h2 id="问题7同样一个预测模型lstm商品期货准确率比股指差这么多">问题7：同样一个预测模型（LSTM），商品期货准确率比股指差这么多？</h2>
-<ul>
-<li>因为1min的股指期货数据平滑，噪声少，而1min的商品期货毛刺非常多</li>
-<li>将1min的商品期货聚合成5min之后，再使用过去1h的数据预测未来1h的数据，准确率非常之高</li>
-</ul>
-<p>数据颗粒度太细时 噪声很大， 直接丢给模型，也可能造成模型学不好。（这个已经在quantML实践上面得到了证实）</p>
-<h2 id="问题8直接用回归模型预测价格可能有负数怎么处理">问题8：直接用回归模型预测价格，可能有负数怎么处理</h2>
-<p>预测增长率</p>
-<h2 id="问题9除了直接回归还有哪些方法">问题9：除了直接回归，还有哪些方法？</h2>
-<p>转化为分类问题，换预测涨跌幅</p>
-<h1 id="其他经验">其他经验</h1>
+<h2 id="悖论2-伯克森悖论">悖论2-伯克森悖论</h2>
 <ol type="1">
-<li><p>不同品种的训练数据，分组训练 比 汇总训练 效果好。</p>
+<li>生物统计学家约瑟夫.伯克森在医院做实验时，观察到了一个现象：两种疾病本来在一般人群中毫无关联，但是在住院人群中却会观察到似是而非的相关性。</li>
+<li>医院样本实际上是一个冲撞模型，即，当一个人同时患了两种疾病时，一定会住院。</li>
+<li>所以，「医院样本」就好像一个经过精心挑选过的样本，体现出来的相关关系是控制了「住院」变量之后，疾病1和疾病2的伪相关性。 <img src="img7890.png" alt="img.png" /></li>
+<li>1956年，哲学家赖欣巴提出了一个猜想「共因原则」（common cause principle），他认为没有不含因果关系的相关关系，即，X和Y的相关不是偶然发生的，要么是一个变量导致另一个变量，要么是第三个变量，比如说出现在两个变量之前的Z变量，导致两者发生。</li>
+<li>设计一个抛硬币的实验就可以推翻「共因原则」：假设同时抛两枚硬币，抛100次，只记录其中至少又一枚硬币为正面的结果，实验结束，发现记录的75条记录中，发现只要硬币1反面，硬币2就是正面，是因为两个硬币互通消息了吗？不是的，是因为人为记录改变了测度空间。</li>
+<li>还有一个社会现象就是，在一些调查中发现，跟你约会的人中，哪些又魅力的人往往是混蛋。这个也是因为测度空间被你亲手改变了，因为长得丑的渣男最开始就被你过滤了。过滤之前，有魅力的渣男的概率是1/4，过滤之后有魅力的渣男概率是1/3。所以感觉这个比例增加了。</li>
+</ol>
+<h2 id="悖论3-辛普森悖论">悖论3-辛普森悖论</h2>
+<ol type="1">
+<li>辛普森逆转：一个叫辛普森的医生，在文献上发现了一种新药D，可以治疗心脏病。论文的实验数据显示，女性患者服用药物之后，心脏病发作比例升高；男性患者服用药物之后，心脏病发作比例也升高。但是，在整体人群上，心脏病发作比例却降低了，因此该药物也被归为BBG（BAD/BAD/GOOD）型药物。然而，实际上这种药物不存在，虽然说在数学上没有什么问题。 <img src="judea-pearl_the-book-of-why7/img.png" alt="辛普森" /></li>
+<li>对整体人群来说，正确的结论应该是什么呢？可以这么操作，先控制性别：
+<ul>
+<li>do（性别）=女性，计算女性服药之后心脏病发作比例的变化 r1。</li>
+<li>do（性别）=男性，计算男性服药之后心脏病发作比例的变化 r2。</li>
+<li>假设整体人群中，男女比例为1：1，那么可以推断出整体人群，服药之后，心脏比发作比例的变化为（r1+r2）/2</li>
+</ul></li>
+<li>辛普森悖论是因为混杂因子的存在。</li>
+<li>当我们考察两个变量的因果效应时：
+<ul>
+<li>如果存在混在因子，只能用分层数据计算因果效应，采用控制混杂因子的方式，case by case，计算每个混在因子取值的情况下，两个变量的因果关系，然后按照混杂因子每个取值的概率汇总，得到整体上，两个变量之间的因果关系。 <img src="./img_2.png" alt="img_2.png" /></li>
+<li>如果不存在混杂因子（有可能存在中介物），可以用聚合数据计算因果效应 <img src="./img_1.png" alt="中介物" /></li>
+</ul></li>
+<li>混杂因子存在的警告：根据聚合数据估计出来的因果效应大于，根据分层数据估计出来的因果效应。</li>
+</ol>
+<h2 id="关于悖论">关于悖论</h2>
+<ol type="1">
+<li><p>什么是悖论？绝大部分人深信不疑的两个信念之间的冲突。</p>
 <blockquote>
-<p>一定要汇总训练的话，要加入每个品种的静态特征，不然会学到混乱的模式。</p>
+<p>辛普森逆转并不算悖论，只是纠正了不懂数学的人，对"平均表现"的错误认识。</p>
 </blockquote></li>
+<li><p>如何解决悖论？</p>
+<ol type="1">
+<li>理解为什么大多数人会把它看成一个悖论？or大家对世界的直观看法到底在哪里存在重大缺陷？eg生理结构原因：大部分人不擅长处理概率问题；「过分擅长」处理因果问题</li>
+<li>如何纠正：刻意训练，完成大脑重塑。</li>
+</ol></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li>
 </ol>
 
       
@@ -295,7 +308,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/04/reading_notes/computer/liangzijisuanji/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/06/reading_notes/reality/caiwujiangyi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -309,7 +322,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/04/reading_notes/computer/liangzijisuanji/" class="post-title-link" itemprop="url">量子计算机</a>
+            <a href="/2021/06/06/reading_notes/reality/caiwujiangyi/" class="post-title-link" itemprop="url">《财务讲义》读书笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -318,10 +331,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-06-04 09:05:44 / 修改时间：09:32:47" itemprop="dateCreated datePublished" datetime="2021-06-04T09:05:44+08:00">2021-06-04</time>
+              <time title="创建时间：2021-06-06 16:25:08" itemprop="dateCreated datePublished" datetime="2021-06-06T16:25:08+08:00">2021-06-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-28 10:13:25" itemprop="dateModified" datetime="2021-06-28T10:13:25+08:00">2021-06-28</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -343,48 +362,190 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="why">why？</h2>
-<ol type="1">
-<li>最早提出用量子体系来计算，或者说模拟量子物理问题的科学家是费曼，不过当时只是一个概念。</li>
-<li>真正从数学上证明有效的算法，是20世纪90年代数学家提出的两类算法：Shor算法和Grover算法.</li>
-<li>Shor算法解决质因数分解问题。用量子的逻辑电路，可以将大数分解问题的求解时间从指数级降低为准多项式级。大数不可分正是现在互联网上应用最广泛的非对称加密系统，也叫公钥加密系统的数学基础。用现在最好的算法破解2048位数的公钥密码，需要超过100万年时间，而用Shor算法只需要几分钟</li>
-<li>Grover算法是一个搜索算法，它可以将无结构的数据搜索问题从N复杂度降低为根号N复杂度。虽然加速能力不如Shor算法，但搜索算法是一种非常基础的算法，可以映射到多种实际问题中去。当N非常大时，这种加速效应也非常显著。目前互联网中每时每刻产生的海量数据，要从中寻找有用信息，正对应着这种N非常大的情况。此外，搜索算法还可以用来进行密码破解。</li>
-<li>此外，量子计算还可以通过模拟复杂系统的哈密顿量来进行量子化学计算，研究原来很难研究的复杂多体物理问题；通过量子纠缠特性，量子计算还可以快速计算多参量的代价函数，从而提高优化问题的求解效率，在人工智能方面也有潜在的应用价值。</li>
-</ol>
-<h2 id="量子计算可以解决什么问题">量子计算可以解决什么问题？</h2>
-<ol type="1">
-<li>计算科学中，所有的计算问题可以分为可判定问题和不可判定问题。</li>
-<li>计算机能够解决的只是可判定类问题，也就是可计算问题。</li>
-<li>NP问题中还有一类NP完全问题，计算复杂度指数增长，其中包括非常经典的最大割问题、行商问题等等。量子计算目前无法解决。</li>
-</ol>
-<figure>
-<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
-<h2 id="怎么实现量子计算">怎么实现量子计算？</h2>
-<ol type="1">
-<li><p>从理论上看，比较简单，先把问题用比特进行编码，算完之后观测结果 <img src="img_1.png" alt="img_1.png" /></p></li>
-<li><p>从实现上看，比较有挑战，因为实现过程中会有噪声，并且量子不好操控和测量。</p>
-<blockquote>
-<p>量子计算的理论和算法研究早在上世纪八九十年代就出现了，而实验物理研究却一直到2000年以后才逐渐走上快车道。</p>
-</blockquote></li>
-<li><p>现实世界中，能够用来做量子计算的体系有很多，包括自然原子、离子阱、光子、二维电子气、NV-色心、核自旋、冷原子，以及超导量子比特，等等。哪些是优秀的“量子比特”，能成功构建出实用的量子计算机呢？要满足以下条件（Divincenzo准则”）：</p>
+          <blockquote>
+<p>思考几个问题，选股的分析框架？看市盈率，看行业龙头股的baseline，跨版本的股票，看业务构成，找相应板块</p>
+</blockquote>
+<h2 id="第3章-花钱-投资与分配">第3章 花钱-投资与分配</h2>
+<h3 id="chapter-21-固定资产">chapter 21 固定资产</h3>
 <ul>
-<li>可以构建一组可扩展的大量量子比特，并且能够很好的表征它们</li>
-<li>能够对量子比特进行初始化</li>
-<li>量子比特必须具有足够长的退相干时间</li>
-<li>能实现一组通用的量子门操作</li>
-<li>能够很好地测量这些量子比特的最终状态</li>
+<li>固定资产：企业的大件资产，比如厂房，生产设备。不仅花费大，而且是企业准备长期 持有的资产。</li>
+<li>与固定资产相对的 是流动资产，如 库存 ，短期投资 等</li>
+<li>企业最大的开销是固定资产投资（类似搞基建，互联网公司可以弱化，但是实业公司不能弱化）</li>
+<li>租赁的本质是债务融资（跟房贷一样）</li>
+<li>财务决策中，在 同风险等级 的 投资决策 之间进行比较是一个重要原则。</li>
+<li>投资的机会成本 是为了一个项目A 所放弃的 其他项目B 的收益，其他项目B的风险等级必须要和A一样。</li>
+<li>所以，不应该考虑买还是租，而是考虑 租还是 借（钱）。也就是说 把 租赁这种 债务融资方式 和 借 这种债务融资方式 比较</li>
+<li>如何降低租赁对负债率的影响
+<ul>
+<li>在2018年 会计准则修改之前，将融资行负债 修改为 经营性负债</li>
+<li>在2018年 会计准则修改之后，就没法专空子了。</li>
 </ul></li>
-<li><p>基于超导量子比特的超导量子计算，满足上面五点，成为现在各大头部公司最看好的技术方案</p></li>
-</ol>
-<h2 id="现状以及未来展望">现状以及未来展望</h2>
-<ol type="1">
-<li>2019年10月，Google在Science上刊出了一篇论文，介绍了他们验证了量子霸权的实验结果。个实验让全世界都备感兴奋，谷歌的CEO皮查伊评价这个实验的意义，就像当年莱特兄弟发明了第一驾飞机。不过，正如第一驾民用客机要到50多年后才诞生，量子计算机走入千家万户，仍有很长的路要走。 <img src="img_2.png" alt="img_2.png" /></li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li>https://weibo.com/ttarticle/x/m/show/id/2309404644282962411850?<em>wb_client</em>=1</li>
-</ol>
+<li>如何盘活租来的固定资产</li>
+<li>融资性 售后回租：将固定资产 卖给 融资租赁公司，然后签订租赁合同，合同期满就可以买回来。</li>
+</ul>
+<h3 id="chapter-22-价值投资-用别人的错误赚钱">chapter 22 价值投资-用别人的错误赚钱</h3>
+<h3 id="chapter-23-资本预算-项目之间是如何pk的">chapter 23 资本预算-项目之间是如何PK的</h3>
+<ul>
+<li>投资收益比较</li>
+<li>（往上一层）投资的溢出效应：值新项目对企业其他项目 或者 外部事物的影响
+<ul>
+<li>负向</li>
+<li>正向-协同效应</li>
+</ul></li>
+<li>投资回收期平衡</li>
+</ul>
+<h3 id="chapter-24-风险量化">chapter 24 风险量化</h3>
+<ul>
+<li>点分析：项目的保本点是多少
+<ul>
+<li>对美国上市公司的盈余公告进行研究：发现每一美元造成的股价下跌，几乎是每一美元盈利带来的股价上涨幅度的两倍</li>
+<li>企业的盈利目标又三个层析：1. 保证不亏损 2 超过前一年同期的盈利 3 超过证券分析师的预期</li>
+<li>局限：
+<ul>
+<li>有的项目处于战略需要一定要投资，即时财务不赚钱</li>
+<li>正向偏离也是一种风险</li>
+</ul></li>
+</ul></li>
+<li>线分析：跟往年比是多少</li>
+<li>面分析：分析师的预期是多少</li>
+</ul>
+<h3 id="chapter-25-实物期权-应对投资的不确定性">chapter 25 实物期权-应对投资的不确定性</h3>
+<ul>
+<li>案例：爱尔眼科怎样降低并购小诊所的风险？
+<ul>
+<li>【道】增加投资的灵活性</li>
+<li>【法】采用延迟期权，扩张期权，放弃期权策略</li>
+<li>【术】联合PE成立 并购基金，联合孵化小型创业公司</li>
+<li>https://www.pedata.cn/jsp/research.html</li>
+</ul></li>
+<li>互联网项目 的投资 适合实物期权投资 策略。</li>
+</ul>
+<h3 id="chapter-26-风险转移-保险和责任共担">chapter 26 风险转移-保险和责任共担</h3>
+<ul>
+<li>常见的企业风险转移方法：
+<ul>
+<li>签订长期合同；利用金融工具；购买保险。</li>
+</ul></li>
+</ul>
+<h3 id="chapter-27-并购策略-以小博大的智慧">chapter 27 并购策略-以小博大的智慧</h3>
+<ul>
+<li>基本概念：
+<ul>
+<li>私有化：将一家上市公司从公众公司重新 变回 私人公司。</li>
+<li>MBO： 管理层收购，manegement buy-out，指管理层要把公司其流通在市场上的股份全部回购。</li>
+<li>LBO：杠杆收购，lenerage buy-out，企业用很少的自由资金，买下一家体谅比自己大很多的企业</li>
+</ul></li>
+<li>判断一家企业的复制扩张战略是否成功看两个指标：收入集中度，利润集中度</li>
+<li>如何看待企业的并购活动？
+<ul>
+<li>是企业实现规模和也业务扩张常用的一种方式</li>
+<li>并购的效果与起亚的管理能力有关</li>
+<li>杠杆收购的本质是利用财务杠杆以小博大，是一种高风险的资本运作方式</li>
+</ul></li>
+</ul>
+<h3 id="chapter-28-并购隐患-商誉这只灰犀牛">chapter 28 并购隐患-商誉这只灰犀牛</h3>
+<h3 id="chapter-29-减值时机">chapter 29 减值时机</h3>
+<h3 id="chapter-30-分红政策-分红多就是好公司吗">chapter 30 分红政策-分红多就是好公司吗</h3>
+<h2 id="第4章-精进-快速把脉一家上市公司">第4章 精进-快速把脉一家上市公司</h2>
+<ul>
+<li>我觉得这一章是 对所有 公司的 财务状况的 诊断，其中上市公司只是一个特例，并且上市公司暴露了更多的财务数据，也有公众对其未来盈利能力的估值（股价）</li>
+</ul>
+<h3 id="chapter-31-财务诊断-分析框架">chapter 31 财务诊断-分析框架</h3>
+<ul>
+<li>哈佛分析框架包括战略分析，会计分析，财务分析和前景分析。战略分析 和 会计分析都是比较 主观的分析，财务分析 和 前景分析是可以用量化的指标 分析出来的</li>
+<li>战略分析：
+<ul>
+<li>先看外部环境-“经营环境分析”
+<ul>
+<li>宏观环境
+<ul>
+<li>政治，经济，法律，社会文化</li>
+</ul></li>
+<li>行业环境
+<ul>
+<li>行业规模，增长前景，利润空间，变革速度</li>
+<li>增长前景，按照行业跟经济周期的关系可以将行业分类：
+<ul>
+<li>增长型行业：如高科技行业</li>
+<li>防御性行业：</li>
+<li>周期性行业：如大宗原材料行业，房地产行业</li>
+</ul></li>
+<li>利润空间
+<ul>
+<li>行业利润率估值方法-波特五力模型：
+<ul>
+<li>行业内竞争的激烈程度</li>
+<li>行业进入 壁垒的高低</li>
+<li>供应商谈判能力的强弱</li>
+<li>购买方谈判能力的强弱</li>
+<li>替代产品威胁的大小</li>
+</ul></li>
+</ul></li>
+<li>行业变革速度：哪些是核心驱动因素，以及核心因素的变化速度
+<ul>
+<li>一个是客户群体以及消费偏好的变化：例如消费行业</li>
+<li>一个是技术革新的速度：如新能源技术在汽车的应用</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>再看自己-“企业自身战略”
+<ul>
+<li>战略：差异化战略（星巴克），成本领先战略（沃尔玛）</li>
+<li>前者毛利率是后者两倍</li>
+</ul></li>
+</ul></li>
+<li>会计分析：检验财务指标的真实性，是否真实的反应了公司的运营状况，重点关注以下3个维度
+<ul>
+<li>1， 对企业影响最大的<strong>会计政策</strong>是什么？
+<ul>
+<li>高科技企业利润要重点关注对研发支出的处理</li>
+<li>重资产企业利润要重点关注固定资产折旧的处理</li>
+</ul></li>
+<li>2 哪些会计政策发生了变化？
+<ul>
+<li>比如某一年度钢铁公司<strong>突然</strong>调节了固定资产折旧政策--延长折旧时间，来降低档期折旧费用。那么就需要进一步了解是否“操纵利润”的嫌疑。（真实情况是，这个是为了避免退市的垂死挣扎）</li>
+</ul></li>
+<li>3，对标企业（同行，用一行业的其他公司）的会计政策有哪些不一样？
+<ul>
+<li>如果发现一家高科技企业的研发支出资本化比例 明显超过同行，就要进一步分析背后的原因。</li>
+</ul></li>
+</ul></li>
+<li>财务分析：从4个维度 用具体的数值 评价公司现在做的怎么样</li>
+<li>前景分析：预测业绩的可持续性，以及未来的价值</li>
+</ul>
+<h3 id="chapter-32-财务分析-4个维度诊断公司健康">chapter 32 财务分析-4个维度诊断公司健康</h3>
+<ul>
+<li><p>我同可以通过建立一些核心的财务指标考察企业在偿债能力，营运能力，盈利能力，价值创造这4个维度的表现，这个分析方法被称为“比率分析”方法。偿债能力: 关注的是企业家必须守住的底线，其他三个指标考虑的是企业的发展问题。企业发展 要靠“开源节流”，也就是，一方面提升盈利，一方面提升管理效率（营运能力）。</p></li>
+<li><p>偿债能力: 关注的是企业家必须守住的底线</p>
+<ul>
+<li>流动比率 = 流动资产 / 流动负债， 小于1说明有重大问题，a股平均值1.22</li>
+<li>速动比率= （流动资产 - 存货） /流动负债，a股平均值0.5
+<ul>
+<li>速冻比率 相对流动比率，剔除了资产中 变现能力 最差的 存货</li>
+</ul></li>
+<li>现金比率 = 货币资金 / 流动负债，a股平均值0.31
+<ul>
+<li>现金比率相对速动比率剔除 了 应收帐款</li>
+<li>这个比率不能过高，过高了虽然风险预防能力是具备了，但是也说明资金使用效率低了。</li>
+</ul></li>
+</ul></li>
+<li><p>营运能力</p>
+<ul>
+<li>周转率：
+<ul>
+<li>主要反应管理效率，</li>
+</ul></li>
+</ul></li>
+<li><p>盈利能力</p></li>
+<li><p>价值创造能力：市盈率 和 市净率 - ### chapter 33 财报工具-竖着比和横着比</p></li>
+<li><p>竖着比就是跟自己往年业绩比</p></li>
+<li><p>横着比就是跟同行业的竞争公司比</p></li>
+</ul>
+<h3 id="chapter-34-财务实战-哈佛分析框架的应用">chapter 34 财务实战-哈佛分析框架的应用</h3>
+<ul>
+<li>【chiechie】作业1-使用哈佛分析框架分析下腾讯</li>
+<li>【chiechie】作业2-使用哈佛分析框架分析下现在在做的项目</li>
+</ul>
 
       
     </div>
@@ -403,7 +564,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/88/">88</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/89/">89</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -469,7 +630,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">176</span>
+          <span class="site-state-item-count">178</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -482,7 +643,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">197</span>
+        <span class="site-state-item-count">200</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

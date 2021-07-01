@@ -6,9 +6,9 @@ date: 2021-03-16 23:46:13
 tags:
 - 编程
 - 数据结构
-- leet code
+- leetcode
 categories: 
-- 实践
+- 数据结构
 ---
 
 ## 求两个字符串的非连续的最大的公共子串

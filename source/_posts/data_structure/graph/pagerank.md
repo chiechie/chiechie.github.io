@@ -5,6 +5,7 @@ mathjax: true
 date: 2021-05-22 18:07:11
 tags: 
 - 图算法
+- 图
 - 拓扑数据
 categories: 
 - 数据结构

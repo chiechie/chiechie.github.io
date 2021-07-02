@@ -12,6 +12,20 @@ categories:
 - 数据结构
 ---
 
+## 总结
+
+1. 图不仅仅通过边存储静态的信息，还能基于边，inference更多的信息。
+
+## 真实世界中的网络
+
+1. 计算机网络：互联网
+2. 交通网络（铁路网，公路网）
+3. 金融网络
+4. 下水道网络
+5. 政治网络
+6. 犯罪网络
+
+
 ## 图的定义
 
 传统的空间都是定义在欧几里得空间（Euclidean Space）的，在该空间定义的距离被称为欧式距离。
@@ -21,7 +35,7 @@ categories:
 每一个图都有对应的4个矩阵：incidence matrix,A/degree matrix/adjacency matrix/拉普拉斯矩阵（laplacian matrix， L）
 
 incidence matrix:$A \ in R^{m *n}$, m 是边的个数，n是节点的个数
-每一行代表一条边的起点和终点
+每一行代表一条边的起点（也叫parent）和终点（也叫children）
 
 ![img_2.png](img_2.png)
 
@@ -83,9 +97,6 @@ laplace方程也叫微分方程，其微分形式 跟一个网格图的laplacian
 
 
 
-
-
-
 3. 实对称矩阵,有n个线性无关的特征向量;
 2. 其特征向量可以进行正交单位化;
 3. 所有的特征值非负;
@@ -96,6 +107,16 @@ $$L=U\left(\begin{array}{ccc}\lambda_{1} & & \\ & \ddots & \\ & & \lambda_{n}\en
 $$L^{s y s}=D^{-1 / 2} L D^{-1 / 2}=I-D^{-1 / 2} A D^{-1 / 2}$$
 
 ## 图的算法
+
+基于这个网络，可以做一些什么分析呢？聚类分析，
+
+即，找到一些cluster，内部的距离很小，之间的距离很大，这个可以抽象成求最大割或者最小流问题
+通常还有一些其他的基于图的问题：
+
+比如，给定一个图，任意两个元素之间是否存在一个link？如果存在，最快捷的路径是什么？
+
+还有一个经典的问题--'图分割'（graph partition）
+
 
 ###  S-T Cut 
 
@@ -127,3 +148,4 @@ S-T cut的容量，就是链接S,C的变（图中红色的边）的权重求和�
 ## 参考
 
 1. https://zhuanlan.zhihu.com/p/84271169
+2. [Graph-theoretic Models](https://www.youtube.com/watch?v=V_TulH374hw)

@@ -12,13 +12,16 @@ categories:
 ---
 
 
+## 总结 
+
 1. 数据结构分为线性和非线性
 2. 线性包括数组列表栈队列
    
     ![线性数据结构](b3728c27302a8548fe9e8a87e619ca83.png)
    
-3. 非线性包括树和图,树可以认为是图的special case
+3. 非线性包括树和图,树可以认为是有向图的special case
     ![非线性数据结构](e6d5a8d9a75587abe612dfef9abffc01.png)
+   
 4. 图分有向图和无向图
    
     ![有向图vs无向图](18c651092d22c7204021d10a5a79b0ff.png)
@@ -37,9 +40,11 @@ categories:
 8. 图还可以分有权图和无权图，无权图可认为是权图的special case，权重都为1。
 9. 有权图的一个实例是高速公路网,边代表距离
     ![公路网](5b81b50b2d2b048ed3188b71af85a02f.png)
-   
+10. 树的一个实例是家谱，树种，任意一对节点，有且只有一条通路（不存在loop嘛）
+11. 因果图是一个有向有权图。
 
 
 ## 参考
 
 1. [youtube](https://www.youtube.com/watch?v=gXgEDyodOJU)
+2. [Graph-theoretic Models](https://www.youtube.com/watch?v=V_TulH374hw)

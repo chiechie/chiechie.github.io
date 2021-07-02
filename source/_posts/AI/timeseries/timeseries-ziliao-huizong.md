@@ -7,7 +7,7 @@ tags:
 - 时间序列
 - 人工智能
 categories:
-- 技术
+- AI
 ---
 
 # 算法

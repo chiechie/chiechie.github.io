@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-07-01T11:56:15.297Z</updated>
+  <updated>2021-07-02T09:33:10.759Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -15,6 +15,41 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>图的最大流和最小割算法</title>
+    <link href="https://chiechie.github.io/2021/07/02/data_structure/graph/min-cut/"/>
+    <id>https://chiechie.github.io/2021/07/02/data_structure/graph/min-cut/</id>
+    <published>2021-07-02T00:48:14.000Z</published>
+    <updated>2021-07-02T09:33:10.759Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="最大流">最大流</h2><h3 id="最大流问题">最大流问题</h3><h3 id="最大流算法">最大流算法</h3><h2 id="最小割">最小割</h2><h3 id="最小割问题">最小割问题</h3><p>最小割要解决的问题和最大流是一样的</p><p>输入：方向有权图 目标：割的容量最小 输出：某个S-T cut，</p><blockquote><p>最大流最小割定理（Max-Flow Min-Cut Theorem）</p><p>在一个网络流量中，从s到t的最大流量等于，最小s-t cut的容量。</p><p>--L. R. Ford and D. R. Fulkerson. Flows in Networks. Princeton University Press, (1962 .)</p></blockquote><p><img src="img_1.png" /></p><h3 id="寻找最小割的方法">寻找最小割的方法</h3><ol type="1"><li>使用最大流算法获得residual graph， 移走其中反向的边</li><li>在residual graph中，从起点s出发，找到所有能达到的节点，并记为集合S，把其他所有节点记做T（s到不了的节点）。</li><li>将{S, T}记做最小割。</li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=Ev_lFSIzNh4&amp;t=128s">图的最小割算法-youtube</a></li><li><a href="https://github.com/wangshusen/AdvancedAlgorithms">图的最小割算法-slide</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;最大流&quot;&gt;最大流&lt;/h2&gt;
+&lt;h3 id=&quot;最大流问题&quot;&gt;最大流问题&lt;/h3&gt;
+&lt;h3 id=&quot;最大流算法&quot;&gt;最大流算法&lt;/h3&gt;
+&lt;h2 id=&quot;最小割&quot;&gt;最小割&lt;/h2&gt;
+&lt;h3 id=&quot;最小割问题&quot;&gt;最小割问题&lt;/h3&gt;
+&lt;p&gt;最小割要解决的问题和最大流是一</summary>
+      
+    
+    
+    
+    <category term="数据结构" scheme="https://chiechie.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    
+    <category term="数据结构" scheme="https://chiechie.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    <category term="图算法" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="图" scheme="https://chiechie.github.io/tags/%E5%9B%BE/"/>
+    
+    <category term="最小割" scheme="https://chiechie.github.io/tags/%E6%9C%80%E5%B0%8F%E5%89%B2/"/>
+    
+  </entry>
   
   <entry>
     <title>基于Ray的融合计算框架</title>
@@ -43,13 +78,13 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="计算机原理" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    <category term="大数据" scheme="https://chiechie.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
     <category term="读书笔记" scheme="https://chiechie.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
-    <category term="分布式计算" scheme="https://chiechie.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/"/>
+    <category term="计算机原理" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
     
-    <category term="大数据" scheme="https://chiechie.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    <category term="分布式计算" scheme="https://chiechie.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/"/>
     
   </entry>
   
@@ -110,22 +145,21 @@
   </entry>
   
   <entry>
-    <title>进程和线程和协程</title>
+    <title>进程,线程和协程</title>
     <link href="https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/"/>
     <id>https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/</id>
     <published>2021-06-27T04:16:07.000Z</published>
-    <updated>2021-07-01T14:02:22.835Z</updated>
+    <updated>2021-07-02T00:47:36.273Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="基本定义">基本定义</h2><h3 id="进程process">进程（process）</h3><p>我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。</p><p>编译器将它翻译成二进制代码--机器的语言。</p><p>但是此时不执行这段断码的话，就还是一段静态程序。</p><p>当执行起来的时候，就变成了一个进程。</p><p>进程（process）有时候也称做任务，是指一个程序运行的实例。</p><h4 id="进程的3种状态">进程的3种状态</h4><p>从程序员的角度，我们可以认为进程总是处于下面三种状态之一：</p><ul><li><p>运行。进程要么在CPU上执行，要么在等待被执行且最终会被内核调度</p></li><li><p>停止。进程的执行被挂起（suspend），且不会被调度。当收到SIGSTOP、SIGTSTP、SIDTTIN或者SIGTTOU信号时，进程就停止，并且保持停止直到它收到一个SIGCONT信号，在这个时候，进程再次开始运行（信号是一种软件中断的形式，将在后文描述）</p></li><li><p>终止。进程永远的停止了。进程会因为三种原因终止:</p><ol type="1"><li>收到一个信号，该信号的默认行为是终止进程；</li><li>从主程序返回；</li><li>调用exit函数。</li></ol></li></ul><h4 id="创建子进程">创建子进程</h4><ol type="1"><li>子进程得到与父进程用户级虚拟地址空间相同的（但是独立的）一份拷贝，包括文本、数据和bss段、堆以及用户栈。</li><li>子进程还获得与父进程任何打开文件描述符相同的拷贝。</li><li>父进程和新创建的子进程之间最大的区别在于它们有不同PID。</li><li>fork函数调用一次，返回两次，父进程中，fork返回子进程的PID，子进程中fork返回0。</li></ol><h4 id="进程的地址空间">进程的地址空间</h4><p>我们一般都知道，每个程序都能看到一片完整连续的地址空间，这些空间并没有直接关联到物理内存，而是操作系统提供了内存的一种抽象概念，使得每个进程都有一个连续完整的地址空间，在程序的运行过程，再完成虚拟地址到物理地址的转换。我们同样知道，进程的地址空间是分段的，存在所谓的数据段，代码段，bbs段，堆，栈等等。每个段都有特定的作用，仔细看下面这张图，就对进程地址空间中的划分有了清楚的了解了。</p><ol type="1"><li>从0xc000000000到0xFFFFFFFF共1G的大小是内核地址空间（后面再探讨内核地址空间，先重点关注用户地址空间），余下的低地址3G空间则是用户地址空间。</li><li>Code VMA: 即程序的代码段，CPU执行的机器指令部分。通常，这一段是可以共享的，即多线程共享进程的代码段。并且，此段是只读的，不能修改。</li><li>Data VMA: 即程序的数据段，包含ELF文件在中的data段和bss段。</li><li>堆和栈: 这两个大家都十分熟悉了，new或者malloc分配的空间在堆上，需要程序猿维护，若没有主动释放堆上的空间，进程运行结束后会被释放。栈上的是函数栈临时的变量，还有程序的局部变量，自动释放。</li><li>共享库和mmap内容映射区：位于栈和堆之间，例如程序使用的printf，函数共享库printf.o固定在某个物理内存位置上，让许多进程映射共享。mmap是一个系统函数，可以把磁盘文件的一部分直接映射到内存，这样文件中的位置直接就有对应的内存地址。此处参考后面的第三条。</li><li>命令行参数: 程序的命令行参数</li><li>环境变量：类似于Linux下的PATH，HOME等环境变量，子进程会继承父进程的环境变量。</li></ol><h3 id="线程threads">线程（threads）</h3><p>一个进程中的执行的单位。</p><p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p><h3 id="协程coroutines">协程（CoRoutines）</h3><p>Co：即corperation，Routines即函数。</p><p>协程（CoRoutines）：即用来实现functions 即corperate with each other。</p><figure><img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption></figure><p>不同的编程语言有不同的实现协程的方式，在python和js里面，用的较多的就是yield</p><p>用python实现一个协程</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_coroutine_body</span>(<span class="params">*args</span>):</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># Do some funky stuff</span></span><br><span class="line">        *args = <span class="keyword">yield</span> value_im_returning</span><br><span class="line">        <span class="comment"># Do some more funky stuff</span></span><br><span class="line"></span><br><span class="line">my_coro = make_coroutine(my_coroutine_body)</span><br><span class="line"></span><br><span class="line">x = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">   <span class="comment"># The coroutine does some funky stuff to x, and returns a new value.</span></span><br><span class="line">   x = my_coro(x)</span><br><span class="line">   <span class="built_in">print</span> x</span><br></pre></td></tr></table></figure><h3 id="生成器generator">生成器(generator)</h3><p>A generator is essentially a cut down (asymmetric) coroutine.</p><p>The difference between a coroutine and generator is that a coroutine can accept arguments after it's been initially called, whereas a generator can't.</p><h2 id="应用-vs-线程-vs-进程">应用 vs 线程 vs 进程</h2><p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p><p>进程和线程的区别：</p><p>• 进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉 • 线程（车厢）在进程（火车）下行进 • 一个进程（火车）可以包含多个线程（车厢） • 不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享</p><p>线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行 • 进程要比线程消耗更多的计算机资源 • 进程间不会相互影响，一个线程挂掉将导致整个进程挂掉 • 进程可以拓展到多机，线程最多适合多核 • 进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁" • 进程使用的内存地址可以限定使用量－“信号量”</p><p>进程提供给应用程序关键的抽象： 1. 一个独立的逻辑控制流，它提供一个假象，好像我们的程序独占地使用处理器 2. 一个私有的地址空间，它提供一个假象，好像我们的程序独占地使用存储器系统</p><h2 id="硬件多线程vs软件多线程">硬件多线程vs软件多线程</h2><p>CPU架构演进路线： 多cpu---&gt;超线程--&gt;多core</p><p>https://stackoverflow.com/questions/680684/multi-cpu-multi-core-and-hyper-thread</p><p>其中的超线程（hyper thread）指的硬件多线程，如下图，相当于给一个core，虚拟化为2个core，可以更方便压榨计算机性能</p><h2 id="多进程-or-多线程">多进程 or 多线程？</h2><p>多进程更稳定，但是多线程能达到更高的计算效率</p><figure><img src="img_1.png" alt="左边是单线程，右边是多线程" /><figcaption aria-hidden="true">左边是单线程，右边是多线程</figcaption></figure><p>多线程的优势：</p><ul><li>响应性：比如启动一个网页（启动一个浏览器进程），可以同时并行做个事情，如浏览/下载/问答（并行启动多个线程）。</li><li>资源共享：一个进程上的所有线程共享同一份内存，这样能够让机器的使用效率更高，可以做更多的复杂的事情。---赋能/增效</li><li>更经济： 多进程浪费资源，因为创建1个进程需要分配很多内存和资源，相比之下，创建和切换线程的成本小的多。另外，完成一个复杂的任务，多线程共用一份底层资源，多进程就需要把资源复制几份。又浪费了一遍。--降本</li><li>充分压榨多处理器的架构：</li></ul><blockquote><p>大中台类似多线程，烟囱式开发类似多进程</p></blockquote><h2 id="实践">实践</h2><h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3><p><a href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p><p>需求：实现一个任务管理/编排的机制，即，输入一堆任务，每个任务的计划执行时间/执行时长都有，现在有一台单线程CPU，如何安排这些任务的执行顺序？</p><p>分析： 设想应用场景，医院的排队系统/有一堆任务要排期。</p><p>一遍在执行已有的任务，一边有源源不断的接到新的任务，</p><p>每执行完一个任务，check一下距离上次检查，有多少新任务进来了，加到任务池里面，从里面选出最容易的。</p><p>设计1个数据结构：</p><p>1个是优先队列，存放候选任务，并且按照执行时间长短从小到到排序。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tasks = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">4</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">1</span>]]</span><br><span class="line">n = <span class="built_in">len</span>(tasks)</span><br><span class="line">timestamp = <span class="number">1</span></span><br><span class="line">candidate_list = []</span><br><span class="line">new_task = []</span><br><span class="line">j = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) <span class="keyword">and</span> (tasks[j][<span class="number">0</span>] &lt;= timestamp):</span><br><span class="line">        heapq.heappush(candidate_list, (tasks[j][<span class="number">1</span>], j))</span><br><span class="line">        j+=<span class="number">1</span></span><br><span class="line">        print(j, n)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    process, index = heapq.heappop(candidate_list)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    new_task.append(index)</span><br><span class="line">    timestamp += process</span><br><span class="line">new_task</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/25532384/answer/411179772">biaodianfu-zhihu</a></li><li><a href="https://www.youtube.com/watch?v=usyg5vbni34">thred</a></li><li><a href="https://www.junmajinlong.com/os/multi_cpu/">计算机原理系列-blog</a></li><li><a href="https://www.junmajinlong.com/os/cpu_cache/">关于CPU上的高速缓存</a></li><li><a href="https://www.youtube.com/watch?v=tqay-vzqSN0">What are CoRoutines in Programming?YOUTUBE</a></li><li><a href="https://stackoverflow.com/questions/715758/coroutine-vs-continuation-vs-generator">生成器和协程</a></li><li><a href="https://buptjz.github.io/2014/04/23/processAndThreads">进程、线程及其内存模型</a></li><li>深入理解操作系统</li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="基本定义">基本定义</h2><h3 id="进程process">进程（process）</h3><p>进程（process）有时候也称做任务，是指一个程序运行的实例。</p><p>我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。</p><p>编译器将它翻译成二进制代码--机器的语言。</p><p>但是此时不执行这段断码的话，就还是一段静态程序。</p><p>当执行起来的时候，就变成了一个进程。</p><h4 id="进程的3种状态">进程的3种状态</h4><p>从程序员的角度，可以认为进程总是处于下面三种状态之一：</p><ul><li><p>运行。进程要么在CPU上执行，要么在等待被执行且最终会被内核调度</p></li><li><p>停止。进程的执行被挂起（suspend），且不会被调度。当收到SIGSTOP/SIGTSTP/SIDTTIN/SIGTTOU信号时，进程就停止，直收到SIGCONT信号，这时，进程再次运行</p></li><li><p>终止。进程永远的停止了。进程会因为三种原因终止:</p><ol type="1"><li>收到一个终止进程的信号</li><li>从主程序返回；</li><li>调用exit函数。</li></ol></li></ul><h4 id="创建子进程">创建子进程</h4><ol type="1"><li>子进程得到与父进程用户级虚拟地址空间相同的（但是独立的）一份拷贝，包括文本、数据和bss段、堆以及用户栈。</li><li>子进程还获得与父进程任何打开文件描述符相同的拷贝。</li><li>父进程和新创建的子进程之间最大的区别在于它们有不同PID。</li><li>fork函数调用一次，返回两次，父进程中，fork返回子进程的PID，子进程中fork返回0。</li></ol><h4 id="进程的地址空间">进程的地址空间</h4><ol type="1"><li><p>进程提供给应用程序关键的抽象：</p><ul><li>一个独立的逻辑控制流，它提供一个假象，好像我们的程序独占地使用处理器</li><li>一个私有的地址空间，它提供一个假象，好像我们的程序独占地使用存储器系统</li></ul></li><li><p>每个程序都能看到一片完整连续的地址空间，这些空间并没有直接关联到物理内存，只是操作系统提供的对内存一种抽象，在程序的运行时，会将虚拟地址映射到物理地址。</p></li><li><p>进程的地址空间是分段的，存在所谓的数据段，代码段，bbs段，堆，栈等等。每个段都有特定的作用，下面这张图介绍了进程地址空间中的划分。 <img src="img_3.png" /></p></li><li><p>对于32位的机器来说，虚拟的地址空间大小就是4G，可能实际的物理内存大小才1G到2G，意味着程序可以使用比物理内存更大的空间。</p><ol type="1"><li>从0xc000000000到0xFFFFFFFF共1G的大小是内核地址空间，余下的低地址3G是用户地址空间。</li><li>Code VMA: 即程序的代码段，CPU执行的机器指令部分。通常，这一段是可以共享的，即多线程共享进程的代码段。并且，此段是只读的，不能修改。</li><li>Data VMA: 即程序的数据段，包含ELF文件在中的data段和bss段。</li><li>堆和栈: new或者malloc分配的空间在「堆」上，需要程序猿维护，如果没有主动释放堆上的空间，进程运行结束后会自动释放。「栈」上的是函数栈临时的变量，还有程序的局部变量，自动释放。</li><li>共享库和mmap内容映射区：位于栈和堆之间，例如程序使用的printf，函数共享库printf.o固定在某个物理内存位置上，让许多进程映射共享。mmap是一个系统函数，可以把磁盘文件的一部分直接映射到内存，这样文件中的位置直接就有对应的内存地址。</li><li>命令行参数: 程序的命令行参数</li><li>环境变量：类似于Linux下的PATH，HOME等环境变量，子进程会继承父进程的环境变量。</li></ol></li></ol><h3 id="线程threads">线程（threads）</h3><p>一个进程中的执行的单位。</p><p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p><h3 id="协程coroutines">协程（CoRoutines）</h3><p>Co：即corperation，Routines即函数。</p><p>协程（CoRoutines）：即用来实现functions 即corperate with each other。</p><p><img src="img_2.png" /></p><p>不同的编程语言有不同的实现协程的方式，在python和js里面，用的较多的就是yield</p><p>用python实现一个协程</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_coroutine_body</span>(<span class="params">*args</span>):</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># Do some funky stuff</span></span><br><span class="line">        *args = <span class="keyword">yield</span> value_im_returning</span><br><span class="line">        <span class="comment"># Do some more funky stuff</span></span><br><span class="line"></span><br><span class="line">my_coro = make_coroutine(my_coroutine_body)</span><br><span class="line"></span><br><span class="line">x = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">   <span class="comment"># The coroutine does some funky stuff to x, and returns a new value.</span></span><br><span class="line">   x = my_coro(x)</span><br><span class="line">   <span class="built_in">print</span> x</span><br></pre></td></tr></table></figure><h3 id="生成器generator">生成器(generator)</h3><p>A generator is essentially a cut down (asymmetric) coroutine.</p><p>The difference between a coroutine and generator is that a coroutine can accept arguments after it's been initially called, whereas a generator can't.</p><h2 id="应用-vs-线程-vs-进程">应用 vs 线程 vs 进程</h2><p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p><p>进程和线程的区别：</p><ul><li>进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉</li><li>线程（车厢）在进程（火车）下行进</li><li>一个进程（火车）可以包含多个线程（车厢）</li><li>不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享</li></ul><p>线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行</p><ul><li>进程要比线程消耗更多的计算机资源</li><li>进程间不会相互影响，一个线程挂掉将导致整个进程挂掉</li><li>进程可以拓展到多机，线程最多适合多核</li><li>进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁"</li><li>进程使用的内存地址可以限定使用量－“信号量”</li></ul><h2 id="硬件多线程vs软件多线程">硬件多线程vs软件多线程</h2><p>CPU架构演进路线：</p><p>多cpu---&gt;超线程--&gt;多core</p><p>https://stackoverflow.com/questions/680684/multi-cpu-multi-core-and-hyper-thread</p><p>其中的超线程（hyper thread）指的硬件多线程，如下图，相当于给一个core，虚拟化为2个core，可以更方便压榨计算机性能</p><h2 id="多进程-or-多线程">多进程 or 多线程？</h2><p>多进程更稳定，但是多线程能达到更高的计算效率</p><figure><img src="img_1.png" alt="左边是单线程，右边是多线程" /><figcaption aria-hidden="true">左边是单线程，右边是多线程</figcaption></figure><p>多线程的优势：</p><ul><li>响应性：比如启动一个网页（启动一个浏览器进程），可以同时并行做个事情，如浏览/下载/问答（并行启动多个线程）。</li><li>资源共享：一个进程上的所有线程共享同一份内存，这样能够让机器的使用效率更高，可以做更多的复杂的事情。---赋能/增效</li><li>更经济： 多进程浪费资源，因为创建1个进程需要分配很多内存和资源，相比之下，创建和切换线程的成本小的多。另外，完成一个复杂的任务，多线程共用一份底层资源，多进程就需要把资源复制几份。又浪费了一遍。--降本</li><li>充分压榨多处理器的架构：</li></ul><blockquote><p>大中台类似多线程，烟囱式开发类似多进程</p></blockquote><h2 id="实践">实践</h2><h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3><p><a href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p><p>需求：实现一个任务管理/编排的机制，即，输入一堆任务，每个任务的计划执行时间/执行时长都有，现在有一台单线程CPU，如何安排这些任务的执行顺序？</p><p>分析： 设想应用场景，医院的排队系统/有一堆任务要排期。</p><p>一遍在执行已有的任务，一边有源源不断的接到新的任务，</p><p>每执行完一个任务，check一下距离上次检查，有多少新任务进来了，加到任务池里面，从里面选出最容易的。</p><p>设计1个数据结构：</p><p>1个是优先队列，存放候选任务，并且按照执行时间长短从小到到排序。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tasks = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">4</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">1</span>]]</span><br><span class="line">n = <span class="built_in">len</span>(tasks)</span><br><span class="line">timestamp = <span class="number">1</span></span><br><span class="line">candidate_list = []</span><br><span class="line">new_task = []</span><br><span class="line">j = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) <span class="keyword">and</span> (tasks[j][<span class="number">0</span>] &lt;= timestamp):</span><br><span class="line">        heapq.heappush(candidate_list, (tasks[j][<span class="number">1</span>], j))</span><br><span class="line">        j+=<span class="number">1</span></span><br><span class="line">        print(j, n)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    process, index = heapq.heappop(candidate_list)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    new_task.append(index)</span><br><span class="line">    timestamp += process</span><br><span class="line">new_task</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.zhihu.com/question/25532384/answer/411179772">线程和进程的区别是什么？-zhihu</a></li><li><a href="https://www.youtube.com/watch?v=usyg5vbni34">Threading in Python - Advanced Python 16 - Programming Tutorial-youtube</a></li><li><a href="https://www.junmajinlong.com/os/multi_cpu/">计算机原理系列-blog</a></li><li><a href="https://www.junmajinlong.com/os/cpu_cache/">关于CPU上的高速缓存</a></li><li><a href="https://www.youtube.com/watch?v=tqay-vzqSN0">What are CoRoutines in Programming?YOUTUBE</a></li><li><a href="https://stackoverflow.com/questions/715758/coroutine-vs-continuation-vs-generator">生成器和协程</a></li><li><a href="https://buptjz.github.io/2014/04/23/processAndThreads">进程、线程及其内存模型</a></li><li>深入理解操作系统</li></ol>]]></content>
     
     
       
       
     <summary type="html">&lt;h2 id=&quot;基本定义&quot;&gt;基本定义&lt;/h2&gt;
 &lt;h3 id=&quot;进程process&quot;&gt;进程（process）&lt;/h3&gt;
-&lt;p&gt;我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。&lt;/p&gt;
-&lt;p&gt;编译器将它翻译成二进制代码--机器的语言。&lt;/p&gt;
-</summary>
+&lt;p&gt;进程（process）有时候也称做任务，是指一个程序运行的实例。&lt;/p&gt;
+&lt;p&gt;我们想要计算机要做一项任务（task），我们会写一段代码（python/j</summary>
       
     
     
@@ -180,18 +214,19 @@
     <link href="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/"/>
     <id>https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/</id>
     <published>2021-06-25T01:17:29.000Z</published>
-    <updated>2021-07-01T03:42:01.716Z</updated>
+    <updated>2021-07-02T10:13:29.495Z</updated>
     
-    <content type="html"><![CDATA[<ol type="1"><li><p>数据结构分为线性和非线性</p></li><li><p>线性包括数组列表栈队列</p><figure><img src="b3728c27302a8548fe9e8a87e619ca83.png" alt="线性数据结构" /><figcaption aria-hidden="true">线性数据结构</figcaption></figure></li><li><p>非线性包括树和图,树可以认为是图的special case <img src="e6d5a8d9a75587abe612dfef9abffc01.png" alt="非线性数据结构" /></p></li><li><p>图分有向图和无向图</p><figure><img src="18c651092d22c7204021d10a5a79b0ff.png" alt="有向图vs无向图" /><figcaption aria-hidden="true">有向图vs无向图</figcaption></figure></li><li><p>无向图的一个实例是fb的社交网络，边表示好友关系。</p><figure><img src="f3fc896014d62fb1ec1c96c93210f7ff.png" alt="社交网络" /><figcaption aria-hidden="true">社交网络</figcaption></figure></li><li><p>基于社交网络这个数据结构有什么应用呢？好友推荐, 推荐朋友的朋友,网络社会科学的小世界</p><blockquote><p>小世界网络的重要性质：“流行病学”、“合作”、“知识”</p></blockquote><figure><img src="d5fe57a166d6f2ee93457d0ea4b54cef0.png" alt="社交网路" /><figcaption aria-hidden="true">社交网路</figcaption></figure></li><li><p>有向图的一个实例是万维网,好有一个文章影响因子 <img src="b9b97250ce6e998045dcbb0d5b379724.png" alt="www" /></p></li><li><p>图还可以分有权图和无权图，无权图可认为是权图的special case，权重都为1。</p></li><li><p>有权图的一个实例是高速公路网,边代表距离 <img src="5b81b50b2d2b048ed3188b71af85a02f.png" alt="公路网" /></p></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=gXgEDyodOJU">youtube</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="总结">总结</h2><ol type="1"><li><p>数据结构分为线性和非线性</p></li><li><p>线性包括数组列表栈队列</p><figure><img src="b3728c27302a8548fe9e8a87e619ca83.png" alt="线性数据结构" /><figcaption aria-hidden="true">线性数据结构</figcaption></figure></li><li><p>非线性包括树和图,树可以认为是有向图的special case <img src="e6d5a8d9a75587abe612dfef9abffc01.png" alt="非线性数据结构" /></p></li><li><p>图分有向图和无向图</p><figure><img src="18c651092d22c7204021d10a5a79b0ff.png" alt="有向图vs无向图" /><figcaption aria-hidden="true">有向图vs无向图</figcaption></figure></li><li><p>无向图的一个实例是fb的社交网络，边表示好友关系。</p><figure><img src="f3fc896014d62fb1ec1c96c93210f7ff.png" alt="社交网络" /><figcaption aria-hidden="true">社交网络</figcaption></figure></li><li><p>基于社交网络这个数据结构有什么应用呢？好友推荐, 推荐朋友的朋友,网络社会科学的小世界</p><blockquote><p>小世界网络的重要性质：“流行病学”、“合作”、“知识”</p></blockquote><figure><img src="d5fe57a166d6f2ee93457d0ea4b54cef0.png" alt="社交网路" /><figcaption aria-hidden="true">社交网路</figcaption></figure></li><li><p>有向图的一个实例是万维网,好有一个文章影响因子 <img src="b9b97250ce6e998045dcbb0d5b379724.png" alt="www" /></p></li><li><p>图还可以分有权图和无权图，无权图可认为是权图的special case，权重都为1。</p></li><li><p>有权图的一个实例是高速公路网,边代表距离 <img src="5b81b50b2d2b048ed3188b71af85a02f.png" alt="公路网" /></p></li><li><p>树的一个实例是家谱，树种，任意一对节点，有且只有一条通路（不存在loop嘛）</p></li><li><p>因果图是一个有向有权图。</p></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=gXgEDyodOJU">youtube</a></li><li><a href="https://www.youtube.com/watch?v=V_TulH374hw">Graph-theoretic Models</a></li></ol>]]></content>
     
     
       
       
-    <summary type="html">&lt;ol type=&quot;1&quot;&gt;
+    <summary type="html">&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
 &lt;li&gt;&lt;p&gt;数据结构分为线性和非线性&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;线性包括数组列表栈队列&lt;/p&gt;
 &lt;figure&gt;
-&lt;img src=&quot;b3728c27302a8548fe9e8a87e619ca83.png&quot; alt=&quot;线性数据结构&quot; /&gt;&lt;f</summary>
+&lt;img src=&quot;b3728c27302a8548fe9e8a87e619ca83.pn</summary>
       
     
     
@@ -212,9 +247,9 @@
     <link href="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/"/>
     <id>https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/</id>
     <published>2021-06-23T03:20:42.000Z</published>
-    <updated>2021-07-01T13:52:51.025Z</updated>
+    <updated>2021-07-02T09:24:56.308Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。</p></blockquote><h1 id="目前常用聚类算法">目前常用聚类算法</h1><p>目前常用的聚类算法大概分为三类：</p><ul><li>层次聚类： nearest neigbour</li><li>基于分区的聚类（partitional）：Kmeans系列/FCM/图理论</li><li>密度：</li><li>其他：ACODF</li></ul><figure><img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><h2 id="层次聚类">层次聚类</h2><p>层次聚类算法,又称为树聚类算法,它使用数据的联接规则,透过一种层次架构方式,反复将数据进行分裂或聚合,以形成一个层次序列的聚类问题解.</p><p>本文仅以层次聚类算法中的层次聚合算法为例进行介绍.</p><p>层次聚合算法的时间复杂度为<span class="math inline">\(O(n^2)\)</span>,适合于小数据集的分类.</p><p>该算法由树状结构的底部开始逐层向上进行聚合,假定样本集S={o1,o2,...,on}共有n个样本.</p><ol type="1"><li>初始化：每个样本 <span class="math inline">\(o_i\)</span> 为一个类; 共形成 n 个类:<span class="math inline">\(o_1,o_2,...,o_n\)</span></li><li>找最近的两个类：从现有的所有类中找出距离最近(相似度最大)的两个类 <span class="math inline">\(o_r\)</span> 和 <span class="math inline">\(o_k\)</span> <span class="math display">\[distance(o_r,o_k) = min_{\forall{o_u,o_v \in S,o_u \neq o_v}}distance(o_u,o_v)\]</span></li><li>合并<span class="math inline">\(o_r\)</span>和<span class="math inline">\(o_k\)</span>: 将类<span class="math inline">\(o_r\)</span>和<span class="math inline">\(o_k\)</span>合并成一个新类<span class="math inline">\(o_{rk}\)</span>; 现有的cluster个数减1</li><li>若所有的样本都属于同一个类,则终止本算法;否则,返回步骤2.</li></ol><p>层次聚类最大的优点，它一次性地得到了整个聚类的过程，只要得到了上面那样的聚类树，想要分多少个cluster都可以直接根据树结构来得到结果，改变cluster数目不需要再次计算数据点的归属。</p><p>层次聚类的缺点是计算量比较大，因为要每次都要计算多个cluster内所有数据点的两两距离。</p><p>另外，由于层次聚类使用的是贪心算法，得到的显然只是局域最优，不一定就是全局最优，这可以通过加入随机效应解决，这就是另外的问题了。</p><h2 id="基于graph的聚类">基于Graph的聚类</h2><p>基于Graph的聚类算法，大致思路是，计算样本两两之间的相似度，并设定阈值，高于阈值就右边，低于阈值就无边，以此构造有权无向图，权重即为相似度。</p><h3 id="谱聚类">谱聚类</h3><p>谱聚类的流程是：</p><p>输入：n个样本, 类别k</p><ol type="1"><li>根据样本两两之间的相似度，构建有权无向图，以及邻接矩阵W。</li><li>计算出拉普拉斯矩阵L，对L做谱分解（相当于降维）：计算拉普拉斯矩阵L的最小的k个特征向量u1, u2,...,uk,将这些向量组成n*k维的矩阵U,</li><li>将U中的每一行作为一个样本，共n个样本，使用k-means对这n个样本进行聚类</li></ol><p>得到簇划分C(c1,c2,...ck).</p><h3 id="如何判断两个cluster之间的距离">如何判断两个cluster之间的距离？</h3><p>一开始每个数据点独自作为一个类，它们的距离就是这两个点之间的距离。而对于包含不止一个数据点的cluster，就可以选择多种方法了。最常用的，就是average-linkage，即计算两个cluster各自数据点的两两距离的平均值。类似的还有single-linkage/complete-linkage，选择两个cluster中距离最短/最长的一对数据点的距离作为类的距离。个人经验complete-linkage基本没用，single-linkage通过关注局域连接，可以得到一些形状奇特的cluster，但是因为太过极端，所以效果也不是太好。</p><h2 id="聚类应用">聚类应用</h2><p>从某种意义上说，层次聚类是一个大的框架，而基于图的图像分割是在图像分割上多加了骨头，使他更适用于图像分割的领域，而使用者可以在骨头上继续加肉来达到不同的分割效果。</p><h3 id="日志分析">日志分析</h3><h3 id="图像分割">图像分割</h3><p>图像的分割是图聚类的其中一个应用场景。把图像中的每一个像素点看成是一个item，那么图像分割的任务就是将所有的items进行聚类，属于一个类里面的所有像素就构成了一个区域，最终的分割结构就是若干个区域组成的。由此我们过渡到本文的第二部分，基于图的图像分割算法。</p><p>怎样利用上述的定义，在基于图的表示方法下，做出高效而准确的分割呢？主要流程如下</p><p>输入一个图<span class="math inline">\(G=(V,E)\)</span>，有n个点和m个边。输出是一个分割V，分割成<span class="math inline">\(S=(C_1,...,C_2).\)</span></p><ol type="1"><li><p>对边E进行排序，生成非递减的序列<span class="math inline">\(\pi = (o_1,...,o_m)\)</span></p></li><li><p>从初始分割<span class="math inline">\(S^0\)</span>开始，每一个点<span class="math inline">\(v_i\)</span>自己就是一个区域</p></li><li><p>对于每一个边<span class="math inline">\(q = 1,...,m\)</span>重复步骤3，通过<span class="math inline">\(S^{q-1}\)</span>构建<span class="math inline">\(S^q\)</span>，使用如下的方式</p><ul><li>令<span class="math inline">\(v_i\)</span>和<span class="math inline">\(v_j\)</span>表示按顺序排列的第q条边的两个点，比如<span class="math inline">\(o_q = (v_i,v_j)\)</span>。</li><li>如果<span class="math inline">\(v_i\)</span>和<span class="math inline">\(v_j\)</span>在<span class="math inline">\(S^{q-1}\)</span>中连个不同的区域下，并且<span class="math inline">\(w(o_q)\)</span>比两个区域的内部差异都小，那么合并这连个区域，否则什么也不做。</li><li>用公式来表达就是：<ul><li>令<span class="math inline">\(C_{i}^{q-1}\)是\(S^{q-1}\)</span>的一个区域，它包含点<span class="math inline">\(v_i\)</span>；令<span class="math inline">\(C_{j}^{q-1}\)是\(S^{q-1}\)</span>的一个区域，它包含点<span class="math inline">\(v_j\)</span>。</li><li>如果<span class="math inline">\(C_{i}^{q-1} \neq C_{j}^{q-1}\)</span> 并且<span class="math inline">\(w(o_q) \leq MInt(C_i^{q-1},C_j^{q-1})\)</span>，那么通过合并<span class="math inline">\(C_{i}^{q-1}\)</span>和<span class="math inline">\(C_{j}^{q-1}\)</span>得到了<span class="math inline">\(S^q\)</span>；</li><li>否则的话<span class="math inline">\(S^q = S^{q-1}\)</span>，返回<span class="math inline">\(S = S^m\)</span></li></ul></li></ul></li></ol><p>图像分割结果如下</p><figure><img src="img.png" alt="图像分割" /><figcaption aria-hidden="true">图像分割</figcaption></figure><h1 id="参考">参考</h1><ol type="1"><li><a href="https://patentimages.storage.googleapis.com/34/c0/df/3417293b1602a5/CN105468677A.pdf">一种基于图结构的日志聚类算法</a></li><li><a href="https://zhuanlan.zhihu.com/p/78382376">常用聚类算法综述</a></li><li><a href="https://buptjz.github.io/2014/04/21/cluster">从层次聚类到Graph-based图像分割</a></li><li><a href="http://www.jos.org.cn/1000-9825/19/48.pdf">聚类算法</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。</p></blockquote><h2 id="总结">总结</h2><ol type="1"><li>我们常常对表数据使用kmeans来实现聚类，其实也是分为两步，第一步是是将多维的表数据（维度代表特征），转为2D的相似图（一个节点代表一个样本）。第二步，是对这个图进行聚类。</li><li>kmeans在实际中应用较多，但是并没有理论保证其收敛。 &gt; ...I don't think there is a nice theory of convergence or rate of convergence, But is a very popular algorimth,..., But that's one sort of hack that works quite well--Gilbert Strang</li><li>对一个图，找到其中的一些cluster，kmeans是其中一种方法，还有谱聚类（spectral clustring）。</li><li>除此之外，还可以使用终极大招--使用数值方法去求解优化问题（比如BP，就是alternative methods的一个特例）。</li><li>按照理论严密从高到低，实现聚类的算法可以分为三类：谱聚类，基于运筹优化的聚类，一些直觉类的方法。直觉类的方法包括kmeans，层次聚类</li></ol><h2 id="聚类算法summary">聚类算法summary</h2><p>目前常用的聚类算法大概分为三类：</p><ul><li>层次聚类： nearest neigbour</li><li>基于分区的聚类（partitional）：Kmeans系列/FCM/图理论</li><li>基于密度：DBSCAN</li><li>其他：ACODF</li></ul><figure><img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><h2 id="层次聚类">层次聚类</h2><p>层次聚类算法,又称为树聚类算法,它使用数据的联接规则,透过一种层次架构方式,反复将数据进行分裂或聚合,以形成一个层次序列的聚类问题解.</p><p>本文仅以层次聚类算法中的层次聚合算法为例进行介绍.</p><p>层次聚合算法的时间复杂度为<span class="math inline">\(O(n^2)\)</span>,适合于小数据集的分类.</p><p>该算法由树状结构的底部开始逐层向上进行聚合,假定样本集S={o1,o2,...,on}共有n个样本.</p><ol type="1"><li>初始化：每个样本 <span class="math inline">\(o_i\)</span> 为一个类; 共形成 n 个类:<span class="math inline">\(o_1,o_2,...,o_n\)</span></li><li>找最近的<strong>两个类</strong>：从现有所有类中找出相似度最大的<strong>两个</strong>类<span class="math inline">\(o_r\)</span> 和 <span class="math inline">\(o_k\)</span> <span class="math display">\[distance(o_r,o_k) = min_{\forall{o_u,o_v \in S,o_u \neq o_v}}distance(o_u,o_v)\]</span></li><li>将类<span class="math inline">\(o_r\)</span>和<span class="math inline">\(o_k\)</span>合并成一个新类<span class="math inline">\(o_{rk}\)</span>，现有cluster个数减1</li><li>若所有的样本都属于同一个类,则终止;否则,返回步骤2.</li></ol><p>层次聚类最大的优点，它一次性地得到了整个聚类的过程。如果想要改变cluster个数，不需要重新训练聚类模型，取聚类树的中间某一层就好了。相比之下kmeans是要重新弄训练的。</p><p>层次聚类的缺点是计算量比较大，因为要每次都要计算多个cluster内所有数据点的两两距离，复杂度是O(n^2*d)，d表示聚类树的深度。</p><p>还有一个缺点，超参数比较难设置，跟kmeans一样。最终到底聚成多少类，需人工给定一个distance threshold，这个阈值跟sample有关，跟距离函数的定义也有关，并且聚类结果对这个参数比较敏感。</p><p>btw，如何判断两个cluster之间的距离？</p><ul><li>一开始每个数据点独自作为一个类，它们的距离就是这两个点之间的距离。</li><li>对于包含不止一个数据点的cluster，最常用的方法是average-linkage，即计算两个cluster各自数据点的两两距离的平均值。 其他方法还有single-linkage/complete-linkage，选择两个cluster中距离最短/最长的一对数据点的距离作为类的距离。 个人经验complete-linkage基本没用，single-linkage通过关注局域连接，可以得到一些形状奇特的cluster，但是因为太过极端，所以效果也不是太好。</li></ul><h2 id="基于graph的聚类">基于Graph的聚类</h2><p>基于Graph的聚类算法，大致思路是，计算样本两两之间的相似度，并设定阈值，高于阈值就右边，低于阈值就无边，以此构造有权无向图，权重即为相似度。</p><h3 id="谱聚类">谱聚类</h3><p>什么是spectrum？</p><p>矩阵的spectrum就是矩阵的特征根。 spectral clustring就是使用矩阵的特征根聚类</p><p>回忆一下，其拉普拉斯矩阵定义为 <span class="math inline">\(L=D-A\)</span>.</p><p>怎么根据L来找到目标的clusters（or centriod）？ 对L进行谱分解（特征根分解），并且找到L的fieder向量。</p><p>fieder向量中的元素有正的，也有负的， 正的位置对应的样本分配到cluster1，负元素对应的样本分配到cluster2</p><p>谱聚类的流程是：</p><p>输入：n个样本, 类别k</p><ol type="1"><li>根据样本两两之间的相似度，构建有权无向图，以及邻接矩阵W。</li><li>计算出拉普拉斯矩阵L，对L做谱分解（相当于降维）：计算拉普拉斯矩阵L的最小的k个特征值对应的特征向量u1, u2,...,uk,将这些向量组成n*k维的矩阵U,</li><li>将U中的每一行作为一个样本，共n个样本，使用k-means对这n个样本进行聚类</li></ol><p>得到簇划分C(c1,c2,...ck).</p><h2 id="聚类应用">聚类应用</h2><h3 id="日志分析">日志分析</h3><h3 id="图像分割">图像分割</h3><p>图像的分割是图聚类的其中一个应用场景。</p><p>层次聚类可看成框架，而基于图的图像分割是在层次聚类上加了骨头，使他更适用于图像分割的领域，而使用者可以在骨头上继续加肉来达到不同的分割效果。</p><p>图像中的每一个像素点是一个item，图像分割的任务即对所有items聚类，属于一个cluster的所有像素就构成了一个区域， 最终的分割结构就是若干个区域（即clusters）组成的。由此我们过渡到本文的第二部分，</p><p>基于图的图像分割算法，主要流程如下</p><p>输入一个图<span class="math inline">\(G=(V,E)\)</span>，有n个点和m个边。输出是一个分割V，分割成<span class="math inline">\(S=(C_1,...,C_2).\)</span></p><ol type="1"><li><p>对边E进行排序，生成非递减的序列<span class="math inline">\(\pi = (o_1,...,o_m)\)</span></p></li><li><p>从初始分割<span class="math inline">\(S^0\)</span>开始，每一个点<span class="math inline">\(v_i\)</span>自己就是一个区域</p></li><li><p>对于每一个边<span class="math inline">\(q = 1,...,m\)</span>重复步骤3，通过<span class="math inline">\(S^{q-1}\)</span>构建<span class="math inline">\(S^q\)</span>，使用如下的方式</p><ul><li>令<span class="math inline">\(v_i\)</span>和<span class="math inline">\(v_j\)</span>表示按顺序排列的第q条边的两个点，比如<span class="math inline">\(o_q = (v_i,v_j)\)</span>。</li><li>如果<span class="math inline">\(v_i\)</span>和<span class="math inline">\(v_j\)</span>在<span class="math inline">\(S^{q-1}\)</span>中连个不同的区域下，并且<span class="math inline">\(w(o_q)\)</span>比两个区域的内部差异都小，那么合并这连个区域，否则什么也不做。</li><li>用公式来表达就是：<ul><li>令<span class="math inline">\(C_{i}^{q-1}\)是\(S^{q-1}\)</span>的一个区域，它包含点<span class="math inline">\(v_i\)</span>；令<span class="math inline">\(C_{j}^{q-1}\)是\(S^{q-1}\)</span>的一个区域，它包含点<span class="math inline">\(v_j\)</span>。</li><li>如果<span class="math inline">\(C_{i}^{q-1} \neq C_{j}^{q-1}\)</span> 并且<span class="math inline">\(w(o_q) \leq MInt(C_i^{q-1},C_j^{q-1})\)</span>，那么通过合并<span class="math inline">\(C_{i}^{q-1}\)</span>和<span class="math inline">\(C_{j}^{q-1}\)</span>得到了<span class="math inline">\(S^q\)</span>；</li><li>否则的话<span class="math inline">\(S^q = S^{q-1}\)</span>，返回<span class="math inline">\(S = S^m\)</span></li></ul></li></ul></li></ol><p>图像分割结果如下</p><figure><img src="img1.png" alt="图像分割" /><figcaption aria-hidden="true">图像分割</figcaption></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://patentimages.storage.googleapis.com/34/c0/df/3417293b1602a5/CN105468677A.pdf">一种基于图结构的日志聚类算法</a></li><li><a href="https://zhuanlan.zhihu.com/p/78382376">常用聚类算法综述</a></li><li><a href="https://buptjz.github.io/2014/04/21/cluster">从层次聚类到Graph-based图像分割</a></li><li><a href="http://www.jos.org.cn/1000-9825/19/48.pdf">聚类算法</a></li><li><a href="https://www.youtube.com/watch?v=cxTmmasBiC8">35. Finding Clusters in Graphs-mit-youtube</a></li></ol>]]></content>
     
     
       
@@ -222,10 +257,9 @@
     <summary type="html">&lt;blockquote&gt;
 &lt;p&gt;除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h1 id=&quot;目前常用聚类算法&quot;&gt;目前常用聚类算法&lt;/h1&gt;
-&lt;p&gt;目前常用的聚类算法大概分为三类：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;层次聚类： </summary>
+&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;我们常常对表数据使用kmeans来实现聚类，其实也是分为两步，第一</summary>
       
     
     
@@ -233,7 +267,7 @@
     <category term="数据结构" scheme="https://chiechie.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
     
-    <category term="图" scheme="https://chiechie.github.io/tags/%E5%9B%BE/"/>
+    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
     
     <category term="聚类" scheme="https://chiechie.github.io/tags/%E8%81%9A%E7%B1%BB/"/>
     
@@ -246,19 +280,34 @@
     <link href="https://chiechie.github.io/2021/06/22/data_structure/graph/graph-basic/"/>
     <id>https://chiechie.github.io/2021/06/22/data_structure/graph/graph-basic/</id>
     <published>2021-06-22T03:42:17.000Z</published>
-    <updated>2021-07-01T03:58:45.668Z</updated>
+    <updated>2021-07-02T10:29:07.111Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="图的定义">图的定义</h2><p>传统的空间都是定义在欧几里得空间（Euclidean Space）的，在该空间定义的距离被称为欧式距离。 音频，图像，视频等都是定义在欧式空间下的欧几里得结构化数据，然而对于社交网络等数据，使用欧几里得空间进行定义并不合适，所以将这一类的数据所处的空间称为非欧几里得空间。</p><p>非欧空间下最有代表的结构就是图（Graph）结构， 其定义形式如下： [公式] , [公式] 表示顶点或节点，其中 [公式] 表示Graph中节点的个数。 [公式] 表示Graph中的边。</p><p>下面几个基本概念的定义</p><h3 id="邻接矩阵adjacency-matrix">邻接矩阵（Adjacency matrix）</h3><p>邻接矩阵是一个NxN的矩阵，对于有权图，其值为权重或0，对于无权图，其值为0和1，该矩阵定义如下： <span class="math display">\[A \in R^{N \times N}, A_{i j}=\left\{\begin{array}{ll}a_{i j} \neq 0 &amp; e_{i j} \in E \\ 0 &amp; \text { othersize }\end{array}\right.\]</span></p><h3 id="度矩阵degree-matrix">度矩阵（Degree matrix）</h3><p>度矩阵D是一个对角矩阵，其定义为：</p><p><span class="math display">\[D \in R^{N \times N}, D_{i i}=\sum_{j} A_{i j}\]</span></p><h3 id="邻域neighborhood">邻域（Neighborhood）</h3><p>邻域表示与某个顶点有连接的点集，其定义为：<span class="math display">\[N\left(v_{i}\right)=\left\{v_{j} \mid e_{i j} \in E\right\}\]</span></p><h3 id="谱spectral">谱（Spectral）</h3><p>只有方阵才有谱概念，方阵作为线性算子，其所有特征值的集合称为方阵的谱。方阵的谱半径为其最大的特征值，谱分解就是特征分解。</p><h3 id="拉普拉斯矩阵lapalcian-matrix">拉普拉斯矩阵（Lapalcian matrix）</h3><p>对于无向图，其拉普拉斯矩阵定义为 <span class="math inline">\(L=D-A\)</span>.</p><p>而大多数论文中使用的都是正规拉普拉斯矩阵（Symmetric Normalized Laplacian matrix）: <span class="math display">\[L^{s y s}=D^{-1 / 2} L D^{-1 / 2}=I-D^{-1 / 2} A D^{-1 / 2}\]</span></p><h3 id="谱分解spectral-factorization">谱分解(Spectral Factorization)</h3><p>谱分解又叫特征值分解，实际上就是对n维方阵做特征分解. 只有含有n个线性无关的特征向量的n维方阵才可以进行特征分解.</p><p>拉普拉斯矩阵是半正定矩阵,有如下的几个性质:</p><ol type="1"><li>实对称矩阵,有n个线性无关的特征向量;</li><li>其特征向量可以进行正交单位化;</li><li>所有的特征值非负;</li></ol><p><span class="math display">\[L=U\left(\begin{array}{ccc}\lambda_{1} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; \lambda_{n}\end{array}\right) U^{-1}=U\left(\begin{array}{ccc}\lambda_{1} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; \lambda_{n}\end{array}\right) U^{T}\]</span></p><h2 id="图的算法">图的算法</h2><h3 id="最小割">最小割</h3><p>最小割是指去掉图中的一些边，在使得图从连通图变为不连通图，并且尽可能保证去除的边对应的权重很小。</p><p>对于相似性图来说，最小割就是要去除一些很弱的相似性，把数据点从一个连通的大图切割成多个独立的连通小图。</p><h2 id="参考">参考</h2><ol type="1"><li>https://zhuanlan.zhihu.com/p/84271169</li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="总结">总结</h2><ol type="1"><li>图不仅仅通过边存储静态的信息，还能基于边，inference更多的信息。</li></ol><h2 id="真实世界中的网络">真实世界中的网络</h2><ol type="1"><li>计算机网络：互联网</li><li>交通网络（铁路网，公路网）</li><li>金融网络</li><li>下水道网络</li><li>政治网络</li><li>犯罪网络</li></ol><h2 id="图的定义">图的定义</h2><p>传统的空间都是定义在欧几里得空间（Euclidean Space）的，在该空间定义的距离被称为欧式距离。 音频，图像，视频等都是定义在欧式空间下的欧几里得结构化数据，然而对于社交网络等数据，使用欧几里得空间进行定义并不合适，所以将这一类的数据所处的空间称为非欧几里得空间。</p><p>非欧空间下最有代表的结构就是图（Graph）结构， 每一个图都有对应的4个矩阵：incidence matrix,A/degree matrix/adjacency matrix/拉普拉斯矩阵（laplacian matrix， L）</p><p>incidence matrix:<span class="math inline">\(A \ in R^{m *n}\)</span>, m 是边的个数，n是节点的个数 每一行代表一条边的起点（也叫parent）和终点（也叫children）</p><figure><img src="img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption></figure><h3 id="邻接矩阵adjacency-matrix">邻接矩阵（Adjacency matrix）</h3><p>邻接矩阵是一个NxN的矩阵，对于有权图，其值为权重或0，对于无权图，其值为0和1，该矩阵定义如下： <span class="math display">\[A \in R^{N \times N}, A_{i j}=\left\{\begin{array}{ll}a_{i j} \neq 0 &amp; e_{i j} \in E \\ 0 &amp; \text { othersize }\end{array}\right.\]</span></p><h3 id="度矩阵degree-matrix">度矩阵（Degree matrix）</h3><p>度矩阵D是一个对角矩阵，其定义为：</p><p><span class="math display">\[D \in R^{N \times N}, D_{i i}=\sum_{j} A_{i j}\]</span></p><h3 id="邻域neighborhood">邻域（Neighborhood）</h3><p>邻域表示与某个顶点有连接的点集，其定义为：<span class="math display">\[N\left(v_{i}\right)=\left\{v_{j} \mid e_{i j} \in E\right\}\]</span></p><h3 id="谱spectral">谱（Spectral）</h3><h3 id="拉普拉斯矩阵lapalcian-matrix">拉普拉斯矩阵（Lapalcian matrix）</h3><h4 id="谱分解spectral-factorization">谱分解(Spectral Factorization)</h4><p>什么是spectrum？ 矩阵的spectrum就是矩阵的特征根。 只有方阵才有谱概念，方阵作为线性算子，其所有特征值的集合称为方阵的谱。方阵的谱半径为其最大的特征值，谱分解就是特征分解。</p><p>谱分解(Spectral Factorization)又叫特征值分解，实际上就是对n维方阵做特征分解. 只有含有n个线性无关的特征向量的n维方阵才可以进行特征分解.</p><blockquote><p>spectral定理用公式表达：对于一个对称矩阵S，其特征根<span class="math inline">\(\Lambda\)</span>都是实数, 特征向量都正交<span class="math inline">\(Q\)</span></p><blockquote><p><span class="math display">\[S = Q\LambdaQ^T\]</span></p></blockquote></blockquote><p>graph laplacian 矩阵：connection of 线性代数和图论</p><p>拉普拉斯矩阵（laplacian matrix），<span class="math inline">\(L \ in R^{n *n}\)</span> <span class="math display">\[L = A^T A= D-B\]</span></p><p>degree matrix：<span class="math inline">\(D \ in R^{n*n}\)</span>，代表了每个节点有多少degree adjaceny matrix：<span class="math inline">\(B \ in R^{n*n}\)</span>，代表了任意两个点是否有link</p><p>拉普拉斯矩阵是半正定矩阵,其特征根从小到达排序 1. 第一个特征根为0，<span class="math inline">\(\lambda_1 = 0\)</span>, 即DIM(null space) = 1，对应的特种向量为常熟向量 2. 第二个特征根（最小的正的特征根）叫fiedler， 对应的特征向量叫fiedler vector</p><p>graph的laplacian矩阵和laplace方程（有限差分方法）的关系：</p><p>laplace方程也叫微分方程，其微分形式 跟一个网格图的laplacian矩阵（n*n）就是离散形式。</p><ol start="3" type="1"><li>实对称矩阵,有n个线性无关的特征向量;</li><li>其特征向量可以进行正交单位化;</li><li>所有的特征值非负;</li></ol><p><span class="math display">\[L=U\left(\begin{array}{ccc}\lambda_{1} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; \lambda_{n}\end{array}\right) U^{-1}=U\left(\begin{array}{ccc}\lambda_{1} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; \lambda_{n}\end{array}\right) U^{T}\]</span></p><p>有时，使用的都是正规拉普拉斯矩阵（Symmetric Normalized Laplacian matrix）: <span class="math display">\[L^{s y s}=D^{-1 / 2} L D^{-1 / 2}=I-D^{-1 / 2} A D^{-1 / 2}\]</span></p><h2 id="图的算法">图的算法</h2><p>基于这个网络，可以做一些什么分析呢？聚类分析，</p><p>即，找到一些cluster，内部的距离很小，之间的距离很大，这个可以抽象成求最大割或者最小流问题 通常还有一些其他的基于图的问题：</p><p>比如，给定一个图，任意两个元素之间是否存在一个link？如果存在，最快捷的路径是什么？</p><p>还有一个经典的问题--'图分割'（graph partition）</p><h3 id="s-t-cut">S-T Cut</h3><p>S-T Cut 就是把一个图切成了两个子图，S和T</p><figure><img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><p>S-T cut的容量，就是链接S,C的变（图中红色的边）的权重求和，</p><figure><img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption></figure><h3 id="最小割">最小割</h3><p>最小割（min -cut），就是容量最小的那个S-T cut</p><figure><img src="img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption></figure><p>最小割是指去掉图中的一些边，在使得图从连通图变为不连通图，并且尽可能保证去除的边对应的权重很小。</p><p>最小割可能并不唯一</p><p>对于相似性图来说，最小割就是要去除一些很弱的相似性，把数据点从一个连通的大图切割成多个独立的连通小图。</p><h2 id="参考">参考</h2><ol type="1"><li>https://zhuanlan.zhihu.com/p/84271169</li><li><a href="https://www.youtube.com/watch?v=V_TulH374hw">Graph-theoretic Models</a></li></ol>]]></content>
     
     
       
       
-    <summary type="html">&lt;h2 id=&quot;图的定义&quot;&gt;图的定义&lt;/h2&gt;
-&lt;p&gt;传统的空间都是定义在欧几里得空间（Euclidean Space）的，在该空间定义的距离被称为欧式距离。 音频，图像，视频等都是定义在欧式空间下的欧几里得结构化数据，然而对于社交网络等数据，使用欧几里得空间进行定义并不合适，所</summary>
+    <summary type="html">&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;图不仅仅通过边存储静态的信息，还能基于边，inference更多的信息。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;真实世界中的网络&quot;&gt;真实世界中的网络&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;计算机网</summary>
       
     
     
     
+    <category term="数据结构" scheme="https://chiechie.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    
+    <category term="数据结构" scheme="https://chiechie.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    <category term="图算法" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="图" scheme="https://chiechie.github.io/tags/%E5%9B%BE/"/>
+    
+    <category term="拓扑数据" scheme="https://chiechie.github.io/tags/%E6%8B%93%E6%89%91%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
@@ -555,9 +604,9 @@
     <category term="沉思录" scheme="https://chiechie.github.io/categories/%E6%B2%89%E6%80%9D%E5%BD%95/"/>
     
     
-    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
-    
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
@@ -588,45 +637,6 @@
     <category term="最佳实践" scheme="https://chiechie.github.io/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
     
     <category term="low level" scheme="https://chiechie.github.io/tags/low-level/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>《the book of why》读书笔记-7</title>
-    <link href="https://chiechie.github.io/2021/06/10/reading_notes/the-book-of-why/judea-pearl_the-book-of-why7/"/>
-    <id>https://chiechie.github.io/2021/06/10/reading_notes/the-book-of-why/judea-pearl_the-book-of-why7/</id>
-    <published>2021-06-10T00:33:38.000Z</published>
-    <updated>2021-06-24T07:10:06.042Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>the book of why 的第7章 征服干预之峰</p></blockquote><h2 id="前门规则和后门调整">前门规则和后门调整</h2><ol type="1"><li>do条件概率和条件概率的区别是：当有混杂因子存在时，使用条件概率可能得出假的相关性。</li><li>那么除了随机对照试验，还有什么办法能够排除掉混杂因子带来的影响呢？后门调整和前门标准。后门调整即使用便相关系数代替相关系数，前门调整是，在特殊的因果模型的情况下，使用条件概率代替do算子。 <img src="./img.png" alt="img.png" /></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;the book of why 的第7章 征服干预之峰&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;前门规则和后门调整&quot;&gt;前门规则和后门调整&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;do条件概率和条件概率的区别是：当有混杂因子存在时，</summary>
-      
-    
-    
-    
-    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
-    
-    
-    <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="因果推断" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
-    
-    <category term="因果分析" scheme="https://chiechie.github.io/tags/%E5%9B%A0%E6%9E%9C%E5%88%86%E6%9E%90/"/>
-    
-    <category term="贝叶斯" scheme="https://chiechie.github.io/tags/%E8%B4%9D%E5%8F%B6%E6%96%AF/"/>
-    
-    <category term="根因分析" scheme="https://chiechie.github.io/tags/%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90/"/>
     
   </entry>
   

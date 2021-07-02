@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。  目前常用聚类算法 目前常用的聚类算法大概分为三类：  层次聚类： nearest neigbour 基于分区的聚类（partitional）：Kmeans系列&#x2F;FCM&#x2F;图理论 密度： 其他：ACODF   img.png  层次聚类 层次聚类算法,又称为树聚类算法,它使用数据的联接规则,透过一种层次架构方式,反复将数据进行分">
+  <meta name="description" content="除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。  总结  我们常常对表数据使用kmeans来实现聚类，其实也是分为两步，第一步是是将多维的表数据（维度代表特征），转为2D的相似图（一个节点代表一个样本）。第二步，是对这个图进行聚类。 kmeans在实际中应用较多，但是并没有理论保证其收敛。 &gt; ...I don&#39;t think there is a nice theo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一些聚类算法">
 <meta property="og:url" content="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。  目前常用聚类算法 目前常用的聚类算法大概分为三类：  层次聚类： nearest neigbour 基于分区的聚类（partitional）：Kmeans系列&#x2F;FCM&#x2F;图理论 密度： 其他：ACODF   img.png  层次聚类 层次聚类算法,又称为树聚类算法,它使用数据的联接规则,透过一种层次架构方式,反复将数据进行分">
+<meta property="og:description" content="除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。  总结  我们常常对表数据使用kmeans来实现聚类，其实也是分为两步，第一步是是将多维的表数据（维度代表特征），转为2D的相似图（一个节点代表一个样本）。第二步，是对这个图进行聚类。 kmeans在实际中应用较多，但是并没有理论保证其收敛。 &gt; ...I don&#39;t think there is a nice theo">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/img.png">
-<meta property="og:image" content="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/img1.png">
 <meta property="article:published_time" content="2021-06-23T03:20:42.000Z">
-<meta property="article:modified_time" content="2021-07-01T13:52:51.025Z">
+<meta property="article:modified_time" content="2021-07-02T09:24:56.308Z">
 <meta property="article:author" content="Chiechie">
-<meta property="article:tag" content="图">
+<meta property="article:tag" content="图数据">
 <meta property="article:tag" content="聚类">
 <meta property="article:tag" content="日志聚类">
 <meta name="twitter:card" content="summary">
@@ -203,7 +203,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-01 21:52:51" itemprop="dateModified" datetime="2021-07-01T21:52:51+08:00">2021-07-01</time>
+                <time title="修改时间：2021-07-02 17:24:56" itemprop="dateModified" datetime="2021-07-02T17:24:56+08:00">2021-07-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,12 +236,20 @@
         <blockquote>
 <p>除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。</p>
 </blockquote>
-<h1 id="目前常用聚类算法">目前常用聚类算法</h1>
+<h2 id="总结">总结</h2>
+<ol type="1">
+<li>我们常常对表数据使用kmeans来实现聚类，其实也是分为两步，第一步是是将多维的表数据（维度代表特征），转为2D的相似图（一个节点代表一个样本）。第二步，是对这个图进行聚类。</li>
+<li>kmeans在实际中应用较多，但是并没有理论保证其收敛。 &gt; ...I don't think there is a nice theory of convergence or rate of convergence, But is a very popular algorimth,..., But that's one sort of hack that works quite well--Gilbert Strang</li>
+<li>对一个图，找到其中的一些cluster，kmeans是其中一种方法，还有谱聚类（spectral clustring）。</li>
+<li>除此之外，还可以使用终极大招--使用数值方法去求解优化问题（比如BP，就是alternative methods的一个特例）。</li>
+<li>按照理论严密从高到低，实现聚类的算法可以分为三类：谱聚类，基于运筹优化的聚类，一些直觉类的方法。直觉类的方法包括kmeans，层次聚类</li>
+</ol>
+<h2 id="聚类算法summary">聚类算法summary</h2>
 <p>目前常用的聚类算法大概分为三类：</p>
 <ul>
 <li>层次聚类： nearest neigbour</li>
 <li>基于分区的聚类（partitional）：Kmeans系列/FCM/图理论</li>
-<li>密度：</li>
+<li>基于密度：DBSCAN</li>
 <li>其他：ACODF</li>
 </ul>
 <figure>
@@ -254,32 +262,41 @@
 <p>该算法由树状结构的底部开始逐层向上进行聚合,假定样本集S={o1,o2,...,on}共有n个样本.</p>
 <ol type="1">
 <li>初始化：每个样本 <span class="math inline">\(o_i\)</span> 为一个类; 共形成 n 个类:<span class="math inline">\(o_1,o_2,...,o_n\)</span></li>
-<li>找最近的两个类：从现有的所有类中找出距离最近(相似度最大)的两个类 <span class="math inline">\(o_r\)</span> 和 <span class="math inline">\(o_k\)</span> <span class="math display">\[distance(o_r,o_k) = min_{\forall{o_u,o_v \in S,o_u \neq o_v}}distance(o_u,o_v)\]</span></li>
-<li>合并<span class="math inline">\(o_r\)</span>和<span class="math inline">\(o_k\)</span>: 将类<span class="math inline">\(o_r\)</span>和<span class="math inline">\(o_k\)</span>合并成一个新类<span class="math inline">\(o_{rk}\)</span>; 现有的cluster个数减1</li>
-<li>若所有的样本都属于同一个类,则终止本算法;否则,返回步骤2.</li>
+<li>找最近的<strong>两个类</strong>：从现有所有类中找出相似度最大的<strong>两个</strong>类<span class="math inline">\(o_r\)</span> 和 <span class="math inline">\(o_k\)</span> <span class="math display">\[distance(o_r,o_k) = min_{\forall{o_u,o_v \in S,o_u \neq o_v}}distance(o_u,o_v)\]</span></li>
+<li>将类<span class="math inline">\(o_r\)</span>和<span class="math inline">\(o_k\)</span>合并成一个新类<span class="math inline">\(o_{rk}\)</span>，现有cluster个数减1</li>
+<li>若所有的样本都属于同一个类,则终止;否则,返回步骤2.</li>
 </ol>
-<p>层次聚类最大的优点，它一次性地得到了整个聚类的过程，只要得到了上面那样的聚类树，想要分多少个cluster都可以直接根据树结构来得到结果，改变cluster数目不需要再次计算数据点的归属。</p>
-<p>层次聚类的缺点是计算量比较大，因为要每次都要计算多个cluster内所有数据点的两两距离。</p>
-<p>另外，由于层次聚类使用的是贪心算法，得到的显然只是局域最优，不一定就是全局最优，这可以通过加入随机效应解决，这就是另外的问题了。</p>
+<p>层次聚类最大的优点，它一次性地得到了整个聚类的过程。如果想要改变cluster个数，不需要重新训练聚类模型，取聚类树的中间某一层就好了。相比之下kmeans是要重新弄训练的。</p>
+<p>层次聚类的缺点是计算量比较大，因为要每次都要计算多个cluster内所有数据点的两两距离，复杂度是O(n^2*d)，d表示聚类树的深度。</p>
+<p>还有一个缺点，超参数比较难设置，跟kmeans一样。最终到底聚成多少类，需人工给定一个distance threshold，这个阈值跟sample有关，跟距离函数的定义也有关，并且聚类结果对这个参数比较敏感。</p>
+<p>btw，如何判断两个cluster之间的距离？</p>
+<ul>
+<li>一开始每个数据点独自作为一个类，它们的距离就是这两个点之间的距离。</li>
+<li>对于包含不止一个数据点的cluster，最常用的方法是average-linkage，即计算两个cluster各自数据点的两两距离的平均值。 其他方法还有single-linkage/complete-linkage，选择两个cluster中距离最短/最长的一对数据点的距离作为类的距离。 个人经验complete-linkage基本没用，single-linkage通过关注局域连接，可以得到一些形状奇特的cluster，但是因为太过极端，所以效果也不是太好。</li>
+</ul>
 <h2 id="基于graph的聚类">基于Graph的聚类</h2>
 <p>基于Graph的聚类算法，大致思路是，计算样本两两之间的相似度，并设定阈值，高于阈值就右边，低于阈值就无边，以此构造有权无向图，权重即为相似度。</p>
 <h3 id="谱聚类">谱聚类</h3>
+<p>什么是spectrum？</p>
+<p>矩阵的spectrum就是矩阵的特征根。 spectral clustring就是使用矩阵的特征根聚类</p>
+<p>回忆一下，其拉普拉斯矩阵定义为 <span class="math inline">\(L=D-A\)</span>.</p>
+<p>怎么根据L来找到目标的clusters（or centriod）？ 对L进行谱分解（特征根分解），并且找到L的fieder向量。</p>
+<p>fieder向量中的元素有正的，也有负的， 正的位置对应的样本分配到cluster1，负元素对应的样本分配到cluster2</p>
 <p>谱聚类的流程是：</p>
 <p>输入：n个样本, 类别k</p>
 <ol type="1">
 <li>根据样本两两之间的相似度，构建有权无向图，以及邻接矩阵W。</li>
-<li>计算出拉普拉斯矩阵L，对L做谱分解（相当于降维）：计算拉普拉斯矩阵L的最小的k个特征向量u1, u2,...,uk,将这些向量组成n*k维的矩阵U,</li>
+<li>计算出拉普拉斯矩阵L，对L做谱分解（相当于降维）：计算拉普拉斯矩阵L的最小的k个特征值对应的特征向量u1, u2,...,uk,将这些向量组成n*k维的矩阵U,</li>
 <li>将U中的每一行作为一个样本，共n个样本，使用k-means对这n个样本进行聚类</li>
 </ol>
 <p>得到簇划分C(c1,c2,...ck).</p>
-<h3 id="如何判断两个cluster之间的距离">如何判断两个cluster之间的距离？</h3>
-<p>一开始每个数据点独自作为一个类，它们的距离就是这两个点之间的距离。而对于包含不止一个数据点的cluster，就可以选择多种方法了。最常用的，就是average-linkage，即计算两个cluster各自数据点的两两距离的平均值。类似的还有single-linkage/complete-linkage，选择两个cluster中距离最短/最长的一对数据点的距离作为类的距离。个人经验complete-linkage基本没用，single-linkage通过关注局域连接，可以得到一些形状奇特的cluster，但是因为太过极端，所以效果也不是太好。</p>
 <h2 id="聚类应用">聚类应用</h2>
-<p>从某种意义上说，层次聚类是一个大的框架，而基于图的图像分割是在图像分割上多加了骨头，使他更适用于图像分割的领域，而使用者可以在骨头上继续加肉来达到不同的分割效果。</p>
 <h3 id="日志分析">日志分析</h3>
 <h3 id="图像分割">图像分割</h3>
-<p>图像的分割是图聚类的其中一个应用场景。把图像中的每一个像素点看成是一个item，那么图像分割的任务就是将所有的items进行聚类，属于一个类里面的所有像素就构成了一个区域，最终的分割结构就是若干个区域组成的。由此我们过渡到本文的第二部分，基于图的图像分割算法。</p>
-<p>怎样利用上述的定义，在基于图的表示方法下，做出高效而准确的分割呢？主要流程如下</p>
+<p>图像的分割是图聚类的其中一个应用场景。</p>
+<p>层次聚类可看成框架，而基于图的图像分割是在层次聚类上加了骨头，使他更适用于图像分割的领域，而使用者可以在骨头上继续加肉来达到不同的分割效果。</p>
+<p>图像中的每一个像素点是一个item，图像分割的任务即对所有items聚类，属于一个cluster的所有像素就构成了一个区域， 最终的分割结构就是若干个区域（即clusters）组成的。由此我们过渡到本文的第二部分，</p>
+<p>基于图的图像分割算法，主要流程如下</p>
 <p>输入一个图<span class="math inline">\(G=(V,E)\)</span>，有n个点和m个边。输出是一个分割V，分割成<span class="math inline">\(S=(C_1,...,C_2).\)</span></p>
 <ol type="1">
 <li><p>对边E进行排序，生成非递减的序列<span class="math inline">\(\pi = (o_1,...,o_m)\)</span></p></li>
@@ -298,14 +315,15 @@
 </ol>
 <p>图像分割结果如下</p>
 <figure>
-<img src="img.png" alt="图像分割" /><figcaption aria-hidden="true">图像分割</figcaption>
+<img src="img1.png" alt="图像分割" /><figcaption aria-hidden="true">图像分割</figcaption>
 </figure>
-<h1 id="参考">参考</h1>
+<h2 id="参考">参考</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://patentimages.storage.googleapis.com/34/c0/df/3417293b1602a5/CN105468677A.pdf">一种基于图结构的日志聚类算法</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78382376">常用聚类算法综述</a></li>
 <li><a target="_blank" rel="noopener" href="https://buptjz.github.io/2014/04/21/cluster">从层次聚类到Graph-based图像分割</a></li>
 <li><a target="_blank" rel="noopener" href="http://www.jos.org.cn/1000-9825/19/48.pdf">聚类算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=cxTmmasBiC8">35. Finding Clusters in Graphs-mit-youtube</a></li>
 </ol>
 
     </div>
@@ -316,7 +334,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%9B%BE/" rel="tag"># 图</a>
+              <a href="/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/" rel="tag"># 图数据</a>
               <a href="/tags/%E8%81%9A%E7%B1%BB/" rel="tag"># 聚类</a>
               <a href="/tags/%E6%97%A5%E5%BF%97%E8%81%9A%E7%B1%BB/" rel="tag"># 日志聚类</a>
           </div>
@@ -392,7 +410,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%89%8D%E5%B8%B8%E7%94%A8%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">目前常用聚类算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB"><span class="nav-number">1.1.</span> <span class="nav-text">层次聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Egraph%E7%9A%84%E8%81%9A%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">基于Graph的聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%B1%E8%81%9A%E7%B1%BB"><span class="nav-number">1.2.1.</span> <span class="nav-text">谱聚类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AAcluster%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%9D%E7%A6%BB"><span class="nav-number">1.2.2.</span> <span class="nav-text">如何判断两个cluster之间的距离？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E7%B1%BB%E5%BA%94%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">聚类应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90"><span class="nav-number">1.3.1.</span> <span class="nav-text">日志分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2"><span class="nav-number">1.3.2.</span> <span class="nav-text">图像分割</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95summary"><span class="nav-number">2.</span> <span class="nav-text">聚类算法summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">层次聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Egraph%E7%9A%84%E8%81%9A%E7%B1%BB"><span class="nav-number">4.</span> <span class="nav-text">基于Graph的聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%B1%E8%81%9A%E7%B1%BB"><span class="nav-number">4.1.</span> <span class="nav-text">谱聚类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E7%B1%BB%E5%BA%94%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">聚类应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90"><span class="nav-number">5.1.</span> <span class="nav-text">日志分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2"><span class="nav-number">5.2.</span> <span class="nav-text">图像分割</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -406,7 +424,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">178</span>
+          <span class="site-state-item-count">179</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -419,7 +437,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">200</span>
+        <span class="site-state-item-count">201</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

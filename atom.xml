@@ -52,6 +52,38 @@
   </entry>
   
   <entry>
+    <title>一种日志聚类的方法-LogCluster</title>
+    <link href="https://chiechie.github.io/2021/07/01/AI/AIOps/AIOps-1_5_3-LogCluster-_ms/"/>
+    <id>https://chiechie.github.io/2021/07/01/AI/AIOps/AIOps-1_5_3-LogCluster-_ms/</id>
+    <published>2021-07-01T10:56:03.000Z</published>
+    <updated>2021-07-02T11:01:15.553Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="参考">参考</h2><ol type="1"><li><a href="https://netman.aiops.org/~peidan/ANM2018Fall/6.LogAnomalyDetection/LectureCoverage/2016ICSE_Log%20Clustering%20based%20Problem%20Identification%20for%20Online%20Service%20Systems%20.pdf">Log Clustering based Problem Identification for Online Service Systems- 微软</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;参考&quot;&gt;参考&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;https://netman.aiops.org/~peidan/ANM2018Fall/6.LogAnomalyDetection/LectureCoverage/2016ICSE_L</summary>
+      
+    
+    
+    
+    <category term="AIOps" scheme="https://chiechie.github.io/categories/AIOps/"/>
+    
+    
+    <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
+    
+    <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
+    
+    <category term="日志分析" scheme="https://chiechie.github.io/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/"/>
+    
+    <category term="论文笔记" scheme="https://chiechie.github.io/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>基于Ray的融合计算框架</title>
     <link href="https://chiechie.github.io/2021/06/30/reading_notes/computer/fenbushi/"/>
     <id>https://chiechie.github.io/2021/06/30/reading_notes/computer/fenbushi/</id>
@@ -607,36 +639,6 @@
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深度学习基础1 数据表示和神经网络基础</title>
-    <link href="https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/"/>
-    <id>https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/</id>
-    <published>2021-06-10T08:35:36.000Z</published>
-    <updated>2021-06-24T01:38:53.493Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="数据表示">数据表示</h1><p>在深度学习中如何表示现实中的事物？</p><p>Let’s make data tensors more concrete with a few examples similar to what you’ll encounter later. The data you’ll manipulate will almost always fall into one of the following categories:</p><ul><li>Vector data:2D tensors of shape(samples, features)</li><li>Timeseries data or sequence data:3D tensors of shape (samples, timesteps, features)</li><li>Images:4D tensors of shape(samples,height,width,channels) or (samples,channels, height, width)</li><li>Video:5D tensors of shape (samples, frames, height, width, channels) or (samples, frames, channels, height, width)</li></ul><h2 id="表数据">表数据</h2><ul><li>两个轴：samples axis 和 features axis.</li><li>文本数据, 假设词典长度为2k，每一个doc可以表示为1个2k维的向量，位置的值代表词在文本中出现的次数。</li><li>500个文件可以存储为(500, 20000).</li></ul><h2 id="时间序列数据">时间序列数据</h2><ul><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_vMGBboznU.png?alt=media&amp;token=73c12f97-acdb-4680-b4eb-79a9a07581f9" /></li></ul><p>时间序列数据一般表示成3-d的张亮，tf中使用3d张量存储，(samples, timestamp, features) 每一个sample可以被编码成一个2d张量， 具体的两个例子</p><ol type="1"><li>股票数据：每年有250个交易日，每个交易日的交易时长有390分钟，每个分钟可以抽取3个重要特征：当前价格，上一分钟最高成交价格，上一分钟最低价格<ul><li>以每一天的交易数据为1个样本，构建的样本的shape为(250,390,3)</li></ul></li><li>TWEET数据：一条twitter长度不超过256，每个位置的字符来自128个assical码中的一个。每一条twitter的shape为（256， 128），1 百万 tweets 的shape为(1000000, 280, 128)</li></ol><h2 id="图像数据">图像数据</h2><p>图像数据一般表示成4维tensor，一个图像数据就是一个3d张量</p><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD24ghIvE2L.png?alt=media&amp;token=4a68bc5a-7b95-46d2-8418-deed053d4301" /></p><ul><li>tensorflow： (samples, height, width, color_depth)</li><li>theano：(samples, color_depth, height, width).</li><li>keras两者都支持</li></ul><h2 id="视频数据的表示">视频数据的表示</h2><p>视频数据表示成5维张量：(samples, frames, height, width, color_depth).</p><h1 id="模型超参">模型超参</h1><h2 id="结构超参数">结构超参数</h2><p>结构超参数包括层数、层的类别、层的大小等数值。以一个卷积层为例，其中的超参数包括卷积核 (filter) 的大小，卷积核的数量，步长 (stride) 的大小，unit：单元，hidden_layers: 隐藏层，cell：单元 ，dropout_rate丢弃率。这些超参数决定了神经网络的结构。</p><h3 id="layers的基本类型">layers的基本类型</h3><p>keras中layer的基本类型：</p><ul><li>卷积(Conv1D)</li><li>池化(MaxPooling1D/GlobalAveragePooling1D)</li><li>dropout(Dropout)</li><li>线性全连接层(Dense)</li><li>high-level层(LSTM)</li></ul><h3 id="卷积层">卷积层</h3><ol type="1"><li>卷积的维度有1Ｄ，2Ｄ，3D, 区别在于?</li></ol><p>输入数据的shape以及卷积核如何滑动</p><ul><li><img src="https://miro.medium.com/max/1621/1*aBN2Ir7y2E-t2AbekOtEIw.png" title="fig:" alt="I１维卷积和２维卷积的区别" /></li><li>1维卷积（Conv1D）：只有1个维度可以滑动，但是另一维度也是有待估参数的</li><li>2维卷积（Conv2D）：有两个维度可以滑动，</li><li>相同点：从参数视角都是2维的，每一个卷积kernel，参数个数是 height × width +１　（off_ set）</li></ul><ol start="2" type="1"><li>什么情况下，1d比2d好用呢？其中2个维度上，做卷积没有意义(high,close,open,close)</li></ol><h3 id="关于dropout">关于dropout</h3><p>keras中对dropout的处理，因为训练阶段需要dropout ，但是inference阶段不需要dropout，keras中如何设置？</p><p>Keras does this by default. In Keras dropout is disabled in test mode. You can look at the code<a href="https://github.com/keras-team/keras/blob/dc95ceca57cbfada596a10a72f0cb30e1f2ed53b/keras/layers/core.py#L109">here</a> and see that they use the dropped input in training and the actual input while testing.</p><p>As far as I know you have to build your own training function from the layers and specify the training flag to predict with dropout (e.g. its not possible to specify a training flag for the predict functions). This is a problem in case you want to do GANs, which use the intermediate output for training and also train the network as a whole, due to a divergence between generated training images and generated test images.</p><h2 id="算法超参数">算法超参数</h2><p>算法超参数包括学习率 (learning rate),批量大小 (batch size)、epoch数量(迭代周期个数)、正则，损失，激活函数等。由于神经网络的非凸性，用不同的算法超参数会得到不同的解。</p><h3 id="归一化">归一化</h3><p>归一化层，目前主要有这几个方法：</p><ul><li>Batch Normalization（BN， 2015年）</li><li>Layer Normalization（LN， 2016年）</li><li>Instance Normalization（IN， 2017年）</li><li>Group Normalization（GN， 2018年）</li><li>Switchable Normalization（SN， 2018年）；</li></ul><figure><img src="img_1.png" alt="几种归一化方法g" /><figcaption aria-hidden="true">几种归一化方法g</figcaption></figure><h4 id="问题1-transformer-为什么要使用ln而不是-bn">问题1 transformer 为什么要使用LN而不是 BN？</h4><p>在<a href="https://arxiv.org/pdf/2003.07845.pdf">paper: Rethinking Batch Normalization in Transformers</a>中, 作者对比了cv和nlp的BN, 得出的结论是在nlp数据上基于batch的统计信息不稳定性过大(相比cv的数据)，导致bn在nlp上效果差。相比之下layer norm能够带来更稳定的统计信息，有利于模型学习</p><p>Batch Normalization主要的问题是计算归一化统计量时计算的样本数太少，在RNN等动态模型中不能很好的反映全局统计分布信息，而Layer Normalization根据样本的特征数做归一化，是batch size无关的，只取决于隐层节点的数量，较多的隐层节点数量能保证Layer Normalization归一化统计分布信息的代表性。</p><h4 id="问题2.-in直观上怎么理解">问题2. IN直观上怎么理解？</h4><p>在计算机视觉中，IN本质上是一种Style Normalization，它的作用相当于把不同的图片统一成一种风格。另外，既然IN和BN都会统一图片的风格，那么在Generator里加IN或BN应该是不利于生成风格多样的图片的，论文中也进行了展示：</p><p><img src="https://pic2.zhimg.com/v2-235433127838fca762ebd10511de9ca7_b.jpg" /></p><p>图e是在generator中加了BN的结果，图f是在generator中加了IN的结果。果然崩了，IN崩得尤其厉害。</p><h3 id="激活函数">激活函数</h3><ul><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4_fjPJ90ir.png?alt=media&amp;token=9fb9e321-aed2-4c7b-bb6b-4762b7a38c81" /></li><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FADUH_mebAQ.png?alt=media&amp;token=65efc150-0f7b-42f9-8657-1ca131bfd8b5" /></li><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&amp;token=55bc24ce-0531-4702-8d3d-394595bd4d6e" /></li><li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&amp;token=d7421445-afca-439e-85be-8631db133a41" /></li><li>https://missinglink.ai/guides/neural-network-concepts/7-types-neural-network-activation-functions-right/</li></ul><h3 id="损失函数">损失函数</h3><p>tensorflow中的损失函数:</p><ul><li>sparse_categorical_crossentropy: target是interger list，形状n*1；</li><li>categorical_crossentropy: target 是one-hot vector，target的shape跟模型输出一致，是n*k(类)。<ul><li><span class="math display">\[C E(x)=-\sum\limits_{i=1}^{C} y_{i} \log f_{i}(x)\]</span></li></ul></li><li>binary_crossentropy: target 是interger list。 <span class="math display">\[B C E(x)_{i}=-\left[y_{i} \log f_{i}(x)+\left(1-y_{i}\right) \log \left(1-f_{i}(x)\right)\right]\]</span></li><li>如果输出标签维度为1，只能使用binary_crossentropy，否则程序会报错。不能直接使用categorical_crossentropy 或者sparse_categorical_crossentropy</li><li>如果输出标签维度为K：使用categorical_crossentropy 或者sparse_categorical_crossentropy</li><li>单标签多分类（multi-class）：softmax + CE</li><li>二分类：sigmoid + BCE</li><li>多标签多分类（multi-label）的情况：sigmoid + BCE</li><li>最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</li></ul><h4 id="优化算法">优化算法</h4><h1 id="参考资料">参考资料</h1><ol type="1"><li><a href="https://arxiv.org/pdf/1502.03167.pdf">Batch Normalization</a></li><li><a href="https://arxiv.org/pdf/1607.06450v1.pdf">Layer Normalizaiton</a></li><li><a href="https://arxiv.org/pdf/1607.08022.pdf">Instance Normalization</a></li><li><a href="https://github.com/DmitryUlyanov/texture_nets">code</a></li><li><a href="https://arxiv.org/pdf/1803.08494.pdf">Group Normalization</a></li><li><a href="https://arxiv.org/pdf/1806.10779.pdf">Switchable Normalization</a></li><li><a href="https://github.com/switchablenorms/Switchable-Normalization">code</a></li><li><a href="https://blog.csdn.net/liuxiao214/article/details/81037416">有公式推导，写的很棒</a></li><li><a href="https://www.jianshu.com/p/05de1f989790">用书比喻图像很好理解</a></li><li><a href="https://zhuanlan.zhihu.com/p/61248211">Conditional Batch Normalization 详解</a></li><li><a href="https://zhuanlan.zhihu.com/p/57875010">从Style的角度理解Instance Normalization</a></li><li><a href="https://blog.goodaudience.com/introduction-to-1d-convolutional-neural-networks-in-keras-for-time-sequences-3a7ff801a2cf">在时序数据上应用conv1D</a></li><li>https://zhuanlan.zhihu.com/p/57875010</li><li>https://stackoverflow.com/questions/47787011/how-to-disable-dropout-while-prediction-in-keras</li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;数据表示&quot;&gt;数据表示&lt;/h1&gt;
-&lt;p&gt;在深度学习中如何表示现实中的事物？&lt;/p&gt;
-&lt;p&gt;Let’s make data tensors more concrete with a few examples similar to what you’ll encount</summary>
-      
-    
-    
-    
-    <category term="AI" scheme="https://chiechie.github.io/categories/AI/"/>
-    
-    
-    <category term="深度学习" scheme="https://chiechie.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="最佳实践" scheme="https://chiechie.github.io/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
-    
-    <category term="low level" scheme="https://chiechie.github.io/tags/low-level/"/>
     
   </entry>
   

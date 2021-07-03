@@ -8,7 +8,7 @@ tags:
 - 聚类
 - 日志聚类
 categories:
-- 数据结构
+- AI
 ---
 
 

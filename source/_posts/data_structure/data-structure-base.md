@@ -11,14 +11,18 @@ categories:
 - 数据结构
 ---
 
+> 数据结构是在计算机中存储数据的方法，使数据能更有效地使用。
+> 
+> 一般情况下，精心挑选的数据结构能产生有效的算法。在选择数据结构前必须选择一种抽象数据类型。
+
 
 ## 总结 
+
 
 1. 数据结构分为线性和非线性
 2. 线性包括数组（array），链表（linked list），栈（stack），队列（queue）
    
     ![线性数据结构](b3728c27302a8548fe9e8a87e619ca83.png)
-   
 3. 非线性数据结构包括树和图,树可以认为是有向图的special case
     ![非线性数据结构](e6d5a8d9a75587abe612dfef9abffc01.png)
    
@@ -44,7 +48,23 @@ categories:
 11. 因果图是一个有向有权图。
 
 
+## 附录
+
+### 抽象数据类型和数据结构
+
+1. ADT is a logical description and data structure is concrete. 
+2. ADT is the logical picture of the data and the operations to manipulate the component elements of the data. 
+3. Data structure is the actual representation of the data during the implementation and the algorithms to manipulate the data elements. 
+4. ADT is in the logical level and data structure is in the implementation level.
+
+
+
+### 列表和链表
+
+1. 列表（list）或序列（sequence）是一种抽象数据类型(ADT), 链表是一种数据结构。
+
 ## 参考
 
 1. [youtube](https://www.youtube.com/watch?v=gXgEDyodOJU)
 2. [Graph-theoretic Models](https://www.youtube.com/watch?v=V_TulH374hw)
+3. [](https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure)

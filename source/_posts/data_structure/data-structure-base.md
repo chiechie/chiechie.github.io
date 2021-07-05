@@ -19,7 +19,7 @@ categories:
    
     ![线性数据结构](b3728c27302a8548fe9e8a87e619ca83.png)
    
-3. 非线性包括树和图,树可以认为是有向图的special case
+3. 非线性数据结构包括树和图,树可以认为是有向图的special case
     ![非线性数据结构](e6d5a8d9a75587abe612dfef9abffc01.png)
    
 4. 图分有向图和无向图

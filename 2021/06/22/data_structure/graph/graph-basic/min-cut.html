@@ -1,0 +1,33 @@
+<h2 id="最大流">最大流</h2>
+<h3 id="最大流问题">最大流问题</h3>
+<p>在一个网络中，求从起点、source到目标点，经过的最大的流量，每条边的权重等于该管道的最大流量，求整个路径的最大流量。</p>
+<p><img src="img_3.png" /></p>
+<p>残差 = 容量 - 真实流量 <img src="img_4.png" /></p>
+<h3 id="最大流算法">最大流算法</h3>
+<p>最简单的方法，但是未必能找到最大流</p>
+<figure>
+<img src="img_5.png" alt="img_5.png" /><figcaption aria-hidden="true">img_5.png</figcaption>
+</figure>
+<p>通过多次迭代，先找可达路径，计算残差图，移走空闲量=0的边，进入第二次循环。</p>
+<h2 id="最小割">最小割</h2>
+<h3 id="最小割问题">最小割问题</h3>
+<p>最小割要解决的问题和最大流是一样的</p>
+<p>输入：方向有权图 目标：割的容量最小 输出：某个S-T cut，</p>
+<blockquote>
+<p>最大流最小割定理（Max-Flow Min-Cut Theorem）</p>
+<p>在一个网络流量中，从s到t的最大流量等于，最小s-t cut的容量。</p>
+<p>--L. R. Ford and D. R. Fulkerson. Flows in Networks. Princeton University Press, (1962 .)</p>
+</blockquote>
+<p><img src="img_1.png" /></p>
+<h3 id="寻找最小割的方法">寻找最小割的方法</h3>
+<ol type="1">
+<li>使用最大流算法获得residual graph， 移走其中反向的边</li>
+<li>在residual graph中，从起点s出发，找到所有能达到的节点，并记为集合S，把其他所有节点记做T（s到不了的节点）。</li>
+<li>将{S, T}记做最小割。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a href="https://www.youtube.com/watch?v=6DFWUgV5Osc&amp;t=774s">图的最大流和</a></li>
+<li><a href="https://www.youtube.com/watch?v=Ev_lFSIzNh4&amp;t=128s">图的最小割算法-youtube</a></li>
+<li><a href="https://github.com/wangshusen/AdvancedAlgorithms">图的最小割算法-slide</a></li>
+</ol>

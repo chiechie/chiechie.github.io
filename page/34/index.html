@@ -165,6 +165,120 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/19/AI/machine_learning/deeplearning/rnn-1-lstm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/19/AI/machine_learning/deeplearning/rnn-1-lstm/" class="post-title-link" itemprop="url">循环神经网络2-长短期记忆网络（LSTM）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-19 10:48:04" itemprop="dateCreated datePublished" datetime="2021-05-19T10:48:04+08:00">2021-05-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-07 10:19:58" itemprop="dateModified" datetime="2021-06-07T10:19:58+08:00">2021-06-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="总结">总结</h2>
+<ol type="1">
+<li>LSTM是一种RNN模型，是对Simple RNN的一种改进，为了避免长期的梯度消失问题。</li>
+<li>LSTM也可以看成一个带状态的函数，输入当前词的embedding向量（维度为m）和上一个时刻的状态向量（h维）和上一个时刻的记忆单元向量（h维），输出当前时刻的状态向量（h维）和当前时刻的记忆单元向量（h维）。</li>
+<li>LSTM通过引入一个传输带（conveyor belt）来缓解梯度消失的问题。过去的信息通过传输带到达下一个时刻，不会发生很大变化。</li>
+</ol>
+<h2 id="lstm">LSTM</h2>
+<p><img src="./lstm.png" /></p>
+<p>LSTM引入新的内部状态专门进行先行的循环信息传递，同时将非线性加工后的信息给隐藏层的外部状态</p>
+<p>lstm有3个门，分别为输入门，输出门，遗忘门，也是三个权重向量</p>
+<ul>
+<li>输入门：一个权重向量，控制当前时刻的候选状态<span class="math inline">\(\mathbf{C}_{t}\)</span>有多少信息要保留</li>
+<li>输出门：控制当前内部状态<span class="math inline">\(\tilde{\mathbf{c}}_{t}\)</span>有多少信息要输出给外部状态</li>
+<li>遗忘门：一个权重向量表示上一个时刻的内部状态<span class="math inline">\(\mathbf{c}_{t-1}\)</span>需要遗忘多少信息</li>
+</ul>
+<p><img src="./img.png" /></p>
+<p>更新当前记忆 <img src="./img_1.png" /></p>
+<p>更新当前时刻的state</p>
+<p><img src="./img_2.png" /></p>
+<p>lstm的参数个数：</p>
+<p>三个门参数 + 记忆单元参数: (dim(x) + dim(h)) ✖ dim(h) ✖4</p>
+<h2 id="lstm应用-情感判断">LSTM应用-情感判断</h2>
+<p><img src="./img_3.png" /></p>
+<h2 id="cnn-和-rnn视觉对比">cnn 和 rnn视觉对比</h2>
+<p>有两个图还蛮有意思的，</p>
+<figure>
+<img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" alt="cnn" /><figcaption aria-hidden="true">cnn</figcaption>
+</figure>
+<figure>
+<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FoIsH5iVKwV.png?alt=media&amp;token=05e8189e-dd5f-4781-910c-a46bb9fa4eaf" alt="rnn" /><figcaption aria-hidden="true">rnn</figcaption>
+</figure>
+<h2 id="cnn-vs-rnn-vs-attention">cnn vs rnn vs attention</h2>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_n2z_XQqI2.png?alt=media&amp;token=facfccac-e8ac-4895-a84c-7add43cd165a" /></p>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/a-comparison-of-dnn-cnn-and-lstm-using-tf-keras-2191f8c77bbe">a-comparison-of-dnn-cnn-and-lstm-using-tf-keras</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_recurrent-neural-networks/lstm.html">dive into deep learning-lstm</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Cc4ENs6BHQw&amp;list=PLvOO0btloRnuTUGN4XqO85eKPeFSZsEqK&amp;index=3">wangshusen-RNN-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://nndl.github.io/nndl-book.pdf">神经网络与深度学习</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/19/AI/machine_learning/deeplearning/rnn-0-simpleRNN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -265,107 +379,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/18/AI/machine_learning/automl/NAS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/18/AI/machine_learning/automl/NAS/" class="post-title-link" itemprop="url">可微的NAS方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-18 08:32:24" itemprop="dateCreated datePublished" datetime="2021-05-18T08:32:24+08:00">2021-05-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-19 10:55:05" itemprop="dateModified" datetime="2021-05-19T10:55:05+08:00">2021-05-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>NAS是auto-ml的一个子领域，相关的技术有随机搜索，强化学习，基于微分的方法，如DARTS 和 FBNet。</p>
-<p>DARTS 和 FBNet是目前做NAS的the state of arts方法</p>
-<p>下面简单介绍FBNet的思路</p>
-</blockquote>
-<h2 id="fbnet的基本idea">FBNet的基本idea</h2>
-<ol type="1">
-<li><p>定义候选block, eg10个</p></li>
-<li><p>定义神经网络的层数,eg20，神经网络的每一层都是从9个候选block中选一个，搜索空间9^20</p></li>
-<li><p>构建一个很大的神经网络--supernet，每一层由9个候选block并联而成。supernet的待估参数包括9个候选block✖️20层，以及长度为9的权重向量✖️20。</p>
-<blockquote>
-<p>人工调参，可以看成是，指定supernet中的一条路径，然后灌入数据，来估计路径上20个blcock的参数。使用FBNet就不用人为指定其中某条路径，而是这个大网络supernet从训练数据中，学习出9个block✖️20（层）个参数，以及9✖️20（层）个权重。训练完之后，选择每一层权重最大的block并且连成一条路径，就是机器选定的20层的网络结构。</p>
-</blockquote></li>
-<li><p>模型要落地，还要考虑计算效率。具体的做法，事先算好候选block各自的latency(做一次推断平均耗时多久，block的权重随机给，跑多组数据求平均时延），然后将latency信息加入损失函数中，作为错误率之外的另外的一个惩罚项。</p></li>
-</ol>
-<h2 id="chiechies-reflection">chiechie's reflection</h2>
-<p>联想到之前构建的通用异常检测模型，整体流程大概是这样：定义多个检测器，曲线特征，并用一个随机森林去做集成。希望随机森林可以将不同的曲线路由到适合的检测器上去。</p>
-<p>FBNet的思路跟上面的流程有点像，都是数据驱动去选择适配的组件。不同的地方在于，FBNet最终会减枝，即从9✖️20个可能的路径中，裁剪成一条路径。</p>
-<p>FBNet要解决的任务更简单，给一个小任务找到适配的解决方案；通用异常检测更难，要给n个小任务找解决方案，并且用一套复合的解决方案。</p>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=D9m9-CXw_HY">Differentiable Neural Architecture Search-youtube</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/33/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><span class="page-number current">34</span><a class="page-number" href="/page/35/">35</a><span class="space">&hellip;</span><a class="page-number" href="/page/90/">90</a><a class="extend next" rel="next" href="/page/35/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/33/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><span class="page-number current">34</span><a class="page-number" href="/page/35/">35</a><span class="space">&hellip;</span><a class="page-number" href="/page/91/">91</a><a class="extend next" rel="next" href="/page/35/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -431,7 +448,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">180</span>
+          <span class="site-state-item-count">181</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -444,7 +461,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">201</span>
+        <span class="site-state-item-count">202</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

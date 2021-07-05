@@ -16,38 +16,25 @@ categories:
 # Transformer
 
 > 先概括Transformer的主要设计思路；再讲每一步的具体技术细节。
->
-> 只想粗略了解Transformer的设计可以只看 “high-level ideas”这部分。
 
-- Transformer是google2016年在论文《attention is all you need》提出的一个机器翻译模型。
-- Transformer是一个很典型的seq2seq架构。
-- Transformer的亮点在于将attention和self-attention机制完全剥离开之前rnn的结构，只跟dense层组合。
+- Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。
+- Transformer的亮点在于将attention和self-attention完全剥离开之前rnn的结构，只跟dense层组合。
 
 
 ##  High-Level ideas
 
-首先把模型看作一个黑盒。 在机器翻译（eg德译英）任务中，它会将一个句子（例如德文）翻译成一种语言（机器语言），然后再将其翻译成另一种语言（例如英文）。
-
-打开Transformer的黑盒，我们看到一个encoders组件，一个decoders组件，以及它们之间的数据流。
-
-![](./transformer_encoders_decoders.png)
-
-encoders内部stacked encoders(论文堆了六个)，decoders内部也是stacked decoders(论文堆了六个)。
-
-一个encoder或一个decoder叫做一个block。
-
+1. Transformer是一个翻译模型，在机器翻译任务中，eg德译英，输入一个德文句子，输出十一句英文。
+2. Transformer由两部分组成：encoders和decoders组件
+   ![Transformer由两部分组成：encoders和decoders组件](./transformer_encoders_decoders.png)
+3. 其中encoders由6个encoder堆叠而成，decoders由6个decoder堆叠而成。每一个encoder或一个decoder叫做一个block。
+encoders的6个个block，结构相同，但是不共享权重。
 ![](./transformer_encoder_decoder_stack.png)
+4. 对于encoders，每个block包含2层:
+   - self-attention层，参数不共享
+   - ffnn层，参数共享
 
-encoders包含的6个block，结构相同，但是不共享权重。
-
-每个encoder block包含2层:
-
-- self-attention层，参数不共享
-- ffnn层，参数共享
-
-![](./Transformer_encoder.png)
-
-每个decoder block除了这两层，还有一个encoder-decoder attention层，用来关注encoder的输出，作用类似于  [seq2seq models](https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/) 中的attention。
+   ![](./Transformer_encoder.png)
+5. 对于decoders，每个block除了包含self-attention和ffnn，还有一个encoder-decoder attention层，用来关注encoder的输出，作用类似于[seq2seq models](https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/) 中的attention。
 
 ![](./Transformer_decoder.png)
 

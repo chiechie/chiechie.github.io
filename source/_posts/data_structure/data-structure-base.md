@@ -11,16 +11,16 @@ categories:
 - 数据结构
 ---
 
-> 数据结构是在计算机中存储数据的方法，使数据能更有效地使用。
+> 数据结构是在计算机中存储数据的方法
 > 
-> 一般情况下，精心挑选的数据结构能产生有效的算法。在选择数据结构前必须选择一种抽象数据类型。
+> 一般情况下，精心挑选的数据结构能产生有效的算法
 
 
 ## 总结 
 
 
-1. 数据结构分为线性和非线性
-2. 线性包括数组（array），链表（linked list），栈（stack），队列（queue）
+1. 数据结构分为线性数据结构和非线性数据结构
+2. 线性数据结构包括数组（array），链表（linked list），栈（stack），队列（queue）
    
     ![线性数据结构](b3728c27302a8548fe9e8a87e619ca83.png)
 3. 非线性数据结构包括树和图,树可以认为是有向图的special case
@@ -35,13 +35,11 @@ categories:
 6. 基于社交网络这个数据结构有什么应用呢？好友推荐, 推荐朋友的朋友,网络社会科学的小世界
 
     > 小世界网络的重要性质：“流行病学”、“合作”、“知识”
-
-    ![社交网路](d5fe57a166d6f2ee93457d0ea4b54cef0.png)
-
-7. 有向图的一个实例是万维网,好有一个文章影响因子
+   
+7. 有向图的一个实例是万维网：
     ![www](b9b97250ce6e998045dcbb0d5b379724.png)
 
-8. 图还可以分有权图和无权图，无权图可认为是权图的special case，权重都为1。
+8. 图还可以分有权图和无权图。无权图可认为是权图的special case，权重都为1。
 9. 有权图的一个实例是高速公路网,边代表距离
     ![公路网](5b81b50b2d2b048ed3188b71af85a02f.png)
 10. 树的一个实例是家谱，树种，任意一对节点，有且只有一条通路（不存在loop嘛）
@@ -61,10 +59,11 @@ categories:
 
 ### 列表和链表
 
-1. 列表（list）或序列（sequence）是一种抽象数据类型(ADT), 链表是一种数据结构。
+1. 列表（list）或序列（sequence）是一种抽象数据类型(ADT), 
+2. 链表是一种数据结构。
 
 ## 参考
 
 1. [youtube](https://www.youtube.com/watch?v=gXgEDyodOJU)
 2. [Graph-theoretic Models](https://www.youtube.com/watch?v=V_TulH374hw)
-3. [](https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure)
+3. [the difference-between-ADT和DS](https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure)

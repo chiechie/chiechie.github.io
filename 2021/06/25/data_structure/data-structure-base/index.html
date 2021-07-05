@@ -20,22 +20,21 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="总结  数据结构分为线性和非线性 线性包括数组列表栈队列  线性数据结构  非线性包括树和图,树可以认为是有向图的special case  图分有向图和无向图  有向图vs无向图  无向图的一个实例是fb的社交网络，边表示好友关系。  社交网络  基于社交网络这个数据结构有什么应用呢？好友推荐, 推荐朋友的朋友,网络社会科学的小世界  小世界网络的重要性质：“流行病学”、“合作”、“知识”">
+  <meta name="description" content="数据结构是在计算机中存储数据的方法 一般情况下，精心挑选的数据结构能产生有效的算法  总结  数据结构分为线性数据结构和非线性数据结构 线性数据结构包括数组（array），链表（linked list），栈（stack），队列（queue）  线性数据结构  非线性数据结构包括树和图,树可以认为是有向图的special case  图分有向图和无向图  有向图vs无向图  无向图的一个实例是fb">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构基础">
 <meta property="og:url" content="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="总结  数据结构分为线性和非线性 线性包括数组列表栈队列  线性数据结构  非线性包括树和图,树可以认为是有向图的special case  图分有向图和无向图  有向图vs无向图  无向图的一个实例是fb的社交网络，边表示好友关系。  社交网络  基于社交网络这个数据结构有什么应用呢？好友推荐, 推荐朋友的朋友,网络社会科学的小世界  小世界网络的重要性质：“流行病学”、“合作”、“知识”">
+<meta property="og:description" content="数据结构是在计算机中存储数据的方法 一般情况下，精心挑选的数据结构能产生有效的算法  总结  数据结构分为线性数据结构和非线性数据结构 线性数据结构包括数组（array），链表（linked list），栈（stack），队列（queue）  线性数据结构  非线性数据结构包括树和图,树可以认为是有向图的special case  图分有向图和无向图  有向图vs无向图  无向图的一个实例是fb">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/b3728c27302a8548fe9e8a87e619ca83.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/e6d5a8d9a75587abe612dfef9abffc01.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/18c651092d22c7204021d10a5a79b0ff.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/f3fc896014d62fb1ec1c96c93210f7ff.png">
-<meta property="og:image" content="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/d5fe57a166d6f2ee93457d0ea4b54cef0.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/b9b97250ce6e998045dcbb0d5b379724.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/5b81b50b2d2b048ed3188b71af85a02f.png">
 <meta property="article:published_time" content="2021-06-25T01:17:29.000Z">
-<meta property="article:modified_time" content="2021-07-02T10:13:29.495Z">
+<meta property="article:modified_time" content="2021-07-05T06:56:14.367Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="数据结构">
@@ -208,7 +207,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-02 18:13:29" itemprop="dateModified" datetime="2021-07-02T18:13:29+08:00">2021-07-02</time>
+                <time title="修改时间：2021-07-05 14:56:14" itemprop="dateModified" datetime="2021-07-05T14:56:14+08:00">2021-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,14 +237,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="总结">总结</h2>
+        <blockquote>
+<p>数据结构是在计算机中存储数据的方法</p>
+<p>一般情况下，精心挑选的数据结构能产生有效的算法</p>
+</blockquote>
+<h2 id="总结">总结</h2>
 <ol type="1">
-<li><p>数据结构分为线性和非线性</p></li>
-<li><p>线性包括数组列表栈队列</p>
+<li><p>数据结构分为线性数据结构和非线性数据结构</p></li>
+<li><p>线性数据结构包括数组（array），链表（linked list），栈（stack），队列（queue）</p>
 <figure>
 <img src="b3728c27302a8548fe9e8a87e619ca83.png" alt="线性数据结构" /><figcaption aria-hidden="true">线性数据结构</figcaption>
 </figure></li>
-<li><p>非线性包括树和图,树可以认为是有向图的special case <img src="e6d5a8d9a75587abe612dfef9abffc01.png" alt="非线性数据结构" /></p></li>
+<li><p>非线性数据结构包括树和图,树可以认为是有向图的special case <img src="e6d5a8d9a75587abe612dfef9abffc01.png" alt="非线性数据结构" /></p></li>
 <li><p>图分有向图和无向图</p>
 <figure>
 <img src="18c651092d22c7204021d10a5a79b0ff.png" alt="有向图vs无向图" /><figcaption aria-hidden="true">有向图vs无向图</figcaption>
@@ -257,20 +260,31 @@
 <li><p>基于社交网络这个数据结构有什么应用呢？好友推荐, 推荐朋友的朋友,网络社会科学的小世界</p>
 <blockquote>
 <p>小世界网络的重要性质：“流行病学”、“合作”、“知识”</p>
-</blockquote>
-<figure>
-<img src="d5fe57a166d6f2ee93457d0ea4b54cef0.png" alt="社交网路" /><figcaption aria-hidden="true">社交网路</figcaption>
-</figure></li>
-<li><p>有向图的一个实例是万维网,好有一个文章影响因子 <img src="b9b97250ce6e998045dcbb0d5b379724.png" alt="www" /></p></li>
-<li><p>图还可以分有权图和无权图，无权图可认为是权图的special case，权重都为1。</p></li>
+</blockquote></li>
+<li><p>有向图的一个实例是万维网： <img src="b9b97250ce6e998045dcbb0d5b379724.png" alt="www" /></p></li>
+<li><p>图还可以分有权图和无权图。无权图可认为是权图的special case，权重都为1。</p></li>
 <li><p>有权图的一个实例是高速公路网,边代表距离 <img src="5b81b50b2d2b048ed3188b71af85a02f.png" alt="公路网" /></p></li>
 <li><p>树的一个实例是家谱，树种，任意一对节点，有且只有一条通路（不存在loop嘛）</p></li>
 <li><p>因果图是一个有向有权图。</p></li>
+</ol>
+<h2 id="附录">附录</h2>
+<h3 id="抽象数据类型和数据结构">抽象数据类型和数据结构</h3>
+<ol type="1">
+<li>ADT is a logical description and data structure is concrete.</li>
+<li>ADT is the logical picture of the data and the operations to manipulate the component elements of the data.</li>
+<li>Data structure is the actual representation of the data during the implementation and the algorithms to manipulate the data elements.</li>
+<li>ADT is in the logical level and data structure is in the implementation level.</li>
+</ol>
+<h3 id="列表和链表">列表和链表</h3>
+<ol type="1">
+<li>列表（list）或序列（sequence）是一种抽象数据类型(ADT),</li>
+<li>链表是一种数据结构。</li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=gXgEDyodOJU">youtube</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=V_TulH374hw">Graph-theoretic Models</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure">the difference-between-ADT和DS</a></li>
 </ol>
 
     </div>
@@ -357,7 +371,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.</span> <span class="nav-text">抽象数据类型和数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E5%92%8C%E9%93%BE%E8%A1%A8"><span class="nav-number">2.2.</span> <span class="nav-text">列表和链表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -371,7 +385,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

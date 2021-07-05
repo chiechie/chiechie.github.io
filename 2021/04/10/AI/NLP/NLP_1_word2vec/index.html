@@ -20,26 +20,26 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="词向量是用来表示词的向量。把词映射为实数域向量的技术也叫词嵌入。 word2vec包含跳字模型和连续词袋模型。跳字模型假设基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。 既然模型学习到了一个词的两个表示（背景词向量和中心词向量），下游节点用的是哪个呢？  why 直接one-hot不行吗？ one-hot vector没法表达word在语义上的相似性。 举个例子，假如用余弦函数">
+  <meta name="description" content="词嵌入（word embedding）是指把一个词映射为一个实数域的向量，这个向量也叫词向量。 word2vec是一个词嵌入模型，有两个变形，跳字模型和连续词袋模型。跳字模型是基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。 word2vec模型学习到了一个词的两个表示（背景词向量和中心词向量），下游节点用的是哪个呢？  why word2vec？ 实现词嵌入的方法有很多，最简单">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP_1_word2vec的原理">
 <meta property="og:url" content="https://chiechie.github.io/2021/04/10/AI/NLP/NLP_1_word2vec/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="词向量是用来表示词的向量。把词映射为实数域向量的技术也叫词嵌入。 word2vec包含跳字模型和连续词袋模型。跳字模型假设基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。 既然模型学习到了一个词的两个表示（背景词向量和中心词向量），下游节点用的是哪个呢？  why 直接one-hot不行吗？ one-hot vector没法表达word在语义上的相似性。 举个例子，假如用余弦函数">
+<meta property="og:description" content="词嵌入（word embedding）是指把一个词映射为一个实数域的向量，这个向量也叫词向量。 word2vec是一个词嵌入模型，有两个变形，跳字模型和连续词袋模型。跳字模型是基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。 word2vec模型学习到了一个词的两个表示（背景词向量和中心词向量），下游节点用的是哪个呢？  why word2vec？ 实现词嵌入的方法有很多，最简单">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chiechie.github.io/2021/04/10/AI/NLP/NLP_1_word2vec/bootstrap/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/10/AI/NLP/NLP_1_word2vec/img.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/04/10/AI/NLP/NLP_1_word2vec/img1.png">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjpuHAmzTik.png?alt=media&amp;token=47e0004c-bc7c-4fc5-af22-d227532a7548">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FsFuwRdSRxR.png?alt=media&amp;token=03f6ea4c-aee0-4e11-993f-468505022f8d">
 <meta property="og:image" content="https://chiechie.github.io/2021/04/10/AI/NLP/NLP_1_word2vec/img2.png">
 <meta property="article:published_time" content="2021-04-10T14:23:20.000Z">
-<meta property="article:modified_time" content="2021-05-31T00:24:44.556Z">
+<meta property="article:modified_time" content="2021-07-05T08:26:52.601Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="NLP">
 <meta property="article:tag" content="word2vec">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chiechie.github.io/2021/04/10/AI/NLP/NLP_1_word2vec/bootstrap/img.png">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/04/10/AI/NLP/NLP_1_word2vec/img.png">
 
 <link rel="canonical" href="https://chiechie.github.io/2021/04/10/AI/NLP/NLP_1_word2vec/">
 
@@ -206,7 +206,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-31 08:24:44" itemprop="dateModified" datetime="2021-05-31T08:24:44+08:00">2021-05-31</time>
+                <time title="修改时间：2021-07-05 16:26:52" itemprop="dateModified" datetime="2021-07-05T16:26:52+08:00">2021-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,28 +237,28 @@
 
       
         <blockquote>
-<p>词向量是用来表示词的向量。把词映射为实数域向量的技术也叫词嵌入。</p>
-<p>word2vec包含跳字模型和连续词袋模型。跳字模型假设基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。</p>
-<p>既然模型学习到了一个词的两个表示（背景词向量和中心词向量），下游节点用的是哪个呢？</p>
+<p>词嵌入（word embedding）是指把一个词映射为一个实数域的向量，这个向量也叫词向量。</p>
+<p>word2vec是一个词嵌入模型，有两个变形，跳字模型和连续词袋模型。跳字模型是基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。</p>
+<p>word2vec模型学习到了一个词的两个表示（背景词向量和中心词向量），下游节点用的是哪个呢？</p>
 </blockquote>
-<h2 id="why">why</h2>
-<p>直接one-hot不行吗？</p>
-<p>one-hot vector没法表达word在语义上的相似性。 举个例子，假如用余弦函数来描述word之间的相似度， 那么one-hot的表达方式，就会使所有word之间的相似度为0。</p>
-<p>那么需要一种词的表示方法，能表达语义上的相关性，word2vec就应运而生了。</p>
-<h2 id="what">what</h2>
-<p>我对wod2vec的理解: 是对一个word的one-hot vector降维。</p>
-<p>跟传统的线性降维方法如PCA比，本质上都是在寻找原始输入的一种更经济、高效的表达。</p>
-<p>区别在于：</p>
+<h2 id="why-word2vec">why word2vec？</h2>
+<p>实现词嵌入的方法有很多，最简单的就是one-hot，即，先构建一次词典，然后将该word映射为索引向量。</p>
+<p>那么为什么还要提出来word2vec方法？直接使用one-hot有什么问题吗？</p>
+<p>one-hot vector没有表达word在语义上的相似性。 举个例子，假如用余弦函数来描述word之间的相似度， 那么one-hot的表达方式，就会使所有word之间的相似度为0，这样就丢失了词语的语义上的信息。</p>
+<p>所以，需要一种词的表示方法，能表达语义上的相关性，word2vec就应运而生了。</p>
+<h2 id="what-word2vec">what word2vec？</h2>
+<p>wod2vec跟传统的线性降维方法如PCA一样，本质上都是在寻找对原始输入（词语）的一种更经济、高效的表达。</p>
+<p>PCA和Word2vec的区别在于，两者对于何为「最优表达」的定义不一样：</p>
 <ul>
-<li>PCA：经过编码-解码之后,信息丢失尽可能少,想重构回原来空间。</li>
-<li>word2vec： 经过编码-解码之后，中心词映射为背景词，或者，背景词映射为中心词。想预测另外一个东西。 其中，前者是（Skip-gram model，SG），后者是连续词袋模型（Continuous Bag-of-Words，CBOW）。</li>
+<li>PCA认为重构误差最小的表达，就是最好的表达。即经过编码-解码之后,重构回原来空间时丢失尽可能少。</li>
+<li>word2vec认为如果一个中心词的表达跟上下文表达关联最大，就是最好的表达。即经过编码-解码之后，中心词映射为背景词，或者，背景词映射为中心词。想预测另外一个东西。 其中，前者是（Skip-gram model，SG），后者是连续词袋模型（Continuous Bag-of-Words，CBOW）。</li>
 </ul>
 <figure>
-<img src="bootstrap/img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+<img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
 </figure>
-<h2 id="how">how ?</h2>
+<h2 id="how-word2vec">how word2vec?</h2>
 <p>先看跳字模型</p>
-<h3 id="跳字模型skip-gram">跳字模型（skip gram）</h3>
+<h3 id="跳字模型skip-gram--基于中心词来生成背景词">跳字模型（skip gram）--基于中心词来生成背景词</h3>
 <h4 id="high-level">high-level</h4>
 <p>跳字模型就是将一个中心词映射成多个背景词，大概思路，</p>
 <p><img src="./img1.png" /></p>
@@ -451,7 +451,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#why"><span class="nav-number">1.</span> <span class="nav-text">why</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what"><span class="nav-number">2.</span> <span class="nav-text">what</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#how"><span class="nav-number">3.</span> <span class="nav-text">how ?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E5%AD%97%E6%A8%A1%E5%9E%8Bskip-gram"><span class="nav-number">3.1.</span> <span class="nav-text">跳字模型（skip gram）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#high-level"><span class="nav-number">3.1.1.</span> <span class="nav-text">high-level</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%86%E8%8A%82"><span class="nav-number">3.1.2.</span> <span class="nav-text">细节</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8tensorflow%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E8%B7%B3%E5%AD%97%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.1.3.</span> <span class="nav-text">使用tensorflow实现一个跳字模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BB%BA%E6%A8%A1"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">建模</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">评估</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8Bcontinous-bag-of-words"><span class="nav-number">3.2.</span> <span class="nav-text">连续词袋模型（continous bag of words）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E7%89%88"><span class="nav-number">4.</span> <span class="nav-text">优化版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%91%E4%BC%BC%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95-%E8%B4%9F%E9%87%87%E6%A0%B7"><span class="nav-number">4.1.</span> <span class="nav-text">近似的学习方法-负采样</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%B9%E7%A7%AFor%E4%BD%99%E5%BC%A6"><span class="nav-number">5.</span> <span class="nav-text">点积or余弦</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#detail"><span class="nav-number">6.</span> <span class="nav-text">detail</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83-1"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#why-word2vec"><span class="nav-number">1.</span> <span class="nav-text">why word2vec？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what-word2vec"><span class="nav-number">2.</span> <span class="nav-text">what word2vec？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#how-word2vec"><span class="nav-number">3.</span> <span class="nav-text">how word2vec?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E5%AD%97%E6%A8%A1%E5%9E%8Bskip-gram--%E5%9F%BA%E4%BA%8E%E4%B8%AD%E5%BF%83%E8%AF%8D%E6%9D%A5%E7%94%9F%E6%88%90%E8%83%8C%E6%99%AF%E8%AF%8D"><span class="nav-number">3.1.</span> <span class="nav-text">跳字模型（skip gram）--基于中心词来生成背景词</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#high-level"><span class="nav-number">3.1.1.</span> <span class="nav-text">high-level</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%86%E8%8A%82"><span class="nav-number">3.1.2.</span> <span class="nav-text">细节</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8tensorflow%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E8%B7%B3%E5%AD%97%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.1.3.</span> <span class="nav-text">使用tensorflow实现一个跳字模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BB%BA%E6%A8%A1"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">建模</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">评估</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8Bcontinous-bag-of-words"><span class="nav-number">3.2.</span> <span class="nav-text">连续词袋模型（continous bag of words）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E7%89%88"><span class="nav-number">4.</span> <span class="nav-text">优化版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%91%E4%BC%BC%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95-%E8%B4%9F%E9%87%87%E6%A0%B7"><span class="nav-number">4.1.</span> <span class="nav-text">近似的学习方法-负采样</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%B9%E7%A7%AFor%E4%BD%99%E5%BC%A6"><span class="nav-number">5.</span> <span class="nav-text">点积or余弦</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#detail"><span class="nav-number">6.</span> <span class="nav-text">detail</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83-1"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -465,7 +465,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

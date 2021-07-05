@@ -165,6 +165,112 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/02/data_structure/graph/graph-basic/min-cut/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/02/data_structure/graph/graph-basic/min-cut/" class="post-title-link" itemprop="url">图的最大流和最小割算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-02 08:48:14" itemprop="dateCreated datePublished" datetime="2021-07-02T08:48:14+08:00">2021-07-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-03 14:16:12" itemprop="dateModified" datetime="2021-07-03T14:16:12+08:00">2021-07-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="最大流">最大流</h2>
+<h3 id="最大流问题">最大流问题</h3>
+<p>在一个网络中，求从起点、source到目标点，经过的最大的流量，每条边的权重等于该管道的最大流量，求整个路径的最大流量。</p>
+<p><img src="img_3.png" /></p>
+<p>残差 = 容量 - 真实流量 <img src="img_4.png" /></p>
+<h3 id="最大流算法">最大流算法</h3>
+<p>最简单的方法，但是未必能找到最大流</p>
+<figure>
+<img src="img_5.png" alt="img_5.png" /><figcaption aria-hidden="true">img_5.png</figcaption>
+</figure>
+<p>通过多次迭代，先找可达路径，计算残差图，移走空闲量=0的边，进入第二次循环。</p>
+<h2 id="最小割">最小割</h2>
+<h3 id="最小割问题">最小割问题</h3>
+<p>最小割要解决的问题和最大流是一样的</p>
+<p>输入：方向有权图 目标：割的容量最小 输出：某个S-T cut，</p>
+<blockquote>
+<p>最大流最小割定理（Max-Flow Min-Cut Theorem）</p>
+<p>在一个网络流量中，从s到t的最大流量等于，最小s-t cut的容量。</p>
+<p>--L. R. Ford and D. R. Fulkerson. Flows in Networks. Princeton University Press, (1962 .)</p>
+</blockquote>
+<p><img src="img_1.png" /></p>
+<h3 id="寻找最小割的方法">寻找最小割的方法</h3>
+<ol type="1">
+<li>使用最大流算法获得residual graph， 移走其中反向的边</li>
+<li>在residual graph中，从起点s出发，找到所有能达到的节点，并记为集合S，把其他所有节点记做T（s到不了的节点）。</li>
+<li>将{S, T}记做最小割。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=6DFWUgV5Osc&amp;t=774s">图的最大流和</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Ev_lFSIzNh4&amp;t=128s">图的最小割算法-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/AdvancedAlgorithms">图的最小割算法-slide</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/01/AI/AIOps/AIOps-1_5_3-LogCluster-_ms/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -293,111 +399,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/30/reading_notes/computer/fenbushi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/30/reading_notes/computer/fenbushi/" class="post-title-link" itemprop="url">基于Ray的融合计算框架</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-30 14:39:39" itemprop="dateCreated datePublished" datetime="2021-06-30T14:39:39+08:00">2021-06-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-01 19:56:15" itemprop="dateModified" datetime="2021-07-01T19:56:15+08:00">2021-07-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>看到阿里在2021发表的一个演讲--《新一代的计算基础设施-对于Ray的融合计算》，做一些笔记</p>
-</blockquote>
-<ol type="1">
-<li>举一个复杂的业务的例子，用户支付流程：</li>
-</ol>
-<ul>
-<li>先选择支付场景--线上/线下/，</li>
-<li>选择支付方式--</li>
-<li>选择交易网络--银联/第三方</li>
-<li>选择银行</li>
-</ul>
-<figure>
-<img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
-</figure>
-<p>整个流程需要秒级响应。</p>
-<ol start="2" type="1">
-<li>要是大家都开始用统一的计算平台，AIOps也可以用同一套方案了</li>
-</ol>
-<figure>
-<img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
-</figure>
-<ol start="3" type="1">
-<li>业务需求之一是，复杂的业务逻辑计算存在单机性能瓶颈，需要支持分布式无范式的分布式开发。</li>
-<li>现在的基础设计在单一用途的组件上，已经做的比较成熟了，专门做流式计算的计算引擎有flink，专门做深度学习的计算引擎有tensorflow，专门做批处理的有spark。</li>
-<li>但是，考虑到一个复杂的应用场景，完成1个任务需要用到多种计算模式，统一计算平台 能够让这几种计算模式实现状态共享，中间结果共享。在这种场景下，统一计算平台，相较于多个独立的计算组件 效率更高。</li>
-<li>要不要搞统一计算平台，取决于需求的复杂性，如果是一个很pure很纯粹的任务，搞这个的意义就不大。但是可以作为预研嘛，万一以后业务变得越来越复杂，也有准备。</li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1gh411Y7qf?t=1">Ray Forward Meetup 2021-面向金融决策场景的在线计算系统-bilibili</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -467,7 +468,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

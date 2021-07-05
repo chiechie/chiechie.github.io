@@ -20,26 +20,24 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="建模pipeline  搜集原始数据: 过去十年的成交数据 数据筛选: 选择交易日，固定时间段（９:30~15:30)的数据 对选好的数据进行采样，并不能保证每天都有整数个点 切分训练集 &amp; 验证集 模型训练  归一化训练集，&lt;x， target&gt; 训练  模型评估  归一化验证集 预测&amp;画图：   实践过程中遇到的一些问题，需要逐一解决，下面记录其中一些 问题集合 问">
+  <meta name="description" content="DeepAR探索 以DeepAR为例，回忆下我们从探索到落地的过程：  Student： 网上找到了pytorch版本的deepAR版（发于2017年4月），训练过程很慢要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？ Teacher： 生产环境，这种性能实在不能接受。既然amazon将DeepAR作为时序预测场景的主推算法方案，这种性能肯定拿不出手，后续肯定做了的优化，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="时序预测最佳实践">
-<meta property="og:url" content="https://chiechie.github.io/2021/06/05/AI/timeseries/quantml-practice/index.html">
+<meta property="og:title" content="从DeepAR谈论paper到工程化的距离">
+<meta property="og:url" content="https://chiechie.github.io/2021/04/18/timeseries/DeepAR_2_practice/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="建模pipeline  搜集原始数据: 过去十年的成交数据 数据筛选: 选择交易日，固定时间段（９:30~15:30)的数据 对选好的数据进行采样，并不能保证每天都有整数个点 切分训练集 &amp; 验证集 模型训练  归一化训练集，&lt;x， target&gt; 训练  模型评估  归一化验证集 预测&amp;画图：   实践过程中遇到的一些问题，需要逐一解决，下面记录其中一些 问题集合 问">
+<meta property="og:description" content="DeepAR探索 以DeepAR为例，回忆下我们从探索到落地的过程：  Student： 网上找到了pytorch版本的deepAR版（发于2017年4月），训练过程很慢要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？ Teacher： 生产环境，这种性能实在不能接受。既然amazon将DeepAR作为时序预测场景的主推算法方案，这种性能肯定拿不出手，后续肯定做了的优化，">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNUSWvXNmWb.png?alt=media&amp;token=8c03a9f3-60e1-424d-879e-3371c1516623">
-<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fg6FAdLzkOj.png?alt=media&amp;token=362ed41e-1773-4ff5-ac41-a3095f75bb86">
-<meta property="article:published_time" content="2021-06-04T16:06:21.000Z">
-<meta property="article:modified_time" content="2021-07-03T01:09:30.010Z">
+<meta property="article:published_time" content="2021-04-18T03:56:59.000Z">
+<meta property="article:modified_time" content="2021-06-11T01:47:17.422Z">
 <meta property="article:author" content="Chiechie">
-<meta property="article:tag" content="人工智能">
-<meta property="article:tag" content="量化交易">
-<meta property="article:tag" content="最佳实践">
-<meta property="article:tag" content="时序预测">
+<meta property="article:tag" content="时间序列">
+<meta property="article:tag" content="DeepAR">
+<meta property="article:tag" content="AIOps">
+<meta property="article:tag" content="知识分子">
+<meta property="article:tag" content="RNN">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNUSWvXNmWb.png?alt=media&amp;token=8c03a9f3-60e1-424d-879e-3371c1516623">
 
-<link rel="canonical" href="https://chiechie.github.io/2021/06/05/AI/timeseries/quantml-practice/">
+<link rel="canonical" href="https://chiechie.github.io/2021/04/18/timeseries/DeepAR_2_practice/">
 
 
 <script id="page-configurations">
@@ -52,7 +50,7 @@
   };
 </script>
 
-  <title>时序预测最佳实践 | Chiechie's Mini World</title>
+  <title>从DeepAR谈论paper到工程化的距离 | Chiechie's Mini World</title>
   
 
 
@@ -174,7 +172,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/05/AI/timeseries/quantml-practice/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/timeseries/DeepAR_2_practice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -187,7 +185,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          时序预测最佳实践<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AI/timeseries/quantml-practice.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          从DeepAR谈论paper到工程化的距离<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/timeseries/DeepAR_2_practice.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -197,14 +195,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-05 00:06:21" itemprop="dateCreated datePublished" datetime="2021-06-05T00:06:21+08:00">2021-06-05</time>
+              <time title="创建时间：2021-04-18 11:56:59" itemprop="dateCreated datePublished" datetime="2021-04-18T11:56:59+08:00">2021-04-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-03 09:09:30" itemprop="dateModified" datetime="2021-07-03T09:09:30+08:00">2021-07-03</time>
+                <time title="修改时间：2021-06-11 09:47:17" itemprop="dateModified" datetime="2021-06-11T09:47:17+08:00">2021-06-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,63 +232,62 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="建模pipeline">建模pipeline</h1>
-<ol type="1">
-<li>搜集原始数据: 过去十年的成交数据</li>
-<li>数据筛选: 选择交易日，固定时间段（９:30~15:30)的数据</li>
-<li>对选好的数据进行采样，并不能保证每天都有整数个点</li>
-<li>切分训练集 &amp; 验证集</li>
-<li>模型训练
+        <h2 id="deepar探索">DeepAR探索</h2>
+<p>以DeepAR为例，回忆下我们从探索到落地的过程：</p>
 <ul>
-<li>归一化训练集，&lt;x， target&gt;</li>
-<li>训练</li>
-</ul></li>
-<li>模型评估
-<ul>
-<li>归一化验证集</li>
-<li>预测&amp;画图：</li>
-</ul></li>
-</ol>
-<p>实践过程中遇到的一些问题，需要逐一解决，下面记录其中一些</p>
-<h1 id="问题集合">问题集合</h1>
-<h2 id="问题1.-验证集的mse比训练集低但相关系数训练集远远大于调参集这是bug">问题1. 验证集的mse比训练集低，但相关系数训练集远远大于调参集，这是bug？</h2>
-<p>没有bug，mse和correlation评估的侧重点不一样。</p>
-<p>mse小，但是correlation也小的例子，如下图：</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNUSWvXNmWb.png?alt=media&amp;token=8c03a9f3-60e1-424d-879e-3371c1516623" /></p>
-<p>几个距离：</p>
-<ul>
-<li>欧式距离（mse）量化的 是两个实体（或者两个群体）之间的绝对物理距离</li>
-<li>余弦距离（correlation）量化的是 两个实体（或者两个群体）相对原点的角度的距离</li>
-<li>pearson衡量的是 两个变量 之间的 线性相关性，具体做法是使用一个直线去拟合多组样本点&lt;变量1，变量2&gt; ，直线斜率就是相关性大小。</li>
+<li>Student： 网上找到了pytorch版本的deepAR版（发于2017年4月），训练过程很慢要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？</li>
+<li>Teacher： 生产环境，这种性能实在不能接受。既然amazon将DeepAR作为时序预测场景的主推算法方案，这种性能肯定拿不出手，后续肯定做了的优化，去查一下近3年的amazon关于DeepAR相关的资料，重点看看有没有更优秀的实现方案。</li>
+<li>Student：找到了--基于MXNET的gluon-ts（于2019年6月发表），mxnet在electricty上的训练和预测时间大概是10min左右。</li>
+<li>Teacher： nice！</li>
 </ul>
-<h2 id="问题3怎么解决分布漂移的问题">问题3：怎么解决分布漂移的问题？</h2>
-<p>分布漂移在时序预测中尤其常见，使用滑动窗口的均值来 做中心化</p>
-<h2 id="问题4还有哪些措能提升实验效果">问题4：还有哪些措能提升实验效果？</h2>
-<p>取效果好和效果差的两组实验进行对比，观察到1个现象：使用短期趋势中心化后，在使用长期趋势归一化，能使效果变好，背后的理论依据是什么？</p>
-<p>分析下：因为用到了更长的历史数据作为参考,本身模型是记不住那么长的历史信息的。（输入才半个小时）</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fg6FAdLzkOj.png?alt=media&amp;token=362ed41e-1773-4ff5-ac41-a3095f75bb86" /></p>
-<p>参考: <a target="_blank" rel="noopener" href="https://github.com/Arturus/kaggle-web-traffic/blob/master/how_it_works.md">doc</a></p>
-<h2 id="问题5-过拟合的原因">问题5： 过拟合的原因</h2>
-<p>训练集 的比例远大于 验证集 和测试集</p>
-<h2 id="问题6-是不是预测的准就能挣钱了">问题6： 是不是预测的准就能挣钱了？</h2>
-<p>不是，回测的时候要考虑滑点，交易费用，爆仓风险</p>
-<h2 id="问题7同样一个预测模型lstm商品期货准确率比股指差这么多">问题7：同样一个预测模型（LSTM），商品期货准确率比股指差这么多？</h2>
+<p>最开始把gluon-ts实现的DeepAR算法当黑盒用的时候，发现效果很神奇，不调参，换不同数据进去效果都还挺好，周期性和趋势性都还能学到。</p>
+<p>但是就觉得很奇怪，按照自己构建RNN的经验，调参就要反反复复好多次，最后效果还不一定好。使用gluon-TS的代码我没有调参的，并且默认的网络结构很简单 不太可能过拟合.</p>
+<p>看了源代码之后，有一个很大的感受就是，<strong>完成论文demo和完成一个业界可用方案，两者的工作量 ，可能是0到1再到100的距离。</strong></p>
+<p>按照paper所说，整个网络结构非常之简单，1层rnn + 1层 dense层（输出分布参数），构成2层rnn，大概十几行代码。 但是，<strong>真正大量的代码都在做预处理以及 模型训练的一些小trick。 这些小trick，对提升模型效果非常有帮助，但是paper里面是没有的，应该随是工程团队总结出的最佳实践</strong>。</p>
 <ul>
-<li>因为1min的股指期货数据平滑，噪声少，而1min的商品期货毛刺非常多</li>
-<li>将1min的商品期货聚合成5min之后，再使用过去1h的数据预测未来1h的数据，准确率非常之高</li>
+<li>best practice1: 把每个样本（历史依赖）的scale 取对数，放入样本。 （因为所有的lags项在归一化之后已经丢失了scale信息，为了避免这个信息的丢失，还是把log scale 放入特征，用于区别不同的曲线的模式）</li>
+<li>best practice2: 在rnn中，每一层rnn后都接了一个residual和一个dropout。（原文没有提到）</li>
+<li>best practice3: 为了学习到数据的周期性模式，除了一定要有的context_length，代码还会跳着取lag , 类似空洞卷积。这些周期性的lag项，是被硬编码在代码里面的，比如年/月/日的周期性。</li>
 </ul>
-<p>数据颗粒度太细时 噪声很大， 直接丢给模型，也可能造成模型学不好。（这个已经在quantML实践上面得到了证实）</p>
-<h2 id="问题8直接用回归模型预测价格可能有负数怎么处理">问题8：直接用回归模型预测价格，可能有负数怎么处理</h2>
-<p>预测增长率</p>
-<h2 id="问题9除了直接回归还有哪些方法">问题9：除了直接回归，还有哪些方法？</h2>
-<p>转化为分类问题，换预测涨跌幅</p>
-<h1 id="其他经验">其他经验</h1>
-<ol type="1">
-<li><p>不同品种的训练数据，分组训练 比 汇总训练 效果好。</p>
-<blockquote>
-<p>一定要汇总训练的话，要加入每个品种的静态特征，不然会学到混乱的模式。</p>
-</blockquote></li>
-</ol>
+<p>（我甚至怀疑论文的作者都不知道，因为作者自己写了一个pytorch版本，没有见到相关的处理，并且训练时长是gluon-TS的100倍以上）</p>
+<h2 id="对于aiops建设的启发">对于AIOps建设的启发</h2>
+<p>对于根因分析，日志关联等大部分场景，业界没有可参考的工具，转而求助学术界，可参考论文以及kaggle比赛等。</p>
+<p>但是要注意，这些方案只是demo，没有在工业界的数据和真实需求上验证过，实际上真实业务环境会比做实验要复杂得多。</p>
+<p>从调研demo到完成一个业务上高可用的方案，有大量的优化工作。评估时间的时候，需要预留buffer，来验证和调优，可能需要迭代多轮，有不确定性。</p>
+<h2 id="从paper到工程落地的距离">从paper到工程落地的距离？</h2>
+<ul>
+<li>实验室方案不能直接搬到 真实业务的 几个原因：
+<ul>
+<li>样本数据不一致：
+<ul>
+<li>实验室的数据有一些 标记质量差，以及标记的标准不一致。</li>
+<li>实验室的数据模式单一，很多是模拟生成的，没法模拟出真实业务上复杂的模式</li>
+<li>真实环境中数据质量差：历史数据不够，缺失值多，有用特征缺失。</li>
+<li>实验室数据格式 千奇百怪，要适当预处理才能给 业务使用</li>
+</ul></li>
+<li>评估指标不一致
+<ul>
+<li>实验室只能基于已有的封闭数据集，业务上的指标是开放式的跟业务运营相关的</li>
+</ul></li>
+<li>效果不一致
+<ul>
+<li>实验 中效果好的方案 到真实环境中 效果不好</li>
+</ul></li>
+<li>性能要求不一致：
+<ul>
+<li>实验室方案运行效率到不到真实环境的标准</li>
+<li>eg，kaggle比赛常用模型ensenmble方案，在工业界就很少会用，计算效率的问题å</li>
+</ul></li>
+</ul></li>
+<li>正常的开发流程是：
+<ul>
+<li>理解论文原理</li>
+<li>复现论文：开发demo，</li>
+<li>工程优化（beta）：初步上线，demo性能优化，覆盖现实中可能的异常</li>
+<li>稳定上线（正式）： 在真实环境上测试一段时间。</li>
+<li>产品化：给其他无背景的人用</li>
+</ul></li>
+</ul>
 
     </div>
 
@@ -300,10 +297,11 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
-              <a href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" rel="tag"># 量化交易</a>
-              <a href="/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" rel="tag"># 最佳实践</a>
-              <a href="/tags/%E6%97%B6%E5%BA%8F%E9%A2%84%E6%B5%8B/" rel="tag"># 时序预测</a>
+              <a href="/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/" rel="tag"># 时间序列</a>
+              <a href="/tags/DeepAR/" rel="tag"># DeepAR</a>
+              <a href="/tags/AIOps/" rel="tag"># AIOps</a>
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E5%88%86%E5%AD%90/" rel="tag"># 知识分子</a>
+              <a href="/tags/RNN/" rel="tag"># RNN</a>
           </div>
 
         
@@ -312,12 +310,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/06/04/reading_notes/computer/liangzijisuanji/" rel="prev" title="量子计算机">
-      <i class="fa fa-chevron-left"></i> 量子计算机
+    <a href="/2021/04/18/reading_notes/computer/information-theory/" rel="prev" title="信息论">
+      <i class="fa fa-chevron-left"></i> 信息论
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/06/06/reading_notes/reality/caiwujiangyi/" rel="next" title="《财务讲义》读书笔记">
-      《财务讲义》读书笔记 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/04/18/reading_notes/zhexue/taleb-blackswan/" rel="next" title="黑天鹅">
+      黑天鹅 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -377,7 +375,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%BA%E6%A8%A1pipeline"><span class="nav-number">1.</span> <span class="nav-text">建模pipeline</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E9%9B%86%E5%90%88"><span class="nav-number">2.</span> <span class="nav-text">问题集合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%981.-%E9%AA%8C%E8%AF%81%E9%9B%86%E7%9A%84mse%E6%AF%94%E8%AE%AD%E7%BB%83%E9%9B%86%E4%BD%8E%E4%BD%86%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0%E8%AE%AD%E7%BB%83%E9%9B%86%E8%BF%9C%E8%BF%9C%E5%A4%A7%E4%BA%8E%E8%B0%83%E5%8F%82%E9%9B%86%E8%BF%99%E6%98%AFbug"><span class="nav-number">2.1.</span> <span class="nav-text">问题1. 验证集的mse比训练集低，但相关系数训练集远远大于调参集，这是bug？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%983%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E5%88%86%E5%B8%83%E6%BC%82%E7%A7%BB%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">问题3：怎么解决分布漂移的问题？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%984%E8%BF%98%E6%9C%89%E5%93%AA%E4%BA%9B%E6%8E%AA%E8%83%BD%E6%8F%90%E5%8D%87%E5%AE%9E%E9%AA%8C%E6%95%88%E6%9E%9C"><span class="nav-number">2.3.</span> <span class="nav-text">问题4：还有哪些措能提升实验效果？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%985-%E8%BF%87%E6%8B%9F%E5%90%88%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.4.</span> <span class="nav-text">问题5： 过拟合的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%986-%E6%98%AF%E4%B8%8D%E6%98%AF%E9%A2%84%E6%B5%8B%E7%9A%84%E5%87%86%E5%B0%B1%E8%83%BD%E6%8C%A3%E9%92%B1%E4%BA%86"><span class="nav-number">2.5.</span> <span class="nav-text">问题6： 是不是预测的准就能挣钱了？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%987%E5%90%8C%E6%A0%B7%E4%B8%80%E4%B8%AA%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8Blstm%E5%95%86%E5%93%81%E6%9C%9F%E8%B4%A7%E5%87%86%E7%A1%AE%E7%8E%87%E6%AF%94%E8%82%A1%E6%8C%87%E5%B7%AE%E8%BF%99%E4%B9%88%E5%A4%9A"><span class="nav-number">2.6.</span> <span class="nav-text">问题7：同样一个预测模型（LSTM），商品期货准确率比股指差这么多？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%988%E7%9B%B4%E6%8E%A5%E7%94%A8%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B%E9%A2%84%E6%B5%8B%E4%BB%B7%E6%A0%BC%E5%8F%AF%E8%83%BD%E6%9C%89%E8%B4%9F%E6%95%B0%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86"><span class="nav-number">2.7.</span> <span class="nav-text">问题8：直接用回归模型预测价格，可能有负数怎么处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%989%E9%99%A4%E4%BA%86%E7%9B%B4%E6%8E%A5%E5%9B%9E%E5%BD%92%E8%BF%98%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E6%B3%95"><span class="nav-number">2.8.</span> <span class="nav-text">问题9：除了直接回归，还有哪些方法？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%BB%8F%E9%AA%8C"><span class="nav-number">3.</span> <span class="nav-text">其他经验</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#deepar%E6%8E%A2%E7%B4%A2"><span class="nav-number">1.</span> <span class="nav-text">DeepAR探索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8Eaiops%E5%BB%BA%E8%AE%BE%E7%9A%84%E5%90%AF%E5%8F%91"><span class="nav-number">2.</span> <span class="nav-text">对于AIOps建设的启发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8Epaper%E5%88%B0%E5%B7%A5%E7%A8%8B%E8%90%BD%E5%9C%B0%E7%9A%84%E8%B7%9D%E7%A6%BB"><span class="nav-number">3.</span> <span class="nav-text">从paper到工程落地的距离？</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -391,7 +389,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

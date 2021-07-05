@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Transformer  先概括Transformer的主要设计思路；再讲每一步的具体技术细节。 只想粗略了解Transformer的设计可以只看 “high-level ideas”这部分。   Transformer是google2016年在论文《attention is all you need》提出的一个机器翻译模型。 Transformer是一个很典型的seq2seq架构。 Transf">
+  <meta name="description" content="Transformer  先概括Transformer的主要设计思路；再讲每一步的具体技术细节。   Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。 Transformer的亮点在于将attention和self-attention完全剥离开之前rnn的结构，只跟dense层组合。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP_2_Transformer的原理">
 <meta property="og:url" content="https://chiechie.github.io/2021/04/18/AI/NLP/NLP_2_bert/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="Transformer  先概括Transformer的主要设计思路；再讲每一步的具体技术细节。 只想粗略了解Transformer的设计可以只看 “high-level ideas”这部分。   Transformer是google2016年在论文《attention is all you need》提出的一个机器翻译模型。 Transformer是一个很典型的seq2seq架构。 Transf">
+<meta property="og:description" content="Transformer  先概括Transformer的主要设计思路；再讲每一步的具体技术细节。   Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。 Transformer的亮点在于将attention和self-attention完全剥离开之前rnn的结构，只跟dense层组合。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chiechie.github.io/2021/04/18/AI/NLP/NLP_2_bert/transformer_encoders_decoders.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/04/18/AI/NLP/NLP_2_bert/transformer_encoder_decoder_stack.png">
@@ -60,10 +60,10 @@
 <meta property="og:image" content="https://chiechie.github.io/2021/04/18/AI/NLP/NLP_2_bert/transformer_output_trained_model_probability_distributions.png">
 <meta property="og:image" content="https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&amp;rect=0%2C0%2C2668%2C3126&amp;w=1980&amp;h=2320">
 <meta property="article:published_time" content="2021-04-17T16:04:13.000Z">
-<meta property="article:modified_time" content="2021-05-17T00:42:41.415Z">
+<meta property="article:modified_time" content="2021-07-05T08:35:00.929Z">
 <meta property="article:author" content="Chiechie">
-<meta property="article:tag" content="NLP">
 <meta property="article:tag" content="神经网络">
+<meta property="article:tag" content="NLP">
 <meta property="article:tag" content="模型可视化">
 <meta property="article:tag" content="Transformer">
 <meta property="article:tag" content="Bert">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
+                <time title="修改时间：2021-07-05 16:35:00" itemprop="dateModified" datetime="2021-07-05T16:35:00+08:00">2021-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -268,28 +268,24 @@
         <h1 id="transformer">Transformer</h1>
 <blockquote>
 <p>先概括Transformer的主要设计思路；再讲每一步的具体技术细节。</p>
-<p>只想粗略了解Transformer的设计可以只看 “high-level ideas”这部分。</p>
 </blockquote>
 <ul>
-<li>Transformer是google2016年在论文《attention is all you need》提出的一个机器翻译模型。</li>
-<li>Transformer是一个很典型的seq2seq架构。</li>
-<li>Transformer的亮点在于将attention和self-attention机制完全剥离开之前rnn的结构，只跟dense层组合。</li>
+<li>Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。</li>
+<li>Transformer的亮点在于将attention和self-attention完全剥离开之前rnn的结构，只跟dense层组合。</li>
 </ul>
 <h2 id="high-level-ideas">High-Level ideas</h2>
-<p>首先把模型看作一个黑盒。 在机器翻译（eg德译英）任务中，它会将一个句子（例如德文）翻译成一种语言（机器语言），然后再将其翻译成另一种语言（例如英文）。</p>
-<p>打开Transformer的黑盒，我们看到一个encoders组件，一个decoders组件，以及它们之间的数据流。</p>
-<p><img src="./transformer_encoders_decoders.png" /></p>
-<p>encoders内部stacked encoders(论文堆了六个)，decoders内部也是stacked decoders(论文堆了六个)。</p>
-<p>一个encoder或一个decoder叫做一个block。</p>
-<p><img src="./transformer_encoder_decoder_stack.png" /></p>
-<p>encoders包含的6个block，结构相同，但是不共享权重。</p>
-<p>每个encoder block包含2层:</p>
+<ol type="1">
+<li>Transformer是一个翻译模型，在机器翻译任务中，eg德译英，输入一个德文句子，输出十一句英文。</li>
+<li>Transformer由两部分组成：encoders和decoders组件 <img src="./transformer_encoders_decoders.png" alt="Transformer由两部分组成：encoders和decoders组件" /></li>
+<li>其中encoders由6个encoder堆叠而成，decoders由6个decoder堆叠而成。每一个encoder或一个decoder叫做一个block。 encoders的6个个block，结构相同，但是不共享权重。 <img src="./transformer_encoder_decoder_stack.png" /></li>
+<li>对于encoders，每个block包含2层:
 <ul>
 <li>self-attention层，参数不共享</li>
 <li>ffnn层，参数共享</li>
 </ul>
-<p><img src="./Transformer_encoder.png" /></p>
-<p>每个decoder block除了这两层，还有一个encoder-decoder attention层，用来关注encoder的输出，作用类似于 <a target="_blank" rel="noopener" href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/">seq2seq models</a> 中的attention。</p>
+<img src="./Transformer_encoder.png" /></li>
+<li>对于decoders，每个block除了包含self-attention和ffnn，还有一个encoder-decoder attention层，用来关注encoder的输出，作用类似于<a target="_blank" rel="noopener" href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/">seq2seq models</a> 中的attention。</li>
+</ol>
 <p><img src="./Transformer_decoder.png" /></p>
 <h2 id="输入tensor">输入tensor</h2>
 <p>上面介绍了Transformer的主要组件，现在看一下组件之间的数据流向。</p>
@@ -517,8 +513,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/NLP/" rel="tag"># NLP</a>
               <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag"># 神经网络</a>
+              <a href="/tags/NLP/" rel="tag"># NLP</a>
               <a href="/tags/%E6%A8%A1%E5%9E%8B%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag"># 模型可视化</a>
               <a href="/tags/Transformer/" rel="tag"># Transformer</a>
               <a href="/tags/Bert/" rel="tag"># Bert</a>
@@ -609,7 +605,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

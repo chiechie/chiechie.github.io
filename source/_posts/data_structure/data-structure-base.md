@@ -15,7 +15,7 @@ categories:
 ## 总结 
 
 1. 数据结构分为线性和非线性
-2. 线性包括数组列表栈队列
+2. 线性包括数组（array），链表（linked list），栈（stack），队列（queue）
    
     ![线性数据结构](b3728c27302a8548fe9e8a87e619ca83.png)
    

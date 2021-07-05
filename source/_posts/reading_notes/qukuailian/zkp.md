@@ -60,9 +60,9 @@ categories:
     - 将计算问题拍平（flatten）变成circuit
     - 把circuit转化成 R1CS(rank-1 constraint system，一阶约束系统)。R1CS 是一个由三向量组 (a,b,c) 组成的序列，R1CS 有个解向量s（就是witness），s 必须满足符号表示向量的内积运算 a.s * b.s - c.s = 0
     - 将R1CS转化成QAP形式，这两者的区别是QAP使用多项式来代替点积运算，他们所实现的逻辑完全相同。
-- 接下是trusted setup，trusted setup会生成两个值PK，VK，truseted setup的目的是实现零交互验证，它生成的PK，VK相当于是一个“上帝”由它来帮我们做一些挑战，来验证Prover。
+- trusted setup会生成两个值PK，VK，truseted setup的目的是实现零交互验证，它生成的PK，VK相当于是一个“上帝”,由它来帮我们验证Prover。
 - Prover用PK生成一个Proof交给Verifier
-- Verifier拿到这个Proof会用VK做校验，这一步发生在链上，有链上的节点或智能合约来做校验。
+- Verifier拿到这个Proof会用VK做校验，这一步发生在链上，由链上的节点或智能合约来做校验。
     > PK就像一个query word，VK是该query word对应的answer，CRS相当于是一个生成了一个<question，answer>，拿Prover的答案跟正确的已知的答案进行对比，从而验证Prover是qualified
 
 

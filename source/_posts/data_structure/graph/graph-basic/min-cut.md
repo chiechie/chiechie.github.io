@@ -14,10 +14,27 @@ categories:
 
 ## 最大流
 
+
+
+
 ### 最大流问题
+
+在一个网络中，求从起点、source到目标点，经过的最大的流量，每条边的权重等于该管道的最大流量，求整个路径的最大流量。
+
+![](img_3.png)
+
+
+残差 = 容量 - 真实流量
+![](img_4.png)
+
 
 ### 最大流算法
 
+最简单的方法，但是未必能找到最大流
+
+![img_5.png](img_5.png)
+
+通过多次迭代，先找可达路径，计算残差图，移走空闲量=0的边，进入第二次循环。
 
 ## 最小割
 
@@ -51,6 +68,6 @@ categories:
 
 
 ## 参考
-
+1. [图的最大流和](https://www.youtube.com/watch?v=6DFWUgV5Osc&t=774s)
 1. [图的最小割算法-youtube](https://www.youtube.com/watch?v=Ev_lFSIzNh4&t=128s)
 2. [图的最小割算法-slide](https://github.com/wangshusen/AdvancedAlgorithms)

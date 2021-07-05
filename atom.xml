@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-07-05T07:28:35.707Z</updated>
+  <updated>2021-07-05T12:39:08.518Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -17,24 +17,30 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>投资、投机与套利</title>
-    <link href="https://chiechie.github.io/2021/07/05/investment/quant/"/>
-    <id>https://chiechie.github.io/2021/07/05/investment/quant/</id>
-    <published>2021-07-05T07:10:19.000Z</published>
-    <updated>2021-07-05T07:28:35.707Z</updated>
+    <title>《Advances in Financial Machine Learning》读书笔记</title>
+    <link href="https://chiechie.github.io/2021/07/05/AFML/AFML1/"/>
+    <id>https://chiechie.github.io/2021/07/05/AFML/AFML1/</id>
+    <published>2021-07-05T11:50:44.000Z</published>
+    <updated>2021-07-05T12:39:08.518Z</updated>
     
-    <content type="html"><![CDATA[<ol type="1"><li>巴菲特希望通过分析公司基本面来做精准判断，通过每次投资的长期持有获得收益，而西蒙斯用机器算法来发现短期胜率，通过短期胜率超过50%加上大数定律（law of large numbers）来保证长时间的盈利</li><li>人在做投资决策的时候都会根据自己的经历和知识储备选取合适的策略。</li><li>从交易的方式来看，投资的策略有三种形式：投资（investment）、投机（speculation）和套利（arbitrage），三种形式都可以用量化的方法来提高胜率。</li><li>1949年，格雷厄姆在《聪明的投资者》里写到：“投资者与投机者最实际的区别在于他们对股市运动的态度上：投机者的兴趣主要在参与市场波动并从中谋取利润，投资者的兴趣主要在以适当的价格取得和持有适当的股票。”</li><li>所谓价值投资其实是“价值和价格之差”投资，然后低买高卖。他说投资的秘诀是“不要赔钱”。</li><li>在金融市场里，如果看不清30年这么长的时间线，分析交易量、交易价格和其它技术和基本面的数据，对股票未来短期内的变化，可以在日或周这样的时间线上找到机会。这样的投机行为并不关心股票未来的成长，但是只要在短期内做到足够好的判断，则可以成功地投机获利。</li><li>如果把时间线再缩短，就会有套利的机会。套利背后的逻辑是低买高卖</li><li>很多高频交易的策略，在市场的大量卖单和买单中找到规律，用一个较低的价格买回股票，然后找到下一个买家用高一点的价格卖出去。</li><li>从投资到投机再到套利，随着交易速度的提升，超额收益会越来越高，但是这样的速度提升也有缺点，那就是随着交易速度的提升，机会的窗口就比较小，盈利的容量会越来越小。如果把股市比作赌场，随着交易速度的提升，赢钱的概率会提高，但是能赢的钱的总量却是在下降的。</li><li>高频的量化投资有点像从沙子里捞金子，每捞一次在付出成本的同时都有一个概率找到金子，捞金子的收益可以从两方面得到，一是捞金子的成功率，这个可以通过优化算法加强预测准确率来得到；二是交易频率，可以通过增加单位时间的交易次数来达到。总收益大致和正确率与交易次数平方根的乘积是成正比的。这个原理叫主动管理基本定律The Fundamental Law of Active Management。</li><li>机器学习做交易策略的一个误区。大家一上来就在想办法预测股价，这个思路是最直接的，从数据分析的层面看，这并没有错，很多对算法很熟悉的人都非常厉害，可以迅速的找到一些算法（例如xgboost）来做非常好的样本内预测。但是一旦在实际股市中使用的时候就会发现预测准确度远远不如历史数据所做出来的。</li><li>问题不是机器学习的算法不够好，而是所有的预测模型都假设底层的市场逻辑没有变化，这样的假设是错误的，导致了过度拟合</li><li>如今的市场上，找一个会用厉害的算法做预测的码农并不难，难的是管理者和投资决策者需要知道如何从最底层理解金融市场的量化思维并发挥出算法的优势。</li></ol><h2 id="参考">参考</h2><ol type="1"><li>https://zhuanlan.zhihu.com/p/362383721</li></ol>]]></content>
+    <content type="html"><![CDATA[<ol type="1"><li>市场上关于投资的书籍大致分为两类：一类是理论家写的，自己都没有实践过；一类是实践家写的，他们误用了数学工具。</li><li>金融市场上现在鱼龙混扎，很多小散户收到不良媒体的诱导会冲动投资，结果造成市场动荡。量化工具可以肃清这种风气，减少这种套利机会。</li></ol><h3 id="为什么金融领域的机器学习项目经常失败">为什么金融领域的机器学习项目经常失败？</h3><p>有一些导致失败的原因：</p><ol type="1"><li>西西弗斯范式（Sisyphus Paradigm）：大概是说请了一堆投资人，但是有用的策略很少，导致入不敷出？</li><li>元策略范式（Meta-Strategy Paradigm）：构建一个成功的策略和构建100个成功的策略话费的心思一样多。构建一个团队，让成员各司其职，成功率要远大于单兵作战。</li><li>常见的陷阱：</li></ol><figure><img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><p>Does that mean that there is no space left for human investors? Not at all. No human is better at chess than a computer. And no computer is better at chess than a human supported by a computer. Discretionary PMs are at a disad- vantage when betting against an ML algorithm, but it is possible that the best results are achieved by combining discretionary PMs with ML algorithms. This is what has come to be known as the “quantamental” way. Throughout the book you will find techniques that can be used by quantamental teams, that is, methods that allow you to combine human guesses (inspired by fundamental variables) with mathematical forecasts. In particular, Chapter 3 introduces a new technique called meta-labeling, which allows you to add an ML layer on top of a discretionary one.</p><h2 id="参考">参考</h2><ol type="1"><li>《Advances in Financial Machine Learning》</li></ol>]]></content>
     
     
       
       
     <summary type="html">&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;巴菲特希望通过分析公司基本面来做精准判断，通过每次投资的长期持有获得收益，而西蒙斯用机器算法来发现短期胜率，通过短期胜率超过50%加上大数定律（law of large numbers）来保证长时间的盈利&lt;/li&gt;
-&lt;li&gt;人在做投资决策的时候</summary>
+&lt;li&gt;市场上关于投资的书籍大致分为两类：一类是理论家写的，自己都没有实践过；一类是实践家写的，他们误用了数学工具。&lt;/li&gt;
+&lt;li&gt;金融市场上现在鱼龙混扎，很多小散户收到不良媒体的诱导会冲动投资，结果造成市场动荡。量化工具可以肃清这种风气，减少这种</summary>
       
     
     
     
+    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="量化" scheme="https://chiechie.github.io/tags/%E9%87%8F%E5%8C%96/"/>
+    
+    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
     
   </entry>
   
@@ -505,11 +511,11 @@
     <category term="沉思录" scheme="https://chiechie.github.io/categories/%E6%B2%89%E6%80%9D%E5%BD%95/"/>
     
     
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
     <category term="科技史" scheme="https://chiechie.github.io/tags/%E7%A7%91%E6%8A%80%E5%8F%B2/"/>
     
     <category term="人工智障" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E9%9A%9C/"/>
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
   </entry>
   
@@ -537,9 +543,9 @@
     
     <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
     
-    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
-    
     <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
     
   </entry>
   

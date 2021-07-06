@@ -12,6 +12,7 @@ categories:
 
 ## xgboost
 
+XGB在GBDT的基础上引入了二阶导数，并且在loss中加入了正则项。
 boosting tree的另外一个代表是xgboost,下面重点介绍一下xgboost
 
 ### 损失函数定义

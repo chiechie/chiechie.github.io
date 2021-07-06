@@ -1,5 +1,5 @@
 ---
-title: 树模型3 Gradient Boosting Decision Tree 和 RandomForest
+title: 树模型3 RandomForest，Adaboost和GBDT
 author: chiechie
 mathjax: true
 date: 2021-05-15 10:39:45
@@ -29,10 +29,12 @@ categories:
     - gradient boost是一种线性blending对模型汇总的方法，只不过，构建新的base estimator时，不是像adboost那样重新对样本赋予权重，而是，直接去最小化残差，然后根据学的结果，赋予当前base estimator一个权重。
     - boosting-like的算法最受到欢迎，即ada boosting和gradient boost
     
-![img_2.png](img_2.png)
+   ![img_2.png](img_2.png)
 5. 为什么对模型做aggregation之后，效果变好了？相当于对特征做了非线性变换，整体表达能力更强；多个estimator求共识，相当于做了正则化，模型效果更稳定。
 6. 不同的blending方法中，有的方法解决overfitting，有的适合解决underfitting。
-   
+
+# 随机森林，Adaboost和 GBDT
+
 ## 随机森林
 
 1. Bagging是什么？通过bootstrap的方式抽样得到多分样本。Bagging的特点是，可以降低整体的模型预测的不稳定性，通过让多个base estimator投票或者取均值的方式。
@@ -44,27 +46,10 @@ categories:
 6. rf的作者还建议，可个对特征作随机组合，即构建投影矩阵，将原始的训练数据映射到一个低维的特征空间。
 
 
-## GBDT 
 
-1. GBDT是将一个优化问题，拆解成一系列子优化问题，每个子优化问题要解决的问题是，基于当前学习的成果，为了达到最终的目标（拟合target），我还要做出哪些改变，也就是是说，当前的base estimator的优化目标是最小化target和截止当前的预测值之间的差，也叫residual。
-   ![img_4.png](img_4.png)
-   h是当前的base estimator，$\eta$表示权重
-2. 如何使用GBDT做回归？将上面的error 设置为squared loss。
-3. GBDT的预测逻辑，分两个层次，第一层，保证每一个样本的准确率；第二层，构造决策路径，即希望通过特征来达到第一层的准确率。实现第一层目的的方法是基于梯度确定阶段性目标；实现第二层的目的的方法通过特征去拟合阶段性目标（残差），也就是cart。
-![img_5.png](img_5.png)
-4. 怎么求这个子优化问题？先求里面的优化问题在搜索最佳步长$\eta$.第一步类似拉格朗日乘子法，将h的大小限制到一定的范围内。
-5. 经过各种变形之后，发现直接拟合residual就好。
-![img_7.png](img_7.png)
-6. adaboost是要根据不同样本的权重来找一一个拟合的最好的小g; GBDT是找一个能拟合当前残差最好的小g。
+## Adaboost
 
-
-### Adaboost, GBDT 与 XGBoost
-2. XGB在GBDT的基础上引入了二阶导数，并且在loss中加入了正则项。
-
-
-## 算法细节
-
-![adaboost](trees_1/img.png)
+![adaboost](./img.png)
 
 boosting中有三个重要的参数：
 - 树的棵树
@@ -72,8 +57,25 @@ boosting中有三个重要的参数：
 - 每一棵树的最大splits个数
 
 
+## GBDT 
 
-## 参考资料
+1. GBDT是将一个优化问题，拆解成一系列子优化问题，每个子优化问题要解决的问题是，在当前学习成果的基础上查漏补缺，从而更加逼近target variable。即当前的base estimator的优化目标是最小化target和截止当前的预测值之间的差，也叫residual。
+   ![img_4.png](img_4.png)
+   h是当前的base estimator，$\eta$表示权重
+2. 怎么求这个优化问题？先求里层的优化问题，再求外层的优化问题。里面的优化问题是将err对当前prediction做一阶泰勒展开，其中一阶项（h，待学习的目标）的系数就是error相对当前prediction的一偏导数，也就是梯度。这里有一个问题，如果我已经知道要做regression，也就是当前的目标函数是关于h的二次函数，我直接求最优解不就好了，即令损失函数关于h的导数为0？其实是可以的，但是GBDT的野心很大，想推导出，任意形式的err对应的最优解h，随意下面的一阶近似方法是更具备通用性的。（想象一下如果err是absolute loss或者像交叉熵这种非convex，就不适用了。btw，xgboost是使用err的二阶泰勒展开去作为err的近似）
+   
+   > 回忆一下一阶泰勒展开：
+   > $$f(x + \Delta x) = f(x) + \Delta x \partial f_x $$
+   
+   ![img_5.png](img_5.png)
+3. 里层的优化问题求解方法类似拉格朗日乘子法，先将h的大小限制到一定的范围内。然后经过各种变形之后，发现直接拟合residual就好。
+   ![img_7.png](img_7.png)
+4. 如何使用GBDT做回归？将上面的error 设置为squared loss。
+6. adaboost是要根据不同样本的权重来找一一个拟合的最好的小g; GBDT是找一个能拟合当前残差最好的小g。
+
+
+
+# 参考资料
 1. [Random Forest Algorithm-Hsuan-Tien Lin](https://www.youtube.com/watch?v=ATM3sH0D45s&list=RDCMUC9Wi1Ias8t4u1OosYnHhi0Q&index=9)
 2. [Adaptive Boosting linxuantian](https://www.csie.ntu.edu.tw/~htlin/mooc/doc/208_present.pdf)
 3. [youtube-gbdt](https://www.youtube.com/watch?v=2xudPOBz-vs)

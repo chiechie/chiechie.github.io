@@ -16,7 +16,7 @@ categories:
 
 ## 总结
 
-1. 我们常常对表数据使用kmeans来实现聚类，其实也是分为两步，第一步是是将多维的表数据（维度代表特征），转为2D的相似图（一个节点代表一个样本）。第二步，是对这个图进行聚类。
+1. 我们常常对表数据使用kmeans来实现聚类，内部流程分为两步，第一步是是将多维的表数据（维度代表特征），转为2D的相似图（一个节点代表一个样本）。第二步，是对这个图进行聚类。
 2. kmeans在实际中应用较多，但是并没有理论保证其收敛。
    > ...I don't think there is a nice theory of convergence or rate of convergence, But is  a very popular algorimth,..., But that's one sort of hack that works quite well--Gilbert Strang
 3. 对一个图，找到其中的一些cluster，kmeans是其中一种方法，还有谱聚类（spectral clustring）。

@@ -32,6 +32,9 @@ boosting是另外一种提升决策树效果的方法，Boosting works in a simi
 ![img.png](trees_1/img.png)
 xgboost是一种boosting tree的一种，其他的还是有gbdt，catboost
 
+
+
+
 ## 参考资料
 1. [youtube-gbdt](https://www.youtube.com/watch?v=2xudPOBz-vs)
 2. [xgboost](https://arxiv.org/pdf/1603.02754.pdf)

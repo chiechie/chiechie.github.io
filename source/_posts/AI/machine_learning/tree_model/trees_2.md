@@ -14,20 +14,36 @@ categories:
 
 # 总结
 
-1. 构建一个决策树需要确定两个东西，一个是确定分支条件，一个是落入每个分支的预测值。第一步将特征空间划分为多个distinct and non-overlapping regions,$R_1,\dots,R_J$；第二步，对每个region定义一个response variable，作为该region的值。
+1. 决策树是一个预测算法，是使用贪婪的递归的方法来找到最优的预测结构。
+1. 构建一个决策树需要确定分支条件以及每个分支的预测值。构建分支条件即把特征空间划分为多个distinct and non-overlapping regions,$R_1,\dots,R_J$；第二步，对每个region定义一个response variable，作为该region的值。
 2. 构建好了一个决策树，想要使用决策树做预测，步骤也分为两步：第一步是按照分支条件将新样本路由到指定的叶子结点，第二步将叶子结点对应的responsible varible作为该样本的预测值。
-2. 怎么得到这些region呢？决策树的实现算法有三类：ID3，C4.5和cart。前两者可以构造多叉树，cart只能构造二叉树。 
+3. 怎么得到分支条件呢？有三类构建决策树的算法：ID3，C4.5和cart。前两者可以构造多叉树，cart只能构造二叉树。 
 因为cart效果最好，现在通常就用它（例如sklean）。
-3. 三类算法的大致思路一样，分为两步：第一步是将feature space切成多个boxes。为什么不是切成多个球？因为球没法填充整个feature space.
-第二步是找到最优的切割boxes的方式，如果去遍历每一组partition of feature space，计算量太大了，通常采用greedy的方法。
-4. 落入每个region的response variable是什么？
+4. ID3，C4.5和cart三类算法的大致思路一样，分为两步：第一步是将feature space切成多个boxes。为什么不是切成多个球？因为球没法填充整个feature space.
+5. 如何找到最优的切割boxes的方式，如果去遍历每一组partition of feature space，计算量太大了，通常采用greedy的方法。
+6. 构建决策树的过程中需要确定的参数：分支的个数，条件分支的条件，终止条件，叶子结点的值。
 
-  - 如果是连续变量，求该region上训练集的response均值，以后赋值给新落入该区间的predictor的response，
+
+
+## cart
+1. cart的特色是构建的一个binary tree，每次分支条件都是将一个空间以分为2，变成2个子空间，每个叶子结点的值，即response variable都是一个常数，是这么的到的：
+  - 如果target var是一个连续变量，求落入该region的训练集的response均值，即${y_n}$的均值，其实这个均值对应的是最小化suqared error。
 构建一个决策树，主要是要确定partition，或者说分支条件，以及每个落入每个partition（或者说）中对应的预测值。
-  - 如果是离散变量，求众数。
+  - 如果target var是一个离散变量，求众数对应的那个类别。
+2. 怎么确定分支条件？找一个decision stump，使用纯度（purify）来衡量分支的质量，如果左边的data set 和右边的dataset 纯度 都很高，（其中的大部分样本的label很接近），就说切分的很好。对应到计算上面，就是找一个让平均不纯度最小的切分方式（decision stump）。
+3. 如何确定分支/切割的不纯度？
+    - 如果target var是一个连续变量，使用squared loss来描述impurity，（跟样本子集的均值比），
+    - 如果target var是一个离散变量，使用不一致样本比例来描述impurity，（跟样本子集的众数币），多分类的时候，不纯度常用giniindex
+    - 如果是多分类，经常使用Gini index来刻画不纯度。
+4. 什么时候会停下来？当满足下面的条件时，也叫fully grown tree：
+    - 落入某个分支的样本的target都一样，不纯度取到最小了，
+    - 落入某个分支的样本的x都一样，没有decision stupms了。
+5. 为何要剪枝(pruning)? a very bushy tree has got high variances,ie, over-fitting the data
 
 
-# 基本概念
+# 附录
+
+## 基本概念
 
 - 信息增益: 衡量切分前后，样本的秩序的提升or混乱程度的下降。
 
@@ -106,11 +122,6 @@ $$\min\limits_{T\in T_0} \sum\limits_{m=1}^{|T|}\sum\limits_{x_i\in R_m}(y_i - \
 classification tree切分节点时，参考信息增益，其他流程和构建回归树是一样的
 
 
-## 为何要剪枝?
-
-为何要剪枝(pruning)?
-
-a very bushy tree has got high variances,ie, over-fitting the data
 
 
 ## 参考

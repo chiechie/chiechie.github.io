@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-05 18:04:46" itemprop="dateModified" datetime="2021-07-05T18:04:46+08:00">2021-07-05</time>
+                <time title="修改时间：2021-07-06 09:04:00" itemprop="dateModified" datetime="2021-07-06T09:04:00+08:00">2021-07-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,9 +223,18 @@
 <ol type="1">
 <li>LSTM是一个循环神经网络，即RNN模型，是对Simple RNN的一种改进，可以避免梯度消失问题, 可以有比simple RNN更长的记忆。LSTM的论文在1997年就发表了。</li>
 <li>LSTM的结构比simple-RNN的结构复杂很多，Simple RNN有1个参数矩阵，LSTM有四个参数矩阵。</li>
-<li>LSTM也可以看成一个带状态的函数，输入当前词的embedding向量（维度为m）和上一个时刻的状态向量（h维）和上一个时刻的记忆单元向量（h维），输出当前时刻的状态向量（h维）和当前时刻的记忆单元向量（h维）。</li>
+<li>LSTM也可以看成一个带状态的函数，输入当前词的embedding向量（维度为m）和上一个时刻的状态向量（h维）和上一个时刻的记忆单元向量（h + m 维），输出当前时刻的状态向量（h维）和当前时刻的记忆单元向量（h维）。</li>
 <li>LSTM通过引入一个传输带（conveyor belt）来缓解梯度消失的问题。过去的信息通过传输带到达下一个时刻，不会发生很大变化。</li>
-<li>LSTM有4个组件，各自对应一个参数矩阵。</li>
+<li>LSTM的处理流程可以描述为，对长期记忆选择性遗忘，对短期记忆选择性保留，两个求和得到了新的长期记忆；将新的长期记忆选择性输出，得到新的短期记忆。</li>
+<li>lstm有3个门，分别为输入门，输出门，遗忘门，也是三个权重向量，取值范围从0到1
+<ul>
+<li><p>遗忘门：一个权重向量表示上一个时刻的传送带向量<span class="math inline">\(\mathbf{c}_{t-1}\)</span>需要遗忘多少信息</p></li>
+<li><p>输入门：一个权重向量，控制当前时刻的新的状态<span class="math inline">\(z\)</span>有多少信息要保留</p>
+<blockquote>
+<p>遗忘门 + 输入门共同作用的结果是，得到新的传送带向量</p>
+</blockquote></li>
+<li><p>输出门：控制当前传送带向量<span class="math inline">\(\tilde{\mathbf{c}}_{t}\)</span>有多少信息要输出给外部状态</p></li>
+</ul></li>
 </ol>
 <h2 id="lstm应用-情感判断">LSTM应用-情感判断</h2>
 <p><img src="./img_3.png" /></p>
@@ -249,25 +258,40 @@
 <h3 id="lstm的内部结构">LSTM的内部结构</h3>
 <ol type="1">
 <li><p>LSTM最重要的设计是一个传输带（conveyor belt），记为向量<span class="math inline">\(C_t\)</span>, 过去的信息通过传输带直接传到下一个时刻<span class="math inline">\(C_{t+1}\)</span> ，不会发生太大的变化。LSTM就是靠传输带来避免梯度小时的问题。</p></li>
-<li><p>LSTM中有很多gates，可以有选择的让信息通过，</p></li>
-<li><p>LSTM的其中一个gates--遗忘门，由两部分组成，sigmoid激活函数和elementiwise mulplication两部分组成。 forget gate输入一个a和传送带向量<span class="math inline">\(C_t\)</span>,输出（中间的siogmoid输出了一个遗忘门向量f）。遗忘门的作用是，让传输带上的信息有选择性的通过，选择性是由遗忘门向量控制的（经过sigmoid作用之后取值范围为0~1）。 <img src="image_122.png" alt="img_2.png" /></p></li>
-<li><p>遗忘门的输入a是怎么得到呢？上一个时刻的状态<span class="math inline">\(h_{t-1}\)</span>，和新的输入，即当前时刻观测值<span class="math inline">\(x_t\)</span>，以及Wi <img src="./lstm.png" />。为了得到双曲正切的输入，也需要一个参数矩阵<span class="math inline">\(W_i\)</span>，他作用于上一个时刻的状态向量以及最新的观测向量， <img src="image_123.png" alt="img_3.png" /> <img src="image_126.png" alt="img_6.png" /></p></li>
-<li><p>输入门跟遗忘门的计算逻辑很像，也是由激活函数和点乘算子组成。但不同之处在于，输入门有两个激活函数--sigmoid函数和双曲正切函数。其中双曲正切函数可以把上一个时刻的状态和新的观测值组成的向量映射到【-1，1】之间，sigmoid函数将上一个时刻状态和新的观测值映射到[0,1]--叫输入门向量。输入门的目的是，让上一个时刻的状态和最新的信息，能有选择性的通过。</p>
+<li><p>遗忘门的输入是上一个时刻的状态<span class="math inline">\(h_{t-1}\)</span>和当前时刻的观测值<span class="math inline">\(x_t\)</span>，通过遗忘矩阵<span class="math inline">\(W^f\)</span>加上一个sigomid变换，得到一个概率向量。 <img src="./lstm.png" />。 <img src="image_123.png" alt="img_3.png" /></p></li>
+<li><p>LSTM的遗忘门（forget gate）的作用是，让传输带上的信息有选择性的通过，选择性是由遗忘门向量控制的，通过遗忘门向量与传送带向量<span class="math inline">\(C_t\)</span>点乘来实现。 <img src="image_122.png" alt="img_2.png" /></p></li>
+<li><p>输入门(input gate)的输入也是上一个时刻的状态<span class="math inline">\(h_{t-1}\)</span>和当前时刻的观测值<span class="math inline">\(x_t\)</span>。</p>
 <figure>
 <img src="image_125.png" alt="img_5.png" /><figcaption aria-hidden="true">img_5.png</figcaption>
 </figure></li>
+<li><p>输入门的目的是，让上一个时刻的状态和最新的信息，能有选择性的通过。通过计算输入门向量跟<span class="math inline">\([h_{t-1}, x_{t}]\)</span>的双曲正切向量的点乘来实现。</p>
+<blockquote>
+<p>双曲正切函数可以把上一个时刻的状态和新的观测值组成的向量映射到【-1，1]之间，</p>
+</blockquote></li>
+<li><p>输出门(output gate)的输入也是上一个时刻的状态<span class="math inline">\(h_{t-1}\)</span>和当前时刻的观测值<span class="math inline">\(x_t\)</span></p></li>
 </ol>
-<p><img src="image_127.png" alt="img_7.png" /> 6. 遗忘门 跟 传送带向量点乘， 输入门<span class="math inline">\(i_t\)</span> 跟 新的观测值<span class="math inline">\(\pie C_T\)</span>的点乘。将两个点乘向量相加，得到新的传送带向量<span class="math inline">\(c_T\)</span> 7. 计算输出们<span class="math inline">\(o_t\)</span>，输入上一个时刻的状态和新输入 <img src="image_128.png" alt="img_8.png" /> 8. 计算状态向量<span class="math inline">\(H_T\)</span>, 将输出们向量<span class="math inline">\(o_t\)</span>跟传输带最新值<span class="math inline">\(c_t\)</span>的双曲正切映射进行点乘，得到新的状态向量 9. 新的状态向量<span class="math inline">\(h_t\)</span>有两份copies，一份作为当前时刻的输出，一份作为下一个时刻lstm单元的输入。可以认为迄今为止，t个时刻的输入信息都被编码到了状态向量<span class="math inline">\(h_t\)</span>中。 <img src="image_129.png" alt="img_9.png" /> 10. LSTM有遗忘门，输入门，new value，输出门，一共对应4个参数矩阵。矩阵的行数是状态向量的长度，矩阵的列数是状态向量的长度+输入向量的长度。</p>
-<p><img src="img_1210.png" alt="img_10.png" /> 11. LSTM引入新的内部状态专门进行先行的循环信息传递，同时将非线性加工后的信息给隐藏层的外部状态。lstm有3个门，分别为输入门，输出门，遗忘门，也是三个权重向量</p>
-<ul>
-<li>输入门：一个权重向量，控制当前时刻的候选状态<span class="math inline">\(\mathbf{C}_{t}\)</span>有多少信息要保留</li>
-<li>输出门：控制当前内部状态<span class="math inline">\(\tilde{\mathbf{c}}_{t}\)</span>有多少信息要输出给外部状态</li>
-<li>遗忘门：一个权重向量表示上一个时刻的内部状态<span class="math inline">\(\mathbf{c}_{t-1}\)</span>需要遗忘多少信息</li>
-</ul>
-<p><img src="./img_3.png" /></p>
-<p>更新当前记忆 <img src="./img_1.png" /></p>
-<p>更新当前时刻的state</p>
+<figure>
+<img src="image_128.png" alt="img_8.png" /><figcaption aria-hidden="true">img_8.png</figcaption>
+</figure>
+<ol start="7" type="1">
+<li><p>输出门的目的是，让最新的长期记忆有选择性的输出，作为状态向量<span class="math inline">\(h_t\)</span>。计算状态向量, 将输出门向量<span class="math inline">\(o_t\)</span>跟传输带最新值<span class="math inline">\(c_t\)</span>的双曲正切映射进行点乘，得到新的状态向量<span class="math inline">\(h_t\)</span>。</p></li>
+<li><p>新的状态向量<span class="math inline">\(h_t\)</span>有两份copies，一份作为当前时刻的输出，一份作为下一个时刻lstm单元的输入。可以认为迄今为止，t个时刻的输入信息都被编码到了状态向量<span class="math inline">\(h_t\)</span>中。 <img src="image_129.png" alt="img_9.png" /></p></li>
+<li><p>LSTM有遗忘门，输入门，new value，输出门，一共对应4个参数矩阵。矩阵的行数是状态向量的长度，矩阵的列数是状态向量的长度+输入向量的长度。</p></li>
+</ol>
+<figure>
+<img src="./image_1210.png" alt="img_10.png" /><figcaption aria-hidden="true">img_10.png</figcaption>
+</figure>
+<ol start="10" type="1">
+<li>更新长期记忆-传送带向量</li>
+</ol>
+<p><img src="./img_1.png" /></p>
+<ol start="11" type="1">
+<li>更新短期机器-状态向量</li>
+</ol>
 <p><img src="./img_2.png" /></p>
+<ol start="12" type="1">
+<li>LSTM处理过程用数学公式表达 <img src="img_5.png" alt="img_5.png" /> <img src="img_4.png" alt="img_4.png" /></li>
+</ol>
 <h2 id="参考资料">参考资料</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/a-comparison-of-dnn-cnn-and-lstm-using-tf-keras-2191f8c77bbe">a-comparison-of-dnn-cnn-and-lstm-using-tf-keras</a></li>
@@ -275,6 +299,7 @@
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Cc4ENs6BHQw&amp;list=PLvOO0btloRnuTUGN4XqO85eKPeFSZsEqK&amp;index=3">wangshusen-RNN-youtube</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">RNN模型与NLP应用(4/9)：LSTM模型</a></li>
 <li><a target="_blank" rel="noopener" href="https://nndl.github.io/nndl-book.pdf">神经网络与深度学习</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32085405">人人都能看懂的LSTM</a></li>
 </ol>
 
       
@@ -477,7 +502,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">202</span>
+        <span class="site-state-item-count">203</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

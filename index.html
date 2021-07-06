@@ -188,10 +188,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-07-05 19:50:44 / 修改时间：20:39:08" itemprop="dateCreated datePublished" datetime="2021-07-05T19:50:44+08:00">2021-07-05</time>
+              <time title="创建时间：2021-07-05 19:50:44" itemprop="dateCreated datePublished" datetime="2021-07-05T19:50:44+08:00">2021-07-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-06 11:08:47" itemprop="dateModified" datetime="2021-07-06T11:08:47+08:00">2021-07-06</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -224,10 +230,40 @@
 <li>元策略范式（Meta-Strategy Paradigm）：构建一个成功的策略和构建100个成功的策略话费的心思一样多。构建一个团队，让成员各司其职，成功率要远大于单兵作战。</li>
 <li>常见的陷阱：</li>
 </ol>
-<figure>
-<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
-<p>Does that mean that there is no space left for human investors? Not at all. No human is better at chess than a computer. And no computer is better at chess than a human supported by a computer. Discretionary PMs are at a disad- vantage when betting against an ML algorithm, but it is possible that the best results are achieved by combining discretionary PMs with ML algorithms. This is what has come to be known as the “quantamental” way. Throughout the book you will find techniques that can be used by quantamental teams, that is, methods that allow you to combine human guesses (inspired by fundamental variables) with mathematical forecasts. In particular, Chapter 3 introduces a new technique called meta-labeling, which allows you to add an ML layer on top of a discretionary one.</p>
+<p><img src="img.png" alt="img.png" /> 4. 是否意味着有了ai就没有human投资者的空间了？不是，可以人+ai</p>
+<h2 id="chapter2-金融数据结构">chapter2 金融数据结构</h2>
+<ol type="1">
+<li><p>金融数据经常分为4类，基本面数据，市场交易数据，分析数据，另类数据（Alternative） <img src="img.png" alt="img.png" /></p></li>
+<li><p>基本面数据包括公司每个季度发布的会计报告，要注意发布时间和统计时间段的区别。</p></li>
+<li><p>另类数据（Alternative）包括个人数据，商业过程数据，卫星，天气数据。</p></li>
+<li><p>数据处理，为了让ml方法可用，需要将原始数据处理为表数据（bars）。两种处理方法，标准bar methods和信息驱动的方法。第二种在实践中用的多。</p></li>
+<li><p>标准bars方法：将不等间隔处理成等间隔数据，很多数据厂商都是提供这种格式。标准bars方法包括Time Bars，Tick Bars，Volume Bars，Dollar Bars</p>
+<blockquote>
+<p>一个tick表示一次成交事件</p>
+</blockquote></li>
+<li><p>【Tick Bars】每隔多少笔交易采样一次，属于一种基于信息的采样方法，其理论依据是：固定时间内的价格变化服从方差无限大的Paretian分布；固定交易笔数内的价格变化服从高斯分布。</p>
+<blockquote>
+<p>Price changes over a fixed number of transactions may have a Gaussian distribution. Price changes over a fixed time period may follow a stable Paretian distribution, whose variance is infinite. Since the number of transactions in any time period is random, the above statements are not necessarily in disagreement --Mandelbrot and Taylor</p>
+</blockquote></li>
+<li><p>上面的假设很重要，因为很多统计方法的依赖于假设--样本来自IID高斯过程。</p></li>
+<li><p>【Tick Bars】构造tick bars要留意异常点，很多交易所在看盘前和收盘后都有竞价（auction），这段时间，order book 积累 bids 和 offers单，并不撮合（match）。当竞价结束，有一笔数量很大的交易会公开，这一笔交易可等价于成千上万个ticks，虽然现实的是一个tick。</p></li>
+<li><p>【Volume Bars】tick bars的缺陷在于，真实情况下，我们下的一笔单子会被拆分成多笔交易去成交。因此看到的tick比我们实际下的tick变多了。Volume bars可以解决这个问题，他是按照一定证券价值变动的时间段，进行抽样。举个例子，we could sample prices every time a futures contract exchanges 1,000 units, regardless of the number of ticks involved.</p></li>
+<li><p>【Dollar Bars】每隔一段时间，市场上交易价值达到某个给定值（bar size），就进行抽样，the bar size could be adjusted dynamically as a function of the free-floating market capitalization of a company (in the case of stocks), or the outstanding amount of issued debt (in the case of fixed-income securities)</p></li>
+<li><p>tick bars， volumn bars， dollar bars 三者对比： If you compute tick bars and volume bars on E-mini S&amp;P 500 futures for a given bar size, the number of bars per day will vary wildly over the years. That range and speed of variation will be reduced once you compute the number of dollar bars per day over the years, for a constant bar size. 结论是前面两者每天的变动范围和变动速度，要远高于dollar bars <img src="img_1.png" alt="img_1.png" /></p></li>
+<li><p>信息驱动的bars，目的在于，当有信息到达时，采样更频繁。信息驱动bars有几种方法：Tick Imbalance Bars，Volume/Dollar Imbalance Bars，Tick Runs Bars，Volume/Dollar Runs Bars</p></li>
+<li><p>【Tick Imbalance Bars】背后的想法是只要tick数据超过我们的期望，就去采样。这样设置index，累计的交易信号超过某个阈值，没看懂</p></li>
+<li><p>【Volume/Dollar Imbalance Bars】？</p></li>
+<li><p>【Tick Runs Bars】？</p></li>
+<li><p>【Volume/Dollar Runs Bars】？</p></li>
+<li><p>处理多产品序列：The ETF Trick、PCA Weights，Single Future Roll <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pcaWeights</span>(<span class="params">cov,riskDist=<span class="literal">None</span>,riskTarget=<span class="number">1.</span></span>):</span></span><br><span class="line">    <span class="comment"># Following the riskAlloc distribution, match riskTarget</span></span><br><span class="line">    eVal,eVec = np.linalg.eigh(cov) <span class="comment"># must be Hermitian              </span></span><br><span class="line">    indices = eVal.argsort()[::-<span class="number">1</span>] <span class="comment"># arguments for sorting eVal desc</span></span><br><span class="line">    eVal,eVec=eVal[indices],eVec[:,indices]</span><br><span class="line">    <span class="keyword">if</span> riskDist <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        riskDist=np.zeros(cov.shape[<span class="number">0</span>])</span><br><span class="line">        riskDist[-<span class="number">1</span>]=<span class="number">1.</span> </span><br><span class="line">    loads=riskTarget*(riskDist/eVal)**<span class="number">.5</span> </span><br><span class="line">    wghts=np.dot(eVec,np.reshape(loads,(-<span class="number">1</span>,<span class="number">1</span>))) </span><br><span class="line">    <span class="comment">#ctr= (loads/riskTarget)**2*eVal # verify riskDist </span></span><br><span class="line"><span class="comment"># return wghts</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>直接让ml预测涨跌很难， after certain catalytic conditions算法会更容易表现好。</p></li>
+<li><p>对特征进行采样的方法-Event-Based Sampling，其中一种方法叫The CUSUM Filter，利用CUSUM可以构造交易策略（Fama and Blume [1966]的filter trading strategy），同事也可以用来采样：当累计收益<span class="math inline">\(S_t\)</span>超过某个阈值时，进行采样，并将<span class="math inline">\(S\)</span>置为0，</p></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getTEvents</span>(<span class="params">gRaw,h</span>):</span> </span><br><span class="line">    <span class="comment"># gRaw： raw time series</span></span><br><span class="line">    <span class="comment"># h: thresh</span></span><br><span class="line">    tEvents,sPos,sNeg=[],<span class="number">0</span>,<span class="number">0</span> </span><br><span class="line">    diff=gRaw.diff()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> diff.index[<span class="number">1</span>:]:</span><br><span class="line">        sPos,sNeg=<span class="built_in">max</span>(<span class="number">0</span>,sPos+diff.loc[i]),<span class="built_in">min</span>(<span class="number">0</span>,sNeg+diff.loc[i]) </span><br><span class="line">        <span class="keyword">if</span> sNeg&lt;-h:</span><br><span class="line">            sNeg=<span class="number">0</span></span><br><span class="line">            tEvents.append(i) </span><br><span class="line">        <span class="keyword">elif</span> sPos&gt;h:</span><br><span class="line">            sPos=<span class="number">0</span></span><br><span class="line">            Events.append(i) </span><br><span class="line">    <span class="keyword">return</span> pd.DatetimeIndex(tEvents)</span><br></pre></td></tr></table></figure>
+<ol start="19" type="1">
+<li><span class="math inline">\(S_t\)</span>可以是structural break statistics, entropy, or market microstructure measurement。比如，我们可以定义一个时间，之哟啊r SADF远离之前的取值足够远。</li>
+<li>使用event-based的方法获得了一个子集之后，可以让ml算法来分析，这些特殊事件有没有蕴含一些有值得决策的信息。</li>
+</ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li>《Advances in Financial Machine Learning》</li>
@@ -421,7 +457,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">202</span>
+        <span class="site-state-item-count">203</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

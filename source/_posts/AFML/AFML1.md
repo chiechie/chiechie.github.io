@@ -148,13 +148,29 @@ it is preferable to drop extremely rare labels and focus on the more common outc
 
 ## chapter 4 样本权重
 
-## chapter 5 部分可微特征
+大部分ML算法都是基于IID假设，而金融时序不是IID的，所以大部分ml应用直接套用到金融场景会失败。 
 
+## chapter 5 部分差分特征
+Fractionally Differentiated Features
+1. 金融序列有很低信噪比，标准的平稳变换，例如差分，会早晨信息丢失。
+2. 价格序列有记忆，但是查分后的序列没有记忆了。
+3. 接下来理论家们会从剩下的残差信号中使用各种fancy的工具去提取信息。
+下面会介绍一些转换方法，在保留记忆的同时，又能实现平稳变换的放啊。
+
+### STATIONARITY VS. MEMORY的两难问题
+
+It is common in finance to find non-stationary time series. What makes these series non-stationary is the presence of memory, i.e., a long history of previous levels that shift the series’ mean over time. In order to perform inferential analyses, researchers need to work with invariant processes, such as returns on prices (or changes in log- prices), changes in yield, or changes in volatility. These data transformations make the series stationary, at the expense of removing all memory from the original series (Alexander [2001], chapter 11). Although stationarity is a necessary property for inferential purposes, it is rarely the case in signal processing that we wish all mem- ory to be erased, as that memory is the basis for the model’s predictive power. For example, equilibrium (stationary) models need some memory to assess how far the
+price process has drifted away from the long-term expected value in order to gen- erate a forecast. The dilemma is that returns are stationary, however memory-less, and prices have memory, however they are non-stationary. The question arises: What is the minimum amount of differentiation that makes a price series stationary while preserving as much memory as possible? Accordingly, we would like to generalize the notion of returns to consider stationary series where not all memory is erased. Under this framework, returns are just one kind of (and in most cases suboptimal) price transformation among many other possibilities.
+Part of the importance of cointegration methods is their ability to model series with memory. But why would the particular case of zero differentiation deliver best out- comes? Zero differentiation is as arbitrary as 1-step differentiation. There is a wide region between these two extremes (fully differentiated series on one hand, and zero differentiated series on the other) that can be explored through fractional differentia- tion for the purpose of developing a highly predictive ML model.
+Supervised learning algorithms typically require stationary features. The reason is that we need to map a previously unseen (unlabeled) observation to a collection of labeled examples, and infer from them the label of that new observation. If the features are not stationary, we cannot map the new observation to a large number of known examples. But stationarity does not ensure predictive power. Stationarity is a necessary, non-sufficient condition for the high performance of an ML algorithm. The problem is, there is a trade-off between stationarity and memory. We can always make a series more stationary through differentiation, but it will be at the cost of erasing some memory, which will defeat the forecasting purpose of the ML algorithm. In this chapter, we will study one way to resolve this dilemma.
 
 ### 5.5 IMPLEMENTATION
+
+
 ### 5.5.1 Expanding Window
 #### 5.5.2 Fixed-Width Window Fracdiff
 
 
 ## 参考
 1. 《Advances in Financial Machine Learning》
+2. https://blog.csdn.net/weixin_38753422/article/details/100179559

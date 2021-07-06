@@ -30,7 +30,7 @@ categories:
 ## chapter 2 金融数据结构
 
 1. 金融数据经常分为4类，基本面数据，市场交易数据，分析数据，另类数据（Alternative）
-![img.png](img.png)
+![img.png](image.png)
 2. 基本面数据包括公司每个季度发布的会计报告，要注意发布时间和统计时间段的区别。
 3. 另类数据（Alternative）包括个人数据，商业过程数据，卫星，天气数据。
 4. 数据处理，为了让ml方法可用，需要将原始数据处理为表数据（bars）。两种处理方法，标准bar methods和信息驱动的方法。第二种在实践中用的多。
@@ -48,7 +48,7 @@ categories:
 10. 【Volume Bars】tick bars的缺陷在于，真实情况下，我们下的一笔单子会被拆分成多笔交易去成交。因此看到的tick比我们实际下的tick变多了。Volume bars可以解决这个问题，他是按照一定证券价值变动的时间段，进行抽样。举个例子，we could sample prices every time a futures contract exchanges 1,000 units, regardless of the number of ticks involved.
 11. 【Dollar Bars】每隔一段时间，市场上交易价值达到某个给定值（bar size），就进行抽样，the bar size could be adjusted dynamically as a function of the free-floating market capitalization of a company (in the case of stocks), or the outstanding amount of issued debt (in the case of fixed-income securities)
 12. tick bars， volumn bars， dollar bars 三者对比： If you compute tick bars and volume bars on E-mini S&P 500 futures for a given bar size, the number of bars per day will vary wildly over the years. That range and speed of variation will be reduced once you compute the number of dollar bars per day over the years, for a constant bar size. 结论是前面两者每天的变动范围和变动速度，要远高于dollar bars
-   ![img_1.png](AFML1/img_1.png)
+   ![img_1.png](./img_1.png)
 13. 信息驱动的bars，目的在于，当有信息到达时，采样更频繁。信息驱动bars有几种方法：Tick Imbalance Bars，Volume/Dollar Imbalance Bars，Tick Runs Bars，Volume/Dollar Runs Bars
 14. 【Tick Imbalance Bars】背后的想法是只要tick数据超过我们的期望，就去采样。这样设置index，累计的交易信号超过某个阈值，没看懂
 15. 【Volume/Dollar Imbalance Bars】？
@@ -99,20 +99,52 @@ def getTEvents(gRaw,h):
 > 在监督学习中，需要输入label，那么在金融领域，如何定义label？
 
 
-### 3.2 固定时间段方法 & 
+### 固定时间段方法
 
 1. 大部分论文都是采用的这个方法，即固定的一段时间收益率是否超过/低于某个取值。
-![img_2.png](AFML1/img_2.png)
+    ![img_2.png](./img_2.png)
 2. 虽然大部分人这么用，但是这个方法跟固定时间段采样有一样的毛病，就是固定时间段内的样本并不服从gaussian分布。第二个缺陷是，这个阈值是固定的，无视当前市场波动率的变化，可能会导致错失很多有价值的正样本。
 3. 有更优的标记方法：动态阈值（类似异常检测）和  volume /dollar bars（波动率更固定）， 
 4. 即使改进了fixed time 和 fixed thresh，还有一个很显现实的问题就是，要考虑到价格路径，如果在半路触发margin call，那么预测得再准也没有用。
 
 
-### 3.4 3重障碍方法
+### 3重障碍方法
 
 1. 三重障碍方法是这样的，首先设置2个水平障碍和1个垂直障碍。2个水平障碍是基于变动的日波动率算出来的，1个垂直障碍是说，离上一次position take，经过了bars的个数。
-2. 如果upper 障碍最先触发，返回1；如果lower障碍最先触发，返回-1；如果垂直的障碍触发，返回-1/+1，或者0，具体情况具体分析。
-3. 三重障碍方法是路径依赖的标记方法。
+2. 如果upper障碍最先触发，返回1；如果lower障碍最先触发，返回-1；如果垂直的障碍触发，返回-1/+1，或者0，具体情况具体分析.三重障碍方法是路径依赖的标记方法。
+```python
+def applyPtSlOnT1(close,events,ptSl,molecule):
+    # apply stop loss/profit taking, if it takes place before t1 (end of event)
+    events_=events.loc[molecule] 
+    out=events_[['t1']].copy(deep=True)
+    if ptSl[0]>0:
+        pt=ptSl[0]*events_['trgt'] 
+    else:
+        pt=pd.Series(index=events.index) # NaNs
+    if ptSl[1]>0:
+        sl=-ptSl[1]*events_['trgt'] 
+    else:
+        sl=pd.Series(index=events.index) # NaNs
+    for loc,t1 in events_['t1'].fillna(close.index[-1]).iteritems():
+        df0=close[loc:t1] # path prices df0=(df0/close[loc]-1)*events_.at[loc,'side'] # path returns out.loc[loc,'sl']=df0[df0<sl[loc]].index.min() # earliest stop loss. out.loc[loc,'pt']=df0[df0>pt[loc]].index.min() # earliest profit taking.
+    return out
+```
+### 学习SIDE和SIZE
+
+1. 这种标记可以让ml算法从side和size中学习到一些信息
+2. 如果没有side信息，我们没法区分profit-taking 障碍 和 stop-loss 障碍。
+
+### META-LABELING
+
+### 如何使用META-LABELING
+
+### 量化 + 基本面方法
+
+THE QUANTAMENTAL WAY
+
+### 丢掉不必要的label
+
+it is preferable to drop extremely rare labels and focus on the more common outcomes.
 
 ## chapter 4 样本权重
 

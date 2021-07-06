@@ -1,5 +1,5 @@
 ---
-title: 树模型2_决策树介绍
+title: 树模型2 决策树介绍
 author: chiechie
 mathjax: true
 date: 2021-04-07 20:56:02
@@ -14,7 +14,8 @@ categories:
 
 # 总结
 
-1. 决策树做预测的流程可以分为两步：第一步，将特征空间划分为多个distinct and non-overlapping regions,$R_1,\dots,R_J$；第二步，对每个region定义一个response variable，作为该region的值。
+1. 构建一个决策树需要确定两个东西，一个是确定分支条件，一个是落入每个分支的预测值。第一步将特征空间划分为多个distinct and non-overlapping regions,$R_1,\dots,R_J$；第二步，对每个region定义一个response variable，作为该region的值。
+2. 构建好了一个决策树，想要使用决策树做预测，步骤也分为两步：第一步是按照分支条件将新样本路由到指定的叶子结点，第二步将叶子结点对应的responsible varible作为该样本的预测值。
 2. 怎么得到这些region呢？决策树的实现算法有三类：ID3，C4.5和cart。前两者可以构造多叉树，cart只能构造二叉树。 
 因为cart效果最好，现在通常就用它（例如sklean）。
 3. 三类算法的大致思路一样，分为两步：第一步是将feature space切成多个boxes。为什么不是切成多个球？因为球没法填充整个feature space.
@@ -22,7 +23,9 @@ categories:
 4. 落入每个region的response variable是什么？
 
   - 如果是连续变量，求该region上训练集的response均值，以后赋值给新落入该区间的predictor的response，
+构建一个决策树，主要是要确定partition，或者说分支条件，以及每个落入每个partition（或者说）中对应的预测值。
   - 如果是离散变量，求众数。
+
 
 # 基本概念
 
@@ -94,7 +97,7 @@ $$\min\limits_{T\in T_0} \sum\limits_{m=1}^{|T|}\sum\limits_{x_i\in R_m}(y_i - \
 - $y_i$表示第i个样本的真实值
 - $y_{R_m}$表示第m个partition region的预测值
 
-构造一颗树的流程如下：
+可以使用一个递归的方法来构建一个决策树，主要是要确定partition，或者说分支条件，以及每个落入每个partition（或者说）中对应的预测值。
 
 ![regression tree 构造流程](./img.png)
 
@@ -111,6 +114,8 @@ a very bushy tree has got high variances,ie, over-fitting the data
 
 
 ## 参考
+1. [决策树算法-linxuantian](https://www.youtube.com/watch?v=s9Um2O7N7YM)
+1. [决策树-linxuantian](https://www.csie.ntu.edu.tw/~htlin/mooc/doc/209_present.pdf)
 1. [An Introduction to Statistical Learning](https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/6062a083acbfe82c7195b27d/1617076404560/ISLR%2BSeventh%2BPrinting.pdf)
 2. [Why-is-entropy-used-instead-of-the-Gini-index](https://www.quora.com/Why-is-entropy-used-instead-of-the-Gini-index)
 1. [github-id3的实现1](https://github.com/dozercodes/DecisionTree)

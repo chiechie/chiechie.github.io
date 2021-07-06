@@ -67,3 +67,4 @@ categories:
 1. [youtube](https://www.youtube.com/watch?v=gXgEDyodOJU)
 2. [Graph-theoretic Models](https://www.youtube.com/watch?v=V_TulH374hw)
 3. [the difference-between-ADT和DS](https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure)
+4. [数据结构和算法](https://www.csie.ntu.edu.tw/~htlin/course/dsa21spring/)

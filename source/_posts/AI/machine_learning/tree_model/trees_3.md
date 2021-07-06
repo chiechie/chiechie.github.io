@@ -41,6 +41,7 @@ boosting中有三个重要的参数：
 
 
 ## 参考资料
+1. [Adaptive Boosting linxuantian](https://www.csie.ntu.edu.tw/~htlin/mooc/doc/208_present.pdf)
 1. [youtube-gbdt](https://www.youtube.com/watch?v=2xudPOBz-vs)
 2. [xgboost](https://arxiv.org/pdf/1603.02754.pdf)
 3. [An Introduction to Statistical Learning](https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/6062a083acbfe82c7195b27d/1617076404560/ISLR%2BSeventh%2BPrinting.pdf)

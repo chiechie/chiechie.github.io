@@ -207,7 +207,7 @@ it is preferable to drop extremely rare labels and focus on the more common outc
 
 ### 分数差分方法
 
-1. 如何解决平稳和两难的问题？已有paper提出了分数差分的方法。（Hosking [1981]），分数差分过程展现出了长期的记忆
+1. 如何解决平稳和记忆两难的问题？Hosking [1981]提出了分数差分的方法。
     ![img.png](fd.png)
 2. 使用迭代法计算权重向量
     ![img.png](fd1.png)

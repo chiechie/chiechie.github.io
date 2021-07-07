@@ -1,8 +1,8 @@
 ---
-title: 循环神经网络1-simple RNN
+title: 深度学习基础4 循环神经网络1-simple RNN
 author: chiechie
 mathjax: true
-date: 2021-05-19 10:47:27
+date: 2021-03-10 10:47:27
 tags:
 - 神经网络
 - 深度学习
@@ -48,7 +48,7 @@ categories:
 
 判断电影评价是正面还是负面, 
 
-![img_1.png](img_1.png)
+![img_1.png](dl-basic2/img_1.png)
 
 
 ## 参考

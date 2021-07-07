@@ -2,7 +2,7 @@
 title: 深度学习基础1 数据表示和神经网络基础
 author: chiechie
 mathjax: true
-date: 2021-03-7 16:35:36
+date: 2021-03-07 16:35:36
 tags:
 - 深度学习
 - low level
@@ -109,7 +109,7 @@ As far as I know you have to build your own training function from the layers an
 - Group Normalization（GN， 2018年）
 - Switchable Normalization（SN， 2018年）；
   
-![几种归一化方法g](img_1.png)
+![几种归一化方法g](dl-basic2/img_1.png)
 
 #### 问题1 transformer 为什么要使用LN而不是 BN？
 

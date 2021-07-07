@@ -1,8 +1,8 @@
 ---
-title: 循环神经网络2-长短期记忆网络（LSTM）
+title: 深度学习基础5 循环神经网络2-长短期记忆网络（LSTM）
 author: chiechie
 mathjax: true
-date: 2021-05-20 10:48:04
+date: 2021-03-11 10:48:04
 tags:
 - 神经网络
 - 深度学习
@@ -32,7 +32,7 @@ categories:
 
 ## LSTM应用-情感判断
 
-![](./img_3.png)
+![](dl-basic2/img_3.png)
 
 ![使用keras实现lstm](./image_1212.png)
 
@@ -87,15 +87,15 @@ categories:
 
 10. 更新长期记忆-传送带向量
 
-![](./img_1.png)
+![](dl-basic2/img_1.png)
 
 11. 更新短期机器-状态向量
 
-![](./img_2.png)
+![](dl-basic2/img_2.png)
 
 12. LSTM处理过程用数学公式表达
-![img_5.png](img_5.png)
-![img_4.png](img_4.png)
+![img_5.png](dl-basic2/img_5.png)
+![img_4.png](dl-basic2/img_4.png)
 
 
 ## 参考资料

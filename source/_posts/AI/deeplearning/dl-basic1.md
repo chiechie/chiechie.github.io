@@ -66,7 +66,7 @@ model_m.add(Dense(num_classes, activation='softmax'))
 keras.layers.Dense(10, activation="relu", kernel_initializer="he_normal")
 ```
 
-![3种初始化方法](./img.png) 
+![3种初始化方法](img.png) 
 
 
 ## 训练过程太长？

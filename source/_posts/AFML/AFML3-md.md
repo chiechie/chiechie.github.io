@@ -1,5 +1,5 @@
 ---
-title: 《Advances in Financial Machine Learning》读书笔记4 回测
+title: 《Advances in Financial Machine Learning》读书笔记3 回测
 author: chiechie
 mathjax: true
 date: 2021-07-07 11:08:30

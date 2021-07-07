@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/17/meditation/about-AGI/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/22/data_structure/graph/graph-basic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/17/meditation/about-AGI/" class="post-title-link" itemprop="url">关于AGI？</a>
+            <a href="/2021/06/22/data_structure/graph/graph-basic/" class="post-title-link" itemprop="url">图数据基础</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-17 17:04:32" itemprop="dateCreated datePublished" datetime="2021-06-17T17:04:32+08:00">2021-06-17</time>
+              <time title="创建时间：2021-06-22 11:42:17" itemprop="dateCreated datePublished" datetime="2021-06-22T11:42:17+08:00">2021-06-22</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-28 10:11:37" itemprop="dateModified" datetime="2021-06-28T10:11:37+08:00">2021-06-28</time>
+                <time title="修改时间：2021-07-02 18:29:07" itemprop="dateModified" datetime="2021-07-02T18:29:07+08:00">2021-07-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
                 </span>
             </span>
 
@@ -219,38 +219,83 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="chiechies-reflection">chiechie's reflection</h2>
+          <h2 id="总结">总结</h2>
 <ol type="1">
-<li>理论突破不是技术爆发的必经之路，很多技术都没有理论，比如古代时候的发明，造船，造纸，造火药，爱迪森发明电灯泡，还有现代的量子计算机和深度学习，理论完备个P。</li>
-<li>大部分发明都是做实验，通过试错迭代而产生的,而很多情况下理论都是滞后的。</li>
+<li>图不仅仅通过边存储静态的信息，还能基于边，inference更多的信息。</li>
 </ol>
-<h2 id="无人驾驶现状">无人驾驶现状</h2>
+<h2 id="真实世界中的网络">真实世界中的网络</h2>
 <ol type="1">
-<li>一个技术在工业化生产之前，一般要经历三个阶段, 理论突破，技术验证，工程化
-<ol type="1">
-<li>理论突破，科学家在理论上证明其可行性，即产品要达到一个什么样的性能，在技术上是一定可以实现的；</li>
-<li>技术突破，研究机构突破技术实现上壁垒，做出来达到预期的Demo；</li>
-<li>工程化，主要解决产品设计，方案优化，功能完备，性能提升，良品率，鲁棒性，可用性提升，大规模复制的技术准备，成本降低等工程问题。</li>
-</ol></li>
-<li>通用无人驾驶在第一，第二阶段还彻底整明白的情况下，由资本驱动直接进入第三阶段.</li>
+<li>计算机网络：互联网</li>
+<li>交通网络（铁路网，公路网）</li>
+<li>金融网络</li>
+<li>下水道网络</li>
+<li>政治网络</li>
+<li>犯罪网络</li>
 </ol>
-<h2 id="agi的理论先行者">AGI的理论先行者</h2>
-<ol type="1">
-<li>目前强化学习是最被看好的方向。</li>
-<li>强化学习本质上是演化论的思路，跟自然界一样，给定一个reward，让机器放肆的学习探索。</li>
-<li>目前还需要解决的问题是计算资源的问题。</li>
-<li>自然界的演化大部分时间是平稳状态，只有极少数黑天鹅事件决定了演化的方向。</li>
-<li>在计算机中模拟agent的演化过程，和自然界的演化类似，需要忍受长期的无秩序无进展。</li>
-<li>如果全世界的资源往这方面倾斜，可能可以加快黑天鹅事件出现。</li>
-<li>理论突破不是AGI成熟的必要条件，有可能是2者互相促进发展。</li>
-<li>目前收到关注较多的公司--自动标注样本公司scale</li>
+<h2 id="图的定义">图的定义</h2>
+<p>传统的空间都是定义在欧几里得空间（Euclidean Space）的，在该空间定义的距离被称为欧式距离。 音频，图像，视频等都是定义在欧式空间下的欧几里得结构化数据，然而对于社交网络等数据，使用欧几里得空间进行定义并不合适，所以将这一类的数据所处的空间称为非欧几里得空间。</p>
+<p>非欧空间下最有代表的结构就是图（Graph）结构， 每一个图都有对应的4个矩阵：incidence matrix,A/degree matrix/adjacency matrix/拉普拉斯矩阵（laplacian matrix， L）</p>
+<p>incidence matrix:<span class="math inline">\(A \ in R^{m *n}\)</span>, m 是边的个数，n是节点的个数 每一行代表一条边的起点（也叫parent）和终点（也叫children）</p>
+<figure>
+<img src="img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
+</figure>
+<h3 id="邻接矩阵adjacency-matrix">邻接矩阵（Adjacency matrix）</h3>
+<p>邻接矩阵是一个NxN的矩阵，对于有权图，其值为权重或0，对于无权图，其值为0和1，该矩阵定义如下： <span class="math display">\[A \in R^{N \times N}, A_{i j}=\left\{\begin{array}{ll}a_{i j} \neq 0 &amp; e_{i j} \in E \\ 0 &amp; \text { othersize }\end{array}\right.\]</span></p>
+<h3 id="度矩阵degree-matrix">度矩阵（Degree matrix）</h3>
+<p>度矩阵D是一个对角矩阵，其定义为：</p>
+<p><span class="math display">\[D \in R^{N \times N}, D_{i i}=\sum_{j} A_{i j}\]</span></p>
+<h3 id="邻域neighborhood">邻域（Neighborhood）</h3>
+<p>邻域表示与某个顶点有连接的点集，其定义为：<span class="math display">\[N\left(v_{i}\right)=\left\{v_{j} \mid e_{i j} \in E\right\}\]</span></p>
+<h3 id="谱spectral">谱（Spectral）</h3>
+<h3 id="拉普拉斯矩阵lapalcian-matrix">拉普拉斯矩阵（Lapalcian matrix）</h3>
+<h4 id="谱分解spectral-factorization">谱分解(Spectral Factorization)</h4>
+<p>什么是spectrum？ 矩阵的spectrum就是矩阵的特征根。 只有方阵才有谱概念，方阵作为线性算子，其所有特征值的集合称为方阵的谱。方阵的谱半径为其最大的特征值，谱分解就是特征分解。</p>
+<p>谱分解(Spectral Factorization)又叫特征值分解，实际上就是对n维方阵做特征分解. 只有含有n个线性无关的特征向量的n维方阵才可以进行特征分解.</p>
+<blockquote>
+<p>spectral定理用公式表达：对于一个对称矩阵S，其特征根<span class="math inline">\(\Lambda\)</span>都是实数, 特征向量都正交<span class="math inline">\(Q\)</span></p>
+<blockquote>
+<p><span class="math display">\[S = Q\LambdaQ^T\]</span></p>
+</blockquote>
+</blockquote>
+<p>graph laplacian 矩阵：connection of 线性代数和图论</p>
+<p>拉普拉斯矩阵（laplacian matrix），<span class="math inline">\(L \ in R^{n *n}\)</span> <span class="math display">\[L = A^T A= D-B\]</span></p>
+<p>degree matrix：<span class="math inline">\(D \ in R^{n*n}\)</span>，代表了每个节点有多少degree adjaceny matrix：<span class="math inline">\(B \ in R^{n*n}\)</span>，代表了任意两个点是否有link</p>
+<p>拉普拉斯矩阵是半正定矩阵,其特征根从小到达排序 1. 第一个特征根为0，<span class="math inline">\(\lambda_1 = 0\)</span>, 即DIM(null space) = 1，对应的特种向量为常熟向量 2. 第二个特征根（最小的正的特征根）叫fiedler， 对应的特征向量叫fiedler vector</p>
+<p>graph的laplacian矩阵和laplace方程（有限差分方法）的关系：</p>
+<p>laplace方程也叫微分方程，其微分形式 跟一个网格图的laplacian矩阵（n*n）就是离散形式。</p>
+<ol start="3" type="1">
+<li>实对称矩阵,有n个线性无关的特征向量;</li>
+<li>其特征向量可以进行正交单位化;</li>
+<li>所有的特征值非负;</li>
 </ol>
+<p><span class="math display">\[L=U\left(\begin{array}{ccc}\lambda_{1} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; \lambda_{n}\end{array}\right) U^{-1}=U\left(\begin{array}{ccc}\lambda_{1} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; \lambda_{n}\end{array}\right) U^{T}\]</span></p>
+<p>有时，使用的都是正规拉普拉斯矩阵（Symmetric Normalized Laplacian matrix）: <span class="math display">\[L^{s y s}=D^{-1 / 2} L D^{-1 / 2}=I-D^{-1 / 2} A D^{-1 / 2}\]</span></p>
+<h2 id="图的算法">图的算法</h2>
+<p>基于这个网络，可以做一些什么分析呢？聚类分析，</p>
+<p>即，找到一些cluster，内部的距离很小，之间的距离很大，这个可以抽象成求最大割或者最小流问题 通常还有一些其他的基于图的问题：</p>
+<p>比如，给定一个图，任意两个元素之间是否存在一个link？如果存在，最快捷的路径是什么？</p>
+<p>还有一个经典的问题--'图分割'（graph partition）</p>
+<h3 id="s-t-cut">S-T Cut</h3>
+<p>S-T Cut 就是把一个图切成了两个子图，S和T</p>
+<figure>
+<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<p>S-T cut的容量，就是链接S,C的变（图中红色的边）的权重求和，</p>
+<figure>
+<img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<h3 id="最小割">最小割</h3>
+<p>最小割（min -cut），就是容量最小的那个S-T cut</p>
+<figure>
+<img src="img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
+</figure>
+<p>最小割是指去掉图中的一些边，在使得图从连通图变为不连通图，并且尽可能保证去除的边对应的权重很小。</p>
+<p>最小割可能并不唯一</p>
+<p>对于相似性图来说，最小割就是要去除一些很弱的相似性，把数据点从一个连通的大图切割成多个独立的连通小图。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>https://www.zhihu.com/question/404870865/answer/1324577689</li>
-<li>https://www.zhihu.com/question/464616760/answer/1940847401</li>
-<li><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S0004370221000862">reward is enough ,david silver</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.notboring.co/p/scale-rational-in-the-fullness-of?token=eyJ1c2VyX2lkIjoxNzY2NjQ2OSwicG9zdF9pZCI6Mzc4NDY2MzEsIl8iOiJrTHFWcCIsImlhdCI6MTYyNDQyNDU4NCwiZXhwIjoxNjI0NDI4MTg0LCJpc3MiOiJwdWItMTAwMjUiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.zWmuXLn35R720iDVtX7yTuTpM4kCMk25457XzZN8_Ks">not boring</a></li>
+<li>https://zhuanlan.zhihu.com/p/84271169</li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=V_TulH374hw">Graph-theoretic Models</a></li>
 </ol>
 
       
@@ -271,7 +316,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/16/reading_notes/reality/about-scale/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/21/reading_notes/zhexue/hongloumengxishuo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -285,7 +330,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/16/reading_notes/reality/about-scale/" class="post-title-link" itemprop="url">关于Scale AI</a>
+            <a href="/2021/06/21/reading_notes/zhexue/hongloumengxishuo/" class="post-title-link" itemprop="url">细说红楼梦</a>
         </h2>
 
         <div class="post-meta">
@@ -295,14 +340,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-16 10:39:20" itemprop="dateCreated datePublished" datetime="2021-06-16T10:39:20+08:00">2021-06-16</time>
+              <time title="创建时间：2021-06-21 10:02:37" itemprop="dateCreated datePublished" datetime="2021-06-21T10:02:37+08:00">2021-06-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-30 15:30:46" itemprop="dateModified" datetime="2021-06-30T15:30:46+08:00">2021-06-30</time>
+                <time title="修改时间：2021-06-22 14:21:25" itemprop="dateModified" datetime="2021-06-22T14:21:25+08:00">2021-06-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -310,7 +355,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -325,59 +370,52 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>看到Packy激情满满写了一篇关于Scale AI的公关文，比较好奇这个年轻的小公司有何特别之处，为什么会受到资本的一致认可。</p>
-<p>印象中Scale AI就是一家硅谷的数据标注公司，主要靠外包给第三方国家，赚取中间费用，这种公司有什么竞争力呢？跟大厂比起来？</p>
+          <h2 id="第一回">第一回</h2>
+<p>空空道人有批注：“因空见色，由色生情，传情入色，自色悟空，遂易名为情僧……”</p>
+<p>“因空见色”，是说本来就白茫茫一片，什么都没有，（六祖慧能：本来无一物），因为我们的幻觉，看到好多好多的现象，“由色生情”，情多了就会陷进去，陷进了更深的色的幻觉，“传情入色”，要经过多少彻悟之后，再从里面出来，“自色悟空”，再回到白茫茫一片真干净。</p>
+<p>甄士隐经了这许多人生起伏，有一天突然又看见跛足道士来了，口里唱一首《好了歌》：</p>
+<blockquote>
+<p>世人都晓神仙好，惟有功名忘不了！古今将相在何方？荒冢一堆草没了。世人都晓神仙好，只有金银忘不了！终朝只恨聚无多，及到多时眼闭了。世人都晓神仙好，只有姣妻忘不了！君生日日说恩情，君死又随人去了。世人都晓神仙好，只有儿孙忘不了！痴心父母古来多，孝顺儿孙谁见了？</p>
 </blockquote>
-<h2 id="总结">总结</h2>
-<ol type="1">
-<li><p>Scale AI创立至今5年，最近一次估值73亿$。它跟stripe有点像，在一个蓬勃发展的行业，找到一个关键但是不起眼的小地方，深耕细作。</p></li>
-<li><p>刚开始成立的时候，Scale AI专注做数据标注，但是他们的野心不限于此，他们想做更好用的数据标注工具，即人机互助的方式，Human-in-the-Loop（HIL）。</p></li>
-<li><p>Scale AI的故事是：随着标记数据越来越多，标注数据的边际成本会降低，因为标记样本越多，标记机器人的性能越好，能hold的事情就越多，需要分配出去的工作就越少。</p>
+<p>甄士隐说：“你唱什么？我只听见‘好’‘了’、‘好’‘了’两个字。道人说：</p>
 <blockquote>
-<p>这里有一个问题，怎么确定，哪些是机器可以搞定的，哪些是机器搞不定的？这个是不是又要多一层人工监督了？</p>
-<p>可以从环境中获取到反馈，也可以人工抽查。</p>
-<p>总的来说，都不是很完善的方案。</p>
-</blockquote></li>
-<li><p>Scale AI还有一个亮点，他的客户群体很分散，从国防部到无人驾驶公司，eg OpenAI, Airbnb and Lyft。这有一个好处就是。AI公司去去留留，竞争之后，留下了最有效的ml应用场景，但是Scale AI始终有机会，因为是做基础设施的。</p></li>
-<li><p>除了标注API，Scale AI还做了一个样本调试的产品--Nucleus，data debugging SaaS product。目的是做全链路基建嘛。 <img src="./img.png" alt="Nucleus" /></p></li>
-<li><p>Scale AI的CEO Alexandr Wang 说的一段话</p>
-<blockquote>
-<p>At Scale, we’re building the foundation to enable organizations to manage the entire AI lifecycle. Whether they have an AI team in-house or need a fully managed models-as-a-service approach, we partner with our customers to build their strategy from the ground up and ensure they have the infrastructure in place to systematically deliver highly-performant models.</p>
-</blockquote></li>
-</ol>
-<p>简单点说，他们的方法是，帮助企业从0到1落地一个AI应用--不管这个企业内部有没有AI团队--企业能够使用这个基建更高效地构建模型. 就是win-win,后生可畏.</p>
-<ol start="10" type="1">
-<li><p>对于没有AI团队的传统企业，Scale AI定制化合作（跟必示一样），客户例如Brex和Flexport。</p>
-<figure>
-<img src="./img1.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure></li>
-<li><p>这里有一个小故事：Brex doesn’t have an AI team working on the model; they outsource it to Scale. .Brex一开始找的是专门做OCR的大公司，帮他们做发票文本提取，但是效果一般（“they were all mediocre.” ）。后面找到scale，通过深入合作定制化了一个模型，效果100%。后面沉淀出了一个产品document。</p></li>
-<li><p>scale的产品还有蛮多的：地图/文档/图像。。 <img src="img2.png" alt="img.png" /></p></li>
-</ol>
-<blockquote>
-<p>btw, 知乎上有一个相关提问--如何评价Scale AI？大家似乎认识非常有限（只知道它是做数据标注的），还讨论的热火朝天。由此可见的，噪声膨胀的速度远远超过信息增长的速度。</p>
+<p>好便是了，了便是好。若不了，便不好；若要好，须是了。</p>
 </blockquote>
-<h2 id="chiechies-reflection">chiechie's reflection</h2>
-<ol type="1">
-<li><p>packy这篇文章的公司分析框架蛮好的，后面分析科技公司可以套用：</p>
-<ul>
-<li>行业介绍：The State of AI and ML</li>
-<li>公司介绍：Getting to Scale.</li>
-<li>相同模式的成功案例对比：Scaling Like Stripe.</li>
-<li>关于公司的负面观点：The Bear Case for Scale.</li>
-<li>关于公司的正面观点：The Bull Case for Scale.</li>
-<li>前景展望：Scale’s Compounding Vision.</li>
-</ul></li>
-<li><p>AI市场未来还有这么大的成长空间，当前只有8%的公司应用了AI技术,看到这个数字有点吃惊。但是，即便如此，AI从业人员的需求也不用过分乐观估计。</p></li>
-<li><p>AI应用目前还在探索期。Scale AI比较鸡贼，让AI公司在前面探路，让他们相互pk，把有价值可落地的场景摸索清楚，自己在后面提供军火库，妥妥的赢家。</p></li>
-</ol>
+<p>跛足道人讲的是道家的哲学，对儒家社会秩序，有很大的颠覆性。儒家修身齐家治国平天下这一套道理，要建立的是稳定的社会秩序（social order），鼓励人入世，求功名、利禄、妻子、儿女，儒家宗法社会下面，大概就是这些。</p>
+<p>跛足道人给了很大的一个警告，好就是了，了就是好，等于给恋恋在红尘中的人临头棒喝、醍醐灌顶。</p>
+<p>人大概都经过几个阶段：年轻的时候，大家都是入世哲学，儒家那一套，要求功名利禄。到了中年，大概受了些挫折，于是道家来了，点你一下，有所醒悟。到了最后，要超脱人生境界的时候，佛家就来了。</p>
+<p>所以过去的中国人，从儒道释，大致都经过这么三个阶段，有意思的是这三个阶段不冲突。在同一个人身上，这三样哲学都有。所以中国人既出世又入世的态度，常常造成整个文化的一种紧张，也就是说，我们的人生态度在这之间常常有一种徘徊迟疑，我想，这就是文学的起因。</p>
+<p>文学写什么呢？写一个人求道提升，讲他的目标求道，讲这一生多么地艰难，往往很多人没有求到，在半路已经失败。不管是爱情也好，理想也好，各种的失败，我想，文学写的就是这些。《红楼梦》写的也是这些。</p>
+<p>甄士隐对《好了歌》的注解：</p>
+<blockquote>
+<p>陋室空堂，当年笏满床；衰草枯杨，曾为歌舞场。蛛丝儿结满雕梁，绿纱今又糊在蓬窗上。说什么脂正浓、粉正香，如何两鬓又成霜？昨日黄土陇头送白骨，今宵红灯帐底卧鸳鸯。金满箱，银满箱，展眼乞丐人皆谤。正叹他人命不长，那知自己归来丧！训有方，保不定日后作强梁。择膏粱，谁承望流落在烟花巷！因嫌纱帽小，致使锁枷扛；昨怜破袄寒，今嫌紫蟒长：乱烘烘你方唱罢我登场，反认他乡是故乡。甚荒唐，到头来都是为他人作嫁衣裳！</p>
+</blockquote>
+<p>人生不就是个大舞台，一个人唱完下来，第二个人上去唱，唱完又一鞠躬下台，又换个人上去唱，“乱烘烘你方唱罢我登场”，然后“反认他乡是故乡”。</p>
+<p>佛家说，我们以为这是我们自己的故乡，其实也靠不住，一下子一把火就整个烧掉了。道家说，要醒悟这一点，才找到你真正理想的地方。甚荒唐！到头来都是为他人做嫁衣裳。讲起来，整个一生是白忙一场，都为他人做嫁衣裳，所有事情都是为他人做的。</p>
+<p>甄士隐、贾雨村，一个代表出世，一个代表入世。后来甄士隐变成道士，贾雨村经过好多官宦历程的折腾，到了书结束的时候，这两人又碰到一起。甄士隐想要度化贾雨村，贾雨村还是迷恋红尘。各走各的路，两个分歧，自己去看，自己去选择。</p>
+<h2 id="第二章">第二章</h2>
+<p>贾政，自觉是遵从儒家理想的一个人。他非常正直，也想用儒家那一套思想道德来持家，但是太过守法，太过拘束了。中国社会能够生存下来，光靠儒家思想、书生之见是不够的，还需要别种哲学，譬如很要紧的法家，很实在的、很现实的顶在后边。儒家的很多理想不一定都能实现，碰到了现实问题，常常不能解决。不过儒家也很重要，它是一种道德力量（moral force），没有它也不行，但光是有它也不行，所以，还要配合别的东西。</p>
+<p>贾雨村听冷子兴讲了半天贾宝玉这个怪人，也发表了一篇言论：</p>
+<p>“天地生人，除大仁大恶两种，馀者皆无大异。若大仁者，则应运而生，大恶者，则应劫而生。运生世治，劫生世危。尧、舜、禹、汤、文、武、周、召、孔、孟、董、韩、周、程、张、朱，皆应运而生者。蚩尤、共工、桀、纣、始皇、王莽、曹操、桓温、安禄山、秦桧等，皆应劫而生者。大仁者，修治天下；大恶者，挠乱天下。清明灵秀，天地之正气，仁者之所秉也；残忍乖僻，天地之邪气，恶者之所秉也。今当运隆祚永之朝，太平无为之世，清明灵秀之气所秉者，上至朝廷，下及草野，比比皆是。所馀之秀气，漫无所归，遂为甘露、为和风，洽然溉及四海。彼残忍乖僻之邪气，不能荡溢于光天化日之中，遂凝结充塞于深沟大壑之内，偶因风荡，或被云摧，略有摇动感发之意，一丝半缕误而泄出者，偶值灵秀之气适过，正不容邪，邪复妒正，两不相下，亦如风水雷电，地中既遇，既不能消，又不能让，必至搏击掀发后始尽。故其气亦必赋人，发泄一尽始散。使男女偶秉此气而生者，在上则不能成仁人君子，下亦不能为大凶大恶。置之于万万人中，其聪俊灵秀之气，则在万万人之上；其乖僻邪谬不近人情之态，又在万万人之下。若生于公侯富贵之家，则为情痴情种；若生于诗书清贫之族，则为逸士高人；纵再偶生于薄祚寒门，断不能为走卒健仆，甘遭庸人驱制驾驭，必为奇优名娼。如前代之许由、陶潜、阮籍、嵇康、刘伶、王谢二族、顾虎头、陈后主、唐明皇、宋徽宗、刘庭芝、温飞卿、米南宫、石曼卿、柳耆卿、秦少游，近日之倪云林、唐伯虎、祝枝山，再如李龟年、黄幡绰、敬新磨、卓文君、红拂、薛涛、崔莺、朝云之流，此皆易地则同之人也。”</p>
+<h2 id="第四章">第四章</h2>
+<p>再看看贾雨村这个人，他也是有高度象征性的一个人，象征这个世界上每一个为求功名利禄不择手段往上爬的凡俗之人。</p>
+<p>贾雨村刚刚做官，还不太清楚。葫芦僧就讲，贾、王、史、薛这四大家族是互相牵连、互相庇护的，你一动薛家，其他家族就暗中使力，根本没法去办他们。的确是！后来薛蟠又打死人，贾家去讲讲情也就过了。</p>
+<p>为官为政的这些人，像贾雨村者也是很典型的，一旦发迹，若从前是贫贱出身，他不愿意人家知道他的过去，哪个不长心眼儿的去碰他的过去的话，砍掉！因为他要维持现在的形象，掩掉过去。后来贾家没落的时候，贾雨村果然对有恩的贾家加踹一脚，这正是官场反复无情的写照。</p>
+<h2 id="第五章">第五章</h2>
+<p>无常，我们看起来好像是个悲剧，在佛家看，人所有的一切就是如此。佛教很理性地看待人生，看待一切的事物，没有永远存在的东西，因为时间会破坏一切、会毁灭一切，有时间的转动，春夏秋冬的转动，就会有无常现象。人生无常，什么都无常。所以，“生关死劫谁能躲？闻说道，西方宝树唤婆娑，上结着长生果。”这是惜春的醒悟！佛教的传说，佛陀释迦牟尼圆寂的时候，是在两棵宝树中间，那两棵宝树叫作“娑罗”。佛教对“婆娑”两字另有所解，长生果，佛家讲修成正果，要悟道了以后，从而解脱。最后惜春出家了，她是找到解脱最彻底的一个人物。</p>
+<p>王熙凤，机关算尽太聪明，她最精明，涉入红尘也最深，《好了歌》讲：“世人都晓神仙好，只有金银忘不了！”等到聚多之时缘尽了。凤姐放高利贷，到处攒钱，聚敛多时，一下子抄家抄得精光，一场空欢喜！她在贾府最得宠，掌大权，抄家的原因之一是她放高利贷给抄出来了，一世的颜面丢得精光。“反算了卿卿性命”，后来王熙凤的下场也很悲惨。</p>
+<p>对照一下，惜春走一条路，王熙凤走另外一条路，一个出世，一个入世，两种不同的道路。甄士隐跟贾雨村，也是出世和入世的辩证。曹雪芹从未批判哪方，他只是写出各人选的道路。儒家的入世在《红楼梦》的结局也很重要，贾府衰败，王熙凤死了，也还有接班人，谁呢？薛宝钗，她把贾府重新扛起来，这就是人生。</p>
+<p>中国人的人生，常常有三种哲学的循环。年轻的时候有所求，中年醒悟，晚年一切看开。有这三种哲学，才是完整的中国文化，三者相克相生，互用互补。 《红楼梦》曲最后收尾的曲子：</p>
+<blockquote>
+<p>为官的，家业凋零；富贵的，金银散尽；有恩的，死里逃生；无情的，分明报应。欠命的，命已还；欠泪的，泪已尽。冤冤相报实非轻，分离聚合皆前定。欲知命短问前生，老来富贵也真侥幸。看破的，遁入空门；痴迷的，枉送了性命。好一似食尽鸟投林，落了片白茫茫大地真干净！</p>
+</blockquote>
+<h2 id="第16回">第16回</h2>
+<p>儒家跟道家人生观，宇宙、社会的看法，互相冲突。《红楼梦》的悲剧，并不是一个突发性的意外，而是人生必然的过程，</p>
+<h2 id="第22回">第22回</h2>
+<p>宝玉出的灯谜：南面而坐，北面而朝，“象忧亦忧，象喜亦喜”。 佛家有一句话说镜花水月，一切都是幻象。宝玉看到的一切，由色入空，一切都是幻象。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.notboring.co/p/scale-rational-in-the-fullness-of">not boring</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/384012257">吴恩达发起新型竞赛范式！模型固定，只调数据？</a></li>
-<li><a target="_blank" rel="noopener" href="https://scale.com/blog/series-e">Scale AI’s Series E: Deploying AI Across Every Industry</a></li>
-<li><a target="_blank" rel="noopener" href="https://dashboard.scale.com/nucleus/">nucleus</a></li>
+<li>https://weread.qq.com/web/reader/3c432fc05d0f283c488450e</li>
 </ol>
 
       
@@ -397,7 +435,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/92/">92</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -463,7 +501,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">183</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

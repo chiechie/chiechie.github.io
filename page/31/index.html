@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_2-fault-prediction/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/AI/AIOps/AIOps-1_2-fault-prediction/" class="post-title-link" itemprop="url">chapter1.2 故障预测</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-2_1_1-topo-rca-causeinfer-notes1/" class="post-title-link" itemprop="url">chapter2.1.1 基于拓扑的根因定位CauseInfer1</a>
         </h2>
 
         <div class="post-meta">
@@ -189,142 +189,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-21 11:01:18" itemprop="dateCreated datePublished" datetime="2021-05-21T11:01:18+08:00">2021-05-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-02 17:43:09" itemprop="dateModified" datetime="2021-06-02T17:43:09+08:00">2021-06-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="目录">目录</h1>
-<ul>
-<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
-<ul>
-<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
-<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
-<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
-<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
-</ul>
-<blockquote>
-<p>硬盘故障预测实战</p>
-</blockquote>
-<h1 id="背景">背景</h1>
-<p>最近10年，随着服务器数量快速增长, 服务器老化的问题（商家超过5）日趋严重。越老的服务器发生故障的概率越高，这个会带了不小的负面影响，从而提高运营成本。</p>
-<p>服务器的所有故障中，占比最高的类型属于磁盘故障，达到70%。第二名是主板故障。 因为磁盘生命周期短，一般只有3到5年，而整个服务器使用和年限一般都会超过5年，所以一台服务器的生命周期中几乎必然会发生磁盘故障。</p>
-<p>如何降低磁盘故障带来的影响？业务的方案是，实施监控以及事后自动修复，修复不了就更换磁盘，并且做业务迁移。</p>
-<p>但是这个时候损失已经发生，如果能够在磁盘故障之前，就预测到即将到来的故障，并且提前做预案，是可以避免业务损失的。</p>
-<p>下面就介绍一下，如何预测磁盘故障，从而减少业务损失。</p>
-<h1 id="方案">方案</h1>
-<h2 id="搜集数据">搜集数据</h2>
-<p>范围：即将故障的硬盘以及其宿主的信息 根据经验可以提取如下指标：磁盘负载，磁盘I/O，具体来说</p>
-<ul>
-<li>每秒磁盘读写块数： 902-读，903-写</li>
-<li>每秒中用于I/O操作的CPU时间占的比例：即999，</li>
-</ul>
-<p>其中，I/O指标差分，简称为IO跳变跟故障相关度较高</p>
-<p>此外考虑了磁盘SMART（Self-Monitoring Analysis and Reporting Technology——自我检测、分析及报告技术）。之所以考虑用SMART作为核心数据，因其相关技术发展比较成熟，至今20年了，业界对其认可度较高。</p>
-<h2 id="预测模型">预测模型</h2>
-<p>使用一个分类器（SVM），搜集历史故障样本和非故障样本，</p>
-<h2 id="总结">总结</h2>
-<ol type="1">
-<li>现已完成希捷SATA硬盘预测，各型号预测正确率和故障覆盖率如表3所示。其中前六种型号达到运营要求，已进入推广，具体覆盖65%的SATA盘</li>
-<li>关于正样本数据的搜集：刚开始我们把预测单与实际故障单作对比时，得到的准确率很低。因为模型报出来的预故障单都是从SMART上看，属于“亚健康”甚至“病危”状态的硬盘。而实际故障单是以磁盘自检失败并且不可在线修复和系统dmesg信息中的错误关键字（主要包括SCSI设备掉线，ATA设备超时和设备故障）为准发起故障处理流程，并且结单故障类型为硬盘故障，也就是说一定要有实际换盘的，这个定义其实是相当严苛的，会漏掉很多情况。因为结单故障类型是现场去确认后填写的，如果没有换盘或者没有填写结单故障类型就会算是我们的误报。 并且，实际故障单更多的侧重于依赖OS层面的判断，一定程度漏掉了一些健康堪忧但并未报障的硬盘。我们把这部分「误报」的部分提供给厂商确认，的确被确诊为病态盘甚至于高危盘。所以是否故障的判断，不能仅依赖结单故障类型，还要关注单块硬盘自身的健康状态--如果它的SMART核心指标远离安全阈值，也应判断为故障。</li>
-<li>下一步工作-现在核心主要侧重于SATA盘的故障预测，后续二期我们会把SAS、SSD作为核心，希望能有更大的作为。</li>
-</ol>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://km.oa.com/group/23255/articles/show/251071">部件故障预测初论</a></li>
-<li><a target="_blank" rel="noopener" href="https://km.woa.com/group/11783/articles/show/170959?sessionKey=Q3i7YOn2ZcLaDSNohaOIZgxO5ztyEuU8">磁盘IO与磁盘故障率研究</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/21/AI/AIOps/AIOps-1_5_2-log-analysis_meituan/" class="post-title-link" itemprop="url">chapter1.5.2 美团的日志聚类</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-21 11:01:18" itemprop="dateCreated datePublished" datetime="2021-05-21T11:01:18+08:00">2021-05-21</time>
+              <time title="创建时间：2021-05-21 14:41:39" itemprop="dateCreated datePublished" datetime="2021-05-21T14:41:39+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -386,153 +251,312 @@
 <li>chapter3 故障恢复</li>
 </ul>
 <blockquote>
-<p>本文是美团的提出的告警聚类的一种算法，其实也只是基于已有的paper做了一下应用。</p>
-<p>跟logmine的区别是，他可以定义多层的泛化结构，对于有多层关系的属性有很好的效果。</p>
+<p>CauseInfer是一个解决故障定位的通用方案，原理是通过在历史数据中学习因果图，进而在发生故障时，推断出故障根因。</p>
+<p>这篇文章对我说太难啃了，主要是因为涉及大量专业领域知识，比如计算机网络，微服务架构等，对这块不熟悉，需要补很多功课。</p>
+<p>输出的文章分成两篇: CauseInfer论文笔记1，即本文，讲背景知识和概要设计，以及直觉型的描述问题和解题思路，都是粗粒度的；<a href="https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/">CauseInfer论文笔记2</a>，讲核心技术点，方案的实现逻辑，涉及到数学公式。</p>
+<p>原则上，第一篇不用技术背景也能看明白，问题是啥，解题思路是啥。第二篇就是给算法人员看的，要出方案了，所以要越详细越好。</p>
 </blockquote>
-<h2 id="设计"><strong>设计</strong></h2>
-<p>如[图2]所示，异常报警根因分析的设计大致分为四个部分：搜集告警数据、提取告警的关键特征、聚类、展示告警摘要。</p>
-<figure>
-<img src="img.png" alt="图2" /><figcaption aria-hidden="true">图2</figcaption>
-</figure>
-<h3 id="算法选择"><strong>算法选择</strong></h3>
-<p>聚类算法采用论文《Clustering intrusion detection alarms to support root cause analysis》中的算法。</p>
-<figure>
-<img src="./kjhjk.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>我们可以将这几条报警抽象为：“全部服务器 网络调用 故障”，该泛化报警包含的范围较广；也可以抽象为：“server_room_a服务器 网络调用 产品信息获取失败”和“server_room_b服务器 RPC 获取产品类型信息失败”，此时包含的范围较小。当然也可以用其他层次的抽象来表达这个报警集群。</p>
-<p>可以观察到，抽象层次越高，细节越少，但是它能包含的范围就越大；反之，抽象层次越低，则可能无用信息越多，包含的范围就越小。</p>
-<p>这种抽象的层次关系可以用DAG表达，如图3所示：</p>
-<figure>
-<img src="img_1.png" alt="图3 泛化层次结构示例" /><figcaption aria-hidden="true">图3 泛化层次结构示例</figcaption>
-</figure>
-<h3 id="基本概念">基本概念</h3>
+<h2 id="名词解释">名词解释</h2>
+<p>来，补充业务知识</p>
 <ul>
-<li><p>属性（Attribute）：构成报警日志的某一类信息，如机器、环境、时间等，文中用<span class="math inline">\(A_i\)</span>表示。</p></li>
-<li><p>值域（Domain）：属性<span class="math inline">\(A_i\)</span>的取值范围，文中用<span class="math inline">\(Dom(A_i)\)</span>表示。</p></li>
-<li><p>泛化层次结构（Generalization Hierarchy）：对于每个Ai都有一个对应的泛化层次结构，文中用<span class="math inline">\(G_i\)</span>表示。 <img src="img_1.png" alt="图3 泛化层次结构示例" /></p></li>
-<li><p>属性的不相似度:令<span class="math inline">\(x_1\)</span>、<span class="math inline">\(x_2\)</span>为某个属性<span class="math inline">\(A_i\)</span>的两个不同的值，那么<span class="math inline">\(x_1\)</span>、<span class="math inline">\(x_2\)</span>的不相似度为：在泛化层次结构<span class="math inline">\(Gi\)</span>中，通过一个公共点父节点p连接x1、x2的最短路径长度。即 d(x1, x2) := min{d(x1, p) + d(x2, p) | p ∈ Gi, x1 ⊴ p, x2 ⊴ p}。例如在图3的泛化层次结构中，d("Thrift", "Pigeon") = d("RPC", "Thrift") + d("RPC", "Pigeon") = 1 + 1 = 2。</p></li>
-<li><p>告警的不相似度（Dissimilarity）: 对于两个报警<span class="math inline">\(a_1, a_2\)</span>, 距离为： <span class="math display">\[d\left(\mathbf{a}_{1}, \mathbf{a}_{2}\right):=\sum\limits_{i=1}^{n} d\left(\mathbf{a}_{1}\left[A_{i}\right], \mathbf{a}_{2}\left[A_{i}\right]\right)\]</span></p>
-<p>例如： a1 = ("server_room_b-biz_tag-offline02", "Thrift"),a2 = ("server_room_a-biz_tag-online01", "Pigeon"), 那么d(a1, a2) = d("server_room_b-biz_tag-offline02", "server_room_a-biz_tag-online01") + d(("Thrift", "Pigeon") = 2 + 2 + 1 + 1 = 6。</p></li>
-<li><p>告警集合：C</p></li>
-<li><p>告警摘要：g，<span class="math inline">\(\forall a \in C, a \leq g\)</span>, 就是pattern</p></li>
+<li>QPS：Queries Per Second，每秒查询次数</li>
+<li>SLA （service level agreement）:服务等级协议。指的是整个协议，协议的内容包含了SLI，SLO以及恢复的方式和时间等等一系列所构成的协议。</li>
+<li>SLI（service level indicator）:服务等级对象。指的是对象，例如：qps，响应时间，准确性等</li>
+<li>SLO（service level objective）:服务等级目标。指的是目标，例如：qps 99.99% ，响应时间10ms等。</li>
 </ul>
-<p>以报警集合{"dx-trip-package-api02 Thrift get deal list error.", "dx-trip-package-api01 Thrift get deal list error."}为例，“dx服务器 thrift调用 获取产品信息失败”是一个泛化表示，“服务器 网络调用 获取产品信息失败”也是一个泛化表示。对于某个聚类来说，我们希望获得既能涵盖它的集合又有最大信息量的摘要（pattern）。为了解决这个问题，定义以下两个指标：</p>
-<p><span class="math display">\[\begin{aligned} \bar{d}(\mathbf{g}, \mathcal{C}) &amp;:=1 /|\mathcal{C}| \times \sum_{\mathbf{a} \in \mathcal{C}} d(\mathbf{g}, \mathbf{a}) \\ H(\mathcal{C}) &amp;:=\min \left\{\bar{d}(\mathbf{g}, \mathcal{C}) | \mathbf{g} \in \mathbf{X}_{i=1}^{n} \operatorname{Dom}\left(A_{i}\right), \forall \mathbf{a} \in \mathcal{C}: \mathbf{a} \leq \mathbf{g}\right\} \end{aligned}\]</span></p>
-<p>公式2</p>
-<p>H(C)值最小时对应的g，就是我们要找的最适合的泛化表示，我们称g为C的“覆盖”（Cover）。</p>
-<p>基于以上的概念，将报警日志聚类问题定义为：</p>
+<h2 id="几个问题">几个问题</h2>
+<p>看完第一遍之后，还有几个问题</p>
+<ul>
+<li><p>因果图是什么？</p>
+<ul>
+<li>因果图是一个两层分层的图（two layered hierarchical causality graph），因果图 = 指标因果图（刻画局部的依赖关系） + 服务依赖图（刻画整个信息设备的依赖关系）。</li>
+<li>服务依赖图（Service Dependency Graph）：粗粒度的信息，表示每台机器上每个服务间的依赖关系，用于定位到服务级别的cause。</li>
+<li>指标因果图（Metric Causality Graph）：细粒度的信息，表示表达的是一台机器上，一个服务的指标和多个机器之间的故障传播关系），用于定位到性能异常的真正的元凶。</li>
+</ul></li>
+<li><p>指标因果图和服务依赖图是什么关系？</p>
+<p>指标因果图中的节点 是 服务依赖图中的节点 的一个属性</p></li>
+<li><p>因果图是怎么构建？</p>
+<p>两种方式结合：采集调用链构建拓扑 + 数据分析得到因果关系</p></li>
+<li><p>因果图构建好了，如果做因果推断？</p>
+<p>深度优先遍历，找有故障的父母亲，直到找到根结点，或者正常的上游。</p></li>
+<li><p>一个主机上的服务，构建一个因果图？</p>
+<p>对的，每个主机上的每个服务都有一个自己的指标因果图。 然后跨主机的服务调用，就靠服务依赖图表示。</p></li>
+<li><p>因果图中不同的机器IP是否是不同的节点？</p>
+<p>是的，服务依赖图的粒度更细，是一个机器上的一个服务是一个节点。</p></li>
+<li><p>一个服务的SLO指标是怎么定义的？有什么规则？其他指标是怎么选取的？</p></li>
+</ul>
+<p>一般来说是需要对每一个应用去定制化定义的，但是这里可以用一个统一的指标，即服务相应时长。</p>
+<ul>
+<li><p>根因推断的时候，多个因导致的结果怎么推断出来？</p>
+<p>这种复杂的问题解决不了.</p></li>
+<li><p>根因推断的时候，多个根因怎么打分？</p>
+<p>找异常程度最高的那个指标。</p></li>
+</ul>
+<h2 id="问题描述">问题描述</h2>
+<p>关于性能诊断领域，之前大部分工作都很粗糙，只涉及定位异常，但是我们觉得还应该包括根因推断，使得软件维护更高效，并且提供更有用的信息给软件bug。</p>
+<p>解决所有的性能诊断问题，没有银弹（silver bullet）。本文也只是诊断性能问题的一个子集。</p>
+<p>当review完一些开源软件的bugs之后，我们观察到，很多bugs都可能导致性能问题。</p>
+<p>这里，我们仅仅考虑那些造成资源异常的bugs，例如导致物理资源消耗异常（eg CPU） 或者 逻辑资源异常（eg 锁）。</p>
+<p>为什么要选择这些bugs？ 因为 不需要关注源代码，就可以搜集资源消耗指标；软件中存在太多这种bugs了。 我们的目的是，找到导致这些指标异常（cpu消耗过多，db被锁）的原因，我们不直接识别软件bug，我们提供一些提示。 举个例子，如果我们定位到根因是，锁的个数异常，则可能是系统中有一个并发bug。</p>
+<p>CauseInfer的思路是这样的，构建一个因果图，来捕捉因果（cause-effect ）关系，然后沿着因果路径推断出根因（root cause）。 为了完成这个任务，CauseInfer自动化地构建了一个两层的分层的因果图。</p>
+<p>一旦服务级别目标（SLO）异常了，就触发因果推断。 首先将性能异常定位到某个服务（eg，tomcat），通过检测该SLO指标是否异常。 然后通过检测同一台机器上的其他性能指标是否异常，找到根因， 更进一步为了保证效果的稳定，提出了突变点检测方法，基于贝叶斯理论--这个方法比传统的检测方法如cusum要好。 通过在两组benchmark（Olio 和 TPC-W,）做实验评估，发现本方法可以定位出根因，准召分别是80%和85%。 本文的贡献</p>
+<ul>
+<li>提出了一个新的BCP突变点检测方法，比cusum更稳定，在长期的数据序列上</li>
+<li>提出了一个轻量的服务依赖方式的 发现方法，通过分析两个服务的流量延迟，很快定位到服务级别的性能异常，</li>
+<li>提供了一个基于原始PC-算法的因果图构建方法，使用这个因果图，我们肯呢个很准确定位到性能指标级别的性能问题的根因。</li>
+<li>设计和实现了CauseInfer，可以推断性能问题的根因，可以以较小的代价，较高的准确率找到性能问题的真正根因。</li>
+</ul>
+<h2 id="系统概览">系统概览</h2>
+<p>先描述CauseInfer的框架，并且通过一个简单的例子来描述这个系统的工作流</p>
+<h3 id="causeinfer的框架">CauseInfer的框架</h3>
+<p>看图说话--CauseInfer的框架</p>
+<p>对于每个节点-机器，都存在一个本地的因果图， 因果推断的流程 在前端的SLO异常时被触发，然后迭代往复地 沿着服务依赖图的路径，跑到后端服务， 如果在某个服务节点检测到SLO异常，那么就可以进行更精细的推断，--在指标依赖图上。 【图1-根因分析框架】展示了基本结构和workflow，</p>
+<ul>
+<li>底层是一个业务系统的物理拓扑</li>
+<li>顶部是这个业务系统对应的因果图 <img src="causeinfer_framework.jpeg" alt="图1-根因分析框架" /></li>
+<li>大虚线圆圈表示服务</li>
+<li>红色节点表示根本原因，</li>
+<li>黑色节点表示性能指标，</li>
+<li>绿色节点表示 SLO 指标，</li>
+<li>箭头表示方向 故障传播。</li>
+<li>图中的有向边代表的意思是，因果关系</li>
+</ul>
+<h3 id="举个演示工作流">举个🌰演示工作流</h3>
+<p>假设服务II节点中的指标 E 是根因</p>
+<ul>
+<li>当检测到服务 I 的 SLO 异常时，触发原因推断</li>
+<li>对服务 I 节点进行根因分析，定位根因是指标A，A就是服务II的SLO指标</li>
+<li>因此，服务II中的根因分析被触发，在服务II在的机器中，加载出相应的服务指标依赖图，服务I中的指标A异常可能是服务II的SLO异常导致。</li>
+<li>因此会继续在服务II中触发因果推断，这里用到该机器的指标因果图。</li>
+<li>总结：最后我们找到了根因--指标E， 推断路径为：SLO（service II ） → A（service II ） → D（service II） → E（service II）</li>
+</ul>
+<figure>
+<img src="./eample1.png" alt="图2example" /><figcaption aria-hidden="true">图2example</figcaption>
+</figure>
+<p>另外，需要注意的是，推断结果包含多个根因，因此需要一个排序的步骤选择最可能的根因， 来降低误告。</p>
+<h2 id="系统细节">系统细节</h2>
+<p>CauseInfer包含两个步骤：离线和在线。</p>
+<p>在线阶段包括两个模块，数据收集和因果推断。</p>
+<ul>
+<li>数据收集模块，收集了运行的性能指标--多个数据源。</li>
+<li>因果推断模块，负责因果图遍历和对根因进行排序。</li>
+</ul>
+<p>离线阶段包括两个模块--变点检测和因果图构建</p>
+<ul>
+<li>变点检测：将指标转化为0/1的二值序列，使用的是贝叶斯变点检测。</li>
+<li>因果图构建：使用二值指标来构建一个2层的层次化的因果图。</li>
+</ul>
+<h3 id="a数据收集">A：数据收集</h3>
+<p>数据收集模块，收集高维度运行信息，从多个数据源，横跨多个不同的软件栈，包括应用，进程 和 操作系统。</p>
+<p>在因果图构建阶段，我们需要一个应用的SLO指标。然而，并不是所有的应用都显示地提供SLO指标（例如mysql，hadoop）， 并且，不同应用中SLO对应不同指标。因此我们提出了一个新的统一的SLO指标--tcp请求延迟，简称为TCP LATENCY。 TCP LATENCY 衡量的是某个端口， 最后一个入站包（请求）和第一次出站包（响应）的时间间隔。 大部分应用都是用TCP作为传输协议，例如 Mysql, Httpd等，因此TCP延迟，可以作为大部分应用的SLO指标。</p>
+<h3 id="b-变点检测">B: 变点检测</h3>
+<p>根据Pearl的因果（cause-effect）[7]概念，如果有两个变量有因果关系，一个变量的变化将导致另一个变化。因此，在构建因果图之前，我们首先确定时间序列中的变化。一般采用CUSUM [4]来检测突变点， 但是由于对噪声的高敏感性，CUSUM很难检测出长期的变化，导致离线分析的高误警。因此我们引入了更有效的方法，贝叶斯变点检测（缩写为BCP）[8]</p>
+<p>BCP的基本思想是找到一个underlying 参数序列，将时间序列划分为连续的blocks，每个blocks的参数一样 突变点的位置，就是每个block的边缘。 。给定一个观察序列：X =（x1，x2，···，xn），目的是 找到一个分区：ρ=（P1，P2，P3，···，Pn-1）， 其中Pi = 1 表示在位置i + 1处发生了变化，否则Pi = 0。 关于BCP的详细理论分析参考论文[8]。与CUSUM方法相比，BCP不需要设置突变点个数，以及原始序列中group个数。</p>
+<p>BCP效果更好，更适合分析长序列，但是不适合在线模式， 所以我们仍采用CUSUM作为在线的变点检测方法。</p>
+<h3 id="c-因果图构建">C: 因果图构建</h3>
+<p>在本节中，我们将描述两层的分层因果图（即服务依赖图和 性能指标因果图）构建过程。 在collective变量中，如果Y的所有父母已经固定的，Y的分布将是固定的，并且不受其他变量影响。在这种因果关系中， 不允许两个变量互为因果。所以因果关系可以由DAG进行编码。</p>
+<p>详细的服务依赖图 和 性能依赖图 的构建，参考<a href="https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/">CauseInfer论文笔记2</a></p>
+<h2 id="把离线和在线串起来">把离线和在线串起来</h2>
+<h3 id="离线分析">离线分析</h3>
+<p>在离线阶段，构建因果图（causality graph）:</p>
+<ul>
+<li><p>构造服务依赖图分为两步：</p>
+<ul>
+<li>第一步通过采集器获取边是否存在；</li>
+<li>第二步通过分析两个服务间的通信延迟相关性（traffic lag correlation）来进一步确定边的方向。</li>
+</ul></li>
+<li><p>服务依赖图中的节点怎么定义？二元组 (ip, service name)</p>
 <blockquote>
-<p>定义L为一个日志集合，$G_i(i = 1, 2, 3……n) $为属性Ai的泛化层次结构，目标是找到一个L的子集C，满足 |C| &gt;= min_size，且H(C)值最小。</p>
+<p>有的文章用3元组(ip, port, proto)表示，proto是传输协议的类型，比如TCP或者UDP。</p>
+<p>考虑到一个服务可能占用多个端口, 采用这种方式就会导致图的节点非常多，但是对根因定位其实没有很大的用处。</p>
+<p>举个例子，在一个三层的系统中，一个web server可以通过任意一个端口访问application server的。如果使用端口作为服务的唯一属性，这个服务依赖图就会变得非常大，即使所有请求都是由同一个服务发起的。</p>
+</blockquote></li>
+</ul>
+<h3 id="在线推断">在线推断</h3>
+<p>在实时阶段，使用因果图（causality graph）来做根因推断，得到可能的原因列表。</p>
+<figure>
+<img src="./img.png" alt="图1-根因分析框架" /><figcaption aria-hidden="true">图1-根因分析框架</figcaption>
+</figure>
+<h2 id="评估">评估</h2>
+<p>我们解决的是一个因果推断的问题，因此常用的统计学的设计实验的思路在这里行不通。</p>
+<h2 id="参考文献">参考文献</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/~peidan/ANM2016/RootCauseAnalysis/ReadingLists/2014INFOCOM_CauseInfer.pdf">2014-INFOCOM_CauseInfer</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://saruagithub.github.io/2020/04/13/20200413CauseInfer%E8%AE%BA%E6%96%871/">别人对CauseInfer论文的解读</a></li>
+<li><a href="https://chiechie.github.io/2021/03/03/technology/causeinfer-notes2/">CauseInfer论文笔记2</a></li>
+<li>J. Pearl, Causality: models, reasoning and inference. Cambridge Univ Press, 2000, vol. 29.</li>
+<li>D. Barry, “A bayesian analysis for change point problems,” Journal of the American Statistical Association, vol. 88, no. 421, pp. 309–319, 1993.</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/21/AI/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/" class="post-title-link" itemprop="url">chapter2.1.5 基于拓扑的根因定位-CN-Softbei2020比赛</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-21 14:37:13" itemprop="dateCreated datePublished" datetime="2021-05-21T14:37:13+08:00">2021-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-05 08:42:57" itemprop="dateModified" datetime="2021-06-05T08:42:57+08:00">2021-06-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="目录">目录</h1>
+<ul>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
+</ul>
+<blockquote>
+<p>数据来自CN-Softbei2020比赛--《基于网络拓扑及告警的故障根因定位系统实现及算法研究》</p>
+<p>现在实验一种很激进的做法---仅靠指标做根因分析</p>
+<p>当涉及的指标过多时, 得到的拓扑图非常复杂.</p>
 </blockquote>
-<p>min_size是用来控制抽象程度的，min_size越大抽象的越厉害. 这是个NP问题，论文提出了如下的启发式算法</p>
-<h3 id="算法描述"><strong>算法描述</strong></h3>
+<p><strong>赛题名称:基于网络拓扑及告警的故障根因定位系统实现及算法研究</strong> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FQm8N2Yas2F.png?alt=media&amp;token=110a4f63-df4b-4080-96e7-538078152112" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FiscvbTqPV9.png?alt=media&amp;token=0fd1674e-9bc7-4ac2-8f48-add9cdf2c946" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fn2jiCvLL8K.png?alt=media&amp;token=6ee81f61-a008-4040-b1d0-5968b6ab5765" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbiDgXGazeM.png?alt=media&amp;token=60d55dac-68c7-42df-a7c4-4b8270ce0578" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FW1v20u-7tH.png?alt=media&amp;token=0702a100-6ee5-4e4d-98b1-a42e92ac1fa0" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fsvpv3-38IA.png?alt=media&amp;token=5b7e7f4f-0ac7-4180-bfa2-1e2447bffa3a" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FzflLEiJ2fa.png?alt=media&amp;token=d07f20d5-c2b7-4011-acd4-c6df97b7964b" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FherPwjhHIR.png?alt=media&amp;token=8cbd3491-37d9-46d6-9c12-7d6292e3689f" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FF47x1XYXV2.png?alt=media&amp;token=f837d32c-a170-4bf6-8a20-7be096537ba3" /> - 大型电商平台内部涉及上百个系统间的相互调用，每天会产生上万条告警数据。如何利用网络拓扑信息及告警数据，及时有效的对告警进行过滤、分析，最终给出有效告警及疑似根因是网络运维面临的主要挑战。 - 本赛题的目标是分析实际生产中的网络拓扑及告警数据，设计并实现一种故障根因定位算法，准确的定位出故障根因节点。 - 赛题的价值在于准确、快速的定位网络故障，提升一线网络运维的效率，降低网络故障产生的损失。 - 该赛题主要涉及数据分析、图论、信息论、自然语言处理、神经网络等技术，要求参赛队员掌握相关的基础知识，具有python数据分析、处理及功能开发能力。 # 业务背景：</p>
+<ul>
+<li>网络拓扑中一个节点出现故障，往往会导致与其相连的其他节点也发生异常，进而产生大量告警，将真正根因淹没掉。当出现大量告警时，为保证电商业务的稳定运行，我们需要对这些告警进行分析处理，过滤掉无效的告警，准确定位出可能的疑似根因节点，缩短故障定位时间。</li>
+<li>在实际中，同一故障触发的告警信息往往相似的。网络故障定位的一般过程为：先根据历史告警数据及标记进行离线分析，总结因果关系的规律；然后在线分析阶段，首先对告警数据进行去噪和聚类，然后对类内的告警进行因果关系匹配，得到当前告警的可能根因。</li>
+</ul>
+<h1 id="赛题场景">赛题场景：</h1>
+<ul>
+<li>提供实际生产中的网络拓扑数据，100组不同时间段的告警数据，每组中可能有根因，也可能没有根因，根据拓扑数据及告警数据，设计并实现故障根因定位算法，最终在测试数据上评估告警根因定位的F1值，可视化展现根因信息及根因关联的局部拓扑图。</li>
+</ul>
+<h1 id="要求">要求</h1>
+<ul>
+<li>1、基于提供的训练数据，设计并实现故障根因定位算法。</li>
+<li>2、故障根因定位算法中要包含告警数据预处理和故障根因定位两个模块；</li>
+<li>3、可视化展现根因信息及根因关联的局部拓扑图。</li>
+</ul>
+<h1 id="训练数据">训练数据</h1>
+<ul>
+<li>1、实际生产中的部分网络拓扑数据，json格式，key为父亲节点，value为孩子节点list。</li>
+<li>2、告警数据，csv格式，包括告警节点，告警信息，告警时间，告警级别，是否为根因。</li>
+<li>3、提供100组不同时间段的告警数据，每组中可能有根因，也可能没有根因，如果有根因，只有1个准确的根因。</li>
+<li>数据样例：</li>
+</ul>
 <ol type="1">
-<li>假设所有的泛化层次结构<span class="math inline">\(G_i\)</span>都是树，这样每个cluster都有一个唯一的、最顶层的泛化结果。</li>
-<li>将L定义为一个原始的告警日志集合，算法选择一个属性<span class="math inline">\(A_i\)</span>，将L中所有报警的<span class="math inline">\(A_i\)</span>值替换为<span class="math inline">\(G_i\)</span>中<span class="math inline">\(A_i\)</span>的父值，通过这一操作不断对报警进行泛化。</li>
-<li>持续步骤2的操作，直到找到一个覆盖报警数量大于min_size的pattern为止。</li>
-<li>输出步骤3中找到的报警。</li>
+<li>拓扑图样例：</li>
 </ol>
-<p>算法伪代码如下所示：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">输入：报警日志集合L，min<span class="emphasis">_size，每个属性的泛化层次结构G1,......,Gn</span></span><br><span class="line"><span class="emphasis">输出：所有符合条件的泛化报警</span></span><br><span class="line"><span class="emphasis">T := L;              // 将报警日志集合保存至表T</span></span><br><span class="line"><span class="emphasis">for all alarms a in T do</span></span><br><span class="line"><span class="emphasis">    a[count] := 1;   // &quot;count&quot;属性用于记录a当前覆盖的报警数量</span></span><br><span class="line"><span class="emphasis">while ∀a ∈ T : a[count] &lt; min_</span>size do &#123;</span><br><span class="line"><span class="code">    使用启发算法选择一个属性Ai;</span></span><br><span class="line"><span class="code">    for all alarms a in T do</span></span><br><span class="line"><span class="code">        a[Ai] := parent of a[Ai] in Gi;</span></span><br><span class="line"><span class="code">        while identical alarms a, a&#x27; exist do</span></span><br><span class="line"><span class="code">            Set a[count] := a[count] + a&#x27;[count];</span></span><br><span class="line"><span class="code">            delete a&#x27; from T;</span></span><br><span class="line"><span class="code">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>其中第7行的启发算法为：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">首先计算Ai对应的Fi</span><br><span class="line">fi(v) := SELECT sum(count) FROM T WHERE Ai = v   // 统计在Ai属性上值为v的报警的数量</span><br><span class="line">Fi := max&#123;fi(v) | v ∈ Dom(Ai)&#125;</span><br><span class="line">选择Fi值最小的属性Ai</span><br></pre></td></tr></table></figure>
-<h2 id="实现">实现</h2>
-<h3 id="提取报警特征">提取报警特征</h3>
-<p>根据线上问题排查的经验，运维人员通常关注的指标包括时间、机器（机房、环境）、异常来源、报警日志文本提示、故障所在位置（代码行数、接口、类）、Case相关的特殊ID（订单号、产品编号、用户ID等等）等。</p>
-<p>但是，Case相关的特殊ID不符合我们希望获得一个抽象描述的要求，因此不关注。</p>
-<p>综上，最后选择的特征包括：机房、环境、异常来源、报警日志文本关键内容、故障所在位置（接口、类）共5个。</p>
-<h3 id="算法实现">算法实现</h3>
+<ul>
+<li>key为源节点，value为目标节点list，类似下面这样：AAA表示系统名，NG表示是Nginx。</li>
+<li><code>javascript &#123;   "AAA-10.10.0.1":     ["AAA-NG-10.10.0.2",      "AAA-NG-10.10.0.3",      "AAA-NG-10.10.0.4"],    "AAA-NG-10.10.0.2":    ["AAA-JBOSS-10.10.0.5",     "AAA-JBOSS-10.10.0.6",      "AAA-JBOSS-10.10.0.7"] &#125;</code> 2。告警数据样例：</li>
+</ul>
+<p>告警数据为csv格式，如下面所示，其中sysEname为系统名称, software为软件类型,time告警时间,triggername告警信息，里面包含ip信息，isrootcause表示是否为根因，0-否，1-是。 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">,sysEname,software,time,告警信息,isrootcause</span><br><span class="line"><span class="number">0</span>,AAA,Elasticsearch <span class="number">1.7</span><span class="number">.0</span> ,<span class="number">2019</span>-<span class="number">06</span>-<span class="number">01</span> <span class="number">00</span>:<span class="number">01</span>:<span class="number">04</span>,<span class="string">&quot;eth0 网卡接受数据流量,net.if.in[eth0],主机10.10.0.8(VM)网卡eth0接收流量持续10分钟平均值大于180M&quot;</span>,<span class="number">0</span></span><br><span class="line"><span class="number">1</span>,BBB,WildFly standalone ,<span class="number">2019</span>-<span class="number">06</span>-<span class="number">01</span> <span class="number">00</span>:<span class="number">01</span>:<span class="number">05</span>,主机<span class="number">10.10</span><span class="number">.0</span><span class="number">.9</span>日志中有READONLY信息,<span class="number">0</span></span><br><span class="line"><span class="number">2</span>,BBB,WildFly standalone ,<span class="number">2019</span>-<span class="number">06</span>-<span class="number">01</span> <span class="number">00</span>:<span class="number">01</span>:<span class="number">06</span>,主机<span class="number">10.10</span><span class="number">.0</span><span class="number">.10</span>日志中有READONLY信息,<span class="number">0</span></span><br></pre></td></tr></table></figure> 测试数据： - 1、提供20组训练数据，格式同训练数据，不提供根因标注（没有is_root列） - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F0iBs9_I--S.png?alt=media&amp;token=3963d6db-13df-4b57-9318-a0eb008c6766" /></p>
+<p>总结一下， -取发生故障的这段时间内(每次10到15min)： - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FhT-H9-YnH5.png?alt=media&amp;token=2b7a6f5f-c828-49c0-b6be-f274de231c1d" /> - 所有告警数据： 来自哪台机器，那个系统，哪个软件，告警描述 - 软硬件拓扑数据：静态的， - 根因incident可能存在也可能不存在 - 根因incident可能是1个也有可能是多个（多个是因为持续异常，所以就持续告警） - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FRgMOthtgUp.png?alt=media&amp;token=37da69ab-2425-472f-acc1-7ea85c517cf3" /> - - 训练数据有标记，人工标的根因事件 - 根因分析的样本粒度是 event，即一个告警事件，它的特征包括，主机id，系统名称，软件类型（optinal），告警信息</p>
+<ul>
+<li>还没有搞清楚，如何处理这些数据，已经定位到根因？
+<ul>
+<li>如何利用拓扑数据？</li>
+<li>如何利用标记数据？</li>
+<li>如何利用历史数据？--历史的告警数据</li>
+</ul></li>
+<li>看一下nokia的解决方案把[[bell给nokia做 故障诊断的 方案]]</li>
+</ul>
+<h2 id="数据解析">数据解析</h2>
+<figure>
+<img src="dataoverview.png" alt="dataoverview" /><figcaption aria-hidden="true">dataoverview</figcaption>
+</figure>
+<p>将每个事件看成一个指标的话，可以得到一个节点为2876的图</p>
+<h2 id="关联分析">关联分析</h2>
+<figure>
+<img src="./orr.png" alt="corr" /><figcaption aria-hidden="true">corr</figcaption>
+</figure>
+<figure>
+<img src="./img.png" alt="节点个数" /><figcaption aria-hidden="true">节点个数</figcaption>
+</figure>
+<p>对应的 因果图巨大无比，如下：</p>
+<figure>
+<img src="./correlation_topology.png" alt="图1-关联拓扑" /><figcaption aria-hidden="true">图1-关联拓扑</figcaption>
+</figure>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li>提取关键特征：数据来源是日志中心已经格式化过的告警日志信息，包含：报警日志产生的时间、服务标记、在代码中的位置、日志内容等。</li>
-</ol>
-<ul>
-<li>故障所在位置：优先查找是否有异常堆栈，如存在则查找第一个本地代码的位置；如果不存在，则取日志打印位置。</li>
-<li>异常来源：获得故障所在位置后，优先使用此信息确定异常报警的来源（需要预先定义词典支持）；如不能获取，则在日志内容中根据关键字匹配（需要预先定义词典支持）。</li>
-<li>报警日志文本关键内容：优先查找是否有异常堆栈，如存在，则查找最后一个异常（通常为真正的故障原因）；如不能获取，则在日志中查找是否存在“code=……,message=……” 这样形式的错误提示；如不能获取，则取日志内容的第一行内容（以换行符为界），并去除其中可能存在的Case相关的提示信息</li>
-<li>提取“机房和环境”这两个指标比较简单，在此不做赘述。</li>
-</ul>
-<ol start="2" type="1">
-<li><p>聚类算法：以图4来表示。</p>
-<figure>
-<img src="img_2.png" alt="图4 报警日志聚类流程图" /><figcaption aria-hidden="true">图4 报警日志聚类流程图</figcaption>
-</figure></li>
-</ol>
-<h3 id="泛化层次结构">泛化层次结构</h3>
-<p>泛化层次结构，用于记录属性的泛化关系，是泛化时向上抽象的依据，需要预先定义。</p>
-<p>下面是4个预先定义的泛化层次结构</p>
-<figure>
-<img src="img_9.png" alt="图5 机房泛化层次结构" /><figcaption aria-hidden="true">图5 机房泛化层次结构</figcaption>
-</figure>
-<figure>
-<img src="img_10.png" alt="图6 环境泛化层次结构g" /><figcaption aria-hidden="true">图6 环境泛化层次结构g</figcaption>
-</figure>
-<figure>
-<img src="img_11.png" alt="图7 错误来源泛化层次结构" /><figcaption aria-hidden="true">图7 错误来源泛化层次结构</figcaption>
-</figure>
-<figure>
-<img src="img_12.png" alt="图8 日志文本摘要泛化层次结构" /><figcaption aria-hidden="true">图8 日志文本摘要泛化层次结构</figcaption>
-</figure>
-<p>“故障所在位置”此属性无需泛化层次结构，每次泛化时直接按照包路径向上层截断，直到系统包名。</p>
-<h2 id="实验">实验</h2>
-<p>以下三个实验均使用C端API系统。</p>
-<h3 id="单依赖故障">1. 单依赖故障</h3>
-<ul>
-<li>环境：线上</li>
-<li>故障原因：产品中心线上单机故障</li>
-<li>报警日志数量：939条</li>
-</ul>
-<p>部分原始报警日志如图9所示，初次观察时，很难理出头绪。</p>
-<figure>
-<img src="img_3.png" alt="图9 单依赖故障报警日志节选" /><figcaption aria-hidden="true">图9 单依赖故障报警日志节选</figcaption>
-</figure>
-<p>经过聚类后的摘要如表1所示：</p>
-<figure>
-<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
-</figure>
-<p>可以看到前三条摘要的Count远超其他摘要，并且它们指明了故障主要发生在产品中心的接口。</p>
-<h3 id="无相关的多依赖同时故障">2. 无相关的多依赖同时故障</h3>
-<p>利用故障注入工具，在Staging环境模拟运营置顶服务和A/B测试服务同时产生故障的场景。</p>
-<ul>
-<li>环境：Staging,使用线上录制流量和压测平台模拟线上正常流量环境</li>
-<li>模拟故障原因：置顶与A/B测试接口大量超时</li>
-<li>报警日志数量：527条</li>
-</ul>
-<p>部分原始报警日志如图10所示：</p>
-<figure>
-<img src="img_5.png" alt="图10 无相关的多依赖同时故障报警日志节选" /><figcaption aria-hidden="true">图10 无相关的多依赖同时故障报警日志节选</figcaption>
-</figure>
-<p>经过聚类后的报警摘要如表2所示：</p>
-<figure>
-<img src="img_6.png" alt="表2" /><figcaption aria-hidden="true">表2</figcaption>
-</figure>
-<p>从上表可以看到，前两条摘要符合本次试验的预期，定位到了故障发生的原因。</p>
-<p>说明在多故障的情况下，算法也有较好的效果。</p>
-<h3 id="中间件与相关依赖同时故障">3. 中间件与相关依赖同时故障</h3>
-<p>利用故障注入工具，在Staging环境模拟产品中心服务和缓存服务同时产生超时故障的场景。</p>
-<ul>
-<li>环境：Staging，使用线上录制流量和压测平台模拟线上正常流量环境</li>
-<li>模拟故障原因：产品中心所有接口超时，所有缓存服务超时</li>
-<li>报警日志数量：2165</li>
-</ul>
-<p>部分原始告警日志如图11所示：</p>
-<figure>
-<img src="img_7.png" alt="图11 中间件与相关依赖同时故障报警日志节选" /><figcaption aria-hidden="true">图11 中间件与相关依赖同时故障报警日志节选</figcaption>
-</figure>
-<p>经过聚类后的报警摘要如表3所示：</p>
-<figure>
-<img src="img_8.png" alt="img_8.png" /><figcaption aria-hidden="true">img_8.png</figcaption>
-</figure>
-<p>从上表可以看到，缓存（Squirrel和Cellar双缓存）超时最多，产品中心的超时相对较少，这是因为我们针对产品中心的部分接口做了兜底处理，当超时发生时后先查缓存，如果缓存查不到会穿透调用一个离线信息缓存系统，因此产品中心超时总体较少。</p>
-<h3 id="总结">总结</h3>
-<ul>
-<li>优点：综合上述三个实验得出结果，算法对于报警日志的泛化是具有一定效果。</li>
-<li>不足：有些摘要过于笼统；利用摘要进行进一步定位，也需要领域知识。</li>
-</ul>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cluster_analysis">Cluster_analysis--wiki</a></li>
-<li><a target="_blank" rel="noopener" href="https://tech.meituan.com/2019/02/28/root-clause-analysis.html">meituan-blog</a></li>
-<li><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.136.1949&amp;rep=rep1&amp;type=pdf">Clustering intrusion detection alarms to support root cause analysis--paper</a>)</li>
+<li><a target="_blank" rel="noopener" href="http://www.cnsoftbei.com/plus/view.php?aid=479">CN-Softbei2020比赛</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/Insighter/blob/master/aiops_CN-Softbei_2020.ipynb">chiechie的代码-github</a></li>
 </ol>
 
       
@@ -552,7 +576,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/92/">92</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -618,7 +642,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">183</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1-event-generate/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1_1-GAN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/AI/AIOps/AIOps-1-event-generate/" class="post-title-link" itemprop="url">chapter1 故障发现</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-1_1_1-GAN/" class="post-title-link" itemprop="url">chapter1.1 使用GAN做异常检测</a>
         </h2>
 
         <div class="post-meta">
@@ -189,159 +189,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-21 16:03:52" itemprop="dateCreated datePublished" datetime="2021-05-21T16:03:52+08:00">2021-05-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-05 08:42:57" itemprop="dateModified" datetime="2021-06-05T08:42:57+08:00">2021-06-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="目录">目录</h1>
-<ul>
-<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
-<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
-<ul>
-<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
-<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
-<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
-<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
-<ul>
-<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
-<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
-</ul></li>
-</ul></li>
-<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
-<ul>
-<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
-<ul>
-<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
-<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
-<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
-<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
-<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
-<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
-</ul></li>
-<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
-<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
-<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
-</ul></li>
-<li>chapter3 故障恢复</li>
-</ul>
-<h1 id="概览">概览</h1>
-<p>故障发现阶段，根据监控的对象不同，可以细分为以下场景：</p>
-<ol type="1">
-<li>单指标异常检测</li>
-<li>多指标异常检测</li>
-<li>故障预测</li>
-<li>指标异常关联</li>
-<li>日志聚类</li>
-<li>调用链异常检测： https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA</li>
-</ol>
-<h1 id="相关资料">相关资料</h1>
-<h2 id="论文">论文</h2>
-<ul>
-<li>半自动的标记工具Label-Less: A Semi-automatic Labelling Tool for KPI Anomalies</li>
-<li>非监督异常检测算法-对复杂kpi使用vae进行对抗训练Unsupervised Anomaly Detection for Intricate KPIs via Adversarial Training of VAE</li>
-<li>对非结构化日志数据进行异常检测-LogAnomaly: Unsupervised Detection of Sequential and Quantitative Anomalies in Unstructured Logs</li>
-<li>多指标时序异常检测Robust Anomaly Detection for Multivariate Time Series through Stochastic Recurrent Neural Network</li>
-<li>对周期性时间序列数据进行异常检测-Automatic and Generic Periodicity Adaptation for KPI Anomaly Detection:<a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2019/08/08723601.pdf">paper</a></li>
-<li>Robust and Rapid Adaption for Concept Drift in Software System Anomaly Detection</li>
-<li>无监督异常检测-基于聚类Robust and Rapid Clustering of KPIs for Large-Scale Anomaly Detection</li>
-<li>无监督异常检测-基于VAE：Unsupervised Anomaly Detection via Variational Auto-Encoder for Seasonal KPIs in Web Applications</li>
-<li>有监督异常检测-Opprentice: Towards Practical and Automatic Anomaly Detection Through Machine Learning:<a target="_blank" rel="noopener" href="http://netman.cs.tsinghua.edu.cn/wp-content/uploads/2015/11/liu_imc15_Opprentice.pdf">paper</a></li>
-<li>雅虎开源的时序预测和异常检测项目 EGAD:<a target="_blank" rel="noopener" href="http://www.infoq.com/cn/articles/automated-time-series-anomaly-detection">论文的中文翻译</a></li>
-<li>CMU 做多指标模式提取和异常检测的 SPIRIT 系统论文：<a target="_blank" rel="noopener" href="https://bitquill.net/pdf/spirit_vldb05.pdf">paper</a></li>
-</ul>
-<h2 id="代码">代码</h2>
-<ul>
-<li>阿里巴巴开源的Time2Graph(基于序列片段的图迁移路径做异常检测)：<a target="_blank" rel="noopener" href="https://github.com/petecheng/Time2Graph">code</a></li>
-<li>清华/阿里巴巴开源的 Donut(基于 VAE 算法)：<a target="_blank" rel="noopener" href="https://github.com/haowen-xu/donut">code</a></li>
-<li>清华开源的 Bagel(Donut改进型，基于 CVAE 算法)：<a target="_blank" rel="noopener" href="https://github.com/lizeyan/Bagel">code</a></li>
-<li>清华/百度的 opprentice 系统(14 个检测器，平均取参数值，随机森林)：<a target="_blank" rel="noopener" href="https://github.com/tencent/metis">code</a></li>
-<li>清华/建行做的指标批量标注 Label-less 项目(基于 iForest 异常检测和 DTW 相似度学习)：<a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2019/10/Label-less-v2.pdf%3E">code</a></li>
-<li>百度开源的指标异常标注工具：<a target="_blank" rel="noopener" href="https://github.com/baidu/Curve">code</a></li>
-<li>微软开源的指标异常工具：<a target="_blank" rel="noopener" href="https://github.com/Microsoft/TagAnomaly">code</a></li>
-<li>清华OmniAnomaly-多指标异常检测: <a target="_blank" rel="noopener" href="https://github.com/NetManAIOps/OmniAnomaly/tree/master/omni_anomaly">code</a></li>
-<li>清华/南开/腾讯的 ADS 系统(ROCKA+opprentice+CPLE)：<a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2018/12/bujiahao.pdf">paper</a>|<a target="_blank" rel="noopener" href="https://github.com/tmadl/semisup-learn">code</a></li>
-<li>开源的时序特征值提取库 tsfresh：<a target="_blank" rel="noopener" href="http://tsfresh.readthedocs.io/en/latest/">code</a></li>
-<li>twitter 的异常检测库，R 语言<a target="_blank" rel="noopener" href="https://github.com/twitter/anomalydetection">code</a></li>
-<li>numenta公司，HTM 算法：<a target="_blank" rel="noopener" href="https://github.com/numenta/nupic">code</a>|<a target="_blank" rel="noopener" href="https://github.com/numenta/NAB/blob/master/nab/scorer.py">code-评估</a>|<a target="_blank" rel="noopener" href="https://github.com/numenta/NAB/tree/master/data">data</a></li>
-<li>雅虎开源的时序预测和异常检测项目 EGADS:<a target="_blank" rel="noopener" href="https://github.com/yahoo/egads">code</a></li>
-<li>亿客行Expedia开源的异常检测项目 adaptive-alerting:<a target="_blank" rel="noopener" href="https://github.com/ExpediaDotCom/adaptive-alerting">code</a></li>
-<li>新加坡国立大学做传感器多变量指标异常检测的开源项目(基于 GAN 算法)：<a target="_blank" rel="noopener" href="https://github.com/LiDan456/MAD-GANs">code</a></li>
-</ul>
-<h2 id="比赛">比赛</h2>
-<ol type="1">
-<li>清华裴丹团队举办的 KPI 异常检测比赛：<a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=5&amp;flag=1">data</a></li>
-<li>清华裴丹团队举办的 KPI 异常检测比赛方案-分享：<a target="_blank" rel="noopener" href="http://workshop.aiops.org/">slide</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-0-summary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/21/AI/AIOps/AIOps-0-summary/" class="post-title-link" itemprop="url">chapter0 AIOps概览</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-21 16:03:30" itemprop="dateCreated datePublished" datetime="2021-05-21T16:03:30+08:00">2021-05-21</time>
+              <time title="创建时间：2021-05-21 16:37:13" itemprop="dateCreated datePublished" datetime="2021-05-21T16:37:13+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -402,23 +250,238 @@
 </ul></li>
 <li>chapter3 故障恢复</li>
 </ul>
-<h2 id="总结">总结</h2>
-<p>智能运维（AIOps）全程是Artificial Intelligent Operation，即，使用AI技术辅助运维。现在业界和学术界研究的比较多的主要有9个场景，这10个场景按照监控的阶段可以分为故障发现阶段（6个场景）和故障分析（4个场景）两类。还有少部分人研究故障恢复阶段的场景，但是，这个场景对数据要求比较高，并且实施过程中，风险比较大，暂时不列出来。</p>
-<p>故障发现阶段，根据监控的对象不同，可以细分为以下场景：</p>
+<blockquote>
+<p>使用gnn做异常检测</p>
+</blockquote>
+<h1 id="不仅仅生成图片用gan做无监督的异常检测">不仅仅生成图片，用GAN做无监督的异常检测</h1>
+<p>代码：https://github.com/chiechie/wgan-gp-anomaly</p>
+<p>GAN被LeCun赞为继CNN之后最为重要的一个工作，其原因在于让各位惊呼“这才有点人工智能的样子”。相比于CNN或者RNN而言，GAN是一种完全不一样的思路。CNN或者RNN，其本质都是一种有监督的学习方式，相比于传统的方式而言，得益于网络强大的表达能力和自动学习特征的end-to-end的学习能力，CNN和RNN在很多任务上实现了巨大提升从而引领了这一次的人工智能的兴起。但是有监督学习的缺陷在于需要大量的数据进行学习，所以很多人工智能公司都是花了大量的资金和人力来收集和标注数据。记得在学校听“驭势科技”的黄波博士的一次技术分享，他就谈到数据的问题，笑称其实现在最赚钱的不是做人工智能技术的公司，而是那些做数据标注的公司。如果我没有记错的话，似乎买一张给自动驾驶标注的<strong>精细的语义分割</strong>的标签图需要1块人民币左右（敲黑板！商机啊！同学们）。</p>
+<p>GAN是一种对抗学习网络，通过生成器G和判别器D的对抗学习来学习训练集的数据分布从而学会生成图片（<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1406.2661.pdf">Goodfellow的paper</a>）。GAN一出来就被大家广泛的讨论，并且大量的人开始研究GAN，2017年以来arxiv上GAN的paper数量如同火箭一般的速度上升。原因就是GAN给做unsupervised learning提供一种很好的思路，最直接的应用在于我们可以用GAN学习真实的数据分布，从而生成图片可以给各种任务做<strong>数据增强</strong>。然后GAN也被应用在其他领域取得了非常不错的效果，有名的比如Twitter的那篇做超分辨的<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1609.04802">SRGAN</a>，最近最火的GAN应该是Berkeley的<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1611.07004">Pix2Pix GAN</a>和<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1703.10593">Cycle GAN</a>。</p>
+<p><strong>Pix2Pix GAN和普通的GAN的区别是实现图片域的转换（Image Translation）</strong>， 比如从手绘画到实物图的转换，而不是从一个噪声生成图片，效果非常之好。但是<strong>Pix2Pix GAN要求需要pair的数据训练</strong>，即两个图片域之间要有对应好的训练数据。Cycle GAN和Pix2Pix GAN一脉相承，加入了cycle consistency loss从而不需要像Pix2Pix GAN一样需要不同图片域里面pair的数据才能训练GAN，实现了unpair的训练就可以完成不同图片域之间的转换。由于开源代码写的非常好（特别是<a href="https://link.zhihu.com/?target=https%3A//github.com/junyanz/pytorch-CycleGAN-and-pix2pix">Pytorch版的代码</a>，简直是Pytoch的良心模板，强推），实验效果也好，并且Image Translation本来就有很多的应用场景（除了刚提到的手绘图还有什么场景？），估计今年的CVPR里面应该会有很多魔改Cycle GAN和Pix2Pix GAN来做各种应用的paper出现。</p>
+<h2 id="把gan应用于做异常检测">把GAN应用于做异常检测</h2>
+<p>这篇文章要讲的不是用GAN来做图片的生成，而是一个非常有意思的应用方向-把GAN应用于做异常检测。首先解释一下什么是异常检测，顾名思义，异常检测就是<strong>检测出异常情况</strong>并且<strong>定位出异常位置</strong>。异常检测有着非常广泛的应用，例如在监控中，人行道中行人正常行走是正常情况，但是一旦出现车、自行车甚至滑板等等就是异常情况；或者在工厂生产产品中，正常外形的产品是合格的，但是也有出现一些瑕疵的产品。一般异常检测任务意味着<strong>异常的复杂性和异常数据的少量性</strong>：</p>
+<ul>
+<li>1、复杂性：异常检测不同于分类任务，分类任务是有确定的类别个数，所有的结果都在确定的分类标签中，但是对于异常检测而言，只要是和正常情况有出入就是异常情况，所以异常情况非常多而且事先无法预知，所以如果用分类的方式来做异常检测有很大的局限性。</li>
+<li>2、异常数据的少量性：异常情况往往不常出现，所以导致异常情况的数据不是很方便收集，但是正常情况的数据通常是很多的。</li>
+</ul>
+<p>有很多正常的数据，但是没有很多异常的数据，那我们可不可以通过一个model来学习正常数据的分布，然后需要检测的异常图通过前面学习到的model找到它应该的正常图的样子，这样一对比不是可以找到异常吗？这样的思路简直完美契合GAN的思想！这篇文章里面我将会介绍一篇相关的paper：Unsupervised Anomaly Detection with Generative Adversarial Networks to Guide Marker Discovery， arxiv传送门：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1703.05921">https://arxiv.org/abs/1703.05921</a>。</p>
+<p>这篇paper是把GAN用在医学图像里面做异常检测，我们可以先看下整体的框架图：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-3afb9ef54ee08b8983abcec88975ff17_hd.jpg" alt="img" />Fig.1 图中使用的数据是眼部的SD-OCT图像，这种图像信噪比比较高，然后眼部结构相比于其他部位又比较简单一点。眼部OCT图像需要经过一些预处理：视网膜区域的提取，展平，还有给GAN输入的图像patch的提取和normalization。</p>
+<p>这个框架图基本已经解释了这篇paper的方法，其实就是用正常的图片去训练GAN，然后通过GAN生成与异常图对应的正常图来对比找到异常。</p>
+<p><img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/v2-592e8ddc687eda45212d8ddf70853aeb_hd.png" alt="img" />Fig.2 (a)是网络结构图，(b)是指正常和异常数据的分布</p>
+<p>Fig.2 是paper中使用的GAN的结构图，</p>
+<p>其实在这篇paper里面使用的GAN就是普通的DCGAN，从一个噪声向量Z学习生成一张图片。我们可以看到正常的眼部OCT图的纹理是一种比较正常的过渡，但是异常的OCT图明显纹理产生了变化。DCGAN只用正常的OCT图像训练，这样DCGAN就只能从噪声生成正常纹理的OCT图像。当输入一个异常图时，通过比较DCGAN的生成图和异常图的差异去更新输入的噪声Z，从而生成一个与异常图尽可能相似的正常图。通过这样的方式，可以认为重建出了异常区域的理想的正常情况，这样两张图一对比不仅仅可以认定异常情况，同时还可以找到异常区域。</p>
+<p>这样paper的重点是如何更新GAN的输入噪声Z，最直接的想法就是把在正常图中训练得到的生成器G的参数固定，然后通过计算生成图和输入的L1 loss或者L2 loss来更新输入的噪声Z。这篇paper中同样也是使用了L1 loss，在paper中作者命名为Residual loss，但是本质就是算pixel-wise的L1 loss：</p>
+<figure>
+<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/v2-77779aba2e1a63a5ef312c0de9c38e2e_hd.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>Fig.3 更新噪声Z的Residual loss</p>
+<p>在这篇paper中作者还加了一个loss去迭代噪声Z，An improved discrimination loss based on feature matching：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-13c9d37e5f19a28390fc17de03097cf4_hd.jpg" alt="img" />Fig.4 更新噪声Z的Improved discrimination loss</p>
+<p>加入这个loss目的是希望同时利用到训练好的判别器D，取判别器D中一个layer的输出，对比生成图和输入图之间在这层layer上feature map的差异，从而更新噪声Z。这样的目的在于加入了一个更high level的对比，希望生成图和输入尽量靠近。最后总体的loss是这两个loss的加权和：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-8b08b59f3a23aa990b2fb63bf65b3acc_hd.jpg" alt="img" />Fig.5 Final loss fuction</p>
+<p>下面是作者贴出来的一些实验结果图，可以看到对于异常区域都可以比较明显的找到。</p>
+<p><img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/v2-9dbf3f09ea6ba47de03569ad1ad0bd6e_hd.png" alt="img" />Fig.6</p>
+<p>第一行：真实的输入图；第二行：迭代噪声Z之后的生成器G的生成图；第三行：计算生成与输入直接差异找到的异常区域；第四行：异常区域的heatmap图。图中的红色和黄色标注分别表示通过Residual loss和Improved discriminator loss认定的异常图片。</p>
+<p>这篇paper提出了一个GAN很有意思的应用方向，对于异常情况，通过这样使用GAN就可以不需要任何异常数据而仅通过正常数据的训练就可以找到异常，相当于是一种无监督的异常检测方法。</p>
+<p>但是这篇paper并没有开源代码，同时数据也没有给下载的link，我自己用Pytorch重现了这篇paper，github传送门：<a href="https://link.zhihu.com/?target=https%3A//github.com/oyxhust/wgan-gp-anomaly">oyxhust/wgan-gp-anomaly</a>（来都来了，点个star再走吧）。和原始的paper不同的是我用了wgan-gp实现，而没有用DCGAN，wgan-gp应该是目前gan训练最稳定的一种方式之一。并且我也没有下载到paper中的眼部OCT数据集，目前是在MNIST在做的测试，我选择数字“0”的图像当成正常图像，然后其他数字图就是异常图。WGAN-gp只用数字“0”的图像进行训练，在测试中我用所有数字的图来测试model。</p>
+<p>下面是我复现的效果图：</p>
+<figure>
+<img src="https://pic1.zhimg.com/80/v2-c66190ea550aee83736e30e8e0ff02d0_hd.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>可以看到GAN只能生成数字“0”（相当于正常情况），对于“0”的测试图，GAN可以生成几乎一样的输出。对于其他数字（相当于异常情况），GAN只能生成形状非常类似的“0”的图像。在我自己的实验中，对于“0”的测试图，L1 loss可以降低0.02左右，但是其他数字的测试图最低也是大概0.05左右，所以还是可以很明显地检测出异常。</p>
+<p>我觉得GAN用来做异常检测是一个非常有意思的方向，但是目前还有很多问题，这篇paper里面的做法我认为只能检测出一些比较大的异常。对于比较小的异常，因为GAN生成图并不能做到细节非常明显，所以很难检测。</p>
+<figure>
+<img src="../_image/image-20191113125624723.png" alt="image-20191113125624723" /><figcaption aria-hidden="true">image-20191113125624723</figcaption>
+</figure>
+<figure>
+<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20191113125714058.png" alt="image-20191113125714058" /><figcaption aria-hidden="true">image-20191113125714058</figcaption>
+</figure>
+<h2 id="参考资料">参考资料</h2>
 <ol type="1">
-<li>单指标异常检测</li>
-<li>多指标异常检测</li>
-<li>故障预测</li>
-<li>指标异常关联</li>
-<li>日志聚类</li>
-<li>调用链异常检测</li>
+<li>https://www.youtube.com/watch?v=pXGqDiE4N0I</li>
 </ol>
-<p>故障分析阶段, 根据需要定位的组件对象不同，也可以细分为以下几个场景：</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/" class="post-title-link" itemprop="url">chapter2.2 多维下钻根因定位/多维指标异常定位</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-21 16:05:42" itemprop="dateCreated datePublished" datetime="2021-05-21T16:05:42+08:00">2021-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-02 17:48:31" itemprop="dateModified" datetime="2021-06-02T17:48:31+08:00">2021-06-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="目录">目录</h1>
+<ul>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>:</li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
+</ul>
+<h1 id="问题描述">问题描述</h1>
+<p>在运维场景中对监控指标的多个维度进行根因定位。具体来说，当某个总指标（如总流量）发生异常时，需要快速准确地定位到是哪个交叉维度的细粒度指标（如“省份=北京 &amp; 运营商=联通”的流量）的异常导致的，以便尽快做进一步的修复止损操作。图示如下：</p>
+<h2 id="输入输出">输入输出</h2>
+<p>输出：</p>
+<table>
+<thead>
+<tr class="header">
+<th>timestamp</th>
+<th>set</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1501475700</td>
+<td>a1&amp;b2;a3&amp;b4</td>
+</tr>
+<tr class="even">
+<td>1501475760</td>
+<td>a1&amp;b2&amp;x3;a4&amp;b5&amp;x6</td>
+</tr>
+</tbody>
+</table>
+<h1 id="方案介绍">方案介绍</h1>
+<h2 id="几个问题">几个问题</h2>
 <ol type="1">
-<li>微服务系统的故障定位</li>
-<li>多维指标下钻分析</li>
-<li>调用链根因定位</li>
-<li>指标和事件的关联关系</li>
+<li><p>要训练集干嘛？</p>
+<p>训练集用来当做历史数据，学习正常波动区间，对测试数据进行异常检测。</p></li>
+<li><p>为什么要注入异常？</p>
+<p>真实中故障很少发生，并且故障根因大部分都比较简单，不会出现多层，多个elemnts是根因的情况, 需要人工构造。</p></li>
+</ol>
+<h2 id="adtributor">Adtributor</h2>
+<p>Adtributor: Revenue Debugging in Advertising Systems</p>
+<p>简介：Adtributor假设所有根因都是一维的，提出了解释力（Explanatory power）和惊奇性（Surprise）来量化根因的定义。使用ARMA模型对KPI进行预测，通过计算维度的惊奇性（维度内所有元素惊奇性之和）对维度进行排序，确定根因所在的维度（例如省份）。在维度内部计算每个元素的解释力，当元素的解释力之和（例如北京+上海）超过阈值时，这些元素就被认为是根因。</p>
+<figure>
+<img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<p>上述是针对基本类型的KPI的计算公式（例如PV、交易量），对于派生类型的KPI（多个基本类型KPI计算得到，例如成功率）就不太适用了。当然，作者也提出了另一套公式来计算派生型KPI，主要是让“解释力”和“惊奇性”的分数符合我们对于异常的“直觉”。</p>
+<p>评价：Adtributor提出的“解释力”和“惊奇性”对根因给出了量化的评价，有很强的借鉴意义。将根因限定在一维的假设也极大的简化了问题的复杂度。但是这样的假设并不太符合我们的实际场景，同时用解释性和惊奇性的大小来衡量根因也不完全合理。因为其没有考虑到维度之间的相互影响以及「外部根因」的可能，即根因所在的维度没有在数据中体现。另外，Adtributor的根因分析严重依赖于整体KPI的变化情况，对于整体变化不大，但是内部波动较为剧烈的数据表现不好。</p>
+<p>总的来说，Adtributor是一种可以落地的业务指标明细多维分析算法，能够提供一些对排障有帮助的信息，配合人工筛查，可以有一定的效果。但是如果应对更多的维度、更复杂的情况，甚至存在外部根因的时候，能够提供的帮助就有限了。</p>
+<h2 id="idice">iDice</h2>
+<p>iDice: Problem Identification for Emerging Issues</p>
+<p>简介：iDice针对的场景和Adtributor稍有不同，它分析的数据是一段时间序列下的多维明细数据而不是对某一个具体的时间点。首先它认为根因的表现是一定在时间序列上体现突变，然后根据信息熵的思想提出Isolation Power的概念来解释根因，基本的思想就是对每一个维度组合计算他们的Isolation Power值，一个有效的根因维度组合（图1 Effective Combination）是其IP值大于其所有的直接子节点和直接父节点。在判断了当前节点为「可能的根因」后，其所有子节点都被剪枝掉。为了降低搜索和聚合的复杂度，本文还提出了多种剪枝方法。如减掉数量较小的节点、减掉在时间序列上没有突变的的节点等。最终对每个「可能的根因」突变点前后计算类似Adtributor的“惊奇性”进行排序。</p>
+<p>评价：iDice提出了一种更符合实际情况的根因评估指标：Isolation Power，利用多种剪枝手段减少搜索的复杂度。利用了数据的时间序列，从一定程度上缓解了单一时间点做预测时不准的情况。但是对大量的节点做异常检测也带来了额外的复杂度，在维度和取值较多时，上层节点的数目要远远大于叶子结点的数目。从上至下的搜索以及至下而上的聚合的复杂度极大，虽然本文提出了几种剪枝方法，但是并不能带来量级上的减少。</p>
+<p>同时，iDice的几种剪枝略显暴力，例如基于Impact的剪枝，虽然减掉的是量较少的维度组合，但是当维度和取值增加，极限情况下每一个叶子结点的维度组合的量只有1，这样剪枝的结果是不可以接受的。另外iDice对于派生类型的指标没有很好的处理方法，例如成功率，首先剪枝不能很好地进行，其次做变点检测时，容易忽略掉真正的“根因”。</p>
+<h2 id="hotspot">HotSpot</h2>
+<ol start="3" type="1">
+<li>HotSpot: Anomaly Localization for Additive KPIs with Multi-Dimensional Attributes</li>
+</ol>
+<p>简介：HotSpot和Adtributor一样使用“预测+搜索”的策略，针对基本类型的指标（可加型，例如交易量，PV等）提出了基于Ripple Effect的根因判断方法，即维度组合与其子节点之间越满足Ripple Effect条件就越有可能是根因，提出了Potential Score来量化一个节点与其所有叶子结点之间满足Ripple Effect程度。举个简单的例子，例如表一中的北京。PV从30-&gt;21,而北京联通和北京电信分别从20-&gt;14、10-&gt;7，变化的比例和北京相同（Ripple Effect），所以判断出北京是根因。和iDice对于根因集的定义不同，HotSpot会考虑同一维度下的根因组合，例如不仅有（北京，联通）这样的元素，还会有（北京，上海）这样的元素。这样当然会带来额外的搜索复杂度（2n-1，n是维度取值数目之和），所以作者提出基于MCTS（蒙特卡洛树搜索）和分层的剪枝策略，按照获得最大Potential Score收益的路径进行搜索，如果某一元素的PS分数较低，则减掉其子节点（Hierarchical Pruning）。</p>
+<p>评价：HotSpot提出具有启发意义的根因判断方式：Ripple Effect。使用叶子结点而不使用直接子节点参与Potential Score的计算，达到了边搜索边聚合的效果，极大的降低了空间的使用。创新的将MCTS应用到搜索的剪枝中，降低了搜索的复杂度。当然，HotSpot也存在一些局限，例如假设所有的根因在一个Cuboid内（完全相同的维度组成：eg.C省份、C省份、运营商）、没有考虑到非可加型指标（eg.成功率）、时间序列预测方法也只是使用了简单的MA，如果指标有一定的波动，可能会影响PS的准确性。另外使用叶子结点计算PS虽然减少了空间的使用，但是随着维度和取值的增加，叶子结点的量下降，极端情况下下降到1，此时的PS计算会受到较大的影响。</p>
+<h2 id="squeeze">Squeeze</h2>
+<p>Squeeze：Generic and Robust Localization of Multi-Dimensional Root Causes</p>
+<p>简介：Squeeze在HotSpot的基础上提出广义的Ripple Effect,证明RE不仅仅适用于基本类型的指标，也适用于派生类型的指标（eg.成功率）同时解决了0值预测的问题。和之前的算法搜索策略不同，Squeeze先至下而上剪掉正常的叶子结点的减小搜索空间，然后计算叶子结点的deviation score来进行聚类，因为根据RE，相同的根因的叶子结点将具有相似的deviation score。然后自顶向下在每一个簇中搜索根因。Squeeze假设每一个簇中的根因都在一个Cuboid（见HotSpot简介）内，同样提出类似于Potential Score的GPS来作为是否是根因的量化标准。</p>
+<p>评价：Squeeze在HotSpot的基础上进行了理论的拓展，增加了算法的通用性和鲁棒性。“Squeeze”的做法也极具创新性。不过实际的业务场景可能会对算法的准确性产生一定的影响，例如预测不准可能会导致聚类不准确、同时有多个异常或者外部异常也会影响聚类效果。另外按照GPS对结果根因进行排序有时也不符合真实业务场景，因为真实的业务场景数量的大小同样是一个重要的衡量指标。失败量从50到100的组合可能比0到5的组合更值得注意。</p>
+<h2 id="百度的方案">百度的方案</h2>
+<p>参考人工定位过程中的分析思路，提取了两个特征，用来描述某维度是否为根因：</p>
+<ol type="1">
+<li>贡献度：即该维度PVLost与总PVLost的比例。</li>
+<li>一致度：即构成该维度的子维度的异常程度的相似度。子维度的异常程度的一致度可通过各子维度异常程度间的变异系数衡量，变异系数越小，则异常程度越一致。(如何衡量小？绝对值还是相对值?)</li>
+</ol>
+<h1 id="评估指标">评估指标</h1>
+<p>评估准确性的指标是F-score,该指标是准确率（Precision）和召回率(Recall)综合体现。具体计算如下所示： F-score =(2 ∗ Precision ∗ Recall)/(Precision+ Recall)，其中： Precision ＝ TP / (TP + FP)， Recall = TP / (TP + FN)。</p>
+<p>每个异常时刻都有一个真正的根因集合，记为S<em>，该集合中包含一个或多个属性值组合，参赛队伍的算法输出结果 记为S。对于S</em>中的每一个元素，S中包含其中一个，则算一次true positive （TP），遗漏一个算一次false negative （FN），多出一个S*中不存在的，记一次false positive （FP）。计算出所有异常时刻总的TP、FP、FN，最后得出F-score。</p>
+<h1 id="代码地址">代码地址</h1>
+<ol type="1">
+<li>https://github.com/chiechie/ADminer</li>
+</ol>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2018/12/sunyq_IEEEAccess2018_HotSpot.pdf">HotSpot-英文paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kj309bzifIv4j80nZbGVZw">HotSpot-中文</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/48926992">百度做根因钻</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.usenix.org/system/files/conference/nsdi14/nsdi14-paper-bhagwan.pdf">Adtributor</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/ICSE-2016-1-iDice-Problem-Identification-for-Emerging-Issues.pdf">iDice</a></li>
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2019/08/camera_ready.pdf">Squeeze</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bizseer.com/index.php?m=content&amp;c=index&amp;a=show&amp;catid=26&amp;id=3">bizseer总结</a></li>
+<li><a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=8&amp;flag=1">比赛</a></li>
 </ol>
 
       
@@ -438,7 +501,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/27/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/92/">92</a><a class="extend next" rel="next" href="/page/29/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/27/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/29/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -504,7 +567,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">183</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

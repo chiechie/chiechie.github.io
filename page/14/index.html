@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/08/reading_notes/computer/coding/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/11/meditation/graph-summary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/08/reading_notes/computer/coding/" class="post-title-link" itemprop="url">《编程:隐匿在计算机硬件背后的语言 》的读书笔记</a>
+            <a href="/2021/06/11/meditation/graph-summary/" class="post-title-link" itemprop="url">关于图数据结构，图模型和图算法</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-08 09:09:12" itemprop="dateCreated datePublished" datetime="2021-06-08T09:09:12+08:00">2021-06-08</time>
+              <time title="创建时间：2021-06-11 18:42:27" itemprop="dateCreated datePublished" datetime="2021-06-11T18:42:27+08:00">2021-06-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-11 10:39:26" itemprop="dateModified" datetime="2021-06-11T10:39:26+08:00">2021-06-11</time>
+                <time title="修改时间：2021-06-26 18:56:35" itemprop="dateModified" datetime="2021-06-26T18:56:35+08:00">2021-06-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -219,100 +219,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="二进制加法器">12 二进制加法器</h2>
-<ol type="1">
-<li>电路中的逻辑门能实现二进制加法。</li>
-</ol>
-<blockquote>
-<p>逻辑门是认为设计的一种电路走线，为了映射到逻辑上的加法运算。</p>
-<p>逻辑门是链接物理世界和信息世界的桥梁，信息世界以逻辑求和为根基，开始构建信息世界的高楼大厦。</p>
-</blockquote>
-<h2 id="存储器组织">16 存储器组织</h2>
-<ol type="1">
-<li><p>我们习惯于将可能用到的事物先存起来，在需要时将它们取出。从技术角度来讲，这个过程称为先存储后访问。存储器的职责和作用就在于此，它负责保障这两个过程之间信息完好无损。</p></li>
-<li><p>存储信息都要利用不同种类的存储器。比如，保存文本信息的不二之选就是纸张，而磁带则更适于存储音乐和电影。</p></li>
-<li><p>电报继电器（Telegraph Relays）——以一定形式组织起来构成逻辑门，然后再形成触发器——同样具备保存信息的能力</p></li>
-<li><p>随机访问存储器（RAM）一断电，数据就消失了。因此随机访问存储器也叫易失性（volatile）存储器。</p>
-<blockquote>
-<p>一个辛辛苦苦装满65,536字节珍贵数据的64 K×8 RAM阵列，如果断掉电源，首先所有的电磁铁都将因为没有电流而失去磁性，随着“梆”的一声，金属片将弹回原位，所有继电器将还原到未触发状态。RAM中存储的数据呢？它们将如风中残烛般消失在黑暗中</p>
-</blockquote></li>
-</ol>
-<h2 id="从算盘到芯片">18 从算盘到芯片</h2>
-<h2 id="两种微处理器">19 两种微处理器</h2>
-<ol type="1">
-<li><p>微处理器将中央处理器的所有组建整合到一个硅芯片上。</p></li>
-<li><p>第一个微处理器，intel 4004，包含了2300个晶体管</p></li>
-<li><p>三十年过去了，一个微处理器中的晶体管数量逼近1000w个。</p></li>
-<li><p>摩托罗拉公司，从20实际50年代生产半导体和晶体管，在1974年8月推出了6800处理器。</p></li>
-<li><p>得克萨斯仪器在1974年，推处4位的处理器TMS1000，</p></li>
-<li><p>英特尔为8080最初定的价格为360美元，8080是一个8位的微处理器，它包括6000个晶体管，运行的时钟频率为2 MHz，寻址空间为64 KB。</p></li>
-<li><p>这些芯片被称为“单芯片微处理器”（single-chip microprocessors</p></li>
-<li><p>除了处理器之外，计算机还需要其他一些设备，至少要包括存储器（RAM），输入设备（键盘），输出设备（显示屏），以及其他一些能把所有构件连接在一块的芯片（主板，机箱）。</p></li>
-<li><p>通过观测芯片的输入、输出信号，特别是芯片的指令集来理解微处理器的工作原理。</p></li>
-<li><p>微处理器通过管脚提供了处理器的输入和输出访问接入点 <img src="img.png" alt="img.png" /></p></li>
-<li><p>所有电气或电子设备都需要某种电源来供电</p></li>
-<li><p>8080的一个特殊的地方就是它需要三种电源电压：管脚20必须接到5V的电压；管脚11需要接到-5V的电压；管脚28需接12V的电压；管脚2接地。（英特尔在1976年发布了8085芯片，目的就是简化对这些电源的要求）.</p>
-<ul>
-<li>从芯片引出的箭头表明这是一个输出（output）信号，这种信号由微处理器控制，计算机的其他芯片对该信号响应。</li>
-<li>指向芯片的箭头表明该信号是一个输入（input）信号，该信号由其他芯片发出，并由8080芯片对其响应。还一些管脚既是输入又是输出。</li>
-</ul></li>
-<li><p>8080有16个用于寻址的输出信号，标记为A0～A15，因此它的可寻址空间大小为<span class="math inline">\(2^16\)</span></p></li>
-<li><p>在计算机中，所有的指令都是3个字节长（1个字节=8个bit），包括1字节的操作码和2字节的地址，指令长什么样？：</p>
-<ul>
-<li>有些指令使8080从存储器的一个特定地址读取字节到微处理器，</li>
-<li>有些指令使8080将一个字节从微处理器写入存储器的特定地址；</li>
-<li>还有些指令使8080在其内部执行而不需要访问RAM</li>
-</ul>
-<p>8080执行完第一条指令后，接着从「存储器」读取第二条指令，并依此类推。这些指令组合在一起构成了计算机程序</p></li>
-<li><p>计算机的指令集包括两条非常重要的指令，我们称之为加载（Load）和保存（Store），每条指令占3个字节</p>
-<ul>
-<li>在Load指令中，第一个字节是操作码，其后的两个字节是要加载的操作数的16位地址。当处理器执行加载指令时，会把该指定地址中的字节加载到累加器。</li>
-<li>当Store指令被执行时，累加器中的内容被保存到该指令指定的地址中。</li>
-</ul></li>
-<li><p>8080芯片的微处理器的内部除累加器外还设置了6个寄存器（register），每个寄存器可以存放一个8位的数。这些寄存器和累加器非常相似，事实上累加器被视为一种特殊的寄存器。</p></li>
-<li><p>寄存器是计算机必不可少的部件吗？理论上不是。很多计算机程序都同时用到多个数据，将这些数据存放在寄存器比存放在存储器更便于访问，因为程序访问内存的次数越少其执行速度就越快。</p></li>
-<li><p>利用指令，可以方便地把一个寄存器存放的数据转移到另一个寄存器</p></li>
-<li><p>有一种存储器叫堆栈：以从底部到顶部的顺序把数据存入存储器，并以相反的顺序把数据从堆栈中取出，因此该技术也称作后进先出存储器（last-in-first-out，LIFO）。在计算机中使用堆栈技术是十分方便的。通常把将数据存入堆栈的过程称作压入（push），把从堆栈取出数据的过程称作弹出（pop）。</p></li>
-<li><p>堆栈的功能是怎样实现的呢？首先，堆栈其实就是一段普通的RAM存储空间，只是这段空间相对独立不另作他用。8080微处理器设置了一个专门的16位寄存器对这段存储空间寻址，这个特殊的寄存器称为堆栈指针（SP，Stack Pointer）。</p></li>
-<li><p>在8080中，执行PUSH指令实际上是把16位的数据保存到堆栈，执行POP指令是把这些数据从堆栈中取回至寄存器。</p></li>
-<li><p>每执行一条PUSH指令，堆栈都会增加两个字节，这可能会导致程序出现一些小错误——堆栈可能会不断增大，最终覆盖掉存储器中保存的程序所必需的代码或数据。这种错误被称作堆栈上溢（stackoverflow）。类似的，如果在程序中过多地使用了POP指令，则会过早地取完堆栈中的数据从而导致类似的错误，这种情况称为堆栈下溢（stack underflow）。</p></li>
-<li><p>根据摩尔定律（Moore’s Law），微处理器中的晶体管数量每18个月翻一倍，增加的这些大量的晶体管用来做什么呢？</p>
-<ul>
-<li>一些晶体管用来适应处理器不断增加的数据宽度——从4位、8位、16位到32位；</li>
-<li>另一些新增的晶体管用来应对新的指令。</li>
-</ul></li>
-<li><p>现代处理器主要使用2种策略来提高运行速度:</p>
-<ul>
-<li>一种就是流水线技术（pipelining），即处理器在执行一条指令的同时读取下一条指令，</li>
-<li>还有一种是Cache（高速缓冲存储器），它是一个设置在处理器内部，访问速度非常快的RAM阵列，用来存放处理器最近要执行的指令</li>
-</ul>
-<p>这两种策略都需要在处理器内部增加更多的逻辑组件和晶体管。</p></li>
-</ol>
-<h2 id="ascii码和字符转换">20　ASCII码和字符转换</h2>
-<ol type="1">
-<li>存储器中唯一可以存储的东西是bit</li>
-<li>如果我们想把一段文本存下来该怎么办呢？将文本表示成数字。</li>
-<li>可以为每一个字母赋予一个唯一的编码，具有这种功能的系统叫 字符编码集（Coded CharacterSet），系统内的每个独立编码称为字符编码（Character Codes）</li>
-<li>莫尔斯码: 常用字符的编码较短，而不常用字符的编码较长。这样的编码非常适合电报系统，但并不适用于计算机.</li>
-<li>对一个句子进行编码后得到的连续字符通常被称为文本字符串（string）</li>
-<li>电传打字机键盘上的每一个键实质上都起到了转换器的作用，它负责产生二进制编码并且通过输出电缆逐位传输出去</li>
-<li>尽管ASCII码是计算机领域最重要的标准,但是它是太美国化了，在其他国家ASCII码并不适用。</li>
-<li>近几十年来出现了许多不同版本的扩展的ASCII码，多个不同的版本严重影响了编码的一致性，导致了混淆和不兼容。ASCII码被扩展到极致，有的甚至可以对中文、日文和韩文进行编码</li>
-<li>从1988年开始，几大著名计算机公司合作研究出一种用来替代ASCII码的编码系统，取名为Unicode（统一化字符编码标准）。相对于ASCII的7位编码，Unicode采用了16位编码，每一个字符需要2个字节。</li>
-<li>Unicode编码不是从零开始设计的，前128个字符编码——即0000h～007Fh——与ASCII码是一致的</li>
-<li>对于Unicode来讲，它唯一的问题，就是它改变了字符与存储空间之间“单字符，单字节”的等价对应关系。采用ASCII编码方式存储的著作《怒火之花》，其所占据的存储空间约为1 MB。而如果采用Unicode编码，约占2 MB。为了使编码系统兼容，Unicode在存储空间上付出了相应的代价。</li>
-</ol>
-<blockquote>
-<p>UTF-8是unicode的升级版，减少存储空间。</p>
-</blockquote>
-<p>你看到的unicode字符集是这样的编码表： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">I 0049</span><br><span class="line">t 0074</span><br><span class="line">&#x27; 0027</span><br><span class="line">s 0073</span><br><span class="line">  0020</span><br><span class="line">知 77e5</span><br><span class="line">乎 4e4e</span><br><span class="line">日 65e5</span><br><span class="line">报 62a5</span><br></pre></td></tr></table></figure></p>
-<p>每一个字符对应一个十六进制数字。计算机只懂二进制，因此，严格按照unicode的方式(UCS-2)，应该这样存储： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">I 00000000 01001001</span><br><span class="line">t 00000000 01110100</span><br><span class="line">&#x27; 00000000 00100111</span><br><span class="line">s 00000000 01110011</span><br><span class="line">  00000000 00100000</span><br><span class="line">知 01110111 11100101</span><br><span class="line">乎 01001110 01001110</span><br><span class="line">日 01100101 11100101</span><br><span class="line">报 01100010 10100101</span><br></pre></td></tr></table></figure></p>
-<p>这个字符串总共占用了18个字节，但是对比中英文的二进制码，可以发现，英文前9位都是0！浪费啊，浪费硬盘，浪费流量。怎么办？UTF。</p>
-<p>于是，”It's 知乎日报“就变成了： <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">I 01001001</span><br><span class="line">t 01110100</span><br><span class="line">&#x27; 00100111</span><br><span class="line">s 01110011</span><br><span class="line">  00100000</span><br><span class="line">知 11100111 10011111 10100101</span><br><span class="line">乎 11100100 10111001 10001110</span><br><span class="line">日 11100110 10010111 10100101</span><br><span class="line">报 11100110 10001010 10100101</span><br></pre></td></tr></table></figure> 和上边的方案对比一下，英文短了，每个中文字符却多用了一个字节。但是整个字符串只用了17个字节，比上边的18个短了一点点。</p>
-<p><img src="img_1.png" alt="img_1.png" /> ## 参考</p>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/64e32bf071fd5a9164ece6b">编程：隐匿在计算机硬件背后的语言</a></li>
-<li>https://www.zhihu.com/question/23374078/answer/65352538</li>
+          <ol type="1">
+<li>图数据是一种数据结构，对于图数据有一些常见的任务，比如单源最短路径，等。</li>
+<li>当图数据的点和边具备一定的含义，如边代表概率，这个时候就是一个概率图模型。通常用于对多个变量之间的因果关系或者相关关系进行建模。</li>
+<li>概率图模型可以细分为有向图和无向图。有向图比如贝叶斯网络，无向图比条件随机场（CRF）。</li>
+<li>有向图又可进一步细分，如果边的方向代表因果关系，就是一个因果图。通常因果图都是需要专家构建的。</li>
 </ol>
 
       
@@ -333,7 +244,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/07/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -347,7 +258,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/07/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/" class="post-title-link" itemprop="url">《the book of why》读书笔记-6</a>
+            <a href="/2021/06/10/AI/machine_learning/deeplearning/dl-basic0/" class="post-title-link" itemprop="url">深度学习基础1 数据表示和神经网络基础</a>
         </h2>
 
         <div class="post-meta">
@@ -357,14 +268,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-07 08:33:38" itemprop="dateCreated datePublished" datetime="2021-06-07T08:33:38+08:00">2021-06-07</time>
+              <time title="创建时间：2021-06-10 16:35:36" itemprop="dateCreated datePublished" datetime="2021-06-10T16:35:36+08:00">2021-06-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-28 10:13:03" itemprop="dateModified" datetime="2021-06-28T10:13:03+08:00">2021-06-28</time>
+                <time title="修改时间：2021-06-24 09:38:53" itemprop="dateModified" datetime="2021-06-24T09:38:53+08:00">2021-06-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -387,75 +298,135 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>the book of why 的第6章-一些悖论</p>
-</blockquote>
-<h2 id="悖论1-蒙提-霍尔">悖论1-蒙提 霍尔</h2>
-<h3 id="背景">背景</h3>
-<p>一个竞猜游戏中，有三个用幕布遮住的们，其中有2个门后面是山羊，1个是汽车。有两种游戏规则，分别是：</p>
+          <h1 id="数据表示">数据表示</h1>
+<p>在深度学习中如何表示现实中的事物？</p>
+<p>Let’s make data tensors more concrete with a few examples similar to what you’ll encounter later. The data you’ll manipulate will almost always fall into one of the following categories:</p>
+<ul>
+<li>Vector data:2D tensors of shape(samples, features)</li>
+<li>Timeseries data or sequence data:3D tensors of shape (samples, timesteps, features)</li>
+<li>Images:4D tensors of shape(samples,height,width,channels) or (samples,channels, height, width)</li>
+<li>Video:5D tensors of shape (samples, frames, height, width, channels) or (samples, frames, channels, height, width)</li>
+</ul>
+<h2 id="表数据">表数据</h2>
+<ul>
+<li>两个轴：samples axis 和 features axis.</li>
+<li>文本数据, 假设词典长度为2k，每一个doc可以表示为1个2k维的向量，位置的值代表词在文本中出现的次数。</li>
+<li>500个文件可以存储为(500, 20000).</li>
+</ul>
+<h2 id="时间序列数据">时间序列数据</h2>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_vMGBboznU.png?alt=media&amp;token=73c12f97-acdb-4680-b4eb-79a9a07581f9" /></li>
+</ul>
+<p>时间序列数据一般表示成3-d的张亮，tf中使用3d张量存储，(samples, timestamp, features) 每一个sample可以被编码成一个2d张量， 具体的两个例子</p>
 <ol type="1">
-<li>观众先选择三个门中的一个，然后主持人从另外两个门中选择一个没有汽车的们打开，然后这个观众可以选择要不要换门？</li>
-<li>观众先选择三个门中的一个，然后主持人从另外两个门中随便选一个打开，然后这个观众可以选择要不要换门？</li>
+<li>股票数据：每年有250个交易日，每个交易日的交易时长有390分钟，每个分钟可以抽取3个重要特征：当前价格，上一分钟最高成交价格，上一分钟最低价格
+<ul>
+<li>以每一天的交易数据为1个样本，构建的样本的shape为(250,390,3)</li>
+</ul></li>
+<li>TWEET数据：一条twitter长度不超过256，每个位置的字符来自128个assical码中的一个。每一条twitter的shape为（256， 128），1 百万 tweets 的shape为(1000000, 280, 128)</li>
 </ol>
-<p>第一种强况下，选择换门的话，赢到车车的概率是2/3， 第二种情况下，选择换门的话，赢到的车车的概率是1/2</p>
+<h2 id="图像数据">图像数据</h2>
+<p>图像数据一般表示成4维tensor，一个图像数据就是一个3d张量</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD24ghIvE2L.png?alt=media&amp;token=4a68bc5a-7b95-46d2-8418-deed053d4301" /></p>
+<ul>
+<li>tensorflow： (samples, height, width, color_depth)</li>
+<li>theano：(samples, color_depth, height, width).</li>
+<li>keras两者都支持</li>
+</ul>
+<h2 id="视频数据的表示">视频数据的表示</h2>
+<p>视频数据表示成5维张量：(samples, frames, height, width, color_depth).</p>
+<h1 id="模型超参">模型超参</h1>
+<h2 id="结构超参数">结构超参数</h2>
+<p>结构超参数包括层数、层的类别、层的大小等数值。以一个卷积层为例，其中的超参数包括卷积核 (filter) 的大小，卷积核的数量，步长 (stride) 的大小，unit：单元，hidden_layers: 隐藏层，cell：单元 ，dropout_rate丢弃率。这些超参数决定了神经网络的结构。</p>
+<h3 id="layers的基本类型">layers的基本类型</h3>
+<p>keras中layer的基本类型：</p>
+<ul>
+<li>卷积(Conv1D)</li>
+<li>池化(MaxPooling1D/GlobalAveragePooling1D)</li>
+<li>dropout(Dropout)</li>
+<li>线性全连接层(Dense)</li>
+<li>high-level层(LSTM)</li>
+</ul>
+<h3 id="卷积层">卷积层</h3>
+<ol type="1">
+<li>卷积的维度有1Ｄ，2Ｄ，3D, 区别在于?</li>
+</ol>
+<p>输入数据的shape以及卷积核如何滑动</p>
+<ul>
+<li><img src="https://miro.medium.com/max/1621/1*aBN2Ir7y2E-t2AbekOtEIw.png" title="fig:" alt="I１维卷积和２维卷积的区别" /></li>
+<li>1维卷积（Conv1D）：只有1个维度可以滑动，但是另一维度也是有待估参数的</li>
+<li>2维卷积（Conv2D）：有两个维度可以滑动，</li>
+<li>相同点：从参数视角都是2维的，每一个卷积kernel，参数个数是 height × width +１　（off_ set）</li>
+</ul>
+<ol start="2" type="1">
+<li>什么情况下，1d比2d好用呢？其中2个维度上，做卷积没有意义(high,close,open,close)</li>
+</ol>
+<h3 id="关于dropout">关于dropout</h3>
+<p>keras中对dropout的处理，因为训练阶段需要dropout ，但是inference阶段不需要dropout，keras中如何设置？</p>
+<p>Keras does this by default. In Keras dropout is disabled in test mode. You can look at the code<a target="_blank" rel="noopener" href="https://github.com/keras-team/keras/blob/dc95ceca57cbfada596a10a72f0cb30e1f2ed53b/keras/layers/core.py#L109">here</a> and see that they use the dropped input in training and the actual input while testing.</p>
+<p>As far as I know you have to build your own training function from the layers and specify the training flag to predict with dropout (e.g. its not possible to specify a training flag for the predict functions). This is a problem in case you want to do GANs, which use the intermediate output for training and also train the network as a whole, due to a divergence between generated training images and generated test images.</p>
+<h2 id="算法超参数">算法超参数</h2>
+<p>算法超参数包括学习率 (learning rate),批量大小 (batch size)、epoch数量(迭代周期个数)、正则，损失，激活函数等。由于神经网络的非凸性，用不同的算法超参数会得到不同的解。</p>
+<h3 id="归一化">归一化</h3>
+<p>归一化层，目前主要有这几个方法：</p>
+<ul>
+<li>Batch Normalization（BN， 2015年）</li>
+<li>Layer Normalization（LN， 2016年）</li>
+<li>Instance Normalization（IN， 2017年）</li>
+<li>Group Normalization（GN， 2018年）</li>
+<li>Switchable Normalization（SN， 2018年）；</li>
+</ul>
 <figure>
-<img src="./img789.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+<img src="img_1.png" alt="几种归一化方法g" /><figcaption aria-hidden="true">几种归一化方法g</figcaption>
 </figure>
-<h3 id="悖论的原因">悖论的原因</h3>
-<ol type="1">
-<li><p>贝叶斯公式可以解释信息在非因果关系上的流动，也就是规则1，主持人选择了没有汽车的之后，第三个门的不确定性降低了（沿着门后有车的概率变大的方向），而整个空间的概率之和为1，所以第一个门有车的概率变小了。</p>
-<blockquote>
-<p>主持人的这个决策带来了系统的熵减，系统坍塌到2号门某个确定状态的子空间去了。</p>
-</blockquote></li>
-<li><p>为什么直觉上很难接受规则1的结论，反而会认为比赛的机制不公平？这个跟人类大脑结构有关系：</p>
+<h4 id="问题1-transformer-为什么要使用ln而不是-bn">问题1 transformer 为什么要使用LN而不是 BN？</h4>
+<p>在<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.07845.pdf">paper: Rethinking Batch Normalization in Transformers</a>中, 作者对比了cv和nlp的BN, 得出的结论是在nlp数据上基于batch的统计信息不稳定性过大(相比cv的数据)，导致bn在nlp上效果差。相比之下layer norm能够带来更稳定的统计信息，有利于模型学习</p>
+<p>Batch Normalization主要的问题是计算归一化统计量时计算的样本数太少，在RNN等动态模型中不能很好的反映全局统计分布信息，而Layer Normalization根据样本的特征数做归一化，是batch size无关的，只取决于隐层节点的数量，较多的隐层节点数量能保证Layer Normalization归一化统计分布信息的代表性。</p>
+<h4 id="问题2.-in直观上怎么理解">问题2. IN直观上怎么理解？</h4>
+<p>在计算机视觉中，IN本质上是一种Style Normalization，它的作用相当于把不同的图片统一成一种风格。另外，既然IN和BN都会统一图片的风格，那么在Generator里加IN或BN应该是不利于生成风格多样的图片的，论文中也进行了展示：</p>
+<p><img src="https://pic2.zhimg.com/v2-235433127838fca762ebd10511de9ca7_b.jpg" /></p>
+<p>图e是在generator中加了BN的结果，图f是在generator中加了IN的结果。果然崩了，IN崩得尤其厉害。</p>
+<h3 id="激活函数">激活函数</h3>
 <ul>
-<li>大脑不擅长处理概率问题，</li>
-<li>大脑自发抵制非因果关系的信息传递，这个是贝叶斯式变量控制的产物。</li>
-<li>习惯将相关性等同于因果性</li>
-<li>大脑天生难以接受</li>
-</ul></li>
-</ol>
-<h2 id="悖论2-伯克森悖论">悖论2-伯克森悖论</h2>
-<ol type="1">
-<li>生物统计学家约瑟夫.伯克森在医院做实验时，观察到了一个现象：两种疾病本来在一般人群中毫无关联，但是在住院人群中却会观察到似是而非的相关性。</li>
-<li>医院样本实际上是一个冲撞模型，即，当一个人同时患了两种疾病时，一定会住院。</li>
-<li>所以，「医院样本」就好像一个经过精心挑选过的样本，体现出来的相关关系是控制了「住院」变量之后，疾病1和疾病2的伪相关性。 <img src="img7890.png" alt="img.png" /></li>
-<li>1956年，哲学家赖欣巴提出了一个猜想「共因原则」（common cause principle），他认为没有不含因果关系的相关关系，即，X和Y的相关不是偶然发生的，要么是一个变量导致另一个变量，要么是第三个变量，比如说出现在两个变量之前的Z变量，导致两者发生。</li>
-<li>设计一个抛硬币的实验就可以推翻「共因原则」：假设同时抛两枚硬币，抛100次，只记录其中至少又一枚硬币为正面的结果，实验结束，发现记录的75条记录中，发现只要硬币1反面，硬币2就是正面，是因为两个硬币互通消息了吗？不是的，是因为人为记录改变了测度空间。</li>
-<li>还有一个社会现象就是，在一些调查中发现，跟你约会的人中，哪些又魅力的人往往是混蛋。这个也是因为测度空间被你亲手改变了，因为长得丑的渣男最开始就被你过滤了。过滤之前，有魅力的渣男的概率是1/4，过滤之后有魅力的渣男概率是1/3。所以感觉这个比例增加了。</li>
-</ol>
-<h2 id="悖论3-辛普森悖论">悖论3-辛普森悖论</h2>
-<ol type="1">
-<li>辛普森逆转：一个叫辛普森的医生，在文献上发现了一种新药D，可以治疗心脏病。论文的实验数据显示，女性患者服用药物之后，心脏病发作比例升高；男性患者服用药物之后，心脏病发作比例也升高。但是，在整体人群上，心脏病发作比例却降低了，因此该药物也被归为BBG（BAD/BAD/GOOD）型药物。然而，实际上这种药物不存在，虽然说在数学上没有什么问题。 <img src="judea-pearl_the-book-of-why7/img.png" alt="辛普森" /></li>
-<li>对整体人群来说，正确的结论应该是什么呢？可以这么操作，先控制性别：
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4_fjPJ90ir.png?alt=media&amp;token=9fb9e321-aed2-4c7b-bb6b-4762b7a38c81" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FADUH_mebAQ.png?alt=media&amp;token=65efc150-0f7b-42f9-8657-1ca131bfd8b5" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&amp;token=55bc24ce-0531-4702-8d3d-394595bd4d6e" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&amp;token=d7421445-afca-439e-85be-8631db133a41" /></li>
+<li>https://missinglink.ai/guides/neural-network-concepts/7-types-neural-network-activation-functions-right/</li>
+</ul>
+<h3 id="损失函数">损失函数</h3>
+<p>tensorflow中的损失函数:</p>
 <ul>
-<li>do（性别）=女性，计算女性服药之后心脏病发作比例的变化 r1。</li>
-<li>do（性别）=男性，计算男性服药之后心脏病发作比例的变化 r2。</li>
-<li>假设整体人群中，男女比例为1：1，那么可以推断出整体人群，服药之后，心脏比发作比例的变化为（r1+r2）/2</li>
-</ul></li>
-<li>辛普森悖论是因为混杂因子的存在。</li>
-<li>当我们考察两个变量的因果效应时：
+<li>sparse_categorical_crossentropy: target是interger list，形状n*1；</li>
+<li>categorical_crossentropy: target 是one-hot vector，target的shape跟模型输出一致，是n*k(类)。
 <ul>
-<li>如果存在混在因子，只能用分层数据计算因果效应，采用控制混杂因子的方式，case by case，计算每个混在因子取值的情况下，两个变量的因果关系，然后按照混杂因子每个取值的概率汇总，得到整体上，两个变量之间的因果关系。 <img src="./img_2.png" alt="img_2.png" /></li>
-<li>如果不存在混杂因子（有可能存在中介物），可以用聚合数据计算因果效应 <img src="./img_1.png" alt="中介物" /></li>
+<li><span class="math display">\[C E(x)=-\sum\limits_{i=1}^{C} y_{i} \log f_{i}(x)\]</span></li>
 </ul></li>
-<li>混杂因子存在的警告：根据聚合数据估计出来的因果效应大于，根据分层数据估计出来的因果效应。</li>
-</ol>
-<h2 id="关于悖论">关于悖论</h2>
+<li>binary_crossentropy: target 是interger list。 <span class="math display">\[B C E(x)_{i}=-\left[y_{i} \log f_{i}(x)+\left(1-y_{i}\right) \log \left(1-f_{i}(x)\right)\right]\]</span></li>
+<li>如果输出标签维度为1，只能使用binary_crossentropy，否则程序会报错。不能直接使用categorical_crossentropy 或者sparse_categorical_crossentropy</li>
+<li>如果输出标签维度为K：使用categorical_crossentropy 或者sparse_categorical_crossentropy</li>
+<li>单标签多分类（multi-class）：softmax + CE</li>
+<li>二分类：sigmoid + BCE</li>
+<li>多标签多分类（multi-label）的情况：sigmoid + BCE</li>
+<li>最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</li>
+</ul>
+<h4 id="优化算法">优化算法</h4>
+<h1 id="参考资料">参考资料</h1>
 <ol type="1">
-<li><p>什么是悖论？绝大部分人深信不疑的两个信念之间的冲突。</p>
-<blockquote>
-<p>辛普森逆转并不算悖论，只是纠正了不懂数学的人，对"平均表现"的错误认识。</p>
-</blockquote></li>
-<li><p>如何解决悖论？</p>
-<ol type="1">
-<li>理解为什么大多数人会把它看成一个悖论？or大家对世界的直观看法到底在哪里存在重大缺陷？eg生理结构原因：大部分人不擅长处理概率问题；「过分擅长」处理因果问题</li>
-<li>如何纠正：刻意训练，完成大脑重塑。</li>
-</ol></li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1502.03167.pdf">Batch Normalization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1607.06450v1.pdf">Layer Normalizaiton</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1607.08022.pdf">Instance Normalization</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/DmitryUlyanov/texture_nets">code</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1803.08494.pdf">Group Normalization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1806.10779.pdf">Switchable Normalization</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/switchablenorms/Switchable-Normalization">code</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/liuxiao214/article/details/81037416">有公式推导，写的很棒</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/05de1f989790">用书比喻图像很好理解</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/61248211">Conditional Batch Normalization 详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/57875010">从Style的角度理解Instance Normalization</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.goodaudience.com/introduction-to-1d-convolutional-neural-networks-in-keras-for-time-sequences-3a7ff801a2cf">在时序数据上应用conv1D</a></li>
+<li>https://zhuanlan.zhihu.com/p/57875010</li>
+<li>https://stackoverflow.com/questions/47787011/how-to-disable-dropout-while-prediction-in-keras</li>
 </ol>
 
       
@@ -475,7 +446,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/92/">92</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -541,7 +512,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">183</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

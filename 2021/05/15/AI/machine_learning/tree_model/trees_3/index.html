@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost  总结  Bagging是一种数据采样的方法，Blending是一种模型混合的方法. Blending的方法有几个：投票&#x2F;线性blending&#x2F;stacking。  如果每个base estimator一样重要，就对他们采用uniform的aggregation方式。 如果">
+  <meta name="description" content="boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost  何为bagging和boosting？  Bagging是一种数据采样的方法，Blending是一种模型混合的方法. Blending的方法有几个：投票&#x2F;线性blending&#x2F;stacking。  如果每个base estimator一样重要，就对他们采用uniform的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="树模型3 RandomForest，Adaboost和GBDT">
 <meta property="og:url" content="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_3/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost  总结  Bagging是一种数据采样的方法，Blending是一种模型混合的方法. Blending的方法有几个：投票&#x2F;线性blending&#x2F;stacking。  如果每个base estimator一样重要，就对他们采用uniform的aggregation方式。 如果">
+<meta property="og:description" content="boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost  何为bagging和boosting？  Bagging是一种数据采样的方法，Blending是一种模型混合的方法. Blending的方法有几个：投票&#x2F;线性blending&#x2F;stacking。  如果每个base estimator一样重要，就对他们采用uniform的">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_3/img_2.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_3/img_1.png">
@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_3/img_5.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/05/15/AI/machine_learning/tree_model/trees_3/img_7.png">
 <meta property="article:published_time" content="2021-05-15T02:39:45.000Z">
-<meta property="article:modified_time" content="2021-07-07T01:06:36.922Z">
+<meta property="article:modified_time" content="2021-07-07T01:25:43.167Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="树模型">
@@ -207,7 +207,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-07 09:06:36" itemprop="dateModified" datetime="2021-07-07T09:06:36+08:00">2021-07-07</time>
+                <time title="修改时间：2021-07-07 09:25:43" itemprop="dateModified" datetime="2021-07-07T09:25:43+08:00">2021-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,7 +240,7 @@
         <blockquote>
 <p>boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost</p>
 </blockquote>
-<h1 id="总结">总结</h1>
+<h2 id="何为bagging和boosting">何为bagging和boosting？</h2>
 <ol type="1">
 <li>Bagging是一种数据采样的方法，Blending是一种模型混合的方法.</li>
 <li>Blending的方法有几个：投票/线性blending/stacking。
@@ -253,17 +253,18 @@
 <li>也可以一边构建base estimator，一边决定模型blending的方法。
 <ul>
 <li>uniform aggregation的代表是Bagging Tree/随机森林</li>
-<li>通过改变样本权重的方式得到不一样的base estimator，一边根据他们的表现决定给每个estimator多少票。</li>
-<li>在不同条件下找到最优的base estimator的代表算法是决策树，回想一下，在决策树里面，不同的路使用的是不同的叶子（在决策树的场景中，一个叶子就是一个base estimator）。</li>
-<li>gradient boost是一种线性blending对模型汇总的方法，只不过，构建新的base estimator时，不是像adboost那样重新对样本赋予权重，而是，直接去最小化残差，然后根据学的结果，赋予当前base estimator一个权重。</li>
-<li>boosting-like的算法最受到欢迎，即ada boosting和gradient boost</li>
+<li>AdaBoost通过改变样本权重的方式得到不一样的base estimator，一边根据他们的表现决定给每个estimator多少票。</li>
+<li>在不同条件下找到最优的base estimator的代表算法是决策树，回想一下，在决策树里面，不同的路径使用的是不同的叶子（在决策树的场景中，一个叶子就是一个base estimator）。</li>
+<li>gradient boost是一种线性blending的方法，只不过，构建新的base estimator时，不是像AdaBoost那样重新对样本赋予权重，而是，直接去最小化残差，然后根据学到的结果，赋予当前base estimator一个权重。</li>
+<li>boosting-like的算法最受到欢迎，即aAdaBoost和GradientBoost</li>
 </ul>
 <img src="img_2.png" title="fig:" alt="img_2.png" /></li>
 <li>为什么对模型做aggregation之后，效果变好了？相当于对特征做了非线性变换，整体表达能力更强；多个estimator求共识，相当于做了正则化，模型效果更稳定。</li>
 <li>不同的blending方法中，有的方法解决overfitting，有的适合解决underfitting。</li>
+<li>boosting是多个base estimtor进行aggregate的一种方法，并且每个estimator都有一个自己的权重，GBDT和AdaBoosting要解决的就是一个问题。 boosting相对于uniform的方式，多了n个待估参数，复杂度更高，如何求解这个高维的优化问题？衍生出了两种算法，第一种是像adaboost，使用一个reweighted的样本去构建一个新的estimator，并使用其预测准确率作为权重。 GBDT则是基于前面所有的estimator的学习成果，做增量学习。</li>
 </ol>
-<h1 id="随机森林adaboost和-gbdt">随机森林，Adaboost和 GBDT</h1>
-<h2 id="随机森林">随机森林</h2>
+<h2 id="随机森林adaboost和-gbdt">随机森林，Adaboost和 GBDT</h2>
+<h3 id="随机森林">随机森林</h3>
 <ol type="1">
 <li>Bagging是什么？通过bootstrap的方式抽样得到多分样本。Bagging的特点是，可以降低整体的模型预测的不稳定性，通过让多个base estimator投票或者取均值的方式。</li>
 <li>decision tree非常不稳定，训练数据稍微有一点变化，分支条件就会改变，从而整个树都长得不一样了。</li>
@@ -272,12 +273,12 @@
 <li>构建base estimator时，除了对样本采样，还可以对特征采样，随机森林的原始论文作者建议，在构建cart的每个分支条件时，都随机采样一个特征子空间，在这个子空间中找一个最优的分割点。</li>
 <li>rf的作者还建议，可个对特征作随机组合，即构建投影矩阵，将原始的训练数据映射到一个低维的特征空间。</li>
 </ol>
-<h2 id="adaboost">Adaboost</h2>
+<h3 id="adaboost">Adaboost</h3>
 <figure>
 <img src="./img.png" alt="adaboost" /><figcaption aria-hidden="true">adaboost</figcaption>
 </figure>
-<p>boosting中有三个重要的参数： - 树的棵树 - <span class="math inline">\(\lambda\)</span>: 学习速率 - 每一棵树的最大splits个数</p>
-<h2 id="gbdt">GBDT</h2>
+<p>AdaBoost通过改变样本权重的方式得到不一样的base estimator，一边根据他们的表现决定给每个estimator多少票。boosting中有三个重要的参数：</p>
+<h3 id="gbdt">GBDT</h3>
 <ol type="1">
 <li><p>GBDT是将一个优化问题，拆解成一系列子优化问题，每个子优化问题要解决的问题是，在当前学习成果的基础上查漏补缺，从而更加逼近target variable。即当前的base estimator的优化目标是最小化target和截止当前的预测值之间的差，也叫residual。 <img src="img_4.png" alt="img_4.png" /> h是当前的base estimator，<span class="math inline">\(\eta\)</span>表示权重</p></li>
 <li><p>怎么求这个优化问题？先求里层的优化问题，再求外层的优化问题。里面的优化问题是将err对当前prediction做一阶泰勒展开，其中一阶项（h，待学习的目标）的系数就是error相对当前prediction的一偏导数，也就是梯度。这里有一个问题，如果我已经知道要做regression，也就是当前的目标函数是关于h的二次函数，我直接求最优解不就好了，即令损失函数关于h的导数为0？其实是可以的，但是GBDT的野心很大，想推导出，任意形式的err对应的最优解h，随意下面的一阶近似方法是更具备通用性的。（想象一下如果err是absolute loss或者像交叉熵这种非convex，就不适用了。btw，xgboost是使用err的二阶泰勒展开去作为err的近似）</p>
@@ -291,7 +292,7 @@
 <li><p>如何使用GBDT做回归？将上面的error 设置为squared loss。</p></li>
 <li><p>adaboost是要根据不同样本的权重来找一一个拟合的最好的小g; GBDT是找一个能拟合当前残差最好的小g。</p></li>
 </ol>
-<h1 id="参考资料">参考资料</h1>
+<h2 id="参考资料">参考资料</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ATM3sH0D45s&amp;list=RDCMUC9Wi1Ias8t4u1OosYnHhi0Q&amp;index=9">Random Forest Algorithm-Hsuan-Tien Lin</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~htlin/mooc/doc/208_present.pdf">Adaptive Boosting linxuantian</a></li>
@@ -325,8 +326,8 @@
       <i class="fa fa-chevron-left"></i> 关于理财教育
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/05/15/AI/machine_learning/tree_model/trees_4/" rel="next" title="树模型4_xgboost介绍">
-      树模型4_xgboost介绍 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/05/15/AI/machine_learning/tree_model/trees_1/" rel="next" title="树模型1_常用树模型介绍">
+      树模型1_常用树模型介绍 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -386,7 +387,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97adaboost%E5%92%8C-gbdt"><span class="nav-number">2.</span> <span class="nav-text">随机森林，Adaboost和 GBDT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97"><span class="nav-number">2.1.</span> <span class="nav-text">随机森林</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adaboost"><span class="nav-number">2.2.</span> <span class="nav-text">Adaboost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gbdt"><span class="nav-number">2.3.</span> <span class="nav-text">GBDT</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%95%E4%B8%BAbagging%E5%92%8Cboosting"><span class="nav-number">1.</span> <span class="nav-text">何为bagging和boosting？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97adaboost%E5%92%8C-gbdt"><span class="nav-number">2.</span> <span class="nav-text">随机森林，Adaboost和 GBDT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97"><span class="nav-number">2.1.</span> <span class="nav-text">随机森林</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#adaboost"><span class="nav-number">2.2.</span> <span class="nav-text">Adaboost</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gbdt"><span class="nav-number">2.3.</span> <span class="nav-text">GBDT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -400,7 +401,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">183</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

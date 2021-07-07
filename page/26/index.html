@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_1_2-feature/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_4-metric_event_correlation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/AI/AIOps/AIOps-1_1_2-feature/" class="post-title-link" itemprop="url">chapter1.1 单指标异常检测</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-2_4-metric_event_correlation/" class="post-title-link" itemprop="url">chapter2.4 时间序列关联性分析</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-21 16:37:13" itemprop="dateCreated datePublished" datetime="2021-05-21T16:37:13+08:00">2021-05-21</time>
+              <time title="创建时间：2021-05-21 17:27:26" itemprop="dateCreated datePublished" datetime="2021-05-21T17:27:26+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-05 08:42:57" itemprop="dateModified" datetime="2021-06-05T08:42:57+08:00">2021-06-05</time>
+                <time title="修改时间：2021-06-02 17:43:09" itemprop="dateModified" datetime="2021-06-02T17:43:09+08:00">2021-06-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -250,105 +250,66 @@
 </ul></li>
 <li>chapter3 故障恢复</li>
 </ul>
-<h2 id="概述">1. 概述</h2>
-<p>大型集群系统中，可能存在软件问题和硬件问题导致的系统故障，严重影响了系统的高可用性。这就要求7*24小时，对系统不间断监控。这就意味着需要不间断地监控大量时间序列数据，以便检测系统潜在的故障和异常现象。然而，实际当中的系统异常很多，且不容易发现；从而导致人工方式监控方式效率很低。</p>
-<p>异常场景本质上是一个或者多个数据点；数据点一般在系统运行过程中产生，且能反应系统的功能是否正常，多以日志形式呈现。当系统功能发生异常时，就会产生异常数据。快速高效地发现这些异常值，对于快速止损具有重要意义。对此，我们提出一种基于时间序列的异常识别模型，用来及时发现异常。</p>
-<p>对于多数系统，一般都有成功率、流量等指标，故障发生时，这些指标也会出现响应的异常。我们将系统成功率、流量统一称为特征值变量，并对其进行建模，从而方便后续其它特征变量的扩展。为了更好地感知这些特征变量的突变，需要对特征变量进行计算处理或者空间转换。那么异常识别问题就转换为以下两个问题：</p>
+<blockquote>
+<p>performance counter： 性能监视器</p>
+</blockquote>
+<h2 id="背景">背景</h2>
+<p>为了保证产品的服务质量、减少服务宕机时间，从而避免更大的经济损失，对关键的服务事件的诊断显得尤为重要。实际的运维工作中，对服务事件进行诊断时，运维人员可以通过分析与服务事件相关的时序数据，来对事件发生的原因进行分析。虽然这个相关关系不能完全准确的反映真实的因果关系，但是仍然可以为诊断提供一些很好的线索和启发。</p>
 <ul>
-<li>特征变量的计算处理和转换</li>
-<li>突变的判断</li>
+<li><p>如下图， 两个事件：程序A启动和程序B启动，一个时序：cpu使用率。 可以看到，事件（程序A的运行）与时序（CPU使用率）存在相关关系，并且程序A启动会导致CPU使用率升高，记为A-&gt;cpu上升。</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMjzFINogsh.png?alt=media&amp;token=9002fb74-9363-4a57-a182-fac68f04bd60" /></p></li>
 </ul>
-<p>针对这两个关键问题，我们将在下文中进行建模和分析。</p>
-<h2 id="异常识别">2. 异常识别</h2>
-<p>如下图，通过计算器进行特征变量的计算处理和转换，通过异常检测器来判断数值的突变，从而解决上面的两个问题。其中，异常检测器由比较器和决策器组成。</p>
-<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20180815093422131.png"><img src="http://www.datadriven.top/images/image-20180815093422131.png" alt="image-20180815093422131" /></a>image-20180815093422131</p>
-<p>对于给定时间序列二维矩阵X={xmt∈R：∀t≥0,∀m≥0}X={xtm∈R：∀t≥0,∀m≥0} ，xmtxtm为tt时刻的第m个指标的真实数据，umtutm表示时间tt的xmtxtm的计算值，ymtytm为第m个指标的输出结果，ytyt为整体预测结果。</p>
-<p>xmtxtm通过计算器得到计算值umtutm，然后xmtxtm 和 umtutm分别作为比较器的输入，得到第m个指标的输出ymtytm。y1tyt1,y2tyt2…ymtytm作为决策器的输入得到ytyt。ytyt是一个二元值，可以用<code>TRUE</code>（表示输出数据正常），<code>FALSE</code>（表示输入数据异常）表示。下面对计算器和检测器进行说明。</p>
-<h3 id="计算器">2.1 计算器</h3>
-<p><strong>计算器</strong>用来对输入值xmtxtm 进行计算或者空间转换，从而得到特征变量的计算值umtutm。一般情况下，特征变量具有趋势性、周期性等特征。基于这些特征，计算值的获取，可以使用以下三种方式：累计窗口均值计算器、基于趋势性的环比计算器、基于周期性的同比计算器。</p>
-<h4 id="累积窗口均值计算器">2.1.1 累积窗口均值计算器</h4>
-<p>输入值为xtxt（为了方便省略指标参数<code>m</code>），如果直接只用单个点xtxt的抖动来判断，受噪声影响较大。因此，使用累积窗口均值的方式：</p>
-<figure>
-<img src="../_image/image-20191012164029688.png" alt="image-20191012164029688" /><figcaption aria-hidden="true">image-20191012164029688</figcaption>
-</figure>
-<p>其中，ww为累计窗口的大小。通过窗口平滑之后，会过滤掉尖刺等噪声。</p>
-<h4 id="基于趋势性的计算器">2.1.2 基于趋势性的计算器</h4>
-<p>为了描述数据的趋势性，引入环比类算法。对<span class="math inline">\(x_t\)</span>进行空间转换，得到环比，再使用检测器进行检测。</p>
-<figure>
-<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20191012163924379.png" alt="image-20191012163924379" /><figcaption aria-hidden="true">image-20191012163924379</figcaption>
-</figure>
-<p>其中，分子为当前窗口w内的数据，分母为上一窗口w内数据。通过窗口w对数据进行平滑。</p>
-<h4 id="基于周期性的计算器">2.1.3 基于周期性的计算器</h4>
-<p>为了描述数据的周期性，引入同比算法。当同比值过大或者过小时，认为发生故障。同比公式如下：</p>
-<figure>
-<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20191012164057696.png" alt="image-20191012164057696" /><figcaption aria-hidden="true">image-20191012164057696</figcaption>
-</figure>
-<p>其中TT为周期，kk表示第几个周期。一般选取kk为<code>1</code>、<code>7</code>、<code>30</code>，来表示昨天、上周、上个月。</p>
-<h4 id="其他类型计算器">2.1.4 其他类型计算器</h4>
-<p>计算器还可以使用其他算法，包括：</p>
+<p>希望能使用数据驱动的方法，找到类似的相关组合，也就是&lt;事件, 指标&gt;对，例如A-&gt;cpu上升，</p>
+<h2 id="基本概念">基本概念</h2>
 <ul>
-<li>统计类算法：包括同比、环比算法的改进，或者其他统计算法。此时，计算器的输出结果为预测值，预测值和输入值进行比较即可。</li>
-<li>时序型算法：包含ARIMA、Holter-Winter等时序型算法。计算器的输出结果为预测值。</li>
-<li>机器学习：根据有监督、无监督、深度学习(LSTM)等算法，训练出的模型即为计算器。此时，计算器的输出结果一般为归一化的值，根据归一化的值进行比较。</li>
+<li>时间序列（metric）： 通常有固定的时间间隔，例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。</li>
+<li>事件（event）：就是一个正常的操作比如程序A的启动，这个是需要运维指定的 他感兴趣的某个日志模版。 比如“Out of memory” /启动某个磁盘intensive程序/ 启动某个cpu intensive程序/query-time out alerts/某个告警，类似log3C的日志pattern，big pandas 的变更事件。event报告告警和日志。</li>
+<li>日志(logging)：例如有个应用出错，抛出了NullPointerExcepction。</li>
+<li>事件序列（event sequence）：记录了特定事件发生的序列。</li>
+<li>故障（incident）：故障定位，就是要找到这个故障的根因。 （感觉也能跟BigPanda的告警关联之后的结果 对应起来），</li>
 </ul>
-<p>这些算法，在这里不再做深入研究和阐述。</p>
-<h3 id="异常检测器">2.2 异常检测器</h3>
-<p>当数据出现异常时，计算值会出现较大偏差，该偏差由<strong>异常检测器</strong>来判断。<strong>异常检测器</strong>由比较器和决策器组成，计算值和真实值通过该模块后，得到最终预测结果。</p>
-<h4 id="比较器">2.2.1 比较器</h4>
-<p>比较器的本质是求解如下公式的过程：</p>
-<p>f(xmt,umt;hm) = boolean(4)(4)f(xtm,utm;hm) = boolean</p>
-<p>其中，xmtxtm为真实值，uu为计算值，hmhm为阈值参数，booleanboolean为结果<code>TRUE/FALSE</code>。真实值已知，计算值通过计算器得到；剩下的阈值参数hmhm，则需要根据故障发生时的实际值进行参数估计。</p>
-<p>很多场景下，该公式还可以简化为：f(umt;hm) = booleanf(utm;hm) = boolean ，即计算值直接和阈值比较即可。</p>
-<h5 id="比较器种类">2.2.1.1 比较器种类</h5>
-<p>比较器有两种：相对值比较器和绝对值比较器。给定计算值umtutm和输入值xmtxtm，得到绝对值比较器：</p>
-<p>f=xmt−umt opretor hm(5)(5)f=xtm−utm opretor hm</p>
-<p>其中，opretoropretor为比较操作符，比如<code>&gt; &lt; &gt;= &lt;=</code>。由于utut由xtxt得到，所以很多情况下公式可以简化为 umtopretorhmtutmopretorhtm，即确定计算值的阈值即可。</p>
-<p>对于一些场景来说，需要捕获特征变量的相对性。因此，引入相对值比较器：</p>
-<p>f=xmt−umtumt opretor hm(6)(6)f=xtm−utmutm opretor hm</p>
-<p>通过对相对值比较器进行阈值处理，既可以检测异常值，同时还能对期望值进行归一化。</p>
-<h5 id="比较器阈值h的选取">2.2.1.2 比较器阈值h的选取</h5>
-<p>一般情况下，阈值参数决定了异常检测模块的敏感度。最优阈值的选择，取决于数据分布的性质以及先验数据。一般情况下，<strong>阈值的选取方法为</strong>：</p>
+<h2 id="总结">总结</h2>
 <ul>
-<li>方法一：跟踪一组故障数据和正常数据，根据经验估计阈值。</li>
-<li>方法二：跟踪一组故障数据和正常数据，根据经验，并结合<code>3σ准则</code>确定，来确定阈值。（特征变量或者特征变量的组合，服从正态分布）</li>
+<li>这篇文章主要是解决的什么问题？找到事件（E，event）和指标（S，metric）的相关性。</li>
+<li>具体的思路？将这个问题转换为统计中的两样本问题，并且使用邻近算法判断相关性。</li>
+<li>难点是什么？异构数据 + 异常关联性，异构指的是文本+时序，异常关联性，指的是，只关心事件和指标异常时刻的相关性。</li>
+<li>用的什么分析方法？还可以应用到哪些领域？ 用2-sample解决event 和 指标 之间的关联关系，可推广到所有离散变量的相关性分析中。</li>
+<li>这篇文章没有解决的问题是？这些问题有什么解决方法？ 本文还是比较学术派，只是给了一个 分析指标 和 事件 的相关性 方法，至于怎么从众多原始日志和告警中得到事件，以及分析出来的相关性怎么应用到故障定位上面去，没有说。但是这两步 对于实际应用来说 是必不可少的。</li>
+<li>BigPandas将众多告警基于业务关系（拓扑数据）收敛成incident，然后将incident跟变更事件进行关联，得到的变更事件就是root cause</li>
 </ul>
-<h4 id="决策器">2.2.2 决策器</h4>
-<p>如下公式，基于逻辑操作符，对比较器结果进行合并.</p>
+<h3 id="技术细节">技术细节</h3>
+<p>要解决两个问题：</p>
+<ol type="1">
+<li>确定指标和事件的因果关系，即事件A--&gt;指标1：两个随机分布的相似性指标</li>
+<li>确定因果关系中指标的单调性，即事件A--&gt;指标1上升：判断两个随机变量的大小关系的指标</li>
+</ol>
+<p>都是统计中的假设检验的方法。</p>
+<p>判断方向可以转化为以下问题：</p>
+<ol type="1">
+<li>判断事件发生前的 一段序列 跟 整个时序的相似性。如果差异大，说明指标 --&gt; event</li>
+<li>判断事件发生后的 一段序列 跟 整个时序的相似性。如果差异大，说明event --&gt; 指标</li>
+</ol>
+<p>判断单调性，是这么做的：</p>
+<ol type="1">
+<li><p>计算event前后，2个子序列的 均值的差 <span class="math display">\[ t_{s c o r e}=\frac{\mu_{\Gamma^{f r o n t}}-\mu_{\Gamma^{r e a r}}}{\sqrt{\frac{\sigma_{\Gamma^{f} r o n t}^{2}+\sigma_{\Gamma^{r e a r}}^{2}}{n}}} \]</span></p></li>
+<li><p>判断单调性：</p></li>
+</ol>
 <ul>
-<li>方式一：逻辑组合</li>
+<li><p>如果<span class="math inline">\(t_{score} &gt; \alpha\)</span>, 得到负的单调性，即 <img src="./img.png" /></p></li>
+<li><p>如果<span class="math inline">\(t_{score} &lt; -\alpha\)</span>, 得到正的单调性。</p>
+<p>这里P=0.025对应<span class="math inline">\(\alpha=1.96\)</span>，P=0.001对应<span class="math inline">\(\alpha=2.58\)</span></p></li>
 </ul>
-<p>yt=y1t &amp;| y2t &amp;| y3t &amp;| ... ymt(7)(7)yt=yt1 &amp;| yt2 &amp;| yt3 &amp;| ... ytm</p>
-<p>其中，||表示逻辑或操作，&amp;&amp;表示逻辑与操作。</p>
+<h3 id="实验">实验</h3>
 <ul>
-<li><p>方式二：权重设置法</p>
-<p>yt=k1∗y1t + k2∗y2t + k3∗y3t + ... km∗ymt(8)</p></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGkHOys2alH.png?alt=media&amp;token=95dde9c8-0249-4033-a027-83bca9a543ff" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fy5QnzhCHAl.png?alt=media&amp;token=13774051-eb1f-4ada-a978-9cd7d2bee748" /></li>
 </ul>
-<p>其中，kmkm为系数，这种方式一般适合基本无负样本的场景，参数的确定需要使用<code>层次分析法</code>，将在后面的文章进行说明。</p>
-<h2 id="故障止损">3. 故障止损</h2>
-<p>上面主要阐述了异常识别的方式。如果条件过于严格，刚开始并不容易被识别出来；如果条件过松，可能导致误识别。对此，我们将止损策略分为两级：</p>
-<ul>
-<li>级别一：预警。对于不能完全确定故障发生的场景，使用级别一。</li>
-<li>级别二：预警+止损（踢IDC）。对于能确定IDC故障的场景，使用级别二。</li>
-</ul>
-<h2 id="实际场景应用">4. 实际场景应用</h2>
-<p>下面通过一个规则的场景，进行举例说明。假如存在如下异常场景：</p>
-<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20181108211144340.png"><img src="http://www.datadriven.top/images/image-20181108211144340.png" alt="image-20181108211144340" /></a>image-20181108211144340</p>
-<p><strong>体现在模型中，则级别一（预警）的模型图</strong></p>
-<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20180815093336600.png"><img src="http://www.datadriven.top/images/image-20180815093336600.png" alt="image-20180815093336600" /></a>image-20180815093336600</p>
-<p><strong>级别二（预警+踢IDC）的模型图：</strong></p>
-<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20180815093352931.png"><img src="http://www.datadriven.top/images/image-20180815093352931.png" alt="image-20180815093352931" /></a>image-20180815093352931</p>
-<p>最终，得到故障识别规则：</p>
-<ul>
-<li>级别一触发条件: u1&lt;h1 | (u5&lt;h5 &amp; u6&lt;h6 &amp; u7&lt;h7)u1&lt;h1 | (u5&lt;h5 &amp; u6&lt;h6 &amp; u7&lt;h7)</li>
-<li>级别二触发条件：u1&lt;h2 &amp; u3&gt;h3u1&lt;h2 &amp; u3&gt;h3</li>
-</ul>
-<p>其中，h1,h2,h3,h5,h6,h7h1,h2,h3,h5,h6,h7为阈值参数。需要结合经验和实际数据估计得到。</p>
-<h2 id="小结">5. 小结</h2>
-<p>本文主要基于时间序列的数据，提出了异常场景识别模型，并重点对基于规则的识别进行了说明。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="http://dl.acm.org/citation.cfm?id=2788611">Generic and Scalable Framework for Automated Time-series Anomaly Detection</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.datadriven.top/categories/数据驱动/">数据驱动应用（一）：整体概述</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/SIGKDD-2014-Correlating-Events-with-Time-Series-for-Incident-Diagnosis.pdf">微软-指标与事件的关联分析paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jixinpu/aiopstools/tree/master/aiopstools/association_analysis">关联分析code</a>:</li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-NMwaCD4Kzkt4BTnr5JKDQ">智能运维前沿-微软AIOps工作：时序数据与事件的关联分析</a></li>
+<li>H. B. Mann， On a test of whether one of two random variables is stochastically larger than the other. The annals of mathematical statistics, 1947.</li>
 </ol>
 
       
@@ -369,7 +330,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_3-trace_rca/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -383,7 +344,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/AI/AIOps/AIOps-2_2-multi-dimensional-rca/" class="post-title-link" itemprop="url">chapter2.2 多维下钻根因定位/多维指标异常定位</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-2_3-trace_rca/" class="post-title-link" itemprop="url">chapter2.3 调用链根因分析</a>
         </h2>
 
         <div class="post-meta">
@@ -393,14 +354,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-21 16:05:42" itemprop="dateCreated datePublished" datetime="2021-05-21T16:05:42+08:00">2021-05-21</time>
+              <time title="创建时间：2021-05-21 16:49:19" itemprop="dateCreated datePublished" datetime="2021-05-21T16:49:19+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-02 17:48:31" itemprop="dateModified" datetime="2021-06-02T17:48:31+08:00">2021-06-02</time>
+                <time title="修改时间：2021-06-10 17:35:56" itemprop="dateModified" datetime="2021-06-10T17:35:56+08:00">2021-06-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -423,7 +384,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="目录">目录</h1>
+          <h2 id="目录">目录</h2>
 <ul>
 <li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
 <li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
@@ -448,89 +409,141 @@
 <li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
 <li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
 </ul></li>
-<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>:</li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
 <li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
 <li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
 </ul></li>
 <li>chapter3 故障恢复</li>
 </ul>
-<h1 id="问题描述">问题描述</h1>
-<p>在运维场景中对监控指标的多个维度进行根因定位。具体来说，当某个总指标（如总流量）发生异常时，需要快速准确地定位到是哪个交叉维度的细粒度指标（如“省份=北京 &amp; 运营商=联通”的流量）的异常导致的，以便尽快做进一步的修复止损操作。图示如下：</p>
-<h2 id="输入输出">输入输出</h2>
-<p>输出：</p>
-<table>
-<thead>
-<tr class="header">
-<th>timestamp</th>
-<th>set</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1501475700</td>
-<td>a1&amp;b2;a3&amp;b4</td>
-</tr>
-<tr class="even">
-<td>1501475760</td>
-<td>a1&amp;b2&amp;x3;a4&amp;b5&amp;x6</td>
-</tr>
-</tbody>
-</table>
-<h1 id="方案介绍">方案介绍</h1>
-<h2 id="几个问题">几个问题</h2>
+<h2 id="调用链的数据格式">调用链的数据格式</h2>
+<ul>
+<li>做调用链路分析（TraceAnomaly）用到了耗时，以及调用链的结构信息。</li>
+<li>2021AIOps比赛的调用链的数据：每个span_id表示一个trace中的一次子调用，耗时表示当前服务从接受call，到开始response的时间间隔。这里的表格信息量很少，它不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。</li>
+</ul>
+<h2 id="代码">代码</h2>
+<p>放这里: https://github.com/chiechie/TraceAnomaly</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FKYZHUFjpAr.png?alt=media&amp;token=1d1635a5-9524-4918-986a-c9eb54a1a558" /></p>
+<p>Service Trace Vector</p>
+<h2 id="总结">总结</h2>
+<p>该论文想解决的问题：监控一个web service S1的健康状况，并且在异常的时候给出根因--是哪个节点故障引起的？</p>
+<p>具体来说，这个web service S1由多个微服务组成，当外部应用向S1发起一个请求时（请求id就是uuid），S1 会将这个外部请求拆成一系列微服务之间的子调用。而如果其中微服务s1发生了故障，所有调用他的微服务s2,s3,...都会发生故障。</p>
+<p>发生故障的表现有两种：调用链结构异常 和 调用耗时异常。</p>
+<ul>
+<li>调用结构异常 比如某个微服务挂了，导致调用路径都没有记录，或者本不应该调用某个微服务但是产生了调用数据。</li>
+<li>调用耗时异常比如，本来a调用b，b通常的响应只需要1min，但是b所在的机器内存满了，导致s5响应完成用了10min。</li>
+</ul>
+<p>那么为了监控调用链路的，希望系统能回答两个问题</p>
 <ol type="1">
-<li><p>要训练集干嘛？</p>
-<p>训练集用来当做历史数据，学习正常波动区间，对测试数据进行异常检测。</p></li>
-<li><p>为什么要注入异常？</p>
-<p>真实中故障很少发生，并且故障根因大部分都比较简单，不会出现多层，多个elemnts是根因的情况, 需要人工构造。</p></li>
+<li>是当前调用是否异常？，</li>
+<li>如果异常，是哪个节点（微服务）引起的？</li>
 </ol>
-<h2 id="adtributor">Adtributor</h2>
-<p>Adtributor: Revenue Debugging in Advertising Systems</p>
-<p>简介：Adtributor假设所有根因都是一维的，提出了解释力（Explanatory power）和惊奇性（Surprise）来量化根因的定义。使用ARMA模型对KPI进行预测，通过计算维度的惊奇性（维度内所有元素惊奇性之和）对维度进行排序，确定根因所在的维度（例如省份）。在维度内部计算每个元素的解释力，当元素的解释力之和（例如北京+上海）超过阈值时，这些元素就被认为是根因。</p>
-<figure>
-<img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
-</figure>
-<p>上述是针对基本类型的KPI的计算公式（例如PV、交易量），对于派生类型的KPI（多个基本类型KPI计算得到，例如成功率）就不太适用了。当然，作者也提出了另一套公式来计算派生型KPI，主要是让“解释力”和“惊奇性”的分数符合我们对于异常的“直觉”。</p>
-<p>评价：Adtributor提出的“解释力”和“惊奇性”对根因给出了量化的评价，有很强的借鉴意义。将根因限定在一维的假设也极大的简化了问题的复杂度。但是这样的假设并不太符合我们的实际场景，同时用解释性和惊奇性的大小来衡量根因也不完全合理。因为其没有考虑到维度之间的相互影响以及「外部根因」的可能，即根因所在的维度没有在数据中体现。另外，Adtributor的根因分析严重依赖于整体KPI的变化情况，对于整体变化不大，但是内部波动较为剧烈的数据表现不好。</p>
-<p>总的来说，Adtributor是一种可以落地的业务指标明细多维分析算法，能够提供一些对排障有帮助的信息，配合人工筛查，可以有一定的效果。但是如果应对更多的维度、更复杂的情况，甚至存在外部根因的时候，能够提供的帮助就有限了。</p>
-<h2 id="idice">iDice</h2>
-<p>iDice: Problem Identification for Emerging Issues</p>
-<p>简介：iDice针对的场景和Adtributor稍有不同，它分析的数据是一段时间序列下的多维明细数据而不是对某一个具体的时间点。首先它认为根因的表现是一定在时间序列上体现突变，然后根据信息熵的思想提出Isolation Power的概念来解释根因，基本的思想就是对每一个维度组合计算他们的Isolation Power值，一个有效的根因维度组合（图1 Effective Combination）是其IP值大于其所有的直接子节点和直接父节点。在判断了当前节点为「可能的根因」后，其所有子节点都被剪枝掉。为了降低搜索和聚合的复杂度，本文还提出了多种剪枝方法。如减掉数量较小的节点、减掉在时间序列上没有突变的的节点等。最终对每个「可能的根因」突变点前后计算类似Adtributor的“惊奇性”进行排序。</p>
-<p>评价：iDice提出了一种更符合实际情况的根因评估指标：Isolation Power，利用多种剪枝手段减少搜索的复杂度。利用了数据的时间序列，从一定程度上缓解了单一时间点做预测时不准的情况。但是对大量的节点做异常检测也带来了额外的复杂度，在维度和取值较多时，上层节点的数目要远远大于叶子结点的数目。从上至下的搜索以及至下而上的聚合的复杂度极大，虽然本文提出了几种剪枝方法，但是并不能带来量级上的减少。</p>
-<p>同时，iDice的几种剪枝略显暴力，例如基于Impact的剪枝，虽然减掉的是量较少的维度组合，但是当维度和取值增加，极限情况下每一个叶子结点的维度组合的量只有1，这样剪枝的结果是不可以接受的。另外iDice对于派生类型的指标没有很好的处理方法，例如成功率，首先剪枝不能很好地进行，其次做变点检测时，容易忽略掉真正的“根因”。</p>
-<h2 id="hotspot">HotSpot</h2>
-<ol start="3" type="1">
-<li>HotSpot: Anomaly Localization for Additive KPIs with Multi-Dimensional Attributes</li>
-</ol>
-<p>简介：HotSpot和Adtributor一样使用“预测+搜索”的策略，针对基本类型的指标（可加型，例如交易量，PV等）提出了基于Ripple Effect的根因判断方法，即维度组合与其子节点之间越满足Ripple Effect条件就越有可能是根因，提出了Potential Score来量化一个节点与其所有叶子结点之间满足Ripple Effect程度。举个简单的例子，例如表一中的北京。PV从30-&gt;21,而北京联通和北京电信分别从20-&gt;14、10-&gt;7，变化的比例和北京相同（Ripple Effect），所以判断出北京是根因。和iDice对于根因集的定义不同，HotSpot会考虑同一维度下的根因组合，例如不仅有（北京，联通）这样的元素，还会有（北京，上海）这样的元素。这样当然会带来额外的搜索复杂度（2n-1，n是维度取值数目之和），所以作者提出基于MCTS（蒙特卡洛树搜索）和分层的剪枝策略，按照获得最大Potential Score收益的路径进行搜索，如果某一元素的PS分数较低，则减掉其子节点（Hierarchical Pruning）。</p>
-<p>评价：HotSpot提出具有启发意义的根因判断方式：Ripple Effect。使用叶子结点而不使用直接子节点参与Potential Score的计算，达到了边搜索边聚合的效果，极大的降低了空间的使用。创新的将MCTS应用到搜索的剪枝中，降低了搜索的复杂度。当然，HotSpot也存在一些局限，例如假设所有的根因在一个Cuboid内（完全相同的维度组成：eg.C省份、C省份、运营商）、没有考虑到非可加型指标（eg.成功率）、时间序列预测方法也只是使用了简单的MA，如果指标有一定的波动，可能会影响PS的准确性。另外使用叶子结点计算PS虽然减少了空间的使用，但是随着维度和取值的增加，叶子结点的量下降，极端情况下下降到1，此时的PS计算会受到较大的影响。</p>
-<h2 id="squeeze">Squeeze</h2>
-<p>Squeeze：Generic and Robust Localization of Multi-Dimensional Root Causes</p>
-<p>简介：Squeeze在HotSpot的基础上提出广义的Ripple Effect,证明RE不仅仅适用于基本类型的指标，也适用于派生类型的指标（eg.成功率）同时解决了0值预测的问题。和之前的算法搜索策略不同，Squeeze先至下而上剪掉正常的叶子结点的减小搜索空间，然后计算叶子结点的deviation score来进行聚类，因为根据RE，相同的根因的叶子结点将具有相似的deviation score。然后自顶向下在每一个簇中搜索根因。Squeeze假设每一个簇中的根因都在一个Cuboid（见HotSpot简介）内，同样提出类似于Potential Score的GPS来作为是否是根因的量化标准。</p>
-<p>评价：Squeeze在HotSpot的基础上进行了理论的拓展，增加了算法的通用性和鲁棒性。“Squeeze”的做法也极具创新性。不过实际的业务场景可能会对算法的准确性产生一定的影响，例如预测不准可能会导致聚类不准确、同时有多个异常或者外部异常也会影响聚类效果。另外按照GPS对结果根因进行排序有时也不符合真实业务场景，因为真实的业务场景数量的大小同样是一个重要的衡量指标。失败量从50到100的组合可能比0到5的组合更值得注意。</p>
-<h2 id="百度的方案">百度的方案</h2>
-<p>参考人工定位过程中的分析思路，提取了两个特征，用来描述某维度是否为根因：</p>
+<p>文章的解决方案是这样的：</p>
+<p>针对1个web服务S1，将它的所有的trace数据搜集起来。按照uuid1个1个trace进行分析，对1个trace，提取出所有的节点和子调用路径以及耗时。此外，每个trace的每一次子调用call_path 都会统一存放到 call path list 中去，也就是说 call path list收集了 所有trace 的所有 的子调用路径。然后将这个自调用路径 作为维度，记录每一次trace 在 call path 取便 call path list中的每一个值时 对应的耗时，如果trace 中没有访问到 call path list中的某个call path，就记为-1。这样如果有100个trace，就可以得到100个样本，如果100个trace的所有call path的并集为32，那么样本的维度就是32。一个样本对应的特征向量就叫STV（Service Trace Vector）。得到了这个STV后要做两个事情：检测 和 定位</p>
 <ol type="1">
-<li>贡献度：即该维度PVLost与总PVLost的比例。</li>
-<li>一致度：即构成该维度的子维度的异常程度的相似度。子维度的异常程度的一致度可通过各子维度异常程度间的变异系数衡量，变异系数越小，则异常程度越一致。(如何衡量小？绝对值还是相对值?)</li>
+<li>检测： 构造一个生成模型（vae），输入是原始的STV，输出是STV的对数概率。对数概率越小说明越异常</li>
+<li>根因定位：通过1知道了trace整体是异常的，那么到底是哪个维度导致的呢？需要进一步 找到当前trace 的 同伴们（同构调用链，HSTV）， 把每一个维度的耗时 跟 同伴们在 该维度的平均耗时进行对比（3-sigma），判断自己是不是异常的。进一步，将自己的所有异常的维度汇总，按照call path的 长度从大到小排序，call path长度最大的 维度 或者 它的下游call path 就是根因。</li>
 </ol>
-<h1 id="评估指标">评估指标</h1>
-<p>评估准确性的指标是F-score,该指标是准确率（Precision）和召回率(Recall)综合体现。具体计算如下所示： F-score =(2 ∗ Precision ∗ Recall)/(Precision+ Recall)，其中： Precision ＝ TP / (TP + FP)， Recall = TP / (TP + FN)。</p>
-<p>每个异常时刻都有一个真正的根因集合，记为S<em>，该集合中包含一个或多个属性值组合，参赛队伍的算法输出结果 记为S。对于S</em>中的每一个元素，S中包含其中一个，则算一次true positive （TP），遗漏一个算一次false negative （FN），多出一个S*中不存在的，记一次false positive （FP）。计算出所有异常时刻总的TP、FP、FN，最后得出F-score。</p>
-<h1 id="代码地址">代码地址</h1>
+<p>冷启动问题：上面的方法对没在训练数据中出现过的call path是无效的，这个时候需要让运维人员进行人工审核call path是否符合预期，符合预期就放入白名单，。在下一轮训练启动之前，统一认为 是正常的并且不会判断其耗时。</p>
+<p>这样微服务和它们之间的调用（call path）关系就构成一个调用拓扑。当其中1个节点</p>
+<h2 id="基本概念">基本概念</h2>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fu9Iqc3l8Tq.png?alt=media&amp;token=b8798779-4d40-4c62-a9f6-0322561041b5" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FANIRoOIQ2o.png?alt=media&amp;token=da808004-780a-460e-98e0-eef80cfb7fe8" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FhVSU37d3Pd.png?alt=media&amp;token=bae28c0c-f5dc-4114-9313-c987ea0cf1d2" /></li>
+<li>call path ： A call path of a microservice s in a trace, denoted as (s, call path), is the sequence of call messages (sorted by sending time) before s is called. - 在一次调用中，从start 到 某个微服务s 被调用，所有被调用的s'.(按时间顺序)
+<ul>
+<li>srt：the sending time of the corresponding response message，某次调用的 发送时间</li>
+<li>rt：response time，某次调用的respnd时间</li>
+<li><span class="math display">\[ r t=s r t-rc t \]</span>，某次调用响应时长</li>
+<li>STV（Service Trace Vector）：微服务调用向量</li>
+<li>调用路径提取：
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fi4eYxs1D2B.png?alt=media&amp;token=fdaf077a-cddc-4e9a-bd0f-4f2c291b3b4d" /></li>
+</ul></li>
+</ul></li>
+<li><ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FzI6rcYmiD2.png?alt=media&amp;token=449f532b-a126-40b0-a6dd-f07067847e3a" /></li>
+</ul></li>
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/09/%E5%88%98%E5%B9%B3issre.pdf">论文地址</a></li>
+<li>https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA</li>
+<li>https://netman.aiops.org/wp-content/uploads/2020/09/%E5%88%98%E5%B9%B3issre.pdf</li>
+</ul>
+<h2 id="论文内容">论文内容：</h2>
+<h3 id="ii-traceanomaly总览stv构造方法定位算法">II TraceAnomaly总览，STV构造方法，定位算法</h3>
+<ul>
+<li>A. TraceAnomaly整体结构
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FAEYpjsaibJ.png?alt=media&amp;token=361e3b43-eeee-49af-90b7-fed65874868b" /></li>
+<li>在线检测时，每一个新的trace 被编码成一个向量（STV），
+<ul>
+<li>如果trace中包含有未见过的call path就认为是异常，当然这么简单粗暴的方式会带来误警，所以后面提出了白名单的方法（让运维人员去判断，当然只用判断1次）。</li>
+<li>如果trace中没有unseen call path,就丢到神经网络中计算vector 的likelihood</li>
+</ul></li>
+</ul></li>
+<li>B. 从一个调用链数据（trace）中提取调用路径（call paths）和 响应时长（response times）
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FaOsHfGkpQQ.png?alt=media&amp;token=6b899aa5-ad63-4f57-899d-d97eb7f04e33" />
+<ul>
+<li>计算微服务b的响应时间
+<ul>
+<li>同一行的右边减去左边表示，source 到arget的通信时间。</li>
+<li>rt（respond time） = 处理完事务并开始响应的时间点（第11行红色的时间戳） - 接受到指令的时间（第2行红色的时间戳）= 处理事务消耗的时间</li>
+</ul></li>
+</ul></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fkqz7HgJgWs.png?alt=media&amp;token=3be5adbe-1632-478e-b77e-39cae4d07068" /></li>
+</ul></li>
+<li>C. 构造STV（Service Trace Vector）
+<ul>
+<li>Fig. 6: Trace t1 和 t2 结构一样, 但t1正常，t2 异常
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FL-kGMqUym3.png?alt=media&amp;token=a388505b-f239-4b57-b5f2-770253d44ead" /></li>
+<li>t1 ：业务逻辑不要 b调用e。</li>
+<li>t2 ：业务逻辑要b调用e，但是因为e故障了导致调用失败。</li>
+<li>两种情况都会导致看不到b-&gt;e的call path，但是t1是正常，而t2是异常。那么应该怎么做 才能找到 t2 ，而不误伤t1呢？看耗时</li>
+</ul></li>
+</ul></li>
+<li>D. 定位根因
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FTn7YZeNZvO.png?alt=media&amp;token=12611153-f760-45de-843f-d2db11015f81" /></li>
+<li>step1 先使用预测模型判断是否当前 trace是否异常</li>
+<li>step2 然后判断异常的维度是哪个？跟同构traces（valid dimension 一摸一样的traces）对比 每个维度的耗时。</li>
+<li>step3 链路最长的异常维度就是根因</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FZodnzghX6P.png?alt=media&amp;token=a6870609-66c6-472d-998c-4e6efe4356cd" /></li>
+</ul></li>
+</ul>
+<h3 id="iii.-异常检测算法">III. 异常检测算法</h3>
+<ul>
+<li>A. 学习数据分布</li>
+<li>B. 模型结构 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F5CUrxFwPhA.png?alt=media&amp;token=84b40833-873d-482b-979f-181f4fc3ad45" /></li>
+<li>C. 训练</li>
+<li>D. 异常检测
+<ul>
+<li><span class="math display">\[\log p_{\theta}(\mathbf{x}) \approx \log \frac{1}{L_{z}} \sum_{l=1}^{L_{z}}\left[\frac{p_{\theta}\left(\mathbf{x} \mid \mathbf{z}_{(l)}^{(K)}\right) p_{\theta}\left(\mathbf{z}_{(l)}^{(K)}\right)}{q_{\phi}^{(K)}\left(\mathbf{z}_{(l)}^{(K)} \mid \mathbf{x}\right)}\right]\]</span></li>
+<li>某个trace为异常 等价于 ，该trace 的对数概率明显小于 正常trace（要求同构吗？）。怎么界定正常呢？用kde来拟合对数概率的分布</li>
+</ul></li>
+</ul>
+<h3 id="iv.-实施和部署">IV. 实施和部署</h3>
+<ul>
+<li>A. Deployment at online services <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FYT-1AJDNXX.png?alt=media&amp;token=a4984091-89d3-424f-b97f-bfdbcfbf8409" /></li>
+<li>B. Dealing with Unseen Call Paths <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FSuilsPv1oH.png?alt=media&amp;token=6262ff2c-60ab-4e31-a60a-3fddc035ff7d" /></li>
+</ul>
+<h3 id="v.-评估">V. 评估</h3>
+<ul>
+<li>B. Anomaly Detection Baseline Approaches <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUrcO_5Aovy.png?alt=media&amp;token=92e2bcbf-7711-401b-927e-636b9ca2d296" /></li>
+<li>E. Localizing Root Cause <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F2-eRHdEbPI.png?alt=media&amp;token=708e7973-4439-424a-b037-2dac452daf98" /> <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFJ0FxrFnTb.png?alt=media&amp;token=12d55bec-55c0-4df7-a6ba-c074c5d829db" /></li>
+<li>demo复现
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FA_n0kckFDJ.png?alt=media&amp;token=f438c18d-5396-4914-b321-903554ce6316" /></li>
+</ul></li>
+<li>STV的构造过程 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FIcq2XYIGEe.png?alt=media&amp;token=ac5e5876-cc3f-4fd2-94d4-fec58ebf3a1e" />
+<ul>
+<li>微服务e的响应时长 是故障根因， <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGZoUsnaFDn.png?alt=media&amp;token=06311178-0f22-4f3d-90ef-a67405dd20e1" /></li>
+</ul></li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
 <ol type="1">
-<li>https://github.com/chiechie/ADminer</li>
-</ol>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2018/12/sunyq_IEEEAccess2018_HotSpot.pdf">HotSpot-英文paper</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kj309bzifIv4j80nZbGVZw">HotSpot-中文</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/48926992">百度做根因钻</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.usenix.org/system/files/conference/nsdi14/nsdi14-paper-bhagwan.pdf">Adtributor</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/ICSE-2016-1-iDice-Problem-Identification-for-Emerging-Issues.pdf">iDice</a></li>
-<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2019/08/camera_ready.pdf">Squeeze</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.bizseer.com/index.php?m=content&amp;c=index&amp;a=show&amp;catid=26&amp;id=3">bizseer总结</a></li>
-<li><a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=8&amp;flag=1">比赛</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA">清华微众AIOps新作:基于深度学习的调用轨迹异常检测算法 -微信公众号</a></li>
+<li><a href="https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
 </ol>
 
       
@@ -550,7 +563,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/92/">92</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -616,7 +629,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">183</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

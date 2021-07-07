@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/01/AI/AIOps/AIOps-1_5_3-LogCluster-_ms/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/27/reading_notes/computer/thread-and-process/" class="post-title-link" itemprop="url">进程,线程和协程</a>
+            <a href="/2021/07/01/AI/AIOps/AIOps-1_5_3-LogCluster-_ms/" class="post-title-link" itemprop="url">chapter1.5.3一种日志聚类的方法-LogCluster</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-27 12:16:07" itemprop="dateCreated datePublished" datetime="2021-06-27T12:16:07+08:00">2021-06-27</time>
+              <time title="创建时间：2021-07-01 18:56:03" itemprop="dateCreated datePublished" datetime="2021-07-01T18:56:03+08:00">2021-07-01</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-02 08:47:36" itemprop="dateModified" datetime="2021-07-02T08:47:36+08:00">2021-07-02</time>
+                <time title="修改时间：2021-07-05 10:23:15" itemprop="dateModified" datetime="2021-07-05T10:23:15+08:00">2021-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -219,122 +219,64 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="基本定义">基本定义</h2>
-<h3 id="进程process">进程（process）</h3>
-<p>进程（process）有时候也称做任务，是指一个程序运行的实例。</p>
-<p>我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。</p>
-<p>编译器将它翻译成二进制代码--机器的语言。</p>
-<p>但是此时不执行这段断码的话，就还是一段静态程序。</p>
-<p>当执行起来的时候，就变成了一个进程。</p>
-<h4 id="进程的3种状态">进程的3种状态</h4>
-<p>从程序员的角度，可以认为进程总是处于下面三种状态之一：</p>
-<ul>
-<li><p>运行。进程要么在CPU上执行，要么在等待被执行且最终会被内核调度</p></li>
-<li><p>停止。进程的执行被挂起（suspend），且不会被调度。当收到SIGSTOP/SIGTSTP/SIDTTIN/SIGTTOU信号时，进程就停止，直收到SIGCONT信号，这时，进程再次运行</p></li>
-<li><p>终止。进程永远的停止了。进程会因为三种原因终止:</p>
-<ol type="1">
-<li>收到一个终止进程的信号</li>
-<li>从主程序返回；</li>
-<li>调用exit函数。</li>
-</ol></li>
-</ul>
-<h4 id="创建子进程">创建子进程</h4>
-<ol type="1">
-<li>子进程得到与父进程用户级虚拟地址空间相同的（但是独立的）一份拷贝，包括文本、数据和bss段、堆以及用户栈。</li>
-<li>子进程还获得与父进程任何打开文件描述符相同的拷贝。</li>
-<li>父进程和新创建的子进程之间最大的区别在于它们有不同PID。</li>
-<li>fork函数调用一次，返回两次，父进程中，fork返回子进程的PID，子进程中fork返回0。</li>
-</ol>
-<h4 id="进程的地址空间">进程的地址空间</h4>
-<ol type="1">
-<li><p>进程提供给应用程序关键的抽象：</p>
-<ul>
-<li>一个独立的逻辑控制流，它提供一个假象，好像我们的程序独占地使用处理器</li>
-<li>一个私有的地址空间，它提供一个假象，好像我们的程序独占地使用存储器系统</li>
-</ul></li>
-<li><p>每个程序都能看到一片完整连续的地址空间，这些空间并没有直接关联到物理内存，只是操作系统提供的对内存一种抽象，在程序的运行时，会将虚拟地址映射到物理地址。</p></li>
-<li><p>进程的地址空间是分段的，存在所谓的数据段，代码段，bbs段，堆，栈等等。每个段都有特定的作用，下面这张图介绍了进程地址空间中的划分。 <img src="img_3.png" /></p></li>
-<li><p>对于32位的机器来说，虚拟的地址空间大小就是4G，可能实际的物理内存大小才1G到2G，意味着程序可以使用比物理内存更大的空间。</p>
-<ol type="1">
-<li>从0xc000000000到0xFFFFFFFF共1G的大小是内核地址空间，余下的低地址3G是用户地址空间。</li>
-<li>Code VMA: 即程序的代码段，CPU执行的机器指令部分。通常，这一段是可以共享的，即多线程共享进程的代码段。并且，此段是只读的，不能修改。</li>
-<li>Data VMA: 即程序的数据段，包含ELF文件在中的data段和bss段。</li>
-<li>堆和栈: new或者malloc分配的空间在「堆」上，需要程序猿维护，如果没有主动释放堆上的空间，进程运行结束后会自动释放。「栈」上的是函数栈临时的变量，还有程序的局部变量，自动释放。</li>
-<li>共享库和mmap内容映射区：位于栈和堆之间，例如程序使用的printf，函数共享库printf.o固定在某个物理内存位置上，让许多进程映射共享。mmap是一个系统函数，可以把磁盘文件的一部分直接映射到内存，这样文件中的位置直接就有对应的内存地址。</li>
-<li>命令行参数: 程序的命令行参数</li>
-<li>环境变量：类似于Linux下的PATH，HOME等环境变量，子进程会继承父进程的环境变量。</li>
-</ol></li>
-</ol>
-<h3 id="线程threads">线程（threads）</h3>
-<p>一个进程中的执行的单位。</p>
-<p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p>
-<h3 id="协程coroutines">协程（CoRoutines）</h3>
-<p>Co：即corperation，Routines即函数。</p>
-<p>协程（CoRoutines）：即用来实现functions 即corperate with each other。</p>
-<p><img src="img_2.png" /></p>
-<p>不同的编程语言有不同的实现协程的方式，在python和js里面，用的较多的就是yield</p>
-<p>用python实现一个协程</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_coroutine_body</span>(<span class="params">*args</span>):</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># Do some funky stuff</span></span><br><span class="line">        *args = <span class="keyword">yield</span> value_im_returning</span><br><span class="line">        <span class="comment"># Do some more funky stuff</span></span><br><span class="line"></span><br><span class="line">my_coro = make_coroutine(my_coroutine_body)</span><br><span class="line"></span><br><span class="line">x = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">   <span class="comment"># The coroutine does some funky stuff to x, and returns a new value.</span></span><br><span class="line">   x = my_coro(x)</span><br><span class="line">   <span class="built_in">print</span> x</span><br></pre></td></tr></table></figure>
-<h3 id="生成器generator">生成器(generator)</h3>
-<p>A generator is essentially a cut down (asymmetric) coroutine.</p>
-<p>The difference between a coroutine and generator is that a coroutine can accept arguments after it's been initially called, whereas a generator can't.</p>
-<h2 id="应用-vs-线程-vs-进程">应用 vs 线程 vs 进程</h2>
-<p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p>
-<p>进程和线程的区别：</p>
-<ul>
-<li>进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉</li>
-<li>线程（车厢）在进程（火车）下行进</li>
-<li>一个进程（火车）可以包含多个线程（车厢）</li>
-<li>不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享</li>
-</ul>
-<p>线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行</p>
-<ul>
-<li>进程要比线程消耗更多的计算机资源</li>
-<li>进程间不会相互影响，一个线程挂掉将导致整个进程挂掉</li>
-<li>进程可以拓展到多机，线程最多适合多核</li>
-<li>进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁"</li>
-<li>进程使用的内存地址可以限定使用量－“信号量”</li>
-</ul>
-<h2 id="硬件多线程vs软件多线程">硬件多线程vs软件多线程</h2>
-<p>CPU架构演进路线：</p>
-<p>多cpu---&gt;超线程--&gt;多core</p>
-<p>https://stackoverflow.com/questions/680684/multi-cpu-multi-core-and-hyper-thread</p>
-<p>其中的超线程（hyper thread）指的硬件多线程，如下图，相当于给一个core，虚拟化为2个core，可以更方便压榨计算机性能</p>
-<h2 id="多进程-or-多线程">多进程 or 多线程？</h2>
-<p>多进程更稳定，但是多线程能达到更高的计算效率</p>
-<figure>
-<img src="img_1.png" alt="左边是单线程，右边是多线程" /><figcaption aria-hidden="true">左边是单线程，右边是多线程</figcaption>
-</figure>
-<p>多线程的优势：</p>
-<ul>
-<li>响应性：比如启动一个网页（启动一个浏览器进程），可以同时并行做个事情，如浏览/下载/问答（并行启动多个线程）。</li>
-<li>资源共享：一个进程上的所有线程共享同一份内存，这样能够让机器的使用效率更高，可以做更多的复杂的事情。---赋能/增效</li>
-<li>更经济： 多进程浪费资源，因为创建1个进程需要分配很多内存和资源，相比之下，创建和切换线程的成本小的多。另外，完成一个复杂的任务，多线程共用一份底层资源，多进程就需要把资源复制几份。又浪费了一遍。--降本</li>
-<li>充分压榨多处理器的架构：</li>
-</ul>
-<blockquote>
-<p>大中台类似多线程，烟囱式开发类似多进程</p>
+          <blockquote>
+<p>这篇文章讲了很多方案细节，实际中的需求，以及可以扩展到哪些应用。这篇文章属于detail &amp; application oriented 。</p>
+<p>现在只看了实现方案，关于实现过程中的一些细微的需求，后面再看。</p>
 </blockquote>
-<h2 id="实践">实践</h2>
-<h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3>
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p>
-<p>需求：实现一个任务管理/编排的机制，即，输入一堆任务，每个任务的计划执行时间/执行时长都有，现在有一台单线程CPU，如何安排这些任务的执行顺序？</p>
-<p>分析： 设想应用场景，医院的排队系统/有一堆任务要排期。</p>
-<p>一遍在执行已有的任务，一边有源源不断的接到新的任务，</p>
-<p>每执行完一个任务，check一下距离上次检查，有多少新任务进来了，加到任务池里面，从里面选出最容易的。</p>
-<p>设计1个数据结构：</p>
-<p>1个是优先队列，存放候选任务，并且按照执行时间长短从小到到排序。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tasks = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">4</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">1</span>]]</span><br><span class="line">n = <span class="built_in">len</span>(tasks)</span><br><span class="line">timestamp = <span class="number">1</span></span><br><span class="line">candidate_list = []</span><br><span class="line">new_task = []</span><br><span class="line">j = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) <span class="keyword">and</span> (tasks[j][<span class="number">0</span>] &lt;= timestamp):</span><br><span class="line">        heapq.heappush(candidate_list, (tasks[j][<span class="number">1</span>], j))</span><br><span class="line">        j+=<span class="number">1</span></span><br><span class="line">        print(j, n)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    process, index = heapq.heappop(candidate_list)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    new_task.append(index)</span><br><span class="line">    timestamp += process</span><br><span class="line">new_task</span><br></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2>
+<ol type="1">
+<li><p>使用日志定位故障的基本假设：The delta sets of execution sequences between these two sets（tes和生产） could reflect the potential deployment failures。</p></li>
+<li><p>一些提升效率的方法：</p>
+<ul>
+<li>对log event去重：removing repetitions and permutations of the sequences. For example, both of the following two sequences: “E1, E2, E3, E3, E5, E6” and “E1, E3, E5, E2, E6” are reduced to the sequence “E1, E2, E3, E5, E6”.</li>
+</ul></li>
+<li><p>向量化：将log sequence表达成一个N-dim的向量，N表示词典的大小，每个词代表一个patter或者一个token list。</p>
+<p><span class="math display">\[w(t)=0.5 \times \operatorname{Norm}\left(w_{i d}(t)\right)+0.5 \times w_{c o n}(t)\]</span></p>
+<figure>
+<img src="img_2.png" alt="Log sequences represented as vectors" /><figcaption aria-hidden="true">Log sequences represented as vectors</figcaption>
+</figure>
+<ul>
+<li>Norm is Sigmoid, which normalizes the IDF to [0, 1].</li>
+</ul></li>
+<li><p>层次聚类：聚类函数--N-维向量的cosine similarity， the cluster distance metric使用的是the maximum distance of all element pairs between two clusters，并且把 distance threshold θ作为stopping criterion for the clustering process <img src="img_3.png" alt="Agglomerative Hierarchical Clustering" /></p></li>
+<li><p>提取每个cluster的代表性Log Sequence：计算每个log sequence离其他成员的平均距离作为分数，找出分数最小的那个log sequence，最为代表，时间复杂度为O(n^2),n表示该cluster的成员个数。</p></li>
+<li><p>check生产环境是否产生了新的cluster？对比新cluster和知识库（离线产生的）中的cluster，计算两个cluster的representative log sequence的cosion相似度，使用跟层次聚类一样的距离参数<span class="math inline">\(\theta\)</span>作为决策标准。</p></li>
+<li><p>评估：使用控制实验，先正常运行两个Hadoop应用---WordCount和pagerank，搜集相应的日志。然后注入以下故障以模拟生产环境：</p>
+<ul>
+<li>Machine Down: we turn off one server when the applications are running to simulate the machine failure.</li>
+<li>Network Disconnection: we disconnect one server from the network to simulate the network connection failure.</li>
+<li>Disk Full: we manually fill up one server’s hard disk when the applications are running to simulate the disk full failure.</li>
+</ul></li>
+<li><p>评估看两个方面, 一个是使用日志聚类之后，还需要人check的工作量，一个是定位到故障的准确率。</p></li>
+</ol>
+<p>Measured in terms of #log sequences to be examined. Numbers in brackets indicate the precision values (i.e., the percentage of examined log sequences that are associated with the actual failures). 8. 怎么评估聚类？使用NMI（normalized mutual information），a number between 0 and 1.越大越好 9. LogCLuster的不适用范围：非Hadoop应用；测试环境有bug（算法默认测试是标准）；不适合performance相关的异常定位（有时序性，算法在向量化的时候，就把时序性抹去了）. 10. 应用场景之一--rca，某个产品G对原始执行日志做聚类，得到clusters，每一个identified cluster 都分配一宜昌分数，根据cluster的大小/age/用户feedback。当某个服务经历一个live site issue时，在故障发生时，服务团队的工程师使用G去check异常程度最高的几个cluster，。 This allows for more efficient root cause analysis, which in turn leads to improvement in key metrics like “Mean Time to Mitigate” and “Mean Time to Fix”。</p>
+<figure>
+<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
+</figure>
+<h2 id="附录">附录</h2>
+<h3 id="难点">难点</h3>
+<ol type="1">
+<li>数据量大：每天产生的日志达到10TB甚至1PB</li>
+<li>故障转移：大部分在线系统都有故障转移（failover）机制，会根据节点的availability 和 performance，动态地给计算节点们分配jobs。系统可以主动杀死某个job，并且在另外一个地方重启，这样就产生很多包含“kill” 和“fail” keywords的logs。如果，只依赖关键词"fail"去搜索异常，势必产生很多误告。</li>
+</ol>
+<blockquote>
+<p>故障转移，即当活动的服务或应用意外终止时，快速启用冗余或备用的服务器、系统、硬件或者网络接替它们工作。 故障转移(failover)与交换转移操作基本相同，只是故障转移通常是自动完成的，没有警告提醒手动完成，而交换转移需要手动进行。</p>
+<p>对于要求高可用和高稳定性的服务器、系统或者网络，系统设计者通常会设计故障转移功能。</p>
+<p>在服务器级别，自动故障转移通常使用一个“心跳”线连接两台服务器。只要主服务器与备用服务器间脉冲或“心跳”没有中断，备用服务器就不会启用。为了热切换和防止服务中断，也可能会有第三台服务器运行备用组件待命。当检测到主服务器“心跳”报警后，备用服务器会接管服务。有些系统有发送故障转移通知的功能。</p>
+<p>有些系统故意设计为不能进行完全自动故障转移，而是需要管理员介入。这种“人工确认的自动故障转移”配置，当管理员确认进行故障转移后，整个过程将自动完成。</p>
+</blockquote>
+<h3 id="算法流程">算法流程</h3>
+<figure>
+<img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<p>离线和在线的前半段流程：</p>
+<p>collect log messages ---&gt; parse into log sequence --&gt; log vectorization ---&gt; group similar log sequences into clusters -- &gt; extract a representative log sequence from each cluster</p>
+<p>abstract log message(or log event): 对原始日志泛化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">E1: $DATE INFO [ContainerLauncher #$NUMBER]</span><br><span class="line">org.apache.hadoop.mapreduce.v2.app.launcher.ContainerLauncherImp</span><br><span class="line">l: Processing the event EventType:</span><br><span class="line">CONTAINER_REMOTE_CLEANUP for container $CONTAINERID</span><br><span class="line">taskAttempt $ATTEMPTID</span><br><span class="line">...</span><br><span class="line">E6: $DATE INFO [AsyncDispatcher event handler]</span><br><span class="line">org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl:</span><br><span class="line">Diagnostics report from $ATTEMPTID: Container killed by the</span><br><span class="line">ApplicationMaster.</span><br></pre></td></tr></table></figure>
+<p>log sequence： 属于同一个task ID的log message搜集起来。 (E1, E1, E2, E3, E4, E5, E6)</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/25532384/answer/411179772">线程和进程的区别是什么？-zhihu</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=usyg5vbni34">Threading in Python - Advanced Python 16 - Programming Tutorial-youtube</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.junmajinlong.com/os/multi_cpu/">计算机原理系列-blog</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.junmajinlong.com/os/cpu_cache/">关于CPU上的高速缓存</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=tqay-vzqSN0">What are CoRoutines in Programming?YOUTUBE</a></li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/715758/coroutine-vs-continuation-vs-generator">生成器和协程</a></li>
-<li><a target="_blank" rel="noopener" href="https://buptjz.github.io/2014/04/23/processAndThreads">进程、线程及其内存模型</a></li>
-<li>深入理解操作系统</li>
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/~peidan/ANM2018Fall/6.LogAnomalyDetection/LectureCoverage/2016ICSE_Log%20Clustering%20based%20Problem%20Identification%20for%20Online%20Service%20Systems%20.pdf">Log Clustering based Problem Identification for Online Service Systems- 微软</a></li>
 </ol>
 
       
@@ -355,7 +297,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/26/reading_notes/computer/cache-memory/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/30/reading_notes/computer/fenbushi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -369,7 +311,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/26/reading_notes/computer/cache-memory/" class="post-title-link" itemprop="url">计算机的存储单元</a>
+            <a href="/2021/06/30/reading_notes/computer/fenbushi/" class="post-title-link" itemprop="url">基于Ray的融合计算框架</a>
         </h2>
 
         <div class="post-meta">
@@ -379,14 +321,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-26 09:47:32" itemprop="dateCreated datePublished" datetime="2021-06-26T09:47:32+08:00">2021-06-26</time>
+              <time title="创建时间：2021-06-30 14:39:39" itemprop="dateCreated datePublished" datetime="2021-06-30T14:39:39+08:00">2021-06-30</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-28 13:56:10" itemprop="dateModified" datetime="2021-06-28T13:56:10+08:00">2021-06-28</time>
+                <time title="修改时间：2021-07-01 19:56:15" itemprop="dateModified" datetime="2021-07-01T19:56:15+08:00">2021-07-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -409,26 +351,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="概览">概览</h2>
+          <blockquote>
+<p>看到阿里在2021发表的一个演讲--《新一代的计算基础设施-对于Ray的融合计算》，做一些笔记</p>
+</blockquote>
 <ol type="1">
-<li><p>计算机上的存储单元的处理速度从快到慢依次是： 寄存器&gt; L1&gt;L2&gt;L3&gt;内存&gt;固态硬盘&gt; 机械硬盘</p>
+<li>举一个复杂的业务的例子，用户支付流程：</li>
+</ol>
+<ul>
+<li>先选择支付场景--线上/线下/，</li>
+<li>选择支付方式--</li>
+<li>选择交易网络--银联/第三方</li>
+<li>选择银行</li>
+</ul>
 <figure>
-<img src="./img_1.png" alt="存储单元" /><figcaption aria-hidden="true">存储单元</figcaption>
-</figure></li>
-<li><p>早期的计算机只有寄存器和内存，但是寄存器的处理速度远高于内存，所以大部分时间是寄存器在等内存，所以CPU是处于空转状态。 经过改进</p></li>
-<li><p>除了寄存器，后面的计算机在CPU中又逐步加入了高速缓存--L1/L2/L3缓存，相当于让内存提前做功课，把数据提前取出来，在3个缓存中候着，等寄存器有空了就取来用。笨鸟先飞嘛。</p></li>
-<li><p>L1/L2/L3缓存，每层速度递减、容量递增。L1缓存速度接近寄存器速度，大约1ns时延。</p></li>
-<li><p>多核CPU的L3对诶个core是共享的，L2和L1是每个core私有的。</p></li>
+<img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<p>整个流程需要秒级响应。</p>
+<ol start="2" type="1">
+<li>要是大家都开始用统一的计算平台，AIOps也可以用同一套方案了</li>
 </ol>
 <figure>
 <img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
 </figure>
-<ol start="6" type="1">
-<li>CPU读取数据时，要从内存读取到L3，再读取到L2再读取到L1，同样写到内存时也会经过这些层次。</li>
+<ol start="3" type="1">
+<li>业务需求之一是，复杂的业务逻辑计算存在单机性能瓶颈，需要支持分布式无范式的分布式开发。</li>
+<li>现在的基础设计在单一用途的组件上，已经做的比较成熟了，专门做流式计算的计算引擎有flink，专门做深度学习的计算引擎有tensorflow，专门做批处理的有spark。</li>
+<li>但是，考虑到一个复杂的应用场景，完成1个任务需要用到多种计算模式，统一计算平台 能够让这几种计算模式实现状态共享，中间结果共享。在这种场景下，统一计算平台，相较于多个独立的计算组件 效率更高。</li>
+<li>要不要搞统一计算平台，取决于需求的复杂性，如果是一个很pure很纯粹的任务，搞这个的意义就不大。但是可以作为预研嘛，万一以后业务变得越来越复杂，也有准备。</li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>https://www.junmajinlong.com/os/cpu_cache/</li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1gh411Y7qf?t=1">Ray Forward Meetup 2021-面向金融决策场景的在线计算系统-bilibili</a></li>
 </ol>
 
       
@@ -448,7 +401,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/92/">92</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -514,7 +467,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">183</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -150,22 +150,37 @@ it is preferable to drop extremely rare labels and focus on the more common outc
 
 大部分ML算法都是基于IID假设，而金融时序不是IID的，所以大部分ml应用直接套用到金融场景会失败。 
 
-### NUMBER OF CONCURRENT LABELS
-### AVERAGE UNIQUENESS OF A LABEL
-### BAGGING CLASSIFIERS AND UNIQUENESS
-#### Sequential Bootstrap
+### 一起出现的label个数
 
-#### Implementation of Sequential Bootstrap
+NUMBER OF CONCURRENT LABELS
 
-#### A Numerical Example
+### 一个label的平均UNIQUENESS
 
-#### Monte Carlo Experiments
+### BAGGING分类器 和 独立性
 
-### RETURN ATTRIBUTION
+#### 序列Bootstrap方法
 
-### TIME DECAY
+1. 对样本使用bootstrap方法抽样，以期得到iid样本。
 
-### CLASS WEIGHTS
+
+#### Monte Carlo实验
+
+
+### 收益属性
+
+1. 基于uniqueness和absolute return对样本赋予权重。绝对收益高的的labels应该被给予更高的权重；收益取值越unique的也要给予更高的权重
+
+### 时间衰减
+
+1. 市场是演化着的，所以我们希望给新忘本更多的权重，给老样本更少的权重。
+2. 怎么量化这个事件衰减效应？设计一个时间衰减因子（所有元素加起来为1），用这个因子乘以样本权重，
+
+
+### 类别权重
+
+1. 使用机器学习做分类时，有的稀有事件（比如金融危机）出现次数很少，为了保证ml算法能重视这类事件，可以调整sample_weight
+2. 具体来说，在scikit learn中，设置class_weight='balanced'，或者在bagging trees中设置class_weight='balanced_subsample'，小心[bug](https://github.com/scikit-learn/scikit-learn/issues/4324)
+
 
 
 

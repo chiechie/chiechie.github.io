@@ -14,8 +14,8 @@ categories:
 > boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost
 
 
-# 总结
 
+## 何为bagging和boosting？
 1. Bagging是一种数据采样的方法，Blending是一种模型混合的方法.
 2. Blending的方法有几个：投票/线性blending/stacking。
     - 如果每个base estimator一样重要，就对他们采用uniform的aggregation方式。
@@ -24,18 +24,21 @@ categories:
 3. 投票追求的是公平稳定，其他两种追求高效。
 4. 也可以一边构建base estimator，一边决定模型blending的方法。
     - uniform aggregation的代表是Bagging Tree/随机森林
-    - 通过改变样本权重的方式得到不一样的base estimator，一边根据他们的表现决定给每个estimator多少票。
-    - 在不同条件下找到最优的base estimator的代表算法是决策树，回想一下，在决策树里面，不同的路使用的是不同的叶子（在决策树的场景中，一个叶子就是一个base estimator）。
-    - gradient boost是一种线性blending对模型汇总的方法，只不过，构建新的base estimator时，不是像adboost那样重新对样本赋予权重，而是，直接去最小化残差，然后根据学的结果，赋予当前base estimator一个权重。
-    - boosting-like的算法最受到欢迎，即ada boosting和gradient boost
+    - AdaBoost通过改变样本权重的方式得到不一样的base estimator，一边根据他们的表现决定给每个estimator多少票。
+    - 在不同条件下找到最优的base estimator的代表算法是决策树，回想一下，在决策树里面，不同的路径使用的是不同的叶子（在决策树的场景中，一个叶子就是一个base estimator）。
+    - gradient boost是一种线性blending的方法，只不过，构建新的base estimator时，不是像AdaBoost那样重新对样本赋予权重，而是，直接去最小化残差，然后根据学到的结果，赋予当前base estimator一个权重。
+    - boosting-like的算法最受到欢迎，即aAdaBoost和GradientBoost
     
    ![img_2.png](img_2.png)
 5. 为什么对模型做aggregation之后，效果变好了？相当于对特征做了非线性变换，整体表达能力更强；多个estimator求共识，相当于做了正则化，模型效果更稳定。
 6. 不同的blending方法中，有的方法解决overfitting，有的适合解决underfitting。
+7. boosting是多个base estimtor进行aggregate的一种方法，并且每个estimator都有一个自己的权重，GBDT和AdaBoosting要解决的就是一个问题。
+boosting相对于uniform的方式，多了n个待估参数，复杂度更高，如何求解这个高维的优化问题？衍生出了两种算法，第一种是像adaboost，使用一个reweighted的样本去构建一个新的estimator，并使用其预测准确率作为权重。
+   GBDT则是基于前面所有的estimator的学习成果，做增量学习。
 
-# 随机森林，Adaboost和 GBDT
+## 随机森林，Adaboost和 GBDT
 
-## 随机森林
+### 随机森林
 
 1. Bagging是什么？通过bootstrap的方式抽样得到多分样本。Bagging的特点是，可以降低整体的模型预测的不稳定性，通过让多个base estimator投票或者取均值的方式。
 2. decision tree非常不稳定，训练数据稍微有一点变化，分支条件就会改变，从而整个树都长得不一样了。
@@ -47,17 +50,14 @@ categories:
 
 
 
-## Adaboost
+### Adaboost
 
 ![adaboost](./img.png)
 
-boosting中有三个重要的参数：
-- 树的棵树
-- $\lambda$: 学习速率
-- 每一棵树的最大splits个数
+AdaBoost通过改变样本权重的方式得到不一样的base estimator，一边根据他们的表现决定给每个estimator多少票。boosting中有三个重要的参数：
 
 
-## GBDT 
+### GBDT 
 
 1. GBDT是将一个优化问题，拆解成一系列子优化问题，每个子优化问题要解决的问题是，在当前学习成果的基础上查漏补缺，从而更加逼近target variable。即当前的base estimator的优化目标是最小化target和截止当前的预测值之间的差，也叫residual。
    ![img_4.png](img_4.png)
@@ -75,7 +75,7 @@ boosting中有三个重要的参数：
 
 
 
-# 参考资料
+## 参考资料
 1. [Random Forest Algorithm-Hsuan-Tien Lin](https://www.youtube.com/watch?v=ATM3sH0D45s&list=RDCMUC9Wi1Ias8t4u1OosYnHhi0Q&index=9)
 2. [Adaptive Boosting linxuantian](https://www.csie.ntu.edu.tw/~htlin/mooc/doc/208_present.pdf)
 3. [youtube-gbdt](https://www.youtube.com/watch?v=2xudPOBz-vs)

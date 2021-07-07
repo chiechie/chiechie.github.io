@@ -1,5 +1,5 @@
 ---
-title: NLP_2_Transformer的原理
+title: 深度学习6 Transformer的原理
 author: chiechie
 mathjax: true
 date: 2021-03-13 00:04:13
@@ -9,37 +9,49 @@ tags:
 - 模型可视化
 - Transformer
 - Bert
+- attention
 categories:
-- AI
+- 深度学习
 ---
 
-# Transformer
+# Transformer总结
 
 > 先概括Transformer的主要设计思路；再讲每一步的具体技术细节。
 
 - Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。
 - Transformer的亮点在于将attention和self-attention完全剥离开之前rnn的结构，只跟dense层组合。
-
-
-##  High-Level ideas
-
-1. Transformer是一个翻译模型，在机器翻译任务中，eg德译英，输入一个德文句子，输出十一句英文。
-2. Transformer由两部分组成：encoders和decoders组件
+- Transformer跟RNN没有关系, 只有attention和全连接层
+- Transformer比所有的rnn+attention效果都要好，机器翻译的王者
+- Transformer是一个翻译模型，在机器翻译任务中，eg德译英，输入一个德文句子，输出十一句英文。
+- Transformer由两部分组成：encoders和decoders组件
    ![Transformer由两部分组成：encoders和decoders组件](./transformer_encoders_decoders.png)
-3. 其中encoders由6个encoder堆叠而成，decoders由6个decoder堆叠而成。每一个encoder或一个decoder叫做一个block。
+- 其中encoders由6个encoder堆叠而成，decoders由6个decoder堆叠而成。每一个encoder或一个decoder叫做一个block。
 encoders的6个个block，结构相同，但是不共享权重。
 ![](./transformer_encoder_decoder_stack.png)
-4. 对于encoders，每个block包含2层:
+- 对于encoders，每个block包含2层:
    - self-attention层，参数不共享
    - ffnn层，参数共享
 
    ![](./Transformer_encoder.png)
-5. 对于decoders，每个block除了包含self-attention和ffnn，还有一个encoder-decoder attention层，用来关注encoder的输出，作用类似于[seq2seq models](https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/) 中的attention。
-
+- 对于decoders，每个block除了包含self-attention和ffnn，还有一个encoder-decoder attention层，用来关注encoder的输出，作用类似于[seq2seq models](https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/) 中的attention。
 ![](./Transformer_decoder.png)
 
-## 输入tensor
+- attention+不带rnn的seq2seq
+![img_1.png](img_1.png)
+![img_5.png](img_5.png)
+- self attention
 
+![img_2.png](img_2.png)
+
+![img_3.png](img_3.png)
+
+- attention的演进
+
+![img_4.png](img_4.png)
+
+
+# 附录
+## 输入tensor
 上面介绍了Transformer的主要组件，现在看一下组件之间的数据流向。
 
 和一般的NLP任务一样，Transformer首先使用[embedding algorithm](https://medium.com/deeper-learning/glossary-of-deep-learning-word-embedding-f90c3cec34ca)将每个输入单词转换成一个向量。

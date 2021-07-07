@@ -1,15 +1,17 @@
 ---
-title:《 随机漫步的傻瓜》读书笔记
+title: 《随机漫步的傻瓜》读书笔记
 author: chiechie
 mathjax: true
-date: 2021-04-05 22:58:17
+date: 2021-04-09 08:51:40
 tags: 
 - taleb
 - 哲学
-- 概率哲学
+- 读书笔记
 categories: 
 - 阅读
 ---
+
+
 
 # 前言-幸运的交易员
 

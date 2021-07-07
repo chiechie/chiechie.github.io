@@ -7,8 +7,9 @@ tags:
 - 深度学习
 - 最佳实践
 - attention
+- NLP
 categories: 
-- AI
+- 深度学习
 ---
 
 

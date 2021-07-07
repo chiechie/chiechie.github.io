@@ -1,5 +1,5 @@
 ---
-title: 深度学习基础4 循环神经网络1-simple RNN
+title: 深度学习4 循环神经网络1-simple RNN
 author: chiechie
 mathjax: true
 date: 2021-03-10 10:47:27
@@ -10,7 +10,7 @@ tags:
 - RNN
 - NLP
 categories:
-- AI
+- 深度学习
 ---
 
 ## 总结

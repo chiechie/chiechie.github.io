@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/18/AI/machine_learning/automl/NAS/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/15/AI/machine_learning/bootstrap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/18/AI/machine_learning/automl/NAS/" class="post-title-link" itemprop="url">可微的NAS方法</a>
+            <a href="/2021/05/15/AI/machine_learning/bootstrap/" class="post-title-link" itemprop="url">一种重采样方法-resampling</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-18 08:32:24" itemprop="dateCreated datePublished" datetime="2021-05-18T08:32:24+08:00">2021-05-18</time>
+              <time title="创建时间：2021-05-15 16:29:28" itemprop="dateCreated datePublished" datetime="2021-05-15T16:29:28+08:00">2021-05-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-19 10:55:05" itemprop="dateModified" datetime="2021-05-19T10:55:05+08:00">2021-05-19</time>
+                <time title="修改时间：2021-05-17 08:42:41" itemprop="dateModified" datetime="2021-05-17T08:42:41+08:00">2021-05-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,29 +219,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>NAS是auto-ml的一个子领域，相关的技术有随机搜索，强化学习，基于微分的方法，如DARTS 和 FBNet。</p>
-<p>DARTS 和 FBNet是目前做NAS的the state of arts方法</p>
-<p>下面简单介绍FBNet的思路</p>
-</blockquote>
-<h2 id="fbnet的基本idea">FBNet的基本idea</h2>
-<ol type="1">
-<li><p>定义候选block, eg10个</p></li>
-<li><p>定义神经网络的层数,eg20，神经网络的每一层都是从9个候选block中选一个，搜索空间9^20</p></li>
-<li><p>构建一个很大的神经网络--supernet，每一层由9个候选block并联而成。supernet的待估参数包括9个候选block✖️20层，以及长度为9的权重向量✖️20。</p>
-<blockquote>
-<p>人工调参，可以看成是，指定supernet中的一条路径，然后灌入数据，来估计路径上20个blcock的参数。使用FBNet就不用人为指定其中某条路径，而是这个大网络supernet从训练数据中，学习出9个block✖️20（层）个参数，以及9✖️20（层）个权重。训练完之后，选择每一层权重最大的block并且连成一条路径，就是机器选定的20层的网络结构。</p>
-</blockquote></li>
-<li><p>模型要落地，还要考虑计算效率。具体的做法，事先算好候选block各自的latency(做一次推断平均耗时多久，block的权重随机给，跑多组数据求平均时延），然后将latency信息加入损失函数中，作为错误率之外的另外的一个惩罚项。</p></li>
-</ol>
-<h2 id="chiechies-reflection">chiechie's reflection</h2>
-<p>联想到之前构建的通用异常检测模型，整体流程大概是这样：定义多个检测器，曲线特征，并用一个随机森林去做集成。希望随机森林可以将不同的曲线路由到适合的检测器上去。</p>
-<p>FBNet的思路跟上面的流程有点像，都是数据驱动去选择适配的组件。不同的地方在于，FBNet最终会减枝，即从9✖️20个可能的路径中，裁剪成一条路径。</p>
-<p>FBNet要解决的任务更简单，给一个小任务找到适配的解决方案；通用异常检测更难，要给n个小任务找解决方案，并且用一套复合的解决方案。</p>
+          <h2 id="bootstrap的假设">bootstrap的假设</h2>
+<ul>
+<li>当前的数据资料是最能反映population信息的一批资料</li>
+<li>绝大部分样本跟population中的个体很相似</li>
+</ul>
+<figure>
+<img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<h2 id="为什么bootstrap比一般的参数估计方法更有效">为什么bootstrap比一般的参数估计方法更有效？</h2>
+<figure>
+<img src="./img_1.png" alt="bootstrap比一般的参数估计方法更有效" /><figcaption aria-hidden="true">bootstrap比一般的参数估计方法更有效</figcaption>
+</figure>
+<p>bootstrap本质上是一种外推法（extrapolating to the population），更有想象力，当让也更有出错的可能</p>
+<figure>
+<img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
+</figure>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=D9m9-CXw_HY">Differentiable Neural Architecture Search-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=gcPIyeqymOU">Resampling methods-bootstrapping--youtube</a></li>
 </ol>
 
       
@@ -262,7 +258,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/17/reading_notes/qukuailian/how-to-Defi/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/14/investment/about-invement-education/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -276,7 +272,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/17/reading_notes/qukuailian/how-to-Defi/" class="post-title-link" itemprop="url">《how to Defi》读书笔记</a>
+            <a href="/2021/05/14/investment/about-invement-education/" class="post-title-link" itemprop="url">关于理财教育</a>
         </h2>
 
         <div class="post-meta">
@@ -286,14 +282,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-17 09:20:02" itemprop="dateCreated datePublished" datetime="2021-05-17T09:20:02+08:00">2021-05-17</time>
+              <time title="创建时间：2021-05-14 08:28:15" itemprop="dateCreated datePublished" datetime="2021-05-14T08:28:15+08:00">2021-05-14</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-11 09:03:18" itemprop="dateModified" datetime="2021-06-11T09:03:18+08:00">2021-06-11</time>
+                <time title="修改时间：2021-05-20 08:12:50" itemprop="dateModified" datetime="2021-05-20T08:12:50+08:00">2021-05-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -301,7 +297,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
                 </span>
             </span>
 
@@ -316,32 +312,55 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>区块链技术的第一代应用是以比特币为全球支付货币，第二代应用是以太坊完成智能合约，第三代应用是defi和nft完成金融体系重构</p>
-<p>how to defi 讲的就是区块链技术的第三代应用之一--去中心化金融(DeFI)</p>
-</blockquote>
-<h2 id="why-defi">why defi</h2>
+          <h2 id="市场分析">市场分析</h2>
 <ol type="1">
-<li>传统金融体系容易遭受与人相关的风险，比如腐败。defi试图通过创建一个更好的金融环境，来弥补现有金融系统的漏洞，主要对银行系统的三个关键部分进行了优化：支付&amp;清算系统；可获取性；中心化&amp;透明度。</li>
-<li>DeFi的最大优势在于能够消除中 介机构并在零审查的环境下运行。</li>
-</ol>
-<h2 id="what">what</h2>
-<ol type="1">
-<li><p>DeFi生态中有哪些应用？</p>
+<li>国内中产阶级人群增长红利，带动“理财”需求增长。</li>
+<li>“理财”在国内过去的教育体系，并没有太多涉及，想要获得较优的“理财判断与决策能力”，市场上的“理财教育”应运而生。近年新兴的需求已支撑起国内“营收过亿”、“融资过亿”的理财教育公司。</li>
+<li>“理财教育”市场有两个正在发生的变化：
 <ul>
-<li>稳定币：比如泰达币（Tether，USDT) ，稳定币作为稳定的价值存储手段使得DeFi应用对大众来说更加可用。</li>
-<li>借贷服务：传统金融体系要求用户有银行账户，良好的信用评分，以及足够的抵押品；去中心化借贷允许任何人抵押其数字资产，然后利用抵押资产获得贷款。</li>
-<li>交易所：中心化交易所egconbase，huobi，binance，存在被黑客攻击的危险；去中心化交易所更安全，不依赖交易所的偿付能力。</li>
-<li>衍生品：衍生品合约主要在中心化平台上进行交易。目前，许多DeFi平 台正开始构建去中心化衍生品市场。</li>
-<li>基金管理：基金管理主要有主动型和被动型两种，主动型基金管理会有一个管理团队负责投资 决策。被动型基金管理没有管理团队，而被设计为尽可能接近 某一特定基准的表现。</li>
-<li>彩票：结合DeFi的彩票可将资金池的托管转移到以太坊智能合约上。</li>
-<li>支付：通过将支付重置为流模式而非我们熟悉的交易来改变我们处理支付的方式。（比如云服务商，按照使用的流量收费）</li>
-<li>保险：智能合约的漏洞容易被黑客攻击，从而影响智能合约中锁定的代币。当用户在Defi上处理大量资金的时候，购买保险是必要的。</li>
+<li>过去“鱼龙混杂”、“推销理财产品”为主的“教育”公司，正被新一代具有专业知识的教育公司取代。</li>
+<li>用户大众化。“理财”教育≠“如何选购理财产品”，它更多是“理财”认知、管理与决策能力的提高。它的受众不仅是越来越多有“财产”富余的成年人，还有k12这些更低龄阶段的“财商”教育普及。</li>
 </ul></li>
+<li>国内APP数据服务商Questmobile在今年初的报告，呈现了“越来越广泛受众使用理财APP”的数据变化。综合月活跃用户同比去年增长29%，平均使用时长也同比增加26%。</li>
 </ol>
+<h2 id="理财教育是个啥">理财教育是个啥？</h2>
+<h3 id="理财范畴">理财范畴</h3>
+<ol type="1">
+<li>供给端和需求端两端推进，理财行业兴起。对于个人理财，主看供给端的产品：比如股票、基金、债券、保险、黄金等资产，住房贷款、消费信贷等负债产品。</li>
+<li>当下，国内也在供给端与需求端双向促进，推动理财市场发展的进程。</li>
+</ol>
+<h3 id="理财教育教什么">理财教育教什么</h3>
+<h4 id="理财教育-理财产品推荐与售卖">理财教育 ≠ 理财产品推荐与售卖</h4>
+<ol type="1">
+<li><p>理财覆盖个人财务的所有范畴，从流程来看，包括：</p>
+<ul>
+<li>评估个人财务总体情况，资产与负债；</li>
+<li>制定理财的长短期目标；</li>
+<li>做出理财计划、落实计划；</li>
+<li>以及后续的跟进与重新评估。</li>
+</ul></li>
+<li><p>从管理标的来看，涵盖：收入、支出、资产、负债、投资、保险等等。</p></li>
+<li><p>与之对应的是，“理财教育”：覆盖“理财流程”以及管理目标，目标是提升每个环节的认知、管理与决策能力。</p></li>
+<li><p>“购买理财产品”仅是理财的一部分行为。“如何选购理财产品”因而也只是“理财教育”时可能存在的一部分。而且，这里强调的是如何选购的原则“知识传输”，而不是“理财产品”的推销。</p></li>
+</ol>
+<h4 id="财商">财商</h4>
+<ol type="1">
+<li>财商(Financial Quotient)是“驾驭”操作行为的能力（包括认知、投资理财行为与管理）。 &gt; “财商”首次在1990s年《富爸爸，穷爸爸》被提出，即要懂得如何管理财富、使财富增值，而不只是“埋头兢兢业业稳定工作以维生”。</li>
+<li>在接受“理财”相关教育的时候，最主要的目的是：提高“财商”、具备作出越来越优的“理财”决策能力。然后进行“理财”行为下，获得预期更优收益。</li>
+</ol>
+<h3 id="当下理财教育如何">当下理财教育如何？</h3>
+<ol type="1">
+<li>2015年，美国50个州中有17个要求高中生在毕业前学习个人理财，目前仅剩5个州没有覆盖理财教育（美国有50个州+1个特区）。这是美国政府、学术界与协会共同推进的成果。</li>
+<li>国内的校内“理财”教育暂没有如此普及，市场上“理财教育”服务商已经发展起来了，比如“长投学堂、小帮规划、简七理财、十倍学堂、亿学”等等，他们中有用户数“快速增长”、营收过亿，也有在一级市场完成亿元级别融资。某此前处于平稳发展的早期理财教育公司，疫情期间及至今，营收“仍在快速增长、扩招员工”。经济相对“下行”的时期，人们提高了“理财增值”的意识与需求，也推动了“理财”学习的消费。</li>
+<li>产品服务模式有：线上录播课、线下训练营等，客单价多在在99元至千元区间。</li>
+<li>教学的内容，一种是上面提到的“财商”本身，理解个人财务、资产负债，教授理财与投资的基本知识观念。另一种是相对单价较高，且侧重于某一类“投资产品”，比如股票、基金、保险品类的“进阶”体系内容。</li>
+</ol>
+<h3 id="未来市场展望">未来市场展望</h3>
+<p>有两个基本趋势，一是用户低龄化，二是服务专业化。 1. 目标用户低龄化：美国针对K12阶段设计的金融理财课程；广州也推出了面向k12学生的财商教育试点计划。 &gt; &gt; “K－12”是指从幼儿园到12年级的教育. <img src="metauniverse/img.png" alt="img.png" /> 2. 服务专业化：上一代鱼龙混杂的“理财教育”市场，数万家“理财工作室”，不乏动机不良、“纯粹钓鱼”者。并因此“误导”了入门“理财教育”的个人。当下，新一代以“知识、技能”为导向的教育产品，正成为新的选择。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://news.huoxing24.com/20200817195548945458.html">how to difi中文版</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.woshipm.com/it/4199514.html">知乎上数百万人关注，理财与它的教育大众化</a></li>
+<li><a target="_blank" rel="noopener" href="https://youzhiyouxing.cn/">有知有行</a></li>
 </ol>
 
       

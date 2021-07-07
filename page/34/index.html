@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/investment/xindong-analysis/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/20/AI/machine_learning/deeplearning/rnn-1-lstm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/investment/xindong-analysis/" class="post-title-link" itemprop="url">对心动的股票分析</a>
+            <a href="/2021/05/20/AI/machine_learning/deeplearning/rnn-1-lstm/" class="post-title-link" itemprop="url">循环神经网络2-长短期记忆网络（LSTM）</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-21 10:27:35" itemprop="dateCreated datePublished" datetime="2021-05-21T10:27:35+08:00">2021-05-21</time>
+              <time title="创建时间：2021-05-20 10:48:04" itemprop="dateCreated datePublished" datetime="2021-05-20T10:48:04+08:00">2021-05-20</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
+                <time title="修改时间：2021-07-07 11:43:08" itemprop="dateModified" datetime="2021-07-07T11:43:08+08:00">2021-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
                 </span>
             </span>
 
@@ -219,15 +219,87 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="key-performance">key performance</h2>
+          <h2 id="总结">总结</h2>
 <ol type="1">
-<li>2020年TapTap中国版的MAU为2570万，同比增长43.7%；海外版MAU为481万，同步增长330.9%，且去年Q4的平均MAU已经达到了1070万；游戏下载次数为4.1亿，同比增长15.8%；而心动的信息服务收入（主要为TapTap广告业务）为5.2亿，同比增长12.2%。</li>
-<li>4月6日，心动收购云服务提供商LeanCloud，后者2020年超50％收入来自游戏客户。在未来，LeanCloud将与TapTap的开发者服务（TDS）团队一起负责公司面向开发者的产品线。</li>
-<li>LeanCloud是AVOS中国团队在2013年9月发布的应用开发一站式后端服务，为开发者提供数据存储、实时消息、消息推送以及统计分析等服务。AVOS则是由YouTube联合创始人陈士骏和Chad Hurley创建，2011年4月，Chad Hurley和陈士骏从雅虎手中收购了书签网站Delicious，并在此基础上成立了AVOS公司。游戏客户在LeanCloud 2020年的收入里已经占到一半以上。</li>
+<li>LSTM是一个循环神经网络，即RNN模型，是对Simple RNN的一种改进，可以避免梯度消失问题, 可以有比simple RNN更长的记忆。LSTM的论文在1997年就发表了。</li>
+<li>LSTM的结构比simple-RNN的结构复杂很多，Simple RNN有1个参数矩阵，LSTM有四个参数矩阵。</li>
+<li>LSTM也可以看成一个带状态的函数，输入当前词的embedding向量（维度为m）和上一个时刻的状态向量（h维）和上一个时刻的记忆单元向量（h + m 维），输出当前时刻的状态向量（h维）和当前时刻的记忆单元向量（h维）。</li>
+<li>LSTM通过引入一个传输带（conveyor belt）来缓解梯度消失的问题。过去的信息通过传输带到达下一个时刻，不会发生很大变化。</li>
+<li>LSTM的处理流程可以描述为，对长期记忆选择性遗忘，对短期记忆选择性保留，两个求和得到了新的长期记忆；将新的长期记忆选择性输出，得到新的短期记忆。</li>
+<li>LSTM有3个门，分别为输入门，输出门，遗忘门，也是三个权重向量，取值范围从0到1
+<ul>
+<li><p>遗忘门：一个权重向量表示上一个时刻的传送带向量<span class="math inline">\(\mathbf{c}_{t-1}\)</span>需要遗忘多少信息</p></li>
+<li><p>输入门：一个权重向量，控制当前时刻的新的状态<span class="math inline">\(z\)</span>有多少信息要保留</p>
+<blockquote>
+<p>遗忘门 + 输入门共同作用的结果是，得到新的传送带向量</p>
+</blockquote></li>
+<li><p>输出门：控制当前传送带向量<span class="math inline">\(\tilde{\mathbf{c}}_{t}\)</span>有多少信息要输出给外部状态</p></li>
+</ul></li>
 </ol>
-<h2 id="参考">参考</h2>
+<h2 id="lstm应用-情感判断">LSTM应用-情感判断</h2>
+<p><img src="./img_3.png" /></p>
+<figure>
+<img src="./image_1212.png" alt="使用keras实现lstm" /><figcaption aria-hidden="true">使用keras实现lstm</figcaption>
+</figure>
+<figure>
+<img src="./image_1213.png" alt="img_13.png" /><figcaption aria-hidden="true">img_13.png</figcaption>
+</figure>
+<h2 id="cnn-和-rnn视觉对比">cnn 和 rnn视觉对比</h2>
+<p>有两个图还蛮有意思的，</p>
+<figure>
+<img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" alt="cnn" /><figcaption aria-hidden="true">cnn</figcaption>
+</figure>
+<figure>
+<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FoIsH5iVKwV.png?alt=media&amp;token=05e8189e-dd5f-4781-910c-a46bb9fa4eaf" alt="rnn" /><figcaption aria-hidden="true">rnn</figcaption>
+</figure>
+<h2 id="cnn-vs-rnn-vs-attention">cnn vs rnn vs attention</h2>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_n2z_XQqI2.png?alt=media&amp;token=facfccac-e8ac-4895-a84c-7add43cd165a" /></p>
+<h2 id="附录">附录</h2>
+<h3 id="lstm的内部结构">LSTM的内部结构</h3>
 <ol type="1">
-<li>游戏葡萄</li>
+<li><p>LSTM最重要的设计是一个传输带（conveyor belt），记为向量<span class="math inline">\(C_t\)</span>, 过去的信息通过传输带直接传到下一个时刻<span class="math inline">\(C_{t+1}\)</span> ，不会发生太大的变化。LSTM就是靠传输带来避免梯度小时的问题。</p></li>
+<li><p>遗忘门的输入是上一个时刻的状态<span class="math inline">\(h_{t-1}\)</span>和当前时刻的观测值<span class="math inline">\(x_t\)</span>，通过遗忘矩阵<span class="math inline">\(W^f\)</span>加上一个sigomid变换，得到一个概率向量。 <img src="./lstm.png" />。 <img src="image_123.png" alt="img_3.png" /></p></li>
+<li><p>LSTM的遗忘门（forget gate）的作用是，让传输带上的信息有选择性的通过，选择性是由遗忘门向量控制的，通过遗忘门向量与传送带向量<span class="math inline">\(C_t\)</span>点乘来实现。 <img src="image_122.png" alt="img_2.png" /></p></li>
+<li><p>输入门(input gate)的输入也是上一个时刻的状态<span class="math inline">\(h_{t-1}\)</span>和当前时刻的观测值<span class="math inline">\(x_t\)</span>。</p>
+<figure>
+<img src="image_125.png" alt="img_5.png" /><figcaption aria-hidden="true">img_5.png</figcaption>
+</figure></li>
+<li><p>输入门的目的是，让上一个时刻的状态和最新的信息，能有选择性的通过。通过计算输入门向量跟<span class="math inline">\([h_{t-1}, x_{t}]\)</span>的双曲正切向量的点乘来实现。</p>
+<blockquote>
+<p>双曲正切函数可以把上一个时刻的状态和新的观测值组成的向量映射到【-1，1]之间，</p>
+</blockquote></li>
+<li><p>输出门(output gate)的输入也是上一个时刻的状态<span class="math inline">\(h_{t-1}\)</span>和当前时刻的观测值<span class="math inline">\(x_t\)</span></p></li>
+</ol>
+<figure>
+<img src="image_128.png" alt="img_8.png" /><figcaption aria-hidden="true">img_8.png</figcaption>
+</figure>
+<ol start="7" type="1">
+<li><p>输出门的目的是，让最新的长期记忆有选择性的输出，作为状态向量<span class="math inline">\(h_t\)</span>。计算状态向量, 将输出门向量<span class="math inline">\(o_t\)</span>跟传输带最新值<span class="math inline">\(c_t\)</span>的双曲正切映射进行点乘，得到新的状态向量<span class="math inline">\(h_t\)</span>。</p></li>
+<li><p>新的状态向量<span class="math inline">\(h_t\)</span>有两份copies，一份作为当前时刻的输出，一份作为下一个时刻lstm单元的输入。可以认为迄今为止，t个时刻的输入信息都被编码到了状态向量<span class="math inline">\(h_t\)</span>中。 <img src="image_129.png" alt="img_9.png" /></p></li>
+<li><p>LSTM有遗忘门，输入门，new value，输出门，一共对应4个参数矩阵。矩阵的行数是状态向量的长度，矩阵的列数是状态向量的长度+输入向量的长度。</p></li>
+</ol>
+<figure>
+<img src="./image_1210.png" alt="img_10.png" /><figcaption aria-hidden="true">img_10.png</figcaption>
+</figure>
+<ol start="10" type="1">
+<li>更新长期记忆-传送带向量</li>
+</ol>
+<p><img src="./img_1.png" /></p>
+<ol start="11" type="1">
+<li>更新短期机器-状态向量</li>
+</ol>
+<p><img src="./img_2.png" /></p>
+<ol start="12" type="1">
+<li>LSTM处理过程用数学公式表达 <img src="img_5.png" alt="img_5.png" /> <img src="img_4.png" alt="img_4.png" /></li>
+</ol>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/a-comparison-of-dnn-cnn-and-lstm-using-tf-keras-2191f8c77bbe">a-comparison-of-dnn-cnn-and-lstm-using-tf-keras</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_recurrent-neural-networks/lstm.html">dive into deep learning-lstm</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Cc4ENs6BHQw&amp;list=PLvOO0btloRnuTUGN4XqO85eKPeFSZsEqK&amp;index=3">wangshusen-RNN-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">RNN模型与NLP应用(4/9)：LSTM模型</a></li>
+<li><a target="_blank" rel="noopener" href="https://nndl.github.io/nndl-book.pdf">神经网络与深度学习</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32085405">人人都能看懂的LSTM</a></li>
 </ol>
 
       
@@ -248,7 +320,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/investment/bilibili-analysis/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/20/reading_notes/qukuailian/intro-to-ether/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -262,7 +334,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/21/investment/bilibili-analysis/" class="post-title-link" itemprop="url">对bilibili的股票分析</a>
+            <a href="/2021/05/20/reading_notes/qukuailian/intro-to-ether/" class="post-title-link" itemprop="url">以太坊介绍-Patrick访谈</a>
         </h2>
 
         <div class="post-meta">
@@ -272,14 +344,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-21 10:26:00" itemprop="dateCreated datePublished" datetime="2021-05-21T10:26:00+08:00">2021-05-21</time>
+              <time title="创建时间：2021-05-20 10:14:40" itemprop="dateCreated datePublished" datetime="2021-05-20T10:14:40+08:00">2021-05-20</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-29 08:37:37" itemprop="dateModified" datetime="2021-05-29T08:37:37+08:00">2021-05-29</time>
+                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -287,7 +359,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -303,25 +375,44 @@
 
       
           <blockquote>
-<p>豪掷8亿拿下《英雄联盟》后，B站又获《守望先锋》数年赛事独播权</p>
+<p>有空再翻吧</p>
 </blockquote>
-<h2 id="key-performance">key performance</h2>
-<blockquote>
-<p>3年来，B站在电竞板块大动作频繁</p>
-</blockquote>
+<p>Patrick访谈以太坊组织的研究人员--Justin，内容包括：</p>
+<ul>
+<li>以太坊和比特币的区别</li>
+<li>以太坊平台孵化的项目数量日益增长</li>
+<li>共识算法从工作量证明到权益证明的转变，对以太坊的意义</li>
+</ul>
+<h2 id="key-concepts-of-btc">Key Concepts of BTC</h2>
 <ol type="1">
-<li><p>2018年，B站成立了哔哩哔哩电竞公司，任命前战旗直播CEO陈悠悠出任公司总裁。</p></li>
-<li><p>2019年12月，B站豪掷8亿元的价格，拿下英雄联盟全球总决赛中国地区三年独家直播版权。</p></li>
-<li><p>2020年又与EA合作了2020秋季赛FIFA ONLINE 4顶级职业赛事的电竞活动。</p></li>
-<li><p>2020年8月,拳头也宣布，英雄联盟S10、S11都将在中国举办。两个事件都大力推动了《英雄联盟》中国地区在线上线下的电竞产业发展。</p></li>
-<li><p>2021年，B站拿下《守望先锋联赛》独播权，一方面是因为2年前8亿换来的三年独播权，让B站在电竞板块同时得到了短期流量增长与长线产业布局的收益，而在疫情改变玩家的网络使用习惯后，经验与时机都让B站有更充足的底气采取类似的激进策略拿下《守望先锋》。另一方面，哔哩哔哩电竞或希望其电竞布局，能够突破MOBA类游戏的范围，在FPS等多个电竞品类中建立起自己的用户池，使其在电竞行业中有更细分的竞争力。此前，陈睿将「用户增长」作为公司近期的工作重点，哔哩哔哩电竞的一系列动作也符合该逻辑。</p>
-<blockquote>
-<p>根据此前MakeDataShine公布的全球网络游戏流量份额Top 10，2019-2020年《英雄联盟》与《守望先锋》持续稳定在1、3名,</p>
-</blockquote></li>
+<li>以太坊（Ethereum）诞生于2015年，是一个去中心化的区块链（blockchain），类似的概念是Bitcoin。</li>
+<li>以太坊的平台原生加密货币是以太（Ether），类似的概念是BTC。</li>
+<li>以太坊网络的交易费用每天达到1500w美元，需求日益增长。</li>
+<li>区块链是一个协作平台（coordination platform），让互联网上的人们即使不认识不信任彼此，也可以协作。</li>
+<li>互联网是区块链的第一个阶段，它的使命是冲破地域限制，让世界各地的人可以commmuniction。区块链是对这一能力的拓展，它可以让彼此不信任对方的现状下，人跟人仍然能协作。它的信任来自代码，数学，技术，而不是人。</li>
+<li>货币的本质，一个账本，这个账本记录每个人有多少购买力。比特币本质也是账本，记录每个人有多少比特币。</li>
+<li>关于安全性有哪些必备条件，可参考最安全的东西--时间。时间有3个属性，过去的不可篡改。第二个属性是，当下，对所有人，是一个共享的体验（shared experience）。第三个属性是，未来是确定的，一定会发生，没有任何人能够阻止。</li>
+<li>回到货币上，过去的交易不可篡改，每个人都能信任比特币的状态，不用第三方。绕开审查（Censorship resistance），如果比特币是一个计算器，以太坊就是一个计算机。</li>
+<li>矿工让彼此不信任的人达成共识，理应获得报酬--BTC。</li>
 </ol>
-<h2 id="消息来源">消息来源</h2>
+<h2 id="以太坊">以太坊</h2>
 <ol type="1">
-<li>游戏葡萄</li>
+<li>what was the original impetus（动力） in early history here?</li>
+<li>Why was Ethereum created?</li>
+<li>What shortcomings of Bitcoin did it seek to address in the early days?</li>
+<li>比特币的编程能力有限，以太坊扩展了变成能力。</li>
+<li>说一说以太坊创始人Vitalik的想法？</li>
+<li>权益证明比工作量证明，更便宜，因为货币的机会成本更低？？啥意思</li>
+<li>The rewards that you get as a validator are, number one, issuance but also these tips that don't get burnt.</li>
+<li>The way that we do ownership really in the crypto world is using public keys. It's basically cryptography that allows you to prove that you're the owner of something. What it means to go buy an NFT is, at the end of the day, to basically change this ledger entry to add your public key as the owner of this hash.</li>
+<li>We have, right now, 130,000 validators that are securing the proof-of-stake in Ethereum. This is going to grow to half a million or even close to a million validators. Another thing that is important is to understand that the proof-of-stake is best-in-class in terms of security. Just to give you one compelling reason for that is that when we have this scarce resource securing your consensus engine being money placed as collateral, you have the option to destroy it fully. If an attacker is in a position to be able to attack Ethereum, meaning that it has amassed all these economic resources, well, as soon as they make an attack, we can penalize them and remove them from the system so the system is self-healing. Actually, because there's only a finite number of ETH out there, we can actually put an upper bound on the number of times that an attacker can successfully make an attack. It's on the order of 10 times</li>
+<li>Be intellectually curious, be intellectually honest in the sense that participating in things that you understand and whenever there's something you don't understand, don't be shy to ask questions. There's a lot of information out there. Actually, on that point a lot of information out there, there's also a lot of bad information out there. This is a very organic, decentralized, and chaotic space.</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.joincolossus.com/episodes/14242194/drake-ethereum-into-the-ether?tab=blocks">Justin Drake - Ethereum: Into the Ether</a></li>
+<li><a target="_blank" rel="noopener" href="https://steemit.com/cryptocurrency/@danielzhuang/6uohm9">A Letterto Jamie Dimo-中文</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ceresaig.com/wp-content/uploads/2017/11/A-Letter-to-JP-Morgan-Jamie-Dimon-%E2%80%93-Block-Chain-Crypto-FX.pdf">A Letterto Jamie Dimo-英文</a></li>
 </ol>
 
       

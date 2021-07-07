@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/20/AI/dl-framework-from-view-of-compression/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/meditation/dl-framework/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/20/AI/dl-framework-from-view-of-compression/" class="post-title-link" itemprop="url">深度学习理论的统一框架-基于压缩视角</a>
+            <a href="/2021/04/18/meditation/dl-framework/" class="post-title-link" itemprop="url">模型推断的框架</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-20 18:39:48" itemprop="dateCreated datePublished" datetime="2021-04-20T18:39:48+08:00">2021-04-20</time>
+              <time title="创建时间：2021-04-18 08:53:17" itemprop="dateCreated datePublished" datetime="2021-04-18T08:53:17+08:00">2021-04-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-31 08:24:44" itemprop="dateModified" datetime="2021-05-31T08:24:44+08:00">2021-05-31</time>
+                <time title="修改时间：2021-06-05 08:42:57" itemprop="dateModified" datetime="2021-06-05T08:42:57+08:00">2021-06-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
                 </span>
             </span>
 
@@ -220,61 +220,36 @@
 
       
           <blockquote>
-<p>马毅老师的ppt看不懂，一度放弃了了</p>
-<p>最近看到另外一篇工业界的人讲深度学习的第一性原理，铺垫了该主题的很多背景，我才算看懂了</p>
-<p>尤其是联想到中国哲学中的"名实之争"，有点意思，在这里记录一下</p>
+<p>解答了一直以来，关于模型部署的疑惑</p>
 </blockquote>
-<h2 id="学术界的进展">学术界的进展</h2>
-<p>马毅老师的文章和袁进辉和文章都是想探索一种通用的方法，对任何数据找到其最优的神经网络。</p>
-<p>都知道图像数据可能更适合cnn，序列数据更适合GPT-3，这些网络都是具有某个特殊的结构的DNN，这些奇奇怪怪的结构是无数次试错，人工设计出来的。</p>
-<p>那么，有没有可能有一种脱离人的设计方法呢？即，不管是对图像数据，还是序列数据，统一的模型训练方法呢？更甚至，不管是有监督还是无监督，都能找到统一的模型训练方法呢？</p>
-<p>这个问题很宏大，涵盖了NAS这个方向。</p>
-<h3 id="计算神经科学">计算神经科学</h3>
-<ol type="1">
-<li><p>计算神经科学领域对这个问题已经研究很多年了，有一些非常经典的研究成果譬如ICA(独立成分分析）以及Sparse coding方法，这些方法的背后是一种基于信息论的原则，称之为efficient coding principle。</p></li>
-<li><p>这个理论认为，大脑的结构源自亿万年的进化，进化的目标是形成外界物理环境的一种“最经济”的表达，这种表达是适应于（adapt to)自然界的统计规律，而且这种结构基本上是无监督的。这种理论已经能非常好的解释视网膜、侧膝体、初级视皮层神经元感受野的形成机理，近些年的研究开始向理解V2, V4等更高级的视皮层进发。</p></li>
-<li><p>用efficient coding原则来理解卷积神经网络的一些关键技巧</p>
+<h2 id="关于模型部署">关于模型部署</h2>
 <ul>
-<li>卷积: 在计算神经科学里，相当于初级视皮层神经元的局部感受野</li>
-<li>非线性的激活函数：计算神经科学里通过信息论角度，通过过非线性映射，可以把取值范围很大的activation映射到一个区间，比较重要的输入值编码的分辨率高一些，而不重要的输入不需要消耗太多能量去编码，就被映射到“饱和区”。</li>
+<li>1 为什么说模型部署难？
+<ul>
+<li>因为部署的环境不一样，所以需要许多定制化的工作</li>
 </ul></li>
-<li><p>efficient coding准则认为，神经元的感受野是用来表示输入刺激的统计规律，把输入转化成神经元的响应有助于去除输入之间的冗余性（redudancy）,也就是神经元的响应之间应该比输入 “统计上更接近于独立”。</p></li>
+<li><ol start="2" type="1">
+<li>tensorflow和pytorch这两个框架不能直接用于推理吗？</li>
 </ol>
-<h3 id="信息瓶颈-和-mcr2">信息瓶颈 和 MCR^2</h3>
-<p>针对这个问题，学术界已有的研究方向主要是从信息论角度出发，有两项工作比较知名，一个是受Hinton推崇的“信息瓶颈”（Information bottleneck）理论，一个是马老师团队提出的MCR^2理论。</p>
-<p>以x，z，y 分别表示输入数据，学到的特征以及标签：</p>
 <ul>
-<li>信息瓶颈要解决有监督问题的目标是最大化z和y之间的互信息，而最小化x和z之间的互信息。</li>
-<li>MCR^2则一方面在最大化x和z之间的互信息，也在最大化z和y之间的互信息。</li>
+<li>可以，但是性能不佳。推理阶段相对训练阶段对模型服务的性能要求更高，比如模型稳定性，响应延迟等，。</li>
+<li>tensorflow和pytorch本身是训练框架，拿来兼做推理框架其实不可以。</li>
+<li>但是在推理阶段，如果业务要求模型服务 高可用，训练框架就显得过于臃肿了而不合时宜了，需要更轻量的框架，如pytorch，tensorRT等。 <img src="../AI/machine_learning/deeplearning/dl-framework/img.png" alt="img.png" /></li>
+</ul></li>
+<li><ol start="3" type="1">
+<li>DL框架产业现状？</li>
+</ol>
+<ul>
+<li>训练框架是标准品</li>
+<li>推理框架是定制品：这里提到了一点就是使用场景没有<strong>网络效应</strong>，我理解就是规模效应，客观环境决定了，“推理框架”相对于“训练框架” 而言，不是一个好摘的果子
+<ul>
+<li>客观环境（部署依赖整个生产链路的环境，包括硬件厂商，应用服务）导致了没有统一的条件</li>
+</ul></li>
+</ul></li>
 </ul>
-<p>信息瓶颈那篇论文里论述了这样一个结论:特征条件独立，最优分类器就是线性的。此外，Andrew Ng在论述Naive bayes和Logistic regression等价关系时讨论过.</p>
-<h3 id="mcr2细节">MCR^2细节</h3>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li>用压缩的视角看clustering：聚成两类后是否比原来散开，占用空间小。</li>
-<li>对混合分布的数据进行分类，传统方法基于最大化后验概率（MAP），难点在于后验概率很难estimate和定义，当分布退化时。(所以svm和deep networks赢了)</li>
-<li>用压缩的角度看分类：记录每个类别中对每个样本编码的比特数，分类的原则--Minimum Incremental Coding Length (MICL)</li>
-</ol>
-<h3 id="有监督-vs-无监督之争">有监督 vs 无监督之争</h3>
-<ol type="1">
-<li>有监督or无监督？判别模型or生成模型？半监督学习有没有必要？本质上是在争论一个东西</li>
-<li>回看discriminative model和generative model之辩，前者直接学习用户关心的条件概率p(y|x)，但后者需要学习p(x|y)p(y)，也就是还要学习输入特征的概率分布。发明SVM的Vapnik 认为generative model做了一些和目标无关的、多余的事情，因此而更推崇前者，甚至抛出了奥卡姆剃刀“如无必要，勿增实体”。</li>
-<li>信息瓶颈处于一个极端，既然我们的目标是分类，那就直奔主题，它喜欢的特征就是对分类有效的特征，至于这个特征对最原始的输入的表示来说是不是好就不关心了，甚至要尽可能删除与分类无关的信息。</li>
-<li>MCR^2 的目标函数由两部分构成，第一部分与类别无关，实际上和InfoMax等价（InfoMax直接计算熵有缺陷，正如马老师论文提到的，熵在一些退化情况下没有良好的定义，所以他们用了率失真函数）。第二部分和类别相关，和信息瓶颈的目标一致。</li>
-<li>半监督学习到底成不成立？为什么不带标签的数据对训练分类模型也有帮助呢？比较一致的结论是，无标签数据相当于提供了一种正则化（regularization）,有助于更准确地学习到输入数据所分布的流形（manifold)，而这个低维流形就是数据的本质表示，它对分类有帮助。</li>
-<li>但这又带来一个问题：为什么数据的本质规律对预测它的标签有帮助？</li>
-<li>这又带来一个更本质的问题：数据的标签是怎么来的？</li>
-<li>要回答这些问题，就要和中国古代哲学里的”名实之论“有关系了。到底是先有”名“，还是先有”实“。一般认为是先有”实“，后有”名“，而”实“决定”名“。</li>
-<li>回到机器学习问题上，就是数据的标签是后天出现的，一个东西到底用什么标签去称呼，本质上是由这个东西自身的规律决定的。换句话说，label可能是后天”涌现“（emerge)的，因为一些东西本质一样，张的像，所以人们才会给他们相同的命名。因此要寻求最优的分类器，可能首先要从”无监督“的数据分析入手。</li>
-</ol>
-<h2 id="工业界的进展">工业界的进展</h2>
-<ol type="1">
-<li>项研究和今天很受关注的大规模预训练模型也很相似，而且也有研究发现，大规模预训练模型中真正有效的实际上是一个很小的“子网络”，也就是很多连接的权重是接近零的。最近恰好出现了一些 MLP is all your need相关的研究，也不无道理。</li>
-<li>最近除了自然语言处理，在图像和语音领域，无监督和自监督学习也取得了很大进展，譬如Facebook 的wave2vec 基于无标注的语料可以训练出来和几年前有监督学习的SOTA模型相匹配的结果。可以期待，无监督学习未来会出现更多的成绩。</li>
-</ol>
-<h2 id="参考文献">参考文献</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://cmsa.fas.harvard.edu/wp-content/uploads/2021/04/Deep_Networks_from_First_Principles.pdf">Deep_Networks_from_First_Principles</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/no0u_6m3Ima8YlmV7msGqQ">我对深度学习“第一性原理”的探索和理解 -袁进辉</a></li>
+<li>file:///Users/stellazhao/Desktop/深度学习框架-2020-0630-Qlearning分享-Turbo-PPT.pdf</li>
 </ol>
 
       
@@ -295,7 +270,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/AI/reinforcement_learning/rf1_summary/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/AI/NLP/NLP_2_bert/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -309,7 +284,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/AI/reinforcement_learning/rf1_summary/" class="post-title-link" itemprop="url">强化学习1 资料汇总</a>
+            <a href="/2021/04/18/AI/NLP/NLP_2_bert/" class="post-title-link" itemprop="url">NLP_2_Transformer的原理</a>
         </h2>
 
         <div class="post-meta">
@@ -319,14 +294,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-18 20:16:31" itemprop="dateCreated datePublished" datetime="2021-04-18T20:16:31+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-18 00:04:13" itemprop="dateCreated datePublished" datetime="2021-04-18T00:04:13+08:00">2021-04-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-31 10:13:29" itemprop="dateModified" datetime="2021-05-31T10:13:29+08:00">2021-05-31</time>
+                <time title="修改时间：2021-07-05 16:35:00" itemprop="dateModified" datetime="2021-07-05T16:35:00+08:00">2021-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -349,126 +324,244 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="why-rl">why rl?</h2>
-<p>可能可以超越人类。监督学习 只能模仿，不能超越</p>
-<h2 id="公开课">公开课</h2>
-<h3 id="zhouboleirf-intro">zhoubolei：rf-intro</h3>
-<ul>
-<li><p>zhoubolei: ：rf-intro</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/zhoubolei/introRL">zhoubolei-github-课程资料</a> ｜<a target="_blank" rel="noopener" href="https://github.com/zhoubolei/introRL/blob/master/lecture1.pdf">slide</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1LE411G7Xj">zhoubolei视频</a></li>
-</ul></li>
-<li><p>wangshusen</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1XpTgny_Vr0LobBsuYF4KkA">baidu网盘</a>:密码:x0wb</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DRL/blob/master/Notes_CN/DRL.pdf">强化学习中文教材</a></li>
-<li><a target="_blank" rel="noopener" href="https://youtu.be/vmkRMvhCW5c">视频</a>|<a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">深度学习课件</a>|<a target="_blank" rel="noopener" href="https://github.com/wangshusen/DRL">深度强化学习课件</a></li>
-</ul></li>
-<li><p>chiechie的笔记</p>
-<ul>
-<li>【基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf1-basic-concepts/">1. 强化学习的基本概念</a></li>
-<li>【基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf2-value-based/">2. 基于价值的强化学习-DQN 和 TD 算法</a>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FSSywH-1RRf.png?alt=media&amp;token=6b811aba-b275-47f0-a6d3-2945b6fff817" /></li>
-</ul></li>
-<li>【强化学习基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf3-policy-based/">3. 基于策略的强化学习</a>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVhwFEvq-CN.png?alt=media&amp;token=de826d99-eaa2-4c92-8bec-520c7a04ee0b" /></li>
-</ul></li>
-<li>【强化学习基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf4-actor-critic/">4. actor-critic 方法</a></li>
-<li>【专题】价值学习高级技巧
-<ul>
-<li><a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf5-advanced-value-based/">价值学习高级技巧1/3-经验回放</a>
-<ul>
-<li>对TD算法的改进</li>
-<li>对神经网络结构的改进</li>
-</ul></li>
-</ul></li>
-<li>【专题】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf6-baseline-in-policy-gradient/">策略梯度中的baseline</a>
-<ul>
-<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。Baseline 可以是任何不依赖于动作的函数。这节课我们做数学推导，得出带有 baseline 的策略梯度，并对它做蒙特卡洛近似。在后面的两节课中，我们把它用在 REINFORCE 和 A2C 方法中。</li>
-<li>策略梯度中的Baseline 1/4-数学推导</li>
-<li>策略梯度中的Baseline 2/4-REINFORCE with Baseline
-<ul>
-<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。这节课我们学习 REINFORCE with Baseline，它是一种策略梯度方法。它用价值网络近似 baseline 函数。它用带 baseline 的策略梯度学习策略网络，用价值网络去拟合观测到的回报。</li>
-</ul></li>
-<li>策略梯度中的Baseline 3/4-A2C 方法</li>
-<li>策略梯度中的Baseline 4/4-REINFORCE与A2C的异同</li>
-</ul></li>
-<li>【专题】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf7-continous-action/">连续控制</a>
-<ul>
-<li>连续控制1/3-离散控制与连续控制</li>
-<li>连续控制2/3-确定策略梯度DPG</li>
-<li>连续控制3/3-用随机策略做连续控制</li>
-</ul></li>
-</ul></li>
-</ul>
-<h2 id="练手项目">练手项目</h2>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshub/RL-Stock">使用强化学习炒股</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267998242">强化学习应用于金融问题的文章</a></li>
-<li><a target="_blank" rel="noopener" href="https://gym.openai.com/">Gym-强化学习开发框架</a>：开发强化学习算法的工具箱，有很多第三方环境</li>
-</ul>
-<h2 id="强化学习的应用">强化学习的应用</h2>
-<p><a href="https://chiechie.github.io/2021/04/21/reinforcement_learning/rf-application/">强化学习的应用--chiechie</a></p>
-<ul>
-<li>神经网络结构搜索</li>
-<li>自动生成SQL语句</li>
-<li>推荐系统</li>
-<li>网约车调度</li>
-</ul>
-<h2 id="一些思考">一些思考</h2>
-<h3 id="价值学习策略学习动作裁判学习-这三种方法-存在的必要">价值学习，策略学习，动作裁判学习 这三种方法 存在的必要？</h3>
-<ul>
-<li>既然有了policy Function 或者 Q, 都可以告诉agent怎么操作。那有什么必要去做 actor-critic 算法呢？单独学两个神经网络不就可以了？</li>
-<li>问题就是不容易学呀！所以才会有Actor-Critic这种复杂的方法。</li>
-</ul>
-<h3 id="强化学习-适合哪些应用场景图像分类-适合用吗为什么-auto-ml适合用">强化学习 适合哪些应用场景？图像分类 适合用吗？为什么 auto-ml适合用？</h3>
-<ul>
-<li>适合 序列决策 问题， 图像分类没必要 用</li>
-<li>训练一个大的神经网络类似玩一局游戏 耗时很久，每一个迭代 类似 游戏里面的 一小步，可以拿到即时reward，这样就可以使用TD算法来学习 value-function。</li>
-</ul>
-<h3 id="在线学习-和-强化学习的-区别">在线学习 和 强化学习的 区别？</h3>
-<ul>
-<li>online learning 不假定模型输出会影响未来输入，只看单步损失</li>
-<li>reinforcement learning 中模型输出会影响未来输入，必须考虑输出的后果</li>
-</ul>
-<h3 id="on-policy-和-off-policy-的-区别">on-policy 和 off-policy 的 区别？</h3>
-<ul>
-<li>相同点：都是用来更新价值网络的学习算法</li>
-<li>不同点是：on-policy是按照当前的policy来估计q-value；off-policy是按照最优的policy来估计q-value</li>
-</ul>
-<h3 id="监督学习-和-强化学习的区别">监督学习 和 强化学习的区别</h3>
-<ul>
-<li>监督学习
-<ul>
-<li>要求数据 是独立同分布的</li>
-<li>学习过程有老师手把手教，标准答案（label）是什么</li>
-</ul></li>
-<li>强化学习
-<ul>
-<li>数据不用iid</li>
-<li>没有导师（supervisor），不会被告知正确的action是什么，只有一个奖励信号，并且有延迟的。需要自己去试错，找到具长期reward最大的action</li>
-</ul></li>
-</ul>
-<h3 id="强化学习的特点">强化学习的特点</h3>
-<ul>
-<li><p>强化学习中随机性的两个来源：action可以是随机的，状态转移可以是随机的</p></li>
-<li><p>试错机制</p></li>
-<li><p>延迟reward</p></li>
-<li><p>时间会产生影响</p></li>
-<li><p>agent的行为会影响后续收到的数据（agent的action改变了环境）</p>
+          <h1 id="transformer">Transformer</h1>
 <blockquote>
-<p>类似我们的模型自动更新，担心时间会对模型造成影响。比如模型推荐了商品a，我们也只能收到关于商品a的反馈。</p>
-</blockquote></li>
+<p>先概括Transformer的主要设计思路；再讲每一步的具体技术细节。</p>
+</blockquote>
+<ul>
+<li>Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。</li>
+<li>Transformer的亮点在于将attention和self-attention完全剥离开之前rnn的结构，只跟dense层组合。</li>
 </ul>
+<h2 id="high-level-ideas">High-Level ideas</h2>
+<ol type="1">
+<li>Transformer是一个翻译模型，在机器翻译任务中，eg德译英，输入一个德文句子，输出十一句英文。</li>
+<li>Transformer由两部分组成：encoders和decoders组件 <img src="./transformer_encoders_decoders.png" alt="Transformer由两部分组成：encoders和decoders组件" /></li>
+<li>其中encoders由6个encoder堆叠而成，decoders由6个decoder堆叠而成。每一个encoder或一个decoder叫做一个block。 encoders的6个个block，结构相同，但是不共享权重。 <img src="./transformer_encoder_decoder_stack.png" /></li>
+<li>对于encoders，每个block包含2层:
+<ul>
+<li>self-attention层，参数不共享</li>
+<li>ffnn层，参数共享</li>
+</ul>
+<img src="./Transformer_encoder.png" /></li>
+<li>对于decoders，每个block除了包含self-attention和ffnn，还有一个encoder-decoder attention层，用来关注encoder的输出，作用类似于<a target="_blank" rel="noopener" href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/">seq2seq models</a> 中的attention。</li>
+</ol>
+<p><img src="./Transformer_decoder.png" /></p>
+<h2 id="输入tensor">输入tensor</h2>
+<p>上面介绍了Transformer的主要组件，现在看一下组件之间的数据流向。</p>
+<p>和一般的NLP任务一样，Transformer首先使用<a target="_blank" rel="noopener" href="https://medium.com/deeper-learning/glossary-of-deep-learning-word-embedding-f90c3cec34ca">embedding algorithm</a>将每个输入单词转换成一个向量。</p>
+<p><img src="./transformer_embeddings.png" /></p>
+<p>如上图，每个单词都被embedded为大小为512的向量（上面的x1，x2，x3）。</p>
+<p>接下来，这个512的向量会流入self-attention和ffnn层。</p>
+<p><img src="./transformer_encoder_with_tensors.png" /></p>
+<p>接下来，我们以一个短句为例，看一下Transfomer内部细节。</p>
+<h2 id="encoder">Encoder</h2>
+<p>前面提到，encoder的输入是多个向量构成的list：[x1，x2]。</p>
+<p>接下来它是怎么处理这个list的呢？</p>
+<ol type="1">
+<li>将这些向量传递到一个"self-attention’"层，输出z1，z2</li>
+<li>然后将z1，z2 丢入一个前馈神经网络，输出r1，r2。注意这一层的dense layer的参数对所有的z1，z2，是共享的。</li>
+</ol>
+<p>然后将r1，r2 传递给下一个编码器encoder2作为输入，encoder1的输入（x1,x2）和输出（r1，r2）的维度是一样的。</p>
+<figure>
+<img src="./transformer_encoder_with_tensors_2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="self-attention">self-attention</h3>
+<h4 id="high-level-ideas-1">High Level ideas</h4>
+<p>假设下面的句子是我们要翻译的输入句子:</p>
+<p>”<code>The animal didn't cross the street because it was too tired</code>”</p>
+<p>这个句子中的"it"指的是什么？它指的是“street”还是“Theanimal”？对于人类来说很简单区分，但对于算法就不那么简单了。</p>
+<p>当模型解读每个word时，self-attention会让模型回顾上下文信息，也就是输入序列中的其他word，从而帮助模型更好地理解这个word。</p>
+<p>RNN通过hidden state策略，使得 它将 当前词 与 上下文（准确来说只有上文）的信息进行融合。</p>
+<p>类似的，Transformer通过self-attention来实现这个目的。</p>
+<p>还是回到上面的例子，当模型处理单词"it"时，self-attention使它能够将"it"与"animal"联系起来。</p>
+<figure>
+<img src="./transformer_self-attention_visualization.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>上图表示，当我们在encoder #5 中对"it"编码时，self-attention会将一部分注意力集中在"Animal"上，并将“Animal”的信息融入了"it"的编码中。</p>
+<p>相关可视化工具参考Tensor2Tensor （<a target="_blank" rel="noopener" href="https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb">Tensor2Tensor notebook</a> ）。</p>
+<p>先看看如何使用向量计算self-attention，然后再看看使用矩阵如何实现。。</p>
+<h4 id="第一步-计算3个向量">第一步 计算3个向量</h4>
+<p>对于每个单词，我们创建三个向量：</p>
+<ul>
+<li>一个 Query vector</li>
+<li>一个 Key vector</li>
+<li>一个 Value vector。</li>
+</ul>
+<p>这些向量是通过将单词的embedding乘以三个矩阵来创建的。</p>
+<p>请注意，得到的新向量的维度（64）比embedding（512）小。</p>
+<p>这么设计的目的是，保证在加入了multi-head self- attention之后，encoder的输出和输入维度（512）还能保持一致。</p>
+<p><img src="./transformer_self_attention_vectors.png" alt="img" /> 这三个向量如何解读？为何有用？</p>
+<h4 id="第二步-计算权重分数">第二步 计算权重分数</h4>
+<p>第二步是计算权重分数<span class="math inline">\(\alpha\)</span>，目的是量化 其他单词应该被关注的程度。</p>
+<p>方法如下：</p>
+<p>当前单词的query vector和其他单词的 key vector求 内积。</p>
+<p>如下:</p>
+<p><span class="math inline">\(&lt;q_1, k_1&gt;, &lt;q_1, k_2&gt;, ... &lt; q1, k_m&gt;\)</span></p>
+<figure>
+<img src="./transformer_self_attention_score.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h4 id="第三步和第四步--权重分数归一化">第三步和第四步 -权重分数归一化</h4>
+<p>第三步：将第二步算出来的权重得分向量（长度为m）进行归一化，目的是让权重不要受到key vector的长度（paper里面是64）的影响，这样算梯度就更稳定，。</p>
+<p>第四步：将归一化的权重得分向量（长度为m）送入激活函数（paper里面是softmax），目的是得到一个概率向量，所有数值加起来为1。</p>
+<p>最终的向量，表示每个单词应该被当前单词关注的程度，值越大越应该被关注。。</p>
+<figure>
+<img src="./transformer_self-attention_softmax.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h4 id="第五步和第六步-计算context向量">第五步和第六步-计算context向量</h4>
+<p>第五步和第六步是将每个单词的value vector使用权重概率向量进行加权求和，作为当前单词的self-attention表达（长度为value vector的长度为64，用了8个头，一起输出是64* 8 = 512）。</p>
+<figure>
+<img src="./transformer_self-attention-output.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>然后就结束了。</p>
+<h4 id="使用矩阵运算对self-attention整个过程总结">使用矩阵运算对self-attention整个过程总结</h4>
+<p>把刚刚的过程再加入一个维度，也就是从一个单词 变成 多个单词，计算他们各自的self-attention表示，</p>
+<p>下面用矩阵表达：</p>
+<p>第一步是计算 Query、 Key 和 Value 矩阵：</p>
+<ul>
+<li><p>我们将embeddings塞到一个矩阵x：行数表示单词个数，列表示embedding的长度</p></li>
+<li><p>权重矩阵(WQ、 WK、 WV）：行代表embedding向量的长度，列分别代表query空间，key空间，value空间的维度</p></li>
+<li><p>X分别和这几个矩阵相乘</p></li>
+</ul>
+<figure>
+<img src="./transformer_self-attention-matrix-calculation.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>第二步，利用第一步的结果来计算attention的输出，用一个矩阵计算来表达，简洁优雅</p>
+<figure>
+<img src="./transformer_self-attention-matrix-calculation-2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="多头怪兽">多头怪兽</h3>
+<p>论文通过增加"多头"注意机制进一步细化self-attention layer。 这在两个方面改善了self-attention层的表现:</p>
+<ol type="1">
+<li><p>它扩展了模型关注不同位置的能力。单头机制虽然会注意到其他单词，但是注意力还是 很有可能完全被当前自己的状态牵制。多头的话，相当于多审视几遍 这个注意力，减少完全 关注自己 情况发生的可能性。</p></li>
+<li><p>它给予attention层多个"表示子空间"。 正如我们接下来将看到的，通过多头，我们不仅有一组，而且有多组 query / key / value 权重矩阵(Transformer 使用八个头，因此我们最终为每个encoders / decoders设置了八组)。 这些集合中的每一个都是随机初始化的。</p>
+<p>训练完后，每组的三个矩阵，用于将embedding输入(或来自底层的编encoders/decoders向量)映射到表征子空间。</p></li>
+</ol>
+<figure>
+<img src="./transformer_attention_heads_qkv.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>类似上面提到的单头self-attention计算，我们现在只是用8个不同的权重矩阵算了8次，并且得到了8个不同的 z 矩阵</p>
+<figure>
+<img src="./transformer_attention_heads_z.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>后面怎么跟dense层进行衔接呢？</p>
+<ol type="1">
+<li>将这8个z矩阵进行列拼接（concat）</li>
+<li>拼接后的矩阵大小为m*512，丢入全连接层WO</li>
+</ol>
+<figure>
+<img src="./transformer_attention_heads_weight_matrix_o.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这几乎就是multi-headed self-attention的全部内容。把整个过程放在一个图中描述：</p>
+<figure>
+<img src="./transformer_multi-headed_self-attention-recap.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>回顾一下之前的例子，当我们对"it"进行encoding时，8个注意力头分别关注什么？</p>
+<p>先看2个头的情况：</p>
+<p>如下图所示，在对"it"进行encoding时，一个head（黄色）最关注"animal"上，而另一个head（绿色）最关注“tired”——某种意义上说，这个模型对"it"表达融合了"animal"和“tied”信息。</p>
+<figure>
+<img src="./transformer_self-attention_visualization_2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>再看8个头的情况：</p>
+<p>如下图所示，我们把8个头的信息都表达在图中，就会变得很难解释：</p>
+<figure>
+<img src="./transformer_self-attention_visualization_3.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="用位置编码positional-encoding表示序列的顺序">用位置编码（Positional Encoding）表示序列的顺序</h3>
+<p>到目前为止，我们的模型还没有考虑词的顺序关系。</p>
+<p>为了解决这个问题，transformer向每个输入embedding向量（x1）又加上一个位置编码向量（t1）。</p>
+<figure>
+<img src="./transformer_positional_encoding_vectors.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>假设embedding的维度是4，那么实际的位置编码看起来是这样的:</p>
+<figure>
+<img src="./transformer_positional_encoding_example.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这个模式意味什么？</p>
+<p>在下图中，每一行对应一个向量的位置编码。第一行表示第一个word。</p>
+<p>每行包含512个值，介于1和 -1之间。用颜色表示值的大小</p>
+<figure>
+<img src="./transformer_positional_encoding_large_example.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>可以看到所有的位置编码向量被分成了两半。 左半边的值是由一个函数(使用正弦函数)生成的，而右半边的值是由另一个函数(使用余弦函数)生成的。 然后将它们进行拼接（concate）。</p>
+<p>本文(3.5节)描述了位置编码<a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensor2tensor/blob/23bd23b9830059fbc349381b70d9429b5c40a139/tensor2tensor/layers/common_attention.py"><code>get_timing_signal_1d()</code></a>的公式。 这只是其中一种位置编码的方法。</p>
+<h3 id="残差连接和layer-normalization">残差连接和layer-normalization</h3>
+<p>encoder的架构中还有一个细节：在每个block中，self-attention和ffnn都有一个残差连接，然后接一个层标准化（layer-normalization）步骤。</p>
+<figure>
+<img src="./transformer_resideual_layer_norm.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>如果我们将残差连接和layer normalization用矩阵表示，就是下图：</p>
+<figure>
+<img src="./transformer_resideual_layer_norm_2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>decoder的sub-layers 也同样用到了add &amp; normalization的设计。</p>
+<p>下图是一个简化版的Transformer架构：由2个stacked encoder和2个stacked decoder组成。</p>
+<figure>
+<img src="./transformer_resideual_layer_norm_3.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="decoder">Decoder</h2>
+<p>现在来看看encoder和decoder是如何协作的：</p>
+<ul>
+<li>第一个的encoder的输入式原始的embedding；</li>
+<li>最后一个encoder输出是一个z向量，以及两个矩阵：keys matrix和value maxtrix</li>
+</ul>
+<figure>
+<img src="./transformer_decoding_1.gif" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>encoding阶段（phase）完成后，我们开始decoding阶段，decoding的每个step描述如下：</p>
+<ol type="1">
+<li>每个step 输出一个element的概率分布。</li>
+<li>从step1的概率分布中抽样出word（或者直接选择概率最大的word），作为decoder的输入。</li>
+<li>重复step1，直到产生结束符。</li>
+</ol>
+<p>decoder也会用到位置编码，下图的右半边</p>
+<figure>
+<img src="./transformer_decoding_2.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>decoder中的 self attention layers与encoder的运作方式略有不同:</p>
+<p>在decoder中，self-attention layer只能接触到输出序列中的前半部分。</p>
+<p>怎么做到呢？在softmax操作之前，masking序列后半部分(设为 -inf)</p>
+<p>"Encoder-Decoder Attention"层的工作原理和多头self-attention一样，只不过它的Queries矩阵来自下面的decoder的输出和stacked encoder中的Keys矩阵和Values矩阵 。</p>
+<h2 id="最后的dense层和softmax层">最后的dense层和Softmax层</h2>
+<p>stack decoders输出一个数值向量。 我们怎么把它变成一个词呢？</p>
+<p>这是最后的dense层+softmax在做的事情。</p>
+<p>dense层是一个简单的全连接神经网络，它将stack of decoders的输出映射为一个长多的logits向量（长度就是输出词汇表的大小）。</p>
+<p><img src="./transformer_decoder_output_softmax.gif" alt="img" /> 这个图从底部开始，生成一个vector作为decoder stack的输出。 然后它被转换成一个输出单词。</p>
+<h2 id="训练">训练</h2>
+<p>我们假设输出词汇表只包含六个单词("a"、"am"、"i"、"thanks"、"student"和"eos"("句子结束"的缩写))。</p>
+<blockquote>
+<p>模型的输出词汇表是在开始训练之前的预处理阶段创建的。一旦定义了输出词汇表，就可以使用 one-hot 编码 来表示词汇表中的每个单词。</p>
+</blockquote>
+<p>假设我们正在训练的目标是将"merci"翻译成"thanks"。</p>
+<p>也就是说，当我们输入“merci”的embedding向量，希望模型输出的概率分布向量中单词"thanks"的概率值最大。</p>
+<p>训练的过程：将模型输出与目标输出进行比较，然后使用反向传播方法调整模型的权重，使模型输出更接近目标输出。</p>
+<p>如何比较两种概率分布？ 可查看 <a target="_blank" rel="noopener" href="https://colah.github.io/posts/2015-09-Visual-Information/">cross-entropy</a>和 <a target="_blank" rel="noopener" href="https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained">Kullback-Leibler</a>. 。</p>
+<p>目标概率分布：</p>
+<figure>
+<img src="./output_target_probability_distributions.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>模型输出：</p>
+<figure>
+<img src="./transformer_output_trained_model_probability_distributions.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h1 id="bert模型">bert模型</h1>
+<figure>
+<img src="https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&amp;rect=0%2C0%2C2668%2C3126&amp;w=1980&amp;h=2320" alt="bert模型可视化" /><figcaption aria-hidden="true">bert模型可视化</figcaption>
+</figure>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/questions/184657/what-is-the-difference-between-off-policy-and-on-policy-learning">on-policy和off-policy的区别-stackoverflow</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/290530992">深度强化学习 在实际应用中少吗？难点在那里？</a></li>
-<li><a target="_blank" rel="noopener" href="https://weibo.com/titaniumviii?refer_flag=0000015010_&amp;from=feed&amp;loc=nickname">宋一松SYS</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/64526936">强化学习和在线学习的区别-zhihu</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a> paper, the Transformer blog post ( (<a target="_blank" rel="noopener" href="https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html">Transformer: A Novel Neural Network Architecture for Language Understanding</a>), and the ) ，<a target="_blank" rel="noopener" href="https://ai.googleblog.com/2017/06/accelerating-deep-learning-research.html">Tensor2Tensor announcement</a>.</li>
+<li>Watch <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=rBCqOTEfxvg">Łukasz Kaiser’s talk</a> walking through the model and its details</li>
+<li>Play with the <a target="_blank" rel="noopener" href="https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb">Jupyter Notebook provided as part of the Tensor2Tensor repo</a></li>
+<li>Explore the <a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensor2tensor">Tensor2Tensor repo</a>.</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03059">Depthwise Separable Convolutions for Neural Machine Translation</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.05137">One Model To Learn Them All</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1801.09797">Discrete Autoencoders for Sequence Models</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1801.10198">Generating Wikipedia by Summarizing Long Sequences</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1802.05751">Image Transformer</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1804.00247">Training Tips for the Transformer Model</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1803.02155">Self-Attention with Relative Position Representations</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1803.03382">Fast Decoding in Sequence Models using Discrete Latent Variables</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1804.04235">Adafactor: Adaptive Learning Rates with Sublinear Memory Cost</a></li>
 </ol>
 
       

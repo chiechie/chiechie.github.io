@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/10/reading_notes/computer/tcp-Handshake/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/10/reading_notes/computer/tcp-Handshake/" class="post-title-link" itemprop="url">tcp3次握手和4次挥手</a>
+            <a href="/2021/03/09/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/" class="post-title-link" itemprop="url">《the book of why》读书笔记-6</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-10 13:12:08" itemprop="dateCreated datePublished" datetime="2021-03-10T13:12:08+08:00">2021-03-10</time>
+              <time title="创建时间：2021-03-09 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-09T08:33:38+08:00">2021-03-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
+                <time title="修改时间：2021-07-07 11:46:24" itemprop="dateModified" datetime="2021-07-07T11:46:24+08:00">2021-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
                 </span>
             </span>
 
@@ -220,19 +220,74 @@
 
       
           <blockquote>
-<p>看一下原理介绍</p>
+<p>the book of why 的第6章-一些悖论</p>
 </blockquote>
-<ul>
-<li>TCP-FIN-WAIT1-客户端视角： 「客户端」 发出关闭指令后， 到服务器响应，间隔的时间。</li>
-<li>TCP-CLOSE-WAIT-服务端视角：「服务端」从接受”关闭指令“，到执行完成，间隔的时间。</li>
-<li>TCP-FIN-WAIT2-客户端视角： 「服务器」从 响应命令 到 完成命令，间隔的时间。</li>
-</ul>
+<h2 id="悖论1-蒙提-霍尔">悖论1-蒙提 霍尔</h2>
+<h3 id="背景">背景</h3>
+<p>一个竞猜游戏中，有三个用幕布遮住的们，其中有2个门后面是山羊，1个是汽车。有两种游戏规则，分别是：</p>
+<ol type="1">
+<li>观众先选择三个门中的一个，然后主持人从另外两个门中选择一个没有汽车的们打开，然后这个观众可以选择要不要换门？</li>
+<li>观众先选择三个门中的一个，然后主持人从另外两个门中随便选一个打开，然后这个观众可以选择要不要换门？</li>
+</ol>
+<p>第一种强况下，选择换门的话，赢到车车的概率是2/3， 第二种情况下，选择换门的话，赢到的车车的概率是1/2</p>
 <figure>
-<img src="dl-framework/img.png" alt="图1-握手原理" /><figcaption aria-hidden="true">图1-握手原理</figcaption>
+<img src="./img789.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
 </figure>
+<h3 id="悖论的原因">悖论的原因</h3>
+<ol type="1">
+<li><p>贝叶斯公式可以解释信息在非因果关系上的流动，也就是规则1，主持人选择了没有汽车的之后，第三个门的不确定性降低了（沿着门后有车的概率变大的方向），而整个空间的概率之和为1，所以第一个门有车的概率变小了。</p>
+<blockquote>
+<p>主持人的这个决策带来了系统的熵减，系统坍塌到2号门某个确定状态的子空间去了。</p>
+</blockquote></li>
+<li><p>为什么直觉上很难接受规则1的结论，反而会认为比赛的机制不公平？这个跟人类大脑结构有关系：</p>
+<ul>
+<li>大脑不擅长处理概率问题，</li>
+<li>大脑自发抵制非因果关系的信息传递，这个是贝叶斯式变量控制的产物。</li>
+<li>习惯将相关性等同于因果性</li>
+<li>大脑天生难以接受</li>
+</ul></li>
+</ol>
+<h2 id="悖论2-伯克森悖论">悖论2-伯克森悖论</h2>
+<ol type="1">
+<li>生物统计学家约瑟夫.伯克森在医院做实验时，观察到了一个现象：两种疾病本来在一般人群中毫无关联，但是在住院人群中却会观察到似是而非的相关性。</li>
+<li>医院样本实际上是一个冲撞模型，即，当一个人同时患了两种疾病时，一定会住院。</li>
+<li>所以，「医院样本」就好像一个经过精心挑选过的样本，体现出来的相关关系是控制了「住院」变量之后，疾病1和疾病2的伪相关性。 <img src="img7890.png" alt="img.png" /></li>
+<li>1956年，哲学家赖欣巴提出了一个猜想「共因原则」（common cause principle），他认为没有不含因果关系的相关关系，即，X和Y的相关不是偶然发生的，要么是一个变量导致另一个变量，要么是第三个变量，比如说出现在两个变量之前的Z变量，导致两者发生。</li>
+<li>设计一个抛硬币的实验就可以推翻「共因原则」：假设同时抛两枚硬币，抛100次，只记录其中至少又一枚硬币为正面的结果，实验结束，发现记录的75条记录中，发现只要硬币1反面，硬币2就是正面，是因为两个硬币互通消息了吗？不是的，是因为人为记录改变了测度空间。</li>
+<li>还有一个社会现象就是，在一些调查中发现，跟你约会的人中，哪些又魅力的人往往是混蛋。这个也是因为测度空间被你亲手改变了，因为长得丑的渣男最开始就被你过滤了。过滤之前，有魅力的渣男的概率是1/4，过滤之后有魅力的渣男概率是1/3。所以感觉这个比例增加了。</li>
+</ol>
+<h2 id="悖论3-辛普森悖论">悖论3-辛普森悖论</h2>
+<ol type="1">
+<li>辛普森逆转：一个叫辛普森的医生，在文献上发现了一种新药D，可以治疗心脏病。论文的实验数据显示，女性患者服用药物之后，心脏病发作比例升高；男性患者服用药物之后，心脏病发作比例也升高。但是，在整体人群上，心脏病发作比例却降低了，因此该药物也被归为BBG（BAD/BAD/GOOD）型药物。然而，实际上这种药物不存在，虽然说在数学上没有什么问题。 <img src="judea-pearl_the-book-of-why7/img.png" alt="辛普森" /></li>
+<li>对整体人群来说，正确的结论应该是什么呢？可以这么操作，先控制性别：
+<ul>
+<li>do（性别）=女性，计算女性服药之后心脏病发作比例的变化 r1。</li>
+<li>do（性别）=男性，计算男性服药之后心脏病发作比例的变化 r2。</li>
+<li>假设整体人群中，男女比例为1：1，那么可以推断出整体人群，服药之后，心脏比发作比例的变化为（r1+r2）/2</li>
+</ul></li>
+<li>辛普森悖论是因为混杂因子的存在。</li>
+<li>当我们考察两个变量的因果效应时：
+<ul>
+<li>如果存在混在因子，只能用分层数据计算因果效应，采用控制混杂因子的方式，case by case，计算每个混在因子取值的情况下，两个变量的因果关系，然后按照混杂因子每个取值的概率汇总，得到整体上，两个变量之间的因果关系。 <img src="./img_2.png" alt="img_2.png" /></li>
+<li>如果不存在混杂因子（有可能存在中介物），可以用聚合数据计算因果效应 <img src="./img_1.png" alt="中介物" /></li>
+</ul></li>
+<li>混杂因子存在的警告：根据聚合数据估计出来的因果效应大于，根据分层数据估计出来的因果效应。</li>
+</ol>
+<h2 id="关于悖论">关于悖论</h2>
+<ol type="1">
+<li><p>什么是悖论？绝大部分人深信不疑的两个信念之间的冲突。</p>
+<blockquote>
+<p>辛普森逆转并不算悖论，只是纠正了不懂数学的人，对"平均表现"的错误认识。</p>
+</blockquote></li>
+<li><p>如何解决悖论？</p>
+<ol type="1">
+<li>理解为什么大多数人会把它看成一个悖论？or大家对世界的直观看法到底在哪里存在重大缺陷？eg生理结构原因：大部分人不擅长处理概率问题；「过分擅长」处理因果问题</li>
+<li>如何纠正：刻意训练，完成大脑重塑。</li>
+</ol></li>
+</ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xy010902100449/article/details/48274635">TCP 握手和挥手图解（有限状态机）-CSDN博客</a></li>
+<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li>
 </ol>
 
       
@@ -253,7 +308,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/data_structure/graph/PC-algo/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/AI/machine_learning/deeplearning/dl-basic1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -267,7 +322,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/09/data_structure/graph/PC-algo/" class="post-title-link" itemprop="url">PC算法</a>
+            <a href="/2021/03/08/AI/machine_learning/deeplearning/dl-basic1/" class="post-title-link" itemprop="url">深度学习基础2 神经网络训练的一些小tricks</a>
         </h2>
 
         <div class="post-meta">
@@ -277,14 +332,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-09 10:06:00" itemprop="dateCreated datePublished" datetime="2021-03-09T10:06:00+08:00">2021-03-09</time>
+              <time title="创建时间：2021-03-08 10:17:31" itemprop="dateCreated datePublished" datetime="2021-03-08T10:17:31+08:00">2021-03-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-28 09:34:19" itemprop="dateModified" datetime="2021-06-28T09:34:19+08:00">2021-06-28</time>
+                <time title="修改时间：2021-06-18 14:18:48" itemprop="dateModified" datetime="2021-06-18T14:18:48+08:00">2021-06-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -292,7 +347,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
                 </span>
             </span>
 
@@ -307,74 +362,65 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="背景">背景</h1>
-<p>学术界有两种对因果关系建模的方法：因果图和结构方程。 对于构建因果图，目前使用的最多的是PC算法。</p>
-<p>通过观察N个独立同分布的样本，来挖掘随机变量的之间的因果关系。 每个样本都是来自M个随机变量的1组观测值。</p>
-<p>有点类似机器学习中，使用随机森林去学习特征的相关性。特征就类似因果图中的节点，也就是随机变量。</p>
-<h2 id="基本概念">基本概念</h2>
+          <h3 id="layer的输入输出">layer的输入输出</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model_m = Sequential()</span><br><span class="line">model_m.add(Reshape((TIME_PERIODS, num_sensors),</span><br><span class="line">                    input_shape=(input_shape,)))</span><br><span class="line">model_m.add(Conv1D(<span class="number">100</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>,</span><br><span class="line">                   input_shape=(TIME_PERIODS, num_sensors)))</span><br><span class="line">model_m.add(Conv1D(<span class="number">100</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model_m.add(MaxPooling1D(<span class="number">3</span>))</span><br><span class="line">model_m.add(Conv1D(<span class="number">160</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model_m.add(Conv1D(<span class="number">160</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model_m.add(GlobalAveragePooling1D())</span><br><span class="line">model_m.add(Dropout(<span class="number">0.5</span>))</span><br><span class="line">model_m.add(Dense(num_classes, activation=<span class="string">&#x27;softmax&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://miro.medium.com/max/2073/1*Y117iNR_CnBtBh8MWVtUDg.png" alt="Image for post" /><figcaption aria-hidden="true">Image for post</figcaption>
+</figure>
 <ul>
-<li>因果图：因果模型的一种表达方式，因果图是一个DAG， G=（V，E），对于每一个节点v，给定了他的双亲pa（v），v跟所有非后代都是独立的。</li>
-<li>冲撞点（collider）：一种V型结构的因果图. 两个因导致一个果。</li>
-<li>马尔科夫条件：可用来区分因果关系和相关关系，被用于生成依赖关系集合，构造因果图框架。</li>
-<li>faithfulness假设：可以用来保证，V中的所有变量的独立关系，都可以通过D-seperation表达。</li>
-<li>PC算法的两个假设：马尔可夫条件和faithfulness。</li>
-</ul>
-<p>D-分离</p>
-<blockquote>
-<p>D分离（D-Separation）是一种用来判断两个变量是否条件独立的图形化方法，相比于非图形化方法，更加直观，且计算简单。</p>
-</blockquote>
-<p>定义: 设 X，Y，Z 是 DAG 中不相交的节点集合， <span class="math inline">\(\pi\)</span> 为一条连接 X 中某节点到 Y 中某节点的路径 （不管方向）。 如果路径 <span class="math inline">\(\pi\)</span> 上某节点满足如下的条件：</p>
-<ol type="1">
-<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 V结构 , 即<span class="math inline">\(X \rightarrow w \leftarrow Y\)</span>，且 w 及其后代不在 Z中；(因为collider关系，w不可观测时,X,Y 相互独立)</li>
-<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 非V结构 ，且w在Z中 。</li>
-</ol>
-<p>则称Z阻断了路径<span class="math inline">\(\pi\)</span>。</p>
-<p>如果Z阻断了所有的X到Y的路径，就说Z集合D分离了X和Y，记作<span class="math inline">\((X \perp Y \mid Z)_{G}\)</span>.</p>
-<h1 id="pc算法-概览">PC算法-概览</h1>
-<p>PC算法输入N个m维的样本，输出一个有向无环图（DAG）， 举个例子，如果要构建一个故障因果图，一个指标就是图中的一个节点，每个时间点的观测值，就是一个样本。 如果给定一个变量集合，S，A和B独立，即 A ⊥ B|S，那么A和B两个节点就没有边。</p>
-<p>PC算法分为四步:</p>
-<ol type="1">
-<li>构建一个全连接图，M个随机变量就对应M个节点</li>
-<li>条件独立性检验：对于每一组相邻的节点，给定置信度<span class="math inline">\(\alpha\)</span>, 如果条件独立，那么两个变量之间的边就remove掉。 条件变量S的大小每次迭代递增，直到没有多余的变量可以被加入S</li>
-<li>基于v-structure确定边的方向.</li>
-<li>确定剩下的边的方向，传播.</li>
-</ol>
-<p>PC算法是一种发现因果关系的算法，在满足一定的假设的前提下（基于马尔科夫条件 和 D-separation），使用基于统计的方法（显著性检验-<span class="math inline">\(G^2\)</span>），推导出因果关系（代表因果关系的DAG）。实现流程包括三步:</p>
-<figure>
-<img src="pc-overview.png" alt="图1-PC算法" /><figcaption aria-hidden="true">图1-PC算法</figcaption>
-</figure>
-<h2 id="条件独立性检验">条件独立性检验</h2>
-<p>从全连接图开始，移走条件独立的边</p>
-<figure>
-<img src="pc1.png" alt="图2-确定框架" /><figcaption aria-hidden="true">图2-确定框架</figcaption>
-</figure>
-<p>Z从空集开始，不断增加</p>
-<p>具体来说，可以用指标<span class="math inline">\(G^2\)</span>（条件交叉熵）来检验给定Z时，X和Y的独立性，这里X，Y，Z是互斥的。</p>
-<p><span class="math inline">\(G^{2}=2 m C E(X, Y \mid Z)\)</span></p>
+<li>Conv1D：　model_m.add(Conv1D(100, 10, activation='relu', input_shape=(TIME_PERIODS, num_sensors)))：
 <ul>
-<li>m：样本大小</li>
-<li>$ C E(X, Y Z)$:给定Z时，X和Y的条件交叉熵，</li>
+<li>输入：(timesteps, num_series)</li>
+<li>输出：(timesteps - kerner_size+1, num_kernels)</li>
+<li>参数个数：(kernel_size * num_sensors + 1) * num_kernels</li>
+</ul></li>
+<li>MaxPooling1D: model_m.add(MaxPooling1D(3))
+<ul>
+<li>输入：(timesteps, num_series)</li>
+<li>输出：(timesteps//3, num_series)</li>
+<li>备注：书的页数（channel）没变，但是每页的字数变成了1/3</li>
+<li><img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" title="fig:" alt="Image for post" /></li>
+</ul></li>
+<li>GlobalAveragePooling1D：model_m.add(GlobalAveragePooling1D())
+<ul>
+<li>输入：　(timesteps, num_series) 或者（feature_values, feature_detectors）</li>
+<li>输出：　（１，num_series）或者（１, feature_detectors）</li>
+<li>备注： 书的页数（channel）没变，但是每页的字数变成了1</li>
+</ul></li>
+<li>Dropout: model_m.add(Dropout(0.5))： 形状不变 输入：（１，num_series） 输出：（１，num_series）</li>
+<li>LSTM：model.add(LSTM(units=128, dropout=0.5, return_sequences=True, input_shape=input_shape))
+<ul>
+<li>输入： (timestep, series)</li>
+<li>输出：(timestep, units)</li>
+</ul></li>
+<li>Dense： model_m.add(Dense(num_classes, activation='softmax'))
+<ul>
+<li>输入：（１，num_series）</li>
+<li>输出：（１，num_classes　×　２）</li>
+</ul></li>
+<li>BatchNormalization：
+<ul>
+<li>输入: (timestep, series)</li>
+<li>输出：(timestep, series)</li>
+<li>参数个数：４ * series (channel)
+<ul>
+<li><span class="math display">\[y=\gamma\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\beta \]</span></li>
+</ul></li>
+</ul></li>
 </ul>
-<blockquote>
-<p>显著性低于0.05，就说明条件分布和联合分布没有显著性差异，有因果关系 显著性超过0.05， 就说明条件分布和联合分布没有显著性差异，没有因果关系，是独立的。</p>
-</blockquote>
-<p>如果<span class="math inline">\(G^2\)</span>超过一个预先设定的显著性，比如0.05， 那么X和Y是条件独立的。</p>
-<p>PC算法使用一个全连接的无向图，然后使用<span class="math inline">\(G^2\)</span>描述条件独立性。</p>
-<h2 id="确定边的方向">确定边的方向</h2>
-<p>当DAG的架子搭起来了， 接下来的工作就是决定因果关系的方向了。这里使用到了D-seperation的方法。</p>
+<h2 id="layer如何设置初始化权重">layer如何设置初始化权重？</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.layers.Dense(<span class="number">10</span>, activation=<span class="string">&quot;relu&quot;</span>, kernel_initializer=<span class="string">&quot;he_normal&quot;</span>)</span><br></pre></td></tr></table></figure>
 <figure>
-<img src="pc2.png" alt="图3-确定方向" /><figcaption aria-hidden="true">图3-确定方向</figcaption>
+<img src="./img.png" alt="3种初始化方法" /><figcaption aria-hidden="true">3种初始化方法</figcaption>
 </figure>
-<h2 id="传播方向">传播方向</h2>
-<figure>
-<img src="pc3.png" alt="图4-传播方向" /><figcaption aria-hidden="true">图4-传播方向</figcaption>
-</figure>
-<h1 id="参考">参考</h1>
+<h2 id="训练过程太长">训练过程太长？</h2>
+<p>保存训练结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 设置loss，优化算法</span></span><br><span class="line">model.<span class="built_in">compile</span>(loss=..., optimizer=...,</span><br><span class="line">              metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br><span class="line"></span><br><span class="line">EPOCHS = <span class="number">10</span></span><br><span class="line">checkpoint_filepath = <span class="string">&#x27;/tmp/checkpoint&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 定义回调函数</span></span><br><span class="line">model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(</span><br><span class="line">    filepath=checkpoint_filepath,</span><br><span class="line">    save_weights_only=<span class="literal">True</span>,</span><br><span class="line">    monitor=<span class="string">&#x27;val_accuracy&#x27;</span>,</span><br><span class="line">    mode=<span class="string">&#x27;max&#x27;</span>,</span><br><span class="line">    save_best_only=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model weights are saved at the end of every epoch, if it&#x27;s the best seen</span></span><br><span class="line"><span class="comment"># so far.</span></span><br><span class="line"><span class="comment"># 3.在fit中传入回调函数，模型会一边训练一边存储</span></span><br><span class="line">model.fit(epochs=EPOCHS, callbacks=[model_checkpoint_callback])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 从缓存路径中加载模型</span></span><br><span class="line"><span class="comment"># The model weights (that are considered the best) are loaded into the model.</span></span><br><span class="line">model.load_weights(checkpoint_filepath)</span><br></pre></td></tr></table></figure>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=o2A61bJ0UCw">pc算法-youtube</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">因果图的基本概念-知乎</a></li>
-<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">Page,3-paper</a></li>
+<li>Hands-On Machine Learning with Scikit-Learn and TensorFlow, P334</li>
+<li><a target="_blank" rel="noopener" href="https://keras.io/api/callbacks/model_checkpoint/">keras-model_checkpoint-官网文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://keras.io/api/layers/merging_layers/concatenate/">concatenate</a></li>
 </ol>
 
       

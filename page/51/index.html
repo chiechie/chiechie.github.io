@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reading_notes/zhexue/taleb-blackswan/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/17/AI/machine_learning/tree_model/trees_3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/reading_notes/zhexue/taleb-blackswan/" class="post-title-link" itemprop="url">黑天鹅</a>
+            <a href="/2021/04/17/AI/machine_learning/tree_model/trees_3/" class="post-title-link" itemprop="url">树模型3 RandomForest，Adaboost和GBDT</a>
         </h2>
 
         <div class="post-meta">
@@ -189,138 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-18 19:55:49" itemprop="dateCreated datePublished" datetime="2021-04-18T19:55:49+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-17 10:39:45" itemprop="dateCreated datePublished" datetime="2021-04-17T10:39:45+08:00">2021-04-17</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-10 17:29:43" itemprop="dateModified" datetime="2021-06-10T17:29:43+08:00">2021-06-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="序言">序言</h1>
-<ul>
-<li>黑天鹅举例子
-<ul>
-<li>能带来收益的：风险投资，科技发现</li>
-<li>能带来损失的：金融危机，失业</li>
-</ul></li>
-<li>关于学习，人性又一个弱点：习惯学习精确的东西，而不是从整体上把握
-<ul>
-<li>【马其诺防线的故事】第一次世界大战之后，为了避免德国人再次入侵，法国人沿德国人曾经入侵的路线修建了一条防御工事，而希特勒（几乎）毫不费力地绕过了它。</li>
-<li>问题产生于我们的思维结构：我们不学习规律，而是学习事实，而且只学习事实。。我们似乎不太善于认识到我们的超规律（即我们倾向于不学习规律的规律）。我们蔑视抽象的东西——疯狂地蔑视。</li>
-</ul></li>
-<li>这个问题为什么很重要？
-<ul>
-<li>这种直觉的方法论，对于现代复杂且越来越具循环性的环境来说是非常不切实际的。</li>
-</ul></li>
-<li>我们的生物基因决定了，我们其实不擅长思考。
-<ul>
-<li>我们的头脑似乎不是用来思考和内省的，远古时期，我进行反常规内省和努力思考的祖先会被老虎吃掉，而他不爱思考但身体反应迅速的表亲早已跑开躲了起来。</li>
-</ul></li>
-<li>因为钟形曲线忽（高斯曲线）略大的离差，无法解释它们，但还要让我们相信不确定性是可以控制的，我在本书中戏称它为“智力大骗局”。</li>
-<li>【关于模型】模型和结构并不永远是错的，它们只错在一些具体的运用上。困难在于你不可能事前知道哪里会错（而只能事后知道），也不可能知道错误会导致严重后果。这些模型就像某些可能有效，但同时也可能具有非常严重的副作用的药品。</li>
-<li>教室中的人从没有面对过在不确定性条件下进行决策的真实情况，意识不到什么是重要的，什么是不重要的，即使他们是关于不确定性问题的学者。我所说的不确定性实践，可以是当海盗、做商品投机、职业赌博、在黑手党的某个分部效力，或者是简单的持续创业</li>
-</ul>
-<h1 id="第一部分-极端斯坦-与-黑天鹅现象">第一部分 极端斯坦 与 黑天鹅现象</h1>
-<h2 id="第一章-自我欺骗的人类">第一章 自我欺骗的人类</h2>
-<ul>
-<li>面对历史，人类的思想会犯三个毛病：
-<ul>
-<li>第一宠迷雾：我们以为我们生活的这个世界比他实际上更加可理解，可解释，可预测</li>
-</ul></li>
-</ul>
-<h2 id="第三章-极端斯坦与平均斯坦">第三章 极端斯坦与平均斯坦</h2>
-<ul>
-<li>关于职业选择，有两类职业：
-<ul>
-<li>“一劳永逸型”：
-<ul>
-<li>录音师和电影演员也是一样：他们会让电影院的音效工程师调好播放器，而不必在每一次播放电影时都出现。</li>
-</ul></li>
-<li>“苦力活”
-<ul>
-<li>面包师必须为每一位新客户——烤出面包。</li>
-</ul></li>
-<li>假如我必须给出建议的话，我会建议选择一个收入不具有突破性的职业---面包师！收入具有突破性的职业只有在你成功的时候对你是有利的。这样的职业竞争更激烈，导致更大的不平均和不确定性，在努力和回报之间存在巨大差异，因为少数人获得蛋糕的大部分，其他人可能什么也得不到，而这怪不了别人</li>
-</ul></li>
-<li>可以这样陈述平均斯坦的最高法则：当你的样本量足够大时，任何个例都不会对整体产生重大影响。最大的观察值虽然令人吃惊，但对整体而言最终微不足道。</li>
-<li></li>
-</ul>
-<h1 id="第三部分-极端斯坦的灰天鹅">第三部分 极端斯坦的灰天鹅</h1>
-<h2 id="第十八章-骗子的不确定性">第十八章 骗子的不确定性</h2>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/timeseries/DeepAR_2_practice/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/timeseries/DeepAR_2_practice/" class="post-title-link" itemprop="url">从DeepAR谈论paper到工程化的距离</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-18 11:56:59" itemprop="dateCreated datePublished" datetime="2021-04-18T11:56:59+08:00">2021-04-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-11 09:47:17" itemprop="dateModified" datetime="2021-06-11T09:47:17+08:00">2021-06-11</time>
+                <time title="修改时间：2021-07-07 11:42:36" itemprop="dateModified" datetime="2021-07-07T11:42:36+08:00">2021-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -343,62 +219,268 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="deepar探索">DeepAR探索</h2>
-<p>以DeepAR为例，回忆下我们从探索到落地的过程：</p>
+          <blockquote>
+<p>boosting tree的代表是gbdt，以及一系列变形xgboost,catboost,下面重点介绍一下xgboost</p>
+</blockquote>
+<h2 id="何为bagging和boosting">何为bagging和boosting？</h2>
+<ol type="1">
+<li>Bagging是一种数据采样的方法，Blending是一种模型混合的方法.</li>
+<li>Blending的方法有几个：投票/线性blending/stacking。
 <ul>
-<li>Student： 网上找到了pytorch版本的deepAR版（发于2017年4月），训练过程很慢要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？</li>
-<li>Teacher： 生产环境，这种性能实在不能接受。既然amazon将DeepAR作为时序预测场景的主推算法方案，这种性能肯定拿不出手，后续肯定做了的优化，去查一下近3年的amazon关于DeepAR相关的资料，重点看看有没有更优秀的实现方案。</li>
-<li>Student：找到了--基于MXNET的gluon-ts（于2019年6月发表），mxnet在electricty上的训练和预测时间大概是10min左右。</li>
-<li>Teacher： nice！</li>
+<li>如果每个base estimator一样重要，就对他们采用uniform的aggregation方式。</li>
+<li>如果有的base estimator特别重要，可以将estimator当成特征转换器使用，然后将不同estimator的输出做一个线性映射，得到最终的结果，这个也叫线性blending。</li>
+<li>如果想让这个aggregation更加复杂，也就是说，想要这个模型实现，在不同的condition下，不同的estimator发挥的重要性不一样，这个时候就要基于不同estimator的输出构建一个非线性映射。这个也叫stacking</li>
+</ul></li>
+<li>投票追求的是公平稳定，其他两种追求高效。</li>
+<li>也可以一边构建base estimator，一边决定模型blending的方法。
+<ul>
+<li>uniform aggregation的代表是Bagging Tree/随机森林</li>
+<li>AdaBoost通过改变样本权重的方式得到不一样的base estimator，一边根据他们的表现决定给每个estimator多少票。</li>
+<li>在不同条件下找到最优的base estimator的代表算法是决策树，回想一下，在决策树里面，不同的路径使用的是不同的叶子（在决策树的场景中，一个叶子就是一个base estimator）。</li>
+<li>gradient boost是一种线性blending的方法，只不过，构建新的base estimator时，不是像AdaBoost那样重新对样本赋予权重，而是，直接去最小化残差，然后根据学到的结果，赋予当前base estimator一个权重。</li>
+<li>boosting-like的算法最受到欢迎，即aAdaBoost和GradientBoost</li>
 </ul>
-<p>最开始把gluon-ts实现的DeepAR算法当黑盒用的时候，发现效果很神奇，不调参，换不同数据进去效果都还挺好，周期性和趋势性都还能学到。</p>
-<p>但是就觉得很奇怪，按照自己构建RNN的经验，调参就要反反复复好多次，最后效果还不一定好。使用gluon-TS的代码我没有调参的，并且默认的网络结构很简单 不太可能过拟合.</p>
-<p>看了源代码之后，有一个很大的感受就是，<strong>完成论文demo和完成一个业界可用方案，两者的工作量 ，可能是0到1再到100的距离。</strong></p>
-<p>按照paper所说，整个网络结构非常之简单，1层rnn + 1层 dense层（输出分布参数），构成2层rnn，大概十几行代码。 但是，<strong>真正大量的代码都在做预处理以及 模型训练的一些小trick。 这些小trick，对提升模型效果非常有帮助，但是paper里面是没有的，应该随是工程团队总结出的最佳实践</strong>。</p>
+<img src="img_2.png" title="fig:" alt="img_2.png" /></li>
+<li>为什么对模型做aggregation之后，效果变好了？相当于对特征做了非线性变换，整体表达能力更强；多个estimator求共识，相当于做了正则化，模型效果更稳定。</li>
+<li>不同的blending方法中，有的方法解决overfitting，有的适合解决underfitting。</li>
+<li>boosting是多个base estimtor进行aggregate的一种方法，并且每个estimator都有一个自己的权重，GBDT和AdaBoosting要解决的就是一个问题。 boosting相对于uniform的方式，多了n个待估参数，复杂度更高，如何求解这个高维的优化问题？衍生出了两种算法，第一种是像adaboost，使用一个reweighted的样本去构建一个新的estimator，并使用其预测准确率作为权重。 GBDT则是基于前面所有的estimator的学习成果，做增量学习。</li>
+</ol>
+<h2 id="随机森林adaboost和-gbdt">随机森林，Adaboost和 GBDT</h2>
+<h3 id="随机森林">随机森林</h3>
+<ol type="1">
+<li>Bagging是什么？通过bootstrap的方式抽样得到多分样本。Bagging的特点是，可以降低整体的模型预测的不稳定性，通过让多个base estimator投票或者取均值的方式。</li>
+<li>decision tree非常不稳定，训练数据稍微有一点变化，分支条件就会改变，从而整个树都长得不一样了。</li>
+<li>Bagging + decision tree综合起来构建随机森林。 <img src="img_1.png" alt="img_1.png" /></li>
+<li>Bagging的部分可以并行化，从而可以更加有效地处理更大的训练数据。</li>
+<li>构建base estimator时，除了对样本采样，还可以对特征采样，随机森林的原始论文作者建议，在构建cart的每个分支条件时，都随机采样一个特征子空间，在这个子空间中找一个最优的分割点。</li>
+<li>rf的作者还建议，可个对特征作随机组合，即构建投影矩阵，将原始的训练数据映射到一个低维的特征空间。</li>
+</ol>
+<h3 id="adaboost">Adaboost</h3>
+<figure>
+<img src="./img.png" alt="adaboost" /><figcaption aria-hidden="true">adaboost</figcaption>
+</figure>
+<p>AdaBoost通过改变样本权重的方式得到不一样的base estimator，一边根据他们的表现决定给每个estimator多少票。boosting中有三个重要的参数：</p>
+<h3 id="gbdt">GBDT</h3>
+<ol type="1">
+<li><p>GBDT是将一个优化问题，拆解成一系列子优化问题，每个子优化问题要解决的问题是，在当前学习成果的基础上查漏补缺，从而更加逼近target variable。即当前的base estimator的优化目标是最小化target和截止当前的预测值之间的差，也叫residual。 <img src="img_4.png" alt="img_4.png" /> h是当前的base estimator，<span class="math inline">\(\eta\)</span>表示权重</p></li>
+<li><p>怎么求这个优化问题？先求里层的优化问题，再求外层的优化问题。里面的优化问题是将err对当前prediction做一阶泰勒展开，其中一阶项（h，待学习的目标）的系数就是error相对当前prediction的一偏导数，也就是梯度。这里有一个问题，如果我已经知道要做regression，也就是当前的目标函数是关于h的二次函数，我直接求最优解不就好了，即令损失函数关于h的导数为0？其实是可以的，但是GBDT的野心很大，想推导出，任意形式的err对应的最优解h，随意下面的一阶近似方法是更具备通用性的。（想象一下如果err是absolute loss或者像交叉熵这种非convex，就不适用了。btw，xgboost是使用err的二阶泰勒展开去作为err的近似）</p>
+<blockquote>
+<p>回忆一下一阶泰勒展开： <span class="math display">\[f(x + \Delta x) = f(x) + \Delta x \partial f_x \]</span></p>
+</blockquote>
+<figure>
+<img src="img_5.png" alt="img_5.png" /><figcaption aria-hidden="true">img_5.png</figcaption>
+</figure></li>
+<li><p>里层的优化问题求解方法类似拉格朗日乘子法，先将h的大小限制到一定的范围内。然后经过各种变形之后，发现直接拟合residual就好。 <img src="img_7.png" alt="img_7.png" /></p></li>
+<li><p>如何使用GBDT做回归？将上面的error 设置为squared loss。</p></li>
+<li><p>adaboost是要根据不同样本的权重来找一一个拟合的最好的小g; GBDT是找一个能拟合当前残差最好的小g。</p></li>
+</ol>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ATM3sH0D45s&amp;list=RDCMUC9Wi1Ias8t4u1OosYnHhi0Q&amp;index=9">Random Forest Algorithm-Hsuan-Tien Lin</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~htlin/mooc/doc/208_present.pdf">Adaptive Boosting linxuantian</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
+<li><a target="_blank" rel="noopener" href="https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/6062a083acbfe82c7195b27d/1617076404560/ISLR%2BSeventh%2BPrinting.pdf">An Introduction to Statistical Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=F_EuNXhS9js&amp;list=RDCMUC9Wi1Ias8t4u1OosYnHhi0Q&amp;index=4">Gradient Boosted Decision Tree :: Gradient Boosting</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=3T1mdvzRAF0&amp;list=RDCMUC9Wi1Ias8t4u1OosYnHhi0Q&amp;index=6">Blending and Bagging :: Bagging (Bootstrap Aggregation)- Tien Lin</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/16/AI/machine_learning/tree_model/trees_2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/16/AI/machine_learning/tree_model/trees_2/" class="post-title-link" itemprop="url">树模型2 决策树介绍</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-16 20:56:02" itemprop="dateCreated datePublished" datetime="2021-04-16T20:56:02+08:00">2021-04-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-07 11:42:36" itemprop="dateModified" datetime="2021-07-07T11:42:36+08:00">2021-07-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="总结">总结</h1>
+<h2 id="决策树">决策树</h2>
+<ol type="1">
+<li>决策树是一个预测算法，是使用贪婪的递归的方法来找到最优的预测结构。</li>
+<li>构建一个决策树需要确定分支条件以及每个分支的预测值。构建分支条件即把特征空间划分为多个distinct and non-overlapping regions,<span class="math inline">\(R_1,\dots,R_J\)</span>；第二步，对每个region定义一个response variable，作为该region的值。</li>
+<li>构建好了一个决策树，想要使用决策树做预测，步骤也分为两步：第一步是按照分支条件将新样本路由到指定的叶子结点，第二步将叶子结点对应的responsible varible作为该样本的预测值。</li>
+<li>怎么得到分支条件呢？有三类构建决策树的算法：ID3，C4.5和cart。前两者可以构造多叉树，cart只能构造二叉树。 因为cart效果最好，现在通常就用它（例如sklean）。</li>
+<li>ID3，C4.5和cart三类算法的大致思路一样，分为两步：第一步是将feature space切成多个boxes。为什么不是切成多个球？因为球没法填充整个feature space.</li>
+<li>如何找到最优的切割boxes的方式，如果去遍历每一组partition of feature space，计算量太大了，通常采用greedy的方法。</li>
+<li>构建决策树的过程中需要确定的参数：分支的个数，条件分支的条件，终止条件，叶子结点的值。</li>
+</ol>
+<h2 id="决策树算法-cart">决策树算法-CART</h2>
+<ol type="1">
+<li>cart的特色是构建的一个binary tree，每次分支条件都是将一个空间以分为2，变成2个子空间，每个叶子结点的值，即response variable都是一个常数，是这么的到的：</li>
+</ol>
 <ul>
-<li>best practice1: 把每个样本（历史依赖）的scale 取对数，放入样本。 （因为所有的lags项在归一化之后已经丢失了scale信息，为了避免这个信息的丢失，还是把log scale 放入特征，用于区别不同的曲线的模式）</li>
-<li>best practice2: 在rnn中，每一层rnn后都接了一个residual和一个dropout。（原文没有提到）</li>
-<li>best practice3: 为了学习到数据的周期性模式，除了一定要有的context_length，代码还会跳着取lag , 类似空洞卷积。这些周期性的lag项，是被硬编码在代码里面的，比如年/月/日的周期性。</li>
+<li>如果target var是一个连续变量，求落入该region的训练集的response均值，即<span class="math inline">\({y_n}\)</span>的均值，其实这个均值对应的是最小化suqared error。 构建一个决策树，主要是要确定partition，或者说分支条件，以及每个落入每个partition（或者说）中对应的预测值。</li>
+<li>如果target var是一个离散变量，求众数对应的那个类别。</li>
 </ul>
-<p>（我甚至怀疑论文的作者都不知道，因为作者自己写了一个pytorch版本，没有见到相关的处理，并且训练时长是gluon-TS的100倍以上）</p>
-<h2 id="对于aiops建设的启发">对于AIOps建设的启发</h2>
-<p>对于根因分析，日志关联等大部分场景，业界没有可参考的工具，转而求助学术界，可参考论文以及kaggle比赛等。</p>
-<p>但是要注意，这些方案只是demo，没有在工业界的数据和真实需求上验证过，实际上真实业务环境会比做实验要复杂得多。</p>
-<p>从调研demo到完成一个业务上高可用的方案，有大量的优化工作。评估时间的时候，需要预留buffer，来验证和调优，可能需要迭代多轮，有不确定性。</p>
-<h2 id="从paper到工程落地的距离">从paper到工程落地的距离？</h2>
+<ol start="2" type="1">
+<li>怎么确定分支条件？找一个decision stump，使用纯度（purify）来衡量分支的质量，如果左边的data set 和右边的dataset 纯度 都很高，（其中的大部分样本的label很接近），就说切分的很好。对应到计算上面，就是找一个让平均不纯度最小的切分方式（decision stump）。</li>
+<li>如何确定分支/切割的不纯度？
 <ul>
-<li>实验室方案不能直接搬到 真实业务的 几个原因：
-<ul>
-<li>样本数据不一致：
-<ul>
-<li>实验室的数据有一些 标记质量差，以及标记的标准不一致。</li>
-<li>实验室的数据模式单一，很多是模拟生成的，没法模拟出真实业务上复杂的模式</li>
-<li>真实环境中数据质量差：历史数据不够，缺失值多，有用特征缺失。</li>
-<li>实验室数据格式 千奇百怪，要适当预处理才能给 业务使用</li>
+<li>如果target var是一个连续变量，使用squared loss来描述impurity，（跟样本子集的均值比），</li>
+<li>如果target var是一个离散变量，使用不一致样本比例来描述impurity，（跟样本子集的众数币），多分类的时候，不纯度常用giniindex</li>
+<li>如果是多分类，经常使用Gini index来刻画不纯度。</li>
 </ul></li>
-<li>评估指标不一致
+<li>什么时候会停下来？当满足下面的条件时，也叫fully grown tree：
 <ul>
-<li>实验室只能基于已有的封闭数据集，业务上的指标是开放式的跟业务运营相关的</li>
+<li>落入某个分支的样本的target都一样，不纯度取到最小了，</li>
+<li>落入某个分支的样本的x都一样，没有decision stupms了。</li>
 </ul></li>
-<li>效果不一致
+<li>为何要剪枝(pruning)? a very bushy tree has got high variances,ie, over-fitting the data</li>
+</ol>
+<h1 id="附录">附录</h1>
+<h2 id="基本概念">基本概念</h2>
 <ul>
-<li>实验 中效果好的方案 到真实环境中 效果不好</li>
-</ul></li>
-<li>性能要求不一致：
+<li>信息增益: 衡量切分前后，样本的秩序的提升or混乱程度的下降。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IG = information before splitting (parent) — information after splitting (children)</span><br></pre></td></tr></table></figure>
 <ul>
-<li>实验室方案运行效率到不到真实环境的标准</li>
-<li>eg，kaggle比赛常用模型ensenmble方案，在工业界就很少会用，计算效率的问题å</li>
-</ul></li>
-</ul></li>
-<li>正常的开发流程是：
+<li>具体的，有两个衡量混乱程度的指标：Entropy 和 Gini Impurity
 <ul>
-<li>理解论文原理</li>
-<li>复现论文：开发demo，</li>
-<li>工程优化（beta）：初步上线，demo性能优化，覆盖现实中可能的异常</li>
-<li>稳定上线（正式）： 在真实环境上测试一段时间。</li>
-<li>产品化：给其他无背景的人用</li>
+<li><strong>gini index</strong>: <span class="math display">\[I_{G}=1-\sum_{j=1}^{c} p_{j}^{2}\]</span>
+<ul>
+<li><span class="math inline">\(p_j\)</span>: 落入该节点的样本中，第j类样本的占比</li>
+<li>如果所有样本都属于某一类c，gini系数最小，为0。</li>
+</ul></li>
+<li>entropy（熵）：<span class="math display">\[I_{H}=-\sum_{j=1}^{c} p_{j} \log _{2}\left(p_{j}\right)\]</span>
+<ul>
+<li><span class="math inline">\(p_j\)</span>: 落入该节点的样本中，第j类样本的占比</li>
+<li>如果所有样本都属于某一类c，熵最小，为0。</li>
+</ul></li>
 </ul></li>
 </ul>
+<h2 id="决策树算法-id3">决策树算法-ID3</h2>
+<p>ID3, was the first of three Decision Tree implementations developed by Ross Quinlan</p>
+<p>It builds a decision tree for the given data in a top-down fashion. each node of the tree, one feature is tested based on 最大熵降, and the results are used to split the sample set. This process is recursively done until the set in a given sub-tree is homogeneous (i.e. it contains samples belonging to the same category). The ID3 algorithm uses a greedy search.</p>
+<p>Disadvantages:</p>
+<ul>
+<li>Data may be over-fitted or over-classified, if a small sample is tested.</li>
+<li>Only one attribute at a time is tested for making a decision.</li>
+<li>Does not handle numeric attributes and missing values.</li>
+</ul>
+<h2 id="决策树算法-c4.5">决策树算法-C4.5</h2>
+<p>Improved version on ID 3 . The new features (versus ID3) are:</p>
+<ul>
+<li><ol type="i">
+<li>accepts both continuous and discrete features;</li>
+</ol></li>
+<li><ol start="2" type="i">
+<li>handles incomplete data points;</li>
+</ol></li>
+<li><ol start="3" type="i">
+<li>solves over-fitting problem by (very clever) bottom-up technique usually known as "pruning"; and</li>
+</ol></li>
+<li><ol start="4" type="i">
+<li>different weights can be applied the features that comprise the training data.</li>
+</ol></li>
+</ul>
+<p>Disadvantages</p>
+<ul>
+<li>Over fitting happens when model picks up data with uncommon features value, especially when data is noisy.</li>
+</ul>
+<h2 id="决策树算法-cart-1">决策树算法-CART</h2>
+<p>ID3 和 C4.5是使用基于Entropy-最大信息增益的特征作为节点。</p>
+<p>CART代表分类树和回归树，使用基于entropy和ginix index计算信息增益。</p>
+<p>Disadvantages</p>
+<ul>
+<li>It can split on only one variable</li>
+<li>Trees formed may be unstable</li>
+</ul>
+<p>cart的原理就是，构造一颗大树<span class="math inline">\(T_0\)</span>，然后去剪枝（也叫做cost complexity pruning/the weakest link pruning）, 下面以regression tree 和 classification tree举例说明</p>
+<blockquote>
+<p>如果response var是imbalance, 全部预测为label占比更多的类，怎么办？</p>
+</blockquote>
+<h3 id="regression-tree">regression tree</h3>
+<p>regression tree的cost function 是RSS加上正则项</p>
+<p><span class="math display">\[\min\limits_{T\in T_0} \sum\limits_{m=1}^{|T|}\sum\limits_{x_i\in R_m}(y_i - \hat y_{R_m})^2+\alpha|T|\]</span></p>
+<ul>
+<li><span class="math inline">\(|T|\)</span>是叶子节点的个数。</li>
+<li>m表示第m个叶子</li>
+<li><span class="math inline">\(R_m\)</span>表示第m个partition region</li>
+<li><span class="math inline">\(y_i\)</span>表示第i个样本的真实值</li>
+<li><span class="math inline">\(y_{R_m}\)</span>表示第m个partition region的预测值</li>
+</ul>
+<p>可以使用一个递归的方法来构建一个决策树，主要是要确定partition，或者说分支条件，以及每个落入每个partition（或者说）中对应的预测值。</p>
+<figure>
+<img src="./img.png" alt="regression tree 构造流程" /><figcaption aria-hidden="true">regression tree 构造流程</figcaption>
+</figure>
+<h3 id="classification-tree">classification tree</h3>
+<p>classification tree切分节点时，参考信息增益，其他流程和构建回归树是一样的</p>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=s9Um2O7N7YM">决策树算法-linxuantian</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~htlin/mooc/doc/209_present.pdf">决策树-linxuantian</a></li>
+<li><a target="_blank" rel="noopener" href="https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/6062a083acbfe82c7195b27d/1617076404560/ISLR%2BSeventh%2BPrinting.pdf">An Introduction to Statistical Learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.quora.com/Why-is-entropy-used-instead-of-the-Gini-index">Why-is-entropy-used-instead-of-the-Gini-index</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dozercodes/DecisionTree">github-id3的实现1</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/SebastianMantey/Decision-Tree-from-Scratch/blob/master/notebooks/decision_tree_functions.py">github-id3的实现2</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Information_gain_in_decision_trees">wiki-Information_gain_in_decision_trees</a></li>
+<li><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/tree/plot_unveil_tree_structure.html#sphx-glr-auto-examples-tree-plot-unveil-tree-structure-py">sklearn-decisiontree</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.quora.com/What-are-the-differences-between-ID3-C4-5-and-CART">quora-ID3-C4-5-and-CART的区别？</a></li>
+</ol>
 
       
     </div>

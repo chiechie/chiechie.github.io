@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reading_notes/computer/information-theory/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/15/AI/machine_learning/tree_model/trees_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/reading_notes/computer/information-theory/" class="post-title-link" itemprop="url">信息论</a>
+            <a href="/2021/04/15/AI/machine_learning/tree_model/trees_1/" class="post-title-link" itemprop="url">树模型1 常用树模型介绍</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,99 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-18 11:19:24" itemprop="dateCreated datePublished" datetime="2021-04-18T11:19:24+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-15 14:59:29" itemprop="dateCreated datePublished" datetime="2021-04-15T14:59:29+08:00">2021-04-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
+                <time title="修改时间：2021-07-07 11:42:36" itemprop="dateModified" datetime="2021-07-07T11:42:36+08:00">2021-07-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="树模型">树模型</h2>
+<p>最基本的树模型是cart，优势在于可解释性，但是跟其他的监督学习方法相比，准确性并没有多大的优势。 但是，通过将多棵树以不同的方式组合，会得到很好的准确率，如bagging，random foreast和boosting等等方法。</p>
+<p>回一下机器学习的三个要素： 1. 假设函数的空间： 2. 学习策略or目标函数 3. 优化算法</p>
+<p>bootstrap是统计学中一种抽样的方法，为了获得样本方差或者均值，采取多次有放回的抽样，获得统计量。 针对单个决策树方差过大的问题。 bagging trees 利用bootstrap的思想，提取B份独立的样本集，分别估计出预测值<span class="math inline">\(\hat{f}^{1}(x), \hat{f}^{2}(x), \ldots, \hat{f}^{B}(x)\)</span> ，然后将结果取平均，就可以得到一个方差更小的预测模型，通过多次实验获得多个regression tree或者classification tree，对每一个input，会产生多个输出，regression tree的输出是K个树的输出取average。classification tree是采用投票的方法，大多数相同的那一类就是输出的那一类 。 bagging involves creating multiple copies of the original training data set using the bootstrap, fitting a separate decision tree to each copy, and then combining all of the trees in order to create a single predictive model.</p>
+<p>random forest是bagging tree的加强版本，因为他考虑到了tree之间的de correlates，使得组合后结果的variance更小。构造树过程如下：consider 每一个split的时候，会从p个predictors中<strong>随机</strong>的挑<span class="math inline">\(m = \sqrt p\)</span>）个作为split candidate，</p>
+<p>boosting是另外一种提升决策树效果的方法，Boosting works in a similar way,也是杨原始样本复制n份，然后构建n个模型，跟bagging tree不一样的地方在于，trees are grown sequentially: each tree is grown using information from previously grown trees. Boosting does not involve bootstrap sampling; instead each tree is fit on a modified version of the original data set.</p>
+<p><img src="trees_1/img.png" alt="img.png" /> xgboost是一种boosting tree的一种，其他的还是有gbdt，catboost</p>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=2xudPOBz-vs">youtube-gbdt</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/14/reading_notes/reality/nava-joerogan-show/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/14/reading_notes/reality/nava-joerogan-show/" class="post-title-link" itemprop="url">joerogan访谈nava</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-14 18:27:20" itemprop="dateCreated datePublished" datetime="2021-04-14T18:27:20+08:00">2021-04-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-06 09:40:45" itemprop="dateModified" datetime="2021-05-06T09:40:45+08:00">2021-05-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,120 +304,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="交叉熵">交叉熵</h2>
-<p>交叉熵表示，拥有信念Q的人，在观察到真实分布P后，他的惊讶程度。</p>
-<p>这个绝对惊讶程度 可以拆解为 一个baseline（真实分布P的熵） + 一个相对差距（P和Q的距离）</p>
-<figure>
-<img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
-</figure>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#cross-entropy">交叉熵</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/meditation/dl-framework/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/meditation/dl-framework/" class="post-title-link" itemprop="url">模型推断的框架</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-18 08:53:17" itemprop="dateCreated datePublished" datetime="2021-04-18T08:53:17+08:00">2021-04-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-05 08:42:57" itemprop="dateModified" datetime="2021-06-05T08:42:57+08:00">2021-06-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
           <blockquote>
-<p>解答了一直以来，关于模型部署的疑惑</p>
+<p>人生只有一次，尽最大可能让他精彩。</p>
 </blockquote>
-<h2 id="关于模型部署">关于模型部署</h2>
+<h2 id="摘要">摘要</h2>
 <ul>
-<li>1 为什么说模型部署难？
+<li><p>what you do, who you do with, how you do it, weight more important than how hard you work</p></li>
+<li><p>outputs are nonlinear based on the quality of the work that you put in</p></li>
+<li><p>the right way that work is like a lion, you and i are not like cows, we are not meant to graze all day right.</p></li>
+<li><p>一个公司的规模，取决于内部和外部的交易成本（transaction costs）对比。信息时代带来的最大的便利就是，让外部交易变得更便捷；现在的趋势是公司的最优规模在锐减。</p>
+<blockquote>
+<p>chiechie：会有越来越多的敏捷和有创意的小公司</p>
+<p>大公司的问题：每个小模块有自己的KPI，生产链路长。多任务并发的时候，经常会遇到性能瓶颈。</p>
+<p>根本原因可能是大公司的官僚式管理制度问题？每个模块只用对生产链路中，自己这一环的kpi负责，而不是对整个业务的最终效果负责，根本就违背了「风险共担」。</p>
+</blockquote></li>
+<li><p>现阶段ai是什么阶段？low ai，即模式识别。</p></li>
+<li><p>为什么短时间内通用ai不可能？人连大脑的运行机制都不懂。根据摩尔定律，我们要再花50年，算力才能赶上一个cell内部的计算速度.</p></li>
+<li><p>bankers是不是洗劫了社会的财富？其实他们也冒了很大的风险，赌输了也会破产。</p></li>
+</ul>
+<h2 id="关于资本主义-和-社会主义">关于资本主义 和 社会主义</h2>
 <ul>
-<li>因为部署的环境不一样，所以需要许多定制化的工作</li>
-</ul></li>
-<li><ol start="2" type="1">
-<li>tensorflow和pytorch这两个框架不能直接用于推理吗？</li>
-</ol>
-<ul>
-<li>可以，但是性能不佳。推理阶段相对训练阶段对模型服务的性能要求更高，比如模型稳定性，响应延迟等，。</li>
-<li>tensorflow和pytorch本身是训练框架，拿来兼做推理框架其实不可以。</li>
-<li>但是在推理阶段，如果业务要求模型服务 高可用，训练框架就显得过于臃肿了而不合时宜了，需要更轻量的框架，如pytorch，tensorRT等。 <img src="../AI/machine_learning/deeplearning/dl-framework/img.png" alt="img.png" /></li>
-</ul></li>
-<li><ol start="3" type="1">
-<li>DL框架产业现状？</li>
-</ol>
-<ul>
-<li>训练框架是标准品</li>
-<li>推理框架是定制品：这里提到了一点就是使用场景没有<strong>网络效应</strong>，我理解就是规模效应，客观环境决定了，“推理框架”相对于“训练框架” 而言，不是一个好摘的果子
-<ul>
-<li>客观环境（部署依赖整个生产链路的环境，包括硬件厂商，应用服务）导致了没有统一的条件</li>
-</ul></li>
-</ul></li>
+<li><p>“资本主义”其实大部分时候说的是“自由市场”。</p></li>
+<li><p>“社会主义”强调结果公平，伴随的一定有violence--暴力重分配</p></li>
+<li><p>许多人年轻的时候是社会主义（heart），长大后是资本主义（head）</p></li>
+<li><p>taleb说，对我的家人，我是一个communist；对我最亲密的朋友来说，我是一个社会主义者；在我的state-level的政治中，我是一个democrat；higher levels的政治中我是一个republican；在federal level政治中，我是一个libertarian</p></li>
+<li><p>一个组织或者群体的规模越大，群体内利益差异就越大，相互之间的信任的可能就越少，会产生更多的cheating，为了让这个系统运作的越好 就需要 匹配的 激励机制，将激励机制发挥到极致的例子就是资本主义。</p>
+<blockquote>
+<p>管理小团队，like family；管理大团队，要奖惩机制。</p>
+</blockquote></li>
+<li><p>群体的规模越小，比如对待家人，成为一个社会主义，会让你更幸福，但是对陌生人不行。</p></li>
 </ul>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>file:///Users/stellazhao/Desktop/深度学习框架-2020-0630-Qlearning分享-Turbo-PPT.pdf</li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=3qHkcs3kG44">Joe Rogan Experience #1309 - Naval Ravikants</a></li>
 </ol>
 
       

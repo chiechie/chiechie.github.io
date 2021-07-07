@@ -165,6 +165,100 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/26/reading_notes/computer/cache-memory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/26/reading_notes/computer/cache-memory/" class="post-title-link" itemprop="url">计算机的存储单元</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-26 09:47:32" itemprop="dateCreated datePublished" datetime="2021-06-26T09:47:32+08:00">2021-06-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-28 13:56:10" itemprop="dateModified" datetime="2021-06-28T13:56:10+08:00">2021-06-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="概览">概览</h2>
+<ol type="1">
+<li><p>计算机上的存储单元的处理速度从快到慢依次是： 寄存器&gt; L1&gt;L2&gt;L3&gt;内存&gt;固态硬盘&gt; 机械硬盘</p>
+<figure>
+<img src="./img_1.png" alt="存储单元" /><figcaption aria-hidden="true">存储单元</figcaption>
+</figure></li>
+<li><p>早期的计算机只有寄存器和内存，但是寄存器的处理速度远高于内存，所以大部分时间是寄存器在等内存，所以CPU是处于空转状态。 经过改进</p></li>
+<li><p>除了寄存器，后面的计算机在CPU中又逐步加入了高速缓存--L1/L2/L3缓存，相当于让内存提前做功课，把数据提前取出来，在3个缓存中候着，等寄存器有空了就取来用。笨鸟先飞嘛。</p></li>
+<li><p>L1/L2/L3缓存，每层速度递减、容量递增。L1缓存速度接近寄存器速度，大约1ns时延。</p></li>
+<li><p>多核CPU的L3对诶个core是共享的，L2和L1是每个core私有的。</p></li>
+</ol>
+<figure>
+<img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
+</figure>
+<ol start="6" type="1">
+<li>CPU读取数据时，要从内存读取到L3，再读取到L2再读取到L1，同样写到内存时也会经过这些层次。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>https://www.junmajinlong.com/os/cpu_cache/</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -284,171 +378,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/23/AI/machine_learning/clustering/" class="post-title-link" itemprop="url">一些聚类算法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-23 11:20:42" itemprop="dateCreated datePublished" datetime="2021-06-23T11:20:42+08:00">2021-06-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-06 16:00:14" itemprop="dateModified" datetime="2021-07-06T16:00:14+08:00">2021-07-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。</p>
-</blockquote>
-<h2 id="总结">总结</h2>
-<ol type="1">
-<li>我们常常对表数据使用kmeans来实现聚类，内部流程分为两步，第一步是是将多维的表数据（维度代表特征），转为2D的相似图（一个节点代表一个样本）。第二步，是对这个图进行聚类。</li>
-<li>kmeans在实际中应用较多，但是并没有理论保证其收敛。 &gt; ...I don't think there is a nice theory of convergence or rate of convergence, But is a very popular algorimth,..., But that's one sort of hack that works quite well--Gilbert Strang</li>
-<li>对一个图，找到其中的一些cluster，kmeans是其中一种方法，还有谱聚类（spectral clustring）。</li>
-<li>除此之外，还可以使用终极大招--使用数值方法去求解优化问题（比如BP，就是alternative methods的一个特例）。</li>
-<li>按照理论严密从高到低，实现聚类的算法可以分为三类：谱聚类，基于运筹优化的聚类，一些直觉类的方法。直觉类的方法包括kmeans，层次聚类</li>
-</ol>
-<h2 id="聚类算法summary">聚类算法summary</h2>
-<p>目前常用的聚类算法大概分为三类：</p>
-<ul>
-<li>层次聚类： nearest neigbour</li>
-<li>基于分区的聚类（partitional）：Kmeans系列/FCM/图理论</li>
-<li>基于密度：DBSCAN</li>
-<li>其他：ACODF</li>
-</ul>
-<figure>
-<img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
-<h2 id="层次聚类">层次聚类</h2>
-<p>层次聚类算法,又称为树聚类算法,它使用数据的联接规则,透过一种层次架构方式,反复将数据进行分裂或聚合,以形成一个层次序列的聚类问题解.</p>
-<p>本文仅以层次聚类算法中的层次聚合算法为例进行介绍.</p>
-<p>层次聚合算法的时间复杂度为<span class="math inline">\(O(n^2)\)</span>,适合于小数据集的分类.</p>
-<p>该算法由树状结构的底部开始逐层向上进行聚合,假定样本集S={o1,o2,...,on}共有n个样本.</p>
-<ol type="1">
-<li>初始化：每个样本 <span class="math inline">\(o_i\)</span> 为一个类; 共形成 n 个类:<span class="math inline">\(o_1,o_2,...,o_n\)</span></li>
-<li>找最近的<strong>两个类</strong>：从现有所有类中找出相似度最大的<strong>两个</strong>类<span class="math inline">\(o_r\)</span> 和 <span class="math inline">\(o_k\)</span> <span class="math display">\[distance(o_r,o_k) = min_{\forall{o_u,o_v \in S,o_u \neq o_v}}distance(o_u,o_v)\]</span></li>
-<li>将类<span class="math inline">\(o_r\)</span>和<span class="math inline">\(o_k\)</span>合并成一个新类<span class="math inline">\(o_{rk}\)</span>，现有cluster个数减1</li>
-<li>若所有的样本都属于同一个类,则终止;否则,返回步骤2.</li>
-</ol>
-<p>层次聚类最大的优点，它一次性地得到了整个聚类的过程。如果想要改变cluster个数，不需要重新训练聚类模型，取聚类树的中间某一层就好了。相比之下kmeans是要重新弄训练的。</p>
-<p>层次聚类的缺点是计算量比较大，因为要每次都要计算多个cluster内所有数据点的两两距离，复杂度是O(n^2*d)，d表示聚类树的深度。</p>
-<p>还有一个缺点，超参数比较难设置，跟kmeans一样。最终到底聚成多少类，需人工给定一个distance threshold，这个阈值跟sample有关，跟距离函数的定义也有关，并且聚类结果对这个参数比较敏感。</p>
-<p>btw，如何判断两个cluster之间的距离？</p>
-<ul>
-<li>一开始每个数据点独自作为一个类，它们的距离就是这两个点之间的距离。</li>
-<li>对于包含不止一个数据点的cluster，最常用的方法是average-linkage，即计算两个cluster各自数据点的两两距离的平均值。 其他方法还有single-linkage/complete-linkage，选择两个cluster中距离最短/最长的一对数据点的距离作为类的距离。 个人经验complete-linkage基本没用，single-linkage通过关注局域连接，可以得到一些形状奇特的cluster，但是因为太过极端，所以效果也不是太好。</li>
-</ul>
-<h2 id="基于graph的聚类">基于Graph的聚类</h2>
-<p>基于Graph的聚类算法，大致思路是，计算样本两两之间的相似度，并设定阈值，高于阈值就右边，低于阈值就无边，以此构造有权无向图，权重即为相似度。</p>
-<h3 id="谱聚类">谱聚类</h3>
-<p>什么是spectrum？</p>
-<p>矩阵的spectrum就是矩阵的特征根。 spectral clustring就是使用矩阵的特征根聚类</p>
-<p>回忆一下，其拉普拉斯矩阵定义为 <span class="math inline">\(L=D-A\)</span>.</p>
-<p>怎么根据L来找到目标的clusters（or centriod）？ 对L进行谱分解（特征根分解），并且找到L的fieder向量。</p>
-<p>fieder向量中的元素有正的，也有负的， 正的位置对应的样本分配到cluster1，负元素对应的样本分配到cluster2</p>
-<p>谱聚类的流程是：</p>
-<p>输入：n个样本, 类别k</p>
-<ol type="1">
-<li>根据样本两两之间的相似度，构建有权无向图，以及邻接矩阵W。</li>
-<li>计算出拉普拉斯矩阵L，对L做谱分解（相当于降维）：计算拉普拉斯矩阵L的最小的k个特征值对应的特征向量u1, u2,...,uk,将这些向量组成n*k维的矩阵U,</li>
-<li>将U中的每一行作为一个样本，共n个样本，使用k-means对这n个样本进行聚类</li>
-</ol>
-<p>得到簇划分C(c1,c2,...ck).</p>
-<h2 id="聚类应用">聚类应用</h2>
-<h3 id="日志分析">日志分析</h3>
-<h3 id="图像分割">图像分割</h3>
-<p>图像的分割是图聚类的其中一个应用场景。</p>
-<p>层次聚类可看成框架，而基于图的图像分割是在层次聚类上加了骨头，使他更适用于图像分割的领域，而使用者可以在骨头上继续加肉来达到不同的分割效果。</p>
-<p>图像中的每一个像素点是一个item，图像分割的任务即对所有items聚类，属于一个cluster的所有像素就构成了一个区域， 最终的分割结构就是若干个区域（即clusters）组成的。由此我们过渡到本文的第二部分，</p>
-<p>基于图的图像分割算法，主要流程如下</p>
-<p>输入一个图<span class="math inline">\(G=(V,E)\)</span>，有n个点和m个边。输出是一个分割V，分割成<span class="math inline">\(S=(C_1,...,C_2).\)</span></p>
-<ol type="1">
-<li><p>对边E进行排序，生成非递减的序列<span class="math inline">\(\pi = (o_1,...,o_m)\)</span></p></li>
-<li><p>从初始分割<span class="math inline">\(S^0\)</span>开始，每一个点<span class="math inline">\(v_i\)</span>自己就是一个区域</p></li>
-<li><p>对于每一个边<span class="math inline">\(q = 1,...,m\)</span>重复步骤3，通过<span class="math inline">\(S^{q-1}\)</span>构建<span class="math inline">\(S^q\)</span>，使用如下的方式</p>
-<ul>
-<li>令<span class="math inline">\(v_i\)</span>和<span class="math inline">\(v_j\)</span>表示按顺序排列的第q条边的两个点，比如<span class="math inline">\(o_q = (v_i,v_j)\)</span>。</li>
-<li>如果<span class="math inline">\(v_i\)</span>和<span class="math inline">\(v_j\)</span>在<span class="math inline">\(S^{q-1}\)</span>中连个不同的区域下，并且<span class="math inline">\(w(o_q)\)</span>比两个区域的内部差异都小，那么合并这连个区域，否则什么也不做。</li>
-<li>用公式来表达就是：
-<ul>
-<li>令<span class="math inline">\(C_{i}^{q-1}\)是\(S^{q-1}\)</span>的一个区域，它包含点<span class="math inline">\(v_i\)</span>；令<span class="math inline">\(C_{j}^{q-1}\)是\(S^{q-1}\)</span>的一个区域，它包含点<span class="math inline">\(v_j\)</span>。</li>
-<li>如果<span class="math inline">\(C_{i}^{q-1} \neq C_{j}^{q-1}\)</span> 并且<span class="math inline">\(w(o_q) \leq MInt(C_i^{q-1},C_j^{q-1})\)</span>，那么通过合并<span class="math inline">\(C_{i}^{q-1}\)</span>和<span class="math inline">\(C_{j}^{q-1}\)</span>得到了<span class="math inline">\(S^q\)</span>；</li>
-<li>否则的话<span class="math inline">\(S^q = S^{q-1}\)</span>，返回<span class="math inline">\(S = S^m\)</span></li>
-</ul></li>
-</ul></li>
-</ol>
-<p>图像分割结果如下</p>
-<figure>
-<img src="img1.png" alt="图像分割" /><figcaption aria-hidden="true">图像分割</figcaption>
-</figure>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://patentimages.storage.googleapis.com/34/c0/df/3417293b1602a5/CN105468677A.pdf">一种基于图结构的日志聚类算法</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78382376">常用聚类算法综述</a></li>
-<li><a target="_blank" rel="noopener" href="https://buptjz.github.io/2014/04/21/cluster">从层次聚类到Graph-based图像分割</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.jos.org.cn/1000-9825/19/48.pdf">聚类算法</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=cxTmmasBiC8">35. Finding Clusters in Graphs-mit-youtube</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -518,7 +447,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">187</span>
+          <span class="site-state-item-count">188</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

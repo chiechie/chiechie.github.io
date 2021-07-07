@@ -165,6 +165,98 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/04/investment/quant/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/04/investment/quant/" class="post-title-link" itemprop="url">投资、投机与套利</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-04 15:10:19" itemprop="dateCreated datePublished" datetime="2021-07-04T15:10:19+08:00">2021-07-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-05 20:42:39" itemprop="dateModified" datetime="2021-07-05T20:42:39+08:00">2021-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol type="1">
+<li>巴菲特希望通过分析公司基本面来做精准判断，通过每次投资的长期持有获得收益，而西蒙斯用机器算法来发现短期胜率，通过短期胜率超过50%加上大数定律（law of large numbers）来保证长时间的盈利</li>
+<li>人在做投资决策的时候都会根据自己的经历和知识储备选取合适的策略。</li>
+<li>从交易的方式来看，投资的策略有三种形式：投资（investment）、投机（speculation）和套利（arbitrage），三种形式都可以用量化的方法来提高胜率。</li>
+<li>1949年，格雷厄姆在《聪明的投资者》里写到：“投资者与投机者最实际的区别在于他们对股市运动的态度上：投机者的兴趣主要在参与市场波动并从中谋取利润，投资者的兴趣主要在以适当的价格取得和持有适当的股票。”</li>
+<li>所谓价值投资其实是“价值和价格之差”投资，然后低买高卖。他说投资的秘诀是“不要赔钱”。</li>
+<li>在金融市场里，如果看不清30年这么长的时间线，分析交易量、交易价格和其它技术和基本面的数据，对股票未来短期内的变化，可以在日或周这样的时间线上找到机会。这样的投机行为并不关心股票未来的成长，但是只要在短期内做到足够好的判断，则可以成功地投机获利。</li>
+<li>如果把时间线再缩短，就会有套利的机会。套利背后的逻辑是低买高卖</li>
+<li>很多高频交易的策略，在市场的大量卖单和买单中找到规律，用一个较低的价格买回股票，然后找到下一个买家用高一点的价格卖出去。</li>
+<li>从投资到投机再到套利，随着交易速度的提升，超额收益会越来越高，但是这样的速度提升也有缺点，那就是随着交易速度的提升，机会的窗口就比较小，盈利的容量会越来越小。如果把股市比作赌场，随着交易速度的提升，赢钱的概率会提高，但是能赢的钱的总量却是在下降的。</li>
+<li>高频的量化投资有点像从沙子里捞金子，每捞一次在付出成本的同时都有一个概率找到金子，捞金子的收益可以从两方面得到，一是捞金子的成功率，这个可以通过优化算法加强预测准确率来得到；二是交易频率，可以通过增加单位时间的交易次数来达到。总收益大致和正确率与交易次数平方根的乘积是成正比的。这个原理叫主动管理基本定律The Fundamental Law of Active Management。</li>
+<li>机器学习做交易策略的一个误区。大家一上来就在想办法预测股价，这个思路是最直接的，从数据分析的层面看，这并没有错，很多对算法很熟悉的人都非常厉害，可以迅速的找到一些算法（例如xgboost）来做非常好的样本内预测。但是一旦在实际股市中使用的时候就会发现预测准确度远远不如历史数据所做出来的。</li>
+<li>问题不是机器学习的算法不够好，而是所有的预测模型都假设底层的市场逻辑没有变化，这样的假设是错误的，导致了过度拟合</li>
+<li>如今的市场上，找一个会用厉害的算法做预测的码农并不难，难的是管理者和投资决策者需要知道如何从最底层理解金融市场的量化思维并发挥出算法的优势。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>https://zhuanlan.zhihu.com/p/362383721</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/03/reading_notes/zhexue/wushitangwang/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -262,112 +354,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/02/data_structure/graph/graph-basic/min-cut/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/02/data_structure/graph/graph-basic/min-cut/" class="post-title-link" itemprop="url">图的最大流和最小割算法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-07-02 08:48:14" itemprop="dateCreated datePublished" datetime="2021-07-02T08:48:14+08:00">2021-07-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-03 14:16:12" itemprop="dateModified" datetime="2021-07-03T14:16:12+08:00">2021-07-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="最大流">最大流</h2>
-<h3 id="最大流问题">最大流问题</h3>
-<p>在一个网络中，求从起点、source到目标点，经过的最大的流量，每条边的权重等于该管道的最大流量，求整个路径的最大流量。</p>
-<p><img src="img_3.png" /></p>
-<p>残差 = 容量 - 真实流量 <img src="img_4.png" /></p>
-<h3 id="最大流算法">最大流算法</h3>
-<p>最简单的方法，但是未必能找到最大流</p>
-<figure>
-<img src="img_5.png" alt="img_5.png" /><figcaption aria-hidden="true">img_5.png</figcaption>
-</figure>
-<p>通过多次迭代，先找可达路径，计算残差图，移走空闲量=0的边，进入第二次循环。</p>
-<h2 id="最小割">最小割</h2>
-<h3 id="最小割问题">最小割问题</h3>
-<p>最小割要解决的问题和最大流是一样的</p>
-<p>输入：方向有权图 目标：割的容量最小 输出：某个S-T cut，</p>
-<blockquote>
-<p>最大流最小割定理（Max-Flow Min-Cut Theorem）</p>
-<p>在一个网络流量中，从s到t的最大流量等于，最小s-t cut的容量。</p>
-<p>--L. R. Ford and D. R. Fulkerson. Flows in Networks. Princeton University Press, (1962 .)</p>
-</blockquote>
-<p><img src="img_1.png" /></p>
-<h3 id="寻找最小割的方法">寻找最小割的方法</h3>
-<ol type="1">
-<li>使用最大流算法获得residual graph， 移走其中反向的边</li>
-<li>在residual graph中，从起点s出发，找到所有能达到的节点，并记为集合S，把其他所有节点记做T（s到不了的节点）。</li>
-<li>将{S, T}记做最小割。</li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=6DFWUgV5Osc&amp;t=774s">图的最大流和</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Ev_lFSIzNh4&amp;t=128s">图的最小割算法-youtube</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/AdvancedAlgorithms">图的最小割算法-slide</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -437,7 +423,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">187</span>
+          <span class="site-state-item-count">188</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

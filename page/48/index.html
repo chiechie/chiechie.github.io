@@ -165,6 +165,200 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/AI/reinforcement_learning/rf1_summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/AI/reinforcement_learning/rf1_summary/" class="post-title-link" itemprop="url">强化学习1 资料汇总</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-18 20:16:31" itemprop="dateCreated datePublished" datetime="2021-04-18T20:16:31+08:00">2021-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-31 10:13:29" itemprop="dateModified" datetime="2021-05-31T10:13:29+08:00">2021-05-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="why-rl">why rl?</h2>
+<p>可能可以超越人类。监督学习 只能模仿，不能超越</p>
+<h2 id="公开课">公开课</h2>
+<h3 id="zhouboleirf-intro">zhoubolei：rf-intro</h3>
+<ul>
+<li><p>zhoubolei: ：rf-intro</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/zhoubolei/introRL">zhoubolei-github-课程资料</a> ｜<a target="_blank" rel="noopener" href="https://github.com/zhoubolei/introRL/blob/master/lecture1.pdf">slide</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1LE411G7Xj">zhoubolei视频</a></li>
+</ul></li>
+<li><p>wangshusen</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1XpTgny_Vr0LobBsuYF4KkA">baidu网盘</a>:密码:x0wb</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DRL/blob/master/Notes_CN/DRL.pdf">强化学习中文教材</a></li>
+<li><a target="_blank" rel="noopener" href="https://youtu.be/vmkRMvhCW5c">视频</a>|<a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">深度学习课件</a>|<a target="_blank" rel="noopener" href="https://github.com/wangshusen/DRL">深度强化学习课件</a></li>
+</ul></li>
+<li><p>chiechie的笔记</p>
+<ul>
+<li>【基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf1-basic-concepts/">1. 强化学习的基本概念</a></li>
+<li>【基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf2-value-based/">2. 基于价值的强化学习-DQN 和 TD 算法</a>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FSSywH-1RRf.png?alt=media&amp;token=6b811aba-b275-47f0-a6d3-2945b6fff817" /></li>
+</ul></li>
+<li>【强化学习基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf3-policy-based/">3. 基于策略的强化学习</a>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVhwFEvq-CN.png?alt=media&amp;token=de826d99-eaa2-4c92-8bec-520c7a04ee0b" /></li>
+</ul></li>
+<li>【强化学习基础】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf4-actor-critic/">4. actor-critic 方法</a></li>
+<li>【专题】价值学习高级技巧
+<ul>
+<li><a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf5-advanced-value-based/">价值学习高级技巧1/3-经验回放</a>
+<ul>
+<li>对TD算法的改进</li>
+<li>对神经网络结构的改进</li>
+</ul></li>
+</ul></li>
+<li>【专题】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf6-baseline-in-policy-gradient/">策略梯度中的baseline</a>
+<ul>
+<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。Baseline 可以是任何不依赖于动作的函数。这节课我们做数学推导，得出带有 baseline 的策略梯度，并对它做蒙特卡洛近似。在后面的两节课中，我们把它用在 REINFORCE 和 A2C 方法中。</li>
+<li>策略梯度中的Baseline 1/4-数学推导</li>
+<li>策略梯度中的Baseline 2/4-REINFORCE with Baseline
+<ul>
+<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。这节课我们学习 REINFORCE with Baseline，它是一种策略梯度方法。它用价值网络近似 baseline 函数。它用带 baseline 的策略梯度学习策略网络，用价值网络去拟合观测到的回报。</li>
+</ul></li>
+<li>策略梯度中的Baseline 3/4-A2C 方法</li>
+<li>策略梯度中的Baseline 4/4-REINFORCE与A2C的异同</li>
+</ul></li>
+<li>【专题】<a href="https://chiechie.github.io/2021/04/18/technology/wangshusen-rf7-continous-action/">连续控制</a>
+<ul>
+<li>连续控制1/3-离散控制与连续控制</li>
+<li>连续控制2/3-确定策略梯度DPG</li>
+<li>连续控制3/3-用随机策略做连续控制</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="练手项目">练手项目</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshub/RL-Stock">使用强化学习炒股</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267998242">强化学习应用于金融问题的文章</a></li>
+<li><a target="_blank" rel="noopener" href="https://gym.openai.com/">Gym-强化学习开发框架</a>：开发强化学习算法的工具箱，有很多第三方环境</li>
+</ul>
+<h2 id="强化学习的应用">强化学习的应用</h2>
+<p><a href="https://chiechie.github.io/2021/04/21/reinforcement_learning/rf-application/">强化学习的应用--chiechie</a></p>
+<ul>
+<li>神经网络结构搜索</li>
+<li>自动生成SQL语句</li>
+<li>推荐系统</li>
+<li>网约车调度</li>
+</ul>
+<h2 id="一些思考">一些思考</h2>
+<h3 id="价值学习策略学习动作裁判学习-这三种方法-存在的必要">价值学习，策略学习，动作裁判学习 这三种方法 存在的必要？</h3>
+<ul>
+<li>既然有了policy Function 或者 Q, 都可以告诉agent怎么操作。那有什么必要去做 actor-critic 算法呢？单独学两个神经网络不就可以了？</li>
+<li>问题就是不容易学呀！所以才会有Actor-Critic这种复杂的方法。</li>
+</ul>
+<h3 id="强化学习-适合哪些应用场景图像分类-适合用吗为什么-auto-ml适合用">强化学习 适合哪些应用场景？图像分类 适合用吗？为什么 auto-ml适合用？</h3>
+<ul>
+<li>适合 序列决策 问题， 图像分类没必要 用</li>
+<li>训练一个大的神经网络类似玩一局游戏 耗时很久，每一个迭代 类似 游戏里面的 一小步，可以拿到即时reward，这样就可以使用TD算法来学习 value-function。</li>
+</ul>
+<h3 id="在线学习-和-强化学习的-区别">在线学习 和 强化学习的 区别？</h3>
+<ul>
+<li>online learning 不假定模型输出会影响未来输入，只看单步损失</li>
+<li>reinforcement learning 中模型输出会影响未来输入，必须考虑输出的后果</li>
+</ul>
+<h3 id="on-policy-和-off-policy-的-区别">on-policy 和 off-policy 的 区别？</h3>
+<ul>
+<li>相同点：都是用来更新价值网络的学习算法</li>
+<li>不同点是：on-policy是按照当前的policy来估计q-value；off-policy是按照最优的policy来估计q-value</li>
+</ul>
+<h3 id="监督学习-和-强化学习的区别">监督学习 和 强化学习的区别</h3>
+<ul>
+<li>监督学习
+<ul>
+<li>要求数据 是独立同分布的</li>
+<li>学习过程有老师手把手教，标准答案（label）是什么</li>
+</ul></li>
+<li>强化学习
+<ul>
+<li>数据不用iid</li>
+<li>没有导师（supervisor），不会被告知正确的action是什么，只有一个奖励信号，并且有延迟的。需要自己去试错，找到具长期reward最大的action</li>
+</ul></li>
+</ul>
+<h3 id="强化学习的特点">强化学习的特点</h3>
+<ul>
+<li><p>强化学习中随机性的两个来源：action可以是随机的，状态转移可以是随机的</p></li>
+<li><p>试错机制</p></li>
+<li><p>延迟reward</p></li>
+<li><p>时间会产生影响</p></li>
+<li><p>agent的行为会影响后续收到的数据（agent的action改变了环境）</p>
+<blockquote>
+<p>类似我们的模型自动更新，担心时间会对模型造成影响。比如模型推荐了商品a，我们也只能收到关于商品a的反馈。</p>
+</blockquote></li>
+</ul>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/questions/184657/what-is-the-difference-between-off-policy-and-on-policy-learning">on-policy和off-policy的区别-stackoverflow</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/290530992">深度强化学习 在实际应用中少吗？难点在那里？</a></li>
+<li><a target="_blank" rel="noopener" href="https://weibo.com/titaniumviii?refer_flag=0000015010_&amp;from=feed&amp;loc=nickname">宋一松SYS</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/64526936">强化学习和在线学习的区别-zhihu</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reading_notes/zhexue/taleb-blackswan/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -285,134 +479,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/AI/machine_learning/tree_model/trees_4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/AI/machine_learning/tree_model/trees_4/" class="post-title-link" itemprop="url">树模型4 xgboost介绍</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-18 14:59:29" itemprop="dateCreated datePublished" datetime="2021-04-18T14:59:29+08:00">2021-04-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-07 15:28:21" itemprop="dateModified" datetime="2021-07-07T15:28:21+08:00">2021-07-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="xgboost">xgboost</h2>
-<p>除了Adaboost，GradientBoost，Boosting tree的另外一个代表是xgboost,简称为XGB</p>
-<p>相对GBDT用err的一阶泰勒展开做近似，XGB做了更逼近的近似--二阶近似，并且在err中加入了正则项，限制了base estimator的复杂度。</p>
-<h3 id="损失函数">损失函数</h3>
-<p>先看看，xgboost怎么定义ensemble tree的损失函数：</p>
-<p><span class="math display">\[\begin{array}{l}{\mathcal{L}(\phi)=\sum\limits_{i} l\left(\hat{y}_{i}, y_{i}\right)+\sum\limits_{k} \Omega\left(f_{k}\right)}\end{array}\]</span> <span class="math display">\[ \\{\Omega(f)=\gamma T+\frac{1}{2} \lambda\|w\|^{2}} \]</span></p>
-<ul>
-<li><span class="math inline">\(\hat{y}_{i}=\phi\left(\mathbf{x}_{i}\right)=\sum^{K} f_{k}\left(\mathbf{x}_{i}\right), \quad f_{k} \in \mathcal{F}\)</span></li>
-<li>l是一个可微convex函数</li>
-<li>k表示第k棵树</li>
-<li>i表示第i个样本</li>
-<li>T is the number of leaves in the tree.</li>
-<li><span class="math inline">\(f_k\)</span>表示第k棵树的预测函数，</li>
-<li>q代表树的结构，w代表叶子节点的权重</li>
-<li><span class="math inline">\(\Omega(f_k)\)</span>表示第k棵树的复杂度</li>
-</ul>
-<h3 id="reformulate为一系列子优化问题">reformulate为一系列子优化问题</h3>
-<p>上面的优化问题的解，近似求一系列优化问题的解，如下</p>
-<p><span class="math inline">\(\min \mathcal{L}^{(t)}=\min\limits_{f_t}\sum\limits_{i=1}^{n} l\left(\hat{y}_{i}^{(t-1)}+f_{t}\left(\mathbf{x}_{i}\right), y_{i}\right)+\Omega\left(f_{t}\right)\)</span></p>
-<p><span class="math inline">\(\mathcal{L}^{(t)}\)</span>表示第t棵树的训练目标</p>
-<h3 id="将子优化问题做二阶近似">将子优化问题做二阶近似</h3>
-<p>跟GBDT一样，将l进一步简化，使用二阶展开</p>
-<p><span class="math inline">\(\mathcal{L}^{(t)} \simeq\sum\limits_{i=1}^{n}\left[l\left(y_{i}, \hat{y}^{(t-1)}\right)+g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
-<p>这里</p>
-<ul>
-<li><p><span class="math inline">\(g_{i}=\partial_{\hat{y}^{(t-1) }}l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span>，即l对<span class="math inline">\(y^{(t-1)}\)</span>的一阶导数</p></li>
-<li><p><span class="math inline">\(h_{i}=\partial_{\hat y^{(t-1)}}^{2} l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span>，即l对<span class="math inline">\(y^{(t-1)}\)</span>的二阶导数</p></li>
-</ul>
-<p>进一步remove常数项，得到优化目标为：</p>
-<p><span class="math inline">\(min \sum\limits_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
-<h3 id="基于样本集重新定义损失函数">基于样本集重新定义损失函数</h3>
-<p>更进一步，将<span class="math inline">\(I_{j}=\left\{i | q\left(\mathbf{x}_{i}\right)=j\right\}\)</span>定义为叶子j对应的特征子空间 那么优化目标可以更进一步formulate为：</p>
-<p><span class="math display">\[\min\limits_{\omega, q} \sum_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\gamma T+\frac{1}{2} \lambda \sum_{j=1}^{T} w_{j}^{2} \]</span> <span class="math display">\[=\sum_{j=1}^{T}\left[\left(\sum_{i \in I_{j}} g_{i}\right) w_{j}+\frac{1}{2}\left(\sum_{i \in I_{j}} h_{i}+\lambda\right) w_{j}^{2}\right]+\gamma T \]</span></p>
-<p>也就是说，在构造第t个base estimator时，只需满足该estimator是该优化问题的最优解即可。</p>
-<p>还是回到cart，确定一棵树，首先要确定分支，其次要确定每个叶子的预测值。 假设已经确定好了第t颗树的分支，即<span class="math inline">\(I_{j}\)</span>已经确定，那么最优的叶子预测值<span class="math inline">\(\omega_i\)</span>即为 <span class="math display">\[w_{j}^{*}=-\frac{\sum\limits_{i \in I_{j}} g_{i}}{\sum\limits_{i \in I_{j}} h_{i}+\lambda}\]</span></p>
-<p>将<span class="math inline">\(w_{j}^{*}\)</span>带入上面的目标函数，得到等价的目标函数：</p>
-<p><span class="math inline">\(\min\limits_q -\frac{1}{2} \sum\limits_{j=1}^{T} \frac{\left(\sum_{i \in I_{j}} g_{i}\right)^{2}}{\sum_{i \in I_{j}} h_{i}+\lambda}+\gamma T\)</span> （6）</p>
-<p>公式（6）可以用来衡量树结构q的质量，类似决策树中的impurity得分。根构造决策树算法一样，使用贪婪方法迭代式构造分支，衡量splitting质量好坏用下面的表达式，即计算切分后纯度的提升 或者 不纯度的下降： <span class="math display">\[\mathcal{L}_{s p l i t}=\frac{1}{2}\left[\frac{\left(\sum\limits_{i \in I_{L}} g_{i}\right)^{2}}{\sum\limits_{i \in I_{L}} h_{i}+\lambda}+\frac{\left(\sum\limits_{i \in I_{R}} g_{i}\right)^{2}}{\sum\limits_{i \in I_{R}} h_{i}+\lambda}-\frac{\left(\sum_{i \in I} g_{i}\right)^{2}}{\sum_{i \in I} h_{i}+\lambda}\right]-\gamma\]</span></p>
-<p>其中，<span class="math inline">\(I=I_{L} \cup I_{R}\)</span></p>
-<h3 id="切分点查找算法">切分点查找算法</h3>
-<p>最朴素的算法，遍历所有特征的所有的切分值，找出最佳的。</p>
-<p>目前大部分单机的机器学习库都是采用的这种算法。</p>
-<figure>
-<img src="./image-20200107161207967.png" alt="image-20200107161207967" /><figcaption aria-hidden="true">image-20200107161207967</figcaption>
-</figure>
-<h2 id="最佳实践">最佳实践</h2>
-<ul>
-<li>number of trees:太大会造成过拟合，一般用cross validation去挑最好的参数</li>
-<li>shrinkage parameter:迭代步长，通常取0.01或者0.001，较小的lambda会需要很大的B来取得较好的效果。</li>
-<li>number of split d:通常d=1效果就比较好了。d表示的interation depth，就是交叉项的深度。</li>
-</ul>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -482,7 +548,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">187</span>
+          <span class="site-state-item-count">188</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

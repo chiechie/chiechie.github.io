@@ -165,6 +165,134 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/AI/machine_learning/tree_model/trees_4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/AI/machine_learning/tree_model/trees_4/" class="post-title-link" itemprop="url">树模型4 xgboost介绍</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-18 14:59:29" itemprop="dateCreated datePublished" datetime="2021-04-18T14:59:29+08:00">2021-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-07 15:28:21" itemprop="dateModified" datetime="2021-07-07T15:28:21+08:00">2021-07-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="xgboost">xgboost</h2>
+<p>除了Adaboost，GradientBoost，Boosting tree的另外一个代表是xgboost,简称为XGB</p>
+<p>相对GBDT用err的一阶泰勒展开做近似，XGB做了更逼近的近似--二阶近似，并且在err中加入了正则项，限制了base estimator的复杂度。</p>
+<h3 id="损失函数">损失函数</h3>
+<p>先看看，xgboost怎么定义ensemble tree的损失函数：</p>
+<p><span class="math display">\[\begin{array}{l}{\mathcal{L}(\phi)=\sum\limits_{i} l\left(\hat{y}_{i}, y_{i}\right)+\sum\limits_{k} \Omega\left(f_{k}\right)}\end{array}\]</span> <span class="math display">\[ \\{\Omega(f)=\gamma T+\frac{1}{2} \lambda\|w\|^{2}} \]</span></p>
+<ul>
+<li><span class="math inline">\(\hat{y}_{i}=\phi\left(\mathbf{x}_{i}\right)=\sum^{K} f_{k}\left(\mathbf{x}_{i}\right), \quad f_{k} \in \mathcal{F}\)</span></li>
+<li>l是一个可微convex函数</li>
+<li>k表示第k棵树</li>
+<li>i表示第i个样本</li>
+<li>T is the number of leaves in the tree.</li>
+<li><span class="math inline">\(f_k\)</span>表示第k棵树的预测函数，</li>
+<li>q代表树的结构，w代表叶子节点的权重</li>
+<li><span class="math inline">\(\Omega(f_k)\)</span>表示第k棵树的复杂度</li>
+</ul>
+<h3 id="reformulate为一系列子优化问题">reformulate为一系列子优化问题</h3>
+<p>上面的优化问题的解，近似求一系列优化问题的解，如下</p>
+<p><span class="math inline">\(\min \mathcal{L}^{(t)}=\min\limits_{f_t}\sum\limits_{i=1}^{n} l\left(\hat{y}_{i}^{(t-1)}+f_{t}\left(\mathbf{x}_{i}\right), y_{i}\right)+\Omega\left(f_{t}\right)\)</span></p>
+<p><span class="math inline">\(\mathcal{L}^{(t)}\)</span>表示第t棵树的训练目标</p>
+<h3 id="将子优化问题做二阶近似">将子优化问题做二阶近似</h3>
+<p>跟GBDT一样，将l进一步简化，使用二阶展开</p>
+<p><span class="math inline">\(\mathcal{L}^{(t)} \simeq\sum\limits_{i=1}^{n}\left[l\left(y_{i}, \hat{y}^{(t-1)}\right)+g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
+<p>这里</p>
+<ul>
+<li><p><span class="math inline">\(g_{i}=\partial_{\hat{y}^{(t-1) }}l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span>，即l对<span class="math inline">\(y^{(t-1)}\)</span>的一阶导数</p></li>
+<li><p><span class="math inline">\(h_{i}=\partial_{\hat y^{(t-1)}}^{2} l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span>，即l对<span class="math inline">\(y^{(t-1)}\)</span>的二阶导数</p></li>
+</ul>
+<p>进一步remove常数项，得到优化目标为：</p>
+<p><span class="math inline">\(min \sum\limits_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
+<h3 id="基于样本集重新定义损失函数">基于样本集重新定义损失函数</h3>
+<p>更进一步，将<span class="math inline">\(I_{j}=\left\{i | q\left(\mathbf{x}_{i}\right)=j\right\}\)</span>定义为叶子j对应的特征子空间 那么优化目标可以更进一步formulate为：</p>
+<p><span class="math display">\[\min\limits_{\omega, q} \sum_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\gamma T+\frac{1}{2} \lambda \sum_{j=1}^{T} w_{j}^{2} \]</span> <span class="math display">\[=\sum_{j=1}^{T}\left[\left(\sum_{i \in I_{j}} g_{i}\right) w_{j}+\frac{1}{2}\left(\sum_{i \in I_{j}} h_{i}+\lambda\right) w_{j}^{2}\right]+\gamma T \]</span></p>
+<p>也就是说，在构造第t个base estimator时，只需满足该estimator是该优化问题的最优解即可。</p>
+<p>还是回到cart，确定一棵树，首先要确定分支，其次要确定每个叶子的预测值。 假设已经确定好了第t颗树的分支，即<span class="math inline">\(I_{j}\)</span>已经确定，那么最优的叶子预测值<span class="math inline">\(\omega_i\)</span>即为 <span class="math display">\[w_{j}^{*}=-\frac{\sum\limits_{i \in I_{j}} g_{i}}{\sum\limits_{i \in I_{j}} h_{i}+\lambda}\]</span></p>
+<p>将<span class="math inline">\(w_{j}^{*}\)</span>带入上面的目标函数，得到等价的目标函数：</p>
+<p><span class="math inline">\(\min\limits_q -\frac{1}{2} \sum\limits_{j=1}^{T} \frac{\left(\sum_{i \in I_{j}} g_{i}\right)^{2}}{\sum_{i \in I_{j}} h_{i}+\lambda}+\gamma T\)</span> （6）</p>
+<p>公式（6）可以用来衡量树结构q的质量，类似决策树中的impurity得分。根构造决策树算法一样，使用贪婪方法迭代式构造分支，衡量splitting质量好坏用下面的表达式，即计算切分后纯度的提升 或者 不纯度的下降： <span class="math display">\[\mathcal{L}_{s p l i t}=\frac{1}{2}\left[\frac{\left(\sum\limits_{i \in I_{L}} g_{i}\right)^{2}}{\sum\limits_{i \in I_{L}} h_{i}+\lambda}+\frac{\left(\sum\limits_{i \in I_{R}} g_{i}\right)^{2}}{\sum\limits_{i \in I_{R}} h_{i}+\lambda}-\frac{\left(\sum_{i \in I} g_{i}\right)^{2}}{\sum_{i \in I} h_{i}+\lambda}\right]-\gamma\]</span></p>
+<p>其中，<span class="math inline">\(I=I_{L} \cup I_{R}\)</span></p>
+<h3 id="切分点查找算法">切分点查找算法</h3>
+<p>最朴素的算法，遍历所有特征的所有的切分值，找出最佳的。</p>
+<p>目前大部分单机的机器学习库都是采用的这种算法。</p>
+<figure>
+<img src="./image-20200107161207967.png" alt="image-20200107161207967" /><figcaption aria-hidden="true">image-20200107161207967</figcaption>
+</figure>
+<h2 id="最佳实践">最佳实践</h2>
+<ul>
+<li>number of trees:太大会造成过拟合，一般用cross validation去挑最好的参数</li>
+<li>shrinkage parameter:迭代步长，通常取0.01或者0.001，较小的lambda会需要很大的B来取得较好的效果。</li>
+<li>number of split d:通常d=1效果就比较好了。d表示的interation depth，就是交叉项的深度。</li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/timeseries/DeepAR_2_practice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -290,89 +418,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reading_notes/computer/information-theory/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/18/reading_notes/computer/information-theory/" class="post-title-link" itemprop="url">信息论</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-18 11:19:24" itemprop="dateCreated datePublished" datetime="2021-04-18T11:19:24+08:00">2021-04-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="交叉熵">交叉熵</h2>
-<p>交叉熵表示，拥有信念Q的人，在观察到真实分布P后，他的惊讶程度。</p>
-<p>这个绝对惊讶程度 可以拆解为 一个baseline（真实分布P的熵） + 一个相对差距（P和Q的距离）</p>
-<figure>
-<img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
-</figure>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#cross-entropy">交叉熵</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -442,7 +487,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">187</span>
+          <span class="site-state-item-count">188</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

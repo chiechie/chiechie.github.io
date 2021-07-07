@@ -150,13 +150,35 @@ it is preferable to drop extremely rare labels and focus on the more common outc
 
 大部分ML算法都是基于IID假设，而金融时序不是IID的，所以大部分ml应用直接套用到金融场景会失败。 
 
-## chapter 5 部分差分特征
+### NUMBER OF CONCURRENT LABELS
+### AVERAGE UNIQUENESS OF A LABEL
+### BAGGING CLASSIFIERS AND UNIQUENESS
+#### Sequential Bootstrap
 
-分数差分特征--Fractionally Differentiated Features
+#### Implementation of Sequential Bootstrap
+
+#### A Numerical Example
+
+#### Monte Carlo Experiments
+
+### RETURN ATTRIBUTION
+
+### TIME DECAY
+
+### CLASS WEIGHTS
+
+
+
+## chapter 5 分数差分
+
+分数差分--Fractionally Differentiated Features
+
+如何兼顾平稳性（adf）和 记忆性（跟price的相关性）？--分数差分
 
 ### STATIONARITY VS. MEMORY的两难问题
+
 1. 金融序列大部分非平稳，且有很低信噪比，标准的平稳变换，例如差分变换，会丢失信息。
-2. 价格序列有记忆，但是查分后的序列没有记忆了。
+2. 价格序列有记忆，但是差分后的序列没有记忆了。
 3. 接下来理论家们会从剩下的残差信号中使用各种fancy的工具去提取信息。
 4. 金融序列不平稳的原因是，它有很长的记忆.所以要使用传统的方法的话要做invariant processes，例如看价格的收益率或者取对数差，波动性变化
 5. 在信号处理中，我们是不希望所有的记忆都被抹除的，因为记忆是信号模型的basis。例如，均衡平稳模型需要一些记忆，来获取截止目前为止，结果偏离长期预测值多远，来预测。矛盾在于，收益是平稳的，但是没有记忆。价格有记忆，但是不是平稳的。
@@ -165,7 +187,6 @@ it is preferable to drop extremely rare labels and focus on the more common outc
 7. 平稳性只是ml算法的必要不充分条件，但是通过差分变换的方法虽然获得了平稳性却丢失了记忆性，会导致ml基本上没有什么记忆能力。
 
 下面会介绍一些转换方法，在保留记忆的同时，又能实现平稳变换。
-
 
 
 ### 分数差分方法

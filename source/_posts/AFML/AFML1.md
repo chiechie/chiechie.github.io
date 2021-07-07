@@ -150,9 +150,10 @@ it is preferable to drop extremely rare labels and focus on the more common outc
 
 大部分ML算法都是基于IID假设，而金融时序不是IID的，所以大部分ml应用直接套用到金融场景会失败。 
 
-### 一起出现的label个数
+### concurrent label的个数
 
-NUMBER OF CONCURRENT LABELS
+1. label表示 买/卖 信号, 两个label 如果是基于相同时间段的收益率 计算出来的，就说是 concurrent的.
+
 
 ### 一个label的平均UNIQUENESS
 

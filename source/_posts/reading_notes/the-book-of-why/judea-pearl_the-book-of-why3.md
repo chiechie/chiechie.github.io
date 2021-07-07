@@ -2,7 +2,7 @@
 title: 《the book of why》读书笔记-3
 author: chiechie
 mathjax: true
-date: 2021-03-06 08:33:38
+date: 2021-03-07 08:33:38
 tags: 
 - 因果分析
 - 人工智能

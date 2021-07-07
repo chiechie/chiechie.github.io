@@ -1,8 +1,8 @@
 ---
-title: 树模型1_常用树模型介绍
+title: 树模型1 常用树模型介绍
 author: chiechie
 mathjax: true
-date: 2021-05-15 14:59:29
+date: 2021-04-15 14:59:29
 tags:
 - 人工智能
 - 树模型

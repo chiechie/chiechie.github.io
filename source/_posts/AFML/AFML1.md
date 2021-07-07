@@ -171,17 +171,15 @@ it is preferable to drop extremely rare labels and focus on the more common outc
 ### 分数差分方法
 
 1. 如何解决平稳和两难的问题？已有paper提出了分数差分的方法。（Hosking [1981]），分数差分过程展现出了长期的记忆
-
-![img.png](fd.png)
+    ![img.png](fd.png)
 2. 使用迭代法计算权重向量
-![img.png](fd1.png)
-![img_1.png](fd2.png)
-    
-
-### 5.5.1 Expanding Window
-#### 5.5.2 Fixed-Width Window Fracdiff
+    ![img.png](fd1.png)
+    ![img_1.png](fd2.png)
+3. 在SP500上面做实验，当差分d=0.35时，跟原始价格序列的相关性仍然很高, 0.995，d=1时候，相关性只有0.03, 基本上丢失了记忆。从adf上看，d=0.35时, 序列的黏稠度也不高，adf约等于 –2.8623， 原始的adf是–0.3387,d=1对应的adf是–46.9114。
+4. Expanding Window 和 固定宽度窗口分数差分方法(Fixed-Width Window Fracdiff)
 
 
 ## 参考
+
 1. 《Advances in Financial Machine Learning》
 2. https://blog.csdn.net/weixin_38753422/article/details/100179559

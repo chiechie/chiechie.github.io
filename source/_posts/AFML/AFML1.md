@@ -151,21 +151,26 @@ it is preferable to drop extremely rare labels and focus on the more common outc
 大部分ML算法都是基于IID假设，而金融时序不是IID的，所以大部分ml应用直接套用到金融场景会失败。 
 
 ## chapter 5 部分差分特征
-Fractionally Differentiated Features
-1. 金融序列有很低信噪比，标准的平稳变换，例如差分，会早晨信息丢失。
-2. 价格序列有记忆，但是查分后的序列没有记忆了。
-3. 接下来理论家们会从剩下的残差信号中使用各种fancy的工具去提取信息。
-下面会介绍一些转换方法，在保留记忆的同时，又能实现平稳变换的放啊。
+
+分数差分特征--Fractionally Differentiated Features
 
 ### STATIONARITY VS. MEMORY的两难问题
+1. 金融序列大部分非平稳，且有很低信噪比，标准的平稳变换，例如差分变换，会丢失信息。
+2. 价格序列有记忆，但是查分后的序列没有记忆了。
+3. 接下来理论家们会从剩下的残差信号中使用各种fancy的工具去提取信息。
+4. 金融序列不平稳的原因是，它有很长的记忆.所以要使用传统的方法的话要做invariant processes，例如看价格的收益率或者取对数差，波动性变化
+5. 在信号处理中，我们是不希望所有的记忆都被抹除的，因为记忆是信号模型的basis。例如，均衡平稳模型需要一些记忆，来获取截止目前为止，结果偏离长期预测值多远，来预测。矛盾在于，收益是平稳的，但是没有记忆。价格有记忆，但是不是平稳的。
+那么问题就来了：最小的差分阶数是什么？既能满足一个价格序列平稳，又能保留尽可能多的信息？
+6. 协整（cointergration）方法可以使用记忆来建模。
+7. 平稳性只是ml算法的必要不充分条件，但是通过差分变换的方法虽然获得了平稳性却丢失了记忆性，会导致ml基本上没有什么记忆能力。
 
-It is common in finance to find non-stationary time series. What makes these series non-stationary is the presence of memory, i.e., a long history of previous levels that shift the series’ mean over time. In order to perform inferential analyses, researchers need to work with invariant processes, such as returns on prices (or changes in log- prices), changes in yield, or changes in volatility. These data transformations make the series stationary, at the expense of removing all memory from the original series (Alexander [2001], chapter 11). Although stationarity is a necessary property for inferential purposes, it is rarely the case in signal processing that we wish all mem- ory to be erased, as that memory is the basis for the model’s predictive power. For example, equilibrium (stationary) models need some memory to assess how far the
-price process has drifted away from the long-term expected value in order to gen- erate a forecast. The dilemma is that returns are stationary, however memory-less, and prices have memory, however they are non-stationary. The question arises: What is the minimum amount of differentiation that makes a price series stationary while preserving as much memory as possible? Accordingly, we would like to generalize the notion of returns to consider stationary series where not all memory is erased. Under this framework, returns are just one kind of (and in most cases suboptimal) price transformation among many other possibilities.
-Part of the importance of cointegration methods is their ability to model series with memory. But why would the particular case of zero differentiation deliver best out- comes? Zero differentiation is as arbitrary as 1-step differentiation. There is a wide region between these two extremes (fully differentiated series on one hand, and zero differentiated series on the other) that can be explored through fractional differentia- tion for the purpose of developing a highly predictive ML model.
-Supervised learning algorithms typically require stationary features. The reason is that we need to map a previously unseen (unlabeled) observation to a collection of labeled examples, and infer from them the label of that new observation. If the features are not stationary, we cannot map the new observation to a large number of known examples. But stationarity does not ensure predictive power. Stationarity is a necessary, non-sufficient condition for the high performance of an ML algorithm. The problem is, there is a trade-off between stationarity and memory. We can always make a series more stationary through differentiation, but it will be at the cost of erasing some memory, which will defeat the forecasting purpose of the ML algorithm. In this chapter, we will study one way to resolve this dilemma.
+下面会介绍一些转换方法，在保留记忆的同时，又能实现平稳变换。
 
-### 5.5 IMPLEMENTATION
 
+
+### 分数差分方法
+1. 如何解决平稳和两难的问题？已有paper提出了分数差分的方法。（Hosking [1981]），分数差分过程展现出了长期的记忆
+![img.png](fd.png)
 
 ### 5.5.1 Expanding Window
 #### 5.5.2 Fixed-Width Window Fracdiff

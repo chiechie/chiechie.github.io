@@ -1,10 +1,11 @@
 ---
-title: 投资最重要的事
+title: 《投资最重要的事》读书笔记
 author: chiechie
 mathjax: true
-date: 2021-04-21 09:04:33
+date: 2021-04-23 09:04:33
 tags: 
 - 投资
+- 读书笔记
 categories:
 - 阅读
 ---

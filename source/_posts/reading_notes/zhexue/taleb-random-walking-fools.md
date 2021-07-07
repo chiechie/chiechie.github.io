@@ -1,8 +1,8 @@
 ---
-title: 随机漫步的傻瓜
+title:《 随机漫步的傻瓜》读书笔记
 author: chiechie
 mathjax: true
-date: 2021-04-06 22:58:17
+date: 2021-04-05 22:58:17
 tags: 
 - taleb
 - 哲学

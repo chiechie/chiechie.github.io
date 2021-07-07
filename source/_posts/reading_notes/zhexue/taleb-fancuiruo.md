@@ -1,8 +1,8 @@
 ---
-title: 反脆弱
+title: 《反脆弱》读书笔记
 author: chiechie
 mathjax: true
-date: 2021-04-06 23:42:57
+date: 2021-04-11 23:42:57
 tags: 
 - taleb
 - 哲学

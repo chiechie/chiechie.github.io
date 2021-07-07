@@ -1,11 +1,12 @@
 ---
-title:  思考快与慢
+title:  《思考快与慢》读书笔记
 author: chiechie
 mathjax: true
 date: 2021-04-10 22:33:30
 tags:
 - 心理学
 - 哲学
+- 读书笔记
 categories:
 - 阅读
 ---

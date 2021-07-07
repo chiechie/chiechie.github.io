@@ -2,7 +2,7 @@
 title: 王德峰-资本论
 author: chiechie
 mathjax: true
-date: 2021-04-06 23:44:41
+date: 2021-04-08 23:44:41
 tags:
 - 王德峰
 - 资本论

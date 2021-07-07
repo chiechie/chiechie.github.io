@@ -2,7 +2,7 @@
 title: NLP_2_Transformer的原理
 author: chiechie
 mathjax: true
-date: 2021-04-18 00:04:13
+date: 2021-03-13 00:04:13
 tags: 
 - NLP
 - 神经网络

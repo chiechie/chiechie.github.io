@@ -2,7 +2,7 @@
 title: NLP_1_word2vec的原理
 author: chiechie
 mathjax: true
-date: 2021-04-10 22:23:20
+date: 2021-03-12 22:23:20
 tags:
 - NLP
 - word2vec

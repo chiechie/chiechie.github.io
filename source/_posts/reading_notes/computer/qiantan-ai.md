@@ -2,7 +2,7 @@
 title: 《人工智能的现状，任务，架构和统一》from 朱松纯
 author: chiechie
 mathjax: true
-date: 2021-04-30 08:44:52
+date: 2021-04-29 08:44:52
 tags: 
 - 人工智能
 - 物理

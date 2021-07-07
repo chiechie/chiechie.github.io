@@ -1,11 +1,12 @@
 ---
-title: 非对称风险
+title: 《非对称风险》读书笔记
 author: chiechie
 mathjax: true
 date: 2021-04-09 08:51:40
 tags: 
 - taleb
 - 哲学
+- 读书笔记
 categories: 
 - 阅读
 ---

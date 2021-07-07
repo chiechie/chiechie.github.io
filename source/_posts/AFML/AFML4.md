@@ -2,7 +2,7 @@
 title: 《Advances in Financial Machine Learning》读书笔记4 有用的金融特征
 author: chiechie
 mathjax: true
-date: 2021-07-07 11:18:42
+date: 2021-07-08 11:18:42
 tags: 
 - 量化
 - 投资

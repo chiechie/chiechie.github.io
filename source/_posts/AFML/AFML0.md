@@ -13,6 +13,7 @@ categories:
 2. 金融市场上现在鱼龙混扎，很多小散户收到不良媒体的诱导会冲动投资，结果造成市场动荡。量化工具可以肃清这种风气，减少这种套利机会。
 3. 常见的陷阱：
 ![img.png](img.png)
+   ![img.png](img.png)
 4. 是否意味着有了ai就没有human投资者的空间了？不是，可以人+ai
 
 # Pitfall 1: 西西弗斯模式（THE SISYPHUS PARADIGM）

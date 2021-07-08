@@ -43,7 +43,7 @@ categories:
 
 ## 代码
 
-放这里: https://github.com/chiechie/TraceAnomaly
+放这里:
 
 
 ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FKYZHUFjpAr.png?alt=media&token=1d1635a5-9524-4918-986a-c9eb54a1a558)
@@ -163,5 +163,8 @@ before s is called.
 
 
 ## 参考资料
+
 1. [清华微众AIOps新作:基于深度学习的调用轨迹异常检测算法 -微信公众号](https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA)
 2. [chapter2.1.4 AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/)
+3. [Unsupervised Detection of Microservice Trace Anomalies through Service-Level Deep Bayesian Networks paper](https://netman.aiops.org/wp-content/uploads/2020/09/%E5%88%98%E5%B9%B3issre.pdf)
+4. [traceanomaly-github]( https://github.com/chiechie/TraceAnomaly)

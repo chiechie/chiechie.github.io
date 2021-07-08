@@ -17,7 +17,7 @@ categories:
 # Transformer总结
 
 > 先概括Transformer的主要设计思路；再讲每一步的具体技术细节。
-
+- 
 - Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。
 - Transformer的亮点在于将attention和self-attention完全剥离开之前rnn的结构，只跟dense层组合。
 - Transformer跟RNN没有关系, 只有attention和全连接层
@@ -51,6 +51,42 @@ encoders的6个个block，结构相同，但是不共享权重。
 
 
 # 附录
+
+## 单头和多头self attention
+
+![img_6.png](img_6.png)
+![img_7.png](img_7.png)
+- 每个单头self-attention层有三个参数矩阵
+- 多头attention层就有3*l个参数矩阵（l代表头的个数）
+- 单头的context vector是一个d * m维的矩阵
+- 多头的context vector是一个(dl) *m维的矩阵
+
+## 单头和多头attention
+![img_8.png](img_8.png)
+
+## 用多头self-attention和全连接层搭建一个encoder
+![img_9.png](img_9.png)
+全连接层共享参数矩阵
+
+多搭几层
+![img_10.png](img_10.png)
+
+## transformer的encoder
+
+![img_11.png](img_11.png)
+block都有自己的参数
+![img_13.png](img_13.png)
+
+## 用多头attention和全连接层搭建一个decoder
+
+![img_12.png](img_12.png)
+
+## 整体
+![img_14.png](img_14.png)
+
+![img_15.png](img_15.png)
+
+
 ## 输入tensor
 上面介绍了Transformer的主要组件，现在看一下组件之间的数据流向。
 
@@ -355,15 +391,4 @@ dense层是一个简单的全连接神经网络，它将stack of decoders的输�
 ## 参考
 
 1. [Attention Is All You Need ](https://arxiv.org/abs/1706.03762) paper, the Transformer blog post ( ([Transformer: A Novel Neural Network Architecture for Language Understanding ](https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html)), and the ) ，[Tensor2Tensor announcement](https://ai.googleblog.com/2017/06/accelerating-deep-learning-research.html).
-2. Watch [Łukasz Kaiser’s talk  ](https://www.youtube.com/watch?v=rBCqOTEfxvg) walking through the model and its details 
-3. Play with the [Jupyter Notebook provided as part of the Tensor2Tensor repo ](https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb)
-4. Explore the [Tensor2Tensor repo](https://github.com/tensorflow/tensor2tensor).
-5. [Depthwise Separable Convolutions for Neural Machine Translation ](https://arxiv.org/abs/1706.03059)
-6. [One Model To Learn Them All ](https://arxiv.org/abs/1706.05137)
-7. [Discrete Autoencoders for Sequence Models ](https://arxiv.org/abs/1801.09797)
-8. [Generating Wikipedia by Summarizing Long Sequences ](https://arxiv.org/abs/1801.10198)
-9. [Image Transformer ](https://arxiv.org/abs/1802.05751)
-10. [Training Tips for the Transformer Model ](https://arxiv.org/abs/1804.00247)
-11. [Self-Attention with Relative Position Representations ](https://arxiv.org/abs/1803.02155)
-12. [Fast Decoding in Sequence Models using Discrete Latent Variables ](https://arxiv.org/abs/1803.03382)
-13. [Adafactor: Adaptive Learning Rates with Sublinear Memory Cost ](https://arxiv.org/abs/1804.04235)
+2. [Transformer模型(2/2): 从Attention层到Transformer网络](https://www.youtube.com/watch?v=aJRsr39F4dI)

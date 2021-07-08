@@ -11,21 +11,6 @@ categories:
 ---
 
 
-## chapter 0 引言
-
-1. 市场上关于投资的书籍大致分为两类：一类是理论家写的，自己都没有实践过；一类是实践家写的，他们误用了数学工具。
-2. 金融市场上现在鱼龙混扎，很多小散户收到不良媒体的诱导会冲动投资，结果造成市场动荡。量化工具可以肃清这种风气，减少这种套利机会。
-
-### 为什么金融领域的机器学习项目经常失败？
-
-有一些导致失败的原因：
-
-1. 西西弗斯范式（Sisyphus Paradigm）：大概是说请了一堆投资人，但是有用的策略很少，导致入不敷出？
-2. 元策略范式（Meta-Strategy Paradigm）：构建一个成功的策略和构建100个成功的策略话费的心思一样多。构建一个团队，让成员各司其职，成功率要远大于单兵作战。
-3. 常见的陷阱：
-
-![img.png](img.png)
-4. 是否意味着有了ai就没有human投资者的空间了？不是，可以人+ai
 
 ## chapter 2 金融数据结构
 
@@ -96,7 +81,9 @@ def getTEvents(gRaw,h):
 
 ## chapter 3 标记
 
-> 在监督学习中，需要输入label，那么在金融领域，如何定义label？
+在监督学习中，需要输入label，那么在金融领域，如何定义label？
+固定时间范围方法不够准确（可用动态阈值来改进），同时未考虑价格变化的路径，更好的方法是三边界法；此外，元标签能结合各种先验知识，是基金公司做模型、裁员工必备工具。
+
 
 
 ### 固定时间段方法
@@ -108,7 +95,8 @@ def getTEvents(gRaw,h):
 4. 即使改进了fixed time 和 fixed thresh，还有一个很显现实的问题就是，要考虑到价格路径，如果在半路触发margin call，那么预测得再准也没有用。
 
 
-### 3重障碍方法
+### 三边界方法（THE TRIPLE-BARRIER METHOD）
+
 
 1. 三重障碍方法是这样的，首先设置2个水平障碍和1个垂直障碍。2个水平障碍是基于变动的日波动率算出来的，1个垂直障碍是说，离上一次position take，经过了bars的个数。
 2. 如果upper障碍最先触发，返回1；如果lower障碍最先触发，返回-1；如果垂直的障碍触发，返回-1/+1，或者0，具体情况具体分析.三重障碍方法是路径依赖的标记方法。
@@ -129,61 +117,61 @@ def applyPtSlOnT1(close,events,ptSl,molecule):
         df0=close[loc:t1] # path prices df0=(df0/close[loc]-1)*events_.at[loc,'side'] # path returns out.loc[loc,'sl']=df0[df0<sl[loc]].index.min() # earliest stop loss. out.loc[loc,'pt']=df0[df0>pt[loc]].index.min() # earliest profit taking.
     return out
 ```
-### 学习SIDE和SIZE
+3 根据需要，三边界方法也可以有其他合理变体：下边界+右边界：我们会在一定时间后平仓，除非触发止损点提前平仓；上边界+下边界：如果没有触发盈利点和止损点，则一直持有股票；（见下图）
+![img_4.png](img_4.png)
+这部分讨论了三边界方法的代码实现，即如何给样本打标签使得 ML 算法可以同时学习到一笔交易的方向和规模
+
+### 同时学习方向和规模（LEARNING SIDE AND SIZE）
 
 1. 这种标记可以让ml算法从side和size中学习到一些信息
 2. 如果没有side信息，我们没法区分profit-taking 障碍 和 stop-loss 障碍。
 
 ### META-LABELING
 
-### 如何使用META-LABELING
+假设你有个模型能决定交易方向，你只需要确定交易的规模（包括不交易，即规模为0）。这是金融从业者经常需要考虑的问题，我们确定要买或者卖，唯一的问题是这笔交易值得冒多大风险；同时，我们不需要 ML 模型学习交易方向，只需要它告诉我们合适的交易规模是多少。
+
+假如有一个基于金融理论的模型，告诉我们交易方向，那我们的标签就变成了 [公式] （ML模型只需要决定是否执行这个操作），而不是 [公式] （ML模型同时决定交易方向和规模）
+
+> 元标签的含义:
+> 
+> 金融中用ML的另一常见错误是同时学习仓位的方向和规模（据我所知很多论文仅对买/卖方向做决策，每笔交易的金额/股数是固定的）。具体而言，方向决策（买/卖）是最基本的决策，规模决策（size decision）是风险管理决策，即我们的风险承受能力有多大，以及对于方向决策有多大信心。我们没必要用一个模型处理两种决策，更好的做法是分别构建两个模型：第一个模型来做方向决策，第二个模型来预测第一个模型预测的准确度。很多ML模型表现出高精确度（precision）和低召回率（recall），这意味着这些模型过于保守，大量交易机会被错过。F1-score 综合考虑了精确度和召回率，是更好的衡量指标，元标签（META-LABELING）有助于构建高 F1-score 模型。首先（用专家知识）构建一个高召回率的基础模型，即对交易机会宁可错杀一千，不可放过一个。随后构建一个ML模型，用于决定我们是否应该执行基础模型给出的决策。元标签+ML有以下4个优势：1. 大家批评ML是黑箱，而元标签+ML则是在白箱（基础模型）的基础上构建的，具有更好的可解释性；2. 元标签+ML减少了过拟合的可能性，即ML模型仅对交易规模决策不对交易方向决策，避免一个ML模型对全部决策进行控制；3. 元标签+ML的处理方式允许更复杂的策略架构，例如：当基础模型判断应该多头，用ML模型来决定多头规模；当基础模型判断应该空头，用另一个ML模型来决定空头规模；4. 赢小输大会得不偿失，所以单独构建ML模型对规模决策是有必要的
 
 ### 量化 + 基本面方法
 
 THE QUANTAMENTAL WAY
 
+很多对冲基金——包括一些老牌基金——正在拥抱量化方法。元标签正是这些公司需要的：假设你有了一系列有预测力的特征，你既可以同时预测交易方向和规模；也可以用元标签方法。元标签方法中确定方向的基础模型可以是 ML模型、计量公式、交易规则、基本面分析，也可以是人类基于直觉的预测结果，可见元标签方法的普适性。
+
+举个例子，元标签方法可能会发现基金经理能及时预测市场风格转换，但无法在疲倦、压力下准确预测。由于基金经理必然会受生理心理等因素影响，元标签方法能评价基金经理的预测能力。综上所述，元标签方法为基金公司的量化之路指明了方向（做模型 & 评价基金经理），它应该成为基金公司的基本工具。
+
 ### 丢掉不必要的label
 
 it is preferable to drop extremely rare labels and focus on the more common outcomes.
+当标签很多且类别不均衡（imbalance）时，一些ML模型表现不好。这种情况下，最好丢掉非常罕见的标签并专注于更常见的结果。这样做有另一个原因，即用bagging方法时罕见的标签可能无法采集到，这是 sklearn 的一个bug，短期难以解决，建议读者写自己的 class，扩展 sklearn的功能。
+
 
 ## chapter 4 样本权重
-
-大部分ML算法都是基于IID假设，而金融时序不是IID的，所以大部分ml应用直接套用到金融场景会失败。 
-
-### concurrent label的个数
-
-1. label表示 买/卖 信号, 两个label 如果是基于相同时间段的收益率 计算出来的，就说是 concurrent的.
+训练ML 模型需要抽取样本，本章我们会考虑抽样时如何给样本加权，以更好地训练模型。
 
 
-### 一个label的平均UNIQUENESS
+1. 大部分ML算法都是基于IID假设，而金融时序不是IID的，所以大部分ml应用直接套用到金融场景会失败。
+2. 很多时候数据难免出现交叉（如三标签方法一段数据结束时间不确定），当两段数据出现交叉，标签序列  就不再是 IID 了。
+![img_3.png](img_3.png)
+3. 对此我们有三种解决方案：一是丢弃重复数据，这会造成信息损失，不推荐；二是根据独特性加权抽样——一段数据与其他数据交叉越少，独特性越高，应该给予更多权重；三是 Sequential Bootstrap，即序列有放回抽样，每抽出一个样本，相应地减少与该样本有重叠的样本被抽取的概率，这样抽取的样本比普通 Bootstrap 更接近 IID。
+4. 此外，绝对收益率（absolute return）大的样本应该给予更多权重，原因是对 ML 算法来说，绝对收益率小的样本不好预测，作为训练样本价值不大。
+    
+    > The “neutral” case is unnecessary, as it can be implied by a “−1” or “1” prediction with low confidence.
+5. 市场是常为新的，越新的数据与当前市场相关度越高，价值越大。
 
-### BAGGING分类器 和 独立性
-
-#### 序列Bootstrap方法
-
-1. 对样本使用bootstrap方法抽样，以期得到iid样本。
-
-
-#### Monte Carlo实验
-
-
-### 收益属性
-
-1. 基于uniqueness和absolute return对样本赋予权重。绝对收益高的的labels应该被给予更高的权重；收益取值越unique的也要给予更高的权重
-
-### 时间衰减
-
-1. 市场是演化着的，所以我们希望给新忘本更多的权重，给老样本更少的权重。
-2. 怎么量化这个事件衰减效应？设计一个时间衰减因子（所有元素加起来为1），用这个因子乘以样本权重，
-
-
-### 类别权重
-
-1. 使用机器学习做分类时，有的稀有事件（比如金融危机）出现次数很少，为了保证ml算法能重视这类事件，可以调整sample_weight
-2. 具体来说，在scikit learn中，设置class_weight='balanced'，或者在bagging trees中设置class_weight='balanced_subsample'，小心[bug](https://github.com/scikit-learn/scikit-learn/issues/4324)
-
-
-
+    > Markets are adaptive systems (Lo [2017]). As markets evolve, older examples are less relevant than the newer ones.
+6. 最后，我们还应该考虑类别权重。金融中不均衡数据集很常见，而且这些罕见的标签往往非常重要。在 sklearn 等科学计算包中可以设置为 class_weight='balanced' 。
+7. label表示 买/卖 信号, 两个label 如果是基于相同时间段的收益率 计算出来的，就说是 concurrent的.
+8. 对样本使用bootstrap方法抽样，以期得到iid样本。
+9. 基于uniqueness和absolute return对样本赋予权重。绝对收益高的的labels应该被给予更高的权重；收益取值越unique的也要给予更高的权重
+10. 市场是演化着的，所以我们希望给新忘本更多的权重，给老样本更少的权重。
+11. 怎么量化这个事件衰减效应？设计一个时间衰减因子（所有元素加起来为1），用这个因子乘以样本权重，
+12. 使用机器学习做分类时，有的稀有事件（比如金融危机）出现次数很少，为了保证ml算法能重视这类事件，可以调整sample_weight
+13. 具体来说，在scikit learn中，设置class_weight='balanced'，或者在bagging trees中设置class_weight='balanced_subsample'，小心[bug](https://github.com/scikit-learn/scikit-learn/issues/4324)
 
 ## chapter 5 分数差分
 
@@ -220,3 +208,4 @@ it is preferable to drop extremely rare labels and focus on the more common outc
 
 1. 《Advances in Financial Machine Learning》
 2. https://blog.csdn.net/weixin_38753422/article/details/100179559
+3. https://zhuanlan.zhihu.com/p/69231390

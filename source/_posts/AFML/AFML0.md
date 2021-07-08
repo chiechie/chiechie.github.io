@@ -2,9 +2,12 @@
 title: 《Advances in Financial Machine Learning》读书笔记0 为什么金融领域的机器学习项目经常失败？
 author: chiechie
 mathjax: true
-date: 2021-07-08 09:49:02
-tags:
+date: 2021-07-05 09:49:02
+tags: 
+- 量化
+- 投资
 categories:
+- AFML
 ---
 
 # 概览
@@ -41,7 +44,7 @@ categories:
 3. 需关注ml发现的跟特征相关的模式：什么特征最重要、这些特征的重要性会随时间改变么、这种改变能否被识别和预测。
 4. 总之，特征驱动的分析比回测结果驱动的分析更重要。
 
-# Pitfall 3: 按时间采样（CHRONOLOGICAL SAMPLING）
+# Pitfall 3: 按时间采样
 
 > Pitfall 3: 按时间采样（CHRONOLOGICAL SAMPLING）
 > 
@@ -97,17 +100,23 @@ categories:
 
 # Pitfall 7: 非IID样本加权
 
-Solution #7: （UNIQUENESS WEIGHTING AND SEQUENTIAL BOOTSTRAPPING）
+> Solution #7: （UNIQUENESS WEIGHTING AND SEQUENTIAL BOOTSTRAPPING）
 
-实验室希望研究血液胆固醇含量受什么因素影响，从人群中随机实验者采集的血液样品服从独立同分布（IID），假如有人把每瓶血液都溅出一点到临近试管中，即试管10的血样包含试管1-9的部分血样，试管11的血样包含试管2-10的部分血样，现在要确定什么因素会影响血液胆固醇含量会非常困难。金融ML也面临同样的问题：
+样本不是iid的，比如按照volumn bars，到达1000的成交量才采集一个样本。
 
+如果实际数据中，交易发生拥堵，都集中在了t=10，那么：
+- t=1要到t=10才达到1000，
+- t=2其实也是到t=10达到1000，
+- t=3其实也是到t=10达到1000，
+
+因此，t=10这个样本就被用了很多次（最多9次），当然time bars是没有这个问题的。
+
+为了缓解这个样本重复出现的问题，作者定义了一个衰减因子即$1/c_t$, $c_t$表示t时刻的行情被用了多少次，所以t时刻的行情对应的return应该除以这个次数。 
+
+这些只对那种按成交量或者其他非等时间划分样本的方法有意义
 (1) labels are decided by outcomes;
 (2) outcomes are decided over multiple observations;
 (3) because labels overlap in time, we cannot be certain about what observed features caused an effect.
-
-作者提出一种基于权重的采样方法。
-
-
 
 # Pitfall 8: 交叉检验集泄露信息（CROSS-VALIDATION LEAKAGE）
 

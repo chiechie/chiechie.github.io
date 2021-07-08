@@ -2,12 +2,12 @@
 title: 《Advances in Financial Machine Learning》读书笔记1 数据分析
 author: chiechie
 mathjax: true
-date: 2021-07-05 19:50:44
+date: 2021-07-06 19:50:44
 tags: 
 - 量化
 - 投资
 categories:
-- 阅读
+- AFML
 ---
 
 
@@ -97,8 +97,8 @@ def getTEvents(gRaw,h):
 
 ### 三边界方法（THE TRIPLE-BARRIER METHOD）
 
-
-1. 三重障碍方法是这样的，首先设置2个水平障碍和1个垂直障碍。2个水平障碍是基于变动的日波动率算出来的，1个垂直障碍是说，离上一次position take，经过了bars的个数。
+1. 简单说，固定一个窗口，价格先达到上沿就标记1，先达到下沿就标记-1，到窗口结束都被碰到就标记0。
+1. 具体说，首先设置2个水平障碍和1个垂直障碍。2个水平障碍是基于变动的日波动率算出来的，1个垂直障碍是说，离上一次position take，经过了bars的个数。
 2. 如果upper障碍最先触发，返回1；如果lower障碍最先触发，返回-1；如果垂直的障碍触发，返回-1/+1，或者0，具体情况具体分析.三重障碍方法是路径依赖的标记方法。
 ```python
 def applyPtSlOnT1(close,events,ptSl,molecule):

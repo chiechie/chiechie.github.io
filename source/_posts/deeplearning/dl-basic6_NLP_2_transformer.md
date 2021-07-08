@@ -14,6 +14,7 @@ categories:
 - 深度学习
 ---
 
+
 # Transformer总结
 
 - Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。

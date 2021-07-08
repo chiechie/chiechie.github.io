@@ -14,8 +14,11 @@ categories:
 - 深度学习
 ---
 
-# 总结
+为什么有了word2vec还不够？还需要bert干嘛？因为一词多义，同样的词在不同的上下文中表达的意思不一样，而word2vec的表示是静态的。
+所以我们需要一个能对上下文编码的动态的embedding方法，bert就应运而生了。
 
+# 总结
+- Bert也是是一个对词语生成词语向量的方法。
 - Bert可以认为是一个预训练Transformer的encoder部分
 - Bert的全称是Bidirectional Encoder Representations from Transformers，双向encoder表示
 - Bert的目的是预训练transformer模型的encoder网络，
@@ -35,12 +38,13 @@ categories:
 
 
 # 附录
-## bert模型
+
+## bert模型原理
 
 ![bert模型可视化]
 (https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&rect=0%2C0%2C2668%2C3126&w=1980&h=2320)
 
-## 任务一--预测遮挡词
+### 任务一--预测遮挡词
 
 任务可以描述为：
 输入： “The _____ sat on the mat”
@@ -54,7 +58,7 @@ categories:
 - 损失函数Loss = CrossEntropy(𝐞, 𝐩 )
 - • Performing one gradient descent to update the model parameters.
 
-## 任务二-- Predict the Next Sentence
+### 任务二-- Predict the Next Sentence
 
 任务可以描述为：
 • Given the sentence:
@@ -74,13 +78,21 @@ categories:
 ![img_1.png](img_1.png)
 
 
-## 结合两个任务
+### 结合两个任务
 
 • Input:
 “[CLS] calculus is a [MASK] of math
 [SEP] it [MASK] developed by newton and leibniz”.
 
 • Targets: true, “branch”, “was”.
+
+
+## Bert实践【todo】
+
+如何使用BERT做迁移学习（Transfer Learning）？
+
+- demo数据：https://www.kaggle.com/c/fake-news-pair-classification-challenge/data
+- 预训练的中文bert模型：hugging face
 
 
 
@@ -91,3 +103,4 @@ categories:
 4. [BERT (预训练Transformer模型)](https://www.youtube.com/watch?v=UlC6AjQWao8&t=26s)
 5. [RoBERTa](https://arxiv.org/pdf/1907.11692v1.pdf)
 6. Devlin, Chang, Lee, and Toutanova. BERT: Pre-training of deep bidirectional transformers for language understanding. In ACL, 2019.
+7. https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html

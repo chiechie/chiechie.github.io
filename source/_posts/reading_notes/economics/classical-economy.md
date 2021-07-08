@@ -5,9 +5,10 @@ mathjax: true
 date: 2021-03-13 10:44:13
 tags:
 - 宏观经济学
-
-categories: 
 - 经济学
+categories: 
+- 阅读
+
 ---
 
 > 下文是一篇形式主义的介绍

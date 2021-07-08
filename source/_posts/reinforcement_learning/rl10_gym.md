@@ -1,13 +1,13 @@
 ---
-title: 强化学习3 使用gym规划出租车行车路线的demo
+title: 强化学习10 使用gym规划出租车行车路线的demo
 author: chiechie
 mathjax: true
-date: 2021-05-27 20:33:14
+date: 2021-04-28 20:33:14
 tags:
 - 强化学习
 - 人工智能
 categories:
-- AI
+- 强化学习
 ---
 
 > 看完了强化学习的理论，现在来动手试一试

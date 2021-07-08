@@ -2,7 +2,7 @@
 title: chapter2.1.5 基于拓扑的根因定位-CN-Softbei2020比赛
 author: chiechie
 mathjax: true
-date: 2021-05-21 14:37:13
+date: 2021-05-23 14:37:13
 tags:
 - AIOps
 - 根因分析
@@ -135,7 +135,7 @@ categories:
 
 ![corr](./orr.png)
 
-![节点个数](./img.png)
+![节点个数](img.png)
 
 对应的 因果图巨大无比，如下：
 

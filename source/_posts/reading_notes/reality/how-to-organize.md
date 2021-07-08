@@ -4,7 +4,7 @@ author: chiechie
 mathjax: true
 date: 2021-04-02 22:20:36
 categories: 
-- 沉思录
+- 阅读
 tags:
 - 管理
 - 职场

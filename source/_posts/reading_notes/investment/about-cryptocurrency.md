@@ -13,9 +13,7 @@ categories:
 - 投资
 ---
 
-
 > chiechie的粗浅见解先抛出来，过一段时间再来验一验
-
 
 ## 区块链
 
@@ -88,9 +86,7 @@ categories:
 2. 各种去中心化数字货币成为国际流通货币的可能性很小，但是有较大可能演变成一个收藏品，比特币会成为其中的顶级收藏品。
 3. 狗狗币?帮助加速加密货币出圈。不论是动物币、狗狗币还是shib，都成功用娱乐的形式把外面的客户引流进来,有点像娱乐圈的IP。如果只是一本正经地推广比特币，人们可能会觉得没有意思
 
-
 ## 参考
-
 1. [对话 DODO 雷达熊：DeFi 有太多反逻辑，应创造无需许可的产品并发挥价值](https://www.chainnews.com/articles/503060403039.htm)
 2. [How_to_DeFi-中文](https://assets.coingecko.com/books/how-to-defi/How_to_DeFi_Chinese.pdf)
 3. [report](https://tokeninsight.com/zh/report/2708)

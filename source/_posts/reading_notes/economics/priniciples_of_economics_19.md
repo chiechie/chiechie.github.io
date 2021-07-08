@@ -5,9 +5,8 @@ subtitle: '从劳动经济学到职业选择以及要不要996'
 author: "chiechie"
 header-style: text
 date: 2021-02-19 20:05:20
-
 categories:
-- 经济学
+- 阅读
 tags:
 - 经济学
 ---

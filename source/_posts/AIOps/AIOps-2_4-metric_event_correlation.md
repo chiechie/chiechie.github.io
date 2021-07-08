@@ -2,7 +2,7 @@
 title: chapter2.4 时间序列关联性分析
 author: chiechie
 mathjax: true
-date: 2021-05-21 17:27:26
+date: 2021-05-27 17:27:26
 tags:
 - 人工智能
 - 时间序列
@@ -89,7 +89,7 @@ $$ t_{s c o r e}=\frac{\mu_{\Gamma^{f r o n t}}-\mu_{\Gamma^{r e a r}}}{\sqrt{\f
    
 2. 判断单调性：
   - 如果$t_{score} > \alpha$, 得到负的单调性，即
-    ![](./img.png)
+    ![](img.png)
   - 如果$t_{score} < -\alpha$, 得到正的单调性。 
        
       这里P=0.025对应$\alpha=1.96$，P=0.001对应$\alpha=2.58$

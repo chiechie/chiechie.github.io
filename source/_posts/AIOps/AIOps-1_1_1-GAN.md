@@ -2,7 +2,7 @@
 title: chapter1.1 使用GAN做异常检测
 author: chiechie
 mathjax: true
-date: 2021-05-21 16:37:13
+date: 2021-05-09 16:37:13
 tags:
 - AIOps
 - 异常检测

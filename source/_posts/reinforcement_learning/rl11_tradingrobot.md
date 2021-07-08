@@ -1,14 +1,14 @@
 ---
-title: 强化学习4 使用gym构建股票交易机器人
+title: 强化学习11 使用gym构建股票交易机器人
 author: chiechie
 mathjax: true
-date: 2021-05-31 15:01:49
+date: 2021-04-29 15:01:49
 tags:
 - 强化学习
 - 人工智能
 - 量化交易
 categories:
-- AI
+- 强化学习
 ---
 
 > 现在进行强化学习第2个实践项目--构建交易机器人，

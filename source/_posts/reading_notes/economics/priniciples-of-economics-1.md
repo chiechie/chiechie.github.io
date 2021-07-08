@@ -3,7 +3,7 @@ title: 经济学十大基本原理
 date: 2021-02-24 22:58:44
 author: "chiechie"
 categories: 
-- 经济学
+- 阅读
 tags:
 - 经济学
 ---

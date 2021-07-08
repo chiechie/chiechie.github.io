@@ -1,16 +1,14 @@
 ---
-title: 强化学习5 蒙特卡洛树搜索
+title: 强化学习12 蒙特卡洛树搜索
 author: chiechie
 mathjax: true
-date: 2021-06-02 16:58:05
+date: 2021-04-30 16:58:05
 tags:
 - 强化学习
 - 人工智能
 categories:
-- AI
+- 强化学习
 ---
-
-
 
 # 总结
 

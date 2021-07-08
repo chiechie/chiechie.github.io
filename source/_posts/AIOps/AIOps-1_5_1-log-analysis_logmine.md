@@ -1,7 +1,7 @@
 ---
 title: chapter1.5.1 使用logmine加强版做日志聚类
 author: chiechie
-date: 2021-05-21 11:01:18
+date: 2021-05-14 11:01:18
 categories: 
 - AIOps
 mathjax: true
@@ -66,7 +66,7 @@ logmine使用的是基于聚类的方法，做日志摘要生成。
 - step2. 分词，每条日志都得到一个word vector.
 - step3. 一边聚类 一边提取pattern
 
-![](./img.png)
+![](img.png)
 
 ## 怎么设置level？
 

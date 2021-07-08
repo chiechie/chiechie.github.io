@@ -1,7 +1,7 @@
 ---
 title: chapter2.1.1 基于拓扑的根因定位CauseInfer1
 author: chiechie
-date: 2021-05-21 14:41:39
+date: 2021-05-19 14:41:39
 mathjax: true
 tags:
 - AIOps
@@ -230,7 +230,7 @@ BCP效果更好，更适合分析长序列，但是不适合在线模式，
 
 在实时阶段，使用因果图（causality graph）来做根因推断，得到可能的原因列表。
 
-![图1-根因分析框架](./img.png)
+![图1-根因分析框架](img.png)
 
 ## 评估
 

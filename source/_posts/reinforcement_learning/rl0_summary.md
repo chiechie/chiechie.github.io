@@ -17,7 +17,7 @@ categories:
 
 1. 强化学习的基本概念
 2. 基于价值的强化学习-DQN 和 TD 算法
-        - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FSSywH-1RRf.png?alt=media&token=6b811aba-b275-47f0-a6d3-2945b6fff817)
+ ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FSSywH-1RRf.png?alt=media&token=6b811aba-b275-47f0-a6d3-2945b6fff817)
 3. 基于策略的强化学习
 4. actor-critic 方法
 5. 价值学习高级技巧:对TD算法的改进;对神经网络结构的改进.

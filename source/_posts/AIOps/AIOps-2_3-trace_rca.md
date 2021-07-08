@@ -11,49 +11,15 @@ categories:
 
 ---
 
-## 目录
-
-- [chapter0 概览](../AIOps-0-summary/)
-- [chapter1 故障发现](../AIOps-1-event-generate/)
-	- [chapter1.1 单指标异常检测](../AIOps-1_1-kpi-detector/)
-	- [chapter1.3 故障预测](../AIOps-1_2-fault-prediction/)
-	- [chapter1.4 指标异常关联](../AIOps-1_4-kpi-correlation/)
-	- [chapter1.5 日志聚类](../AIOps-1_5-log-analysis/)
-		- [chapter1.5.1 使用logmine加强版做日志聚类](../AIOps-1_5_1-log-analysis_logmine/)
-		- [chapter1.5.2 美团日志聚类](../AIOps-1_5_2-log-analysis_meituan/)
-- [chapter2 故障定位](../AIOps-2-event-analysis/)
-	- [chapter2.1 微服务系统的故障定位](../AIOps-2_1-topo-rca/)
-		- [chapter2.1.1 CauseInfer1](../AIOps-2_1_1-topo-rca-causeinfer-notes1/)
-		- [chapter2.1.2 CauseInfer2](../AIOps-2_1_2-topo-rca-causeinfer-notes2/)
-		- [chapter2.1.3 AIOps挑战赛2020-获奖方案分享](../AIOps-2_1_3-topo-rca-aiops2020/)
-		- [chapter2.1.4 AIOps挑战赛2021-demo方案](../AIOps-2_1_4-topo-rca-aiops2021/)
-		- [chapter2.1.5 N-Softbei2020比赛](../AIOps-2_1_5-topo-rca-cnsoftbei2020/)
-		- [chapter2.1.6 MicroCause](../AIOps-2_1_6-topo-rca-MicroCause)
-	- [chapter2.2 多维下钻根因定位](../AIOps-2_2-multi-dimensional-rca/)
-	- [chapter2.3 调用链根因分析](../AIOps-2_3-trace_rca/)
-	- [chapter2.4 时间序列关联性分析](../AIOps-2_4-metric_event_correlation/)
-- chapter3 故障恢复
 
 
 
-## 调用链的数据格式
-
-- 做调用链路分析（TraceAnomaly）用到了耗时，以及调用链的结构信息。
-- 2021AIOps比赛的调用链的数据：每个span_id表示一个trace中的一次子调用，耗时表示当前服务从接受call，到开始response的时间间隔。这里的表格信息量很少，它不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。
-
-## 代码
-
-放这里:
 
 
-![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FKYZHUFjpAr.png?alt=media&token=1d1635a5-9524-4918-986a-c9eb54a1a558)
-
-Service Trace Vector
-
-## 总结
+# 总结
 
 
-该论文想解决的问题：监控一个web service S1的健康状况，并且在异常的时候给出根因--是哪个节点故障引起的？
+1. 想解决的问题：监控一个web service S1的健康状况，并且在异常的时候给出根因--是哪个节点故障引起的？
 
 具体来说，这个web service S1由多个微服务组成，当外部应用向S1发起一个请求时（请求id就是uuid），S1 会将这个外部请求拆成一系列微服务之间的子调用。而如果其中微服务s1发生了故障，所有调用他的微服务s2,s3,...都会发生故障。
 
@@ -79,7 +45,21 @@ Service Trace Vector
 
 这样微服务和它们之间的调用（call path）关系就构成一个调用拓扑。当其中1个节点
 
-## 基本概念
+
+# 附录
+
+## 调用链的数据格式
+
+- 做调用链路分析（TraceAnomaly）用到了耗时，以及调用链的结构信息。
+- 2021AIOps比赛的调用链的数据：每个span_id表示一个trace中的一次子调用，耗时表示当前服务从接受call，到开始response的时间间隔。这里的表格信息量很少，它不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。
+
+## 代码
+
+https://github.com/chiechie/TraceAnomaly
+
+## 论文内容：
+
+### 基本概念
 
 - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fu9Iqc3l8Tq.png?alt=media&token=b8798779-4d40-4c62-a9f6-0322561041b5)
 - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FANIRoOIQ2o.png?alt=media&token=da808004-780a-460e-98e0-eef80cfb7fe8)
@@ -96,59 +76,58 @@ before s is called.
         - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fi4eYxs1D2B.png?alt=media&token=fdaf077a-cddc-4e9a-bd0f-4f2c291b3b4d)
 - 
     - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FzI6rcYmiD2.png?alt=media&token=449f532b-a126-40b0-a6dd-f07067847e3a)
-- [论文地址](https://netman.aiops.org/wp-content/uploads/2020/09/%E5%88%98%E5%B9%B3issre.pdf)
-- https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA
-- https://netman.aiops.org/wp-content/uploads/2020/09/%E5%88%98%E5%B9%B3issre.pdf
 
+	
+### TraceAnomaly总览
 
-## 论文内容：
+1. TraceAnomaly整体结构
+	![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FAEYpjsaibJ.png?alt=media&token=361e3b43-eeee-49af-90b7-fed65874868b)
 
-### II TraceAnomaly总览，STV构造方法，定位算法
+### STV构造方法
 
-- A. TraceAnomaly整体结构
-	- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FAEYpjsaibJ.png?alt=media&token=361e3b43-eeee-49af-90b7-fed65874868b)
-	- 在线检测时，每一个新的trace 被编码成一个向量（STV），
-		- 如果trace中包含有未见过的call path就认为是异常，当然这么简单粗暴的方式会带来误警，所以后面提出了白名单的方法（让运维人员去判断，当然只用判断1次）。
-		- 如果trace中没有unseen call path,就丢到神经网络中计算vector 的likelihood
-- B. 从一个调用链数据（trace）中提取调用路径（call paths）和 响应时长（response times） 
-	- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FaOsHfGkpQQ.png?alt=media&token=6b899aa5-ad63-4f57-899d-d97eb7f04e33)
-		- 计算微服务b的响应时间
-			- 同一行的右边减去左边表示，source 到arget的通信时间。
-			- rt（respond time） = 处理完事务并开始响应的时间点（第11行红色的时间戳） - 接受到指令的时间（第2行红色的时间戳）= 处理事务消耗的时间
+1. 在线检测时，每一个新的trace 被编码成一个向量（STV）:
+   - 如果trace中包含有未见过的call path就认为是异常，当然这么简单粗暴的方式会带来误警，所以后面提出了白名单的方法（让运维人员去判断，当然只用判断1次）。
+   - 如果trace中没有unseen call path,就丢到神经网络中计算vector 的likelihood
+2. 从一个调用链数据（trace）中提取调用路径（call paths）和 响应时长（response times） 
+	![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FaOsHfGkpQQ.png?alt=media&token=6b899aa5-ad63-4f57-899d-d97eb7f04e33)
+3. 计算微服务b的响应时间
+	- 同一行的右边减去左边表示，source 到arget的通信时间。
+	- rt（respond time） = 处理完事务并开始响应的时间点（第11行红色的时间戳） - 接受到指令的时间（第2行红色的时间戳）= 处理事务消耗的时间
 	- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fkqz7HgJgWs.png?alt=media&token=3be5adbe-1632-478e-b77e-39cae4d07068)
-- C. 构造STV（Service Trace Vector）
-	- Fig. 6: Trace t1 和 t2 结构一样, 但t1正常，t2 异常
-		- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FL-kGMqUym3.png?alt=media&token=a388505b-f239-4b57-b5f2-770253d44ead)
-		- t1 ：业务逻辑不要 b调用e。
-		- t2 ：业务逻辑要b调用e，但是因为e故障了导致调用失败。
-		- 两种情况都会导致看不到b->e的call path，但是t1是正常，而t2是异常。那么应该怎么做 才能找到 t2 ，而不误伤t1呢？看耗时
-- D. 定位根因
-	- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FTn7YZeNZvO.png?alt=media&token=12611153-f760-45de-843f-d2db11015f81)
+4. 构造STV（Service Trace Vector）
+   
+	![Fig. 6: Trace t1 和 t2 结构一样, 但t1正常，t2 异常](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FL-kGMqUym3.png?alt=media&token=a388505b-f239-4b57-b5f2-770253d44ead)
+	- t1 ：业务逻辑不要 b调用e。
+	- t2 ：业务逻辑要b调用e，但是因为e故障了导致调用失败。
+	- 两种情况都会导致看不到b->e的call path，但是t1是正常，而t2是异常。那么应该怎么做 才能找到 t2 ，而不误伤t1呢？看耗时
+5. STV的构造过程
+	![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FIcq2XYIGEe.png?alt=media&token=ac5e5876-cc3f-4fd2-94d4-fec58ebf3a1e)
+### 根因定位算法
+
+![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FTn7YZeNZvO.png?alt=media&token=12611153-f760-45de-843f-d2db11015f81)
 	- step1 先使用预测模型判断是否当前 trace是否异常
 	- step2 然后判断异常的维度是哪个？跟同构traces（valid dimension 一摸一样的traces）对比 每个维度的耗时。
 	- step3 链路最长的异常维度就是根因
 	- ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FZodnzghX6P.png?alt=media&token=a6870609-66c6-472d-998c-4e6efe4356cd)
 
 
-### III. 异常检测算法
+### 对STV做异常检测
 
-- A. 学习数据分布
-- B. 模型结构
+1. 通过生成模型学习数据分布，VAE模型结构
   ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F5CUrxFwPhA.png?alt=media&token=84b40833-873d-482b-979f-181f4fc3ad45)
-- C. 训练
-- D. 异常检测
+2. 训练VAE
+3. 使用VAE异常检测
 	- $$\log p_{\theta}(\mathbf{x}) \approx \log \frac{1}{L_{z}} \sum_{l=1}^{L_{z}}\left[\frac{p_{\theta}\left(\mathbf{x} \mid \mathbf{z}_{(l)}^{(K)}\right) p_{\theta}\left(\mathbf{z}_{(l)}^{(K)}\right)}{q_{\phi}^{(K)}\left(\mathbf{z}_{(l)}^{(K)} \mid \mathbf{x}\right)}\right]$$
-	- 某个trace为异常 等价于 ，该trace 的对数概率明显小于  正常trace（要求同构吗？）。怎么界定正常呢？用kde来拟合对数概率的分布
+	- 某个trace为异常 等价于 ，该trace 的对数概率明显小于  正常trace（要求同构吗？
+4. 怎么界定正常呢？用kde来拟合对数概率的分布
 
-### IV. 实施和部署
+### 实施和评估
 
 - A. Deployment at online services
 	![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FYT-1AJDNXX.png?alt=media&token=a4984091-89d3-424f-b97f-bfdbcfbf8409)
 - B. Dealing with Unseen Call Paths
 	![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FSuilsPv1oH.png?alt=media&token=6262ff2c-60ab-4e31-a60a-3fddc035ff7d)
-
-### V. 评估
-
+  
 - B. Anomaly Detection Baseline Approaches
   ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUrcO_5Aovy.png?alt=media&token=92e2bcbf-7711-401b-927e-636b9ca2d296)
 - E. Localizing Root Cause
@@ -156,15 +135,11 @@ before s is called.
   ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFJ0FxrFnTb.png?alt=media&token=12d55bec-55c0-4df7-a6ba-c074c5d829db)
 - demo复现
     - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FA_n0kckFDJ.png?alt=media&token=f438c18d-5396-4914-b321-903554ce6316)
-- STV的构造过程
-	![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FIcq2XYIGEe.png?alt=media&token=ac5e5876-cc3f-4fd2-94d4-fec58ebf3a1e)
+
     - 微服务e的响应时长 是故障根因，
 	![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGZoUsnaFDn.png?alt=media&token=06311178-0f22-4f3d-90ef-a67405dd20e1)
 
 
 ## 参考资料
-
 1. [清华微众AIOps新作:基于深度学习的调用轨迹异常检测算法 -微信公众号](https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA)
 2. [chapter2.1.4 AIOps挑战赛2021-demo方案](https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/)
-3. [Unsupervised Detection of Microservice Trace Anomalies through Service-Level Deep Bayesian Networks paper](https://netman.aiops.org/wp-content/uploads/2020/09/%E5%88%98%E5%B9%B3issre.pdf)
-4. [traceanomaly-github]( https://github.com/chiechie/TraceAnomaly)

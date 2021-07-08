@@ -13,29 +13,6 @@ categories:
 
 ---
 
-## 目录
-
-- [chapter0 概览](../AIOps-0-summary/)
-- [chapter1 故障发现](../AIOps-1-event-generate/)
-	- [chapter1.1 单指标异常检测](../AIOps-1_1-kpi-detector/)
-	- [chapter1.3 故障预测](../AIOps-1_2-fault-prediction/)
-	- [chapter1.4 指标异常关联](../AIOps-1_4-kpi-correlation/)
-	- [chapter1.5 日志聚类](../AIOps-1_5-log-analysis/)
-		- [chapter1.5.1 使用logmine加强版做日志聚类](../AIOps-1_5_1-log-analysis_logmine/)
-		- [chapter1.5.2 美团日志聚类](../AIOps-1_5_2-log-analysis_meituan/)
-- [chapter2 故障定位](../AIOps-2-event-analysis/)
-	- [chapter2.1 微服务系统的故障定位](../AIOps-2_1-topo-rca/)
-		- [chapter2.1.1 CauseInfer1](../AIOps-2_1_1-topo-rca-causeinfer-notes1/)
-		- [chapter2.1.2 CauseInfer2](../AIOps-2_1_2-topo-rca-causeinfer-notes2/)
-		- [chapter2.1.3 AIOps挑战赛2020-获奖方案分享](../AIOps-2_1_3-topo-rca-aiops2020/)
-		- [chapter2.1.4 AIOps挑战赛2021-demo方案](../AIOps-2_1_4-topo-rca-aiops2021/)
-		- [chapter2.1.5 N-Softbei2020比赛](../AIOps-2_1_5-topo-rca-cnsoftbei2020/)
-		- [chapter2.1.6 MicroCause](../AIOps-2_1_6-topo-rca-MicroCause)
-	- [chapter2.2 多维下钻根因定位](../AIOps-2_2-multi-dimensional-rca/)
-	- [chapter2.3 调用链根因分析](../AIOps-2_3-trace_rca/)
-	- [chapter2.4 时间序列关联性分析](../AIOps-2_4-metric_event_correlation/)
-- chapter3 故障恢复
-
 
 
 总结下: 先从业务指标异常触发定位，然后从调用链中异常的服务，然后服务对应的机器，定位根因指标。
@@ -48,7 +25,6 @@ categories:
 第二种定义为疑似异常节点，指父节点耗时-子节点耗时，除以父节点耗时大于等于51%的子节点，衡量的是父节点自己占用的资源。
 >
 > 第二种异常模式可能不太容易理解，其实它可以来源于生活中一个十分直观的观察，例如我们从商店订购了一份外卖，2个小时后才收到，这时候我们应该认为是商店备餐慢，还是骑手送货慢呢，想要知道答案，只需要看一看同一时间，点了相同外卖的其他人，是否也出现了收货慢的情况。
-
 
 
 ![根因定位框架](./framework.png)

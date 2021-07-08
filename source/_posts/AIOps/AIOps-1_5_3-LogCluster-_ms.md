@@ -30,12 +30,6 @@ tags:
     ![Log sequences represented as vectors](img_2.png)
 
     - Norm is Sigmoid, which normalizes the IDF to [0, 1].
-   > TF-IDF为词频-逆文件频率，用以评估一个词对于语料库中某一篇文章的重要程度，TF-IDF= TF*IDF.
-   > TF（term frequency）为词频，即一个词语在整个语料库中的出现频率，这个指标可以找到高频但是没有意义的词。
-   > IDF（Inverse Document Frequency）为逆文档频率，这个指标可以筛选出稀有词，比如"量化"，而过滤掉没有意义的随处可见的词。以为词越常见，分母越大，取值越小，假设总共有n篇文章，一个词在其中k篇文章中出现，则idf值为idf=log2(n/k).衡量的是这个词在文章分布中的稀有程度。
-   > 综合词频和稀有程度，可以得到一个词的重要性/信息含量
-
-   
 4. 层次聚类：聚类函数--N-维向量的cosine similarity， the cluster distance metric使用的是the maximum distance of all element pairs between two clusters，并且把 distance threshold θ作为stopping criterion for the clustering process
    ![Agglomerative Hierarchical Clustering](img_3.png)
    
@@ -105,5 +99,5 @@ log sequence： 属于同一个task ID的log message搜集起来。
 
 
 ## 参考
+
 1. [Log Clustering based Problem Identification for Online Service Systems- 微软](https://netman.aiops.org/~peidan/ANM2018Fall/6.LogAnomalyDetection/LectureCoverage/2016ICSE_Log%20Clustering%20based%20Problem%20Identification%20for%20Online%20Service%20Systems%20.pdf)
-2. https://zhuanlan.zhihu.com/p/31197209

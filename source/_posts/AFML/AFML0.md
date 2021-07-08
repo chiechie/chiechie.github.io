@@ -156,3 +156,4 @@ categories:
 1. 《Advances in Financial Machine Learning》
 2. https://blog.csdn.net/weixin_38753422/article/details/100179559
 3. https://zhuanlan.zhihu.com/p/69231390
+4. https://zhuanlan.zhihu.com/p/29208399

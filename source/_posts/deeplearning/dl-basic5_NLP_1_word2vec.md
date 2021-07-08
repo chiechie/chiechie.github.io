@@ -38,7 +38,7 @@ PCA和Word2vec的区别在于，两者对于何为「最优表达」的定义不
 - PCA认为重构误差最小的表达，就是最好的表达。即经过编码-解码之后,重构回原来空间时丢失尽可能少。
 - word2vec认为如果一个中心词的表达跟上下文表达关联最大，就是最好的表达。即经过编码-解码之后，中心词映射为背景词，或者，背景词映射为中心词。想预测另外一个东西。 其中，前者是（Skip-gram model，SG），后者是连续词袋模型（Continuous Bag-of-Words，CBOW）。
 
-![img.png](./img.png)
+![img.png](img.png)
 
 
 ## how word2vec?

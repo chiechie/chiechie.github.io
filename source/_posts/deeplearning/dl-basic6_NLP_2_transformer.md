@@ -1,5 +1,5 @@
 ---
-title: 深度学习6 Transformer的原理
+title: 深度学习6 Transformer
 author: chiechie
 mathjax: true
 date: 2021-03-13 00:04:13
@@ -16,361 +16,161 @@ categories:
 
 # Transformer总结
 
-> 先概括Transformer的主要设计思路；再讲每一步的具体技术细节。
-- 
 - Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。
 - Transformer的亮点在于将attention和self-attention完全剥离开之前rnn的结构，只跟dense层组合。
 - Transformer跟RNN没有关系, 只有attention和全连接层
 - Transformer比所有的rnn+attention效果都要好，机器翻译的王者
 - Transformer是一个翻译模型，在机器翻译任务中，eg德译英，输入一个德文句子，输出十一句英文。
-- Transformer由两部分组成：encoders和decoders组件
-   ![Transformer由两部分组成：encoders和decoders组件](./transformer_encoders_decoders.png)
-- 其中encoders由6个encoder堆叠而成，decoders由6个decoder堆叠而成。每一个encoder或一个decoder叫做一个block。
-encoders的6个个block，结构相同，但是不共享权重。
-![](./transformer_encoder_decoder_stack.png)
-- 对于encoders，每个block包含2层:
-   - self-attention层，参数不共享
-   - ffnn层，参数共享
-
-   ![](./Transformer_encoder.png)
-- 对于decoders，每个block除了包含self-attention和ffnn，还有一个encoder-decoder attention层，用来关注encoder的输出，作用类似于[seq2seq models](https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/) 中的attention。
-![](./Transformer_decoder.png)
-
-- attention+不带rnn的seq2seq
-![img_1.png](./img_1.png)
-![img_5.png](./img_5.png)
-- self attention
-
-![img_2.png](./img_2.png)
-
-![img_3.png](./img_3.png)
-
-- attention的演进
-
-![img_4.png](./img_4.png)
-
+- Transformer由两部分组成：encoders和decoders
+- encoders由6个encoder堆叠而成，decoders由6个decoder堆叠而成，一个encoder或一个decoder叫做一个block。
+- encoders的每个block有2层：self-attention和dense，每个block结构相同，但不共享权重。
+- decoders的每个block有3层：self-attention，attention和dense，其中attenton用来关注encoder的输出，
+- attention技术的演进：attention + 基于rnn的seq2seq --> self-attention + lstm --> attention/self attention + dense.
+- 论文通过增加"多头"注意机制强化self-attention layer。 这在两个方面改善了self-attention层的表现:它扩展了模型关注不同位置的能力。单头机制虽然会注意到其他单词，但是注意力还是 很有可能完全被当前自己的状态牵制。多头的话，相当于多审视几遍 这个注意力，减少完全 关注自己 情况发生的可能性。 它给予attention层多个"表示子空间"。 正如我们接下来将看到的，通过多头，我们不仅有一组，而且有多组 query / key / value 权重矩阵(Transformer 使用八个头，因此我们最终为每个encoders / decoders设置了八组)。 这些集合中的每一个都是随机初始化的。训练完后，每组的三个矩阵，用于将embedding输入映射到表征子空间。
 
 # 附录
 
-## 单头和多头self attention
+## 输入和位置编码
 
-![img_6.png](./img_6.png)
-![img_7.png](./img_7.png)
-- 每个单头self-attention层有三个参数矩阵
-- 多头attention层就有3*l个参数矩阵（l代表头的个数）
-- 单头的context vector是一个d * m维的矩阵
-- 多头的context vector是一个(dl) *m维的矩阵
-
-## 单头和多头attention
-![img_8.png](./img_8.png)
-
-## 用多头self-attention和全连接层搭建一个encoder
-![img_9.png](./img_9.png)
-全连接层共享参数矩阵
-
-多搭几层
-![img_10.png](./img_10.png)
-
-## transformer的encoder
-
-![img_11.png](./img_11.png)
-block都有自己的参数
-![img_13.png](./img_13.png)
-
-## 用多头attention和全连接层搭建一个decoder
-
-![img_12.png](./img_12.png)
-
-## 整体
-![img_14.png](./img_14.png)
-
-![img_15.png](./img_15.png)
-
-
-## 输入tensor
-上面介绍了Transformer的主要组件，现在看一下组件之间的数据流向。
-
-和一般的NLP任务一样，Transformer首先使用[embedding algorithm](https://medium.com/deeper-learning/glossary-of-deep-learning-word-embedding-f90c3cec34ca)将每个输入单词转换成一个向量。
-
-
+1. 和一般的NLP任务一样，用embedding algorithm将每个输入单词转化为词向量之后，才能作为Transformer的输入使用。
+2. 如下图，3个单词被embedded为3个512维的向量
 ![](./transformer_embeddings.png) 
-
-如上图，每个单词都被embedded为大小为512的向量（上面的x1，x2，x3）。 
-
-接下来，这个512的向量会流入self-attention和ffnn层。
-
+3. 接下来，将这3个512维的词向量传入self-attention和dense层
 ![](./transformer_encoder_with_tensors.png)
-
-接下来，我们以一个短句为例，看一下Transfomer内部细节。
-
-## Encoder
-
-前面提到，encoder的输入是多个向量构成的list：[x1，x2]。
-
-接下来它是怎么处理这个list的呢？
-
-1. 将这些向量传递到一个"self-attention’"层，输出z1，z2
-2. 然后将z1，z2 丢入一个前馈神经网络，输出r1，r2。注意这一层的dense layer的参数对所有的z1，z2，是共享的。
-
-然后将r1，r2 传递给下一个编码器encoder2作为输入，encoder1的输入（x1,x2）和输出（r1，r2）的维度是一样的。
-
-![img](./transformer_encoder_with_tensors_2.png)
-
-### self-attention
-
-####  High Level ideas
-
-假设下面的句子是我们要翻译的输入句子:
-
-”`The animal didn't cross the street because it was too tired`”
-
-这个句子中的"it"指的是什么？它指的是“street”还是“Theanimal”？对于人类来说很简单区分，但对于算法就不那么简单了。
-
-当模型解读每个word时，self-attention会让模型回顾上下文信息，也就是输入序列中的其他word，从而帮助模型更好地理解这个word。
-
-RNN通过hidden state策略，使得 它将 当前词  与 上下文（准确来说只有上文）的信息进行融合。  
-
-类似的，Transformer通过self-attention来实现这个目的。
-
-还是回到上面的例子，当模型处理单词"it"时，self-attention使它能够将"it"与"animal"联系起来。
-
-
-
-![img](./transformer_self-attention_visualization.png) 
-
-上图表示，当我们在encoder #5 中对"it"编码时，self-attention会将一部分注意力集中在"Animal"上，并将“Animal”的信息融入了"it"的编码中。
-
-相关可视化工具参考Tensor2Tensor （[Tensor2Tensor notebook](https://colab.research.google.com/github/tensorflow/tensor2tensor/blob/master/tensor2tensor/notebooks/hello_t2t.ipynb) ）。
-
-先看看如何使用向量计算self-attention，然后再看看使用矩阵如何实现。。
-
-#### 第一步 计算3个向量
-
-对于每个单词，我们创建三个向量：
-
-- 一个 Query vector
-- 一个 Key vector
-- 一个 Value vector。
-
-这些向量是通过将单词的embedding乘以三个矩阵来创建的。
-
-请注意，得到的新向量的维度（64）比embedding（512）小。 
-
-这么设计的目的是，保证在加入了multi-head self- attention之后，encoder的输出和输入维度（512）还能保持一致。
-
-![img](./transformer_self_attention_vectors.png) 
-这三个向量如何解读？为何有用？
-
-#### 第二步 计算权重分数
-
-第二步是计算权重分数$\alpha$，目的是量化 其他单词应该被关注的程度。
-
-方法如下：
-
-当前单词的query vector和其他单词的 key vector求 内积。
-
-如下:
-
-$<q_1, k_1>, <q_1, k_2>, ... < q1, k_m>$
-
-![img](./transformer_self_attention_score.png) 
-
-
-
-#### 第三步和第四步 -权重分数归一化
-
-第三步：将第二步算出来的权重得分向量（长度为m）进行归一化，目的是让权重不要受到key vector的长度（paper里面是64）的影响，这样算梯度就更稳定，。
-
-第四步：将归一化的权重得分向量（长度为m）送入激活函数（paper里面是softmax），目的是得到一个概率向量，所有数值加起来为1。
-
-最终的向量，表示每个单词应该被当前单词关注的程度，值越大越应该被关注。。
-
-
-![img](./transformer_self-attention_softmax.png) 
-
-
-
-#### 第五步和第六步-计算context向量
-
-第五步和第六步是将每个单词的value vector使用权重概率向量进行加权求和，作为当前单词的self-attention表达（长度为value vector的长度为64，用了8个头，一起输出是64* 8 = 512）。
-
-![img](./transformer_self-attention-output.png) 
-
-然后就结束了。
-
-#### 使用矩阵运算对self-attention整个过程总结
-
-把刚刚的过程再加入一个维度，也就是从一个单词 变成 多个单词，计算他们各自的self-attention表示，
-
-下面用矩阵表达：
-
-第一步是计算 Query、 Key 和 Value 矩阵：
-
-- 我们将embeddings塞到一个矩阵x：行数表示单词个数，列表示embedding的长度
-
-- 权重矩阵(WQ、 WK、 WV）：行代表embedding向量的长度，列分别代表query空间，key空间，value空间的维度
-- X分别和这几个矩阵相乘
-
-![img](./transformer_self-attention-matrix-calculation.png) 
-
-
-第二步，利用第一步的结果来计算attention的输出，用一个矩阵计算来表达，简洁优雅
-
-![img](./transformer_self-attention-matrix-calculation-2.png) 
-
-
-### 多头怪兽
-
-论文通过增加"多头"注意机制进一步细化self-attention layer。 这在两个方面改善了self-attention层的表现:
-
-1. 它扩展了模型关注不同位置的能力。单头机制虽然会注意到其他单词，但是注意力还是 很有可能完全被当前自己的状态牵制。多头的话，相当于多审视几遍 这个注意力，减少完全 关注自己 情况发生的可能性。
-
-2. 它给予attention层多个"表示子空间"。 正如我们接下来将看到的，通过多头，我们不仅有一组，而且有多组 query / key / value 权重矩阵(Transformer 使用八个头，因此我们最终为每个encoders / decoders设置了八组)。 这些集合中的每一个都是随机初始化的。 
-
-   训练完后，每组的三个矩阵，用于将embedding输入(或来自底层的编encoders/decoders向量)映射到表征子空间。
-
-![img](./transformer_attention_heads_qkv.png)
-
-类似上面提到的单头self-attention计算，我们现在只是用8个不同的权重矩阵算了8次，并且得到了8个不同的 z 矩阵
-
-![img](./transformer_attention_heads_z.png)
-
-
-后面怎么跟dense层进行衔接呢？
-
-1. 将这8个z矩阵进行列拼接（concat）
-2. 拼接后的矩阵大小为m*512，丢入全连接层WO
-
-![img](./transformer_attention_heads_weight_matrix_o.png)
-
-这几乎就是multi-headed self-attention的全部内容。把整个过程放在一个图中描述：
-
-
-![img](./transformer_multi-headed_self-attention-recap.png)
-
-
-回顾一下之前的例子，当我们对"it"进行encoding时，8个注意力头分别关注什么？
-
-
-先看2个头的情况：
-
-如下图所示，在对"it"进行encoding时，一个head（黄色）最关注"animal"上，而另一个head（绿色）最关注“tired”——某种意义上说，这个模型对"it"表达融合了"animal"和“tied”信息。
-
-![img](./transformer_self-attention_visualization_2.png)
-
-再看8个头的情况：
-
-如下图所示，我们把8个头的信息都表达在图中，就会变得很难解释：
-
-![img](./transformer_self-attention_visualization_3.png) 
-
-### 用位置编码（Positional Encoding）表示序列的顺序
-
-到目前为止，我们的模型还没有考虑词的顺序关系。
-
-为了解决这个问题，transformer向每个输入embedding向量（x1）又加上一个位置编码向量（t1）。
-
-
-
+4. 位置编码（Positional Encoding）表示序列的顺序, 为了让模型学习到词的顺序关系，transformer向每个输入embedding向量（x1）又加上一个位置编码向量（t1）。
 ![img](./transformer_positional_encoding_vectors.png)
-
-
-假设embedding的维度是4，那么实际的位置编码看起来是这样的:
-
+5. 假设embedding的维度是4，那么实际的位置编码看起来是这样的:
 ![img](./transformer_positional_encoding_example.png)
 
 
-这个模式意味什么？
+## 多头self attention
 
-在下图中，每一行对应一个向量的位置编码。第一行表示第一个word。
-
-每行包含512个值，介于1和 -1之间。用颜色表示值的大小
-
-![img](./transformer_positional_encoding_large_example.png) 
-
-
-
-可以看到所有的位置编码向量被分成了两半。 左半边的值是由一个函数(使用正弦函数)生成的，而右半边的值是由另一个函数(使用余弦函数)生成的。 然后将它们进行拼接（concate）。
-
-本文(3.5节)描述了位置编码[`get_timing_signal_1d()`](https://github.com/tensorflow/tensor2tensor/blob/23bd23b9830059fbc349381b70d9429b5c40a139/tensor2tensor/layers/common_attention.py)的公式。 这只是其中一种位置编码的方法。
-
-### 残差连接和layer-normalization
-
-encoder的架构中还有一个细节：在每个block中，self-attention和ffnn都有一个残差连接，然后接一个层标准化（layer-normalization）步骤。
-
-![img](./transformer_resideual_layer_norm.png) 
-
-如果我们将残差连接和layer normalization用矩阵表示，就是下图：
-
-![img](./transformer_resideual_layer_norm_2.png) 
-
-
-
-decoder的sub-layers 也同样用到了add & normalization的设计。
-
-下图是一个简化版的Transformer架构：由2个stacked encoder和2个stacked decoder组成。
-
-![img](./transformer_resideual_layer_norm_3.png)
-
-
-
-## Decoder
-
-现在来看看encoder和decoder是如何协作的：
-
-- 第一个的encoder的输入式原始的embedding；
-- 最后一个encoder输出是一个z向量，以及两个矩阵：keys matrix和value maxtrix
+1. 每个单头self-attention层有三个参数矩阵，单头的context vector是一个d * m维的矩阵
+![单头self-attention](./img_6.png)
+2. 多头attention层就有3*l个参数矩阵（l代表头的个数），多头的context vector是一个(dl) *m维的矩阵
+![多头self-attention](./img_7.png)
+   ![img](./transformer_attention_heads_qkv.png)
+3. 类似上面提到的单头self-attention计算，我们现在只是用8个不同的权重矩阵算了8次，并且得到了8个不同的 z 矩阵
+![img](./transformer_attention_heads_z.png)
+3. 当解读一个句子中的一个word时， Transforme中的encoder通过self-attention来回顾上下文信息，找出输入序列中的重要的word，从而更关注重要信息，并且会把重要word的value vector编码到自己的向量里面去。
+RNN通过hidden state策略，使得它将当前词与上下文（准确来说只有上文）的信息进行融合。
+4. self-attention的输入是m个词向量，输出是m个context vector，vector表示融合了上下文之后，对word再次编码。
+![img_2.png](./img_2.png)
+![img_3.png](./img_3.png)
+5. 如何实现self-attention layer？即如何实现计算context vector？
+- step1: 对于每个输入的word的此向量分别计算3个表示向量：
+  - Query vector： $q_i$, to match others；
+  - Key vector：$k_i$, to be matched；
+  - Value vector：$v_i$ to be weighted averaged 。
+  - 这些向量是通过将输入的词向量做三次线性变换得到的，当然对应的三个矩阵是需要学习的。
+  - 请注意，得到的新向量的维度（64）比embedding（512）小。这么设计为了保证，加入多头self-attention之后，encoder的输出和输入维度（512）还能保持一致。
+   > 8头 * 64 = 512
+- step2: 计算权重分数, 目的是量化其他单词应该被关注的程度。
+   - 计算当前单词的query vector和其他单词的key vector的内积
+- step3: 权重分数归一化。将上一步算出来的权重得分向量（长度为m）进行归一化，目的是让权重不要受到key vector的长度（paper里面是64）的影响，这样算梯度就更稳定。
+- step4：将归一化的权重得分向量（长度为m）送入softmax，目的是得到一个概率向量，所有数值加起来为1。示每个单词应该被当前单词关注的程度，值越大越应该被关注。。
+- step5：计算contect vector。将每个单词的value vector使用权重概率向量进行加权求和，作为当前单词的self-attention表达（输出长度为64 * 8个头 = 512）。
+6. 把刚刚的过程再加入一个维度，也就是从一个单词 变成 多个单词，计算他们各自的self-attention表示，用矩阵表达该计算流程：
+- 第一步是计算 Query、 Key 和 Value 矩阵：
+   - 我们将embeddings塞到一个矩阵x：行数表示单词个数，列表示embedding的长度
+   - 权重矩阵(WQ、 WK、 WV）：行代表embedding向量的长度，列分别代表query空间，key空间，value空间的维度
+   - X分别和这几个矩阵相乘
+   ![](./transformer_self-attention-matrix-calculation.png)
+- 第二步，利用第一步的结果来计算attention的输出，用一个矩阵计算来表达，简洁优雅
+   ![](./transformer_self-attention-matrix-calculation-2.png) 
 
 
 
-![img](./transformer_decoding_1.gif)
+## dense层
 
-
-
-encoding阶段（phase）完成后，我们开始decoding阶段，decoding的每个step描述如下：
-
-1. 每个step 输出一个element的概率分布。
-2. 从step1的概率分布中抽样出word（或者直接选择概率最大的word），作为decoder的输入。
-3. 重复step1，直到产生结束符。
-
+1. 后面怎么跟dense层进行衔接呢？1. 将这8个z矩阵进行列拼接（concat）；2. 拼接后的矩阵大小为m*(8*64) = m *512，丢入dense层
+![img](./transformer_attention_heads_weight_matrix_o.png)
+2. 这就是multi-headed self-attention的大部分内容。把整个过程放在一个图中描述：
+![img](./transformer_multi-headed_self-attention-recap.png)
    
 
-decoder也会用到位置编码，下图的右半边
 
-![img](./transformer_decoding_2.png)
 
-decoder中的 self attention layers与encoder的运作方式略有不同:
 
-在decoder中，self-attention layer只能接触到输出序列中的前半部分。 
+## encoder block = 多头self-attention + dense layer
+1. encoder block ≈ 多头self-attention + dense。encoder block的输入维度是512×𝑚，输出维度是512×𝑚.
+2. 以一个短句为例,看看encoder的处理流程:
+   1. 将[x1，...,xm]输入多头self-attention层, 得到m个context vector
+   2. 将m个context vector输入dense + relu，得到m个重新编码后的向量[u1,...,um]，dense层对m个word生效。
+   3. 将[u1,...,um]传递给下一个编码器encoder2作为输入。
+      ![img_9.png](./img_9.png)
+      ![img_10.png](./img_10.png)
 
-怎么做到呢？在softmax操作之前，masking序列后半部分(设为 -inf)
 
-"Encoder-Decoder Attention"层的工作原理和多头self-attention一样，只不过它的Queries矩阵来自下面的decoder的输出和stacked encoder中的Keys矩阵和Values矩阵 。
+## 残差连接和layer-normalization
 
-## 最后的dense层和Softmax层
+1. 每个encoder block中，self-attention和dense都有一个残差连接，然后接一个层标准化（layer-normalization）。
+![img](./transformer_resideual_layer_norm.png)
+2. 如果我们将残差连接和layer normalization用矩阵表示，就是下图：
+![img](./transformer_resideual_layer_norm_2.png)
+3. decoder的sub-layers 也同样用到了add & normalization的设计。
+下图是一个简化版的Transformer架构：由2个stacked encoder和2个stacked decoder组成。
+![img](./transformer_resideual_layer_norm_3.png)
+4. 更准确来说 encoder block = positional codeing + 多头self-attention + add & normalizatioin + dense layer + add & normalizatioin
 
-stack decoders输出一个数值向量。 我们怎么把它变成一个词呢？
 
-这是最后的dense层+softmax在做的事情。
+## encoder network = 6 * encoder block 
 
-dense层是一个简单的全连接神经网络，它将stack of decoders的输出映射为一个长多的logits向量（长度就是输出词汇表的大小）。
+encoder network is a stack of 6 encoder blocks.
 
+![img_11.png](./img_11.png)
+
+
+## 多头attention
+
+1. 单头attention层，要计算3个向量，先计算q跟每个k的相关性（求内积），然后做softmax变换得到权重得分，对所有的v使用该权重求和，得到decoder的这个词相对encoder的表示，也就是context vector。
+![单头atttion](img.png)
+2. decoder中的attention，q来自两部分：下面的decoder的输出和最上面encoder中的Keys矩阵和Values矩阵 。
+   ![img_17.png](img_17.png)
+   ![img_18.png](img_18.png)
+1. Attention 层的Queries 
+
+![img_1.png](./img_1.png)
+![img_5.png](./img_5.png)   
+![img_8.png](./img_8.png)
+
+
+## decoder block = 多头self-attention +  多头attention +  dense layer
+
+![img_13.png](./img_13.png)
+1. 1个decoder block ≈ 多头self-attention + 多头attention + dense。decoder block的输入有两个，一个是encoder的输出（512×m）， 一个来自decoder当前的的输出（512×t ）.
+2. encoding阶段（phase）完成后，我们开始decoding阶段，decoding的每个step描述如下：
+    ![img](./transformer_decoding_1.gif)
+   ![img](./transformer_decoding_2.png)
+    1. 每个时刻，输入第6个encoder产生的m个keys vectors和value vectors，输出一个element的概率分布pdf。
+    2. 从pdf中抽样出word（或者直接选择概率最大的word），作为decoder的输入。
+    3. 重复step1，直到产生结束符。
+3. decoder也会用到位置编码.
+4. decoder中的self attention layers:与encoder的运作方式略有不同,在decoder中，self-attention layer只能接触到输出序列中的前半部分。怎么做到呢？在softmax操作之前，masking序列后半部分(设为 -inf)
+
+
+## decoder network = 6 * decoder block 
+
+1. Decoder network is a stack of 6 decoder blocks.
+
+    ![](./img_12.png)
+    ![](./Transformer_decoder.png)
+2. stack decoders输出一个数值向量。 我们怎么把它变成一个词呢？ 这是最后的dense层+softmax在做的事情。它将stack of decoders的输出映射为一个权重向量。（长度就是输出词汇表的大小）
+3. 这个图从底部开始，生成一个vector作为decoder stack的输出。 然后它被转换成一个输出单词。
 ![img](./transformer_decoder_output_softmax.gif) 
-这个图从底部开始，生成一个vector作为decoder stack的输出。 然后它被转换成一个输出单词。
 
+
+## Transformer = encoder network+ decoder network
+
+![img_14.png](./img_14.png)
+![img_15.png](./img_15.png)
+![Transformer=encoders+decoders](./transformer_encoders_decoders.png)
+![](./transformer_encoder_decoder_stack.png)
 
 
 ## 训练
 
-我们假设输出词汇表只包含六个单词("a"、"am"、"i"、"thanks"、"student"和"eos"("句子结束"的缩写))。
-
->  模型的输出词汇表是在开始训练之前的预处理阶段创建的。一旦定义了输出词汇表，就可以使用 one-hot 编码 来表示词汇表中的每个单词。
-
-假设我们正在训练的目标是将"merci"翻译成"thanks"。
-
-也就是说，当我们输入“merci”的embedding向量，希望模型输出的概率分布向量中单词"thanks"的概率值最大。
-
-训练的过程：将模型输出与目标输出进行比较，然后使用反向传播方法调整模型的权重，使模型输出更接近目标输出。
+学习的目标？ 将模型输出与目标输出进行比较，然后使用反向传播方法调整模型的权重，使模型输出更接近目标输出。
 
 如何比较两种概率分布？ 可查看 [cross-entropy](https://colah.github.io/posts/2015-09-Visual-Information/)和 [Kullback-Leibler](https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained). 。
 
@@ -383,12 +183,13 @@ dense层是一个简单的全连接神经网络，它将stack of decoders的输�
 ![img](./transformer_output_trained_model_probability_distributions.png)
 
 
+## 应用的一个例子
 
-# bert模型
-![bert模型可视化](https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&rect=0%2C0%2C2668%2C3126&w=1980&h=2320)
+![img_20.png](img_20.png)
 
+# 参考
 
-## 参考
-
-1. [Attention Is All You Need ](https://arxiv.org/abs/1706.03762) paper, the Transformer blog post ( ([Transformer: A Novel Neural Network Architecture for Language Understanding ](https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html)), and the ) ，[Tensor2Tensor announcement](https://ai.googleblog.com/2017/06/accelerating-deep-learning-research.html).
-2. [Transformer模型(2/2): 从Attention层到Transformer网络](https://www.youtube.com/watch?v=aJRsr39F4dI)
+1. Bahdanau, Cho, & Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.
+2. Cheng, Dong, & Lapata. Long Short-Term Memory-Networks for Machine Reading. In EMNLP, 2016.
+3. Vaswani et al. Attention Is All You Need. In NIPS, 2017.
+4. [Transformer模型(2/2): 从Attention层到Transformer网络](https://www.youtube.com/watch?v=aJRsr39F4dI)

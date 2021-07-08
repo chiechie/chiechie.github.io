@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="chapter 10 押注大小 跟策略无关的押大小方法  假定三期股价为 [1, 0.5, 1.25]，仓位1: [0.5, 1, 0] &amp; 仓位2: [1, 0.5, 0]，则前者挣钱而后者亏钱。我们偏好这样的下注策略：建仓时保留一些现金，如果交易信号加强（股价变为0.5），我们可以追加投资。 交易信号越强，下注可以越大，因为交易信号很难变得更强了。所以预测的概率 与下注之间可以构建一种">
+  <meta name="description" content="chapter 10 押注大小  即使股价预测很准，但是头寸配置的不恰当，还是有可能亏钱。   假定三期股价为 [1, 0.5, 1.25]，仓位1: [0.5, 1, 0] &amp; 仓位2: [1, 0.5, 0]，则前者挣钱而后者亏钱。 我们偏好这样的下注策略：建仓时保留一些现金，如果交易信号加强（股价变为0.5），就追加投资。 交易信号越强，下注可以越大，因为交易信号很难变得更强了。所以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Advances in Financial Machine Learning》读书笔记3 回测">
 <meta property="og:url" content="https://chiechie.github.io/2021/07/07/AFML/AFML3-md/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="chapter 10 押注大小 跟策略无关的押大小方法  假定三期股价为 [1, 0.5, 1.25]，仓位1: [0.5, 1, 0] &amp; 仓位2: [1, 0.5, 0]，则前者挣钱而后者亏钱。我们偏好这样的下注策略：建仓时保留一些现金，如果交易信号加强（股价变为0.5），我们可以追加投资。 交易信号越强，下注可以越大，因为交易信号很难变得更强了。所以预测的概率 与下注之间可以构建一种">
+<meta property="og:description" content="chapter 10 押注大小  即使股价预测很准，但是头寸配置的不恰当，还是有可能亏钱。   假定三期股价为 [1, 0.5, 1.25]，仓位1: [0.5, 1, 0] &amp; 仓位2: [1, 0.5, 0]，则前者挣钱而后者亏钱。 我们偏好这样的下注策略：建仓时保留一些现金，如果交易信号加强（股价变为0.5），就追加投资。 交易信号越强，下注可以越大，因为交易信号很难变得更强了。所以">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chiechie.github.io/2021/07/07/AFML/AFML3-md/img.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/07/07/AFML/AFML3-md/img_1.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/07/07/AFML/AFML3-md/img_2.png">
 <meta property="article:published_time" content="2021-07-07T03:08:30.000Z">
-<meta property="article:modified_time" content="2021-07-08T02:55:20.189Z">
+<meta property="article:modified_time" content="2021-07-08T07:49:20.556Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="量化">
 <meta property="article:tag" content="投资">
@@ -203,7 +203,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-08 10:55:20" itemprop="dateModified" datetime="2021-07-08T10:55:20+08:00">2021-07-08</time>
+                <time title="修改时间：2021-07-08 15:49:20" itemprop="dateModified" datetime="2021-07-08T15:49:20+08:00">2021-07-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,35 +234,42 @@
 
       
         <h2 id="chapter-10-押注大小">chapter 10 押注大小</h2>
-<h3 id="跟策略无关的押大小方法">跟策略无关的押大小方法</h3>
+<blockquote>
+<p>即使股价预测很准，但是头寸配置的不恰当，还是有可能亏钱。</p>
+</blockquote>
 <ol type="1">
-<li>假定三期股价为 [1, 0.5, 1.25]，仓位1: [0.5, 1, 0] &amp; 仓位2: [1, 0.5, 0]，则前者挣钱而后者亏钱。我们偏好这样的下注策略：建仓时保留一些现金，如果交易信号加强（股价变为0.5），我们可以追加投资。</li>
+<li>假定三期股价为 [1, 0.5, 1.25]，仓位1: [0.5, 1, 0] &amp; 仓位2: [1, 0.5, 0]，则前者挣钱而后者亏钱。</li>
+<li>我们偏好这样的下注策略：建仓时保留一些现金，如果交易信号加强（股价变为0.5），就追加投资。</li>
 <li>交易信号越强，下注可以越大，因为交易信号很难变得更强了。所以预测的概率 与下注之间可以构建一种函数关系. <img src="img.png" alt="img.png" /></li>
 <li>如果每次预测时，如果交易信号的微小改变就要调仓，那换手率就太高了，作者建议可以对预测结果做滑动平均，或者将下注量离散化（如下图） <img src="img_1.png" alt="img_1.png" /></li>
-<li>当股票的市场价格<span class="math inline">\(p_t\)</span>和预测价格<span class="math inline">\(f_t\)</span>波动时，可用如下方法动态地确定下注量<span class="math inline">\(\hat{q}_{i, t}\)</span>： <span class="math display">\[\hat{q}_{i, t}=\operatorname{int}\left[\frac{x}{\sqrt{w+x^{2}}} \cdot Q\right]\]</span>, <span class="math inline">\(x=f_{i}-p_{t}\)</span>为预测价与当前价的差价， Q为最大持仓量。</li>
-<li>即使预测算法，预测的很对，但是头寸配置的不恰当，还是有可能亏钱。</li>
-<li>一般来说，倾向于保留部分cash，在交易信号变弱之前会增强，用于这段时间的交易。</li>
-<li>常用的方法之一是计算两个bet concurrency序列：number of concurrent short/long bets at time t，然后对long和short求差。计算bet concurrency的方法跟计算label concurrency的方法一致。</li>
-<li>第二种方法是，follow预算的方法，计算concurrent long/short bets的最大值，用类似2的方式推导bet size，最大position用于不回答道，在最后一个concurrent信号触发之前。</li>
-<li>第三种方法是应用 meta-labeling，拟合一个分类起，确定错误分类的概率，然后使用这个概率来推导bet size。</li>
+<li>当股票的市场价格<span class="math inline">\(p_t\)</span>和预测价格<span class="math inline">\(f_t\)</span>波动时，可用如下方法动态地确定下注量<span class="math inline">\(\hat{q}_{i, t}\)</span>： <span class="math display">\[\hat{q}_{i, t}=\operatorname{int}\left[\frac{x}{\sqrt{w+x^{2}}} \cdot Q\right]\]</span>, <span class="math inline">\(x=f_{i}-p_{t}\)</span>为预测价与当前价的差价， Q为最大持仓量。 &gt; label就是交易信号，表示买或者卖, 两个label 如果是基于相同时间段的收益率 计算出来的，就说是concurrent的.</li>
+<li>基于预测概率确定BET SIZING</li>
+<li>平均主动BETS</li>
+<li>动态BET SIZES 和 限定价格</li>
 </ol>
-<blockquote>
-<p>label表示 买/卖 信号, 两个label 如果是基于相同时间段的收益率 计算出来的，就说是concurrent的.</p>
-</blockquote>
-<h3 id="基于预测概率确定bet-sizing">基于预测概率确定BET SIZING</h3>
-<h3 id="平均主动bets">平均主动BETS</h3>
-<h3 id="动态bet-sizes-和-限定价格">动态BET SIZES 和 限定价格</h3>
 <h2 id="chapter-11-回测有风险">chapter 11 回测有风险</h2>
 <p>回测是量化中最重要但也最容易被误用的工具，本章将介绍回测时容易犯的错误。</p>
-<p>一个物理实验室可以通过控制变量来探究精确的因果关系，而回测不是实验，它并不能证明一个策略好，只能证明一个策略不好。要做好回测极其困难，我们至少会面临这些问题：</p>
-<p>幸存者偏差：只用现存的股票构建投资组合回测，殊不知过去多少公司倒闭退市了；Look-ahead bias：回测时用到的数据在那一刻还没发布；事后诸葛亮（各种事后分析都在编故事）；手续费：要模拟手续费很难，唯一准确的方式是上实盘；空头：实际交易中如何找借方、空头的成本、空头的额度都需要考虑；</p>
-<p>即使你避免了以上所有问题，你的回测也可能是错的——在一个数据集上回测了成百上千次才得到的漂亮结果，大概率是假的。如第八章所述，特征重要性分析帮助我们理解 ML 发现的结果，它在回测之前进行，是一种“事前“归因。相反，回测并不能帮我们理解为什么一个策略会盈利。通过回测发现的有效“因子”如同上一期彩票的中奖号码，对下一轮抽奖无益。回测前做好数据结构化、标签、加权比回测本身更重要。</p>
-<p>重复回测带来的过拟合可以认为是一种选择偏差，要避免这种偏差可能是量化中最根本的问题。以下步骤可以帮我们减少这种偏差：</p>
-<p>在多种金融资产上回测：由于金融资产的多样性，如果你发现错误 只存在于债券 ，那该策略很可能是错的；用 bagging 减少过拟合；在完成本书章节 1-10 的研究之前别回测；记录得到当前结果之前回测了多少次，从而推算出过拟合的可能性；假如回测结果没能得到有效的策略，从头开始。千万不要在回测结果的基础上继续研究。</p>
-<blockquote>
-<p>Backtesting while researching is like drinking and driving. Do not research under the influence of a backtest.</p>
-</blockquote>
-<p>如果用标准 CV 回测来选择策略，一些回测路径会重复出现，导致极易过拟合。所以一些随机性非常有必要，例如基于 probability of backtest overfitting (PBO) 的回测。</p>
+<ol type="1">
+<li>一个物理实验室可以通过控制变量来探究精确的因果关系，而回测不是实验，它并不能证明一个策略好，只能证明一个策略不好。</li>
+<li>要做好回测极其困难，我们至少会面临这些问题:
+<ul>
+<li>幸存者偏差：只用现存的股票构建投资组合回测，殊不知过去多少公司倒闭退市了；</li>
+<li>Look-ahead bias：回测时用到的数据在那一刻还没发布；</li>
+<li>事后诸葛亮（各种事后分析都在编故事）；</li>
+<li>手续费：要模拟手续费很难，唯一准确的方式是上实盘；</li>
+<li>空头：实际交易中如何找借方、空头的成本、空头的额度都需要考虑；</li>
+</ul></li>
+<li>即使避免了以上问题，你的回测也可能是错的——在一个数据集上回测了成百上千次才得到的漂亮结果，大概率是假的。如第八章所述，特征重要性分析帮助我们理解 ML 发现的结果，它在回测之前进行，是一种“事前“归因。相反，回测并不能帮我们理解为什么一个策略会盈利。通过回测发现的有效“因子”如同上一期彩票的中奖号码，对下一轮抽奖无益。回测前做好数据结构化、标签、加权比回测本身更重要。</li>
+<li>重复回测带来的过拟合可以认为是一种选择偏差，要避免这种偏差可能是量化中最根本的问题。</li>
+<li>以下步骤可以帮我们减少这种偏差:
+<ul>
+<li>在多种金融资产上回测：由于金融资产的多样性，如果你发现错误 只存在于债券，那该策略很可能是错的；</li>
+<li>用 bagging 减少过拟合；在完成本书章节1-10 的研究之前别回测；</li>
+<li>记录得到当前结果之前回测了多少次，从而推算出过拟合的可能性；</li>
+<li>假如回测结果没能得到有效的策略，从头开始。千万不要在回测结果的基础上继续研究。 &gt; Backtesting while researching is like drinking and driving. &gt; Do not research under the influence of a backtest.</li>
+</ul></li>
+<li>如果用标准CV回测来选择策略，一些回测路径会重复出现，导致极易过拟合。所以一些随机性非常有必要，例如基于probability of backtest overfitting (PBO) 的回测。</li>
+</ol>
 <h2 id="chapter-12-使用交叉验证做回测">chapter 12 使用交叉验证做回测</h2>
 <p>本章将介绍三种回测方法，希望能得到更准确的回测结果。</p>
 <ol type="1">
@@ -287,10 +294,10 @@
 <h2 id="chapter-13-在合成数据上做回测">chapter 13 在合成数据上做回测</h2>
 <p>本章将探究如何合成数据并进行回测。</p>
 <ol type="1">
-<li>使用历史数据生成一个拟合数据，拟合数据的分布是从真实数据估计得到的，</li>
-<li>使用拟合数据去做回测的好处是，我们可以测试很多次，在unseen的情况下，因此可以减少得到一个过拟合策略的概率。</li>
+<li>使用历史数据生成一个合成数据：先从从真实数据估计得到的分布，然后从分布中采样得到合成数据。</li>
+<li>使用合成数据去做回测的好处是，可以测试很多次，在unseen的情况下，因此可以减少得到一个过拟合策略的概率。</li>
 <li>利用合成数据回测能减少过拟合，但合成金融数据是一个很大的课题，我们先考察一下交易规则（trading rules）。交易策略假定市场不是有效的，它们用基本面 / 技术面分析试图找到套利机会。交易策略千变万化，但交易规则大同小异：比如策略的信号强于阈值则买入，达到盈利或止损点则卖出，这里的阈值、盈利止损点就是交易规则。如果用合成数据回测来确定交易规则，则过拟合的风险将大大减小。</li>
-<li>作者用离散 OU 过程（discrete O-U process）对资产价格建模，给定资产i当前价格和未来预测价格，其在 t 次交易后的盈亏<span class="math inline">\(\pi_{i,t}\)</span>服从正态分布。可以此为依据模拟价格走势进行实验，得到最佳交易规则，而无需用真实历史数据回测。</li>
+<li>用离散OU过程（discrete O-U process）对资产价格建模，给定资产i当前价格和未来预测价格，其在 t 次交易后的盈亏<span class="math inline">\(\pi_{i,t}\)</span>服从正态分布。可以此为依据模拟价格走势进行实验，得到最佳交易规则，而无需用真实历史数据回测。</li>
 <li>作者在原文中给出了详细步骤以及图文分析，这里试举一例：下图是采取不同盈利、止损点进行模拟数据回测得到的夏普率热力图。对于中性市场（上图），最好的策略是设定较宽的止损空间和较窄的盈利点；对于走高市场（下图），最好的策略是采取较宽的盈利点，而止损点的设定可以比较宽泛。</li>
 <li>总而言之，通过探究引导价格波动的随机过程，而不是在真实历史数据上回测，我们得到的最佳交易规则不会在特定数据上过拟合。尽管这样得到的交易规则可能不是最优的，但也远好于过拟合的结果。本章仅以 OU 过程为例，也可以尝试其它建模方式。</li>
 </ol>
@@ -421,7 +428,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-10-%E6%8A%BC%E6%B3%A8%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.</span> <span class="nav-text">chapter 10 押注大小</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%9F%E7%AD%96%E7%95%A5%E6%97%A0%E5%85%B3%E7%9A%84%E6%8A%BC%E5%A4%A7%E5%B0%8F%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">跟策略无关的押大小方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E9%A2%84%E6%B5%8B%E6%A6%82%E7%8E%87%E7%A1%AE%E5%AE%9Abet-sizing"><span class="nav-number">1.2.</span> <span class="nav-text">基于预测概率确定BET SIZING</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B3%E5%9D%87%E4%B8%BB%E5%8A%A8bets"><span class="nav-number">1.3.</span> <span class="nav-text">平均主动BETS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81bet-sizes-%E5%92%8C-%E9%99%90%E5%AE%9A%E4%BB%B7%E6%A0%BC"><span class="nav-number">1.4.</span> <span class="nav-text">动态BET SIZES 和 限定价格</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-11-%E5%9B%9E%E6%B5%8B%E6%9C%89%E9%A3%8E%E9%99%A9"><span class="nav-number">2.</span> <span class="nav-text">chapter 11 回测有风险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-12-%E4%BD%BF%E7%94%A8%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E5%81%9A%E5%9B%9E%E6%B5%8B"><span class="nav-number">3.</span> <span class="nav-text">chapter 12 使用交叉验证做回测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-13-%E5%9C%A8%E5%90%88%E6%88%90%E6%95%B0%E6%8D%AE%E4%B8%8A%E5%81%9A%E5%9B%9E%E6%B5%8B"><span class="nav-number">4.</span> <span class="nav-text">chapter 13 在合成数据上做回测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-14-%E5%9B%9E%E6%B5%8B%E7%BB%9F%E8%AE%A1"><span class="nav-number">5.</span> <span class="nav-text">chapter 14 回测统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-15-%E4%BA%86%E8%A7%A3%E7%AD%96%E7%95%A5%E9%A3%8E%E9%99%A9"><span class="nav-number">6.</span> <span class="nav-text">chapter 15 了解策略风险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-16-%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%B5%84%E4%BA%A7%E9%85%8D%E7%BD%AE"><span class="nav-number">7.</span> <span class="nav-text">chapter 16 基于机器学习资产配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-10-%E6%8A%BC%E6%B3%A8%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.</span> <span class="nav-text">chapter 10 押注大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-11-%E5%9B%9E%E6%B5%8B%E6%9C%89%E9%A3%8E%E9%99%A9"><span class="nav-number">2.</span> <span class="nav-text">chapter 11 回测有风险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-12-%E4%BD%BF%E7%94%A8%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E5%81%9A%E5%9B%9E%E6%B5%8B"><span class="nav-number">3.</span> <span class="nav-text">chapter 12 使用交叉验证做回测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-13-%E5%9C%A8%E5%90%88%E6%88%90%E6%95%B0%E6%8D%AE%E4%B8%8A%E5%81%9A%E5%9B%9E%E6%B5%8B"><span class="nav-number">4.</span> <span class="nav-text">chapter 13 在合成数据上做回测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-14-%E5%9B%9E%E6%B5%8B%E7%BB%9F%E8%AE%A1"><span class="nav-number">5.</span> <span class="nav-text">chapter 14 回测统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-15-%E4%BA%86%E8%A7%A3%E7%AD%96%E7%95%A5%E9%A3%8E%E9%99%A9"><span class="nav-number">6.</span> <span class="nav-text">chapter 15 了解策略风险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-16-%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%B5%84%E4%BA%A7%E9%85%8D%E7%BD%AE"><span class="nav-number">7.</span> <span class="nav-text">chapter 16 基于机器学习资产配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -435,7 +442,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">187</span>
+          <span class="site-state-item-count">188</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

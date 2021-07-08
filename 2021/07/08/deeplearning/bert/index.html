@@ -20,16 +20,17 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="bert模型  bert模型可视化  参考  Bahdanau, Cho, &amp; Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015. Cheng, Dong, &amp; Lapata. Long Short-Term Memory-Networks for">
+  <meta name="description" content="为什么有了word2vec还不够？还需要bert干嘛？因为一词多义，同样的词在不同的上下文中表达的意思不一样，而word2vec的表示是静态的。 所以我们需要一个能对上下文编码的动态的embedding方法，bert就应运而生了。 总结  Bert也是是一个对词语生成词语向量的方法。 Bert可以认为是一个预训练Transformer的encoder部分 Bert的全称是Bidirectional">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深度学习7 Bert">
 <meta property="og:url" content="https://chiechie.github.io/2021/07/08/deeplearning/bert/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="bert模型  bert模型可视化  参考  Bahdanau, Cho, &amp; Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015. Cheng, Dong, &amp; Lapata. Long Short-Term Memory-Networks for">
+<meta property="og:description" content="为什么有了word2vec还不够？还需要bert干嘛？因为一词多义，同样的词在不同的上下文中表达的意思不一样，而word2vec的表示是静态的。 所以我们需要一个能对上下文编码的动态的embedding方法，bert就应运而生了。 总结  Bert也是是一个对词语生成词语向量的方法。 Bert可以认为是一个预训练Transformer的encoder部分 Bert的全称是Bidirectional">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&amp;rect=0%2C0%2C2668%2C3126&amp;w=1980&amp;h=2320">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/08/deeplearning/bert/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/08/deeplearning/bert/img_1.png">
 <meta property="article:published_time" content="2021-07-08T03:50:30.000Z">
-<meta property="article:modified_time" content="2021-07-08T03:51:44.416Z">
+<meta property="article:modified_time" content="2021-07-08T08:08:00.771Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="NLP">
 <meta property="article:tag" content="神经网络">
@@ -38,7 +39,7 @@
 <meta property="article:tag" content="Bert">
 <meta property="article:tag" content="attention">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&amp;rect=0%2C0%2C2668%2C3126&amp;w=1980&amp;h=2320">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/07/08/deeplearning/bert/img.png">
 
 <link rel="canonical" href="https://chiechie.github.io/2021/07/08/deeplearning/bert/">
 
@@ -199,7 +200,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-07-08 11:50:30 / 修改时间：11:51:44" itemprop="dateCreated datePublished" datetime="2021-07-08T11:50:30+08:00">2021-07-08</time>
+              <time title="创建时间：2021-07-08 11:50:30 / 修改时间：16:08:00" itemprop="dateCreated datePublished" datetime="2021-07-08T11:50:30+08:00">2021-07-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,16 +230,62 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="bert模型">bert模型</h1>
+        <p>为什么有了word2vec还不够？还需要bert干嘛？因为一词多义，同样的词在不同的上下文中表达的意思不一样，而word2vec的表示是静态的。 所以我们需要一个能对上下文编码的动态的embedding方法，bert就应运而生了。</p>
+<h1 id="总结">总结</h1>
+<ul>
+<li>Bert也是是一个对词语生成词语向量的方法。</li>
+<li>Bert可以认为是一个预训练Transformer的encoder部分</li>
+<li>Bert的全称是Bidirectional Encoder Representations from Transformers，双向encoder表示</li>
+<li>Bert的目的是预训练transformer模型的encoder网络，</li>
+<li>Bert的学习目标是怎么设定的呢？bert用以下两个任务来预训练transformer中的encoder网络
+<ul>
+<li>任务1-预测遮挡词（Predict Masked Words）： 随机遮挡上下文，让encoder根据上下文来预测被遮挡的单词，大概随机遮挡挡15%的单词</li>
+<li>任务2-预测下一个句子（Predict the Next Sentence）： 把两个句子放在一起，让encoder判断两句话是不是原文里面相邻的两句话，正样本摘自原文，负样本是随机选择50%。</li>
+</ul></li>
+<li>Bert学习的时候，把上面两个任务结合起来</li>
+<li>假如有两个词被遮挡，就要训练三个任务，2个预测遮挡词任务，1个预测是否邻近的任务。前面两个是一个multi-class分类；后面一个是一个二分类。前两个任务的损失函数是cross entropy，第三个任务的损失函数是binary-entropy。</li>
+<li>最终的目标函数，是上面三个损失函数的求和，把最终的目标函数关于模型参数求梯度，然后使用梯度下降来求参数。</li>
+<li>Bert的优点：不需要人工标注数据，训练数据可以从wiki/网页等，长度为2.5billion单词</li>
+<li>Bert可以利用海量数据训练一个超级大的模型</li>
+<li>Bert想法简单有效，计算大家大，bert有两个版本
+<ul>
+<li>base： 1.1yi参数, 16个tpu训练4days，不算调参数，该参数是公开的</li>
+<li>large：2.35yi参数，64个tpu训练4days，不算调参数，该参数是公开的</li>
+</ul></li>
+<li>想用transformer直接下载徐训练好的bert模型就好，拿到参数就可以对英文编码了</li>
+<li>RoBERTa建议只用masking，而且是动态masking,</li>
+</ul>
+<h1 id="附录">附录</h1>
+<h2 id="bert模型原理">bert模型原理</h2>
+<p>[bert模型可视化] (https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&amp;rect=0%2C0%2C2668%2C3126&amp;w=1980&amp;h=2320)</p>
+<h3 id="任务一--预测遮挡词">任务一--预测遮挡词</h3>
+<p>任务可以描述为： 输入： “The _____ sat on the mat” 输出： What is the masked word?</p>
 <figure>
-<img src="https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&amp;rect=0%2C0%2C2668%2C3126&amp;w=1980&amp;h=2320" alt="bert模型可视化" /><figcaption aria-hidden="true">bert模型可视化</figcaption>
+<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
 </figure>
+<p>如何学习？ - e：one-hot vector of the masked word “cat”. - 𝐩: output probability distribution at the masked position. - 损失函数Loss = CrossEntropy(𝐞, 𝐩 ) - • Performing one gradient descent to update the model parameters.</p>
+<h3 id="任务二---predict-the-next-sentence">任务二-- Predict the Next Sentence</h3>
+<p>任务可以描述为： • Given the sentence: “calculus is a branch of math”. • Is this the next sentence? “it was developed by newton and leibniz” 可以表述为一个而分类问题 • 输入: [CLS] “calculus is a branch of math” [SEP] “it was developed by newton and leibniz” • Target: true</p>
+<p>• [CLS] is a token for classification. • [SEP] is for separating sentences.</p>
+<p>学习过程 <img src="img_1.png" alt="img_1.png" /></p>
+<h3 id="结合两个任务">结合两个任务</h3>
+<p>• Input: “[CLS] calculus is a [MASK] of math [SEP] it [MASK] developed by newton and leibniz”.</p>
+<p>• Targets: true, “branch”, “was”.</p>
+<h2 id="bert实践todo">Bert实践【todo】</h2>
+<p>如何使用BERT做迁移学习（Transfer Learning）？</p>
+<ul>
+<li>demo数据：https://www.kaggle.com/c/fake-news-pair-classification-challenge/data</li>
+<li>预训练的中文bert模型：hugging face</li>
+</ul>
 <h1 id="参考">参考</h1>
 <ol type="1">
 <li>Bahdanau, Cho, &amp; Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.</li>
 <li>Cheng, Dong, &amp; Lapata. Long Short-Term Memory-Networks for Machine Reading. In EMNLP, 2016.</li>
 <li>Vaswani et al. Attention Is All You Need. In NIPS, 2017.</li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=aJRsr39F4dI">Transformer模型(2/2): 从Attention层到Transformer网络</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=UlC6AjQWao8&amp;t=26s">BERT (预训练Transformer模型)</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1907.11692v1.pdf">RoBERTa</a></li>
+<li>Devlin, Chang, Lee, and Toutanova. BERT: Pre-training of deep bidirectional transformers for language understanding. In ACL, 2019.</li>
+<li>https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html</li>
 </ol>
 
     </div>
@@ -266,7 +313,10 @@
     <a href="/2021/07/07/AFML/AFML3-md/" rel="prev" title="《Advances in Financial Machine Learning》读书笔记3 回测">
       <i class="fa fa-chevron-left"></i> 《Advances in Financial Machine Learning》读书笔记3 回测
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/08/deeplearning/gpt/" rel="next" title="深度学习8 gpt">
+      深度学习8 gpt <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -325,7 +375,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bert%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">bert模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bert%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">bert模型原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E4%B8%80--%E9%A2%84%E6%B5%8B%E9%81%AE%E6%8C%A1%E8%AF%8D"><span class="nav-number">2.1.1.</span> <span class="nav-text">任务一--预测遮挡词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E4%BA%8C---predict-the-next-sentence"><span class="nav-number">2.1.2.</span> <span class="nav-text">任务二-- Predict the Next Sentence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E5%90%88%E4%B8%A4%E4%B8%AA%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.1.3.</span> <span class="nav-text">结合两个任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bert%E5%AE%9E%E8%B7%B5todo"><span class="nav-number">2.2.</span> <span class="nav-text">Bert实践【todo】</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -339,7 +389,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">187</span>
+          <span class="site-state-item-count">188</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

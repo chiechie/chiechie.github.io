@@ -165,6 +165,139 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/01/AIOps/AIOps-1_5_3-LogCluster-_ms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/01/AIOps/AIOps-1_5_3-LogCluster-_ms/" class="post-title-link" itemprop="url">chapter1.5.3一种日志聚类的方法-LogCluster</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-01 18:56:03" itemprop="dateCreated datePublished" datetime="2021-07-01T18:56:03+08:00">2021-07-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-08 17:41:56" itemprop="dateModified" datetime="2021-07-08T17:41:56+08:00">2021-07-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>这篇文章讲了很多方案细节，实际中的需求，以及可以扩展到哪些应用。这篇文章属于detail &amp; application oriented 。</p>
+<p>现在只看了实现方案，关于实现过程中的一些细微的需求，后面再看。</p>
+</blockquote>
+<h2 id="总结">总结</h2>
+<ol type="1">
+<li><p>使用日志定位故障的基本假设：The delta sets of execution sequences between these two sets（tes和生产） could reflect the potential deployment failures。</p></li>
+<li><p>一些提升效率的方法：</p>
+<ul>
+<li>对log event去重：removing repetitions and permutations of the sequences. For example, both of the following two sequences: “E1, E2, E3, E3, E5, E6” and “E1, E3, E5, E2, E6” are reduced to the sequence “E1, E2, E3, E5, E6”.</li>
+</ul></li>
+<li><p>向量化：将log sequence表达成一个N-dim的向量，N表示词典的大小，每个词代表一个patter或者一个token list。</p>
+<p><span class="math display">\[w(t)=0.5 \times \operatorname{Norm}\left(w_{i d}(t)\right)+0.5 \times w_{c o n}(t)\]</span></p>
+<figure>
+<img src="img_2.png" alt="Log sequences represented as vectors" /><figcaption aria-hidden="true">Log sequences represented as vectors</figcaption>
+</figure>
+<ul>
+<li>Norm is Sigmoid, which normalizes the IDF to [0, 1]. &gt; TF-IDF为词频-逆文件频率，用以评估一个词对于语料库中某一篇文章的重要程度，TF-IDF= TF*IDF. &gt; TF（term frequency）为词频，即一个词语在整个语料库中的出现频率，这个指标可以找到高频但是没有意义的词。 &gt; IDF（Inverse Document Frequency）为逆文档频率，这个指标可以筛选出稀有词，比如"量化"，而过滤掉没有意义的随处可见的词。以为词越常见，分母越大，取值越小，假设总共有n篇文章，一个词在其中k篇文章中出现，则idf值为idf=log2(n/k).衡量的是这个词在文章分布中的稀有程度。 &gt; 综合词频和稀有程度，可以得到一个词的重要性/信息含量</li>
+</ul></li>
+<li><p>层次聚类：聚类函数--N-维向量的cosine similarity， the cluster distance metric使用的是the maximum distance of all element pairs between two clusters，并且把 distance threshold θ作为stopping criterion for the clustering process <img src="img_3.png" alt="Agglomerative Hierarchical Clustering" /></p></li>
+<li><p>提取每个cluster的代表性Log Sequence：计算每个log sequence离其他成员的平均距离作为分数，找出分数最小的那个log sequence，最为代表，时间复杂度为O(n^2),n表示该cluster的成员个数。</p></li>
+<li><p>check生产环境是否产生了新的cluster？对比新cluster和知识库（离线产生的）中的cluster，计算两个cluster的representative log sequence的cosion相似度，使用跟层次聚类一样的距离参数<span class="math inline">\(\theta\)</span>作为决策标准。</p></li>
+<li><p>评估：使用控制实验，先正常运行两个Hadoop应用---WordCount和pagerank，搜集相应的日志。然后注入以下故障以模拟生产环境：</p>
+<ul>
+<li>Machine Down: we turn off one server when the applications are running to simulate the machine failure.</li>
+<li>Network Disconnection: we disconnect one server from the network to simulate the network connection failure.</li>
+<li>Disk Full: we manually fill up one server’s hard disk when the applications are running to simulate the disk full failure.</li>
+</ul></li>
+<li><p>评估看两个方面, 一个是使用日志聚类之后，还需要人check的工作量，一个是定位到故障的准确率。</p></li>
+</ol>
+<p>Measured in terms of #log sequences to be examined. Numbers in brackets indicate the precision values (i.e., the percentage of examined log sequences that are associated with the actual failures). 8. 怎么评估聚类？使用NMI（normalized mutual information），a number between 0 and 1.越大越好 9. LogCLuster的不适用范围：非Hadoop应用；测试环境有bug（算法默认测试是标准）；不适合performance相关的异常定位（有时序性，算法在向量化的时候，就把时序性抹去了）. 10. 应用场景之一--rca，某个产品G对原始执行日志做聚类，得到clusters，每一个identified cluster 都分配一宜昌分数，根据cluster的大小/age/用户feedback。当某个服务经历一个live site issue时，在故障发生时，服务团队的工程师使用G去check异常程度最高的几个cluster，。 This allows for more efficient root cause analysis, which in turn leads to improvement in key metrics like “Mean Time to Mitigate” and “Mean Time to Fix”。</p>
+<figure>
+<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
+</figure>
+<h2 id="附录">附录</h2>
+<h3 id="难点">难点</h3>
+<ol type="1">
+<li>数据量大：每天产生的日志达到10TB甚至1PB</li>
+<li>故障转移：大部分在线系统都有故障转移（failover）机制，会根据节点的availability 和 performance，动态地给计算节点们分配jobs。系统可以主动杀死某个job，并且在另外一个地方重启，这样就产生很多包含“kill” 和“fail” keywords的logs。如果，只依赖关键词"fail"去搜索异常，势必产生很多误告。</li>
+</ol>
+<blockquote>
+<p>故障转移，即当活动的服务或应用意外终止时，快速启用冗余或备用的服务器、系统、硬件或者网络接替它们工作。 故障转移(failover)与交换转移操作基本相同，只是故障转移通常是自动完成的，没有警告提醒手动完成，而交换转移需要手动进行。</p>
+<p>对于要求高可用和高稳定性的服务器、系统或者网络，系统设计者通常会设计故障转移功能。</p>
+<p>在服务器级别，自动故障转移通常使用一个“心跳”线连接两台服务器。只要主服务器与备用服务器间脉冲或“心跳”没有中断，备用服务器就不会启用。为了热切换和防止服务中断，也可能会有第三台服务器运行备用组件待命。当检测到主服务器“心跳”报警后，备用服务器会接管服务。有些系统有发送故障转移通知的功能。</p>
+<p>有些系统故意设计为不能进行完全自动故障转移，而是需要管理员介入。这种“人工确认的自动故障转移”配置，当管理员确认进行故障转移后，整个过程将自动完成。</p>
+</blockquote>
+<h3 id="算法流程">算法流程</h3>
+<figure>
+<img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<p>离线和在线的前半段流程：</p>
+<p>collect log messages ---&gt; parse into log sequence --&gt; log vectorization ---&gt; group similar log sequences into clusters -- &gt; extract a representative log sequence from each cluster</p>
+<p>abstract log message(or log event): 对原始日志泛化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">E1: $DATE INFO [ContainerLauncher #$NUMBER]</span><br><span class="line">org.apache.hadoop.mapreduce.v2.app.launcher.ContainerLauncherImp</span><br><span class="line">l: Processing the event EventType:</span><br><span class="line">CONTAINER_REMOTE_CLEANUP for container $CONTAINERID</span><br><span class="line">taskAttempt $ATTEMPTID</span><br><span class="line">...</span><br><span class="line">E6: $DATE INFO [AsyncDispatcher event handler]</span><br><span class="line">org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl:</span><br><span class="line">Diagnostics report from $ATTEMPTID: Container killed by the</span><br><span class="line">ApplicationMaster.</span><br></pre></td></tr></table></figure>
+<p>log sequence： 属于同一个task ID的log message搜集起来。 (E1, E1, E2, E3, E4, E5, E6)</p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/~peidan/ANM2018Fall/6.LogAnomalyDetection/LectureCoverage/2016ICSE_Log%20Clustering%20based%20Problem%20Identification%20for%20Online%20Service%20Systems%20.pdf">Log Clustering based Problem Identification for Online Service Systems- 微软</a></li>
+<li>https://zhuanlan.zhihu.com/p/31197209</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/30/reading_notes/computer/fenbushi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -266,154 +399,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/29/reading_notes/qukuailian/zkp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/29/reading_notes/qukuailian/zkp/" class="post-title-link" itemprop="url">零知识量证明</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-29 23:54:57" itemprop="dateCreated datePublished" datetime="2021-06-29T23:54:57+08:00">2021-06-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-05 11:28:18" itemprop="dateModified" datetime="2021-07-05T11:28:18+08:00">2021-07-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="基本概念">基本概念</h2>
-<ol type="1">
-<li><p>零知识证明(ZKP)的定义为：证明者（prover）能够在不向验证者（verifier）提供任何有用的信息的情况下，使验证者（verifier）相信某个论断是正确的。</p></li>
-<li><p>零知识证明具有三个重要的性质：</p>
-<ul>
-<li>完备性（Completeness）：只要证明者拥有相应的知识，那么就能通过验证者的验证，即证明者有足够大的概率使验证者确信。---验证者的问题是可解的。</li>
-<li>可靠性（Soundness）：如果证明者没有相应的知识，则无法通过验证者的验证，即证明者欺骗验证者的概率可以忽略。---验证者的问题是有难度的。</li>
-<li>零知识性（Zero-Knowledge）：证明者在交互过程中仅向验证者透露是否拥有相应知识的陈述，不会泄露任何关于知识的额外信息。---验证者是无不要知道解答过程的，它只在另外一个问题空间验证。</li>
-</ul></li>
-<li><p>零知识证明是一种基于概率的验证方式，验证者（verifier）向证明者（prover)提出多个随机问题，如果证明者都能给出正确回答，则说明证明者大概率拥有他所声称的“知识”。零知识证明并不是数学意义上的证明，因为它存在小概率的误差，欺骗的证明者有可能通过虚假的陈诉骗过验证者，但是，可通过技术手段将误差降低到可以忽略的值。</p></li>
-</ol>
-<h2 id="应用场景">应用场景</h2>
-<p>零知识证明在区块链上的两大应用场景：隐私和扩容。</p>
-<p>隐私：在隐私场景中，我们可以借助零知识证明的“不泄露信息”特性，在不泄漏交易的细节（接收方，发送方，交易余额）的情况下证明区块链上的资产转移是有效的。</p>
-<p>扩容：在扩容场景中，我们不太需要关注零知识证明技术的“不泄露信息”这个特性，我们的关注重点是它的“证明论断有效”这个特性，由于链上资源是有限的，所以我们需要把大量的计算迁移到链下进行，因此需要有一种技术能够证明这些在链下发生的动作是可信的，零知识证明正好可以帮助我们做链下可信计算的背书。</p>
-<p>目前，使用零知识证明技术的应用有隐私币(例如zcash)，以太坊上的混币合约，链下扩容技术zkRollup。</p>
-<h3 id="隐私">隐私</h3>
-<h4 id="为什么需要隐私币">为什么需要隐私币？</h4>
-<ol type="1">
-<li><p>举个生活中的例子：游客向庙里功德箱中仍香火钱，所有的游客仍的都是同一个年份的一元硬币，这时有一个第三方在一旁观察，他可以知道谁在什么时间扔进去多少个硬币。但是当小沙弥从功德箱中取钱的时候，他无法分别取出的硬币是由谁扔进去的。这里功德箱就起到一个混币的功能.同理，为了保证区块链上交易的隐私性，也可以进行混币。</p></li>
-<li><p>混币的目的是切断加密货币交易中发送方与接受方的联系，发送方利用混币系统将自己的钱与其他人的钱进行混合，接受方(Verifier)利用零知识证明来证明有某一个混币的所有权，从而进行转账交易。</p></li>
-<li><p>需要隐私币的第一个理由：隐私币能实现匿名且不可追踪。</p>
-<ul>
-<li>目前公链（比特币）的匿名只起到假名的作用，例如现实生活中的人可以生成任意多的公私钥对，用这些公钥在链上发送或接受每笔交易，这些公钥就充当他们的假名。如果外界不知道你和公钥的关系，他们就无法把你和你的交易历史关联起来，只要有人能把你跟公钥联系起来，就可以顺藤摸瓜找到你过去的交易历史。目前不没有办法阻止第三方将我们和我们的公钥联系起来。</li>
-</ul></li>
-<li><p>需要隐私币的第二个理由：由于隐私币无法查看货币的交易记录，所以减少了货币不可互换的问题。</p>
-<ul>
-<li>流通性使货币具有了内在可互换性,但是加密货币具有极度透明性，我们可以追踪到与某一特定货币的所有相关历史交易，这样一来，人们一旦发现某个货币是“污点”货币（俗称“黑钱”）就可以拒绝接受这种货币。如果这种情况大规模发生，加密货币将不再是可互换的因为“干净”的货币比“污点”货币具有更大价值。</li>
-<li>不可互换的货币会给用户带来额外的负担，用户为了避免不小心买入“污点”货币，那么用户就会被迫检查他们购买的每笔货币的交易历史。</li>
-</ul></li>
-<li><p>下图是使用零知识证明的一般过程，在circuit中会执行一些约束，这些约束是与要解决的问题是相关的。Private input的值只有Prover自己知道,Public input的值是Prover与Verifier共享的。该过程可以总结为，Prover在不揭露Private input 的情况下向Verifier证明自己知道一个值能满足（x+3=5)。</p>
-<figure>
-<img src="./img.png" alt="基于circuit的零知识证明" /><figcaption aria-hidden="true">基于circuit的零知识证明</figcaption>
-</figure></li>
-</ol>
-<h4 id="zk-snark的流程图">zk-SNARK的流程图</h4>
-<p>下图是zk-SNARK的流程图，zk-SNARK不能直接用于解决计算问题，必须先把问题转换成正确的“形式”（即"quadratic arithmetic problem"，QAP)，在转换为QAP的同时，可以用Private input和Public input创建一个对应的解，称为QAP的witness。只有Prover用这个witness来生成proof。</p>
-<figure>
-<img src="./img_1.png" alt="zk-Snark流程图" /><figcaption aria-hidden="true">zk-Snark流程图</figcaption>
-</figure>
-<p>整个过程如下：</p>
-<ul>
-<li>首先得有一个计算问题，这个问题一般是NP问题</li>
-<li>然后将计算问题做一个等价转换变成QAP，步骤如下：
-<ul>
-<li>将计算问题拍平（flatten）变成circuit</li>
-<li>把circuit转化成 R1CS(rank-1 constraint system，一阶约束系统)。R1CS 是一个由三向量组 (a,b,c) 组成的序列，R1CS 有个解向量s（就是witness），s 必须满足符号表示向量的内积运算 a.s * b.s - c.s = 0</li>
-<li>将R1CS转化成QAP形式，这两者的区别是QAP使用多项式来代替点积运算，他们所实现的逻辑完全相同。</li>
-</ul></li>
-<li>trusted setup会生成两个值PK，VK，truseted setup的目的是实现零交互验证，它生成的PK，VK相当于是一个“上帝”,由它来帮我们验证Prover。</li>
-<li>Prover用PK生成一个Proof交给Verifier</li>
-<li>Verifier拿到这个Proof会用VK做校验，这一步发生在链上，由链上的节点或智能合约来做校验。 &gt; PK就像一个query word，VK是该query word对应的answer，CRS相当于是一个生成了一个&lt;question，answer&gt;，拿Prover的答案跟正确的已知的答案进行对比，从而验证Prover是qualified</li>
-</ul>
-<h3 id="扩容">扩容</h3>
-<ol type="1">
-<li>17年出现了一款非常火爆的Dapp应用叫加密猫，加密猫曾造成以太坊主网大规模的拥堵，造成拥堵的原因是以太坊当时的TPS只有15，这意味着以太坊每秒只能处理15笔交易，如此低的TPS严重限制了区块链应用的大规模落地，所以有人开始研究区块链扩容的问题，目的就是为了提高链上的TPS。</li>
-<li>但区块链扩容受到Vitalik提出的不可能三角的限制(区块链系统设计无法兼顾可扩展性，去中心化和安全性).但我们必须知道，一切事物都有自己的边界，公链不应该做所有的事情，公链应该做它该做的事情：“公链是以最高效率达成共识的工具，能够以最低成本来构建信任”。</li>
-<li>作为共识的工具，信任的引擎，公链不应该为了可扩展性放弃去中心化与安全性。那么公链的TPS这么低，该怎么使用呢？可以将大量的工作放到链下去解决，仅仅将最重要的数据提交到区块链主链上，让所有节点都能够验证这些链下的工作都是准确可靠的.</li>
-<li>社会的发展带来的是更精细化的分工，区块链的技术发展也是如此，在底层区块链（Layer1）上构建一个扩展层（Layer2)，Layer1来保证安全和去中心化，绝对可靠、可信；它能做到全球共识，并作为“加密法院”，通过智能合约设计的规则进行仲裁，以经济激励的形式将信任传递到Layer2上，而Layer2追求极致的性能，它只能做到局部共识，但是能够满足各类商业场景的需求。</li>
-</ol>
-<h2 id="发展历史">发展历史</h2>
-<ol type="1">
-<li>1985 年，零知识证明Zero-Knowledge Proof - 由 S.Goldwasser、 S.Micali 及 C.Rackoff 首次提出。</li>
-<li>2010年，Groth实现了首个基于椭圆曲线双线性映射全能的，常数大小的非交互式零知识证明协议。后来这个协议经过不断优化，最终成为区块链著名的零知识证明协议SNARKs。</li>
-<li>2013年，Pinocchio协议实现了分钟级别证明，毫秒级别验证，证明大小不到300字节，将零知识证明从理论带到了应用。后来Zcash使用的SNARKs正是基于Pinocchio的改进版。</li>
-<li>2014 年，名为Zerocash的加密货币则使用了一种特殊的零知识证明工具zk-SNARKs （ Zero-Knowledge Succinct Non-interactive Arguments of Knowledge ) 实现了对交易金额、交易双方的完全隐藏，更注重于隐私，以及对交易透明的可控性。</li>
-<li>2017 年， Zerocash 团队提出将 zk-SNARKs 与智能合约相互结合的方案，使交易能在众目睽睽下隐身，打造保护隐私的智能合约。</li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/152065162">零知识证明介绍-zhihu</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.notboring.co/p/zero-knowledge">Zero Knowledge, from not boring</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_IrI8SJLo1Ht51nJfI4V_Q">十分钟开发一个混币-原理篇</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8OkwqNXIkUz2PBURoghRJQ">十分钟开发零知识证明之混币</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -483,7 +468,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">187</span>
+          <span class="site-state-item-count">188</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

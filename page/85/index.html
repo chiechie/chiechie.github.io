@@ -165,6 +165,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/05/meditation/about-problem-Definition-and-info-collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/05/meditation/about-problem-Definition-and-info-collection/" class="post-title-link" itemprop="url">关于「问题的定义和搜集哪些数据」的一次实践</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-05 11:49:24" itemprop="dateCreated datePublished" datetime="2021-03-05T11:49:24+08:00">2021-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-14 15:29:02" itemprop="dateModified" datetime="2021-05-14T15:29:02+08:00">2021-05-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>问题粗粒度定义--&gt;信息搜集--&gt;问题再定义--&gt;信息再搜集--&gt;...</p>
+<p>阶段1：problem formulation--&gt; collect information---&gt;demo validation</p>
+<p>阶段2：【reflection】：阶段1的demo验证结果 + collect more information---&gt;problem reformulation--&gt; collect information---&gt;demo validation</p>
+<p>阶段3：重复</p>
+<p>阶段4：重复</p>
+<p>。。。</p>
+</blockquote>
+<h2 id="问题定义和信息搜集一个反复迭代同时要验证的过程">问题定义和信息搜集一个反复迭代同时要验证的过程</h2>
+<ul>
+<li>做项目的时候，关于「问题定义」（「需求定义」也类似）和 「数据搜集」往往是一个迭代往复的过程。</li>
+<li>【formulation + demo + validation】认知是从模糊到清晰的：先基于模糊的认知，确定一个粗粒度的问题，以及相应的解决方案，然后使用「概念验证」（思想泵）的方法去验证。</li>
+<li>【reflection】方案中发现有重大缺陷，然后搜集更多信息，比如别人是怎么解决问题的，以及定义问题的关键信息漏了哪些，方案有哪些是我们没有想到的。</li>
+<li>【reformulation + demo + validation】接下来，根据搜集到的信息，重新定义问题，以及梳理方案，这一次的问题和方案 因为有了更多的信息，业务上的和技术上的， 认识更清晰是肯定的，理论上梳理出来的问题和方案粒度更细致，我们也更有把握。 总结下，就是 问题定义和信息搜集一个反复迭代同时要验证的过程</li>
+</ul>
+<h2 id="一次实践">一次实践</h2>
+<ul>
+<li>先有一个模糊认知 ：要日志型的数据（完全非结构化的），告警数据（指标或者日志经过人工规则生成的），事件型数据（第三方的公告或者舆情告警），拓扑数据</li>
+<li>聚焦到问题-"根因定位"-的时候：发现不管是日志型数据，还是告警数据，还是拓扑数据，他们都是围绕着"故障事件定义"展开的。即需要定义到的故障事件的粒度</li>
+</ul>
+<p>最开始的时候， 我是这么定义事件的： 资源类型 + 事件描述</p>
+<p>后面发现这个粒度定义是不行滴，</p>
+<p>举个例子 机器1的mysql服务指标异常，机器2的mysql服务指标异常，使用 「资源类型 + 事件描述」这种定义的还，不就是一个事件了吗？ 但是考虑到应用场景-根因定位，到底是「机器1的mysql服务的指标异常」还是「机器2的mysql服务异常」，这是两个需要区分的cause metric，因为，对应着不同的操作。 更进一步，这两个事件对应的是根因图 上的不同的节点。</p>
+<p>总结下，事件定义的粒度越粗糙，定位到的根因就越粗糙，起到的作用就越少。 参考别人的定义： 2元组&lt;ip：服务名称&gt; 或者 3元组 &lt;ip: 端口：传输协议类型&gt;</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/data_structure/graph/cause-inference-learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -287,107 +384,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/04/reading_notes/zhexue/intuition_pumps_xiaorener/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/04/reading_notes/zhexue/intuition_pumps_xiaorener/" class="post-title-link" itemprop="url">《直觉泵》读书笔记2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-04 09:59:33" itemprop="dateCreated datePublished" datetime="2021-03-04T09:59:33+08:00">2021-03-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-10 17:29:43" itemprop="dateModified" datetime="2021-06-10T17:29:43+08:00">2021-06-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="观点">观点</h2>
-<ol type="1">
-<li><p>「中心小人儿」理论：假设大脑中有一个聪明绝顶的决策者，但是用归谬法会推导出，这个小人儿大脑中是不是也有一个中心小人儿，。。。然后陷入了无线倒推论。</p></li>
-<li><p>「小人儿机械主义」理论:假设大脑中有一堆小人儿在做决策--决策委员会，他们不断地将服务任务拆解成原子的简单的任务。</p>
-<blockquote>
-<p>有点像虚拟机的原理，嵌套学习。有点像官僚体系。</p>
-</blockquote></li>
-<li><p>「小人儿机械主义」相对于「中心小人儿」理论的高明之处在于，他不会陷入“无线倒退论”的荒谬处境，而是有一个ending的。即，当拆解之后的操作变得简单乏味时，就可以终止了，让机器来了。</p></li>
-<li><p>老式人工智能采用自上而下的工作方式，有严格的等级分工，但是却是不必要的设计！ 这种自上而下的工作方式，有个特点，分配任务的层级规模非常庞大。在计算机发明的早期，这种组织形式所以有效，是因为执行层的能力很弱--单个计算机又小又慢。 因此顶层设计人员要将目标任务成功地分解成一组比较容易掌控的子任务，进而知道怎么编程实现每个小功能，以及将程序整合成一个可行的系统。顶层设计人员可以用「概念验证」的方法，有时候省时省力。</p></li>
-</ol>
-<blockquote>
-<p>关于「概念验证」（proof of concept， POC）：</p>
-<p>「概念验证」是一个有用的工程学概念：为了设计出一个非常精致、非常复杂工具或者系统，可以先设计并且解决一个“demo问题 ”（toy problem），即，先做一个简单的小玩意儿，让它按照简化的工作原理运行，这就是在“验证概念”。接下来让这个小东西的功能完善，只需投入更多时间和金钱。这个简单的小玩意儿可以让一个复杂的问题首先在概念上得以“解决”。有时候，“概念验证”很有效。</p>
-</blockquote>
-<ol start="3" type="1">
-<li><p>「小人儿机械主义」的理念设计出来的计算机，需求和工作几乎是完全独立的。各种程序按照一个队列有序进行，不会陷入你争我夺的厮杀，马克思说过的"从各展其能到各取所需"。计算机科学家埃里克称这种等级控制为"政治"。但是神经系统则不一样，人体的普通细胞和工蚁很像--没有私心，机械的工作，百依百顺的奴隶，赶着一成不变的活儿，没有竞争的环境中生存。但是大脑必须参与激烈的市场竞争。神经玩想要的是填饱肚子，活下去。每个神经细胞类似一个生物机器人，虽然没有意识。 但是，并不妨碍它们，在生死攸关的争斗中，成为极强战斗力的行动者。它们的竞争环境在大脑所要求的环境里。在这里，谁能更有效地建立连接网络，谁能在人类的欲望和冲动层面发挥更大的作用，谁就赢了。</p></li>
-<li><p>神经系统中的很多子系统都以敌对的方式存在，每个子系统都希望以自己的方式行事，彼此之间常常会陷入拉锯战。例如，我们的各种情感会为了取代对方而相互对抗，有时候它们也会结成联盟来阻挠劲敌行动。现在我渐渐明白，人类各种情感之间动态的对抗过程，以及情感对我们思想的影响，都是以神经化学系统为基础的。不像那些本质上自私的行动者，比如癌细胞，从一个更广阔的运作范畴来看，神经细胞还算是不错的团队成员.</p></li>
-<li><p>诺贝尔奖得主、生物学家弗朗索瓦·雅各布（François Jacob）说过，每个细胞都梦想着能完成分裂变成两个细胞，只有神经元不图繁殖，一心只想着要保持活力、有所作为。按照这种观点，对动物行为的智能控制是一种计算过程，就像在股票市场里完成一次交易那样。但正如神经科学家塞巴斯蒂安·承（SebastianSeung）所说，神经元也是自私的，它们总是会倾其所能，最大程度地吸纳能在我们的大脑中获得的所有酬劳，这些酬劳以不同的“货币形式”出现。那么神经元利用多巴胺、5-羟色胺还有催产素都买了些什么呢？它们购买的是更加强大的影响力，能让自己在所处的连接网络中变得更加可靠。骡子虽不能生育，但它们仍会努力地营生。同样，神经元也有自我保护的本能，本质上，这是从它们可繁殖的祖先那里遗传下来的。</p></li>
-<li><p>「自下而上的小人儿式机械主义」是指，神经系统是由哪些未成熟的小人儿组成，每个小人儿都有感知，标记和记忆的能力。类似群体智慧。它们之间有竞争也有协作，从胚胎到成人的过程中，整个系统不断建构和修改。目前该理论可以很合理地解释人体复杂认知系统。</p></li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li>《直觉泵和其他思考工具》-丹尼尔·丹尼特</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/84/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><span class="page-number current">85</span><a class="page-number" href="/page/86/">86</a><span class="space">&hellip;</span><a class="page-number" href="/page/93/">93</a><a class="extend next" rel="next" href="/page/86/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/84/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/84/">84</a><span class="page-number current">85</span><a class="page-number" href="/page/86/">86</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/86/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -453,7 +453,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">186</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

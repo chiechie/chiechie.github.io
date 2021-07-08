@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-07-08T02:55:20.189Z</updated>
+  <updated>2021-07-08T03:51:44.416Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>深度学习7 Bert</title>
+    <link href="https://chiechie.github.io/2021/07/08/deeplearning/bert/"/>
+    <id>https://chiechie.github.io/2021/07/08/deeplearning/bert/</id>
+    <published>2021-07-08T03:50:30.000Z</published>
+    <updated>2021-07-08T03:51:44.416Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="bert模型">bert模型</h1><figure><img src="https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&amp;rect=0%2C0%2C2668%2C3126&amp;w=1980&amp;h=2320" alt="bert模型可视化" /><figcaption aria-hidden="true">bert模型可视化</figcaption></figure><h1 id="参考">参考</h1><ol type="1"><li>Bahdanau, Cho, &amp; Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.</li><li>Cheng, Dong, &amp; Lapata. Long Short-Term Memory-Networks for Machine Reading. In EMNLP, 2016.</li><li>Vaswani et al. Attention Is All You Need. In NIPS, 2017.</li><li><a href="https://www.youtube.com/watch?v=aJRsr39F4dI">Transformer模型(2/2): 从Attention层到Transformer网络</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;bert模型&quot;&gt;bert模型&lt;/h1&gt;
+&lt;figure&gt;
+&lt;img src=&quot;https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?aut</summary>
+      
+    
+    
+    
+    <category term="深度学习" scheme="https://chiechie.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
+    
+    <category term="神经网络" scheme="https://chiechie.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="模型可视化" scheme="https://chiechie.github.io/tags/%E6%A8%A1%E5%9E%8B%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+    <category term="Transformer" scheme="https://chiechie.github.io/tags/Transformer/"/>
+    
+    <category term="Bert" scheme="https://chiechie.github.io/tags/Bert/"/>
+    
+    <category term="attention" scheme="https://chiechie.github.io/tags/attention/"/>
+    
+  </entry>
   
   <entry>
     <title>《Advances in Financial Machine Learning》读书笔记3 回测</title>
@@ -218,9 +254,9 @@
     <category term="AIOps" scheme="https://chiechie.github.io/categories/AIOps/"/>
     
     
-    <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
-    
     <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
+    
+    <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
     
     <category term="日志分析" scheme="https://chiechie.github.io/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/"/>
     
@@ -255,13 +291,13 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="大数据" scheme="https://chiechie.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    <category term="计算机原理" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
     
     <category term="读书笔记" scheme="https://chiechie.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
-    <category term="计算机原理" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
-    
     <category term="分布式计算" scheme="https://chiechie.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/"/>
+    
+    <category term="大数据" scheme="https://chiechie.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
@@ -597,41 +633,11 @@
     <category term="沉思录" scheme="https://chiechie.github.io/categories/%E6%B2%89%E6%80%9D%E5%BD%95/"/>
     
     
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
     <category term="科技史" scheme="https://chiechie.github.io/tags/%E7%A7%91%E6%8A%80%E5%8F%B2/"/>
     
     <category term="人工智障" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E9%9A%9C/"/>
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于Scale AI</title>
-    <link href="https://chiechie.github.io/2021/06/16/reading_notes/reality/about-scale/"/>
-    <id>https://chiechie.github.io/2021/06/16/reading_notes/reality/about-scale/</id>
-    <published>2021-06-16T02:39:20.000Z</published>
-    <updated>2021-06-30T07:30:46.238Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>看到Packy激情满满写了一篇关于Scale AI的公关文，比较好奇这个年轻的小公司有何特别之处，为什么会受到资本的一致认可。</p><p>印象中Scale AI就是一家硅谷的数据标注公司，主要靠外包给第三方国家，赚取中间费用，这种公司有什么竞争力呢？跟大厂比起来？</p></blockquote><h2 id="总结">总结</h2><ol type="1"><li><p>Scale AI创立至今5年，最近一次估值73亿$。它跟stripe有点像，在一个蓬勃发展的行业，找到一个关键但是不起眼的小地方，深耕细作。</p></li><li><p>刚开始成立的时候，Scale AI专注做数据标注，但是他们的野心不限于此，他们想做更好用的数据标注工具，即人机互助的方式，Human-in-the-Loop（HIL）。</p></li><li><p>Scale AI的故事是：随着标记数据越来越多，标注数据的边际成本会降低，因为标记样本越多，标记机器人的性能越好，能hold的事情就越多，需要分配出去的工作就越少。</p><blockquote><p>这里有一个问题，怎么确定，哪些是机器可以搞定的，哪些是机器搞不定的？这个是不是又要多一层人工监督了？</p><p>可以从环境中获取到反馈，也可以人工抽查。</p><p>总的来说，都不是很完善的方案。</p></blockquote></li><li><p>Scale AI还有一个亮点，他的客户群体很分散，从国防部到无人驾驶公司，eg OpenAI, Airbnb and Lyft。这有一个好处就是。AI公司去去留留，竞争之后，留下了最有效的ml应用场景，但是Scale AI始终有机会，因为是做基础设施的。</p></li><li><p>除了标注API，Scale AI还做了一个样本调试的产品--Nucleus，data debugging SaaS product。目的是做全链路基建嘛。 <img src="./img.png" alt="Nucleus" /></p></li><li><p>Scale AI的CEO Alexandr Wang 说的一段话</p><blockquote><p>At Scale, we’re building the foundation to enable organizations to manage the entire AI lifecycle. Whether they have an AI team in-house or need a fully managed models-as-a-service approach, we partner with our customers to build their strategy from the ground up and ensure they have the infrastructure in place to systematically deliver highly-performant models.</p></blockquote></li></ol><p>简单点说，他们的方法是，帮助企业从0到1落地一个AI应用--不管这个企业内部有没有AI团队--企业能够使用这个基建更高效地构建模型. 就是win-win,后生可畏.</p><ol start="10" type="1"><li><p>对于没有AI团队的传统企业，Scale AI定制化合作（跟必示一样），客户例如Brex和Flexport。</p><figure><img src="./img1.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure></li><li><p>这里有一个小故事：Brex doesn’t have an AI team working on the model; they outsource it to Scale. .Brex一开始找的是专门做OCR的大公司，帮他们做发票文本提取，但是效果一般（“they were all mediocre.” ）。后面找到scale，通过深入合作定制化了一个模型，效果100%。后面沉淀出了一个产品document。</p></li><li><p>scale的产品还有蛮多的：地图/文档/图像。。 <img src="img2.png" alt="img.png" /></p></li></ol><blockquote><p>btw, 知乎上有一个相关提问--如何评价Scale AI？大家似乎认识非常有限（只知道它是做数据标注的），还讨论的热火朝天。由此可见的，噪声膨胀的速度远远超过信息增长的速度。</p></blockquote><h2 id="chiechies-reflection">chiechie's reflection</h2><ol type="1"><li><p>packy这篇文章的公司分析框架蛮好的，后面分析科技公司可以套用：</p><ul><li>行业介绍：The State of AI and ML</li><li>公司介绍：Getting to Scale.</li><li>相同模式的成功案例对比：Scaling Like Stripe.</li><li>关于公司的负面观点：The Bear Case for Scale.</li><li>关于公司的正面观点：The Bull Case for Scale.</li><li>前景展望：Scale’s Compounding Vision.</li></ul></li><li><p>AI市场未来还有这么大的成长空间，当前只有8%的公司应用了AI技术,看到这个数字有点吃惊。但是，即便如此，AI从业人员的需求也不用过分乐观估计。</p></li><li><p>AI应用目前还在探索期。Scale AI比较鸡贼，让AI公司在前面探路，让他们相互pk，把有价值可落地的场景摸索清楚，自己在后面提供军火库，妥妥的赢家。</p></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.notboring.co/p/scale-rational-in-the-fullness-of">not boring</a></li><li><a href="https://zhuanlan.zhihu.com/p/384012257">吴恩达发起新型竞赛范式！模型固定，只调数据？</a></li><li><a href="https://scale.com/blog/series-e">Scale AI’s Series E: Deploying AI Across Every Industry</a></li><li><a href="https://dashboard.scale.com/nucleus/">nucleus</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;看到Packy激情满满写了一篇关于Scale AI的公关文，比较好奇这个年轻的小公司有何特别之处，为什么会受到资本的一致认可。&lt;/p&gt;
-&lt;p&gt;印象中Scale AI就是一家硅谷的数据标注公司，主要靠外包给第三方国家，赚取中间费用，这种公司有什么竞争</summary>
-      
-    
-    
-    
-    <category term="投资" scheme="https://chiechie.github.io/categories/%E6%8A%95%E8%B5%84/"/>
-    
-    
-    <category term="投资" scheme="https://chiechie.github.io/tags/%E6%8A%95%E8%B5%84/"/>
-    
-    <category term="行业研究" scheme="https://chiechie.github.io/tags/%E8%A1%8C%E4%B8%9A%E7%A0%94%E7%A9%B6/"/>
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
   </entry>
   

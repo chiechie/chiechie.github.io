@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/04/investment/quant/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/01/AI/AIOps/AIOps-1_5_3-LogCluster-_ms/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/07/04/investment/quant/" class="post-title-link" itemprop="url">投资、投机与套利</a>
+            <a href="/2021/07/01/AI/AIOps/AIOps-1_5_3-LogCluster-_ms/" class="post-title-link" itemprop="url">chapter1.5.3一种日志聚类的方法-LogCluster</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-07-04 15:10:19" itemprop="dateCreated datePublished" datetime="2021-07-04T15:10:19+08:00">2021-07-04</time>
+              <time title="创建时间：2021-07-01 18:56:03" itemprop="dateCreated datePublished" datetime="2021-07-01T18:56:03+08:00">2021-07-01</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-05 20:42:39" itemprop="dateModified" datetime="2021-07-05T20:42:39+08:00">2021-07-05</time>
+                <time title="修改时间：2021-07-05 10:23:15" itemprop="dateModified" datetime="2021-07-05T10:23:15+08:00">2021-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -219,24 +219,64 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ol type="1">
-<li>巴菲特希望通过分析公司基本面来做精准判断，通过每次投资的长期持有获得收益，而西蒙斯用机器算法来发现短期胜率，通过短期胜率超过50%加上大数定律（law of large numbers）来保证长时间的盈利</li>
-<li>人在做投资决策的时候都会根据自己的经历和知识储备选取合适的策略。</li>
-<li>从交易的方式来看，投资的策略有三种形式：投资（investment）、投机（speculation）和套利（arbitrage），三种形式都可以用量化的方法来提高胜率。</li>
-<li>1949年，格雷厄姆在《聪明的投资者》里写到：“投资者与投机者最实际的区别在于他们对股市运动的态度上：投机者的兴趣主要在参与市场波动并从中谋取利润，投资者的兴趣主要在以适当的价格取得和持有适当的股票。”</li>
-<li>所谓价值投资其实是“价值和价格之差”投资，然后低买高卖。他说投资的秘诀是“不要赔钱”。</li>
-<li>在金融市场里，如果看不清30年这么长的时间线，分析交易量、交易价格和其它技术和基本面的数据，对股票未来短期内的变化，可以在日或周这样的时间线上找到机会。这样的投机行为并不关心股票未来的成长，但是只要在短期内做到足够好的判断，则可以成功地投机获利。</li>
-<li>如果把时间线再缩短，就会有套利的机会。套利背后的逻辑是低买高卖</li>
-<li>很多高频交易的策略，在市场的大量卖单和买单中找到规律，用一个较低的价格买回股票，然后找到下一个买家用高一点的价格卖出去。</li>
-<li>从投资到投机再到套利，随着交易速度的提升，超额收益会越来越高，但是这样的速度提升也有缺点，那就是随着交易速度的提升，机会的窗口就比较小，盈利的容量会越来越小。如果把股市比作赌场，随着交易速度的提升，赢钱的概率会提高，但是能赢的钱的总量却是在下降的。</li>
-<li>高频的量化投资有点像从沙子里捞金子，每捞一次在付出成本的同时都有一个概率找到金子，捞金子的收益可以从两方面得到，一是捞金子的成功率，这个可以通过优化算法加强预测准确率来得到；二是交易频率，可以通过增加单位时间的交易次数来达到。总收益大致和正确率与交易次数平方根的乘积是成正比的。这个原理叫主动管理基本定律The Fundamental Law of Active Management。</li>
-<li>机器学习做交易策略的一个误区。大家一上来就在想办法预测股价，这个思路是最直接的，从数据分析的层面看，这并没有错，很多对算法很熟悉的人都非常厉害，可以迅速的找到一些算法（例如xgboost）来做非常好的样本内预测。但是一旦在实际股市中使用的时候就会发现预测准确度远远不如历史数据所做出来的。</li>
-<li>问题不是机器学习的算法不够好，而是所有的预测模型都假设底层的市场逻辑没有变化，这样的假设是错误的，导致了过度拟合</li>
-<li>如今的市场上，找一个会用厉害的算法做预测的码农并不难，难的是管理者和投资决策者需要知道如何从最底层理解金融市场的量化思维并发挥出算法的优势。</li>
+          <blockquote>
+<p>这篇文章讲了很多方案细节，实际中的需求，以及可以扩展到哪些应用。这篇文章属于detail &amp; application oriented 。</p>
+<p>现在只看了实现方案，关于实现过程中的一些细微的需求，后面再看。</p>
+</blockquote>
+<h2 id="总结">总结</h2>
+<ol type="1">
+<li><p>使用日志定位故障的基本假设：The delta sets of execution sequences between these two sets（tes和生产） could reflect the potential deployment failures。</p></li>
+<li><p>一些提升效率的方法：</p>
+<ul>
+<li>对log event去重：removing repetitions and permutations of the sequences. For example, both of the following two sequences: “E1, E2, E3, E3, E5, E6” and “E1, E3, E5, E2, E6” are reduced to the sequence “E1, E2, E3, E5, E6”.</li>
+</ul></li>
+<li><p>向量化：将log sequence表达成一个N-dim的向量，N表示词典的大小，每个词代表一个patter或者一个token list。</p>
+<p><span class="math display">\[w(t)=0.5 \times \operatorname{Norm}\left(w_{i d}(t)\right)+0.5 \times w_{c o n}(t)\]</span></p>
+<figure>
+<img src="img_2.png" alt="Log sequences represented as vectors" /><figcaption aria-hidden="true">Log sequences represented as vectors</figcaption>
+</figure>
+<ul>
+<li>Norm is Sigmoid, which normalizes the IDF to [0, 1].</li>
+</ul></li>
+<li><p>层次聚类：聚类函数--N-维向量的cosine similarity， the cluster distance metric使用的是the maximum distance of all element pairs between two clusters，并且把 distance threshold θ作为stopping criterion for the clustering process <img src="img_3.png" alt="Agglomerative Hierarchical Clustering" /></p></li>
+<li><p>提取每个cluster的代表性Log Sequence：计算每个log sequence离其他成员的平均距离作为分数，找出分数最小的那个log sequence，最为代表，时间复杂度为O(n^2),n表示该cluster的成员个数。</p></li>
+<li><p>check生产环境是否产生了新的cluster？对比新cluster和知识库（离线产生的）中的cluster，计算两个cluster的representative log sequence的cosion相似度，使用跟层次聚类一样的距离参数<span class="math inline">\(\theta\)</span>作为决策标准。</p></li>
+<li><p>评估：使用控制实验，先正常运行两个Hadoop应用---WordCount和pagerank，搜集相应的日志。然后注入以下故障以模拟生产环境：</p>
+<ul>
+<li>Machine Down: we turn off one server when the applications are running to simulate the machine failure.</li>
+<li>Network Disconnection: we disconnect one server from the network to simulate the network connection failure.</li>
+<li>Disk Full: we manually fill up one server’s hard disk when the applications are running to simulate the disk full failure.</li>
+</ul></li>
+<li><p>评估看两个方面, 一个是使用日志聚类之后，还需要人check的工作量，一个是定位到故障的准确率。</p></li>
 </ol>
+<p>Measured in terms of #log sequences to be examined. Numbers in brackets indicate the precision values (i.e., the percentage of examined log sequences that are associated with the actual failures). 8. 怎么评估聚类？使用NMI（normalized mutual information），a number between 0 and 1.越大越好 9. LogCLuster的不适用范围：非Hadoop应用；测试环境有bug（算法默认测试是标准）；不适合performance相关的异常定位（有时序性，算法在向量化的时候，就把时序性抹去了）. 10. 应用场景之一--rca，某个产品G对原始执行日志做聚类，得到clusters，每一个identified cluster 都分配一宜昌分数，根据cluster的大小/age/用户feedback。当某个服务经历一个live site issue时，在故障发生时，服务团队的工程师使用G去check异常程度最高的几个cluster，。 This allows for more efficient root cause analysis, which in turn leads to improvement in key metrics like “Mean Time to Mitigate” and “Mean Time to Fix”。</p>
+<figure>
+<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
+</figure>
+<h2 id="附录">附录</h2>
+<h3 id="难点">难点</h3>
+<ol type="1">
+<li>数据量大：每天产生的日志达到10TB甚至1PB</li>
+<li>故障转移：大部分在线系统都有故障转移（failover）机制，会根据节点的availability 和 performance，动态地给计算节点们分配jobs。系统可以主动杀死某个job，并且在另外一个地方重启，这样就产生很多包含“kill” 和“fail” keywords的logs。如果，只依赖关键词"fail"去搜索异常，势必产生很多误告。</li>
+</ol>
+<blockquote>
+<p>故障转移，即当活动的服务或应用意外终止时，快速启用冗余或备用的服务器、系统、硬件或者网络接替它们工作。 故障转移(failover)与交换转移操作基本相同，只是故障转移通常是自动完成的，没有警告提醒手动完成，而交换转移需要手动进行。</p>
+<p>对于要求高可用和高稳定性的服务器、系统或者网络，系统设计者通常会设计故障转移功能。</p>
+<p>在服务器级别，自动故障转移通常使用一个“心跳”线连接两台服务器。只要主服务器与备用服务器间脉冲或“心跳”没有中断，备用服务器就不会启用。为了热切换和防止服务中断，也可能会有第三台服务器运行备用组件待命。当检测到主服务器“心跳”报警后，备用服务器会接管服务。有些系统有发送故障转移通知的功能。</p>
+<p>有些系统故意设计为不能进行完全自动故障转移，而是需要管理员介入。这种“人工确认的自动故障转移”配置，当管理员确认进行故障转移后，整个过程将自动完成。</p>
+</blockquote>
+<h3 id="算法流程">算法流程</h3>
+<figure>
+<img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<p>离线和在线的前半段流程：</p>
+<p>collect log messages ---&gt; parse into log sequence --&gt; log vectorization ---&gt; group similar log sequences into clusters -- &gt; extract a representative log sequence from each cluster</p>
+<p>abstract log message(or log event): 对原始日志泛化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">E1: $DATE INFO [ContainerLauncher #$NUMBER]</span><br><span class="line">org.apache.hadoop.mapreduce.v2.app.launcher.ContainerLauncherImp</span><br><span class="line">l: Processing the event EventType:</span><br><span class="line">CONTAINER_REMOTE_CLEANUP for container $CONTAINERID</span><br><span class="line">taskAttempt $ATTEMPTID</span><br><span class="line">...</span><br><span class="line">E6: $DATE INFO [AsyncDispatcher event handler]</span><br><span class="line">org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl:</span><br><span class="line">Diagnostics report from $ATTEMPTID: Container killed by the</span><br><span class="line">ApplicationMaster.</span><br></pre></td></tr></table></figure>
+<p>log sequence： 属于同一个task ID的log message搜集起来。 (E1, E1, E2, E3, E4, E5, E6)</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>https://zhuanlan.zhihu.com/p/362383721</li>
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/~peidan/ANM2018Fall/6.LogAnomalyDetection/LectureCoverage/2016ICSE_Log%20Clustering%20based%20Problem%20Identification%20for%20Online%20Service%20Systems%20.pdf">Log Clustering based Problem Identification for Online Service Systems- 微软</a></li>
 </ol>
 
       
@@ -257,7 +297,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/03/reading_notes/zhexue/wushitangwang/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/30/reading_notes/computer/fenbushi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -271,7 +311,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/07/03/reading_notes/zhexue/wushitangwang/" class="post-title-link" itemprop="url">《巫师唐望》读书笔记</a>
+            <a href="/2021/06/30/reading_notes/computer/fenbushi/" class="post-title-link" itemprop="url">基于Ray的融合计算框架</a>
         </h2>
 
         <div class="post-meta">
@@ -281,14 +321,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-07-03 15:30:45" itemprop="dateCreated datePublished" datetime="2021-07-03T15:30:45+08:00">2021-07-03</time>
+              <time title="创建时间：2021-06-30 14:39:39" itemprop="dateCreated datePublished" datetime="2021-06-30T14:39:39+08:00">2021-06-30</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-05 14:53:28" itemprop="dateModified" datetime="2021-07-05T14:53:28+08:00">2021-07-05</time>
+                <time title="修改时间：2021-07-01 19:56:15" itemprop="dateModified" datetime="2021-07-01T19:56:15+08:00">2021-07-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -311,33 +351,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="停顿世界">停顿世界</h2>
-<blockquote>
-<p>stopping the world。</p>
+          <blockquote>
+<p>看到阿里在2021发表的一个演讲--《新一代的计算基础设施-对于Ray的融合计算》，做一些笔记</p>
 </blockquote>
 <ol type="1">
-<li>抹掉一切个人历史，免得我们受别人思想的牵绊。</li>
-<li>"他们一旦知道你，你就被视为理所当然的，从那一刻开始，你就没有办法打破他们思想的束缚。我个人很喜欢那种（抹掉个人历史带来的）不为人知的终极自由。没有人能确切地了解我，像人们了解你一样"，唐望说。</li>
-<li>“如果一个人没有个人历史，不论他说什么，都不会被当成谎言，而你的麻烦是你一定得向每个人说明每一件事，同时又希望保持行为的新鲜感。可是在说明所做的一切之后，你没法再兴奋，为了能好好活下去，你只好撒谎。</li>
-<li>“从现在开始，你必须只让人知道你愿意让人知道的，但是不必说明你是怎样做到的。”</li>
-<li>我们只有两条路；或者把一切都当成确定的、真实的：或者不这么做。如果走第一条路，最后会对自己以及世界感到厌倦至死。如果走第二条路，抹去个人历史，我们就在自己周围制造出一层雾，那是一种让人刺激而且神秘的状态，没有人知道兔子会从哪里冒出来，甚至连自己也不知道。</li>
-<li>在没有一样事情是确定时，我们会一直保持警觉，会永远小心翼翼，不知道兔子藏在哪丛灌木后面，要远比假装知道一切来得刺激。</li>
-<li>“你把自己看得太重了，”他慢条斯理地说，“在你心里，你把你自己看得太该死的重要。一定要改！你是如此该死的重要，使你觉得可以理直气壮地对每件事恼火。你是如此该死的重要，所以事情只要不如你的意，你可以掉头就走。你大概以为那样表示你有个性。胡扯！你是又软弱，又自命不凡！”.他指出，因为我加在身上这种夸大的重要感，使我这辈子一事无成。</li>
-<li>“自我重要感是另一件必须丢弃的东西，就像个人历史。”</li>
-<li>我喜欢他这种如谜般的谈话，神秘而带挑战性。不过，我无法判断这些是深奥难懂还是一派胡言。</li>
-<li>我们现在所关心的是丢掉自我重要感。只要你还是感觉你是世界上最重要的事物，就不能真正欣赏周围的世界，就好像一匹戴着眼罩的马只能看到一个远离一切事物的自己</li>
-<li>“死亡是我们永恒的伴侣，”唐望以最严肃的语气说，“它永远在我们的左边，一臂之遥。在你监视白鹰时，它也在监视你，它在你耳边低语，于是你感觉到了它的寒意，就像今天一样。死亡永远在监视你，直到有一天它轻轻碰触你。”</li>
-<li>“你这个男孩，偷偷地潜行追踪猎物，也知道耐心等待，就像死亡的等待。你非常清楚死亡就在我们的左边，就像你在白鹰的左边那样。”</li>
-<li>“如果我们知道死亡正在潜猎我们，又怎能感觉自己如此重要呢？”他问。</li>
-<li>“当你不耐烦时，”他继续说，“你应该转向左边，向死亡寻求忠告。如果死亡对你打个手势，或你瞥见了它，或者你只要感觉它在那儿守望你，你就可以抛弃许多令人心烦的琐事。”</li>
-<li>“死亡是我们仅有的明智忠告者。当你觉得一切都不顺利，一切就要完蛋的时候，转身问问死亡事实是否如此。你的死亡会告诉你，你错了；除了它的触摸之外，一切都无关紧要。它会告诉你：‘我还没有碰你呢！’”</li>
-<li>不知为什么，他的笑声不再像过去那样无礼而令人讨厌。我不认为笑的声调、大小、笑意和过去有什么不同，不同的是我的心情。从死亡随时会降临的观点看，我的恐惧与恼火都失去了意义。</li>
+<li>举一个复杂的业务的例子，用户支付流程：</li>
 </ol>
-<p>猎人知道他会一次又一次地把猎物引进陷阱里，因此他不忧虑。他忧虑的话，就会被得到，不知不觉地被得到。一旦你开始忧虑，你就会因为绝望而抓住任何东西；一旦你抓住东西不放，就会为之耗尽你的力量，或耗尽你所抓住的人或东西。</p>
-<p>把你的注意力集中在你和死亡的联系上，没有反悔、悲伤或忧虑。集中心思去想，你已经没有时间了，然后让你的行动自然发生，让你的一举一动都成为你在世上的最后一战。只有在这种情况下，你的行动才有正当的力量。否则，你穷尽一生所为，也不过是个胆怯的人而已</p>
+<ul>
+<li>先选择支付场景--线上/线下/，</li>
+<li>选择支付方式--</li>
+<li>选择交易网络--银联/第三方</li>
+<li>选择银行</li>
+</ul>
+<figure>
+<img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<p>整个流程需要秒级响应。</p>
+<ol start="2" type="1">
+<li>要是大家都开始用统一的计算平台，AIOps也可以用同一套方案了</li>
+</ol>
+<figure>
+<img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>业务需求之一是，复杂的业务逻辑计算存在单机性能瓶颈，需要支持分布式无范式的分布式开发。</li>
+<li>现在的基础设计在单一用途的组件上，已经做的比较成熟了，专门做流式计算的计算引擎有flink，专门做深度学习的计算引擎有tensorflow，专门做批处理的有spark。</li>
+<li>但是，考虑到一个复杂的应用场景，完成1个任务需要用到多种计算模式，统一计算平台 能够让这几种计算模式实现状态共享，中间结果共享。在这种场景下，统一计算平台，相较于多个独立的计算组件 效率更高。</li>
+<li>要不要搞统一计算平台，取决于需求的复杂性，如果是一个很pure很纯粹的任务，搞这个的意义就不大。但是可以作为预研嘛，万一以后业务变得越来越复杂，也有准备。</li>
+</ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/7c332a60717d350b7c30d04">唐王三部曲-微信读书</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1gh411Y7qf?t=1">Ray Forward Meetup 2021-面向金融决策场景的在线计算系统-bilibili</a></li>
 </ol>
 
       
@@ -357,7 +401,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/93/">93</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -423,14 +467,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">186</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

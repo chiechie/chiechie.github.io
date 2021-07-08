@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/24/reading_notes/computer/visualize-graph/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/24/reading_notes/computer/visualize-graph/" class="post-title-link" itemprop="url">风控领域的图挖掘场景</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-2_1_6-topo-rca-MicroCause/" class="post-title-link" itemprop="url">chapter2.1.5 基于拓扑的根因定位-MicroCause</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-24 09:08:21" itemprop="dateCreated datePublished" datetime="2021-05-24T09:08:21+08:00">2021-05-24</time>
+              <time title="创建时间：2021-05-21 22:43:57" itemprop="dateCreated datePublished" datetime="2021-05-21T22:43:57+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
+                <time title="修改时间：2021-06-02 17:43:09" itemprop="dateModified" datetime="2021-06-02T17:43:09+08:00">2021-06-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -219,53 +219,152 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="几个场景">几个场景</h1>
-<h2 id="攻防对抗">攻防对抗</h2>
-<p>一般都会有下述风控规则：</p>
+          <h2 id="目录">目录</h2>
 <ul>
-<li>7天内在注册账户数超过**的设备号</li>
-<li>1天内某IP关联超过xx个账户</li>
-</ul>
-<p>虽然规则简单，但由于实时性和贴近业务的特点，可以拦截不少黑产, 但也会造成一定误杀，特别是IP类的规则。</p>
-<p>同时因为风控是攻防对抗的过程，黑产也会升级，比如通过伪造设备、LBS、频繁更换IP等手段尽可能伪装成一个真人，隐蔽聚集性等显性特征，绕过风控规则。</p>
-<p>相应风控技术也在进化，如使用设备指纹、IP画像、验证码对抗等。</p>
-<h2 id="基于关联关系识别团伙">基于关联关系识别团伙</h2>
-<p>可以定义设备-账户的Graph如下：</p>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
 <ul>
-<li>节点：账户 + 设备</li>
-<li>边：近xx天账户与设备出现在同一事件中，则它们之间有一条边。</li>
-</ul>
-<p>识别方法：</p>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
 <ul>
-<li>无监督方法：通过「连通子图算法」识别出一个个连通的社区，如果社区规模较大，可能背后业务含义是黑产控制一批账户。定义社区规模为score，通过调节阈值来控制误杀、召回。</li>
-<li>有监督方法-传统：等价为节点分类问题，通过提取节点业务特征、拓扑特征、所属社区特征，训练一个分类器去预测。</li>
-<li>有监督方法-图神经网络：将节点业务特征X与网络拓扑结构A作为输入学习函数，用于对未知数据的预测.相比规则来说，此类方法不仅用到了更复杂的关系，同时也考虑了节点业务和拓扑特征。故防控能力会更强一些。</li>
-</ul>
-<h2 id="基于相似度识别团伙">基于相似度识别团伙</h2>
-<p>如果黑产成功避开设备指纹、聚集性规则等风控措施，把自己伪装成一个真人，如何检测？——只要作案了，总会留下蛛丝马迹。</p>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
 <ul>
-<li>垃圾文本：比如留下了垃圾文本，那么利用文本之间相似度（Jaccard、semi-hash）构建账户之间相似关系，然后使用图分割+连通子图查找技术识别，具体可<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/23385044">参考这里</a></li>
-<li>行为相似度：facebook针对刷量的行为，通过计算账户之间行为度来构建graph，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/58334765">详见这里</a>.此类方法最大问题是, 两两节点相似度计算性能问题。一般会做下约束，如限制在某个事件场景下、限制在某段事件内以及如何分段计算+合并，并且往往是通过spark分布式计算。</li>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a>:</li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
 </ul>
-<h2 id="基于共享特征识别团伙">基于共享特征识别团伙</h2>
-<p>因为黑产控制大量的账户通过软件进行攻击，而不是手工操作，故这些账户某些共同属性上会有Pattern。</p>
-<p>大概的解题思路是“搜集证据”，将共享的某特征/字段作为，判断证据强弱，如共享设备是强证据，可以仅凭此条直接断案。 但是像共用某品牌手机是弱证据，需要多个弱证据结合一起断案。</p>
-<p>再抽象一点是有点像「层次社区划分算法」：</p>
+<blockquote>
+<p>清华阿里合作paper《基于因果分析的微服务内根因定位》, Localizing Failure Root Causes in a Microservice through Causality Inferenc</p>
+<p><strong>MicroCause</strong>，可以定位到导致微服务故障的根因指标，原理是，先使用路径条件时间序列算法（PCTS）挖掘时间序列之间的因果关系，然后使用随机游走方法（TCORW）来推断因果。TCORW方法综合分析了因果关系，指标异常程度和优先级信息。</p>
+<p>在86个实际故障实例中，MicroCause给出的top 5根因的准确性（AC @ 5）为98.7％。</p>
+</blockquote>
+<h2 id="背景介绍">背景介绍</h2>
+<p>在微服务架构中，一个「应用程序」往往被分解为多个「微服务」。例如，图1展示了，在淘宝购物时，完成用户下单操作需要调用多个微服务。当前针对微服务系统的故障根因问题，学术界已有一些成熟的工作。这些工作主要是通过学习故障如何在微服务之间传播，并找到根因的微服务，例如，图1中Address微服务是导致支付异常的根因。但是，更进一步的根因信息尚不得而知，也就是说是什么导致这个微服务故障？运维人员还是没法明确知道下一步要怎么响应故障。</p>
+<p><img src="./image-20200622132926186.png" /></p>
+<p>图1：在线购物平台中，当接收到用户下单指令后，Order Creation微服务，将调用Inventory，Discount Coupon，Freight，Address这几个微服务来完成用户下单的需求。</p>
+<p>怎么进一步定位微服务故障根因？ 上游组件，下游组件，部署环境。</p>
+<p>对于一个微服务来说，通常有上游组件（例如，微服务，中间件）调用它，并且它可以调用某些下游组件（例如，微服务，中间件）。如图2所示，用户在淘宝下了一个订单后，”Order Creation“微服务将调用“Discount Coupon”微服务查看可用的优惠券，“Discount Coupon”微服务将调用“Inventory”微服务，针对不同的库存计算不同的优惠金额。此外，微服务通常部署在一个或多个容器或虚拟机。</p>
+<figure>
+<img src="./image-20200622132951991.png" alt="图2：““Discount Coupon”微服务实现细节" /><figcaption aria-hidden="true">图2：““Discount Coupon”微服务实现细节</figcaption>
+</figure>
+<p>对每个微服务需要配置监控指标（如图2所示），包括用户可感知的KPI，上游组件相关的指标，下游组件相关的指标，与部署环境相关的指标（例如CPU）。当KPI异常时，通常表示微服务故障，</p>
+<p>运维人员通常会配置一系列监控指标以持续监视每个微服务的性能（如图2所示）。这些指标包括用户可感知的指标KPI，例如用户响应时间(RT)和指标Metrics. Metrics包括与上游组件相关的指标（例如，Web用户的每秒查询（QPS）），下游组件相关指标（例如中间件的RT），与部署环境相关的指标（例如CPU）。</p>
+<p>当KPI异常时表示微服务故障，到底是组件异常还是部署环境异常，可通过观察指标是否异常得到。</p>
+<p>因此，微服务故障的根本原因可以用异常metrics表示。例如，如图2中，由Web RT异常标明的微服务故障是由Web QPS异常引起的。</p>
+<p>因此在该问题中，我们将针对一个微服务故障实例，给出N个metrics，作为故障的Top N根因。通常一个故障实例由三部分信息组成：异常的KPI，异常的微服务ID和异常时间点。</p>
+<h2 id="已有方法">已有方法</h2>
+<p>如表1中所示，目前已有的解决方法主要是利用微服务之间的故障传播关系（cross），通常分为两个阶段：</p>
 <ol type="1">
-<li>定义证据：通过业务经验定义共享特征集，不通场景特征集应该是不同的。</li>
-<li>找证据：分别对每个/每组特征进行聚类/社区划分算法，得到一个个簇.</li>
-<li>组合证据：将2得到的簇作为节点，簇之间共有账户数作为连边，构建graph，再进一步划分得到最终的社区，每个社区中的节点共享多个特征。</li>
+<li>构造依赖关系（relationship learning）：适用pc算法学习微服务之间依赖关系，或者采用系统工具获取依赖关系</li>
+<li>推断根因（rcf）：通过随机游走等基于相关性的方法推断根本原因。</li>
 </ol>
-<h1 id="总结">总结</h1>
+<figure>
+<img src="./image-20200622133032479.png" alt="表1：微服务系统中已有解决方法" /><figcaption aria-hidden="true">表1：微服务系统中已有解决方法</figcaption>
+</figure>
+<h2 id="研究挑战">研究挑战</h2>
+<p>针对本问题的研究，主要有以下两个挑战：</p>
+<h3 id="挑战一没有现成的方法学习时序间的因果关系">挑战一：没有现成的方法学习时序间的因果关系</h3>
+<p>总结一下：已有的pc算法是基于iid的假设，不能捕捉延迟的因果关系，所以不适合指标因果图构建。</p>
+<p>已有的方法，要解决的问题比较简单，即只用分析微服务间的因果关系，相应的解决方案要么通过系统工具获取依赖关系，要么通过pc算法学习因果关系。</p>
+<p>但是现在，要解决的为问题更有挑战性，除了微服务之间的因果，还想知道一个微服务的指标之间的因果。 所以，提出了一种PC加强版因果挖掘的方法--PCTS。</p>
+<p>PC算法假设不同时刻，指标之间的因果关系是独立的， 以下图为例，PC算法假设17：17和17：18之间，4个指标的因果关系是独立</p>
+<p>但是，时序不是符合这个假设的，经常会有时间差， 以下图为例，如17:17分Web QPS会影响17:18的Web RT</p>
+<p><img src="./img.png" alt="图3：四个时间序列的因果关系图" /> 图中的每一个节点代表了时间序列的某一个时间点，两个节点之间的箭头，标明了两个时间点的数据之间的因果关系</p>
+<p>所以PC算法，学习不到延迟的因果关系</p>
+<h3 id="挑战二因果推断还要考虑指标本身含义">挑战二：因果推断还要考虑指标本身含义</h3>
+<p>做因果推断，除了从数据出发，考虑指标异常相关性，还要考虑指标本身的含义。同一类别指标比不同类别的相关更强。</p>
+<p>现在看一个不失一般性的故障案例：web请求次数过多导致的的响应时间变长</p>
+<figure>
+<img src="./image-20200622132951991.png" alt="图2：Discount Coupon微服务的实现细节" /><figcaption aria-hidden="true">图2：Discount Coupon微服务的实现细节</figcaption>
+</figure>
+<p>以图2为例， 从数据上看，微服务的KPI异常了，也就是Web RT异常了。</p>
+<p>现在把上下游的metric全部load过来， 使用随机游走的方法，分析到的根因是Middleware1 Consumer RT。</p>
+<p><img src="./img_1.png" alt="图4：微服务中的4个监控指标" /> 其中Web RT是KPI，Web QPS, Middleware1 Consumer RT和JVM FGC Time是metrics。</p>
+<p>但实际上，对这个故障实例，根本原因应是上游组件的指标Web QPS。</p>
+<p>随机游走的视野太狭隘了，还应该考虑指标本身含义，同一类别指标比不同类别的相关更强。 也就是说Web RT和Web QPS的相关性更强，和Middleware1 Consumer RT的相关性更弱</p>
+<h2 id="架构设计">架构设计</h2>
+<p>MicroCause的架构图如下（图5），</p>
+<figure>
+<img src="./image-20200622134206479.png" alt="图5:MicroCause架构图" /><figcaption aria-hidden="true">图5:MicroCause架构图</figcaption>
+</figure>
+<ul>
+<li>stage1-指标监控：当KPI异常时，MicroCause将被激活，将故障前数小时的监控指标将用作MicroCause的输入。</li>
+<li>stage2-构建因果图：生成故障因果图&amp;异常检测，可并行
+<ul>
+<li>使用PCTS算法，从故障kpi和相关指标学习出该故障的故障因果图，</li>
+<li>将故障前数小时的监控指标对metrics做异常检测，并生成异常事件序列。</li>
+</ul></li>
+<li>stage3-因果推断：使用TCORW，输出N个可能的根原。</li>
+</ul>
+<h3 id="故障因果图学习">故障因果图学习</h3>
+<p>针对挑战一，使用PCTS算法学习基于指标的故障因果图。该算法算法分为两步:</p>
 <ol type="1">
-<li>上述三种类型方法的主要区别在于graph的不同，在整个图挖掘体系中最核心也最难一点在于，如何将业务经验抽象成Graph。</li>
-<li>社区发现算法以图分割+连通子图查找为主，一方面可解释强，另外可以通过调节阈值权衡召回和误差，以满足运营人员需要。这也是 "拿算法适配业务，而不是业务适配算法"的工作准则。</li>
+<li><p>第一步，得到每个时刻指标之间的因果图<span class="math inline">\(G_C\)</span>，基于PC算法的改进，该算法用于学习时间序列的因果图。该算法的结果如图3所示。但是由于我们需要利用指标之间的因果关系进行根因定位，我们对于改进的PC算法的结果进行了调整。 <img src="./img.png" alt="图3：四个时间序列的因果关系图- G_C" /></p></li>
+<li><p>第二步，将<span class="math inline">\(G_C\)</span>转化为节点为指标的因果图<span class="math inline">\(G_{FCG}\)</span>，这样才能做根因定位。理论上，如果<span class="math inline">\(G_C\)</span>中时序A和时序B的时间点中存在一条边，那么<span class="math inline">\(G_{FCG}\)</span>中, 时列A到时序B就有一条边。</p>
+<figure>
+<img src="./image-20200622140031849.png" alt="图8：针对故障实例A,基于PCTS算法生成的因果图" /><figcaption aria-hidden="true">图8：针对故障实例A,基于PCTS算法生成的因果图</figcaption>
+</figure>
+<figure>
+<img src="./image-20200622135001778.png" alt="图6：四个指标间的故障因果图-G_FCG" /><figcaption aria-hidden="true">图6：四个指标间的故障因果图-G_FCG</figcaption>
+</figure></li>
 </ol>
-<h1 id="参考">参考</h1>
+<h3 id="异常检测">异常检测</h3>
+<p>由于需要对KPI和指标进行异常检测，这里采用的方法是SPOT，可以检测徒增突降。</p>
+<p><span class="math display">\[\eta_{\max}^{i}=\max _{k \in O} \frac{| M_{k}^{i}-\phi_{M_{k}^{i}}|}{\phi_{M^{i}}}\]</span></p>
+<p>其中是时间序列 在时刻的值，是时间序列 在时刻SPOT拟合的阈值。</p>
+<h3 id="面向时间因果的随机游走tcorw">面向时间因果的随机游走(TCORW)</h3>
+<p>总结一下 先构建一个指标(潜在根因得分) = 随机游走的根因概率 + 指标的异常程度 相关指标分为3层，每一层找出top2的两个指标，一起得到6个 按照时间排序，得到前3个或者5个输出</p>
+<p>TCORW算法主要分为三步：</p>
+<ul>
+<li>面向因果的随机游走，</li>
+<li>潜在根因得分</li>
+<li>根因排序</li>
+</ul>
+<h4 id="随机游走">随机游走</h4>
+<p>这一步我们主要利用监控指标之间的因果关系进行分析。首先我们利用模块一中生成的故障因果图进行随机游走。不同于传统的随机游走算法，在此算法中，我们利用偏相关系数（Partial Correlation)来计算转移概率矩阵。与Pearson相关性不同的是，和异常KPI因果性更强的metric指标将具有更高的偏相关系数，而Pearson相关性更注重两个指标之间的相关性。因此和异常KPI因果性更强的metric将在随机游走中获得更高的访问次数。</p>
+<h4 id="潜在根因得分">潜在根因得分</h4>
+<p>这一步中我们利用，随机游走的结果和指标的异常程度对于异常的metric计算潜在根因得分，计算方式如下所示：</p>
+<p><span class="math display">\[\gamma_{i}=\lambda \bar{c}_{i}+(1-\lambda) \bar{\eta}_{\max }^{i}\]</span></p>
+<p>其中是归一化后的随机游走访问次数，是归一化后的异常程度，作为参数，将用于控制着两部分的贡献比例。</p>
+<h4 id="根因排序">根因排序</h4>
+<p>在这一步中，我们首先利用指标间可能的故障传播关系，将指标分为三个级别Level1，Level2，Level3。</p>
+<p>如表2所示，当Level1和Level2中的指标同时发生异常时，我们认为Level1中的指标更有可能是根因。</p>
+<figure>
+<img src="./image-20200622135235013.png" alt="表2：指标分级" /><figcaption aria-hidden="true">表2：指标分级</figcaption>
+</figure>
+<p>基于指标分级信息，指标的异常时间和指标的潜在异常得分我们设计了如下算法给出最后的根因排序。 <img src="./image-20200622135254320.png" /></p>
+<h2 id="数据集和评估指标">数据集和评估指标</h2>
+<p>在此工作中，从2019年9月份到2020年1月份，我们一直某大型在线购物平台中监控超过400种微服务状态。我们收集了86**个真实的在线故障实例作为评估数据集。根据过去的根因分析工作，我们使用AC@k和avg<span class="citation" data-cites="k评估算法给出的Top">@k评估算法给出的Top</span> K个根因的准确性。</p>
+<p><span class="math display">\[ AC@ k=\frac{1}{|A|} \sum_{a \in A}\frac{\sum_{i&lt; k} R^{a}[i] \in V_{r c}^{a}}{\min (k,|\mathrm{V^a}|)} \]</span></p>
+<p><span class="math display">\[A v g @ k=\frac{1}{k} \sum_{1 \leq j \leq k} A C @ j\]</span></p>
+<h2 id="案例分析">案例分析</h2>
+<p>CauseInfer[INFOCOM14]中提到，使用PC算法来学习基于时间序列的因果图时容易生成的孤立子图。在那篇论文中，作者使用领域知识来弥补这一缺陷。 在我们的工作中，同样观察到了这种现象。从图7中，由PC生成的因果图可以看出，异常KPI与根因之间没有路径。</p>
+<p><img src="./image-20200622140008064.png" /> 图7：针对故障实例A,基于PC算法生成的因果图</p>
+<p>但是PCTS可解决这个问题，因为它可以表达时序之间的延迟因果关系（图8）。</p>
+<figure>
+<img src="./image-20200622140031849.png" alt="图8：针对故障实例A,基于PCTS算法生成的因果图" /><figcaption aria-hidden="true">图8：针对故障实例A,基于PCTS算法生成的因果图</figcaption>
+</figure>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://scikit-network.readthedocs.io/en/latest/">scikit-network的doc</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/search?type=content&amp;q=%E5%9B%BE%E6%8C%96%E6%8E%98">zhihu-风控</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/62750137">GCN</a></li>
+<li><a target="_blank" rel="noopener" href="https://wemp.app/posts/6013f2da-c11a-4f6f-b393-2b631c45172a">清华阿里AIOps新作：基于因果分析的微服务内根因定位</a></li>
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">causeinfer--paper</a></li>
 </ol>
 
       
@@ -286,7 +385,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/23/data_structure/graph/randomwalking/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -300,7 +399,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/23/data_structure/graph/randomwalking/" class="post-title-link" itemprop="url">随机游走</a>
+            <a href="/2021/05/21/AI/AIOps/AIOps-1_4-kpi-correlation/" class="post-title-link" itemprop="url">chapter1.4 指标异常关联</a>
         </h2>
 
         <div class="post-meta">
@@ -310,14 +409,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-23 12:52:46" itemprop="dateCreated datePublished" datetime="2021-05-23T12:52:46+08:00">2021-05-23</time>
+              <time title="创建时间：2021-05-21 22:32:17" itemprop="dateCreated datePublished" datetime="2021-05-21T22:32:17+08:00">2021-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-28 09:34:19" itemprop="dateModified" datetime="2021-06-28T09:34:19+08:00">2021-06-28</time>
+                <time title="修改时间：2021-06-05 08:42:57" itemprop="dateModified" datetime="2021-06-05T08:42:57+08:00">2021-06-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -325,7 +424,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -340,25 +439,79 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="介绍">介绍</h2>
-<p>已知因果图时，随机游走可以用来做因果推断。</p>
-<p>原理是，基于因果关系，构建概率转移矩阵，通过模拟故障传播路径，得到故障根因。</p>
-<h2 id="随机游走算法-详细">随机游走算法-详细</h2>
+          <h1 id="目录">目录</h1>
 <ul>
-<li>Step 1. 生成一个关系图G. <span class="math inline">\(e_{ij} = 1\)</span> 表示节点i是节点j的原因（之一）</li>
-<li>Step 2. 计算转移矩阵Q:
-<ol type="1">
-<li>向前游走：从result节点到 the cause节点.理论上，跟异常节点越相关的节点，就越有可能是根因. 也就是说 <span class="math inline">\(Q_{ij} = R(v_{abnormal}, v_j)\)</span>, <span class="math inline">\(R(v_{abnormal}, v_j)\)</span>表示异常节点<span class="math inline">\(v_{abnormal}\)</span> 和 $ v_j$之间的相关系数, and <span class="math inline">\(e_{ji} = 1\)</span></li>
-<li>向后游走：从cause节点到result节点. 为了避免算法陷入跟异常不相关或者低相关的节点，随机游走允许从cause节点跳出到result节点。 如果 <span class="math inline">\(e_{j i} \in E\)</span>且 <span class="math inline">\(e_{ij} \notin E\)</span>, 那么 <span class="math display">\[Q_{ji} =\rho R\left(v_{abnormal}, v_{i}\right),\rho \in[0,1]\]</span>.</li>
-<li>维持原状：如果一个节点，它的邻居们都跟异常节点的相关性很低，这个节点很有可能就是根因了，所以游走者应该停留在这里， <span class="math display">\[Q_{i i}=\max \left[ 0, R\left(v_{abnormal}, v_{i}\right)- \max _{k: e_{k i} \in E} R\left(v_{abnormal}, v_{k}\right) \right]\]</span></li>
-</ol></li>
-<li>Step 3. 对行做归一化，得到转移概率矩阵 <span class="math display">\[\bar{Q}_{i j}=\frac{Q_{i j}}{\sum_{j} Q_{i j}}\]</span></li>
-<li>Step 4. 在G上面随机游走，使转移概率<span class="math inline">\(\bar{Q}\)</span></li>
+<li><a href="../AIOps-0-summary/">chapter0 概览</a></li>
+<li><a href="../AIOps-1-event-generate/">chapter1 故障发现</a>
+<ul>
+<li><a href="../AIOps-1_1-kpi-detector/">chapter1.1 单指标异常检测</a></li>
+<li><a href="../AIOps-1_2-fault-prediction/">chapter1.3 故障预测</a></li>
+<li><a href="../AIOps-1_4-kpi-correlation/">chapter1.4 指标异常关联</a></li>
+<li><a href="../AIOps-1_5-log-analysis/">chapter1.5 日志聚类</a>
+<ul>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">chapter1.5.1 使用logmine加强版做日志聚类</a></li>
+<li><a href="../AIOps-1_5_2-log-analysis_meituan/">chapter1.5.2 美团日志聚类</a></li>
+</ul></li>
+</ul></li>
+<li><a href="../AIOps-2-event-analysis/">chapter2 故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1-topo-rca/">chapter2.1 微服务系统的故障定位</a>
+<ul>
+<li><a href="../AIOps-2_1_1-topo-rca-causeinfer-notes1/">chapter2.1.1 CauseInfer1</a></li>
+<li><a href="../AIOps-2_1_2-topo-rca-causeinfer-notes2/">chapter2.1.2 CauseInfer2</a></li>
+<li><a href="../AIOps-2_1_3-topo-rca-aiops2020/">chapter2.1.3 AIOps挑战赛2020-获奖方案分享</a></li>
+<li><a href="../AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+<li><a href="../AIOps-2_1_5-topo-rca-cnsoftbei2020/">chapter2.1.5 N-Softbei2020比赛</a></li>
+<li><a href="../AIOps-2_1_6-topo-rca-MicroCause">chapter2.1.6 MicroCause</a></li>
+</ul></li>
+<li><a href="../AIOps-2_2-multi-dimensional-rca/">chapter2.2 多维下钻根因定位</a></li>
+<li><a href="../AIOps-2_3-trace_rca/">chapter2.3 调用链根因分析</a></li>
+<li><a href="../AIOps-2_4-metric_event_correlation/">chapter2.4 时间序列关联性分析</a></li>
+</ul></li>
+<li>chapter3 故障恢复</li>
 </ul>
-<p>采用类似pagerank的方法，得到每个节点的得分。</p>
-<h2 id="参考">参考</h2>
-<ol start="4" type="1">
-<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">Page3,4 -paper</a></li>
+<blockquote>
+<p>CoFlux挖掘KPI之间的异常波动关联, 是清华和阿里巴巴公司的合作成果。</p>
+<p>波动关联关系结果结果可应用于：报警压缩、推荐TOP-N的可能原因、构建异常波动传播链。</p>
+</blockquote>
+<h1 id="问题描述">问题描述</h1>
+<p>在实际的运维管理工作中，当服务发生故障时，与故障原因相关的许多KPI数据也会出波动。如果可以自动挖掘KPI之间的异常波动关系，就可以帮助运维进行更加高效地排查故障。</p>
+<p>CoFlux的目的是挖掘两个KPI之间的波动关联关系，这种关系包括三个具体问题： 1. 两个KPI的波动是否相关？如果相关， 2. 波动的先后顺序如何（同时发生或者某根曲线的波动先发生）？ 3. 波动的方向是否一致（波动方向一致或者相反）？</p>
+<h1 id="方案介绍">方案介绍</h1>
+<h2 id="符号说明">符号说明</h2>
+<ul>
+<li><span class="math inline">\(S = [s_1, s_2,…, s_m]\)</span>：表示对于一个时间序列S，<span class="math inline">\(s_i\)</span>是KPI S在时刻i的数据，m是KPI的长度。</li>
+<li><span class="math inline">\(P = [p_1, p_2, …, p_m]\)</span>：表示KPI S的预测序列，<span class="math inline">\(p_i\)</span>是<span class="math inline">\(s_i\)</span>的预测值。</li>
+<li><span class="math inline">\(F = [f_1, f_2, …, f_m]\)</span>：表示预测残差序列，<span class="math inline">\(f_i = s_i – *p_i\)</span></li>
+</ul>
+<p>CoFlux使用KPI的预测误差序列来表示该KPI的波动特征。如果两个KPI的波动特征曲线相关（即波动同时发生或者发生时有一定的相位差），那么两个KPI的波动相关。</p>
+<h2 id="难点">难点</h2>
+<p>分析判断KPI的波动关联关系，主要的难点为，KPI曲线数据众多且曲线特征各异（例如不同的周期性、平稳性、趋势等），因此，没有通用的方法可以对所有的KPI进行波动特征提取。</p>
+<h2 id="方法">方法</h2>
+<p>CoFlux的输入是两根KPI曲线，输出结果是波动关联关系：两个KPI是否波动相关，如果相关，同时输出波动的先后顺序和波动的方向。</p>
+<p>算法整体分为两个大的部分：特征工程和相关性计算。</p>
+<figure>
+<img src="img_1.png" alt="CoFlux架构" /><figcaption aria-hidden="true">CoFlux架构</figcaption>
+</figure>
+<h3 id="特征工程">特征工程</h3>
+<p>特征工程主要包括两个步骤，特征提取、特征放大。</p>
+<p>特征放大：一个KPI大部分时间范围内都是正常的，没有很大波动，只有随机的噪声。只有当服务受到影响时，才会产生波动。因此，波动的数量是远远小于正常数据的。为了削弱噪声的影响，我们采用改进版的激励函数：一个KPI的波动程度越大，波动特征也就会被放大的越大，这样就使得我们的波动特征更具区别度，对最后的相关性判断也更有帮助。</p>
+<h3 id="相关性判断">相关性判断</h3>
+<p>对两个KPI的波动特征进行相关性判断时，需要考虑到KPI波动的轻微形变以及相位差。因此，我们挑选Cross-Correlation来测量两个波动特征的相关性结果。</p>
+<figure>
+<img src="img_2.png" alt="相关性判断" /><figcaption aria-hidden="true">相关性判断</figcaption>
+</figure>
+<h3 id="应用实例">应用实例</h3>
+<p>CoFlux的结果可以在以下三个方面助力故障排查：</p>
+<ul>
+<li>报警压缩：对于大量的KPI，我们首先利用CoFlux计算所有KPI的两两之间的波动相关程度，然后使用K-means进行聚类（K可以使用轮廓系数方法选择）。每一类内的KPI可以当成一个报警簇，在报警的时候当成一个整体进行报警。</li>
+<li>推荐TOP N的可能原因：对于任一KPI X，通过CoFlux可找到该KPI的TOP N相关的KPI曲线。在进行故障排查时，运维人员可以优先检查这TOP N个指标。</li>
+<li>构建异常波动传播链：我们可以利用KPI之间的波动传播关系来构建异常波动传播链，这个异常波动传播链可以反映不同KPI之间的波动是如何关联在一起的。相比较人工的方式，CoFlux在不需要专家领域知识的情况下可以自动准确的构建异常波动传播链。</li>
+</ul>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2019/05/CoFlux_camera-ready1.pdf">CoFlux英文paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SpiIquuz-8Ud_C3e4oVyaQ">CoFlux中文介绍</a></li>
 </ol>
 
       
@@ -378,7 +531,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/22/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/93/">93</a><a class="extend next" rel="next" href="/page/22/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -444,14 +597,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">186</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

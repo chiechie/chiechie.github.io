@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="概览  市场上关于投资的书籍大致分为两类：一类是理论家写的，自己都没有实践过；一类是实践家写的，他们误用了数学工具。 金融市场上现在鱼龙混扎，小散受到到不良媒体的诱导会冲动投资，造成市场动荡。量化工具可以减少这种套利机会，肃清这种风气。 常见的陷阱：   img.png  是否意味着有了ai就没有human投资者的空间了？不是，可以人+ai  Pitfall 1: 西西弗斯模式  Pitfall">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Advances in Financial Machine Learning》读书笔记0 为什么金融领域的机器学习项目经常失败？">
+<meta property="og:url" content="https://chiechie.github.io/2021/07/05/AFML/AFML0/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
+<meta property="og:description" content="概览  市场上关于投资的书籍大致分为两类：一类是理论家写的，自己都没有实践过；一类是实践家写的，他们误用了数学工具。 金融市场上现在鱼龙混扎，小散受到到不良媒体的诱导会冲动投资，造成市场动荡。量化工具可以减少这种套利机会，肃清这种风气。 常见的陷阱：   img.png  是否意味着有了ai就没有human投资者的空间了？不是，可以人+ai  Pitfall 1: 西西弗斯模式  Pitfall">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/05/AFML/AFML0/img1.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/05/AFML/AFML0/img.png">
+<meta property="article:published_time" content="2021-07-05T01:49:02.000Z">
+<meta property="article:modified_time" content="2021-07-08T02:55:20.196Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="量化">
+<meta property="article:tag" content="投资">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/07/05/AFML/AFML0/img1.png">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/07/05/AFML/AFML0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>《Advances in Financial Machine Learning》读书笔记0 为什么金融领域的机器学习项目经常失败？ | Chiechie's Mini World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Mini World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/05/AFML/AFML0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《Advances in Financial Machine Learning》读书笔记0 为什么金融领域的机器学习项目经常失败？<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/AFML/AFML0.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-05 09:49:02" itemprop="dateCreated datePublished" datetime="2021-07-05T09:49:02+08:00">2021-07-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-08 10:55:20" itemprop="dateModified" datetime="2021-07-08T10:55:20+08:00">2021-07-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AFML/" itemprop="url" rel="index"><span itemprop="name">AFML</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="概览">概览</h1>
+<ol type="1">
+<li><p>市场上关于投资的书籍大致分为两类：一类是理论家写的，自己都没有实践过；一类是实践家写的，他们误用了数学工具。</p></li>
+<li><p>金融市场上现在鱼龙混扎，小散受到到不良媒体的诱导会冲动投资，造成市场动荡。量化工具可以减少这种套利机会，肃清这种风气。</p></li>
+<li><p>常见的陷阱： <img src="img1.png" alt="img.png" /></p>
+<figure>
+<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure></li>
+<li><p>是否意味着有了ai就没有human投资者的空间了？不是，可以人+ai</p></li>
+</ol>
+<h1 id="pitfall-1-西西弗斯模式">Pitfall 1: 西西弗斯模式</h1>
+<blockquote>
+<p>Pitfall 1: 西西弗斯模式（THE SISYPHUS PARADIGM）</p>
+<p>Solution 1: 元策略模式（THE META-STRATEGY PARADIGM）</p>
+</blockquote>
+<ol type="1">
+<li>自由基金经理（Discretionary portfolio managers～DPM）的投资理念比较玄学，不会遵循特定的理论，这样的一群人开会时往往漫无目的、各执一词。DPMs天然地不能组成一个队伍：让50个DPM一起工作，他们的观点会相互影响，结果是老板发了50份工资，只得到一个idea。他们也不是不能成功，关键是要让他们为同一个目标工作，但尽量别交流。</li>
+<li>很多公司采用DPM模式做量化/ML 项目：让50个PhD分别去研究策略，结果要么得到严重过拟合的结果，要么得到烂大街&amp;低夏普率的多因子模型。即使有个别PhD研究出有效的策略，这种模式的投入产出比也极低。这便是所谓让每个员工日复一日搬石头上山的西西弗斯模式。</li>
+<li>量化是一项系统工程，包括数据、高性能计算设备、软件开发、特征研究、模拟交易系统……如果交给一个人做，无异于让一个工人造整辆车——这周他是焊接工，下周他是电工，下下周他是油漆工，尝试---&gt;失败---&gt;尝试---&gt;失败，循环往复。</li>
+<li>好的做法是将项目清晰地分成子任务，分别设定衡量质量的标准，每个quant在保持全局观的同时专注一个子任务，项目才能得以稳步推进。这是所谓元策略模式（THE META-STRATEGY PARADIGM）。</li>
+</ol>
+<h1 id="pitfall-2-根据回测结果做研究">Pitfall 2: 根据回测结果做研究</h1>
+<blockquote>
+<p>Pitfall 2: 根据回测结果做研究（RESEARCH THROUGH BACKTESTING）</p>
+<p>Solution 2: 特征重要性分析（FEATURE IMPORTANCE ANALYSIS）</p>
+</blockquote>
+<ol type="1">
+<li>金融研究中很普遍的错误是在特定数据上尝试ML模型，不断调参直到得到一个比较好看的回测结果——这显然是过拟合,学术期刊往往充斥面向测试集调参。</li>
+<li>考虑一个ML任务，我们可以构建一个分类器，在交叉检验集上评估其泛化误差。假定结果很好，一个自然的问题是：哪些特征对结果的贡献最大？“好的猎人不会对猎狗捕获的猎物照单全收”，回答了这个问题，我们可以增加对提高分类器预测力的特征，减少噪声特征。</li>
+<li>需关注ml发现的跟特征相关的模式：什么特征最重要、这些特征的重要性会随时间改变么、这种改变能否被识别和预测。</li>
+<li>总之，特征驱动的分析比回测结果驱动的分析更重要。</li>
+</ol>
+<h1 id="pitfall-3-按时间采样">Pitfall 3: 按时间采样</h1>
+<blockquote>
+<p>Pitfall 3: 按时间采样（CHRONOLOGICAL SAMPLING）</p>
+<p>Solution 3: 交易量钟（THE VOLUME CLOCK）</p>
+</blockquote>
+<ol type="1">
+<li>Bars：表格数据的一行或者说一个样本，叫一个bar。</li>
+<li>Time Bars:以固定的时间区间对数据进行取样（如每分钟一次）后得到的数据。</li>
+<li>Time bars使用广泛，但是有两个不足：第一，市场交易信息的数量在时间上的分布并不是均匀的。开盘后的一小时内交易通常会比午休前的一小时活跃许多。因此，使用Time bars 会导致交易活跃的时间区间的欠采样，以及交易冷清的时间区间的过采样。第二，根据时间采样的序列通常呈现出较差的统计特征，包括序列相关、异方差等。</li>
+<li>Tick bars 是指每隔固定的（如1000次）交易次数提取上述的变量信息。一些研究发现这一取样方法得到的数据更接近独立正态同分布 [Ane and Geman 2000]。 使用Tick Bars 还需注意异常值 (outliers) 的处理。一些交易所会在开盘和收盘时进行集中竞价，在竞价结束后以统一价格进行撮合。</li>
+<li>Volume Bars &amp; Dollar Bars：Volume Bars 是指每隔固定的成交量提取上述的变量信息。Dollar Bars 则使用了成交额。 使用 Dollar Bars更有优势的。假设一只股票在一定时间区间内股价翻倍，期初10000元可以购买的股票将会是期末10000元可购买股票手数的两倍。在股价有巨大波动的情况下，Tick Bars以及Volume Bars每天的数量都会随之有较大的波动。除此之外，增发、配股、回购等事件也会导致Tick Bars以及Volume Bars每天数量的波动</li>
+</ol>
+<h1 id="pitfall-4-整数差分">Pitfall 4: 整数差分</h1>
+<blockquote>
+<p>Pitfall 4: 整数差分（INTEGER DIFFERENTIATION）</p>
+<p>Solution #4: 非整数差分（FRACTIONAL DIFFERENTIATION）</p>
+</blockquote>
+<p>我们需要在数据平稳性和保留数据信息之间做取舍，非整数/分数差分就是一个较好的解决方案</p>
+<h1 id="pitfall-5-固定时间范围标签">Pitfall 5: 固定时间范围标签</h1>
+<blockquote>
+<p>Pitfall 5: 固定时间范围标签（FIXED-TIME HORIZON LABELING）</p>
+<p>Solution 5: 三边界方法（THE TRIPLE-BARRIER METHOD）</p>
+</blockquote>
+<ol type="1">
+<li>固定时间范围标签方法应用广泛, 但是有若干不足：time bars 的统计性质不好;常数阈值不顾波动性是不明智的;可能被强制平仓.</li>
+<li>三边界方法（THE TRIPLE-BARRIER METHOD）考虑到平仓的触发条件，是更好的处理方式，其包括上下水平边界和右边的垂直边界。水平边界需要综合考虑盈利和止损，其边界宽度是价格波动性的函数（波动大边界宽，波动小边界窄）；垂直边界考虑到建仓后 bar 的流量，如果不采用 time bars，垂直边界的宽度就不是固定的（翻译太艰难了，附上原文）</li>
+<li>如果未来价格走势先触及上边界，可以取1；先触及下边界，则取-2；先触及右边界，可以 0，或者根据盈利正负，取1或者-1 。</li>
+</ol>
+<h1 id="pitfall-6-同时学出方向和规模">Pitfall 6: 同时学出方向和规模</h1>
+<blockquote>
+<p>Pitfall 6: 同时学出方向和规模（LEARNING SIDE AND SIZE SIMULTANEOUSLY）</p>
+<p>Solution #6: 元标签（META-LABELING）</p>
+</blockquote>
+<ol type="1">
+<li>金融中用ML的另一常见错误是同时学习仓位的方向和规模。</li>
+<li>具体而言，方向决策（买/卖）是最基本的决策，规模决策（size decision）是风险管理决策，即我们的风险承受能力有多大，以及对于方向决策有多大信心。</li>
+<li>我们没必要用一个模型处理两种决策，更好的做法是分别构建两个模型：第一个模型来做方向决策，第二个模型来预测第一个模型预测的准确度。</li>
+<li>很多ML模型表现出高精确度（precision）和低召回率（recall）。这意味着这些模型过于保守，大量交易机会被错过。</li>
+<li>F1-score 综合考虑了精确度和召回率，是更好的衡量指标，元标签（META-LABELING）有助于构建高 F1-score 模型。首先（用专家知识）构建一个高召回率的基础模型。随后构建一个ML模型，用于决定我们是否应该执行基础模型给出的决策。</li>
+<li>元标签+ML有以下4个优势：
+<ol type="1">
+<li>元标签+ML则是在白箱（基础模型）的基础上构建的，具有更好的可解释性；</li>
+<li>元标签+ML减少了过拟合的可能性，即ML模型仅对交易规模决策不对交易方向决策，避免一个ML模型对全部决策进行控制；</li>
+<li>元标签+ML的处理方式允许更复杂的策略架构，例如：当基础模型判断应该多头，用ML模型来决定多头规模；当基础模型判断应该空头，用另一个ML模型来决定空头规模；</li>
+<li>赢小输大会得不偿失，所以单独构建ML模型对规模决策是有必要的。</li>
+</ol></li>
+</ol>
+<blockquote>
+<p>achieving high accuracy on small bets and low accuracy on large bets will ruin you</p>
+</blockquote>
+<h1 id="pitfall-7-非iid样本加权">Pitfall 7: 非IID样本加权</h1>
+<blockquote>
+<p>Solution #7: （UNIQUENESS WEIGHTING AND SEQUENTIAL BOOTSTRAPPING）</p>
+</blockquote>
+<p>样本不是iid的，比如按照volumn bars，到达1000的成交量才采集一个样本。</p>
+<p>如果实际数据中，交易发生拥堵，都集中在了t=10，那么： - t=1要到t=10才达到1000， - t=2其实也是到t=10达到1000， - t=3其实也是到t=10达到1000，</p>
+<p>因此，t=10这个样本就被用了很多次（最多9次），当然time bars是没有这个问题的。</p>
+<p>为了缓解这个样本重复出现的问题，作者定义了一个衰减因子即<span class="math inline">\(1/c_t\)</span>, <span class="math inline">\(c_t\)</span>表示t时刻的行情被用了多少次，所以t时刻的行情对应的return应该除以这个次数。</p>
+<p>这些只对那种按成交量或者其他非等时间划分样本的方法有意义 (1) labels are decided by outcomes; (2) outcomes are decided over multiple observations; (3) because labels overlap in time, we cannot be certain about what observed features caused an effect.</p>
+<h1 id="pitfall-8-交叉检验集泄露信息cross-validation-leakage">Pitfall 8: 交叉检验集泄露信息（CROSS-VALIDATION LEAKAGE）</h1>
+<blockquote>
+<p>Pitfall 8: 交叉检验集泄露信息（CROSS-VALIDATION LEAKAGE）</p>
+<p>Solution #8: 清理和禁止（PURGING AND EMBARGOING）</p>
+</blockquote>
+<ol type="1">
+<li>金融中需要警惕在训练集 / CV 集中引入未来信息。</li>
+<li>好的做法应该是在训练集和CV集之间设定一个间隔</li>
+</ol>
+<h1 id="pitfall-9-前向回测">Pitfall 9: 前向回测</h1>
+<blockquote>
+<p>Pitfall 9: 前向回测（WALK-FORWARD / HISTORICAL BACKTESTING）</p>
+<p>Solution #9: CPCV（COMBINATORIAL PURGED CROSS-VALIDATION）</p>
+</blockquote>
+<ol type="1">
+<li>常用的回测方法是前向回测（Walk-forward Backtesting）：根据当前时刻以前的数据做决策。这种方式容易解读同时也很直观，但存在几点不足：
+<ol type="1">
+<li>前向回测只测试了单个场景，容易过拟合；</li>
+<li>前向回测的结果未必能代表未来的表现。 2.作者提出了一种切分方法：将所有数据分为 N 份（注意避免信息泄露），从中任意取 k份作为测试集，剩下作为训练集，总共有很多种取法。这种方法最大的优势是允许我们得到某策略在不同时期的夏普率分布，而不是计算一个夏普率值。</li>
+</ol></li>
+</ol>
+<h1 id="pitfall-10-回测过拟合">Pitfall 10: 回测过拟合</h1>
+<blockquote>
+<p>Pitfall 10: 回测过拟合（BACKTEST OVERFITTING）</p>
+<p>Solution 10: 保守夏普率（THE DEFLATED SHARPE RATIO）</p>
+</blockquote>
+<ol type="1">
+<li>假设 <span class="math inline">\({y_i}\)</span> 独立同分布，可证明<span class="math inline">\(E\left[\max \left\{y_{i}\right\}_{i=1, \ldots, I}\right] \leq \sigma \cdot \sqrt{2 \log (I)}\)</span>。</li>
+<li>若<span class="math inline">\(y_i\)</span> 代表一系列回测结果的夏普率，则只要回测次数足够多，或者每次回测结果方差足够大，从中都能选出任意高的结果，尽管有可能 <span class="math inline">\(E(y_i)=0\)</span> 。</li>
+<li>这提醒我们要考虑到回测次数过多会造成过拟合，一种解决方案是保守夏普率（THE DEFLATED SHARPE RATIO，DSR），其思想是给定一系列对夏普率SR的估计值，通过统计检验的方法估计能否推翻零假设 SR=0 。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>《Advances in Financial Machine Learning》</li>
+<li>https://blog.csdn.net/weixin_38753422/article/details/100179559</li>
+<li>https://zhuanlan.zhihu.com/p/69231390</li>
+<li>https://zhuanlan.zhihu.com/p/29208399</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%87%8F%E5%8C%96/" rel="tag"># 量化</a>
+              <a href="/tags/%E6%8A%95%E8%B5%84/" rel="tag"># 投资</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/04/investment/quant/" rel="prev" title="投资、投机与套利">
+      <i class="fa fa-chevron-left"></i> 投资、投机与套利
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/06/AFML/AFML1/" rel="next" title="《Advances in Financial Machine Learning》读书笔记1 数据分析">
+      《Advances in Financial Machine Learning》读书笔记1 数据分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-number">1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pitfall-1-%E8%A5%BF%E8%A5%BF%E5%BC%97%E6%96%AF%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">Pitfall 1: 西西弗斯模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pitfall-2-%E6%A0%B9%E6%8D%AE%E5%9B%9E%E6%B5%8B%E7%BB%93%E6%9E%9C%E5%81%9A%E7%A0%94%E7%A9%B6"><span class="nav-number">3.</span> <span class="nav-text">Pitfall 2: 根据回测结果做研究</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pitfall-3-%E6%8C%89%E6%97%B6%E9%97%B4%E9%87%87%E6%A0%B7"><span class="nav-number">4.</span> <span class="nav-text">Pitfall 3: 按时间采样</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pitfall-4-%E6%95%B4%E6%95%B0%E5%B7%AE%E5%88%86"><span class="nav-number">5.</span> <span class="nav-text">Pitfall 4: 整数差分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pitfall-5-%E5%9B%BA%E5%AE%9A%E6%97%B6%E9%97%B4%E8%8C%83%E5%9B%B4%E6%A0%87%E7%AD%BE"><span class="nav-number">6.</span> <span class="nav-text">Pitfall 5: 固定时间范围标签</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pitfall-6-%E5%90%8C%E6%97%B6%E5%AD%A6%E5%87%BA%E6%96%B9%E5%90%91%E5%92%8C%E8%A7%84%E6%A8%A1"><span class="nav-number">7.</span> <span class="nav-text">Pitfall 6: 同时学出方向和规模</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pitfall-7-%E9%9D%9Eiid%E6%A0%B7%E6%9C%AC%E5%8A%A0%E6%9D%83"><span class="nav-number">8.</span> <span class="nav-text">Pitfall 7: 非IID样本加权</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pitfall-8-%E4%BA%A4%E5%8F%89%E6%A3%80%E9%AA%8C%E9%9B%86%E6%B3%84%E9%9C%B2%E4%BF%A1%E6%81%AFcross-validation-leakage"><span class="nav-number">9.</span> <span class="nav-text">Pitfall 8: 交叉检验集泄露信息（CROSS-VALIDATION LEAKAGE）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pitfall-9-%E5%89%8D%E5%90%91%E5%9B%9E%E6%B5%8B"><span class="nav-number">10.</span> <span class="nav-text">Pitfall 9: 前向回测</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pitfall-10-%E5%9B%9E%E6%B5%8B%E8%BF%87%E6%8B%9F%E5%90%88"><span class="nav-number">11.</span> <span class="nav-text">Pitfall 10: 回测过拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">11.1.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">186</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/26/reading_notes/computer/cache-memory/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/22/data_structure/graph/graph-basic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/26/reading_notes/computer/cache-memory/" class="post-title-link" itemprop="url">计算机的存储单元</a>
+            <a href="/2021/06/22/data_structure/graph/graph-basic/" class="post-title-link" itemprop="url">图数据基础</a>
         </h2>
 
         <div class="post-meta">
@@ -189,108 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-26 09:47:32" itemprop="dateCreated datePublished" datetime="2021-06-26T09:47:32+08:00">2021-06-26</time>
+              <time title="创建时间：2021-06-22 11:42:17" itemprop="dateCreated datePublished" datetime="2021-06-22T11:42:17+08:00">2021-06-22</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-28 13:56:10" itemprop="dateModified" datetime="2021-06-28T13:56:10+08:00">2021-06-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="概览">概览</h2>
-<ol type="1">
-<li><p>计算机上的存储单元的处理速度从快到慢依次是： 寄存器&gt; L1&gt;L2&gt;L3&gt;内存&gt;固态硬盘&gt; 机械硬盘</p>
-<figure>
-<img src="./img_1.png" alt="存储单元" /><figcaption aria-hidden="true">存储单元</figcaption>
-</figure></li>
-<li><p>早期的计算机只有寄存器和内存，但是寄存器的处理速度远高于内存，所以大部分时间是寄存器在等内存，所以CPU是处于空转状态。 经过改进</p></li>
-<li><p>除了寄存器，后面的计算机在CPU中又逐步加入了高速缓存--L1/L2/L3缓存，相当于让内存提前做功课，把数据提前取出来，在3个缓存中候着，等寄存器有空了就取来用。笨鸟先飞嘛。</p></li>
-<li><p>L1/L2/L3缓存，每层速度递减、容量递增。L1缓存速度接近寄存器速度，大约1ns时延。</p></li>
-<li><p>多核CPU的L3对诶个core是共享的，L2和L1是每个core私有的。</p></li>
-</ol>
-<figure>
-<img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
-</figure>
-<ol start="6" type="1">
-<li>CPU读取数据时，要从内存读取到L3，再读取到L2再读取到L1，同样写到内存时也会经过这些层次。</li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li>https://www.junmajinlong.com/os/cpu_cache/</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/25/data_structure/data-structure-base/" class="post-title-link" itemprop="url">数据结构基础</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-25 09:17:29" itemprop="dateCreated datePublished" datetime="2021-06-25T09:17:29+08:00">2021-06-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-06 14:42:59" itemprop="dateModified" datetime="2021-07-06T14:42:59+08:00">2021-07-06</time>
+                <time title="修改时间：2021-07-02 18:29:07" itemprop="dateModified" datetime="2021-07-02T18:29:07+08:00">2021-07-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -313,55 +219,203 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>数据结构是在计算机中存储数据的方法</p>
-<p>一般情况下，精心挑选的数据结构能产生有效的算法</p>
-</blockquote>
-<h2 id="总结">总结</h2>
+          <h2 id="总结">总结</h2>
 <ol type="1">
-<li><p>数据结构分为线性数据结构和非线性数据结构</p></li>
-<li><p>线性数据结构包括数组（array），链表（linked list），栈（stack），队列（queue）</p>
+<li>图不仅仅通过边存储静态的信息，还能基于边，inference更多的信息。</li>
+</ol>
+<h2 id="真实世界中的网络">真实世界中的网络</h2>
+<ol type="1">
+<li>计算机网络：互联网</li>
+<li>交通网络（铁路网，公路网）</li>
+<li>金融网络</li>
+<li>下水道网络</li>
+<li>政治网络</li>
+<li>犯罪网络</li>
+</ol>
+<h2 id="图的定义">图的定义</h2>
+<p>传统的空间都是定义在欧几里得空间（Euclidean Space）的，在该空间定义的距离被称为欧式距离。 音频，图像，视频等都是定义在欧式空间下的欧几里得结构化数据，然而对于社交网络等数据，使用欧几里得空间进行定义并不合适，所以将这一类的数据所处的空间称为非欧几里得空间。</p>
+<p>非欧空间下最有代表的结构就是图（Graph）结构， 每一个图都有对应的4个矩阵：incidence matrix,A/degree matrix/adjacency matrix/拉普拉斯矩阵（laplacian matrix， L）</p>
+<p>incidence matrix:<span class="math inline">\(A \ in R^{m *n}\)</span>, m 是边的个数，n是节点的个数 每一行代表一条边的起点（也叫parent）和终点（也叫children）</p>
 <figure>
-<img src="b3728c27302a8548fe9e8a87e619ca83.png" alt="线性数据结构" /><figcaption aria-hidden="true">线性数据结构</figcaption>
-</figure></li>
-<li><p>非线性数据结构包括树和图,树可以认为是有向图的special case <img src="e6d5a8d9a75587abe612dfef9abffc01.png" alt="非线性数据结构" /></p></li>
-<li><p>图分有向图和无向图</p>
-<figure>
-<img src="18c651092d22c7204021d10a5a79b0ff.png" alt="有向图vs无向图" /><figcaption aria-hidden="true">有向图vs无向图</figcaption>
-</figure></li>
-<li><p>无向图的一个实例是fb的社交网络，边表示好友关系。</p>
-<figure>
-<img src="f3fc896014d62fb1ec1c96c93210f7ff.png" alt="社交网络" /><figcaption aria-hidden="true">社交网络</figcaption>
-</figure></li>
-<li><p>基于社交网络这个数据结构有什么应用呢？好友推荐, 推荐朋友的朋友,网络社会科学的小世界</p>
+<img src="img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
+</figure>
+<h3 id="邻接矩阵adjacency-matrix">邻接矩阵（Adjacency matrix）</h3>
+<p>邻接矩阵是一个NxN的矩阵，对于有权图，其值为权重或0，对于无权图，其值为0和1，该矩阵定义如下： <span class="math display">\[A \in R^{N \times N}, A_{i j}=\left\{\begin{array}{ll}a_{i j} \neq 0 &amp; e_{i j} \in E \\ 0 &amp; \text { othersize }\end{array}\right.\]</span></p>
+<h3 id="度矩阵degree-matrix">度矩阵（Degree matrix）</h3>
+<p>度矩阵D是一个对角矩阵，其定义为：</p>
+<p><span class="math display">\[D \in R^{N \times N}, D_{i i}=\sum_{j} A_{i j}\]</span></p>
+<h3 id="邻域neighborhood">邻域（Neighborhood）</h3>
+<p>邻域表示与某个顶点有连接的点集，其定义为：<span class="math display">\[N\left(v_{i}\right)=\left\{v_{j} \mid e_{i j} \in E\right\}\]</span></p>
+<h3 id="谱spectral">谱（Spectral）</h3>
+<h3 id="拉普拉斯矩阵lapalcian-matrix">拉普拉斯矩阵（Lapalcian matrix）</h3>
+<h4 id="谱分解spectral-factorization">谱分解(Spectral Factorization)</h4>
+<p>什么是spectrum？ 矩阵的spectrum就是矩阵的特征根。 只有方阵才有谱概念，方阵作为线性算子，其所有特征值的集合称为方阵的谱。方阵的谱半径为其最大的特征值，谱分解就是特征分解。</p>
+<p>谱分解(Spectral Factorization)又叫特征值分解，实际上就是对n维方阵做特征分解. 只有含有n个线性无关的特征向量的n维方阵才可以进行特征分解.</p>
 <blockquote>
-<p>小世界网络的重要性质：“流行病学”、“合作”、“知识”</p>
-</blockquote></li>
-<li><p>有向图的一个实例是万维网： <img src="b9b97250ce6e998045dcbb0d5b379724.png" alt="www" /></p></li>
-<li><p>图还可以分有权图和无权图。无权图可认为是权图的special case，权重都为1。</p></li>
-<li><p>有权图的一个实例是高速公路网,边代表距离 <img src="5b81b50b2d2b048ed3188b71af85a02f.png" alt="公路网" /></p></li>
-<li><p>树的一个实例是家谱，树种，任意一对节点，有且只有一条通路（不存在loop嘛）</p></li>
-<li><p>因果图是一个有向有权图。</p></li>
+<p>spectral定理用公式表达：对于一个对称矩阵S，其特征根<span class="math inline">\(\Lambda\)</span>都是实数, 特征向量都正交<span class="math inline">\(Q\)</span></p>
+<blockquote>
+<p><span class="math display">\[S = Q\LambdaQ^T\]</span></p>
+</blockquote>
+</blockquote>
+<p>graph laplacian 矩阵：connection of 线性代数和图论</p>
+<p>拉普拉斯矩阵（laplacian matrix），<span class="math inline">\(L \ in R^{n *n}\)</span> <span class="math display">\[L = A^T A= D-B\]</span></p>
+<p>degree matrix：<span class="math inline">\(D \ in R^{n*n}\)</span>，代表了每个节点有多少degree adjaceny matrix：<span class="math inline">\(B \ in R^{n*n}\)</span>，代表了任意两个点是否有link</p>
+<p>拉普拉斯矩阵是半正定矩阵,其特征根从小到达排序 1. 第一个特征根为0，<span class="math inline">\(\lambda_1 = 0\)</span>, 即DIM(null space) = 1，对应的特种向量为常熟向量 2. 第二个特征根（最小的正的特征根）叫fiedler， 对应的特征向量叫fiedler vector</p>
+<p>graph的laplacian矩阵和laplace方程（有限差分方法）的关系：</p>
+<p>laplace方程也叫微分方程，其微分形式 跟一个网格图的laplacian矩阵（n*n）就是离散形式。</p>
+<ol start="3" type="1">
+<li>实对称矩阵,有n个线性无关的特征向量;</li>
+<li>其特征向量可以进行正交单位化;</li>
+<li>所有的特征值非负;</li>
 </ol>
-<h2 id="附录">附录</h2>
-<h3 id="抽象数据类型和数据结构">抽象数据类型和数据结构</h3>
-<ol type="1">
-<li>ADT is a logical description and data structure is concrete.</li>
-<li>ADT is the logical picture of the data and the operations to manipulate the component elements of the data.</li>
-<li>Data structure is the actual representation of the data during the implementation and the algorithms to manipulate the data elements.</li>
-<li>ADT is in the logical level and data structure is in the implementation level.</li>
-</ol>
-<h3 id="列表和链表">列表和链表</h3>
-<ol type="1">
-<li>列表（list）或序列（sequence）是一种抽象数据类型(ADT),</li>
-<li>链表是一种数据结构。</li>
-</ol>
+<p><span class="math display">\[L=U\left(\begin{array}{ccc}\lambda_{1} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; \lambda_{n}\end{array}\right) U^{-1}=U\left(\begin{array}{ccc}\lambda_{1} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; \lambda_{n}\end{array}\right) U^{T}\]</span></p>
+<p>有时，使用的都是正规拉普拉斯矩阵（Symmetric Normalized Laplacian matrix）: <span class="math display">\[L^{s y s}=D^{-1 / 2} L D^{-1 / 2}=I-D^{-1 / 2} A D^{-1 / 2}\]</span></p>
+<h2 id="图的算法">图的算法</h2>
+<p>基于这个网络，可以做一些什么分析呢？聚类分析，</p>
+<p>即，找到一些cluster，内部的距离很小，之间的距离很大，这个可以抽象成求最大割或者最小流问题 通常还有一些其他的基于图的问题：</p>
+<p>比如，给定一个图，任意两个元素之间是否存在一个link？如果存在，最快捷的路径是什么？</p>
+<p>还有一个经典的问题--'图分割'（graph partition）</p>
+<h3 id="s-t-cut">S-T Cut</h3>
+<p>S-T Cut 就是把一个图切成了两个子图，S和T</p>
+<figure>
+<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<p>S-T cut的容量，就是链接S,C的变（图中红色的边）的权重求和，</p>
+<figure>
+<img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<h3 id="最小割">最小割</h3>
+<p>最小割（min -cut），就是容量最小的那个S-T cut</p>
+<figure>
+<img src="img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
+</figure>
+<p>最小割是指去掉图中的一些边，在使得图从连通图变为不连通图，并且尽可能保证去除的边对应的权重很小。</p>
+<p>最小割可能并不唯一</p>
+<p>对于相似性图来说，最小割就是要去除一些很弱的相似性，把数据点从一个连通的大图切割成多个独立的连通小图。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=gXgEDyodOJU">youtube</a></li>
+<li>https://zhuanlan.zhihu.com/p/84271169</li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=V_TulH374hw">Graph-theoretic Models</a></li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure">the difference-between-ADT和DS</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~htlin/course/dsa21spring/">数据结构和算法</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/21/reading_notes/zhexue/hongloumengxishuo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/21/reading_notes/zhexue/hongloumengxishuo/" class="post-title-link" itemprop="url">细说红楼梦</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-21 10:02:37" itemprop="dateCreated datePublished" datetime="2021-06-21T10:02:37+08:00">2021-06-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-22 14:21:25" itemprop="dateModified" datetime="2021-06-22T14:21:25+08:00">2021-06-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="第一回">第一回</h2>
+<p>空空道人有批注：“因空见色，由色生情，传情入色，自色悟空，遂易名为情僧……”</p>
+<p>“因空见色”，是说本来就白茫茫一片，什么都没有，（六祖慧能：本来无一物），因为我们的幻觉，看到好多好多的现象，“由色生情”，情多了就会陷进去，陷进了更深的色的幻觉，“传情入色”，要经过多少彻悟之后，再从里面出来，“自色悟空”，再回到白茫茫一片真干净。</p>
+<p>甄士隐经了这许多人生起伏，有一天突然又看见跛足道士来了，口里唱一首《好了歌》：</p>
+<blockquote>
+<p>世人都晓神仙好，惟有功名忘不了！古今将相在何方？荒冢一堆草没了。世人都晓神仙好，只有金银忘不了！终朝只恨聚无多，及到多时眼闭了。世人都晓神仙好，只有姣妻忘不了！君生日日说恩情，君死又随人去了。世人都晓神仙好，只有儿孙忘不了！痴心父母古来多，孝顺儿孙谁见了？</p>
+</blockquote>
+<p>甄士隐说：“你唱什么？我只听见‘好’‘了’、‘好’‘了’两个字。道人说：</p>
+<blockquote>
+<p>好便是了，了便是好。若不了，便不好；若要好，须是了。</p>
+</blockquote>
+<p>跛足道人讲的是道家的哲学，对儒家社会秩序，有很大的颠覆性。儒家修身齐家治国平天下这一套道理，要建立的是稳定的社会秩序（social order），鼓励人入世，求功名、利禄、妻子、儿女，儒家宗法社会下面，大概就是这些。</p>
+<p>跛足道人给了很大的一个警告，好就是了，了就是好，等于给恋恋在红尘中的人临头棒喝、醍醐灌顶。</p>
+<p>人大概都经过几个阶段：年轻的时候，大家都是入世哲学，儒家那一套，要求功名利禄。到了中年，大概受了些挫折，于是道家来了，点你一下，有所醒悟。到了最后，要超脱人生境界的时候，佛家就来了。</p>
+<p>所以过去的中国人，从儒道释，大致都经过这么三个阶段，有意思的是这三个阶段不冲突。在同一个人身上，这三样哲学都有。所以中国人既出世又入世的态度，常常造成整个文化的一种紧张，也就是说，我们的人生态度在这之间常常有一种徘徊迟疑，我想，这就是文学的起因。</p>
+<p>文学写什么呢？写一个人求道提升，讲他的目标求道，讲这一生多么地艰难，往往很多人没有求到，在半路已经失败。不管是爱情也好，理想也好，各种的失败，我想，文学写的就是这些。《红楼梦》写的也是这些。</p>
+<p>甄士隐对《好了歌》的注解：</p>
+<blockquote>
+<p>陋室空堂，当年笏满床；衰草枯杨，曾为歌舞场。蛛丝儿结满雕梁，绿纱今又糊在蓬窗上。说什么脂正浓、粉正香，如何两鬓又成霜？昨日黄土陇头送白骨，今宵红灯帐底卧鸳鸯。金满箱，银满箱，展眼乞丐人皆谤。正叹他人命不长，那知自己归来丧！训有方，保不定日后作强梁。择膏粱，谁承望流落在烟花巷！因嫌纱帽小，致使锁枷扛；昨怜破袄寒，今嫌紫蟒长：乱烘烘你方唱罢我登场，反认他乡是故乡。甚荒唐，到头来都是为他人作嫁衣裳！</p>
+</blockquote>
+<p>人生不就是个大舞台，一个人唱完下来，第二个人上去唱，唱完又一鞠躬下台，又换个人上去唱，“乱烘烘你方唱罢我登场”，然后“反认他乡是故乡”。</p>
+<p>佛家说，我们以为这是我们自己的故乡，其实也靠不住，一下子一把火就整个烧掉了。道家说，要醒悟这一点，才找到你真正理想的地方。甚荒唐！到头来都是为他人做嫁衣裳。讲起来，整个一生是白忙一场，都为他人做嫁衣裳，所有事情都是为他人做的。</p>
+<p>甄士隐、贾雨村，一个代表出世，一个代表入世。后来甄士隐变成道士，贾雨村经过好多官宦历程的折腾，到了书结束的时候，这两人又碰到一起。甄士隐想要度化贾雨村，贾雨村还是迷恋红尘。各走各的路，两个分歧，自己去看，自己去选择。</p>
+<h2 id="第二章">第二章</h2>
+<p>贾政，自觉是遵从儒家理想的一个人。他非常正直，也想用儒家那一套思想道德来持家，但是太过守法，太过拘束了。中国社会能够生存下来，光靠儒家思想、书生之见是不够的，还需要别种哲学，譬如很要紧的法家，很实在的、很现实的顶在后边。儒家的很多理想不一定都能实现，碰到了现实问题，常常不能解决。不过儒家也很重要，它是一种道德力量（moral force），没有它也不行，但光是有它也不行，所以，还要配合别的东西。</p>
+<p>贾雨村听冷子兴讲了半天贾宝玉这个怪人，也发表了一篇言论：</p>
+<p>“天地生人，除大仁大恶两种，馀者皆无大异。若大仁者，则应运而生，大恶者，则应劫而生。运生世治，劫生世危。尧、舜、禹、汤、文、武、周、召、孔、孟、董、韩、周、程、张、朱，皆应运而生者。蚩尤、共工、桀、纣、始皇、王莽、曹操、桓温、安禄山、秦桧等，皆应劫而生者。大仁者，修治天下；大恶者，挠乱天下。清明灵秀，天地之正气，仁者之所秉也；残忍乖僻，天地之邪气，恶者之所秉也。今当运隆祚永之朝，太平无为之世，清明灵秀之气所秉者，上至朝廷，下及草野，比比皆是。所馀之秀气，漫无所归，遂为甘露、为和风，洽然溉及四海。彼残忍乖僻之邪气，不能荡溢于光天化日之中，遂凝结充塞于深沟大壑之内，偶因风荡，或被云摧，略有摇动感发之意，一丝半缕误而泄出者，偶值灵秀之气适过，正不容邪，邪复妒正，两不相下，亦如风水雷电，地中既遇，既不能消，又不能让，必至搏击掀发后始尽。故其气亦必赋人，发泄一尽始散。使男女偶秉此气而生者，在上则不能成仁人君子，下亦不能为大凶大恶。置之于万万人中，其聪俊灵秀之气，则在万万人之上；其乖僻邪谬不近人情之态，又在万万人之下。若生于公侯富贵之家，则为情痴情种；若生于诗书清贫之族，则为逸士高人；纵再偶生于薄祚寒门，断不能为走卒健仆，甘遭庸人驱制驾驭，必为奇优名娼。如前代之许由、陶潜、阮籍、嵇康、刘伶、王谢二族、顾虎头、陈后主、唐明皇、宋徽宗、刘庭芝、温飞卿、米南宫、石曼卿、柳耆卿、秦少游，近日之倪云林、唐伯虎、祝枝山，再如李龟年、黄幡绰、敬新磨、卓文君、红拂、薛涛、崔莺、朝云之流，此皆易地则同之人也。”</p>
+<h2 id="第四章">第四章</h2>
+<p>再看看贾雨村这个人，他也是有高度象征性的一个人，象征这个世界上每一个为求功名利禄不择手段往上爬的凡俗之人。</p>
+<p>贾雨村刚刚做官，还不太清楚。葫芦僧就讲，贾、王、史、薛这四大家族是互相牵连、互相庇护的，你一动薛家，其他家族就暗中使力，根本没法去办他们。的确是！后来薛蟠又打死人，贾家去讲讲情也就过了。</p>
+<p>为官为政的这些人，像贾雨村者也是很典型的，一旦发迹，若从前是贫贱出身，他不愿意人家知道他的过去，哪个不长心眼儿的去碰他的过去的话，砍掉！因为他要维持现在的形象，掩掉过去。后来贾家没落的时候，贾雨村果然对有恩的贾家加踹一脚，这正是官场反复无情的写照。</p>
+<h2 id="第五章">第五章</h2>
+<p>无常，我们看起来好像是个悲剧，在佛家看，人所有的一切就是如此。佛教很理性地看待人生，看待一切的事物，没有永远存在的东西，因为时间会破坏一切、会毁灭一切，有时间的转动，春夏秋冬的转动，就会有无常现象。人生无常，什么都无常。所以，“生关死劫谁能躲？闻说道，西方宝树唤婆娑，上结着长生果。”这是惜春的醒悟！佛教的传说，佛陀释迦牟尼圆寂的时候，是在两棵宝树中间，那两棵宝树叫作“娑罗”。佛教对“婆娑”两字另有所解，长生果，佛家讲修成正果，要悟道了以后，从而解脱。最后惜春出家了，她是找到解脱最彻底的一个人物。</p>
+<p>王熙凤，机关算尽太聪明，她最精明，涉入红尘也最深，《好了歌》讲：“世人都晓神仙好，只有金银忘不了！”等到聚多之时缘尽了。凤姐放高利贷，到处攒钱，聚敛多时，一下子抄家抄得精光，一场空欢喜！她在贾府最得宠，掌大权，抄家的原因之一是她放高利贷给抄出来了，一世的颜面丢得精光。“反算了卿卿性命”，后来王熙凤的下场也很悲惨。</p>
+<p>对照一下，惜春走一条路，王熙凤走另外一条路，一个出世，一个入世，两种不同的道路。甄士隐跟贾雨村，也是出世和入世的辩证。曹雪芹从未批判哪方，他只是写出各人选的道路。儒家的入世在《红楼梦》的结局也很重要，贾府衰败，王熙凤死了，也还有接班人，谁呢？薛宝钗，她把贾府重新扛起来，这就是人生。</p>
+<p>中国人的人生，常常有三种哲学的循环。年轻的时候有所求，中年醒悟，晚年一切看开。有这三种哲学，才是完整的中国文化，三者相克相生，互用互补。 《红楼梦》曲最后收尾的曲子：</p>
+<blockquote>
+<p>为官的，家业凋零；富贵的，金银散尽；有恩的，死里逃生；无情的，分明报应。欠命的，命已还；欠泪的，泪已尽。冤冤相报实非轻，分离聚合皆前定。欲知命短问前生，老来富贵也真侥幸。看破的，遁入空门；痴迷的，枉送了性命。好一似食尽鸟投林，落了片白茫茫大地真干净！</p>
+</blockquote>
+<h2 id="第16回">第16回</h2>
+<p>儒家跟道家人生观，宇宙、社会的看法，互相冲突。《红楼梦》的悲剧，并不是一个突发性的意外，而是人生必然的过程，</p>
+<h2 id="第22回">第22回</h2>
+<p>宝玉出的灯谜：南面而坐，北面而朝，“象忧亦忧，象喜亦喜”。 佛家有一句话说镜花水月，一切都是幻象。宝玉看到的一切，由色入空，一切都是幻象。</p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>https://weread.qq.com/web/reader/3c432fc05d0f283c488450e</li>
 </ol>
 
       
@@ -381,7 +435,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/93/">93</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -447,14 +501,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">186</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

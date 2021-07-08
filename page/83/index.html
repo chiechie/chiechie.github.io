@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/reading_notes/the-book-of-why/judea-pearl_the-book-of-why4/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/07/reading_notes/computer/virtual-machine/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/08/reading_notes/the-book-of-why/judea-pearl_the-book-of-why4/" class="post-title-link" itemprop="url">《the book of why》读书笔记-4</a>
+            <a href="/2021/03/07/reading_notes/computer/virtual-machine/" class="post-title-link" itemprop="url">思考工具--虚拟机</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,109 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-08 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-08T08:33:38+08:00">2021-03-08</time>
+              <time title="创建时间：2021-03-07 12:02:36" itemprop="dateCreated datePublished" datetime="2021-03-07T12:02:36+08:00">2021-03-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>以虚拟机为原型的一个学习方法, 即「层层嵌套」，先使用high-level的视角：「只见森林不见树木」，再使用low-level的视角。</p>
+<p>虚拟机的设计范式，将逻辑复杂度从硬件转移到软件，当服务出现故障时，需要在多层次的软件层中找原因，隐隐有种不安。</p>
+</blockquote>
+<h1 id="总结">总结</h1>
+<ol type="1">
+<li>设计者一般会根据实体机的功能和用途去给实体取名字。</li>
+<li>计算机也类似，不同的是，他被要求做成千上万件事情。用户只用点开不同的程序，就能够让计算机内部实现切换，从而转换成不同的装置去完成不同的工作。每套装置都是一个单独的小机器，这就是虚拟机。</li>
+<li>对计算机来说，指令就是齿轮和滑轮。所有的信息都要转换成二进制代码0和1。他们是计算能够读写的唯一语言。芯片上的电路会分流0/1代码，逻辑门不断开合，将信息流输送到某条电路，并且以这种方式来下达指令。计算机上唯一可移动的部件--是硬件上百万个的小空位，可以在1态和0态之间切换。计算机在某个时刻具有什么功能，取决于百万个微型元件的设置。</li>
+<li>若一台实体机的各组件相互配合，呈现不同状态，具备极强可塑性，只需施加一套特殊指令，就能把它变成虚拟机。虚拟机处理的是信息，它能够跟实体计算机做一样的工作：实体计算机中的可移动部件只是硬件中的状态变化；虚拟机可以直接操纵状态变化，来代表那些"可移动部件"。举个例子，你可以在草稿纸上演算除法，也可以在头脑中演算。两者都可以得出结果，因为我们的目标是得到一种信息--除法的结果。计算机十分擅长在头脑中演算，我们用计算机的时候，很难分清楚，自己操作的是一个专用的硬连线机器，还是一部多用途芯片上运行的虚拟机。</li>
+<li>几乎所有的电梯，空调，汽车都使用廉价的计算机芯片，它能运行PC的所有程序，但是我们却选择让他们只运行一个简单的程序--刻录在只读存储器上的代码，例如点火控制或者周期除霜。为什么呢？多功能芯片生产成本更低。</li>
+<li>虚拟机最初表示的是"实体机的一种独立有效的复制品"，实体机是实在的硬件，由硅芯片和芯片组成，称为A。而虚拟机是运行在另外一台实体机B上的计算机程序，他能完美地模拟计算机A；速度可能会慢点，毕竟他要先保障自己硬件B上的基本操作有效运行（通用操作），才能组织其硬件A上的那些操作。（基于linux开发的程序想要运行在window上，需要在windows机器上开发一个虚拟机；在开发阶段开发的程序要部署到生产环境，可以在生产环境安装一个容器，然后将生产环境的程序安插在容器内）</li>
+<li>虚拟机带来的好处是，避免资源浪费：假设有很多只能在MAC上运行的软件，你没有mac，他们就没法用，如果可以在PC上编写一个模拟MAC的虚拟机，然后这些mac软件就可以使用了。你的电脑会认定自己是真的mac，而且那些软件更加浑然不知。</li>
+<li>目前，绝大多数程序都需要专门的操作系统而不是专门的硬件，相同的硬件可以运行不同的操作系统。一种操作系统本身就是一个虚拟机，它能够让一个程序在略有差异的两台机器上同样有效运行。但是一个操作系统毕竟没有模拟任何实际存在的硬件，他只是按照要求创建出虚构的机器，接受待定的输入。</li>
+<li>JAVA虚拟机（JVM）是当今最流行的一种虚拟机，它比较像一个操作系统。用Java语言编写的web应用可以跨平台使用，不管是用windows还是安卓还是macOS。why？因为java程序的运行环境只依赖JVM，而每个操作系统都有专门的JVM，当运行某个java程序时时，跟你设备匹配的JVM会自动下载到你的电脑，几秒就装好了。然后，各种java小程序就可以运行了。</li>
+<li>可以看到，几乎所有的计算机程序都是虚拟机--由指令构成的软件，一旦运行，将通用计算机变成了专用计算机，这种专用计算机本可以专门设计和创建专门的硬件（例如AI芯片）。只需要在通用计算机上简单安装和运行程序，就可以得到一台功能清晰的计算机。</li>
+<li>图灵机或者笔记本，只能一条条执行指令，再次基础上扩展除了"并行"计算机的概念，可以一次执行数百万条指令。</li>
+<li>考虑一个在国际象棋的程序，它由common lisp这种高级语言写成，在一台pc上运行的windows操作系统上运行。实际上，这台pc伪装成了一台windows机器，这台windows机器又伪装成了一台lisp机器，这台lisp机器又伪装成了一台国际象棋游戏机。</li>
+<li>无论在哪个level上，我们总是只见森林不见树木，low-level的细节总是很容易忽略。计算机上虚拟机的层层嵌套和「小人儿功能主义」中小人儿的层层嵌套，两者之间的雷同并非巧合。虚拟机推动人类的创造和理解，完成了很多创造性任务。这些计算机的成就也给人类带来了启发：如果对大脑也实施类似的逆向工程，或许也能有所收获。</li>
+<li>所有说法语的人 都具备某种版本的法语虚拟机，说英语的人大脑里面也有一套固定模式的系统--英语虚拟机，如何在大脑中建立语言虚拟机？尚未有答案，不过可以看看计算机是怎么做的：编译器将高层指令翻译成可以在硬件上执行的代码，只需程序员在high-level设计出一个想法，它就有把握生成一个可执行的程序。</li>
+</ol>
+<blockquote>
+<p>概念验证：无需动用神奇组织，我们找到了一种方法，能够清楚地说出"具有数万亿活动部件的计算机，它的那种高等能力到底是什么?"--编译器。</p>
+</blockquote>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/21532330716e9c7a215e76c">直觉泵和其他思考工具-丹尼尔·丹尼特-微信读书</a></li>
+<li><a href="https://chiechie.github.io/2021/03/18/technology/dive-into-JVM/">关于JVM的延伸笔记-chiechie</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/07/reading_notes/the-book-of-why/judea-pearl_the-book-of-why3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/07/reading_notes/the-book-of-why/judea-pearl_the-book-of-why3/" class="post-title-link" itemprop="url">《the book of why》读书笔记-3</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-07 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-07T08:33:38+08:00">2021-03-07</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -220,233 +322,31 @@
 
       
           <blockquote>
-<p>the book of why 的第四章-去混杂</p>
+<p>the book of why 的第三章-从证据到原因</p>
 </blockquote>
-<h2 id="do算子">do算子</h2>
+<h2 id="贝叶斯公式">贝叶斯公式</h2>
 <ol type="1">
-<li><p>消除混杂因子的方法：随机对照试验。</p></li>
-<li><p>贝叶斯网络中的箭头，可以看成是信息的流动。这个信息传递是双向的，既可以在因果方向传递，也可以在非因果方向传递。</p></li>
-<li><p>混杂的定义：任何使P（Y｜do（X））和 P（Y｜X）不一样的额因素。</p></li>
-<li><p>非因果路径是混杂的根源。</p></li>
-<li><p>回忆一下三种链接形式：链结合，叉连接，对撞连接</p>
+<li>因果图只是贝叶斯网络中的一个特例，不是所有的贝叶斯网络都是因果关系网络</li>
+<li>休谟的观点：不可靠的证据不能推翻可靠的自然法则。举个例子，自然法则说"凡人皆有一死"可推导出"基督难逃一死"，不可靠的证人的言论是不能推翻这个结论的。</li>
+<li>人的直觉思维很容易推算出前向概率，但是逆向概率，即执果说因，很难通过直觉算出来。</li>
+<li>贝叶斯将休谟提出的问题往前推一步：到底需要多少证据才能推翻已有的自然法则？具体来说，贝叶斯公式给出了逆向概率的推导方法，也就是说，不可靠的证人的前提下基督是上帝儿子的概率。</li>
+<li>科学方法的步骤：提出假设；推断假设的可检验结果；做实验；利用实验结论更新假设信念。通常来说检测和更新只有正确和错误两种结果，贝叶斯公式却可以定量地处理不确定性。</li>
+<li>贝叶斯概率的另外一个应用，先沿着一个方向估计条件概率，根据贝叶斯公式推导另外一个方向的条件概率 &gt; 如何估算女程序员中练瑜伽的比例？ &gt; 搜集几个数据：女性中练习瑜伽的比例(10/100)，练习瑜伽的人中程序员的比例(1/1100)，女性中程序员的比例（1/10000）, &gt; 所以 女程序员中练瑜伽的比例为10/11</li>
+</ol>
+<h2 id="从贝叶斯公式到贝叶斯网络">从贝叶斯公式到贝叶斯网络</h2>
+<ol type="1">
+<li>贝叶斯网络中的箭头并不表示因果关系，只是表示条件概率（那岂不是可以有个环？）。</li>
+<li>贝叶斯网络中的三个基本机构: 链/叉/混杂因子
 <ul>
-<li>链连接：控制B可以防止A的信息流向C或者C的信息流向A</li>
-<li>叉连接: 控制B可以防止有关A的信息流量C</li>
-<li>对撞连接:A和C是独立的，但是，如果控制了B，由于辩解效应的存在，信息就会开始在"管道"中流通。</li>
-<li>控制一个变量的后代节点，就如同部分地控制了变量本身。控制一个中介物的某个后代节点，意味着，部分地关闭了信息管道。控制一个对撞变量的某个后代节点，意味着部分打开了信息管道。 &gt; 抛开观测者，有因果关系吗？</li>
+<li>链： A --&gt; B --&gt; C</li>
+<li>叉： A --&gt; B &lt;-- C</li>
+<li>混杂因子： A&lt;--B --&gt; C</li>
 </ul></li>
-<li><p>我们应该如何阻断信息的流通？如果这条路径中的一个连接被阻断，那么J就无法找到A。有很多当时来阻止A和J之间的交流，我们只用找到其中任何一项就好了。</p></li>
-<li><p>所以，统计过程，是有误导的，因为它只是假设其中的一条可观测的因果链存在，实际了忽视了不可观测的跟多的链路。</p></li>
-<li><p>如何去除X和Y的混杂，我们只要阻断他们之间的每个非因果路径，而不干扰因果路径。</p></li>
-<li><p>后门路径就是，所有X和Y之间，以指向X的箭头为开始的路径。这些后们路径，允许X和Y之间的伪相关信息在管道中流通。</p></li>
-<li><p>如果阻断了所有的后门路径，就完成了X和Y的去混杂。</p></li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/07/AI/machine_learning/deeplearning/dl-basic0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/07/AI/machine_learning/deeplearning/dl-basic0/" class="post-title-link" itemprop="url">深度学习基础1 数据表示和神经网络基础</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-07 16:35:36" itemprop="dateCreated datePublished" datetime="2021-03-07T16:35:36+08:00">2021-03-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-07 11:42:36" itemprop="dateModified" datetime="2021-07-07T11:42:36+08:00">2021-07-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="数据表示">数据表示</h1>
-<p>在深度学习中如何表示现实中的事物？</p>
-<p>Let’s make data tensors more concrete with a few examples similar to what you’ll encounter later. The data you’ll manipulate will almost always fall into one of the following categories:</p>
-<ul>
-<li>Vector data:2D tensors of shape(samples, features)</li>
-<li>Timeseries data or sequence data:3D tensors of shape (samples, timesteps, features)</li>
-<li>Images:4D tensors of shape(samples,height,width,channels) or (samples,channels, height, width)</li>
-<li>Video:5D tensors of shape (samples, frames, height, width, channels) or (samples, frames, channels, height, width)</li>
-</ul>
-<h2 id="表数据">表数据</h2>
-<ul>
-<li>两个轴：samples axis 和 features axis.</li>
-<li>文本数据, 假设词典长度为2k，每一个doc可以表示为1个2k维的向量，位置的值代表词在文本中出现的次数。</li>
-<li>500个文件可以存储为(500, 20000).</li>
-</ul>
-<h2 id="时间序列数据">时间序列数据</h2>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_vMGBboznU.png?alt=media&amp;token=73c12f97-acdb-4680-b4eb-79a9a07581f9" /></li>
-</ul>
-<p>时间序列数据一般表示成3-d的张亮，tf中使用3d张量存储，(samples, timestamp, features) 每一个sample可以被编码成一个2d张量， 具体的两个例子</p>
-<ol type="1">
-<li>股票数据：每年有250个交易日，每个交易日的交易时长有390分钟，每个分钟可以抽取3个重要特征：当前价格，上一分钟最高成交价格，上一分钟最低价格
-<ul>
-<li>以每一天的交易数据为1个样本，构建的样本的shape为(250,390,3)</li>
-</ul></li>
-<li>TWEET数据：一条twitter长度不超过256，每个位置的字符来自128个assical码中的一个。每一条twitter的shape为（256， 128），1 百万 tweets 的shape为(1000000, 280, 128)</li>
-</ol>
-<h2 id="图像数据">图像数据</h2>
-<p>图像数据一般表示成4维tensor，一个图像数据就是一个3d张量</p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD24ghIvE2L.png?alt=media&amp;token=4a68bc5a-7b95-46d2-8418-deed053d4301" /></p>
-<ul>
-<li>tensorflow： (samples, height, width, color_depth)</li>
-<li>theano：(samples, color_depth, height, width).</li>
-<li>keras两者都支持</li>
-</ul>
-<h2 id="视频数据的表示">视频数据的表示</h2>
-<p>视频数据表示成5维张量：(samples, frames, height, width, color_depth).</p>
-<h1 id="模型超参">模型超参</h1>
-<h2 id="结构超参数">结构超参数</h2>
-<p>结构超参数包括层数、层的类别、层的大小等数值。以一个卷积层为例，其中的超参数包括卷积核 (filter) 的大小，卷积核的数量，步长 (stride) 的大小，unit：单元，hidden_layers: 隐藏层，cell：单元 ，dropout_rate丢弃率。这些超参数决定了神经网络的结构。</p>
-<h3 id="layers的基本类型">layers的基本类型</h3>
-<p>keras中layer的基本类型：</p>
-<ul>
-<li>卷积(Conv1D)</li>
-<li>池化(MaxPooling1D/GlobalAveragePooling1D)</li>
-<li>dropout(Dropout)</li>
-<li>线性全连接层(Dense)</li>
-<li>high-level层(LSTM)</li>
-</ul>
-<h3 id="卷积层">卷积层</h3>
-<ol type="1">
-<li>卷积的维度有1Ｄ，2Ｄ，3D, 区别在于?</li>
-</ol>
-<p>输入数据的shape以及卷积核如何滑动</p>
-<ul>
-<li><img src="https://miro.medium.com/max/1621/1*aBN2Ir7y2E-t2AbekOtEIw.png" title="fig:" alt="I１维卷积和２维卷积的区别" /></li>
-<li>1维卷积（Conv1D）：只有1个维度可以滑动，但是另一维度也是有待估参数的</li>
-<li>2维卷积（Conv2D）：有两个维度可以滑动，</li>
-<li>相同点：从参数视角都是2维的，每一个卷积kernel，参数个数是 height × width +１　（off_ set）</li>
-</ul>
-<ol start="2" type="1">
-<li>什么情况下，1d比2d好用呢？其中2个维度上，做卷积没有意义(high,close,open,close)</li>
-</ol>
-<h3 id="关于dropout">关于dropout</h3>
-<p>keras中对dropout的处理，因为训练阶段需要dropout ，但是inference阶段不需要dropout，keras中如何设置？</p>
-<p>Keras does this by default. In Keras dropout is disabled in test mode. You can look at the code<a target="_blank" rel="noopener" href="https://github.com/keras-team/keras/blob/dc95ceca57cbfada596a10a72f0cb30e1f2ed53b/keras/layers/core.py#L109">here</a> and see that they use the dropped input in training and the actual input while testing.</p>
-<p>As far as I know you have to build your own training function from the layers and specify the training flag to predict with dropout (e.g. its not possible to specify a training flag for the predict functions). This is a problem in case you want to do GANs, which use the intermediate output for training and also train the network as a whole, due to a divergence between generated training images and generated test images.</p>
-<h2 id="算法超参数">算法超参数</h2>
-<p>算法超参数包括学习率 (learning rate),批量大小 (batch size)、epoch数量(迭代周期个数)、正则，损失，激活函数等。由于神经网络的非凸性，用不同的算法超参数会得到不同的解。</p>
-<h3 id="归一化">归一化</h3>
-<p>归一化层，目前主要有这几个方法：</p>
-<ul>
-<li>Batch Normalization（BN， 2015年）</li>
-<li>Layer Normalization（LN， 2016年）</li>
-<li>Instance Normalization（IN， 2017年）</li>
-<li>Group Normalization（GN， 2018年）</li>
-<li>Switchable Normalization（SN， 2018年）；</li>
-</ul>
-<figure>
-<img src="img_1.png" alt="几种归一化方法g" /><figcaption aria-hidden="true">几种归一化方法g</figcaption>
-</figure>
-<h4 id="问题1-transformer-为什么要使用ln而不是-bn">问题1 transformer 为什么要使用LN而不是 BN？</h4>
-<p>在<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.07845.pdf">paper: Rethinking Batch Normalization in Transformers</a>中, 作者对比了cv和nlp的BN, 得出的结论是在nlp数据上基于batch的统计信息不稳定性过大(相比cv的数据)，导致bn在nlp上效果差。相比之下layer norm能够带来更稳定的统计信息，有利于模型学习</p>
-<p>Batch Normalization主要的问题是计算归一化统计量时计算的样本数太少，在RNN等动态模型中不能很好的反映全局统计分布信息，而Layer Normalization根据样本的特征数做归一化，是batch size无关的，只取决于隐层节点的数量，较多的隐层节点数量能保证Layer Normalization归一化统计分布信息的代表性。</p>
-<h4 id="问题2.-in直观上怎么理解">问题2. IN直观上怎么理解？</h4>
-<p>在计算机视觉中，IN本质上是一种Style Normalization，它的作用相当于把不同的图片统一成一种风格。另外，既然IN和BN都会统一图片的风格，那么在Generator里加IN或BN应该是不利于生成风格多样的图片的，论文中也进行了展示：</p>
-<p><img src="https://pic2.zhimg.com/v2-235433127838fca762ebd10511de9ca7_b.jpg" /></p>
-<p>图e是在generator中加了BN的结果，图f是在generator中加了IN的结果。果然崩了，IN崩得尤其厉害。</p>
-<h3 id="激活函数">激活函数</h3>
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4_fjPJ90ir.png?alt=media&amp;token=9fb9e321-aed2-4c7b-bb6b-4762b7a38c81" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FADUH_mebAQ.png?alt=media&amp;token=65efc150-0f7b-42f9-8657-1ca131bfd8b5" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMWiLJVveHv.png?alt=media&amp;token=55bc24ce-0531-4702-8d3d-394595bd4d6e" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFztLjU8MxY.png?alt=media&amp;token=d7421445-afca-439e-85be-8631db133a41" /></li>
-<li>https://missinglink.ai/guides/neural-network-concepts/7-types-neural-network-activation-functions-right/</li>
-</ul>
-<h3 id="损失函数">损失函数</h3>
-<p>tensorflow中的损失函数:</p>
-<ul>
-<li>sparse_categorical_crossentropy: target是interger list，形状n*1；</li>
-<li>categorical_crossentropy: target 是one-hot vector，target的shape跟模型输出一致，是n*k(类)。
-<ul>
-<li><span class="math display">\[C E(x)=-\sum\limits_{i=1}^{C} y_{i} \log f_{i}(x)\]</span></li>
-</ul></li>
-<li>binary_crossentropy: target 是interger list。 <span class="math display">\[B C E(x)_{i}=-\left[y_{i} \log f_{i}(x)+\left(1-y_{i}\right) \log \left(1-f_{i}(x)\right)\right]\]</span></li>
-<li>如果输出标签维度为1，只能使用binary_crossentropy，否则程序会报错。不能直接使用categorical_crossentropy 或者sparse_categorical_crossentropy</li>
-<li>如果输出标签维度为K：使用categorical_crossentropy 或者sparse_categorical_crossentropy</li>
-<li>单标签多分类（multi-class）：softmax + CE</li>
-<li>二分类：sigmoid + BCE</li>
-<li>多标签多分类（multi-label）的情况：sigmoid + BCE</li>
-<li>最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</li>
-</ul>
-<h4 id="优化算法">优化算法</h4>
-<h1 id="参考资料">参考资料</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1502.03167.pdf">Batch Normalization</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1607.06450v1.pdf">Layer Normalizaiton</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1607.08022.pdf">Instance Normalization</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/DmitryUlyanov/texture_nets">code</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1803.08494.pdf">Group Normalization</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1806.10779.pdf">Switchable Normalization</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/switchablenorms/Switchable-Normalization">code</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/liuxiao214/article/details/81037416">有公式推导，写的很棒</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/05de1f989790">用书比喻图像很好理解</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/61248211">Conditional Batch Normalization 详解</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/57875010">从Style的角度理解Instance Normalization</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.goodaudience.com/introduction-to-1d-convolutional-neural-networks-in-keras-for-time-sequences-3a7ff801a2cf">在时序数据上应用conv1D</a></li>
-<li>https://zhuanlan.zhihu.com/p/57875010</li>
-<li>https://stackoverflow.com/questions/47787011/how-to-disable-dropout-while-prediction-in-keras</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">知乎-反事实和干预</a></li>
 </ol>
 
       
@@ -466,7 +366,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/82/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/82/">82</a><span class="page-number current">83</span><a class="page-number" href="/page/84/">84</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/84/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/82/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/82/">82</a><span class="page-number current">83</span><a class="page-number" href="/page/84/">84</a><span class="space">&hellip;</span><a class="page-number" href="/page/93/">93</a><a class="extend next" rel="next" href="/page/84/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -532,14 +432,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">186</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

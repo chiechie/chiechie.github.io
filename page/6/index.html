@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/30/reading_notes/computer/fenbushi/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/27/reading_notes/computer/thread-and-process/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/30/reading_notes/computer/fenbushi/" class="post-title-link" itemprop="url">基于Ray的融合计算框架</a>
+            <a href="/2021/06/27/reading_notes/computer/thread-and-process/" class="post-title-link" itemprop="url">进程,线程和协程</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-30 14:39:39" itemprop="dateCreated datePublished" datetime="2021-06-30T14:39:39+08:00">2021-06-30</time>
+              <time title="创建时间：2021-06-27 12:16:07" itemprop="dateCreated datePublished" datetime="2021-06-27T12:16:07+08:00">2021-06-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-01 19:56:15" itemprop="dateModified" datetime="2021-07-01T19:56:15+08:00">2021-07-01</time>
+                <time title="修改时间：2021-07-02 08:47:36" itemprop="dateModified" datetime="2021-07-02T08:47:36+08:00">2021-07-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,37 +219,122 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>看到阿里在2021发表的一个演讲--《新一代的计算基础设施-对于Ray的融合计算》，做一些笔记</p>
-</blockquote>
-<ol type="1">
-<li>举一个复杂的业务的例子，用户支付流程：</li>
-</ol>
+          <h2 id="基本定义">基本定义</h2>
+<h3 id="进程process">进程（process）</h3>
+<p>进程（process）有时候也称做任务，是指一个程序运行的实例。</p>
+<p>我们想要计算机要做一项任务（task），我们会写一段代码（python/java等）。</p>
+<p>编译器将它翻译成二进制代码--机器的语言。</p>
+<p>但是此时不执行这段断码的话，就还是一段静态程序。</p>
+<p>当执行起来的时候，就变成了一个进程。</p>
+<h4 id="进程的3种状态">进程的3种状态</h4>
+<p>从程序员的角度，可以认为进程总是处于下面三种状态之一：</p>
 <ul>
-<li>先选择支付场景--线上/线下/，</li>
-<li>选择支付方式--</li>
-<li>选择交易网络--银联/第三方</li>
-<li>选择银行</li>
+<li><p>运行。进程要么在CPU上执行，要么在等待被执行且最终会被内核调度</p></li>
+<li><p>停止。进程的执行被挂起（suspend），且不会被调度。当收到SIGSTOP/SIGTSTP/SIDTTIN/SIGTTOU信号时，进程就停止，直收到SIGCONT信号，这时，进程再次运行</p></li>
+<li><p>终止。进程永远的停止了。进程会因为三种原因终止:</p>
+<ol type="1">
+<li>收到一个终止进程的信号</li>
+<li>从主程序返回；</li>
+<li>调用exit函数。</li>
+</ol></li>
 </ul>
-<figure>
-<img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
-</figure>
-<p>整个流程需要秒级响应。</p>
-<ol start="2" type="1">
-<li>要是大家都开始用统一的计算平台，AIOps也可以用同一套方案了</li>
+<h4 id="创建子进程">创建子进程</h4>
+<ol type="1">
+<li>子进程得到与父进程用户级虚拟地址空间相同的（但是独立的）一份拷贝，包括文本、数据和bss段、堆以及用户栈。</li>
+<li>子进程还获得与父进程任何打开文件描述符相同的拷贝。</li>
+<li>父进程和新创建的子进程之间最大的区别在于它们有不同PID。</li>
+<li>fork函数调用一次，返回两次，父进程中，fork返回子进程的PID，子进程中fork返回0。</li>
 </ol>
-<figure>
-<img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
-</figure>
-<ol start="3" type="1">
-<li>业务需求之一是，复杂的业务逻辑计算存在单机性能瓶颈，需要支持分布式无范式的分布式开发。</li>
-<li>现在的基础设计在单一用途的组件上，已经做的比较成熟了，专门做流式计算的计算引擎有flink，专门做深度学习的计算引擎有tensorflow，专门做批处理的有spark。</li>
-<li>但是，考虑到一个复杂的应用场景，完成1个任务需要用到多种计算模式，统一计算平台 能够让这几种计算模式实现状态共享，中间结果共享。在这种场景下，统一计算平台，相较于多个独立的计算组件 效率更高。</li>
-<li>要不要搞统一计算平台，取决于需求的复杂性，如果是一个很pure很纯粹的任务，搞这个的意义就不大。但是可以作为预研嘛，万一以后业务变得越来越复杂，也有准备。</li>
+<h4 id="进程的地址空间">进程的地址空间</h4>
+<ol type="1">
+<li><p>进程提供给应用程序关键的抽象：</p>
+<ul>
+<li>一个独立的逻辑控制流，它提供一个假象，好像我们的程序独占地使用处理器</li>
+<li>一个私有的地址空间，它提供一个假象，好像我们的程序独占地使用存储器系统</li>
+</ul></li>
+<li><p>每个程序都能看到一片完整连续的地址空间，这些空间并没有直接关联到物理内存，只是操作系统提供的对内存一种抽象，在程序的运行时，会将虚拟地址映射到物理地址。</p></li>
+<li><p>进程的地址空间是分段的，存在所谓的数据段，代码段，bbs段，堆，栈等等。每个段都有特定的作用，下面这张图介绍了进程地址空间中的划分。 <img src="img_3.png" /></p></li>
+<li><p>对于32位的机器来说，虚拟的地址空间大小就是4G，可能实际的物理内存大小才1G到2G，意味着程序可以使用比物理内存更大的空间。</p>
+<ol type="1">
+<li>从0xc000000000到0xFFFFFFFF共1G的大小是内核地址空间，余下的低地址3G是用户地址空间。</li>
+<li>Code VMA: 即程序的代码段，CPU执行的机器指令部分。通常，这一段是可以共享的，即多线程共享进程的代码段。并且，此段是只读的，不能修改。</li>
+<li>Data VMA: 即程序的数据段，包含ELF文件在中的data段和bss段。</li>
+<li>堆和栈: new或者malloc分配的空间在「堆」上，需要程序猿维护，如果没有主动释放堆上的空间，进程运行结束后会自动释放。「栈」上的是函数栈临时的变量，还有程序的局部变量，自动释放。</li>
+<li>共享库和mmap内容映射区：位于栈和堆之间，例如程序使用的printf，函数共享库printf.o固定在某个物理内存位置上，让许多进程映射共享。mmap是一个系统函数，可以把磁盘文件的一部分直接映射到内存，这样文件中的位置直接就有对应的内存地址。</li>
+<li>命令行参数: 程序的命令行参数</li>
+<li>环境变量：类似于Linux下的PATH，HOME等环境变量，子进程会继承父进程的环境变量。</li>
+</ol></li>
 </ol>
+<h3 id="线程threads">线程（threads）</h3>
+<p>一个进程中的执行的单位。</p>
+<p>线程（thread）：能并行运行，并且与他们的父进程（创建他们的进程）共享同一地址空间（一段内存区域）和其他资源的轻量级的进程</p>
+<h3 id="协程coroutines">协程（CoRoutines）</h3>
+<p>Co：即corperation，Routines即函数。</p>
+<p>协程（CoRoutines）：即用来实现functions 即corperate with each other。</p>
+<p><img src="img_2.png" /></p>
+<p>不同的编程语言有不同的实现协程的方式，在python和js里面，用的较多的就是yield</p>
+<p>用python实现一个协程</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_coroutine_body</span>(<span class="params">*args</span>):</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># Do some funky stuff</span></span><br><span class="line">        *args = <span class="keyword">yield</span> value_im_returning</span><br><span class="line">        <span class="comment"># Do some more funky stuff</span></span><br><span class="line"></span><br><span class="line">my_coro = make_coroutine(my_coroutine_body)</span><br><span class="line"></span><br><span class="line">x = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">   <span class="comment"># The coroutine does some funky stuff to x, and returns a new value.</span></span><br><span class="line">   x = my_coro(x)</span><br><span class="line">   <span class="built_in">print</span> x</span><br></pre></td></tr></table></figure>
+<h3 id="生成器generator">生成器(generator)</h3>
+<p>A generator is essentially a cut down (asymmetric) coroutine.</p>
+<p>The difference between a coroutine and generator is that a coroutine can accept arguments after it's been initially called, whereas a generator can't.</p>
+<h2 id="应用-vs-线程-vs-进程">应用 vs 线程 vs 进程</h2>
+<p>一个应用，比如chrome，可能会启动多个进程（多个网页）, 一个进有多个线程。</p>
+<p>进程和线程的区别：</p>
+<ul>
+<li>进程（火车）间不会相互影响，一个线程（车厢）挂掉将导致整个进程（火车）挂掉</li>
+<li>线程（车厢）在进程（火车）下行进</li>
+<li>一个进程（火车）可以包含多个线程（车厢）</li>
+<li>不同进程（火车）间数据很难共享，同一进程（火车）下不同线程（车厢）间数据很易共享</li>
+</ul>
+<p>线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据， 进程之间的通信需要以通信的方式（IPC)进行</p>
+<ul>
+<li>进程要比线程消耗更多的计算机资源</li>
+<li>进程间不会相互影响，一个线程挂掉将导致整个进程挂掉</li>
+<li>进程可以拓展到多机，线程最多适合多核</li>
+<li>进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。－"互斥锁"</li>
+<li>进程使用的内存地址可以限定使用量－“信号量”</li>
+</ul>
+<h2 id="硬件多线程vs软件多线程">硬件多线程vs软件多线程</h2>
+<p>CPU架构演进路线：</p>
+<p>多cpu---&gt;超线程--&gt;多core</p>
+<p>https://stackoverflow.com/questions/680684/multi-cpu-multi-core-and-hyper-thread</p>
+<p>其中的超线程（hyper thread）指的硬件多线程，如下图，相当于给一个core，虚拟化为2个core，可以更方便压榨计算机性能</p>
+<h2 id="多进程-or-多线程">多进程 or 多线程？</h2>
+<p>多进程更稳定，但是多线程能达到更高的计算效率</p>
+<figure>
+<img src="img_1.png" alt="左边是单线程，右边是多线程" /><figcaption aria-hidden="true">左边是单线程，右边是多线程</figcaption>
+</figure>
+<p>多线程的优势：</p>
+<ul>
+<li>响应性：比如启动一个网页（启动一个浏览器进程），可以同时并行做个事情，如浏览/下载/问答（并行启动多个线程）。</li>
+<li>资源共享：一个进程上的所有线程共享同一份内存，这样能够让机器的使用效率更高，可以做更多的复杂的事情。---赋能/增效</li>
+<li>更经济： 多进程浪费资源，因为创建1个进程需要分配很多内存和资源，相比之下，创建和切换线程的成本小的多。另外，完成一个复杂的任务，多线程共用一份底层资源，多进程就需要把资源复制几份。又浪费了一遍。--降本</li>
+<li>充分压榨多处理器的架构：</li>
+</ul>
+<blockquote>
+<p>大中台类似多线程，烟囱式开发类似多进程</p>
+</blockquote>
+<h2 id="实践">实践</h2>
+<h3 id="练习1-模拟单线程cpp的进程管理">练习1-模拟单线程CPP的进程管理</h3>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/single-threaded-cpu/">leetcode</a>的题目，</p>
+<p>需求：实现一个任务管理/编排的机制，即，输入一堆任务，每个任务的计划执行时间/执行时长都有，现在有一台单线程CPU，如何安排这些任务的执行顺序？</p>
+<p>分析： 设想应用场景，医院的排队系统/有一堆任务要排期。</p>
+<p>一遍在执行已有的任务，一边有源源不断的接到新的任务，</p>
+<p>每执行完一个任务，check一下距离上次检查，有多少新任务进来了，加到任务池里面，从里面选出最容易的。</p>
+<p>设计1个数据结构：</p>
+<p>1个是优先队列，存放候选任务，并且按照执行时间长短从小到到排序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tasks = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">2</span>,<span class="number">4</span>],[<span class="number">3</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">1</span>]]</span><br><span class="line">n = <span class="built_in">len</span>(tasks)</span><br><span class="line">timestamp = <span class="number">1</span></span><br><span class="line">candidate_list = []</span><br><span class="line">new_task = []</span><br><span class="line">j = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) <span class="keyword">and</span> (tasks[j][<span class="number">0</span>] &lt;= timestamp):</span><br><span class="line">        heapq.heappush(candidate_list, (tasks[j][<span class="number">1</span>], j))</span><br><span class="line">        j+=<span class="number">1</span></span><br><span class="line">        print(j, n)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    process, index = heapq.heappop(candidate_list)</span><br><span class="line">    print(candidate_list)</span><br><span class="line">    new_task.append(index)</span><br><span class="line">    timestamp += process</span><br><span class="line">new_task</span><br></pre></td></tr></table></figure>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1gh411Y7qf?t=1">Ray Forward Meetup 2021-面向金融决策场景的在线计算系统-bilibili</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/25532384/answer/411179772">线程和进程的区别是什么？-zhihu</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=usyg5vbni34">Threading in Python - Advanced Python 16 - Programming Tutorial-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.junmajinlong.com/os/multi_cpu/">计算机原理系列-blog</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.junmajinlong.com/os/cpu_cache/">关于CPU上的高速缓存</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=tqay-vzqSN0">What are CoRoutines in Programming?YOUTUBE</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/715758/coroutine-vs-continuation-vs-generator">生成器和协程</a></li>
+<li><a target="_blank" rel="noopener" href="https://buptjz.github.io/2014/04/23/processAndThreads">进程、线程及其内存模型</a></li>
+<li>深入理解操作系统</li>
 </ol>
 
       
@@ -270,7 +355,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/29/reading_notes/qukuailian/zkp/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/26/reading_notes/computer/cache-memory/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -284,7 +369,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/06/29/reading_notes/qukuailian/zkp/" class="post-title-link" itemprop="url">零知识量证明</a>
+            <a href="/2021/06/26/reading_notes/computer/cache-memory/" class="post-title-link" itemprop="url">计算机的存储单元</a>
         </h2>
 
         <div class="post-meta">
@@ -294,14 +379,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-06-29 23:54:57" itemprop="dateCreated datePublished" datetime="2021-06-29T23:54:57+08:00">2021-06-29</time>
+              <time title="创建时间：2021-06-26 09:47:32" itemprop="dateCreated datePublished" datetime="2021-06-26T09:47:32+08:00">2021-06-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-05 11:28:18" itemprop="dateModified" datetime="2021-07-05T11:28:18+08:00">2021-07-05</time>
+                <time title="修改时间：2021-06-28 13:56:10" itemprop="dateModified" datetime="2021-06-28T13:56:10+08:00">2021-06-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -324,80 +409,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="基本概念">基本概念</h2>
+          <h2 id="概览">概览</h2>
 <ol type="1">
-<li><p>零知识证明(ZKP)的定义为：证明者（prover）能够在不向验证者（verifier）提供任何有用的信息的情况下，使验证者（verifier）相信某个论断是正确的。</p></li>
-<li><p>零知识证明具有三个重要的性质：</p>
-<ul>
-<li>完备性（Completeness）：只要证明者拥有相应的知识，那么就能通过验证者的验证，即证明者有足够大的概率使验证者确信。---验证者的问题是可解的。</li>
-<li>可靠性（Soundness）：如果证明者没有相应的知识，则无法通过验证者的验证，即证明者欺骗验证者的概率可以忽略。---验证者的问题是有难度的。</li>
-<li>零知识性（Zero-Knowledge）：证明者在交互过程中仅向验证者透露是否拥有相应知识的陈述，不会泄露任何关于知识的额外信息。---验证者是无不要知道解答过程的，它只在另外一个问题空间验证。</li>
-</ul></li>
-<li><p>零知识证明是一种基于概率的验证方式，验证者（verifier）向证明者（prover)提出多个随机问题，如果证明者都能给出正确回答，则说明证明者大概率拥有他所声称的“知识”。零知识证明并不是数学意义上的证明，因为它存在小概率的误差，欺骗的证明者有可能通过虚假的陈诉骗过验证者，但是，可通过技术手段将误差降低到可以忽略的值。</p></li>
-</ol>
-<h2 id="应用场景">应用场景</h2>
-<p>零知识证明在区块链上的两大应用场景：隐私和扩容。</p>
-<p>隐私：在隐私场景中，我们可以借助零知识证明的“不泄露信息”特性，在不泄漏交易的细节（接收方，发送方，交易余额）的情况下证明区块链上的资产转移是有效的。</p>
-<p>扩容：在扩容场景中，我们不太需要关注零知识证明技术的“不泄露信息”这个特性，我们的关注重点是它的“证明论断有效”这个特性，由于链上资源是有限的，所以我们需要把大量的计算迁移到链下进行，因此需要有一种技术能够证明这些在链下发生的动作是可信的，零知识证明正好可以帮助我们做链下可信计算的背书。</p>
-<p>目前，使用零知识证明技术的应用有隐私币(例如zcash)，以太坊上的混币合约，链下扩容技术zkRollup。</p>
-<h3 id="隐私">隐私</h3>
-<h4 id="为什么需要隐私币">为什么需要隐私币？</h4>
-<ol type="1">
-<li><p>举个生活中的例子：游客向庙里功德箱中仍香火钱，所有的游客仍的都是同一个年份的一元硬币，这时有一个第三方在一旁观察，他可以知道谁在什么时间扔进去多少个硬币。但是当小沙弥从功德箱中取钱的时候，他无法分别取出的硬币是由谁扔进去的。这里功德箱就起到一个混币的功能.同理，为了保证区块链上交易的隐私性，也可以进行混币。</p></li>
-<li><p>混币的目的是切断加密货币交易中发送方与接受方的联系，发送方利用混币系统将自己的钱与其他人的钱进行混合，接受方(Verifier)利用零知识证明来证明有某一个混币的所有权，从而进行转账交易。</p></li>
-<li><p>需要隐私币的第一个理由：隐私币能实现匿名且不可追踪。</p>
-<ul>
-<li>目前公链（比特币）的匿名只起到假名的作用，例如现实生活中的人可以生成任意多的公私钥对，用这些公钥在链上发送或接受每笔交易，这些公钥就充当他们的假名。如果外界不知道你和公钥的关系，他们就无法把你和你的交易历史关联起来，只要有人能把你跟公钥联系起来，就可以顺藤摸瓜找到你过去的交易历史。目前不没有办法阻止第三方将我们和我们的公钥联系起来。</li>
-</ul></li>
-<li><p>需要隐私币的第二个理由：由于隐私币无法查看货币的交易记录，所以减少了货币不可互换的问题。</p>
-<ul>
-<li>流通性使货币具有了内在可互换性,但是加密货币具有极度透明性，我们可以追踪到与某一特定货币的所有相关历史交易，这样一来，人们一旦发现某个货币是“污点”货币（俗称“黑钱”）就可以拒绝接受这种货币。如果这种情况大规模发生，加密货币将不再是可互换的因为“干净”的货币比“污点”货币具有更大价值。</li>
-<li>不可互换的货币会给用户带来额外的负担，用户为了避免不小心买入“污点”货币，那么用户就会被迫检查他们购买的每笔货币的交易历史。</li>
-</ul></li>
-<li><p>下图是使用零知识证明的一般过程，在circuit中会执行一些约束，这些约束是与要解决的问题是相关的。Private input的值只有Prover自己知道,Public input的值是Prover与Verifier共享的。该过程可以总结为，Prover在不揭露Private input 的情况下向Verifier证明自己知道一个值能满足（x+3=5)。</p>
+<li><p>计算机上的存储单元的处理速度从快到慢依次是： 寄存器&gt; L1&gt;L2&gt;L3&gt;内存&gt;固态硬盘&gt; 机械硬盘</p>
 <figure>
-<img src="./img.png" alt="基于circuit的零知识证明" /><figcaption aria-hidden="true">基于circuit的零知识证明</figcaption>
+<img src="./img_1.png" alt="存储单元" /><figcaption aria-hidden="true">存储单元</figcaption>
 </figure></li>
+<li><p>早期的计算机只有寄存器和内存，但是寄存器的处理速度远高于内存，所以大部分时间是寄存器在等内存，所以CPU是处于空转状态。 经过改进</p></li>
+<li><p>除了寄存器，后面的计算机在CPU中又逐步加入了高速缓存--L1/L2/L3缓存，相当于让内存提前做功课，把数据提前取出来，在3个缓存中候着，等寄存器有空了就取来用。笨鸟先飞嘛。</p></li>
+<li><p>L1/L2/L3缓存，每层速度递减、容量递增。L1缓存速度接近寄存器速度，大约1ns时延。</p></li>
+<li><p>多核CPU的L3对诶个core是共享的，L2和L1是每个core私有的。</p></li>
 </ol>
-<h4 id="zk-snark的流程图">zk-SNARK的流程图</h4>
-<p>下图是zk-SNARK的流程图，zk-SNARK不能直接用于解决计算问题，必须先把问题转换成正确的“形式”（即"quadratic arithmetic problem"，QAP)，在转换为QAP的同时，可以用Private input和Public input创建一个对应的解，称为QAP的witness。只有Prover用这个witness来生成proof。</p>
 <figure>
-<img src="./img_1.png" alt="zk-Snark流程图" /><figcaption aria-hidden="true">zk-Snark流程图</figcaption>
+<img src="./img_2.png" alt="img_2.png" /><figcaption aria-hidden="true">img_2.png</figcaption>
 </figure>
-<p>整个过程如下：</p>
-<ul>
-<li>首先得有一个计算问题，这个问题一般是NP问题</li>
-<li>然后将计算问题做一个等价转换变成QAP，步骤如下：
-<ul>
-<li>将计算问题拍平（flatten）变成circuit</li>
-<li>把circuit转化成 R1CS(rank-1 constraint system，一阶约束系统)。R1CS 是一个由三向量组 (a,b,c) 组成的序列，R1CS 有个解向量s（就是witness），s 必须满足符号表示向量的内积运算 a.s * b.s - c.s = 0</li>
-<li>将R1CS转化成QAP形式，这两者的区别是QAP使用多项式来代替点积运算，他们所实现的逻辑完全相同。</li>
-</ul></li>
-<li>trusted setup会生成两个值PK，VK，truseted setup的目的是实现零交互验证，它生成的PK，VK相当于是一个“上帝”,由它来帮我们验证Prover。</li>
-<li>Prover用PK生成一个Proof交给Verifier</li>
-<li>Verifier拿到这个Proof会用VK做校验，这一步发生在链上，由链上的节点或智能合约来做校验。 &gt; PK就像一个query word，VK是该query word对应的answer，CRS相当于是一个生成了一个&lt;question，answer&gt;，拿Prover的答案跟正确的已知的答案进行对比，从而验证Prover是qualified</li>
-</ul>
-<h3 id="扩容">扩容</h3>
-<ol type="1">
-<li>17年出现了一款非常火爆的Dapp应用叫加密猫，加密猫曾造成以太坊主网大规模的拥堵，造成拥堵的原因是以太坊当时的TPS只有15，这意味着以太坊每秒只能处理15笔交易，如此低的TPS严重限制了区块链应用的大规模落地，所以有人开始研究区块链扩容的问题，目的就是为了提高链上的TPS。</li>
-<li>但区块链扩容受到Vitalik提出的不可能三角的限制(区块链系统设计无法兼顾可扩展性，去中心化和安全性).但我们必须知道，一切事物都有自己的边界，公链不应该做所有的事情，公链应该做它该做的事情：“公链是以最高效率达成共识的工具，能够以最低成本来构建信任”。</li>
-<li>作为共识的工具，信任的引擎，公链不应该为了可扩展性放弃去中心化与安全性。那么公链的TPS这么低，该怎么使用呢？可以将大量的工作放到链下去解决，仅仅将最重要的数据提交到区块链主链上，让所有节点都能够验证这些链下的工作都是准确可靠的.</li>
-<li>社会的发展带来的是更精细化的分工，区块链的技术发展也是如此，在底层区块链（Layer1）上构建一个扩展层（Layer2)，Layer1来保证安全和去中心化，绝对可靠、可信；它能做到全球共识，并作为“加密法院”，通过智能合约设计的规则进行仲裁，以经济激励的形式将信任传递到Layer2上，而Layer2追求极致的性能，它只能做到局部共识，但是能够满足各类商业场景的需求。</li>
-</ol>
-<h2 id="发展历史">发展历史</h2>
-<ol type="1">
-<li>1985 年，零知识证明Zero-Knowledge Proof - 由 S.Goldwasser、 S.Micali 及 C.Rackoff 首次提出。</li>
-<li>2010年，Groth实现了首个基于椭圆曲线双线性映射全能的，常数大小的非交互式零知识证明协议。后来这个协议经过不断优化，最终成为区块链著名的零知识证明协议SNARKs。</li>
-<li>2013年，Pinocchio协议实现了分钟级别证明，毫秒级别验证，证明大小不到300字节，将零知识证明从理论带到了应用。后来Zcash使用的SNARKs正是基于Pinocchio的改进版。</li>
-<li>2014 年，名为Zerocash的加密货币则使用了一种特殊的零知识证明工具zk-SNARKs （ Zero-Knowledge Succinct Non-interactive Arguments of Knowledge ) 实现了对交易金额、交易双方的完全隐藏，更注重于隐私，以及对交易透明的可控性。</li>
-<li>2017 年， Zerocash 团队提出将 zk-SNARKs 与智能合约相互结合的方案，使交易能在众目睽睽下隐身，打造保护隐私的智能合约。</li>
+<ol start="6" type="1">
+<li>CPU读取数据时，要从内存读取到L3，再读取到L2再读取到L1，同样写到内存时也会经过这些层次。</li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/152065162">零知识证明介绍-zhihu</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.notboring.co/p/zero-knowledge">Zero Knowledge, from not boring</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_IrI8SJLo1Ht51nJfI4V_Q">十分钟开发一个混币-原理篇</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8OkwqNXIkUz2PBURoghRJQ">十分钟开发零知识证明之混币</a></li>
+<li>https://www.junmajinlong.com/os/cpu_cache/</li>
 </ol>
 
       
@@ -417,7 +448,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/93/">93</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -483,14 +514,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">186</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

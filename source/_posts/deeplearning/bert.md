@@ -15,11 +15,9 @@ categories:
 ---
 
 
-
-
-
-
 # bert模型
+
+
 ![bert模型可视化](https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&rect=0%2C0%2C2668%2C3126&w=1980&h=2320)
 
 

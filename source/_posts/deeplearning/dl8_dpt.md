@@ -1,5 +1,5 @@
 ---
-title:  深度学习8 gpt
+title:  深度学习8 GPT
 author: chiechie
 mathjax: true
 date: 2021-03-15 14:48:13

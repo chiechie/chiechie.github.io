@@ -17,7 +17,9 @@ categories:
 为什么有了word2vec还不够？还需要bert干嘛？因为一词多义，同样的词在不同的上下文中表达的意思不一样，而word2vec的表示是静态的。
 所以我们需要一个能对上下文编码的动态的embedding方法，bert就应运而生了。
 
+
 # 总结
+
 - Bert也是是一个对词语生成词语向量的方法。
 - Bert可以认为是一个预训练Transformer的encoder部分
 - Bert的全称是Bidirectional Encoder Representations from Transformers，双向encoder表示
@@ -94,6 +96,20 @@ categories:
 - demo数据：https://www.kaggle.com/c/fake-news-pair-classification-challenge/data
 - 预训练的中文bert模型：hugging face
 
+## 要不要冻结BERT的部分参数？
+
+Why not to freeze BERT？
+
+That said, BERT is meant to be fine-tuned. The paper talks about the feature-based (i.e., frozen) vs fine-tuning approaches in more general terms, but the module doc spells it out clearly: "fine-tuning all parameters is the recommended practice." This gives the final parts of computing the pooled output a better shot at adapting to the features that matter most for the task at hand.
+
+when you fine-tune BERT, you can choose whether to freeze the BERT layers or not. Do you want BERT to learn to embed the words in a slightly different way, based on your new data, or do you just want to learn to classify the texts in a new way (with the standard BERT embedding of the words)?
+
+I wanted to use BertViz visualisation to see what effect the classification tuning had on the attention heads, so I did fine-tuning with the first 8 layers of BERT frozen and the remaining 4 layers unfrozen.
+
+Some people suggest doing gradual unfreezing of the BERT layers, ie finetuning with BERT frozen, then finetuning a bit more with just one layer unfrozen, etc.
+
+
+
 
 
 # 参考
@@ -103,4 +119,7 @@ categories:
 4. [BERT (预训练Transformer模型)](https://www.youtube.com/watch?v=UlC6AjQWao8&t=26s)
 5. [RoBERTa](https://arxiv.org/pdf/1907.11692v1.pdf)
 6. Devlin, Chang, Lee, and Toutanova. BERT: Pre-training of deep bidirectional transformers for language understanding. In ACL, 2019.
-7. https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html
+7. [](https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html)
+8. [ROBERTA-pytorch](https://pytorch.org/hub/pytorch_fairseq_roberta/)
+9. [](https://discuss.huggingface.co/t/fine-tune-bert-models/1554/2)
+10. https://medium.com/swlh/painless-fine-tuning-of-bert-in-pytorch-b91c14912caa

@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/28/investment/about-leishe/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/25/AIOps/AIOps-2_2-multi-dimensional-rca/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/28/investment/about-leishe/" class="post-title-link" itemprop="url">关于雷蛇的个股研究</a>
+            <a href="/2021/05/25/AIOps/AIOps-2_2-multi-dimensional-rca/" class="post-title-link" itemprop="url">chapter2.2 多维下钻根因定位/多维指标异常定位</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-28 13:31:24" itemprop="dateCreated datePublished" datetime="2021-05-28T13:31:24+08:00">2021-05-28</time>
+              <time title="创建时间：2021-05-25 16:05:42" itemprop="dateCreated datePublished" datetime="2021-05-25T16:05:42+08:00">2021-05-25</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-10 10:28:55" itemprop="dateModified" datetime="2021-06-10T10:28:55+08:00">2021-06-10</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -219,47 +219,83 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>试着分析下</p>
-<p>行业--&gt;护城河--&gt;未来增长--&gt;风险</p>
-<p>分析不出啥？？？电脑主机？</p>
-</blockquote>
-<h2 id="行业分析">行业分析</h2>
-<p>雷蛇属于电子消费行业，在2017-11-13 在港交所上市。</p>
-<p>雷蛇卖什么？卖游戏周边，包括：</p>
-<ul>
-<li>硬件：游戏周边设备，鼠标键盘耳机，游戏笔记本</li>
-<li>软件：？？</li>
-<li>服务：支付服务。</li>
-</ul>
-<p>雷蛇的竞争对手，罗技</p>
-<h3 id="关于显卡的产业链">关于显卡的产业链</h3>
-<p>显卡供应商：AMD(AMD),英伟达(NVDA)</p>
-<p>显卡消费者：矿工和游戏玩家</p>
-<p>近半年，受到疫情影响，显卡供应减少，同时需求增多（主要是加密货币火爆行情刺激了矿机需求）</p>
-<p>两种原因导致显卡涨价，但是雷蛇会受到什么影响？</p>
-<figure>
-<img src="about-cryptocurrency/img.png" alt="英伟达股价" /><figcaption aria-hidden="true">英伟达股价</figcaption>
-</figure>
-<figure>
-<img src="./img_1.png" alt="AMD股价" /><figcaption aria-hidden="true">AMD股价</figcaption>
-</figure>
-<figure>
-<img src="./img_2.png" alt="雷蛇股价" /><figcaption aria-hidden="true">雷蛇股价</figcaption>
-</figure>
-<h2 id="未来增长">未来增长</h2>
-<p>集團更進一步拓展移動╱雲端遊戲、主機遊戲、直播產品及電競椅等增長領域</p>
-<h2 id="新闻">新闻</h2>
+          <h1 id="问题描述">问题描述</h1>
+<p>在运维场景中对监控指标的多个维度进行根因定位。具体来说，当某个总指标（如总流量）发生异常时，需要快速准确地定位到是哪个交叉维度的细粒度指标（如“省份=北京 &amp; 运营商=联通”的流量）的异常导致的，以便尽快做进一步的修复止损操作。图示如下：</p>
+<h2 id="输入输出">输入输出</h2>
+<p>输出：</p>
+<table>
+<thead>
+<tr class="header">
+<th>timestamp</th>
+<th>set</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1501475700</td>
+<td>a1&amp;b2;a3&amp;b4</td>
+</tr>
+<tr class="even">
+<td>1501475760</td>
+<td>a1&amp;b2&amp;x3;a4&amp;b5&amp;x6</td>
+</tr>
+</tbody>
+</table>
+<h1 id="方案介绍">方案介绍</h1>
+<h2 id="几个问题">几个问题</h2>
 <ol type="1">
-<li>雷蛇于5月12日在联交所回购855万股，每股价格介乎2.62至2.66846元，涉资约2,281.53万元。</li>
-<li>2021年初至今雷蛇已回购约1.71亿股，占已发行股本约1.9229%。</li>
-<li>2021年6月，大股东折价卖出大手笔股票，割韭菜了。</li>
+<li><p>要训练集干嘛？</p>
+<p>训练集用来当做历史数据，学习正常波动区间，对测试数据进行异常检测。</p></li>
+<li><p>为什么要注入异常？</p>
+<p>真实中故障很少发生，并且故障根因大部分都比较简单，不会出现多层，多个elemnts是根因的情况, 需要人工构造。</p></li>
 </ol>
-<h2 id="参考">参考</h2>
+<h2 id="adtributor">Adtributor</h2>
+<p>Adtributor: Revenue Debugging in Advertising Systems</p>
+<p>简介：Adtributor假设所有根因都是一维的，提出了解释力（Explanatory power）和惊奇性（Surprise）来量化根因的定义。使用ARMA模型对KPI进行预测，通过计算维度的惊奇性（维度内所有元素惊奇性之和）对维度进行排序，确定根因所在的维度（例如省份）。在维度内部计算每个元素的解释力，当元素的解释力之和（例如北京+上海）超过阈值时，这些元素就被认为是根因。</p>
+<figure>
+<img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
+</figure>
+<p>上述是针对基本类型的KPI的计算公式（例如PV、交易量），对于派生类型的KPI（多个基本类型KPI计算得到，例如成功率）就不太适用了。当然，作者也提出了另一套公式来计算派生型KPI，主要是让“解释力”和“惊奇性”的分数符合我们对于异常的“直觉”。</p>
+<p>评价：Adtributor提出的“解释力”和“惊奇性”对根因给出了量化的评价，有很强的借鉴意义。将根因限定在一维的假设也极大的简化了问题的复杂度。但是这样的假设并不太符合我们的实际场景，同时用解释性和惊奇性的大小来衡量根因也不完全合理。因为其没有考虑到维度之间的相互影响以及「外部根因」的可能，即根因所在的维度没有在数据中体现。另外，Adtributor的根因分析严重依赖于整体KPI的变化情况，对于整体变化不大，但是内部波动较为剧烈的数据表现不好。</p>
+<p>总的来说，Adtributor是一种可以落地的业务指标明细多维分析算法，能够提供一些对排障有帮助的信息，配合人工筛查，可以有一定的效果。但是如果应对更多的维度、更复杂的情况，甚至存在外部根因的时候，能够提供的帮助就有限了。</p>
+<h2 id="idice">iDice</h2>
+<p>iDice: Problem Identification for Emerging Issues</p>
+<p>简介：iDice针对的场景和Adtributor稍有不同，它分析的数据是一段时间序列下的多维明细数据而不是对某一个具体的时间点。首先它认为根因的表现是一定在时间序列上体现突变，然后根据信息熵的思想提出Isolation Power的概念来解释根因，基本的思想就是对每一个维度组合计算他们的Isolation Power值，一个有效的根因维度组合（图1 Effective Combination）是其IP值大于其所有的直接子节点和直接父节点。在判断了当前节点为「可能的根因」后，其所有子节点都被剪枝掉。为了降低搜索和聚合的复杂度，本文还提出了多种剪枝方法。如减掉数量较小的节点、减掉在时间序列上没有突变的的节点等。最终对每个「可能的根因」突变点前后计算类似Adtributor的“惊奇性”进行排序。</p>
+<p>评价：iDice提出了一种更符合实际情况的根因评估指标：Isolation Power，利用多种剪枝手段减少搜索的复杂度。利用了数据的时间序列，从一定程度上缓解了单一时间点做预测时不准的情况。但是对大量的节点做异常检测也带来了额外的复杂度，在维度和取值较多时，上层节点的数目要远远大于叶子结点的数目。从上至下的搜索以及至下而上的聚合的复杂度极大，虽然本文提出了几种剪枝方法，但是并不能带来量级上的减少。</p>
+<p>同时，iDice的几种剪枝略显暴力，例如基于Impact的剪枝，虽然减掉的是量较少的维度组合，但是当维度和取值增加，极限情况下每一个叶子结点的维度组合的量只有1，这样剪枝的结果是不可以接受的。另外iDice对于派生类型的指标没有很好的处理方法，例如成功率，首先剪枝不能很好地进行，其次做变点检测时，容易忽略掉真正的“根因”。</p>
+<h2 id="hotspot">HotSpot</h2>
+<ol start="3" type="1">
+<li>HotSpot: Anomaly Localization for Additive KPIs with Multi-Dimensional Attributes</li>
+</ol>
+<p>简介：HotSpot和Adtributor一样使用“预测+搜索”的策略，针对基本类型的指标（可加型，例如交易量，PV等）提出了基于Ripple Effect的根因判断方法，即维度组合与其子节点之间越满足Ripple Effect条件就越有可能是根因，提出了Potential Score来量化一个节点与其所有叶子结点之间满足Ripple Effect程度。举个简单的例子，例如表一中的北京。PV从30-&gt;21,而北京联通和北京电信分别从20-&gt;14、10-&gt;7，变化的比例和北京相同（Ripple Effect），所以判断出北京是根因。和iDice对于根因集的定义不同，HotSpot会考虑同一维度下的根因组合，例如不仅有（北京，联通）这样的元素，还会有（北京，上海）这样的元素。这样当然会带来额外的搜索复杂度（2n-1，n是维度取值数目之和），所以作者提出基于MCTS（蒙特卡洛树搜索）和分层的剪枝策略，按照获得最大Potential Score收益的路径进行搜索，如果某一元素的PS分数较低，则减掉其子节点（Hierarchical Pruning）。</p>
+<p>评价：HotSpot提出具有启发意义的根因判断方式：Ripple Effect。使用叶子结点而不使用直接子节点参与Potential Score的计算，达到了边搜索边聚合的效果，极大的降低了空间的使用。创新的将MCTS应用到搜索的剪枝中，降低了搜索的复杂度。当然，HotSpot也存在一些局限，例如假设所有的根因在一个Cuboid内（完全相同的维度组成：eg.C省份、C省份、运营商）、没有考虑到非可加型指标（eg.成功率）、时间序列预测方法也只是使用了简单的MA，如果指标有一定的波动，可能会影响PS的准确性。另外使用叶子结点计算PS虽然减少了空间的使用，但是随着维度和取值的增加，叶子结点的量下降，极端情况下下降到1，此时的PS计算会受到较大的影响。</p>
+<h2 id="squeeze">Squeeze</h2>
+<p>Squeeze：Generic and Robust Localization of Multi-Dimensional Root Causes</p>
+<p>简介：Squeeze在HotSpot的基础上提出广义的Ripple Effect,证明RE不仅仅适用于基本类型的指标，也适用于派生类型的指标（eg.成功率）同时解决了0值预测的问题。和之前的算法搜索策略不同，Squeeze先至下而上剪掉正常的叶子结点的减小搜索空间，然后计算叶子结点的deviation score来进行聚类，因为根据RE，相同的根因的叶子结点将具有相似的deviation score。然后自顶向下在每一个簇中搜索根因。Squeeze假设每一个簇中的根因都在一个Cuboid（见HotSpot简介）内，同样提出类似于Potential Score的GPS来作为是否是根因的量化标准。</p>
+<p>评价：Squeeze在HotSpot的基础上进行了理论的拓展，增加了算法的通用性和鲁棒性。“Squeeze”的做法也极具创新性。不过实际的业务场景可能会对算法的准确性产生一定的影响，例如预测不准可能会导致聚类不准确、同时有多个异常或者外部异常也会影响聚类效果。另外按照GPS对结果根因进行排序有时也不符合真实业务场景，因为真实的业务场景数量的大小同样是一个重要的衡量指标。失败量从50到100的组合可能比0到5的组合更值得注意。</p>
+<h2 id="百度的方案">百度的方案</h2>
+<p>参考人工定位过程中的分析思路，提取了两个特征，用来描述某维度是否为根因：</p>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://doc.irasia.com/listco/hk/razer/annual/2020/crespress.pdf">雷蛇2020年财报</a></li>
-<li><a target="_blank" rel="noopener" href="https://news.futunn.com/post/9452174?lang=zh-cn&amp;src=2&amp;report_type=stock&amp;report_id=17625226&amp;level=1&amp;data_ticket=1615555035779921">雷蛇(01337.HK)斥约2,281万元回购855万股</a></li>
-<li><a target="_blank" rel="noopener" href="https://news.futunn.com/report/821714?lang=zh-cn&amp;src=43&amp;level=1&amp;data_ticket=1615555035779921">广发证券</a></li>
+<li>贡献度：即该维度PVLost与总PVLost的比例。</li>
+<li>一致度：即构成该维度的子维度的异常程度的相似度。子维度的异常程度的一致度可通过各子维度异常程度间的变异系数衡量，变异系数越小，则异常程度越一致。(如何衡量小？绝对值还是相对值?)</li>
+</ol>
+<h1 id="评估指标">评估指标</h1>
+<p>评估准确性的指标是F-score,该指标是准确率（Precision）和召回率(Recall)综合体现。具体计算如下所示： F-score =(2 ∗ Precision ∗ Recall)/(Precision+ Recall)，其中： Precision ＝ TP / (TP + FP)， Recall = TP / (TP + FN)。</p>
+<p>每个异常时刻都有一个真正的根因集合，记为S<em>，该集合中包含一个或多个属性值组合，参赛队伍的算法输出结果 记为S。对于S</em>中的每一个元素，S中包含其中一个，则算一次true positive （TP），遗漏一个算一次false negative （FN），多出一个S*中不存在的，记一次false positive （FP）。计算出所有异常时刻总的TP、FP、FN，最后得出F-score。</p>
+<h1 id="代码地址">代码地址</h1>
+<ol type="1">
+<li>https://github.com/chiechie/ADminer</li>
+</ol>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2018/12/sunyq_IEEEAccess2018_HotSpot.pdf">HotSpot-英文paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Kj309bzifIv4j80nZbGVZw">HotSpot-中文</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/48926992">百度做根因钻</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.usenix.org/system/files/conference/nsdi14/nsdi14-paper-bhagwan.pdf">Adtributor</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/ICSE-2016-1-iDice-Problem-Identification-for-Emerging-Issues.pdf">iDice</a></li>
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2019/08/camera_ready.pdf">Squeeze</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bizseer.com/index.php?m=content&amp;c=index&amp;a=show&amp;catid=26&amp;id=3">bizseer总结</a></li>
+<li><a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=8&amp;flag=1">比赛</a></li>
 </ol>
 
       
@@ -280,7 +316,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/27/AI/reinforcement_learning/rl3-gym/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/24/AIOps/AIOps-2_1_6-topo-rca-MicroCause/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -294,7 +330,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/27/AI/reinforcement_learning/rl3-gym/" class="post-title-link" itemprop="url">强化学习3 使用gym规划出租车行车路线的demo</a>
+            <a href="/2021/05/24/AIOps/AIOps-2_1_6-topo-rca-MicroCause/" class="post-title-link" itemprop="url">chapter2.1.6 基于因果分析的微服务根因定位-MicroCause</a>
         </h2>
 
         <div class="post-meta">
@@ -304,14 +340,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-27 20:33:14" itemprop="dateCreated datePublished" datetime="2021-05-27T20:33:14+08:00">2021-05-27</time>
+              <time title="创建时间：2021-05-24 22:43:57" itemprop="dateCreated datePublished" datetime="2021-05-24T22:43:57+08:00">2021-05-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-31 15:07:22" itemprop="dateModified" datetime="2021-05-31T15:07:22+08:00">2021-05-31</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -319,7 +355,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -335,56 +371,116 @@
 
       
           <blockquote>
-<p>看完了强化学习的理论，现在来动手试一试</p>
+<p>清华阿里合作paper《基于因果分析的微服务内根因定位》, Localizing Failure Root Causes in a Microservice through Causality Inferenc</p>
+<p><strong>MicroCause</strong>，可以定位到导致微服务故障的根因指标，原理是，先使用路径条件时间序列算法（PCTS）挖掘时间序列之间的因果关系，然后使用随机游走方法（TCORW）来推断因果。TCORW方法综合分析了因果关系，指标异常程度和优先级信息。</p>
+<p>在86个实际故障实例中，MicroCause给出的top 5根因的准确性（AC @ 5）为98.7％。</p>
 </blockquote>
-<h2 id="场景介绍">场景介绍</h2>
-<p>以出租车司机路线规划为背景，下面演示一下如何由强化学习解决这个问题</p>
-<p>为了将问题进一步简化，基于已有的强化学习框架gym，我就可以更关注在策略实现了</p>
-<p>首先强化学习将问题建模为两个部分：环境（environment）和 决策主体（agent）。 环境基于state，action给出反馈（reward），以及下一个时刻的reward。 agent基于state，给出最佳的action。</p>
-<p>对于「出租车路线规划问题」，state就是给定区域：出租车坐标，行人坐标，行人目的地，障碍物（墙）的坐标，出租车当前是否已经载人</p>
-<p>action就4个方向（东南西北），2个动作（载人，下客）</p>
-<h2 id="开始编程实现啦">开始编程实现啦</h2>
-<h3 id="step1-加载出租车路线规划这个环境">step1: 加载「出租车路线规划」这个环境</h3>
-<p>因为gym已经带有这个环境，直接可用</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gym</span><br><span class="line"></span><br><span class="line">env = gym.make(<span class="string">&quot;Taxi-v3&quot;</span>)</span><br><span class="line">env.reset()</span><br><span class="line"><span class="comment"># visulize current state</span></span><br><span class="line">env.render()</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="img.png" alt="environment" /><figcaption aria-hidden="true">environment</figcaption>
-</figure>
-<p>上图环境渲染的图中</p>
-<ul>
-<li>黄色方块代表出租车当前的位置</li>
-<li>“|”代表一堵墙，不能穿透</li>
-<li>蓝色的字母表示载人地方</li>
-<li>紫色的字母表示下客的地方</li>
-<li>出租车接到人之后会编程绿色</li>
-</ul>
-<p>注意，这些颜色，形状只是方便人理解，算法内部只关心有5个状态</p>
-<h3 id="step2-看一下action的6个状态">step2： 看一下action的6个状态</h3>
-<p>看一下action的6个状态， down (0), up (1), right (2), left (3), pick-up (4), and drop-off (5). <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(env.action_space)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    print(env.action_space.sample())</span><br></pre></td></tr></table></figure> <img src="img_1.png" alt="img_1.png" /></p>
-<h3 id="step3-跟env交互一次">step3: 跟env交互一次</h3>
-<p>跟env交互一次，拿到反馈和最新的状态</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">state, reward, done, info = env.step(action=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="img_3.png" alt="img_3.png" /> 注意：每个Gym环境的step方法都返回state, reward, done, info这四个变量，输入某个action</p>
-<h3 id="step4-使用某个简单策略随机策略">step4： 使用某个简单策略（随机策略）</h3>
-<p>使用某个简单策略（随机策略），让出租车跑完一轮</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">state = env.reset()</span><br><span class="line">env.render()</span><br><span class="line">n = <span class="number">0</span></span><br><span class="line">r = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    state, reward, done, info = env.step(action=env.action_space.sample())</span><br><span class="line">    r += reward</span><br><span class="line">    n = n + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> done:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">print(<span class="string">&quot;totally make %d decisions&quot;</span> % (n+<span class="number">1</span>), <span class="string">&quot;total reward&quot;</span>, r)</span><br><span class="line">env.render()</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
-</figure>
-<h3 id="step5-升级策略-q-table-跑多轮">step5: 升级策略-Q-table, 跑多轮</h3>
-<p>Q-table使用bellman方程迭代更新策略，并且存放到一张表中（这个表就是Q-table），即每个状态，每个action对应的Q-value</p>
-<p><span class="math display">\[Q_{t+1}\left(s_{t}, a_{t}\right)=\underbrace{Q_{t}\left(s_{t}, a_{t}\right)}_{\text {old value }}+\underbrace{\alpha_{t}\left(s_{t}, a_{t}\right)}_{\text {learning rate }} \times[\overbrace{\underbrace{R_{t+1}}_{\text {reward }}+\underbrace{\gamma}_{\text {discount factor }} \underbrace{\max _{a} Q_{t}\left(s_{t+1}, a_{t}\right)}_{\text {estimate of optimal future value }}}^{\text {learned value }}-\underbrace{Q_{t}\left(s_{t}, a_{t}\right)}_{\text {old value }}]\]</span></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">n_state = env.observation_space.n</span><br><span class="line">n_action = env.action_space.n</span><br><span class="line">Q_table = np.zeros((n_state, n_action))</span><br><span class="line">alpha = <span class="number">0.615</span></span><br><span class="line">gamma = <span class="number">0.9</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> episode <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">    state = env.reset()</span><br><span class="line">    <span class="comment">#env.render()</span></span><br><span class="line">    n = <span class="number">0</span></span><br><span class="line">    r = <span class="number">0</span></span><br><span class="line">    done = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">while</span> done <span class="keyword">is</span> <span class="literal">False</span>:</span><br><span class="line">        best_action = np.argmax(Q_table[state, :])</span><br><span class="line">        state2, reward, done, info = env.step(action=best_action)</span><br><span class="line">        Q_table[state, best_action] = Q_table[state, best_action] + alpha *(reward + gamma * np.<span class="built_in">max</span>(Q_table[state2]) - Q_table[state, best_action])</span><br><span class="line">        r += reward</span><br><span class="line">        n = n + <span class="number">1</span></span><br><span class="line">        <span class="comment"># 别漏了</span></span><br><span class="line">        state = state2 </span><br><span class="line">    <span class="keyword">if</span> episode % <span class="number">50</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">&#x27;Episode &#123;&#125; Total Reward: &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(episode,r))</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="img_6.png" alt="img_6.png" /><figcaption aria-hidden="true">img_6.png</figcaption>
-</figure>
-<h2 id="遗留问题">遗留问题</h2>
+<h2 id="总结">总结</h2>
 <ol type="1">
-<li>策略函数要设置约束，比如不能撞墙</li>
+<li>在微服务架构中，一个「应用程序」往往被分解为多个「微服务」。例如，图1展示了，在淘宝购物时，完成用户下单操作需要调用多个微服务。当前针对微服务系统的故障根因问题，学术界已有一些成熟的工作。这些工作主要是通过学习故障如何在微服务之间传播，并找到根因的微服务，例如，图1中Address微服务是导致支付异常的根因。但是更进一步，什么导致这个微服务故障？运维人员还是不得而知，进而不知道下一步要怎么响应。</li>
+</ol>
+<figure>
+<img src="./image-20200622132926186.png" alt="图1" /><figcaption aria-hidden="true">图1</figcaption>
+</figure>
+<p>图1：在线购物平台中，当接收到用户下单指令后，Order Creation微服务，将调用Inventory，Discount Coupon，Freight，Address这几个微服务来完成用户下单的需求。</p>
+<ol start="2" type="1">
+<li><p>怎么进一步定位微服务故障根因？ 上游组件，下游组件，部署环境。</p></li>
+<li><p>对于一个微服务来说，通常有上游组件（例如，微服务，中间件）调用它，并且它可以调用某些下游组件（例如，微服务，中间件）。如图2所示，用户在淘宝下了一个订单后，”Order Creation“微服务将调用“Discount Coupon”微服务查看可用的优惠券，“Discount Coupon”微服务将调用“Inventory”微服务，针对不同的库存计算不同的优惠金额。此外，微服务通常部署在一个或多个容器或虚拟机。 <img src="./image-20200622132951991.png" alt="图2：““Discount Coupon”微服务实现细节" /></p></li>
+<li><p>对每个微服务需要配置监控指标（如图2所示），包括用户可感知的KPI，上游组件相关的指标，下游组件相关的指标，与部署环境相关的指标（例如CPU）。当KPI异常时，通常表示微服务故障，</p></li>
+<li><p>运维人员通常会配置一系列监控指标以持续监视每个微服务的性能（如图2所示）。这些指标包括用户可感知的指标KPI，例如用户响应时间(RT)和指标Metrics. Metrics包括与上游组件相关的指标（例如，Web用户的每秒查询（QPS）），下游组件相关指标（例如中间件的RT），与部署环境相关的指标（例如CPU）。</p></li>
+<li><p>当KPI异常时表示微服务故障，到底是组件异常还是部署环境异常，可通过观察指标是否异常得到。</p></li>
+<li><p>因此，微服务故障的根本原因可以用异常metrics表示。例如，如图2中，由Web RT异常标明的微服务故障是由Web QPS异常引起的。</p></li>
+<li><p>因此在该问题中，我们将针对一个微服务故障实例，给出N个metrics，作为故障的Top N根因。通常一个故障实例由三部分信息组成：异常的KPI，异常的微服务ID和异常时间点。</p></li>
+<li><p>目前已有的解决方法主要是利用微服务之间的故障传播关系（cross），通常分为两个阶段：</p>
+<ol type="1">
+<li>构造依赖关系（relationship learning）：适用pc算法学习微服务之间依赖关系，或者采用系统工具获取依赖关系</li>
+<li>推断根因（rcf）：通过随机游走等基于相关性的方法推断根本原因。</li>
+</ol>
+<figure>
+<img src="./image-20200622133032479.png" alt="表1：微服务系统中已有解决方法" /><figcaption aria-hidden="true">表1：微服务系统中已有解决方法</figcaption>
+</figure></li>
+<li><p>研究挑战:没有现成的方法学习时序间的因果关系;因果推断还要考虑指标本身含义.</p></li>
+<li><p>已有的pc算法是基于iid的假设，不能捕捉延迟的因果关系，所以不适合指标因果图构建。</p></li>
+<li><p>已有的方法，要解决的问题比较简单，即只用分析微服务间的因果关系，相应的解决方案要么通过系统工具获取依赖关系，要么通过pc算法学习因果关系。</p></li>
+<li><p>但是现在的问题更有挑战性，除了微服务之间的因果，还想知道一个微服务的指标之间的因果。所以，提出了一种PC加强版因果挖掘的方法--PCTS。</p></li>
+<li><p>C算法，学习不到延迟的因果关系: PC算法假设不同时刻，指标之间的因果关系是独立的，以下图为例，PC算法假设17：17和17：18之间，4个指标的因果关系是独立. 但是，时序不是符合这个假设的，经常会有时间差. 以下图为例，如17:17分Web QPS会影响17:18的Web RT <img src="img.png" alt="图3：四个时间序列的因果关系图" /> 图中的每一个节点代表了时间序列的某一个时间点，两个节点之间的箭头，标明了两个时间点的数据之间的因果关系, 这说明PC算法学习不到延迟的因果关系</p></li>
+<li><p>做因果推断，除了从数据出发，考虑指标异常相关性，还要考虑指标本身的含义。同一类别指标比不同类别的相关更强。</p></li>
+<li><p>以某个故障案例为例：web请求次数过多导致了服务响应时间变长 <img src="./image-20200622132951991.png" alt="图2：Discount Coupon微服务的实现细节" /> 从数据上看，微服务的KPI--Web RT异常，现在把上下游的metric全部load过来，使用随机游走的方法，分析到的根因是Middleware1 Consumer RT。 <img src="./img_1.png" alt="图4：微服务中的4个监控指标" /> 其中Web RT是KPI，Web QPS, Middleware1 Consumer RT和JVM FGC Time是metrics。 但实际上这个故障实例的根因是上游组件的指标Web QPS。</p></li>
+<li><p>随机游走的视野太狭隘了，还应该考虑指标本身含义，同一类别指标比不同类别的相关更强。也就是说Web RT和Web QPS的相关性更强，和Middleware1 Consumer RT的相关性更弱.</p></li>
+<li><p>MicroCause的架构图如下（图5），</p>
+<figure>
+<img src="./image-20200622134206479.png" alt="图5:MicroCause架构图" /><figcaption aria-hidden="true">图5:MicroCause架构图</figcaption>
+</figure>
+<ul>
+<li>stage1-指标监控：当KPI异常时，MicroCause将被激活，将故障前数小时的监控指标将用作MicroCause的输入。</li>
+<li>stage2-构建因果图：生成故障因果图&amp;异常检测，可并行
+<ul>
+<li>使用PCTS算法，从故障kpi和相关指标学习出该故障的故障因果图，</li>
+<li>将故障前数小时的监控指标对metrics做异常检测，并生成异常事件序列。</li>
+</ul></li>
+<li>stage3-因果推断：使用TCORW，输出N个可能的根原。</li>
+</ul></li>
+<li><p>故障因果图学习: 使用PCTS算法学习基于指标的故障因果图。该算法算法分为两步:</p>
+<ol type="1">
+<li>第一步，得到每个时刻指标之间的因果图<span class="math inline">\(G_C\)</span>，基于PC算法的改进，该算法用于学习时间序列的因果图。该算法的结果如图3所示。但是由于我们需要利用指标之间的因果关系进行根因定位，我们对于改进的PC算法的结果进行了调整。 <img src="img.png" alt="图3：四个时间序列的因果关系图- G_C" /></li>
+<li>第二步，将<span class="math inline">\(G_C\)</span>转化为节点为指标的因果图<span class="math inline">\(G_{FCG}\)</span>，这样才能做根因定位。理论上，如果<span class="math inline">\(G_C\)</span>中时序A和时序B的时间点中存在一条边，那么<span class="math inline">\(G_{FCG}\)</span>中, 时列A到时序B就有一条边。</li>
+</ol>
+<figure>
+<img src="./image-20200622140031849.png" alt="图8：针对故障实例A,基于PCTS算法生成的因果图" /><figcaption aria-hidden="true">图8：针对故障实例A,基于PCTS算法生成的因果图</figcaption>
+</figure>
+<figure>
+<img src="./image-20200622135001778.png" alt="图6：四个指标间的故障因果图-G_FCG" /><figcaption aria-hidden="true">图6：四个指标间的故障因果图-G_FCG</figcaption>
+</figure></li>
+<li><p>异常检测：采用SPOT检测KPI和业务指标中的突增突降。</p></li>
+</ol>
+<p><span class="math display">\[\eta_{\max}^{i}=\max _{k \in O} \frac{| M_{k}^{i}-\phi_{M_{k}^{i}}|}{\phi_{M^{i}}}\]</span></p>
+<pre><code>- 其中是时间序列 在时刻的值，是时间序列 在时刻SPOT拟合的阈值。</code></pre>
+<ol start="20" type="1">
+<li><p>面向时间因果的随机游走(TCORW),主要分为三步：</p>
+<ul>
+<li>面向因果的随机游走，</li>
+<li>潜在根因得分</li>
+<li>根因排序</li>
+</ul></li>
+<li><p>总结一下根因推断的过程：</p>
+<ul>
+<li>先构建一个指标(潜在根因得分) = 随机游走的根因概率 + 指标的异常程度</li>
+<li>相关指标分为3层，每一层找出top2的两个指标，一起得到6个</li>
+<li>按照时间排序，得到前3个或者5个输出</li>
+</ul></li>
+<li><p>随机游走：利用监控指标之间的因果关系进行推断，通过在故障因果图上随机游走。跟传统的随机游走算法的区别在于，这里会使用偏相关系数（Partial Correlation)来计算转移概率矩阵。与Pearson相关性不同的是，和异常KPI因果性更强的metric指标将具有更高的偏相关系数，而Pearson相关性更注重两个指标之间的相关性。因此和异常KPI因果性更强的metric将在随机游走中获得更高的访问次数。</p></li>
+<li><p>潜在根因得分:这一步中我们利用，随机游走的结果和指标的异常程度对于异常的metric计算潜在根因得分，计算方式如下所示：</p></li>
+</ol>
+<p><span class="math display">\[\gamma_{i}=\lambda \bar{c}_{i}+(1-\lambda) \bar{\eta}_{\max }^{i}\]</span></p>
+<p>其中是归一化后的随机游走访问次数，是归一化后的异常程度，作为参数，将用于控制着两部分的贡献比例。</p>
+<ol start="24" type="1">
+<li>根因排序: 先利用指标间可能的故障传播关系，将指标分为三个级别Level1，Level2，Level3。 如表2所示，当Level1和Level2中的指标同时发生异常时，则认为Level1中的指标更有可能是根因。</li>
+</ol>
+<figure>
+<img src="./image-20200622135235013.png" alt="表2：指标分级" /><figcaption aria-hidden="true">表2：指标分级</figcaption>
+</figure>
+<p>基于指标分级信息，指标的异常时间和指标的潜在异常得分我们设计了如下算法给出最后的根因排序。 <img src="./image-20200622135254320.png" /></p>
+<ol start="24" type="1">
+<li>数据集和评估指标:从2019年9月~2020年1月，在某在线购物平台中监控超过400种微服务状态。收集了86**个真实的在线故障实例作为评估数据集，使用AC@k和avg<span class="citation" data-cites="k评估算法给出的Top">@k评估算法给出的Top</span> K个根因的准确性。</li>
+</ol>
+<p><span class="math display">\[ AC@ k=\frac{1}{|A|} \sum_{a \in A}\frac{\sum_{i&lt; k} R^{a}[i] \in V_{r c}^{a}}{\min (k,|\mathrm{V^a}|)} \]</span></p>
+<p><span class="math display">\[A v g @ k=\frac{1}{k} \sum_{1 \leq j \leq k} A C @ j\]</span></p>
+<h2 id="案例分析">案例分析</h2>
+<p>CauseInfer[INFOCOM14]中提到，使用PC算法来学习基于时间序列的因果图时容易生成的孤立子图。在那篇论文中，作者使用领域知识来弥补这一缺陷。 在我们的工作中，同样观察到了这种现象。从图7中，由PC生成的因果图可以看出，异常KPI与根因之间没有路径。</p>
+<p><img src="./image-20200622140008064.png" /> 图7：针对故障实例A,基于PC算法生成的因果图</p>
+<p>但是PCTS可解决这个问题，因为它可以表达时序之间的延迟因果关系（图8）。</p>
+<figure>
+<img src="./image-20200622140031849.png" alt="图8：针对故障实例A,基于PCTS算法生成的因果图" /><figcaption aria-hidden="true">图8：针对故障实例A,基于PCTS算法生成的因果图</figcaption>
+</figure>
+<h2 id="调用链的数据格式">调用链的数据格式</h2>
+<ol type="1">
+<li>做调用链路分析（TraceAnomaly）用到了耗时，以及调用链的结构信息。</li>
+<li>2021AIOps比赛的调用链的数据：每个span_id表示一个trace中的一次子调用，耗时表示当前服务从接受call，到开始response的时间间隔。该表格信息量很少，不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。</li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.oreilly.com/radar/introduction-to-reinforcement-learning-and-openai-gym/">强化学习环境框架-gym</a>)</li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-ytiMaJaHaK2QpchQVB2rA">基于因果分析的微服务内根因定位</a></li>
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">causeinfer--paper</a></li>
 </ol>
 
       
@@ -404,7 +500,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -470,14 +566,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

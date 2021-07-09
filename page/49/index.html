@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reading_notes/computer/information-theory/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/21/reinforcement_learning/rl3_value-based/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/reading_notes/computer/information-theory/" class="post-title-link" itemprop="url">信息论</a>
+            <a href="/2021/04/21/reinforcement_learning/rl3_value-based/" class="post-title-link" itemprop="url">强化学习3 基于价值的强化学习方法</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-18 11:19:24" itemprop="dateCreated datePublished" datetime="2021-04-18T11:19:24+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-21 20:30:11" itemprop="dateCreated datePublished" datetime="2021-04-21T20:30:11+08:00">2021-04-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">强化学习</span></a>
                 </span>
             </span>
 
@@ -219,15 +219,66 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="交叉熵">交叉熵</h2>
-<p>交叉熵表示，拥有信念Q的人，在观察到真实分布P后，他的惊讶程度。</p>
-<p>这个绝对惊讶程度 可以拆解为 一个baseline（真实分布P的熵） + 一个相对差距（P和Q的距离）</p>
-<figure>
-<img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
-</figure>
-<h2 id="参考">参考</h2>
+          <h2 id="几个问题">几个问题：</h2>
+<ul>
+<li>价值 指的是什么？</li>
+<li>怎么使用深度学习技术来求解这个问题？难点在哪里？</li>
+<li>跟DQN并列的概念还有哪些？</li>
+<li>DQN网络的输入输出是什么？中间结构是什么？</li>
+<li>DQN怎么更新参数？</li>
+</ul>
+<h2 id="回答">回答</h2>
+<ul>
+<li>「价值」 指的是 <strong>最优动作价值函数</strong>，即如果后续action都遵循<strong>最优策略</strong>，那么当前的&lt;state，action&gt;的得分。</li>
+<li><strong>最优动作价值函数</strong> 相当于 一个 先知。</li>
+<li>回到强化学习要解决的问题本身（MDP）--agent的目标是 打赢游戏（最大化total reward），那么我们将这个目标拆解为两个步骤，
+<ul>
+<li><ol type="1">
+<li>找到最优动作价值函数</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>在最优价值函数的指引下作出最优决策</li>
+</ol></li>
+</ul></li>
+<li>DQN的想法就是，使用一个深度神经网络拟合 <strong>最优动作价值函数</strong></li>
+<li>难点在于，谁都不知道 先知（<strong>最优价值函数</strong>）长什么样子（少数情况，如玩游戏可能可以知道）</li>
+<li>DQN的输入是state，输出是所有action对应的分数
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FfsQADMgSRa.png?alt=media&amp;token=18bf844e-aa59-4016-85d6-8cdfc801a9ce" title="fig:" alt="价值网络" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&amp;token=71ba382a-432c-4c00-8759-692d84c03f3d" title="fig:" alt="策略网络" /></li>
+</ul></li>
+<li>怎么更新模型参数
+<ul>
+<li>可以把一整局游戏玩完，搜集到反馈信号（total reward）再去更新DQN的参数。</li>
+<li>也可以玩一步，更新一下参数，就是TD算法</li>
+</ul></li>
+</ul>
+<h2 id="时序差分算法td算法">时序差分算法（TD算法）</h2>
+<ul>
+<li>TD error: 对于上一步&lt;<span class="math inline">\(s_{t-1}, a_{t-1}\)</span>&gt;的reward， 模型估值-真实值
+<ul>
+<li>模型作出的估计（模型对上一个状态估计的价值 - 模型对当前状态估计的价值） - 真实 reward （来自 environment）</li>
+</ul></li>
+<li>TD target： 对于上一步&lt;<span class="math inline">\(s_{t-1}, a_{t-1}\)</span>&gt;的长期value，
+<ul>
+<li>真实reward（来自 environment） + 折扣* 模型对当前状态估计的价值</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FROMmZ-LTGx.png?alt=media&amp;token=dae7cba7-84e1-4e7f-8638-60eaa2b1c166" /></li>
+</ul></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FEuWKISitjj.png?alt=media&amp;token=0427aa38-bad9-46f3-98bd-a1eb051df5cd" title="fig:" alt="时序差分算法" /></li>
+</ul>
+<h2 id="没想清楚">没想清楚</h2>
+<ul>
+<li>更新模型参数时，如果 把一整局游戏玩完，搜集到反馈信号（total reward）再去更新DQN的参数，那么，中间的决策过程怎么放到训练样本里面来？玩多次么？怎么搜集「最优价值」的反馈信号？</li>
+<li>Q函数 和 reward 函数 是不是可以相互转化？--是这样把？
+<ul>
+<li>Q 函数 == reward （来自 environment）+ 策略（来自 agent）</li>
+<li>Q * 函数 == reward （来自 environment）+ 最优策略（来自 agent）</li>
+</ul></li>
+</ul>
+<h2 id="时序差分算法的其他资料">时序差分算法的其他资料</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#cross-entropy">交叉熵</a></li>
+<li>Sutton and others: A convergent O(n) algorithm for off-policy temporal-difference learning with linear function approximation. In NIPS, 2008.</li>
+<li>Sutton and others: Fast gradient-descent methods for temporal-difference learning with linear function approximation. In ICML, 2009.</li>
 </ol>
 
       
@@ -248,7 +299,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/meditation/dl-framework/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/21/reading_notes/investment/didi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -262,7 +313,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/meditation/dl-framework/" class="post-title-link" itemprop="url">模型推断的框架</a>
+            <a href="/2021/04/21/reading_notes/investment/didi/" class="post-title-link" itemprop="url">对滴滴的分析</a>
         </h2>
 
         <div class="post-meta">
@@ -272,14 +323,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-18 08:53:17" itemprop="dateCreated datePublished" datetime="2021-04-18T08:53:17+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-21 10:00:14" itemprop="dateCreated datePublished" datetime="2021-04-21T10:00:14+08:00">2021-04-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-08 11:06:18" itemprop="dateModified" datetime="2021-07-08T11:06:18+08:00">2021-07-08</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -287,7 +338,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B2%89%E6%80%9D%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">沉思录</span></a>
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
                 </span>
             </span>
 
@@ -302,37 +353,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>解答了一直以来，关于模型部署的疑惑</p>
-</blockquote>
-<h2 id="关于模型部署">关于模型部署</h2>
-<ul>
-<li>1 为什么说模型部署难？
-<ul>
-<li>因为部署的环境不一样，所以需要许多定制化的工作</li>
-</ul></li>
-<li><ol start="2" type="1">
-<li>tensorflow和pytorch这两个框架不能直接用于推理吗？</li>
+          <h2 id="reflection">reflection</h2>
+<ol type="1">
+<li><p>网约车行业到底挣钱不挣钱？终归是拼价格，要降价抢市场就亏钱；要涨价谋利润，等于将市场拱手让给竞争对手。</p>
+<blockquote>
+<p>Lyft作为全球首家上市的网约车公司，上市第二天就跌破发行价，截至7月22日，Lyft市值仅为93亿美元，较最高市值跌去60%。</p>
+<p>Uber上市后同样遭遇血洗，首日破发报收42美元，如今市值只有568亿美元，远低于Uber最后一轮私募融资时的760亿美元，这意味着解禁后，投资人将血本无归。</p>
+</blockquote></li>
+<li><p>滴滴现在挣钱不挣钱？滴滴的主营业务是快车，但是主要盈利的业务是顺风车，专车，但是盘子太小，总的来说是亏钱。</p></li>
+<li><p>滴滴未来有没有可能做大做强？不可能，因为没有护城河, 用户没有忠诚度。同时，竞争对手很强，其他平台方具备资金优势，地方政府关系过硬，在合规上更胜一筹。</p></li>
+<li><p>网约车是一门社会价值大于商业价值的生意，还是政府来主导比较好。</p></li>
 </ol>
-<ul>
-<li>可以，但是性能不佳。推理阶段相对训练阶段对模型服务的性能要求更高，比如模型稳定性，响应延迟等，。</li>
-<li>tensorflow和pytorch本身是训练框架，拿来兼做推理框架其实不可以。</li>
-<li>但是在推理阶段，如果业务要求模型服务 高可用，训练框架就显得过于臃肿了而不合时宜了，需要更轻量的框架，如pytorch，tensorRT等。 <img src="../deeplearning/dl-framework/img.png" alt="img.png" /></li>
-</ul></li>
-<li><ol start="3" type="1">
-<li>DL框架产业现状？</li>
-</ol>
-<ul>
-<li>训练框架是标准品</li>
-<li>推理框架是定制品：这里提到了一点就是使用场景没有<strong>网络效应</strong>，我理解就是规模效应，客观环境决定了，“推理框架”相对于“训练框架” 而言，不是一个好摘的果子
-<ul>
-<li>客观环境（部署依赖整个生产链路的环境，包括硬件厂商，应用服务）导致了没有统一的条件</li>
-</ul></li>
-</ul></li>
-</ul>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>file:///Users/stellazhao/Desktop/深度学习框架-2020-0630-Qlearning分享-Turbo-PPT.pdf</li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/t-ISF-ptH7tP4TFygqDyig">王川：Uber 上市会引爆硅谷的泡沫破灭吗?</a></li>
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/62e321a071a486b862ee729kb6d32b90216b6d767d2f0dc">商业的本质和互联网</a></li>
+<li><a target="_blank" rel="noopener" href="https://tech.qq.com/a/20200722/014719.htm">等不到IPO这一天，投资人正在抛弃滴滴？</a></li>
 </ol>
 
       
@@ -352,7 +388,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/48/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><span class="page-number current">49</span><a class="page-number" href="/page/50/">50</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/50/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/48/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><span class="page-number current">49</span><a class="page-number" href="/page/50/">50</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/50/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -418,14 +454,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/28/reading_notes/computer/principle-of-computer-network/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/07/reading_notes/computer/virtual-machine/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/28/reading_notes/computer/principle-of-computer-network/" class="post-title-link" itemprop="url">计算机网络基本原理</a>
+            <a href="/2021/03/07/reading_notes/computer/virtual-machine/" class="post-title-link" itemprop="url">思考工具--虚拟机</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-28 20:19:10" itemprop="dateCreated datePublished" datetime="2021-02-28T20:19:10+08:00">2021-02-28</time>
+              <time title="创建时间：2021-03-07 12:02:36" itemprop="dateCreated datePublished" datetime="2021-03-07T12:02:36+08:00">2021-03-07</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -219,37 +219,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="怎么学习">怎么学习？</h2>
-<p>直接看理论，觉得太抽象了。</p>
-<p>引用一个同事说的吧，可能多从实践出发理解会更深刻。 IDC机器上tcpdump，本地机器wireshark都用起来，看网络包究竟是怎样的。 写个网络编程的demo比如echo server 用iptables模拟一些异常再抓包看看。 linux 网络相关系统调用的各个参数，比如listen的backlog。 内核里面关于网络的参数，比如/proc/sys/net/core/rmem_max之类的。 甚至还可以看看最近几年相对比较新的东西比如DPDK，RDMA之类的，有兴趣自然会提升学习的热情。</p>
-<h2 id="基本概念">基本概念</h2>
-<p>什么是协议（protocol）？ 一堆定义好的标准集合没，每台电脑都要遵守，才能够正常通信</p>
-<p>什么是计算机网络？ 覆盖所有相关事物：电脑之间如何通信 网络的作用是，保证每台电脑都能倾听到彼此，并且每台电脑说的话，其他电脑也能听得懂</p>
-<p>什么是TCP/IP模型？ <img src="img_1.png" alt="图1-TCP/IP网络模型" /> 是一个5层的模型 ，每一层都有自己的协议，除了TCP还有，其他的模型如OSI。</p>
-<p>为什么要分层？ 为了让职能分化（specialization）？让不同的人做不同的事？</p>
-<p>TCP/IP模型中包含哪些东西？ - 物理层：即一些物理设备，跟电脑相互联系的，是通过网线（cable）连接的。物理层的几个核心元素是：cable，connectors，发送信号</p>
-<p><img src="img_2.png" alt="图2-物理层-使用网线将物理设备连接起来" /> - 数据层：也叫网络接口层（networklayer），这里是第一次涉及到协议（才开始跟内容有关，物理层仅跟cable有关） 数据连接层，负责定义如何解读这些信号。这一步之后，两边才能交流（communicate，不然就是鸡同鸭讲）。数据连接层有很多协议，最出名的叫"以太网"，尽管现在无线技术越来越popular， 在物理层之上，以太网标准定义了一个协议，负责从同一个网络的一个节点获取数据，accross a single link。</p>
-<ul>
-<li><p>网络层，也叫internetwork层 允许不用的网络进行通信，当然，依靠的是路由器 这里涉及到一个的概念 internetwork ：一系列的网络，通过路由器，彼此相连接。 最有名的internetwork叫Internet。 这一层常用的协议叫：IP即 Internet Protocol IP是Internet和大部分更小的网络的核心，他的作用是将数据从一个节点传给另一个节点。 network software通常被分类为：client 和 server client应用初始化一个request， 并且通过netwrok发送给server应用 ， server将response通过network发送回来</p></li>
-<li><p>传输层，邮件的传输格式和网页的传输格式不一样，这个区别就是在这一层定义的。 会议一下， 网络层在两个node之间传输数据， 一个node，可以运行多个client应用或者server应用， 传输层sort out哪一个client和server 应该去获取数据。 第四层传输层用最常见的协议--TCP，Transmission Control Protocol。 虽然TCP和IP经常被放到一起说，但是要注意，TCP和IP网络模型的不同层的协议。 除了TCP，其他的传输层协议，也会利用IP先将数据送达， 例如UDP，user datagram protocol UDP和TCP的区别在于，TCP机制可确保数据安全被送达，但是UDP并不要求。</p>
-<p>TCP和UDP是用来确保数据被一个node上正确的程序所接受。 对比以下，IP只能保证数据传达到正确的node。 类似送快递，IP可以保证包括从武汉商店送到深圳的腾讯大厦， TCP可以保证包裹 送至 对应的员工手中。</p></li>
-<li><p>应用层，这一层的协议是跟具体的应用类型相关的 比如网页类型的应用要准手http协议 邮件类型的应用要准讯smtp协议。</p></li>
-</ul>
-<p>再用送快递打个比方</p>
-<ul>
-<li>物理层，就是一个一运送快递的卡车和道路</li>
-<li>数据连接层：卡车将包裹从一个</li>
-<li>网络层：识别出 从A到B要走哪条路</li>
-<li>传输层：告诉A中哪个程序来收包裹。</li>
-<li>应用层：就是包裹的内容。</li>
-</ul>
-<figure>
-<img src="img_4.png" alt="图3-用送快递类比TCP/IP网络模型的运行机制" /><figcaption aria-hidden="true">图3-用送快递类比TCP/IP网络模型的运行机制</figcaption>
-</figure>
-<h2 id="参考资料">参考资料</h2>
+          <blockquote>
+<p>以虚拟机为原型的一个学习方法, 即「层层嵌套」，先使用high-level的视角：「只见森林不见树木」，再使用low-level的视角。</p>
+<p>虚拟机的设计范式，将逻辑复杂度从硬件转移到软件，当服务出现故障时，需要在多层次的软件层中找原因，隐隐有种不安。</p>
+</blockquote>
+<h1 id="总结">总结</h1>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/computer-networking/home/welcome">The Bits and Bytes of Computer Networking</a></li>
-<li><a target="_blank" rel="noopener" href="https://open.163.com/newview/movie/free?pid=ME74DFHFC&amp;mid=ME74E6NLA">西安交通大学公开课-计算机网络原理</a></li>
+<li>设计者一般会根据实体机的功能和用途去给实体取名字。</li>
+<li>计算机也类似，不同的是，他被要求做成千上万件事情。用户只用点开不同的程序，就能够让计算机内部实现切换，从而转换成不同的装置去完成不同的工作。每套装置都是一个单独的小机器，这就是虚拟机。</li>
+<li>对计算机来说，指令就是齿轮和滑轮。所有的信息都要转换成二进制代码0和1。他们是计算能够读写的唯一语言。芯片上的电路会分流0/1代码，逻辑门不断开合，将信息流输送到某条电路，并且以这种方式来下达指令。计算机上唯一可移动的部件--是硬件上百万个的小空位，可以在1态和0态之间切换。计算机在某个时刻具有什么功能，取决于百万个微型元件的设置。</li>
+<li>若一台实体机的各组件相互配合，呈现不同状态，具备极强可塑性，只需施加一套特殊指令，就能把它变成虚拟机。虚拟机处理的是信息，它能够跟实体计算机做一样的工作：实体计算机中的可移动部件只是硬件中的状态变化；虚拟机可以直接操纵状态变化，来代表那些"可移动部件"。举个例子，你可以在草稿纸上演算除法，也可以在头脑中演算。两者都可以得出结果，因为我们的目标是得到一种信息--除法的结果。计算机十分擅长在头脑中演算，我们用计算机的时候，很难分清楚，自己操作的是一个专用的硬连线机器，还是一部多用途芯片上运行的虚拟机。</li>
+<li>几乎所有的电梯，空调，汽车都使用廉价的计算机芯片，它能运行PC的所有程序，但是我们却选择让他们只运行一个简单的程序--刻录在只读存储器上的代码，例如点火控制或者周期除霜。为什么呢？多功能芯片生产成本更低。</li>
+<li>虚拟机最初表示的是"实体机的一种独立有效的复制品"，实体机是实在的硬件，由硅芯片和芯片组成，称为A。而虚拟机是运行在另外一台实体机B上的计算机程序，他能完美地模拟计算机A；速度可能会慢点，毕竟他要先保障自己硬件B上的基本操作有效运行（通用操作），才能组织其硬件A上的那些操作。（基于linux开发的程序想要运行在window上，需要在windows机器上开发一个虚拟机；在开发阶段开发的程序要部署到生产环境，可以在生产环境安装一个容器，然后将生产环境的程序安插在容器内）</li>
+<li>虚拟机带来的好处是，避免资源浪费：假设有很多只能在MAC上运行的软件，你没有mac，他们就没法用，如果可以在PC上编写一个模拟MAC的虚拟机，然后这些mac软件就可以使用了。你的电脑会认定自己是真的mac，而且那些软件更加浑然不知。</li>
+<li>目前，绝大多数程序都需要专门的操作系统而不是专门的硬件，相同的硬件可以运行不同的操作系统。一种操作系统本身就是一个虚拟机，它能够让一个程序在略有差异的两台机器上同样有效运行。但是一个操作系统毕竟没有模拟任何实际存在的硬件，他只是按照要求创建出虚构的机器，接受待定的输入。</li>
+<li>JAVA虚拟机（JVM）是当今最流行的一种虚拟机，它比较像一个操作系统。用Java语言编写的web应用可以跨平台使用，不管是用windows还是安卓还是macOS。why？因为java程序的运行环境只依赖JVM，而每个操作系统都有专门的JVM，当运行某个java程序时时，跟你设备匹配的JVM会自动下载到你的电脑，几秒就装好了。然后，各种java小程序就可以运行了。</li>
+<li>可以看到，几乎所有的计算机程序都是虚拟机--由指令构成的软件，一旦运行，将通用计算机变成了专用计算机，这种专用计算机本可以专门设计和创建专门的硬件（例如AI芯片）。只需要在通用计算机上简单安装和运行程序，就可以得到一台功能清晰的计算机。</li>
+<li>图灵机或者笔记本，只能一条条执行指令，再次基础上扩展除了"并行"计算机的概念，可以一次执行数百万条指令。</li>
+<li>考虑一个在国际象棋的程序，它由common lisp这种高级语言写成，在一台pc上运行的windows操作系统上运行。实际上，这台pc伪装成了一台windows机器，这台windows机器又伪装成了一台lisp机器，这台lisp机器又伪装成了一台国际象棋游戏机。</li>
+<li>无论在哪个level上，我们总是只见森林不见树木，low-level的细节总是很容易忽略。计算机上虚拟机的层层嵌套和「小人儿功能主义」中小人儿的层层嵌套，两者之间的雷同并非巧合。虚拟机推动人类的创造和理解，完成了很多创造性任务。这些计算机的成就也给人类带来了启发：如果对大脑也实施类似的逆向工程，或许也能有所收获。</li>
+<li>所有说法语的人 都具备某种版本的法语虚拟机，说英语的人大脑里面也有一套固定模式的系统--英语虚拟机，如何在大脑中建立语言虚拟机？尚未有答案，不过可以看看计算机是怎么做的：编译器将高层指令翻译成可以在硬件上执行的代码，只需程序员在high-level设计出一个想法，它就有把握生成一个可执行的程序。</li>
+</ol>
+<blockquote>
+<p>概念验证：无需动用神奇组织，我们找到了一种方法，能够清楚地说出"具有数万亿活动部件的计算机，它的那种高等能力到底是什么?"--编译器。</p>
+</blockquote>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/21532330716e9c7a215e76c">直觉泵和其他思考工具-丹尼尔·丹尼特-微信读书</a></li>
+<li><a href="https://chiechie.github.io/2021/03/18/technology/dive-into-JVM/">关于JVM的延伸笔记-chiechie</a></li>
 </ol>
 
       
@@ -270,7 +267,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/28/reading_notes/zhexue/intuition_pumps_right-way-to-judge-others/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/07/reading_notes/the-book-of-why/judea-pearl_the-book-of-why3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -284,7 +281,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/28/reading_notes/zhexue/intuition_pumps_right-way-to-judge-others/" class="post-title-link" itemprop="url">《直觉泵》读书笔记1——如何正确地批评别人？</a>
+            <a href="/2021/03/07/reading_notes/the-book-of-why/judea-pearl_the-book-of-why3/" class="post-title-link" itemprop="url">《the book of why》读书笔记-3</a>
         </h2>
 
         <div class="post-meta">
@@ -294,14 +291,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-28 11:40:47" itemprop="dateCreated datePublished" datetime="2021-02-28T11:40:47+08:00">2021-02-28</time>
+              <time title="创建时间：2021-03-07 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-07T08:33:38+08:00">2021-03-07</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-10 17:29:43" itemprop="dateModified" datetime="2021-06-10T17:29:43+08:00">2021-06-10</time>
+                <time title="修改时间：2021-07-07 11:46:24" itemprop="dateModified" datetime="2021-07-07T11:46:24+08:00">2021-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -309,7 +306,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
                 </span>
             </span>
 
@@ -325,48 +322,31 @@
 
       
           <blockquote>
-<p>工作中验收产品/算法方案，审视自己的方案，去别人就某个观点进行argue，都需要这个技能。</p>
-<p>《直觉泵和其他思考工具》对于如何正确地批评别人以及批评那些方面，提出了指引--拉波波特法则和史特金定律，</p>
-<p>拉波波特法则是对「归谬法」的一个补充，是一个更温和的，更让人容易接受的方式。</p>
-<p>史特金定律告诉我们每个领域闪闪发光的知识只有10%或者更少，我们不应该浪费时间，批量一些毫无亮点的东西</p>
+<p>the book of why 的第三章-从证据到原因</p>
 </blockquote>
-<h2 id="避免变成一个杠精">避免变成一个杠精！</h2>
-<p>我们在寻找对方说法中隐藏的矛盾时常常容易走过头，变成鸡蛋里挑骨头，变成彻头彻尾的嘲弄。这种认定对手的想法中一定藏有矛盾的冲动，给了你一个容易击中的靶子，怂恿你对别人的看法做出无情解读。</p>
-<p>然而，<strong>这个容易击中的靶子通常与我们真正关心的问题不是一回事儿</strong>，你只是在浪费大家的时间和耐心而已，最多是给支持你的观点的人提供了一点消遣。</p>
-<h2 id="拉波波特法则">拉波波特法则</h2>
-<p>拉波波特法则的内容如下：</p>
-<table>
-<tbody>
-<tr class="odd">
-<td>如何撰写一篇成功的批评性评论?</td>
-</tr>
-<tr class="even">
-<td>① 你应该非常清楚、生动、不偏不倚地重述对手的想法，使得你的对手说：“谢谢你，我刚才要是像你这么表述就好了。”</td>
-</tr>
-<tr class="odd">
-<td>② 你应该把对方观点中你所同意的部分都列出来，尤其是那种并非被人们广泛接受了的观点。</td>
-</tr>
-<tr class="even">
-<td>③ 你应该提到那些从你对手那里学到的东西。</td>
-</tr>
-<tr class="odd">
-<td>④ 只有完成了以上三点，你才能说一句反驳或批评的话。</td>
-</tr>
-</tbody>
-</table>
-<p>遵循此法则的一个直接的好处就是，你的对手会因此乐于倾听你的批评。因为，他们看到你已站在他们的立场上，理解了他们的想法，同时你也展示出了良好的判断力，在一些重要的事情上和他们达成了共识，甚至在有些地方还被他们说服了。</p>
-<p>遵循拉波波特法则，有时内心会有挣扎，因为有些对手不值得我们如此尊重。但对于值得尊重的对手，当我们用了这个方法，总是能有意外之喜。</p>
-<h2 id="史特金定律">史特金定律</h2>
-<p>科幻作家泰德·史特金（Ted Sturgeon）这个评价科幻小说，"百分之九十的科幻小说确实很渣。但是，任何事物当中的百分之九十都是渣滓，而其中那不是渣滓的百分之十才是有意义的。我敢说，那百分之十的科幻小说可以与人类从古至今写就的任何作品相媲美。"</p>
-<p>对史特金定律更通俗的一种表达是：“任何事物当中的百分之九十都是垃圾（crap）。” 百分之九十的分子生物学实验、百分之九十的诗歌、百分之九十的哲学书、数学系里百分之九十的同行评议文章，等等，都是垃圾。</p>
-<h2 id="不要把时间浪费在无意义的事情上">不要把时间浪费在无意义的事情上</h2>
-<p>从史特金定律中我们应该学到：每个领域，每个人身上都有一大堆愚蠢、平庸、糟糕透顶的东西存在。最伟大的思想家经过些许巧妙扭曲之后，他们最好的学说、最精妙的分析也会显得又臭又长，变成彻头彻尾的蠢话。</p>
-<p>为了不浪费你的时间和大家的耐心，请确保你关注的是你能找到的该领域或者个人身上最好的东西，比如获奖之作、杰出成果、大家都赞不绝口的精品，而非糟粕。</p>
-<h2 id="怎么用知乎">怎么用知乎？</h2>
-<p>知乎对我而言最大的意义是，它上面质量前 10% 的内容价值是相当大的，远超其他主流中文互联网平台——至于剩下的，本来互联网上绝大部分内容都是垃圾，知乎也只是体现了世界的常态而已。这也提醒我对于那些有争议的领域，在噪音中找到真正有价值的东西，比带着偏见全盘否定要好上太多。 --张潇雨</p>
+<h2 id="贝叶斯公式">贝叶斯公式</h2>
+<ol type="1">
+<li>因果图只是贝叶斯网络中的一个特例，不是所有的贝叶斯网络都是因果关系网络</li>
+<li>休谟的观点：不可靠的证据不能推翻可靠的自然法则。举个例子，自然法则说"凡人皆有一死"可推导出"基督难逃一死"，不可靠的证人的言论是不能推翻这个结论的。</li>
+<li>人的直觉思维很容易推算出前向概率，但是逆向概率，即执果说因，很难通过直觉算出来。</li>
+<li>贝叶斯将休谟提出的问题往前推一步：到底需要多少证据才能推翻已有的自然法则？具体来说，贝叶斯公式给出了逆向概率的推导方法，也就是说，不可靠的证人的前提下基督是上帝儿子的概率。</li>
+<li>科学方法的步骤：提出假设；推断假设的可检验结果；做实验；利用实验结论更新假设信念。通常来说检测和更新只有正确和错误两种结果，贝叶斯公式却可以定量地处理不确定性。</li>
+<li>贝叶斯概率的另外一个应用，先沿着一个方向估计条件概率，根据贝叶斯公式推导另外一个方向的条件概率 &gt; 如何估算女程序员中练瑜伽的比例？ &gt; 搜集几个数据：女性中练习瑜伽的比例(10/100)，练习瑜伽的人中程序员的比例(1/1100)，女性中程序员的比例（1/10000）, &gt; 所以 女程序员中练瑜伽的比例为10/11</li>
+</ol>
+<h2 id="从贝叶斯公式到贝叶斯网络">从贝叶斯公式到贝叶斯网络</h2>
+<ol type="1">
+<li>贝叶斯网络中的箭头并不表示因果关系，只是表示条件概率（那岂不是可以有个环？）。</li>
+<li>贝叶斯网络中的三个基本机构: 链/叉/混杂因子
+<ul>
+<li>链： A --&gt; B --&gt; C</li>
+<li>叉： A --&gt; B &lt;-- C</li>
+<li>混杂因子： A&lt;--B --&gt; C</li>
+</ul></li>
+</ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>《直觉泵和其他思考工具》-丹尼尔·丹尼特</li>
+<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">知乎-反事实和干预</a></li>
 </ol>
 
       
@@ -386,7 +366,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/87/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/87/">87</a><span class="page-number current">88</span><a class="page-number" href="/page/89/">89</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/89/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/87/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/87/">87</a><span class="page-number current">88</span><a class="page-number" href="/page/89/">89</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/89/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -452,14 +432,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -585,6 +565,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

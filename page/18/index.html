@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/31/AI/reinforcement_learning/rl4-tradingrobot/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/27/AIOps/AIOps-2_4-metric_event_correlation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/31/AI/reinforcement_learning/rl4-tradingrobot/" class="post-title-link" itemprop="url">强化学习4 使用gym构建股票交易机器人</a>
+            <a href="/2021/05/27/AIOps/AIOps-2_4-metric_event_correlation/" class="post-title-link" itemprop="url">chapter2.4 时间序列关联性分析</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-31 15:01:49" itemprop="dateCreated datePublished" datetime="2021-05-31T15:01:49+08:00">2021-05-31</time>
+              <time title="创建时间：2021-05-27 17:27:26" itemprop="dateCreated datePublished" datetime="2021-05-27T17:27:26+08:00">2021-05-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-03 16:58:37" itemprop="dateModified" datetime="2021-06-03T16:58:37+08:00">2021-06-03</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -220,78 +220,65 @@
 
       
           <blockquote>
-<p>现在进行强化学习第2个实践项目--构建交易机器人，</p>
+<p>performance counter： 性能监视器</p>
 </blockquote>
-<h2 id="思路">思路</h2>
-<p>老路子，先构建environment 再构建agent：</p>
+<h2 id="背景">背景</h2>
+<p>为了保证产品的服务质量、减少服务宕机时间，从而避免更大的经济损失，对关键的服务事件的诊断显得尤为重要。实际的运维工作中，对服务事件进行诊断时，运维人员可以通过分析与服务事件相关的时序数据，来对事件发生的原因进行分析。虽然这个相关关系不能完全准确的反映真实的因果关系，但是仍然可以为诊断提供一些很好的线索和启发。</p>
 <ul>
-<li>environment需要定义state，action类型，以及step和render方法。</li>
-<li>agent需要定义策略函数，即每个state下最优action</li>
+<li><p>如下图， 两个事件：程序A启动和程序B启动，一个时序：cpu使用率。 可以看到，事件（程序A的运行）与时序（CPU使用率）存在相关关系，并且程序A启动会导致CPU使用率升高，记为A-&gt;cpu上升。</p>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMjzFINogsh.png?alt=media&amp;token=9002fb74-9363-4a57-a182-fac68f04bd60" /></p></li>
 </ul>
-<p>下面从0到构建一个,</p>
-<p>为了构建environment，先简化问题:</p>
+<p>希望能使用数据驱动的方法，找到类似的相关组合，也就是&lt;事件, 指标&gt;对，例如A-&gt;cpu上升，</p>
+<h2 id="基本概念">基本概念</h2>
 <ul>
-<li>state: 过去3天close/open/high/low/volume5个指标的数据, shape = &lt;3, 5&gt;</li>
-<li>action: 买/卖/持仓 + 数量(基于目前仓位的百分比), shape = &lt;2, &gt; ,</li>
-<li>step方法返回
-<ul>
-<li>state2: 第二天的close/open/high/low/volume5个指标的数据, shape = &lt;3, 5&gt;</li>
-<li>reward：变动仓位 * 变化的股价</li>
-</ul></li>
+<li>时间序列（metric）： 通常有固定的时间间隔，例如CPU使用率等；指标数据( Metrics Data )：描述具体某个对象某个时间点， CPU 百分比等等，指标数据等等。</li>
+<li>事件（event）：就是一个正常的操作比如程序A的启动，这个是需要运维指定的 他感兴趣的某个日志模版。 比如“Out of memory” /启动某个磁盘intensive程序/ 启动某个cpu intensive程序/query-time out alerts/某个告警，类似log3C的日志pattern，big pandas 的变更事件。event报告告警和日志。</li>
+<li>日志(logging)：例如有个应用出错，抛出了NullPointerExcepction。</li>
+<li>事件序列（event sequence）：记录了特定事件发生的序列。</li>
+<li>故障（incident）：故障定位，就是要找到这个故障的根因。 （感觉也能跟BigPanda的告警关联之后的结果 对应起来），</li>
 </ul>
-<p>为了构建agent:</p>
-<ul>
-<li>随机策略</li>
-<li>Q-table不行，因为state不连续了</li>
-<li>naive策略：趋势策略，短期有上升趋势就买入，否则卖出。</li>
-</ul>
-<h2 id="实施">实施</h2>
-<h3 id="step-1-自定义一个environment">step 1 自定义一个environment</h3>
-<p>自定义一个environment，需要继承gym的标准环境类--gym.Env, 并实现类的关键方法，有step和reset</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomEnv</span>(<span class="params">gym.Env</span>):</span></span><br><span class="line">    metadata = &#123;<span class="string">&#x27;render.modes&#x27;</span>: [<span class="string">&#x27;human&#x27;</span>]&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, arg1, arg2, ...</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(CustomEnv, self).__init__()</span><br><span class="line">        self.action_space = <span class="literal">None</span></span><br><span class="line">        self.observation_space = <span class="literal">None</span></span><br><span class="line">                                       </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">step</span>(<span class="params">self, action</span>):</span>                                               </span><br><span class="line">        <span class="keyword">return</span> observation, reward, done, info</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reset</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> observation  <span class="comment"># reward, done, info can&#x27;t be included</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">render</span>(<span class="params">self, mode=<span class="string">&#x27;human&#x27;</span></span>):</span></span><br><span class="line">                                       </span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close</span> (<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> </span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="step1-1-定义环境类的构造函数">step1-1: 定义环境类的构造函数</h4>
-<p>在构造函数中，定义state空间，和 action空间 state是连续的，action因为涉及到具体买卖多少份额，所以也有部分是连续的， 可以用gyn.space.Box来定义，需要指定上下界。 此外，为了简化问题，直接把一个df当作成员给这个子类</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StockEnv</span>(<span class="params">gym.Env</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, df</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(StockEnv, self).__init__()</span><br><span class="line">        self.action_space = spaces.Box(low=-<span class="number">1</span>, high=<span class="number">1</span>,shape=(<span class="number">1</span>, ), dtype=np.float16)</span><br><span class="line">        self.observation_space = spaces.Box(low=<span class="number">0</span>, high=<span class="number">1</span>, shape=(<span class="number">3</span>, <span class="number">5</span>), dtype=np.float16)</span><br><span class="line">        self.df = df</span><br></pre></td></tr></table></figure>
-<h4 id="step1-2-定义环境类的reset方法">step1-2: 定义环境类的reset方法</h4>
-<p>定义环境类的reset方法，reset用来重置一局游戏。需要返回游戏的初始状态，收益为0， 计算收益的几个变量，账户净值，持股数量，余额，以及游戏开始的时间戳（这个可以随机设置的）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reset</span>(<span class="params">self</span>):</span></span><br><span class="line">    self.net_worth = <span class="number">10000</span></span><br><span class="line">    self.share_hold = <span class="number">0</span></span><br><span class="line">    self.current_step = <span class="number">2</span></span><br><span class="line">    self.cash = <span class="number">10000</span></span><br><span class="line">    observation = self.df.loc[self.current_step - WINDOW_SIZE + <span class="number">1</span>: self.current_step,  [<span class="string">&quot;open&quot;</span>, <span class="string">&quot;close&quot;</span>, <span class="string">&quot;high&quot;</span>, <span class="string">&quot;low&quot;</span>, <span class="string">&quot;volume&quot;</span>]]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> observation  <span class="comment"># reward, done, info can&#x27;t be included</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="step1-3-定义环境类的step方法">step1-3: 定义环境类的step方法</h4>
-<p>定义step方法，step是标准环境类的标准方法，输入输出的格式是固定的，输入一个state，输出下一个state, reward, done, info。</p>
-<p>这里涉及到交易的常识，补充下几个概念：</p>
-<ul>
-<li>net value：账户净值，也就是说账户当前现金+股票折现价值</li>
-<li>cash：这里叫现金是为了方便理解。专业的叫法是balance。</li>
-<li>action amount：一个百分比，基于当前账户余额（balance）可以买卖的比例。</li>
-<li>done：什么时候一轮游戏结束？时间到了或者爆仓了，即net value &lt; 0了</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">step</span>(<span class="params">self, action</span>):</span></span><br><span class="line">    current_price = self.df.loc[self.current_step, <span class="string">&quot;close&quot;</span>]</span><br><span class="line">    <span class="comment"># action_type, action_percent = action</span></span><br><span class="line">    <span class="comment"># action = action[0]</span></span><br><span class="line">    action_amount = <span class="built_in">abs</span>(action)</span><br><span class="line">    buy = action &gt; <span class="number">0</span></span><br><span class="line">    sell = action &lt; <span class="number">0</span></span><br><span class="line">    <span class="comment"># 0表示买     </span></span><br><span class="line">    action_amount = self.cash * action_amount / current_price</span><br><span class="line">    reward = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> sell <span class="keyword">and</span> self.share_hold &lt; action_amount:</span><br><span class="line">        <span class="comment"># 不允许做空</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">elif</span> buy:</span><br><span class="line">        self.share_hold += action_amount</span><br><span class="line">        self.cash -= action_amount * current_price</span><br><span class="line">        reward = (self.df.loc[self.current_step + <span class="number">1</span>, <span class="string">&quot;close&quot;</span>] - current_price) * action_amount</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        self.share_hold -= action_amount</span><br><span class="line">        self.cash += action_amount *  current_price</span><br><span class="line">        reward = - (self.df.loc[self.current_step + <span class="number">1</span>, <span class="string">&quot;close&quot;</span>] - current_price) * action_amount</span><br><span class="line"></span><br><span class="line">    self.current_step += <span class="number">1</span></span><br><span class="line">    observation = self._next_observation()</span><br><span class="line">    next_price = self.df.loc[self.current_step, <span class="string">&quot;close&quot;</span>]</span><br><span class="line">                                   </span><br><span class="line">    self.net_worth = self.cash + self.share_hold * next_price</span><br><span class="line">    done = self.net_worth &lt;= <span class="number">0.01</span></span><br><span class="line">                                         </span><br><span class="line">                                           </span><br><span class="line">    <span class="keyword">return</span> observation, reward, done, &#123;&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="step-2--定义策略policy">step 2- 定义策略policy</h3>
-<h4 id="step-2-1-定义一个静态策略">step 2-1 定义一个静态策略</h4>
-<p>这里先用一个简单的趋势策略作为baseline，如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def pi(obs):</span><br><span class="line">    close_list &#x3D; obs[&quot;close&quot;].values</span><br><span class="line">    ma &#x3D; close_list[:-1].mean()</span><br><span class="line">    price &#x3D;  close_list[-1]</span><br><span class="line"></span><br><span class="line">    if price &#x2F; ma &gt; 1.02:</span><br><span class="line">        action &#x3D; 0.2</span><br><span class="line">    elif price &#x2F; ma &lt; 0.98:</span><br><span class="line">        action &#x3D; -0.2</span><br><span class="line">    else:</span><br><span class="line">        action &#x3D; 0</span><br><span class="line">    return action</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-<h4 id="step-2-2-使用ppo算法构建策略">step 2-2 使用PPO算法构建策略</h4>
-<p>PPO（Proximal Policy Optimization）算法结合了A2C和TRPO的idea，主要思路是， 每次更新策略时，新的策略不能离旧的策略太远，具体的做法是对梯度做截断（clipping）。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">env_PPO = DummyVecEnv([<span class="keyword">lambda</span>: StockEnv(df)])</span><br><span class="line">model = PPO2(MlpPolicy, env_PPO, verbose=<span class="number">0</span>)</span><br><span class="line">model.learn(total_timesteps=<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="step2-3-对比">step2-3 对比</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">&#x27;./stockdata/train/sh.600004.白云机场.csv&#x27;</span>)</span><br><span class="line">df = df.sort_values(<span class="string">&#x27;date&#x27;</span>)</span><br><span class="line">df[<span class="string">&quot;volume&quot;</span>] = df[<span class="string">&quot;volume&quot;</span>].<span class="built_in">map</span>(np.log)</span><br><span class="line"></span><br><span class="line">env_PPO = DummyVecEnv([<span class="keyword">lambda</span>: StockEnv(df)])</span><br><span class="line">env_basis = StockEnv(df)</span><br><span class="line">env_PPO1 = StockEnv(df)</span><br><span class="line"></span><br><span class="line">model = PPO2(MlpPolicy, env_PPO, verbose=<span class="number">0</span>)</span><br><span class="line">model.learn(total_timesteps=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">obs_PPO1 = env_PPO1.reset()</span><br><span class="line">obs_basis = env_basis.reset()</span><br><span class="line">env_PPO1.current_step = env_basis.current_step</span><br><span class="line">obs_PPO1 = obs_basis</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">200</span>):</span><br><span class="line">    action_PPO1, _ = model.predict(obs_PPO1)</span><br><span class="line">    action_basis = pi(obs_basis)</span><br><span class="line">    <span class="comment"># print(env_PPO1.current_step, env_basis.current_step)</span></span><br><span class="line">    obs_PPO, rewards_PPO, done_PPO, info_PPO = env_PPO1.step(action_PPO1)</span><br><span class="line">    obs_basis, rewards_basis, done_basis, info_basis = env_basis.step(action_basis)</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">20</span> ==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">&quot;****&quot;</span>*<span class="number">5</span>, <span class="string">&quot;PPO&quot;</span>, <span class="string">&quot;***&quot;</span>*<span class="number">5</span>)</span><br><span class="line">        env_PPO1.render()</span><br><span class="line">        print(<span class="string">&quot;****&quot;</span>*<span class="number">5</span>,<span class="string">&quot;Basis&quot;</span>,<span class="string">&quot;***&quot;</span>*<span class="number">5</span>)</span><br><span class="line">        env_basis.render()</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
-<p>还凑活吧，能用</p>
-<figure>
-<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
 <h2 id="总结">总结</h2>
+<ul>
+<li>这篇文章主要是解决的什么问题？找到事件（E，event）和指标（S，metric）的相关性。</li>
+<li>具体的思路？将这个问题转换为统计中的两样本问题，并且使用邻近算法判断相关性。</li>
+<li>难点是什么？异构数据 + 异常关联性，异构指的是文本+时序，异常关联性，指的是，只关心事件和指标异常时刻的相关性。</li>
+<li>用的什么分析方法？还可以应用到哪些领域？ 用2-sample解决event 和 指标 之间的关联关系，可推广到所有离散变量的相关性分析中。</li>
+<li>这篇文章没有解决的问题是？这些问题有什么解决方法？ 本文还是比较学术派，只是给了一个 分析指标 和 事件 的相关性 方法，至于怎么从众多原始日志和告警中得到事件，以及分析出来的相关性怎么应用到故障定位上面去，没有说。但是这两步 对于实际应用来说 是必不可少的。</li>
+<li>BigPandas将众多告警基于业务关系（拓扑数据）收敛成incident，然后将incident跟变更事件进行关联，得到的变更事件就是root cause</li>
+</ul>
+<h3 id="技术细节">技术细节</h3>
+<p>要解决两个问题：</p>
 <ol type="1">
-<li>牛刀初试，强化学习实际效果不算离谱，凑活能用。</li>
-<li>现有的强化学习算法框架比较成熟了, like stable-baselines，接口简单易用。</li>
-<li>股票交易的Environment，github上还没有找到比较好用的工具，这个只能自己靠自己写了。上面写的一个简单的env，没有考虑交易费用/允许做空等情况，还要进一步细化。</li>
+<li>确定指标和事件的因果关系，即事件A--&gt;指标1：两个随机分布的相似性指标</li>
+<li>确定因果关系中指标的单调性，即事件A--&gt;指标1上升：判断两个随机变量的大小关系的指标</li>
 </ol>
+<p>都是统计中的假设检验的方法。</p>
+<p>判断方向可以转化为以下问题：</p>
+<ol type="1">
+<li>判断事件发生前的 一段序列 跟 整个时序的相似性。如果差异大，说明指标 --&gt; event</li>
+<li>判断事件发生后的 一段序列 跟 整个时序的相似性。如果差异大，说明event --&gt; 指标</li>
+</ol>
+<p>判断单调性，是这么做的：</p>
+<ol type="1">
+<li><p>计算event前后，2个子序列的 均值的差 <span class="math display">\[ t_{s c o r e}=\frac{\mu_{\Gamma^{f r o n t}}-\mu_{\Gamma^{r e a r}}}{\sqrt{\frac{\sigma_{\Gamma^{f} r o n t}^{2}+\sigma_{\Gamma^{r e a r}}^{2}}{n}}} \]</span></p></li>
+<li><p>判断单调性：</p></li>
+</ol>
+<ul>
+<li><p>如果<span class="math inline">\(t_{score} &gt; \alpha\)</span>, 得到负的单调性，即 <img src="img.png" /></p></li>
+<li><p>如果<span class="math inline">\(t_{score} &lt; -\alpha\)</span>, 得到正的单调性。</p>
+<p>这里P=0.025对应<span class="math inline">\(\alpha=1.96\)</span>，P=0.001对应<span class="math inline">\(\alpha=2.58\)</span></p></li>
+</ul>
+<h3 id="实验">实验</h3>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGkHOys2alH.png?alt=media&amp;token=95dde9c8-0249-4033-a027-83bca9a543ff" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fy5QnzhCHAl.png?alt=media&amp;token=13774051-eb1f-4ada-a978-9cd7d2bee748" /></li>
+</ul>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/quantML/blob/master/gym_rl.py">quantML-github-chiechie</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/hill-a/stable-baselines">强化学习算法框架-stable-baselines</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.oreilly.com/radar/introduction-to-reinforcement-learning-and-openai-gym/">强化学习环境框架-gym</a></li>
-<li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/creating-a-custom-openai-gym-environment-for-stock-trading-be532be3910e">构建交易环境-medium</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshub/RL-Stock">构建交易环境和交易策略-github</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=5P7I-xPq8u8">PPO-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/SIGKDD-2014-Correlating-Events-with-Time-Series-for-Incident-Diagnosis.pdf">微软-指标与事件的关联分析paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jixinpu/aiopstools/tree/master/aiopstools/association_analysis">关联分析code</a>:</li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-NMwaCD4Kzkt4BTnr5JKDQ">智能运维前沿-微软AIOps工作：时序数据与事件的关联分析</a></li>
+<li>H. B. Mann， On a test of whether one of two random variables is stochastically larger than the other. The annals of mathematical statistics, 1947.</li>
 </ol>
 
       
@@ -312,7 +299,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/30/reading_notes/reality/shisanyao-lian/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/26/AIOps/AIOps-2_3-trace_rca/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -326,7 +313,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/30/reading_notes/reality/shisanyao-lian/" class="post-title-link" itemprop="url">十三邀-采访李安</a>
+            <a href="/2021/05/26/AIOps/AIOps-2_3-trace_rca/" class="post-title-link" itemprop="url">chapter2.3 调用链根因分析</a>
         </h2>
 
         <div class="post-meta">
@@ -336,14 +323,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-30 12:02:44" itemprop="dateCreated datePublished" datetime="2021-05-30T12:02:44+08:00">2021-05-30</time>
+              <time title="创建时间：2021-05-26 16:49:19" itemprop="dateCreated datePublished" datetime="2021-05-26T16:49:19+08:00">2021-05-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-21 15:18:09" itemprop="dateModified" datetime="2021-06-21T15:18:09+08:00">2021-06-21</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -351,7 +338,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -366,47 +353,115 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>看了昨天看十三邀采访李安那一期，关于如何面对恐惧，作为旁观者如何深入一个领域，李安分享了自己的经验</p>
-<p>这些也是我一直困惑的地方，看完访谈有一些触动，但是要完全解答自己的困惑，还得要自己去实践吧</p>
-</blockquote>
-<h3 id="勤能补拙的旁观者">勤能补拙的旁观者</h3>
-<p>许知远：你说你总是一个旁观者，旁观者可以进入不同的领域，通过研究理解事物，但它的劣势是什么？</p>
-<p>李安：劣势就是不够地道，你只能用将心比心和勤快去弥补；另一个弥补就是电影不是我一个人拍的，这么多人参与，我总是可以跟他们商量，看看对不对，试试风向。</p>
-<p>电影总是人家看嘛，只要你够勤快，天分到，你合作的伙伴愿意投入，入木三分是做得到的。</p>
-<p>局外人的好处是看得比较准，而且一看就能看到； 局内人的话，你的成长经验、成见都会产生影响。</p>
-<p>我觉得让局外人去做一个东西比较简单，但局内人的话，你要把自己的肉拿出来拧的话，有更大的难度。</p>
-<p>事不关己，关己则乱。</p>
-<p>chiechie: 在研究一个新领域时，也经常会经常怀疑自己，所以要相信勤能补拙，做不到100分，80分总是可以的</p>
-<h3 id="面对不安假装我是谁">面对不安"假装我是谁"</h3>
-<p>许知远：被上了这么多次不同的“身”，面对不安全感、恐惧、挣扎，然后走出来，你觉得人变得更安全了吗？</p>
-<p>李安：我想我们的成长不必靠电影去修炼，你可以用别的方式。我觉得我可能很像演员吧，年轻的时候我想过做演员，做不成，英文不会讲，就做了导演，所以我跟演员扮演角色的感觉很像。我记得梁朝伟跟我讲了一句话，他说“我们做演员很痛苦”，当然，好的演员才会这样讲。因为我每天都在说服他相信一些东西，他自己也相信了，然后就变成了那个人。拍完以后，又要说服自己不要去相信那个东西，要走出来，好累。而我可能就是用电影来扮演不同的角色吧。我觉得就像《色戒》里的主题一样，<strong>透过假装一件事情，你才会有胆量去触摸真实</strong>。<strong>我想人生倒是不可能没有一些好奇心，我们有自己的课业要学，这一辈子有很多东西要学，而这是一个很好的学习方式——“假装是谁”</strong>。</p>
-<p>chiechie： 对于局内人，比如我工作中，要把我的亲身经验拿出来，反复的批判自己，让我感觉很痛苦，但是透过假装一件事情--假装我是谁，做产品的时候可以更有胆量去触摸真实。</p>
-<h3 id="人生就像剥洋葱">人生就像剥洋葱</h3>
-<p>李安：我觉得我也需要去摸自己不同的面向。</p>
-<p>根据成长经验，你到了某一个面向，又到了某一个时间，你会对其他的主题产生兴趣，会遭遇一个困境，需要去触摸它，如果不去触摸的话，它会骚扰不休的。</p>
-<p><strong>首先是要面对，然后去处理它，去处理它以后就可以把它 rationalize（理性化）了，你就定型了</strong>。</p>
-<p>可是一个议题处理以后，你又会有新的会骚扰你的东西，你又要去面对它、处理它，然后把它理性化，<strong>这就跟剥洋葱一样，我想人生是剥不尽的</strong>。</p>
-<h3 id="摸着石头过河">摸着石头过河</h3>
-<p>许知远：那你现在最想剥的是哪块“洋葱”？你最想处理的是哪个主题？</p>
-<p>李安：我不晓得，看下部电影吧。我可能会处理不同议题，也可能是用不同的角度来看同样的事情，这都很难讲，我不是天天思索这种问题的人，我不是搞哲学的。对，哲学有这个需要，它一定要有道理，而<strong>我是拍出来再制作道理</strong>。</p>
-<p>我相信道家的玄之又玄，因为真的就是这样，摸不透，<strong>我只能在我可以触摸的地方去感受它</strong>。有时候触动别人的心的时候，也是有感应的，毕竟我们不是单独的存在嘛；感应多了有时候也有烦的时候，也有想独自一人的时候，<strong>人生也没有什么太大需要解答的东西，摸摸石头过河</strong>。</p>
-<h3 id="命运的安排">命运的安排</h3>
-<p>许知远：如果当时没有去美国，留在台湾，会是什么样？</p>
-<p>李安：不晓得，我的命就是那个时候该离开。我说年纪到了，跟我的朋友冯光远一起去了，后来我们在纽约的人，大部分都回了台湾，很多人到了北京和上海，留在纽约的其实已经很少了。我那时候其实也想回来，可是刚好申请了绿卡，因为美国有一个经纪人签了我。学校刚毕业，太太还在读书，小孩生了，于是就在那边耗着。申请绿卡又好几年不能离开，也不能回台湾找工作，就这么耗着。说真的，我在念书的时候，从来没有想过可能在美国拍电影，这个事情在我脑子还不构成一个想象，连“梦想”都还没有。后来我得了台湾的一个奖，非拍那个片子不可，故事写的是美国，我才开始。后来那个片子又得奖了，一得国际奖，我又进了美国的艺术院线。</p>
-<p>这也不是我设计出来的，好像是命运规定我这么走。现在好像<strong>东西两方我都沾到，有时候也会落到“缝隙”里面</strong>，这种经验也不少。</p>
-<h3 id="失败的经历">失败的经历</h3>
-<p>许知远：落到“缝隙”里是什么感觉？怎样描述这个“缝隙”？</p>
-<p>李安：有一种黑暗无助的感觉。我不是每部电影都那么卖座成功的，我也受过好多打击，刚开始的时候也吃过很多苦头。</p>
-<p>许知远：印象最深的打击是什么？</p>
-<p>李安：不一而足啦，片子不卖座，没人看。但我觉得那片子也挺好，跟我成功的片子一样，<strong>我一样的拍，觉得差不多，可为什么别人不看呢</strong>？</p>
-<p>电影有时真的是<strong>人算不如天算</strong>。</p>
-<p>有的电影中西方都有市场，比如《断背山》这样的，突然大家都喜欢上了，这是没有国界的，我也不晓得为什么，我让一个台湾人看，他为什么会感动，我真的是不晓得。</p>
-<p>我第一次受打击其实是拍完《冰风暴》，真没人看，《绿巨人》也是受打击的。</p>
-<p>其实我受到的打击，我自己也不太知道，即便大约知道是什么，我也不敢肯定，所以会有一种惶恐的感觉，我也不是习惯受打击的。</p>
-<h3 id="参考">参考</h3>
+          <h1 id="总结">总结</h1>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/349695818_563941">十三邀-许知远采访李安-文字稿</a></li>
+<li>想解决的问题：监控一个web service S1的健康状况，并且在异常的时候给出根因--是哪个节点故障引起的？</li>
+</ol>
+<p>具体来说，这个web service S1由多个微服务组成，当外部应用向S1发起一个请求时（请求id就是uuid），S1 会将这个外部请求拆成一系列微服务之间的子调用。而如果其中微服务s1发生了故障，所有调用他的微服务s2,s3,...都会发生故障。</p>
+<p>发生故障的表现有两种：调用链结构异常 和 调用耗时异常。</p>
+<ul>
+<li>调用结构异常 比如某个微服务挂了，导致调用路径都没有记录，或者本不应该调用某个微服务但是产生了调用数据。</li>
+<li>调用耗时异常比如，本来a调用b，b通常的响应只需要1min，但是b所在的机器内存满了，导致s5响应完成用了10min。</li>
+</ul>
+<p>那么为了监控调用链路的，希望系统能回答两个问题</p>
+<ol type="1">
+<li>是当前调用是否异常？，</li>
+<li>如果异常，是哪个节点（微服务）引起的？</li>
+</ol>
+<p>文章的解决方案是这样的：</p>
+<p>针对1个web服务S1，将它的所有的trace数据搜集起来。按照uuid1个1个trace进行分析，对1个trace，提取出所有的节点和子调用路径以及耗时。此外，每个trace的每一次子调用call_path 都会统一存放到 call path list 中去，也就是说 call path list收集了 所有trace 的所有 的子调用路径。然后将这个自调用路径 作为维度，记录每一次trace 在 call path 取便 call path list中的每一个值时 对应的耗时，如果trace 中没有访问到 call path list中的某个call path，就记为-1。这样如果有100个trace，就可以得到100个样本，如果100个trace的所有call path的并集为32，那么样本的维度就是32。一个样本对应的特征向量就叫STV（Service Trace Vector）。得到了这个STV后要做两个事情：检测 和 定位</p>
+<ol type="1">
+<li>检测： 构造一个生成模型（vae），输入是原始的STV，输出是STV的对数概率。对数概率越小说明越异常</li>
+<li>根因定位：通过1知道了trace整体是异常的，那么到底是哪个维度导致的呢？需要进一步 找到当前trace 的 同伴们（同构调用链，HSTV）， 把每一个维度的耗时 跟 同伴们在 该维度的平均耗时进行对比（3-sigma），判断自己是不是异常的。进一步，将自己的所有异常的维度汇总，按照call path的 长度从大到小排序，call path长度最大的 维度 或者 它的下游call path 就是根因。</li>
+</ol>
+<p>冷启动问题：上面的方法对没在训练数据中出现过的call path是无效的，这个时候需要让运维人员进行人工审核call path是否符合预期，符合预期就放入白名单，。在下一轮训练启动之前，统一认为 是正常的并且不会判断其耗时。</p>
+<p>这样微服务和它们之间的调用（call path）关系就构成一个调用拓扑。当其中1个节点</p>
+<h1 id="附录">附录</h1>
+<h2 id="调用链的数据格式">调用链的数据格式</h2>
+<ul>
+<li>做调用链路分析（TraceAnomaly）用到了耗时，以及调用链的结构信息。</li>
+<li>2021AIOps比赛的调用链的数据：每个span_id表示一个trace中的一次子调用，耗时表示当前服务从接受call，到开始response的时间间隔。这里的表格信息量很少，它不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。</li>
+</ul>
+<h2 id="代码">代码</h2>
+<p>https://github.com/chiechie/TraceAnomaly</p>
+<h2 id="论文内容">论文内容：</h2>
+<h3 id="基本概念">基本概念</h3>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fu9Iqc3l8Tq.png?alt=media&amp;token=b8798779-4d40-4c62-a9f6-0322561041b5" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FANIRoOIQ2o.png?alt=media&amp;token=da808004-780a-460e-98e0-eef80cfb7fe8" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FhVSU37d3Pd.png?alt=media&amp;token=bae28c0c-f5dc-4114-9313-c987ea0cf1d2" /></li>
+<li>call path ： A call path of a microservice s in a trace, denoted as (s, call path), is the sequence of call messages (sorted by sending time) before s is called. - 在一次调用中，从start 到 某个微服务s 被调用，所有被调用的s'.(按时间顺序)
+<ul>
+<li>srt：the sending time of the corresponding response message，某次调用的 发送时间</li>
+<li>rt：response time，某次调用的respnd时间</li>
+<li><span class="math display">\[ r t=s r t-rc t \]</span>，某次调用响应时长</li>
+<li>STV（Service Trace Vector）：微服务调用向量</li>
+<li>调用路径提取：
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fi4eYxs1D2B.png?alt=media&amp;token=fdaf077a-cddc-4e9a-bd0f-4f2c291b3b4d" /></li>
+</ul></li>
+</ul></li>
+<li><ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FzI6rcYmiD2.png?alt=media&amp;token=449f532b-a126-40b0-a6dd-f07067847e3a" /></li>
+</ul></li>
+</ul>
+<h3 id="traceanomaly总览">TraceAnomaly总览</h3>
+<ol type="1">
+<li>TraceAnomaly整体结构 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FAEYpjsaibJ.png?alt=media&amp;token=361e3b43-eeee-49af-90b7-fed65874868b" /></li>
+</ol>
+<h3 id="stv构造方法">STV构造方法</h3>
+<ol type="1">
+<li><p>在线检测时，每一个新的trace 被编码成一个向量（STV）:</p>
+<ul>
+<li>如果trace中包含有未见过的call path就认为是异常，当然这么简单粗暴的方式会带来误警，所以后面提出了白名单的方法（让运维人员去判断，当然只用判断1次）。</li>
+<li>如果trace中没有unseen call path,就丢到神经网络中计算vector 的likelihood</li>
+</ul></li>
+<li><p>从一个调用链数据（trace）中提取调用路径（call paths）和 响应时长（response times） <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FaOsHfGkpQQ.png?alt=media&amp;token=6b899aa5-ad63-4f57-899d-d97eb7f04e33" /></p></li>
+<li><p>计算微服务b的响应时间</p>
+<ul>
+<li>同一行的右边减去左边表示，source 到arget的通信时间。</li>
+<li>rt（respond time） = 处理完事务并开始响应的时间点（第11行红色的时间戳） - 接受到指令的时间（第2行红色的时间戳）= 处理事务消耗的时间</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fkqz7HgJgWs.png?alt=media&amp;token=3be5adbe-1632-478e-b77e-39cae4d07068" /></li>
+</ul></li>
+<li><p>构造STV（Service Trace Vector）</p>
+<figure>
+<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FL-kGMqUym3.png?alt=media&amp;token=a388505b-f239-4b57-b5f2-770253d44ead" alt="Fig. 6: Trace t1 和 t2 结构一样, 但t1正常，t2 异常" /><figcaption aria-hidden="true">Fig. 6: Trace t1 和 t2 结构一样, 但t1正常，t2 异常</figcaption>
+</figure>
+<ul>
+<li>t1 ：业务逻辑不要 b调用e。</li>
+<li>t2 ：业务逻辑要b调用e，但是因为e故障了导致调用失败。</li>
+<li>两种情况都会导致看不到b-&gt;e的call path，但是t1是正常，而t2是异常。那么应该怎么做 才能找到 t2 ，而不误伤t1呢？看耗时</li>
+</ul></li>
+<li><p>STV的构造过程 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FIcq2XYIGEe.png?alt=media&amp;token=ac5e5876-cc3f-4fd2-94d4-fec58ebf3a1e" /> ### 根因定位算法</p></li>
+</ol>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FTn7YZeNZvO.png?alt=media&amp;token=12611153-f760-45de-843f-d2db11015f81" /> - step1 先使用预测模型判断是否当前 trace是否异常 - step2 然后判断异常的维度是哪个？跟同构traces（valid dimension 一摸一样的traces）对比 每个维度的耗时。 - step3 链路最长的异常维度就是根因 - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FZodnzghX6P.png?alt=media&amp;token=a6870609-66c6-472d-998c-4e6efe4356cd" /></p>
+<h3 id="对stv做异常检测">对STV做异常检测</h3>
+<ol type="1">
+<li>通过生成模型学习数据分布，VAE模型结构 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F5CUrxFwPhA.png?alt=media&amp;token=84b40833-873d-482b-979f-181f4fc3ad45" /></li>
+<li>训练VAE</li>
+<li>使用VAE异常检测
+<ul>
+<li><span class="math display">\[\log p_{\theta}(\mathbf{x}) \approx \log \frac{1}{L_{z}} \sum_{l=1}^{L_{z}}\left[\frac{p_{\theta}\left(\mathbf{x} \mid \mathbf{z}_{(l)}^{(K)}\right) p_{\theta}\left(\mathbf{z}_{(l)}^{(K)}\right)}{q_{\phi}^{(K)}\left(\mathbf{z}_{(l)}^{(K)} \mid \mathbf{x}\right)}\right]\]</span></li>
+<li>某个trace为异常 等价于 ，该trace 的对数概率明显小于 正常trace（要求同构吗？</li>
+</ul></li>
+<li>怎么界定正常呢？用kde来拟合对数概率的分布</li>
+</ol>
+<h3 id="实施和评估">实施和评估</h3>
+<ul>
+<li><p>A. Deployment at online services <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FYT-1AJDNXX.png?alt=media&amp;token=a4984091-89d3-424f-b97f-bfdbcfbf8409" /></p></li>
+<li><p>B. Dealing with Unseen Call Paths <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FSuilsPv1oH.png?alt=media&amp;token=6262ff2c-60ab-4e31-a60a-3fddc035ff7d" /></p></li>
+<li><p>B. Anomaly Detection Baseline Approaches <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUrcO_5Aovy.png?alt=media&amp;token=92e2bcbf-7711-401b-927e-636b9ca2d296" /></p></li>
+<li><p>E. Localizing Root Cause <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F2-eRHdEbPI.png?alt=media&amp;token=708e7973-4439-424a-b037-2dac452daf98" /> <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFJ0FxrFnTb.png?alt=media&amp;token=12d55bec-55c0-4df7-a6ba-c074c5d829db" /></p></li>
+<li><p>demo复现</p>
+<ul>
+<li><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FA_n0kckFDJ.png?alt=media&amp;token=f438c18d-5396-4914-b321-903554ce6316" /></p></li>
+<li><p>微服务e的响应时长 是故障根因， <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGZoUsnaFDn.png?alt=media&amp;token=06311178-0f22-4f3d-90ef-a67405dd20e1" /></p></li>
+</ul></li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA">清华微众AIOps新作:基于深度学习的调用轨迹异常检测算法 -微信公众号</a></li>
+<li><a href="https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
 </ol>
 
       
@@ -426,7 +481,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -492,14 +547,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

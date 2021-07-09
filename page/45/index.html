@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/23/reading_notes/reality/something-about-investment/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/25/reinforcement_learning/rl7_baseline-in-policy-gradient/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/23/reading_notes/reality/something-about-investment/" class="post-title-link" itemprop="url">《投资最重要的事》读书笔记</a>
+            <a href="/2021/04/25/reinforcement_learning/rl7_baseline-in-policy-gradient/" class="post-title-link" itemprop="url">强化学习7 策略梯度中的baseline</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-23 09:04:33" itemprop="dateCreated datePublished" datetime="2021-04-23T09:04:33+08:00">2021-04-23</time>
+              <time title="创建时间：2021-04-25 20:41:33" itemprop="dateCreated datePublished" datetime="2021-04-25T20:41:33+08:00">2021-04-25</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-08 08:36:34" itemprop="dateModified" datetime="2021-07-08T08:36:34+08:00">2021-07-08</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">强化学习</span></a>
                 </span>
             </span>
 
@@ -219,60 +219,138 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="第1章-序言">第1章 序言</h2>
-<ol type="1">
-<li>宏观未来很难预测, 大部分人都不具备这个知识优势</li>
-<li>"知可知"：对于个别公司和股票，了解的细节越多，越<strong>有可能</strong>获得知识优势，但是对于整个市场的认知做到这一点就很难。</li>
-<li>弄清自己在周期和钟摆中所处的阶段</li>
-<li>找到某个细分的领域，某个公司，通过努力花时间，调研信息。</li>
-</ol>
-<h2 id="第2章-理解市场的有效性以及局限性">第2章 理解市场的有效性以及局限性</h2>
-<ol type="1">
-<li>有效市场假说可以优化为：市场可以迅速快捷地整合信息。</li>
-<li>资产价格能够迅速反映出人们对于信息含义的共识，但是这个共识不一定是对的。</li>
-<li>影响共识的两个因素：心理因素和基本面。前者有时候更重要。</li>
-</ol>
-<h2 id="第10章-抵御消极影响">第10章 抵御消极影响</h2>
-<ol type="1">
-<li>基本观点被转化为高价泡沫的例子--科技股热潮：最开始是有一个有客观吸引力的资产，随着重视程度提高，大家都想要持有这项资产，继而资本流入，价格上涨，资产更加具有吸引力，从而更多人买进，于是上涨进入爆发期。如果这种情况持续的时间足够长、积聚的力量足够大，投资就会变成泡沫。泡沫为善于思考的投资者提供了许多<strong>卖空</strong>的机会。 &gt; 很像平台运营的方式啊。</li>
-</ol>
-<h2 id="第12章-寻找便宜货">第12章 寻找便宜货</h2>
-<ol type="1">
-<li><p>人们通常不愿意挖掘最佳机会。</p></li>
-<li><p>构建投资组合的准备工作：</p>
+          <h2 id="策略梯度中的baseline-14-数学推导">策略梯度中的Baseline 1/4-数学推导</h2>
 <ul>
-<li>潜在投资清单：满足最低的<strong>绝对标准</strong>的股票。</li>
-<li>内在价值估计：要把未来多久的收益考虑进去呢？</li>
-<li>有多少价值price in到价格中了</li>
-<li>每个投资的风险，以及对整体组合的影响。</li>
-</ul></li>
-<li><p>最低标准之一是风险可接受，包括超出投资者专业知识范围导致的不可预测（例如我跟风买比亚迪），以及行业不稳定或者公司财务的不透明导致无法预测。这两点风险都跟价格无关。</p></li>
-<li><p>价值股：高质量，高市值，eg腾讯，茅台，平安。</p></li>
-<li><p>找便宜货：潜在收益/风险 最高的股票，这个是一个<strong>相对标准</strong></p></li>
-<li><p>投资的过程是缜密和经过严格训练的。投资是相对的：不管价格低迷还是高涨，从现存的可能性中选择最好的。这就是相对决策。</p></li>
-<li><p>投资误区：不能区分好在产与好交易，误将客观优点当作投资机会。</p></li>
-<li><p>便宜股为什么收到冷落？</p>
+<li>https://www.youtube.com/watch?v=yNEqbptitZs</li>
+<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。Baseline 可以是任何不依赖于动作的函数。这节课我们做数学推导，得出带有 baseline 的策略梯度，并对它做蒙特卡洛近似。在后面的两节课中，我们把它用在 REINFORCE 和 A2C 方法中。</li>
+<li>策略梯度中的数学推导</li>
+<li>将baseline 应用到reinforce算法中</li>
+<li>将baseline 应用到actor2critic方法中：
 <ul>
-<li>客观上公司表现不好：资产类别可能存在缺陷；在业内较为落后（公司规模？）；资产负债表可能被过度杠杆化（没有能力没有钱）</li>
-<li>投资者非理性或者片面理解这个公司：没有透过表象全面了解资产，或未能克服某些不以价值为基础的传统、偏见或束缚。</li>
-<li>进一步下跌：大多数投资者会根据以往业绩而不是更可靠的均值回归来预测未来趋势。第一层次思维者倾向于将过去的价格疲软视为负担，而不是资产更为廉价的标志。</li>
-</ul></li>
-<li><p>怎么区分便宜货和垃圾？思索下，牛肉是不是一个被低估的赛道。</p></li>
-</ol>
-<h2 id="第20章-最重要的事情">第20章 最重要的事情</h2>
-<ol type="1">
-<li>怎么给一个公司估值？四个方面：账面现金&amp;有形资产价值，产生现金流能力，以及增值潜力。概括一下就是，现在有多少钱，现在能挣多少钱，以及未来可能挣多少钱。</li>
-<li>买入机会存在的原因：极少数人对便宜货有敏锐的洞察力，大部分人认知低下。</li>
-<li>优先级： 买便宜股 &gt; 成长股 &gt; 热门动量股</li>
-<li>韭菜心理学：
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVfCPRKT8Wg.png?alt=media&amp;token=aa73c63c-f5f4-4b48-b626-a5c5262b71ca" /></li>
+<li>直观理解：
 <ul>
-<li>市场处于周期之中，但是大多数人相信惯性和动量。</li>
-<li>投资者的群体心理也呈现有规律的钟摆式波动——从乐观到悲观，从轻信到怀疑，从唯恐错失良机到害怕遭受损失，从急于买进到迫切卖出。</li>
+<li>放到两军交战的场景，对于某一方来说
+<ul>
+<li>策略网络就像一个军师，对于每一种战况（state）给出行动建议（action）；</li>
+<li>价值网络就像一个先知，预测当前战况（state）的好坏（state value）。</li>
+<li>战斗是一个持续的过程，每次交锋（at）一次，根据即时的收益（rt）, 军队首领（agent）要反省得失，更新军师的策略：
+<ul>
+<li>根据先知对交锋前后的战况预测差异 ， 来评价刚刚行为（at）好坏（好坏用 td error来衡量，越大说明at越垃圾）， 并且用来指引接下来策略（梯度更新公式中出现的td error一项）</li>
+<li>此外，策略调整的方向 还有一个因子，就是 策略梯度，也就是 在st时，选择at的概率下降 的方向。是想让军师探索其他方向？？</li>
 </ul></li>
-</ol>
+<li>同时，也要更新先知的认知
+<ul>
+<li>梯度表示想要td error减少</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="策略梯度中的baseline-24-reinforce-with-baseline">策略梯度中的Baseline 2/4-REINFORCE with Baseline</h2>
+<ul>
+<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。这节课我们学习 REINFORCE with Baseline，它是一种策略梯度方法。它用价值网络近似 baseline 函数。它用带 baseline 的策略梯度学习策略网络，用价值网络去拟合观测到的回报。</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMRYKuGAY2M.png?alt=media&amp;token=120372a3-7c92-4b48-be89-9bc99679e69c" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F2KjX--n5BX.png?alt=media&amp;token=5edb9a0b-aaec-4d99-addf-ff2898eccd99" /></li>
+<li></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FWR1r0uRGvm.png?alt=media&amp;token=3bb38d00-ec27-4f8d-acf9-8aa0208cb791" /></li>
+<li>接下来用reinforce训练策略网络，用回归算法训练价值网络</li>
+<li>更新策略网络：
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fi95LEON8Wl.png?alt=media&amp;token=626bdff1-fccd-4c9f-b1cc-c288c2ee0977" /></li>
+</ul></li>
+<li>更新价值网络
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F55QYQnU8wS.png?alt=media&amp;token=b116aa54-22c2-49ae-9fe5-a8b124f78d56" /></li>
+</ul></li>
+<li>整体：</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Foc2FFolpEM.png?alt=media&amp;token=9f2955f5-98a1-4752-b475-094e41be8e6f" /></li>
+</ul>
+<h2 id="策略梯度中的baseline-34-a2c-方法">策略梯度中的Baseline 3/4-A2C 方法</h2>
+<p>https://www.youtube.com/watch?v=mtT4TSGSon8</p>
+<h2 id="策略梯度中的baseline-44-reinforce与a2c的异同">策略梯度中的Baseline 4/4-REINFORCE与A2C的异同</h2>
+<ul>
+<li>先看A2C： 单步td算法和 多步td 算法（多步用的多一些）
+<ul>
+<li>one -step ：
+<ul>
+<li>step1 观察1个transition数据
+<ul>
+<li><span class="math inline">\(\left(s_{t}, a_{t}, r_{t}, s_{t+1}\right)\)</span></li>
+</ul></li>
+<li>step2 计算TD Target
+<ul>
+<li><span class="math inline">\(y_{t}=r_{t}+\gamma \cdot v\left(s_{t+1} ; \mathbf{w}\right)\)</span></li>
+</ul></li>
+<li>step 3 计算TD eror
+<ul>
+<li><span class="math inline">\(\delta_{t}=v\left(s_{t} ; \mathbf{w}\right)-y_{t}\)</span></li>
+</ul></li>
+<li>step 4 更新策略网络
+<ul>
+<li><span class="math inline">\(\boldsymbol{\theta} \leftarrow \boldsymbol{\theta}-\beta \cdot \delta_{t} \cdot \frac{\partial \ln \pi\left(a_{t} \mid s_{t} ; \boldsymbol{\theta}\right)}{\partial \boldsymbol{\theta}}\)</span></li>
+</ul></li>
+<li>step5 更新价值网络
+<ul>
+<li><span class="math inline">\(\mathbf{w} \leftarrow \mathbf{w}-\alpha \cdot \delta_{t} \cdot \frac{\partial v\left(s_{t} ; \mathbf{w}\right)}{\partial \mathbf{w}}\)</span></li>
+</ul></li>
+</ul></li>
+<li>multi-step
+<ul>
+<li>step1: 观察m个transitions数据<span class="math inline">\(\left\{\left(S_{t+i}, a_{t+i}, r_{t+i}, S_{t+i+1}\right)\right\}_{i=0}^{m-1}\)</span></li>
+<li>step2: 计算TD target：
+<ul>
+<li><span class="math inline">\(y_{t}=\sum\limits_{i=0}^{m-1} \gamma^{i} \cdot r_{t+i}+\gamma^{m} \cdot v\left(s_{t+m} ; \mathbf{w}\right)\)</span></li>
+</ul></li>
+<li>step3: 计算 TD error：
+<ul>
+<li><span class="math inline">\(\delta_t = v(s_t;w) - y_t\)</span></li>
+</ul></li>
+<li>step4: 更新策略网络（actor）
+<ul>
+<li><span class="math inline">\(\boldsymbol{\theta} \leftarrow \boldsymbol{\theta}-\beta \cdot \delta_{t} \cdot \frac{\partial \ln \pi\left(a_{t} \mid s_{t} ; \boldsymbol{\theta}\right)}{\partial \boldsymbol{\theta}}\)</span></li>
+</ul></li>
+<li>step5: 更新价值网络（critic）
+<ul>
+<li><span class="math inline">\(\mathbf{w} \leftarrow \mathbf{w}-\alpha \cdot \delta_{t} \cdot \frac{\partial v\left(s_{t} ; \mathbf{w}\right)}{\partial \mathbf{w}}\)</span></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>再看看reinforce with baseline
+<ul>
+<li>step1 获取一整局游戏的transition 数据</li>
+<li>step2 使用观测到的奖励来计算回报
+<ul>
+<li><span class="math inline">\(u_{t}=\sum_{i=t}^{n} \gamma^{i-t} \cdot r_{i}\)</span></li>
+</ul></li>
+<li>step3 计算error：价值网络和回报的差
+<ul>
+<li><span class="math inline">\(\delta_{t}=v\left(s_{t} ; \mathbf{w}\right)-u_{t}\)</span></li>
+</ul></li>
+<li>step4 更新策略网络
+<ul>
+<li><span class="math inline">\(\boldsymbol{\theta} \leftarrow \boldsymbol{\theta}-\beta \cdot \delta_{t} \cdot \frac{\partial \ln \pi\left(a_{t} \mid s_{t} ; \boldsymbol{\theta}\right)}{\partial \boldsymbol{\theta}}\)</span></li>
+</ul></li>
+<li>step5 更新价值网络
+<ul>
+<li><span class="math inline">\(\mathbf{w} \leftarrow \mathbf{w}-\alpha \cdot \delta_{t} \cdot \frac{\partial v\left(s_{t} ; \mathbf{w}\right)}{\partial \mathbf{w}}\)</span></li>
+</ul></li>
+</ul></li>
+<li>两者的关系：A2C 和 Reinforce
+<ul>
+<li>Reinforce 是A2C的一种特例，用到了更多的观测数据，没有使用bootsrap（a2c的第二项）
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4cy4PbmERs.png?alt=media&amp;token=07f13dfc-b03b-43f5-a99e-82690b8b6a79" /></li>
+</ul></li>
+<li>one -step A2C 是 multi-step A2C 的一个特例，使用了最少的观测数据。multi-step的效果更好
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNV4Q90x0xU.png?alt=media&amp;token=eed6b59f-01e5-4803-9475-27a7f594bab9" /></li>
+</ul></li>
+</ul></li>
+</ul>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://weread.qq.com/web/reader/e59329905e4245e59ebd7e1k3c5327902153c59dc0488e1">投资，最重要的事-微信读书</a></li>
+<li>https://www.youtube.com/watch?v=hN9WMIMMeAI&amp;t=64s</li>
 </ol>
 
       
@@ -293,7 +371,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/22/timeseries/gluon-ts_1/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/25/reading_notes/investment/pork-and-beef/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -307,7 +385,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/22/timeseries/gluon-ts_1/" class="post-title-link" itemprop="url">使用gluon-ts做时序预测(1)</a>
+            <a href="/2021/04/25/reading_notes/investment/pork-and-beef/" class="post-title-link" itemprop="url">牛肉是不是未来的趋势之一？</a>
         </h2>
 
         <div class="post-meta">
@@ -317,14 +395,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-22 17:35:59" itemprop="dateCreated datePublished" datetime="2021-04-22T17:35:59+08:00">2021-04-22</time>
+              <time title="创建时间：2021-04-25 16:36:04" itemprop="dateCreated datePublished" datetime="2021-04-25T16:36:04+08:00">2021-04-25</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -332,7 +410,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
                 </span>
             </span>
 
@@ -347,85 +425,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>看一下amazon官方对DeepAR的实现</p>
-</blockquote>
-<h3 id="实验数据">实验数据</h3>
-<p>数据： <a target="_blank" rel="noopener" href="https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014">electricity数据集--Electricity dataset from UCI</a>： , 2011 ~2014期间，370 个 家庭的用电量 ，频率为小时 train/test：2014年9月第一周 作为test，之前的所有数据作为train:</p>
-<ul>
-<li>窗口长度(window_size)：192（8天），其中</li>
-<li>conditioning range：168（前7天）</li>
-<li>prediction range：24（第8天）</li>
-<li>stride_size: 24 hour，滑窗步长</li>
-<li>input_size： window_size-stride_size，14</li>
-</ul>
-<h2 id="问题">问题</h2>
-<ul>
-<li>gluon-ts里面将输入做对数处理效果会不会好一点？
-<ul>
-<li>不用，mxnet已经做了， 并且额外做预处理，可能还会带来负面影响，
-<ul>
-<li>loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，</li>
-</ul></li>
-<li>参考论文--context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。</li>
-</ul></li>
-<li>为什么pytorch的训练要7个小时？mxnet训练只要10min？
-<ul>
-<li>主要在样本采样这块</li>
-</ul></li>
-<li>自己能不用tensorflow复现mxnet的效果？
-<ul>
-<li>对比参数量，准确率，计算时间，内存消耗</li>
-</ul></li>
-<li>为什DeepAR和DeepFator的loss scale 差这么大? loss的含义都不一样</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># deepAR</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss</span>(<span class="params">self, x: Tensor</span>) -&gt; Tensor:</span></span><br><span class="line">	<span class="keyword">return</span> -self.log_prob(x)</span><br><span class="line"><span class="comment"># deepFator</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">negative_normal_likelihood</span>(<span class="params">self, F, y, mu, sigma</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (F.log(sigma) + <span class="number">0.5</span> * math.log(<span class="number">2</span> * math.pi)+ <span class="number">0.5</span> * F.square((y - mu) / sigma))</span><br></pre></td></tr></table></figure>
-<ul>
-<li>对不同曲线预测的时候，为什么有的曲线效果很， 好有的曲线效果很差？
-<ul>
-<li>deepAR会针对不同曲线，给loss 赋予不同的权重：loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的。</li>
-</ul></li>
-</ul>
-<h2 id="算法前期调研中的一些小插曲">算法前期调研中的一些小插曲</h2>
-<p>网上找到了pytorch版本的deepAR版，但是很慢</p>
-<ul>
-<li>Student： 训练过程很慢 要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？</li>
-<li>Teacher： 看了amazon已经将deepAR做了产品化，按照算法开发的流程肯定经历了效率优化的，并且deepAR的文章发于2017年4月，到目前为止amazon应该做了多次迭代的，所以去查一下近3年的amazon deepAR 相关的资料，看有没有开源的稳定的算法代码。</li>
-<li>Student：找到了--基于MXNET的gluon-ts（于2019年6月发表），mxnet在electricty上的训练和预测时间大概是10min左右</li>
-<li>Teacher：很好，接下来可以考虑更多的产品化方面的事情了，结合运维场景；另外注意到CNN-QR的训练效率也很不错，把这几个算法的准确率对比看一下</li>
-<li>Student：整体上准确率 CNN-QR略逊于DeepAR，但是考虑到计算效率，两者还是不相上下。
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUD6-nafIsi.png?alt=media&amp;token=a359d00d-bde2-41b2-bb96-d9222cb4514c" /></li>
-</ul></li>
-<li>Teacher：下一步，试着CNN-QR的拓展,DeepAR用于异常检测 的效果也测试下</li>
-<li>Student：使用数据平台的两台主机的cpu指标测试，发现cpu的效果还不错，体现在 不同类型的曲线，他们的方差趋势都预测的很准。
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FxofMTtcgaV.png?alt=media&amp;token=26cd83f2-717e-4c9c-8a93-da589dcfe63d" /></li>
-</ul></li>
-<li>Teacher：使用有异常标注的数据测试具体的指标，两种都测下--批量预测 和 实时预测</li>
-<li>Student：在获取数据阶段踩了一些坑，因为维度太多，全部数据维度都要 会导致拉数据接口快挂了</li>
-<li>Teacher：找出其中最重要的维度（重要度 即记录的条数 或者 指标求和）</li>
-<li>Student：从5w个维度过滤出来了100个维度，剩下的大部分维度怎么弄呢？</li>
-<li>Teacher：先管好这个100个维度，跑一跑模型，剩下的数据质量差可以暂时不监控。</li>
-<li>Student：这批数据有个特点--不同曲线形态模式很不一样，我怀疑1个模型很容易学混，接下来就证实了这一点（100个曲线上面的图，待补充）<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHF_Qc1aO1g.png?alt=media&amp;token=3591cf24-bfdf-44b7-894b-ba03652522f1" /></li>
-<li>Teacher：尝试加入feat_static_cat特征，来区分不同曲线。</li>
-<li>Student：有些许变化，但是改进还不太明显。另外在做实验过程中，发现几个优化的方向
-<ul>
-<li><strong>epoch</strong>： 从 5 到 50，带来了大量的提升</li>
-<li><strong>lstm</strong>的网络结构参数：layers从2到1，units从40到20，准确率有部分提升</li>
-</ul></li>
-<li>Teacher：因为样本较少（3k个训练样本）更适合用简单的模型</li>
-<li>Student：除了直接使用deepar的默认scale以及概率分布的参数，还尝试了另外一个方法： 因为cpu使用率本身是0～1，将数据预处理（除以100）到0～1 之间后跑，但是直接跑模型会报错， 做了以下设置才能跑：
-<ul>
-<li>scale设置为False</li>
-<li>value 为边界点（0或者1）时，加入扰动项</li>
-<li>输出的概率分布设置为beta分布 输出的上下界，非常符合比率型设定（上界不会超过1，下界不会低于0），但是就是准确率不高，一看就是学混了（移花接木，局部的模式 太弱了）</li>
-</ul></li>
-<li>出bug了，排查问题</li>
-</ul>
-<h2 id="参考">参考</h2>
+          <p>昨天跟朋友聊到，未来几年牛肉市场可能会迎来爆发。</p>
+<p>判断依据是，人们的生活质量要求变高，对健康饮食的追求提升，而牛肉营养比猪肉好。</p>
+<p>这个趋势在发达国家验证过，比如日本。</p>
+<p>国内为什么养牛的这么少？从供需两方面看，需求上牛肉没有那么刚需，猪肉可替代他。 从供给侧来看，养牛周期长，平均两年半，一次只能产一个牛崽，成本高，散农养牛成本比养猪成本要高。</p>
+<p>但是，我觉得如果大家都这么想的话，这反而可能是一个机会，随着市场变化，养牛的成本可能可以通过一些技术手段降低。比如开大养殖场，规模化。</p>
+<p>作为普通人如何参与市场？</p>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/zhykoties/TimeSeries">pytorch版本</a></li>
+<li>实体经济：卖养料；养牛；卖牛肉；食品标准制定。</li>
+<li>金融市场：看多饲料， 买一些衍生品。</li>
+</ol>
+<p>其他再想想吧。</p>
+<h2 id="一些资料">一些资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://xueqiu.com/2684655177/151583638">8000亿市场，外国牛肉入侵：中国企业为什么就是不太愿意养牛？-雪球</a></li>
 </ol>
 
       
@@ -445,7 +458,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/44/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><span class="page-number current">45</span><a class="page-number" href="/page/46/">46</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/46/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/44/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><span class="page-number current">45</span><a class="page-number" href="/page/46/">46</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/46/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -511,14 +524,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

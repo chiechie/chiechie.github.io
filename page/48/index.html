@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/tree_model/trees_4/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/22/reinforcement_learning/rl4_policy-based/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/tree_model/trees_4/" class="post-title-link" itemprop="url">树模型4 xgboost介绍</a>
+            <a href="/2021/04/22/reinforcement_learning/rl4_policy-based/" class="post-title-link" itemprop="url">强化学习4 基于策略的强化学习方法</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-18 14:59:29" itemprop="dateCreated datePublished" datetime="2021-04-18T14:59:29+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-22 20:33:30" itemprop="dateCreated datePublished" datetime="2021-04-22T20:33:30+08:00">2021-04-22</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-07 15:28:21" itemprop="dateModified" datetime="2021-07-07T15:28:21+08:00">2021-07-07</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">强化学习</span></a>
                 </span>
             </span>
 
@@ -219,61 +219,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="xgboost">xgboost</h2>
-<p>除了Adaboost，GradientBoost，Boosting tree的另外一个代表是xgboost,简称为XGB</p>
-<p>相对GBDT用err的一阶泰勒展开做近似，XGB做了更逼近的近似--二阶近似，并且在err中加入了正则项，限制了base estimator的复杂度。</p>
-<h3 id="损失函数">损失函数</h3>
-<p>先看看，xgboost怎么定义ensemble tree的损失函数：</p>
-<p><span class="math display">\[\begin{array}{l}{\mathcal{L}(\phi)=\sum\limits_{i} l\left(\hat{y}_{i}, y_{i}\right)+\sum\limits_{k} \Omega\left(f_{k}\right)}\end{array}\]</span> <span class="math display">\[ \\{\Omega(f)=\gamma T+\frac{1}{2} \lambda\|w\|^{2}} \]</span></p>
+          <h2 id="问题">问题</h2>
 <ul>
-<li><span class="math inline">\(\hat{y}_{i}=\phi\left(\mathbf{x}_{i}\right)=\sum^{K} f_{k}\left(\mathbf{x}_{i}\right), \quad f_{k} \in \mathcal{F}\)</span></li>
-<li>l是一个可微convex函数</li>
-<li>k表示第k棵树</li>
-<li>i表示第i个样本</li>
-<li>T is the number of leaves in the tree.</li>
-<li><span class="math inline">\(f_k\)</span>表示第k棵树的预测函数，</li>
-<li>q代表树的结构，w代表叶子节点的权重</li>
-<li><span class="math inline">\(\Omega(f_k)\)</span>表示第k棵树的复杂度</li>
-</ul>
-<h3 id="reformulate为一系列子优化问题">reformulate为一系列子优化问题</h3>
-<p>上面的优化问题的解，近似求一系列优化问题的解，如下</p>
-<p><span class="math inline">\(\min \mathcal{L}^{(t)}=\min\limits_{f_t}\sum\limits_{i=1}^{n} l\left(\hat{y}_{i}^{(t-1)}+f_{t}\left(\mathbf{x}_{i}\right), y_{i}\right)+\Omega\left(f_{t}\right)\)</span></p>
-<p><span class="math inline">\(\mathcal{L}^{(t)}\)</span>表示第t棵树的训练目标</p>
-<h3 id="将子优化问题做二阶近似">将子优化问题做二阶近似</h3>
-<p>跟GBDT一样，将l进一步简化，使用二阶展开</p>
-<p><span class="math inline">\(\mathcal{L}^{(t)} \simeq\sum\limits_{i=1}^{n}\left[l\left(y_{i}, \hat{y}^{(t-1)}\right)+g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
-<p>这里</p>
+<li>基于策略学习 的大致思路是怎么样的？
 <ul>
-<li><p><span class="math inline">\(g_{i}=\partial_{\hat{y}^{(t-1) }}l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span>，即l对<span class="math inline">\(y^{(t-1)}\)</span>的一阶导数</p></li>
-<li><p><span class="math inline">\(h_{i}=\partial_{\hat y^{(t-1)}}^{2} l\left(y_{i}, \hat{y}^{(t-1)}\right)\)</span>，即l对<span class="math inline">\(y^{(t-1)}\)</span>的二阶导数</p></li>
-</ul>
-<p>进一步remove常数项，得到优化目标为：</p>
-<p><span class="math inline">\(min \sum\limits_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\Omega\left(f_{t}\right)\)</span></p>
-<h3 id="基于样本集重新定义损失函数">基于样本集重新定义损失函数</h3>
-<p>更进一步，将<span class="math inline">\(I_{j}=\left\{i | q\left(\mathbf{x}_{i}\right)=j\right\}\)</span>定义为叶子j对应的特征子空间 那么优化目标可以更进一步formulate为：</p>
-<p><span class="math display">\[\min\limits_{\omega, q} \sum_{i=1}^{n}\left[g_{i} f_{t}\left(\mathbf{x}_{i}\right)+\frac{1}{2} h_{i} f_{t}^{2}\left(\mathbf{x}_{i}\right)\right]+\gamma T+\frac{1}{2} \lambda \sum_{j=1}^{T} w_{j}^{2} \]</span> <span class="math display">\[=\sum_{j=1}^{T}\left[\left(\sum_{i \in I_{j}} g_{i}\right) w_{j}+\frac{1}{2}\left(\sum_{i \in I_{j}} h_{i}+\lambda\right) w_{j}^{2}\right]+\gamma T \]</span></p>
-<p>也就是说，在构造第t个base estimator时，只需满足该estimator是该优化问题的最优解即可。</p>
-<p>还是回到cart，确定一棵树，首先要确定分支，其次要确定每个叶子的预测值。 假设已经确定好了第t颗树的分支，即<span class="math inline">\(I_{j}\)</span>已经确定，那么最优的叶子预测值<span class="math inline">\(\omega_i\)</span>即为 <span class="math display">\[w_{j}^{*}=-\frac{\sum\limits_{i \in I_{j}} g_{i}}{\sum\limits_{i \in I_{j}} h_{i}+\lambda}\]</span></p>
-<p>将<span class="math inline">\(w_{j}^{*}\)</span>带入上面的目标函数，得到等价的目标函数：</p>
-<p><span class="math inline">\(\min\limits_q -\frac{1}{2} \sum\limits_{j=1}^{T} \frac{\left(\sum_{i \in I_{j}} g_{i}\right)^{2}}{\sum_{i \in I_{j}} h_{i}+\lambda}+\gamma T\)</span> （6）</p>
-<p>公式（6）可以用来衡量树结构q的质量，类似决策树中的impurity得分。根构造决策树算法一样，使用贪婪方法迭代式构造分支，衡量splitting质量好坏用下面的表达式，即计算切分后纯度的提升 或者 不纯度的下降： <span class="math display">\[\mathcal{L}_{s p l i t}=\frac{1}{2}\left[\frac{\left(\sum\limits_{i \in I_{L}} g_{i}\right)^{2}}{\sum\limits_{i \in I_{L}} h_{i}+\lambda}+\frac{\left(\sum\limits_{i \in I_{R}} g_{i}\right)^{2}}{\sum\limits_{i \in I_{R}} h_{i}+\lambda}-\frac{\left(\sum_{i \in I} g_{i}\right)^{2}}{\sum_{i \in I} h_{i}+\lambda}\right]-\gamma\]</span></p>
-<p>其中，<span class="math inline">\(I=I_{L} \cup I_{R}\)</span></p>
-<h3 id="切分点查找算法">切分点查找算法</h3>
-<p>最朴素的算法，遍历所有特征的所有的切分值，找出最佳的。</p>
-<p>目前大部分单机的机器学习库都是采用的这种算法。</p>
-<figure>
-<img src="./image-20200107161207967.png" alt="image-20200107161207967" /><figcaption aria-hidden="true">image-20200107161207967</figcaption>
-</figure>
-<h2 id="最佳实践">最佳实践</h2>
-<ul>
-<li>number of trees:太大会造成过拟合，一般用cross validation去挑最好的参数</li>
-<li>shrinkage parameter:迭代步长，通常取0.01或者0.001，较小的lambda会需要很大的B来取得较好的效果。</li>
-<li>number of split d:通常d=1效果就比较好了。d表示的interation depth，就是交叉项的深度。</li>
-</ul>
-<h2 id="参考资料">参考资料</h2>
+<li>目的还是要让agent 实现最大的value，拆解为2步
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754.pdf">xgboost</a></li>
-</ol>
+<li>学习最优的策略（策略函数）</li>
+<li>根据最优策略作出决策</li>
+</ol></li>
+</ul></li>
+<li>难点在哪里？
+<ul>
+<li>state 太多，action 太多，</li>
+</ul></li>
+<li>深度学习技术是怎么帮助 实现策略学习的？
+<ul>
+<li>构造一个神经网络来拟合策略函数，这个神经网络 叫做策略网络</li>
+</ul></li>
+</ul>
+<h2 id="策略网络是什么">策略网络是什么？</h2>
+<p>输入：state，输出：多个action 下的概率，最后一层的激活函数用softmax。</p>
+<ul>
+<li>（input 和 output 的shape 和 DQ网络 一样）</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&amp;token=71ba382a-432c-4c00-8759-692d84c03f3d" title="fig:" alt="策略网络" /></li>
+</ul>
+<h2 id="状态价值函数是啥">状态价值函数是啥？</h2>
+<p>状态价值函数 ：基于某个策略，评价当下处境的好坏。state value function，对所有action求期望</p>
+<ul>
+<li>action-value function ： reward（env） + policy（agent）</li>
+<li>policy （agent）</li>
+<li>动作的随机性来自策略</li>
+<li>状态的随机性来自环境的状态转移</li>
+</ul>
+<h2 id="策略梯度是啥">策略梯度是啥？</h2>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F-uknITMKCq.png?alt=media&amp;token=e1a97c61-4fef-4837-8983-f74ec86f3e5f" title="fig:" alt="策略梯度公式" /></li>
+</ul>
+<h2 id="策略网络的是怎么更新参数的">策略网络的是怎么更新参数的？</h2>
+<ul>
+<li>policy-gradient算法，目标是 求一个 最优策略，使得在这个策略下，几乎所有的状态价值 都是最大的（就是对状态 求期望）</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGvhdfoS3jM.png?alt=media&amp;token=52ed6dde-1bd6-4428-856b-e319d58800d1" title="fig:" alt="Update policy network using policy gradient" /></li>
+</ul>
 
       
     </div>
@@ -293,7 +280,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/timeseries/DeepAR_2_practice/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/22/timeseries/gluon-ts_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -307,7 +294,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/18/timeseries/DeepAR_2_practice/" class="post-title-link" itemprop="url">从DeepAR谈论paper到工程化的距离</a>
+            <a href="/2021/04/22/timeseries/gluon-ts_1/" class="post-title-link" itemprop="url">使用gluon-ts做时序预测(1)</a>
         </h2>
 
         <div class="post-meta">
@@ -317,14 +304,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-18 11:56:59" itemprop="dateCreated datePublished" datetime="2021-04-18T11:56:59+08:00">2021-04-18</time>
+              <time title="创建时间：2021-04-22 17:35:59" itemprop="dateCreated datePublished" datetime="2021-04-22T17:35:59+08:00">2021-04-22</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-11 09:47:17" itemprop="dateModified" datetime="2021-06-11T09:47:17+08:00">2021-06-11</time>
+                <time title="修改时间：2021-05-24 09:56:27" itemprop="dateModified" datetime="2021-05-24T09:56:27+08:00">2021-05-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -347,62 +334,86 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="deepar探索">DeepAR探索</h2>
-<p>以DeepAR为例，回忆下我们从探索到落地的过程：</p>
+          <blockquote>
+<p>看一下amazon官方对DeepAR的实现</p>
+</blockquote>
+<h3 id="实验数据">实验数据</h3>
+<p>数据： <a target="_blank" rel="noopener" href="https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014">electricity数据集--Electricity dataset from UCI</a>： , 2011 ~2014期间，370 个 家庭的用电量 ，频率为小时 train/test：2014年9月第一周 作为test，之前的所有数据作为train:</p>
 <ul>
-<li>Student： 网上找到了pytorch版本的deepAR版（发于2017年4月），训练过程很慢要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？</li>
-<li>Teacher： 生产环境，这种性能实在不能接受。既然amazon将DeepAR作为时序预测场景的主推算法方案，这种性能肯定拿不出手，后续肯定做了的优化，去查一下近3年的amazon关于DeepAR相关的资料，重点看看有没有更优秀的实现方案。</li>
-<li>Student：找到了--基于MXNET的gluon-ts（于2019年6月发表），mxnet在electricty上的训练和预测时间大概是10min左右。</li>
-<li>Teacher： nice！</li>
+<li>窗口长度(window_size)：192（8天），其中</li>
+<li>conditioning range：168（前7天）</li>
+<li>prediction range：24（第8天）</li>
+<li>stride_size: 24 hour，滑窗步长</li>
+<li>input_size： window_size-stride_size，14</li>
 </ul>
-<p>最开始把gluon-ts实现的DeepAR算法当黑盒用的时候，发现效果很神奇，不调参，换不同数据进去效果都还挺好，周期性和趋势性都还能学到。</p>
-<p>但是就觉得很奇怪，按照自己构建RNN的经验，调参就要反反复复好多次，最后效果还不一定好。使用gluon-TS的代码我没有调参的，并且默认的网络结构很简单 不太可能过拟合.</p>
-<p>看了源代码之后，有一个很大的感受就是，<strong>完成论文demo和完成一个业界可用方案，两者的工作量 ，可能是0到1再到100的距离。</strong></p>
-<p>按照paper所说，整个网络结构非常之简单，1层rnn + 1层 dense层（输出分布参数），构成2层rnn，大概十几行代码。 但是，<strong>真正大量的代码都在做预处理以及 模型训练的一些小trick。 这些小trick，对提升模型效果非常有帮助，但是paper里面是没有的，应该随是工程团队总结出的最佳实践</strong>。</p>
+<h2 id="问题">问题</h2>
 <ul>
-<li>best practice1: 把每个样本（历史依赖）的scale 取对数，放入样本。 （因为所有的lags项在归一化之后已经丢失了scale信息，为了避免这个信息的丢失，还是把log scale 放入特征，用于区别不同的曲线的模式）</li>
-<li>best practice2: 在rnn中，每一层rnn后都接了一个residual和一个dropout。（原文没有提到）</li>
-<li>best practice3: 为了学习到数据的周期性模式，除了一定要有的context_length，代码还会跳着取lag , 类似空洞卷积。这些周期性的lag项，是被硬编码在代码里面的，比如年/月/日的周期性。</li>
+<li>gluon-ts里面将输入做对数处理效果会不会好一点？
+<ul>
+<li>不用，mxnet已经做了， 并且额外做预处理，可能还会带来负面影响，
+<ul>
+<li>loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的，</li>
+</ul></li>
+<li>参考论文--context-length内的所有z求平均值，作为scale来归一化原始输入并且记下来，模型输出的u 和 sigma 再 使用这个scale来逆归一化回去。</li>
+</ul></li>
+<li>为什么pytorch的训练要7个小时？mxnet训练只要10min？
+<ul>
+<li>主要在样本采样这块</li>
+</ul></li>
+<li>自己能不用tensorflow复现mxnet的效果？
+<ul>
+<li>对比参数量，准确率，计算时间，内存消耗</li>
+</ul></li>
+<li>为什DeepAR和DeepFator的loss scale 差这么大? loss的含义都不一样</li>
 </ul>
-<p>（我甚至怀疑论文的作者都不知道，因为作者自己写了一个pytorch版本，没有见到相关的处理，并且训练时长是gluon-TS的100倍以上）</p>
-<h2 id="对于aiops建设的启发">对于AIOps建设的启发</h2>
-<p>对于根因分析，日志关联等大部分场景，业界没有可参考的工具，转而求助学术界，可参考论文以及kaggle比赛等。</p>
-<p>但是要注意，这些方案只是demo，没有在工业界的数据和真实需求上验证过，实际上真实业务环境会比做实验要复杂得多。</p>
-<p>从调研demo到完成一个业务上高可用的方案，有大量的优化工作。评估时间的时候，需要预留buffer，来验证和调优，可能需要迭代多轮，有不确定性。</p>
-<h2 id="从paper到工程落地的距离">从paper到工程落地的距离？</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># deepAR</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss</span>(<span class="params">self, x: Tensor</span>) -&gt; Tensor:</span></span><br><span class="line">	<span class="keyword">return</span> -self.log_prob(x)</span><br><span class="line"><span class="comment"># deepFator</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">negative_normal_likelihood</span>(<span class="params">self, F, y, mu, sigma</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (F.log(sigma) + <span class="number">0.5</span> * math.log(<span class="number">2</span> * math.pi)+ <span class="number">0.5</span> * F.square((y - mu) / sigma))</span><br></pre></td></tr></table></figure>
 <ul>
-<li>实验室方案不能直接搬到 真实业务的 几个原因：
+<li>对不同曲线预测的时候，为什么有的曲线效果很， 好有的曲线效果很差？
 <ul>
-<li>样本数据不一致：
-<ul>
-<li>实验室的数据有一些 标记质量差，以及标记的标准不一致。</li>
-<li>实验室的数据模式单一，很多是模拟生成的，没法模拟出真实业务上复杂的模式</li>
-<li>真实环境中数据质量差：历史数据不够，缺失值多，有用特征缺失。</li>
-<li>实验室数据格式 千奇百怪，要适当预处理才能给 业务使用</li>
-</ul></li>
-<li>评估指标不一致
-<ul>
-<li>实验室只能基于已有的封闭数据集，业务上的指标是开放式的跟业务运营相关的</li>
-</ul></li>
-<li>效果不一致
-<ul>
-<li>实验 中效果好的方案 到真实环境中 效果不好</li>
-</ul></li>
-<li>性能要求不一致：
-<ul>
-<li>实验室方案运行效率到不到真实环境的标准</li>
-<li>eg，kaggle比赛常用模型ensenmble方案，在工业界就很少会用，计算效率的问题å</li>
-</ul></li>
-</ul></li>
-<li>正常的开发流程是：
-<ul>
-<li>理解论文原理</li>
-<li>复现论文：开发demo，</li>
-<li>工程优化（beta）：初步上线，demo性能优化，覆盖现实中可能的异常</li>
-<li>稳定上线（正式）： 在真实环境上测试一段时间。</li>
-<li>产品化：给其他无背景的人用</li>
+<li>deepAR会针对不同曲线，给loss 赋予不同的权重：loss_weights 是根据observed_values的min确定的---所以会忽略小量岗的曲线，学的不好的。</li>
 </ul></li>
 </ul>
+<h2 id="算法前期调研中的一些小插曲">算法前期调研中的一些小插曲</h2>
+<p>网上找到了pytorch版本的deepAR版，但是很慢</p>
+<ul>
+<li>Student： 训练过程很慢 要7个小时，虽然paper里面也号称要7个小时，是优化效率还是直接上线呢？</li>
+<li>Teacher： 看了amazon已经将deepAR做了产品化，按照算法开发的流程肯定经历了效率优化的，并且deepAR的文章发于2017年4月，到目前为止amazon应该做了多次迭代的，所以去查一下近3年的amazon deepAR 相关的资料，看有没有开源的稳定的算法代码。</li>
+<li>Student：找到了--基于MXNET的gluon-ts（于2019年6月发表），mxnet在electricty上的训练和预测时间大概是10min左右</li>
+<li>Teacher：很好，接下来可以考虑更多的产品化方面的事情了，结合运维场景；另外注意到CNN-QR的训练效率也很不错，把这几个算法的准确率对比看一下</li>
+<li>Student：整体上准确率 CNN-QR略逊于DeepAR，但是考虑到计算效率，两者还是不相上下。
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUD6-nafIsi.png?alt=media&amp;token=a359d00d-bde2-41b2-bb96-d9222cb4514c" /></li>
+</ul></li>
+<li>Teacher：下一步，试着CNN-QR的拓展,DeepAR用于异常检测 的效果也测试下</li>
+<li>Student：使用数据平台的两台主机的cpu指标测试，发现cpu的效果还不错，体现在 不同类型的曲线，他们的方差趋势都预测的很准。
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FxofMTtcgaV.png?alt=media&amp;token=26cd83f2-717e-4c9c-8a93-da589dcfe63d" /></li>
+</ul></li>
+<li>Teacher：使用有异常标注的数据测试具体的指标，两种都测下--批量预测 和 实时预测</li>
+<li>Student：在获取数据阶段踩了一些坑，因为维度太多，全部数据维度都要 会导致拉数据接口快挂了</li>
+<li>Teacher：找出其中最重要的维度（重要度 即记录的条数 或者 指标求和）</li>
+<li>Student：从5w个维度过滤出来了100个维度，剩下的大部分维度怎么弄呢？</li>
+<li>Teacher：先管好这个100个维度，跑一跑模型，剩下的数据质量差可以暂时不监控。</li>
+<li>Student：这批数据有个特点--不同曲线形态模式很不一样，我怀疑1个模型很容易学混，接下来就证实了这一点（100个曲线上面的图，待补充）<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHF_Qc1aO1g.png?alt=media&amp;token=3591cf24-bfdf-44b7-894b-ba03652522f1" /></li>
+<li>Teacher：尝试加入feat_static_cat特征，来区分不同曲线。</li>
+<li>Student：有些许变化，但是改进还不太明显。另外在做实验过程中，发现几个优化的方向
+<ul>
+<li><strong>epoch</strong>： 从 5 到 50，带来了大量的提升</li>
+<li><strong>lstm</strong>的网络结构参数：layers从2到1，units从40到20，准确率有部分提升</li>
+</ul></li>
+<li>Teacher：因为样本较少（3k个训练样本）更适合用简单的模型</li>
+<li>Student：除了直接使用deepar的默认scale以及概率分布的参数，还尝试了另外一个方法： 因为cpu使用率本身是0～1，将数据预处理（除以100）到0～1 之间后跑，但是直接跑模型会报错， 做了以下设置才能跑：
+<ul>
+<li>scale设置为False</li>
+<li>value 为边界点（0或者1）时，加入扰动项</li>
+<li>输出的概率分布设置为beta分布 输出的上下界，非常符合比率型设定（上界不会超过1，下界不会低于0），但是就是准确率不高，一看就是学混了（移花接木，局部的模式 太弱了）</li>
+</ul></li>
+<li>出bug了，排查问题</li>
+</ul>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/zhykoties/TimeSeries">pytorch版本</a></li>
+</ol>
 
       
     </div>
@@ -421,7 +432,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/47/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><span class="page-number current">48</span><a class="page-number" href="/page/49/">49</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/49/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/47/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><span class="page-number current">48</span><a class="page-number" href="/page/49/">49</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/49/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -487,14 +498,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

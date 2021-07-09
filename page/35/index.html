@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/18/AI/machine_learning/automl/NAS/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/08/AIOps/AIOps-1_1-kpi-detector/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/18/AI/machine_learning/automl/NAS/" class="post-title-link" itemprop="url">可微的NAS方法</a>
+            <a href="/2021/05/08/AIOps/AIOps-1_1-kpi-detector/" class="post-title-link" itemprop="url">chapter1.1 单指标异常检测</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-18 08:32:24" itemprop="dateCreated datePublished" datetime="2021-05-18T08:32:24+08:00">2021-05-18</time>
+              <time title="创建时间：2021-05-08 16:37:13" itemprop="dateCreated datePublished" datetime="2021-05-08T16:37:13+08:00">2021-05-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-19 10:55:05" itemprop="dateModified" datetime="2021-05-19T10:55:05+08:00">2021-05-19</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -219,30 +219,235 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>NAS是auto-ml的一个子领域，相关的技术有随机搜索，强化学习，基于微分的方法，如DARTS 和 FBNet。</p>
-<p>DARTS 和 FBNet是目前做NAS的the state of arts方法</p>
-<p>下面简单介绍FBNet的思路</p>
-</blockquote>
-<h2 id="fbnet的基本idea">FBNet的基本idea</h2>
+          <h1 id="异常检测背景">异常检测背景</h1>
+<p>运维场景的指标监控就是对时序数据做异常检测。但是，很难通过构建一个异常检测策略一劳永逸搞定所有监控需求。因为异常各异，监控指标各异（正常模式各异）。</p>
+<p>先看一下异常有哪些。</p>
+<h2 id="异常分类">异常分类</h2>
+<p>有几类异常：全局异常，条件异常，联合异常</p>
+<ul>
+<li><p>全局异常点：单个点跟历史所有的数据点比，差异很大，有点像黑天鹅事件。 <img src="./global_anomalie.png" /></p></li>
+<li><p>条件异常： 条件异常(contextual or conditional anomalies)：即相对异常，跟剩下的数据点比比较异常。举个例子：</p>
 <ol type="1">
-<li><p>定义候选block, eg10个</p></li>
-<li><p>定义神经网络的层数,eg20，神经网络的每一层都是从9个候选block中选一个，搜索空间9^20</p></li>
-<li><p>构建一个很大的神经网络--supernet，每一层由9个候选block并联而成。supernet的待估参数包括9个候选block✖️20层，以及长度为9的权重向量✖️20。</p>
-<blockquote>
-<p>人工调参，可以看成是，指定supernet中的一条路径，然后灌入数据，来估计路径上20个blcock的参数。使用FBNet就不用人为指定其中某条路径，而是这个大网络supernet从训练数据中，学习出9个block✖️20（层）个参数，以及9✖️20（层）个权重。训练完之后，选择每一层权重最大的block并且连成一条路径，就是机器选定的20层的网络结构。</p>
-</blockquote></li>
-<li><p>模型要落地，还要考虑计算效率。具体的做法，事先算好候选block各自的latency(做一次推断平均耗时多久，block的权重随机给，跑多组数据求平均时延），然后将latency信息加入损失函数中，作为错误率之外的另外的一个惩罚项。</p></li>
-</ol>
-<h2 id="chiechies-reflection">chiechie's reflection</h2>
-<p>联想到之前构建的通用异常检测模型，整体流程大概是这样：定义多个检测器，曲线特征，并用一个随机森林去做集成。希望随机森林可以将不同的曲线路由到适合的检测器上去。</p>
-<p>FBNet的思路跟上面的流程有点像，都是数据驱动去选择适配的组件。不同的地方在于，FBNet最终会减枝，即从9✖️20个可能的路径中，裁剪成一条路径。</p>
-<p>FBNet要解决的任务更简单，给一个小任务找到适配的解决方案；通用异常检测更难，要给n个小任务找解决方案，并且用一套复合的解决方案。</p>
-<h2 id="参考">参考</h2>
+<li>我们办公室出现了一个穿西装打领带的人，会很引人注目。但是放到另外一个context中，比如房屋中介行业很正常。</li>
+<li>凌晨销量突然升高 <img src="img.png" /></li>
+</ol></li>
+<li><p>联合异常：单个点不异常，但是群体表现出某种特殊模式，就可疑了，例如，一个小区中，有人去医院很正常，但是整个小区的人同时去医院就不正常了。 <img src="./img78.png" alt="img.png" /></p></li>
+</ul>
+<h1 id="异常检测方案">异常检测方案</h1>
+<p>时序异常检测原理，由于异常的判断依据是context，所以如何表达context信息是一个重点：</p>
+<h2 id="曲线分类">曲线分类</h2>
+<p>如何构建曲线类型特征？</p>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">wangshusen-slide-github</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=D9m9-CXw_HY">Differentiable Neural Architecture Search-youtube</a></li>
+<li>周期性： autocorrelation</li>
+<li>周期offset：高斯核函数拟合分布极值</li>
+<li>趋势判断：指数滑动平均</li>
+<li>极值分析方法: 假设检验。</li>
 </ol>
+<h2 id="异常检测算法">异常检测算法</h2>
+<ul>
+<li>基于预测（sequence based）
+<ul>
+<li>ARIMA/STL/Holt-winters</li>
+<li>Regression
+<ul>
+<li>SVM</li>
+<li>Random Forest</li>
+<li>Neural Network
+<ul>
+<li>DNN</li>
+<li>Recurrent Neural Networks (RNN/LSTM)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>无监督（iid）
+<ul>
+<li>Isolation Forest</li>
+<li>One-class SVM</li>
+<li>LOF</li>
+<li>PCA</li>
+<li>Autoencoder</li>
+<li>vae</li>
+</ul></li>
+<li>统计分布
+<ul>
+<li>N-sigma</li>
+<li>Grubb TEST</li>
+<li>ESD TEST</li>
+<li>t-test</li>
+</ul></li>
+<li>有监督-分类
+<ul>
+<li>LR</li>
+<li>xgboost（增量学习）</li>
+<li>random forest</li>
+<li>svm</li>
+<li>CNN</li>
+</ul></li>
+</ul>
+<h2 id="根据不同业务适配不同的检测策略">根据不同业务适配不同的检测策略</h2>
+<p>针对不同的业务需求，构建检测策略。</p>
+<p>一般来说，突变点检测+上升下降屏蔽+时间收敛的策略已经可以覆盖80%的检测指标了。</p>
+<p>对于特别重要的指标-业务核心KPI，还是有必要手动配置的。</p>
+<table>
+<thead>
+<tr class="header">
+<th>案例</th>
+<th>指标</th>
+<th>策略</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>历史数据有中断</td>
+<td>在线数据或者其他数据，入库失败</td>
+<td>先使用基于插值的方法填充后再检测。</td>
+</tr>
+<tr class="even">
+<td>趋势漂移是正常模式</td>
+<td>游戏收入在开学季趋势漂移[1]</td>
+<td>学习并且剔除这个趋势漂移，检测残差。</td>
+</tr>
+<tr class="odd">
+<td>周期性有数据</td>
+<td>定时任务日志数；礼包成交数量[2]</td>
+<td>检测规律行为数据缺失</td>
+</tr>
+<tr class="even">
+<td>合理范围的突变异常</td>
+<td>登录在线等周期性曲线</td>
+<td>检测突变点</td>
+</tr>
+<tr class="odd">
+<td>历史数据无规律</td>
+<td>刚上线的游戏和测试服</td>
+<td>相对历史分布的极端异常值。</td>
+</tr>
+<tr class="even">
+<td>周期性毛刺点</td>
+<td>由于数据质量导致的监控指标周期性毛刺，并且间隔不固定</td>
+<td>先剔除极值再检测</td>
+</tr>
+<tr class="odd">
+<td>周期性陡增/降[3]</td>
+<td>业务活动特性导致</td>
+<td>1.按时间收敛；2. 模式识别[4]:</td>
+</tr>
+<tr class="even">
+<td>无历史数据</td>
+<td>新接业务</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>历史数据无异常</td>
+<td>新接业务</td>
+<td>无监督</td>
+</tr>
+<tr class="even">
+<td>不同业务曲线对告警的敏感度不一样</td>
+<td>在线和cpu</td>
+<td>敏感度</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>[1]游戏收入在开学季趋势漂移: 进入开学季之后会，游戏在线人数持续走低，业务觉得正常，但是一般算法会告警</li>
+<li>[2]礼包成交数据，礼包只在周末某个固定时间段上架。</li>
+<li>[3]周期性凸起：定时启动任务导致日志数指标定时凸起，业务觉得正常，但是一般算法会告警</li>
+<li>[4]模式识别： 1. 使用dtw衡量两个窗口的距离，兼容偏差； 2 在历史数据中使用滚动窗口的方法，找到一个最近的窗口。</li>
+</ul>
+<h1 id="产品运营">产品运营</h1>
+<h2 id="如何让用户认可告警">1. 如何让用户认可告警？</h2>
+<ul>
+<li>解释异常</li>
+<li>解释正常是什么样----&gt;上下界</li>
+</ul>
+<h2 id="怎么解决标记成本高然而又想针对自己的业务定制化">2. 怎么解决标记成本高，然而又想针对自己的业务定制化？</h2>
+<ul>
+<li>方案1--人工注异常，可行吗？
+<ul>
+<li>前期： 采用自监督的方法训练一个rnn，注入异常的方法来评估；提供公共样本集，用户调整模型 + auto-ml。</li>
+<li>后期：标记样本积累足够多，用有监督方法来训练。</li>
+</ul></li>
+<li>方案2--使用小样本学习，可行吗？
+<ul>
+<li>用户标记小样本</li>
+</ul></li>
+<li>方案3-使用无监督 + 有监督调超参的方式，
+<ul>
+<li>前者是 大量样本（训练集），后者只用 少量的样本（调参集）</li>
+</ul></li>
+</ul>
+<h1 id="一些未经验证的自己的思考">一些未经验证的自己的思考</h1>
+<h2 id="选无监督-or-有监督算法">1. 选无监督 or 有监督算法？</h2>
+<ul>
+<li>有监督算法的优势：
+<ul>
+<li>如果原始的样本池子 包含 全部模式的样本，那么 很轻易在训练数据和验证集上达到一个很高的准确率。</li>
+<li>如果原始的样本池子 只包含部分模式的样本，
+<ul>
+<li>线上数据的模式没有出现在样本池子中，这个模型对线上样本来说就是过拟合，效果不好，可以继续加样本，让模型去学习。但是如果 没法源源不断地 低成本地 获取到新标记样本，那么这个有监督算法就没用了。</li>
+</ul></li>
+</ul></li>
+<li>无监督（或者自监督）的优势？
+<ul>
+<li>有监督算法 虽然 轻易可以达到一个很高的准确率，但是往往也<strong>很容易过度拟合样本数据</strong>，导致只要应用数据的模式跟 样本集模式(&lt;x, y&gt;的联合分布)有些许区别，就会差之毫里，谬以千里。</li>
+<li>无监督的优势就是，就算过拟合（只可能<x >的分布了），也没关系，因为样本多的是再把线上样本加进来就好了</li>
+</ul></li>
+<li>无监督（或者自监督） 是否能 完全替代 有监督算法？
+<ul>
+<li>除了用作评估的那部分样本，目前觉得可以诶。</li>
+</ul></li>
+<li>为什么要用无监督？
+<ul>
+<li>异常是无法枚举or获取成本很高，那么我想尝试 使用反向方法，把注意力放到正常上面来。（无监督的方法 都是要基于 正常的方法，当然为了适当的放宽弹性，会容忍一些噪声，比如高斯噪声）</li>
+</ul></li>
+</ul>
+<h2 id="为什么推荐系统这种有监督的场景能够落地">2. 为什么推荐系统这种有监督的场景能够落地？</h2>
+<p>推荐场景可以<strong>零成本地</strong> <strong>持续不断的获取到新的标记样本</strong>。</p>
+<h2 id="如果要落地一个有监督的算法需要具备什么条件">3. 如果要落地一个有监督的算法，需要具备什么条件？</h2>
+<ul>
+<li>持续不断地，低成本（包含零成本）地 获取到新的标记样本。</li>
+</ul>
+<h2 id="关于曲线分类异常检测">4. 关于曲线分类+异常检测</h2>
+<p>通用的异常检测方案中，曲线分类 是不是必须的？ 或者说有没有什么场景，只用预测搞不定呢？</p>
+<ul>
+<li>用户1：
+<ul>
+<li>光滑的有周期性的KPI--使用预测算法；</li>
+<li>成功率类型的曲线--使用多指标异常检测。</li>
+<li>将可以搞定的曲线 和 模式混乱的 曲线分开。</li>
+</ul></li>
+<li>chiechie：分很粗糙的大类</li>
+</ul>
+<h2 id="曲线分类的可预见的坑-和-已经踩过的坑">5. 曲线分类的可预见的坑 和 已经踩过的坑？</h2>
+<ul>
+<li>已经踩过的坑
+<ul>
+<li>开发过程痛苦，按着葫芦起了瓢</li>
+<li>实际上，很多曲线都落入了无法识别那一类，因为说不清它的正常模式是什么（btw，这部分曲线只能通过3-sigma这样的策略粗暴解决，那么曲线分类的价值在哪里？）</li>
+</ul></li>
+<li>可预见的坑：
+<ul>
+<li>流程太长，曲线分类和异常检测一定是配套的，不好拓展和维护</li>
+<li>风险暴露因子太多了，这两步只要1个有问题就整体都会有问题</li>
+<li>工程化风险：搞一个复杂度高的模型，对调试和定位问题的压力会很大。</li>
+</ul></li>
+</ul>
+<h2 id="关于分组训练">6. 关于分组训练</h2>
+<ul>
+<li>使用生成模型（时序预测），需要对 正常模式相近 的曲线 聚成一类，比如某个类型或者某个品牌的商品放到一起训练，</li>
+<li>使用判别模型（有监督异常检测）， 需要把 异常模型 相近的 曲线聚成一类，比如异常判断规则一致的曲线。</li>
+</ul>
+<h2 id="sigma的局限性是什么">7. 3-sigma的局限性是什么？</h2>
+<ul>
+<li>相当于从时空二维空间 降维 到 空间这么一个空间： 把时间轴上不同时刻对应的观测值，全部挤到了t=0时刻，得到了一个bin，可以得到value的分布。</li>
+<li>二维空间的连续性捕捉不到： 在二维空间来看，样本之间是有 更复杂的 依赖模式的，也就是，x轴（时间轴）上相近的 点，在y轴（space轴）也会更相近，并且一般来说，这种相近的模式 是 顺着x轴 具有延续性。（</li>
+</ul>
+<h2 id="做多指标异常检测能不能替代多个单指标异常检测">8. 做多指标异常检测能不能替代多个单指标异常检测？</h2>
+<p>不行，举个例子：</p>
+<p>单从体重这个维度来描述人的肥胖程度，没法区分胖子和瘦子，因为胖瘦还跟身高有关。体重超过200kg肯定是个胖子，但是如果体重200kg以内的话，还要看另外一个指标就是身高（类似这里的时间），要知道跟他身高差不多的同伴的 体重的范围，才能知道正常不正常。</p>
+<h2 id="深度模型-是否能-完全替代-传统的机器学习模型">9. 深度模型 是否能 完全替代 传统的机器学习模型 ？</h2>
+<p>不管是ml or dl本质都是用样本数据来拟合出一个函数，至于这个函数族是 简单的好 还是 复杂的好，取决的具体的应用数据。</p>
 
       
     </div>
@@ -262,7 +467,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/17/reading_notes/qukuailian/how-to-Defi/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/07/AIOps/AIOps-1-event-generate/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -276,7 +481,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/17/reading_notes/qukuailian/how-to-Defi/" class="post-title-link" itemprop="url">《how to Defi》读书笔记</a>
+            <a href="/2021/05/07/AIOps/AIOps-1-event-generate/" class="post-title-link" itemprop="url">chapter1 故障发现</a>
         </h2>
 
         <div class="post-meta">
@@ -286,14 +491,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-05-17 09:20:02" itemprop="dateCreated datePublished" datetime="2021-05-17T09:20:02+08:00">2021-05-17</time>
+              <time title="创建时间：2021-05-07 16:03:52" itemprop="dateCreated datePublished" datetime="2021-05-07T16:03:52+08:00">2021-05-07</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-11 09:03:18" itemprop="dateModified" datetime="2021-06-11T09:03:18+08:00">2021-06-11</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -301,7 +506,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
                 </span>
             </span>
 
@@ -316,32 +521,53 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>区块链技术的第一代应用是以比特币为全球支付货币，第二代应用是以太坊完成智能合约，第三代应用是defi和nft完成金融体系重构</p>
-<p>how to defi 讲的就是区块链技术的第三代应用之一--去中心化金融(DeFI)</p>
-</blockquote>
-<h2 id="why-defi">why defi</h2>
+          <h1 id="概览">概览</h1>
+<p>故障发现阶段，根据监控的对象不同，可以细分为以下场景：</p>
 <ol type="1">
-<li>传统金融体系容易遭受与人相关的风险，比如腐败。defi试图通过创建一个更好的金融环境，来弥补现有金融系统的漏洞，主要对银行系统的三个关键部分进行了优化：支付&amp;清算系统；可获取性；中心化&amp;透明度。</li>
-<li>DeFi的最大优势在于能够消除中 介机构并在零审查的环境下运行。</li>
+<li>单指标异常检测</li>
+<li>多指标异常检测</li>
+<li>故障预测</li>
+<li>指标异常关联</li>
+<li>日志聚类</li>
+<li>调用链异常检测： https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA</li>
 </ol>
-<h2 id="what">what</h2>
-<ol type="1">
-<li><p>DeFi生态中有哪些应用？</p>
+<h1 id="相关资料">相关资料</h1>
+<h2 id="论文">论文</h2>
 <ul>
-<li>稳定币：比如泰达币（Tether，USDT) ，稳定币作为稳定的价值存储手段使得DeFi应用对大众来说更加可用。</li>
-<li>借贷服务：传统金融体系要求用户有银行账户，良好的信用评分，以及足够的抵押品；去中心化借贷允许任何人抵押其数字资产，然后利用抵押资产获得贷款。</li>
-<li>交易所：中心化交易所egconbase，huobi，binance，存在被黑客攻击的危险；去中心化交易所更安全，不依赖交易所的偿付能力。</li>
-<li>衍生品：衍生品合约主要在中心化平台上进行交易。目前，许多DeFi平 台正开始构建去中心化衍生品市场。</li>
-<li>基金管理：基金管理主要有主动型和被动型两种，主动型基金管理会有一个管理团队负责投资 决策。被动型基金管理没有管理团队，而被设计为尽可能接近 某一特定基准的表现。</li>
-<li>彩票：结合DeFi的彩票可将资金池的托管转移到以太坊智能合约上。</li>
-<li>支付：通过将支付重置为流模式而非我们熟悉的交易来改变我们处理支付的方式。（比如云服务商，按照使用的流量收费）</li>
-<li>保险：智能合约的漏洞容易被黑客攻击，从而影响智能合约中锁定的代币。当用户在Defi上处理大量资金的时候，购买保险是必要的。</li>
-</ul></li>
-</ol>
-<h2 id="参考">参考</h2>
+<li>半自动的标记工具Label-Less: A Semi-automatic Labelling Tool for KPI Anomalies</li>
+<li>非监督异常检测算法-对复杂kpi使用vae进行对抗训练Unsupervised Anomaly Detection for Intricate KPIs via Adversarial Training of VAE</li>
+<li>对非结构化日志数据进行异常检测-LogAnomaly: Unsupervised Detection of Sequential and Quantitative Anomalies in Unstructured Logs</li>
+<li>多指标时序异常检测Robust Anomaly Detection for Multivariate Time Series through Stochastic Recurrent Neural Network</li>
+<li>对周期性时间序列数据进行异常检测-Automatic and Generic Periodicity Adaptation for KPI Anomaly Detection:<a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2019/08/08723601.pdf">paper</a></li>
+<li>Robust and Rapid Adaption for Concept Drift in Software System Anomaly Detection</li>
+<li>无监督异常检测-基于聚类Robust and Rapid Clustering of KPIs for Large-Scale Anomaly Detection</li>
+<li>无监督异常检测-基于VAE：Unsupervised Anomaly Detection via Variational Auto-Encoder for Seasonal KPIs in Web Applications</li>
+<li>有监督异常检测-Opprentice: Towards Practical and Automatic Anomaly Detection Through Machine Learning:<a target="_blank" rel="noopener" href="http://netman.cs.tsinghua.edu.cn/wp-content/uploads/2015/11/liu_imc15_Opprentice.pdf">paper</a></li>
+<li>雅虎开源的时序预测和异常检测项目 EGAD:<a target="_blank" rel="noopener" href="http://www.infoq.com/cn/articles/automated-time-series-anomaly-detection">论文的中文翻译</a></li>
+<li>CMU 做多指标模式提取和异常检测的 SPIRIT 系统论文：<a target="_blank" rel="noopener" href="https://bitquill.net/pdf/spirit_vldb05.pdf">paper</a></li>
+</ul>
+<h2 id="代码">代码</h2>
+<ul>
+<li>阿里巴巴开源的Time2Graph(基于序列片段的图迁移路径做异常检测)：<a target="_blank" rel="noopener" href="https://github.com/petecheng/Time2Graph">code</a></li>
+<li>清华/阿里巴巴开源的 Donut(基于 VAE 算法)：<a target="_blank" rel="noopener" href="https://github.com/haowen-xu/donut">code</a></li>
+<li>清华开源的 Bagel(Donut改进型，基于 CVAE 算法)：<a target="_blank" rel="noopener" href="https://github.com/lizeyan/Bagel">code</a></li>
+<li>清华/百度的 opprentice 系统(14 个检测器，平均取参数值，随机森林)：<a target="_blank" rel="noopener" href="https://github.com/tencent/metis">code</a></li>
+<li>清华/建行做的指标批量标注 Label-less 项目(基于 iForest 异常检测和 DTW 相似度学习)：<a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2019/10/Label-less-v2.pdf%3E">code</a></li>
+<li>百度开源的指标异常标注工具：<a target="_blank" rel="noopener" href="https://github.com/baidu/Curve">code</a></li>
+<li>微软开源的指标异常工具：<a target="_blank" rel="noopener" href="https://github.com/Microsoft/TagAnomaly">code</a></li>
+<li>清华OmniAnomaly-多指标异常检测: <a target="_blank" rel="noopener" href="https://github.com/NetManAIOps/OmniAnomaly/tree/master/omni_anomaly">code</a></li>
+<li>清华/南开/腾讯的 ADS 系统(ROCKA+opprentice+CPLE)：<a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2018/12/bujiahao.pdf">paper</a>|<a target="_blank" rel="noopener" href="https://github.com/tmadl/semisup-learn">code</a></li>
+<li>开源的时序特征值提取库 tsfresh：<a target="_blank" rel="noopener" href="http://tsfresh.readthedocs.io/en/latest/">code</a></li>
+<li>twitter 的异常检测库，R 语言<a target="_blank" rel="noopener" href="https://github.com/twitter/anomalydetection">code</a></li>
+<li>numenta公司，HTM 算法：<a target="_blank" rel="noopener" href="https://github.com/numenta/nupic">code</a>|<a target="_blank" rel="noopener" href="https://github.com/numenta/NAB/blob/master/nab/scorer.py">code-评估</a>|<a target="_blank" rel="noopener" href="https://github.com/numenta/NAB/tree/master/data">data</a></li>
+<li>雅虎开源的时序预测和异常检测项目 EGADS:<a target="_blank" rel="noopener" href="https://github.com/yahoo/egads">code</a></li>
+<li>亿客行Expedia开源的异常检测项目 adaptive-alerting:<a target="_blank" rel="noopener" href="https://github.com/ExpediaDotCom/adaptive-alerting">code</a></li>
+<li>新加坡国立大学做传感器多变量指标异常检测的开源项目(基于 GAN 算法)：<a target="_blank" rel="noopener" href="https://github.com/LiDan456/MAD-GANs">code</a></li>
+</ul>
+<h2 id="比赛">比赛</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://news.huoxing24.com/20200817195548945458.html">how to difi中文版</a></li>
+<li>清华裴丹团队举办的 KPI 异常检测比赛：<a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=5&amp;flag=1">data</a></li>
+<li>清华裴丹团队举办的 KPI 异常检测比赛方案-分享：<a target="_blank" rel="noopener" href="http://workshop.aiops.org/">slide</a></li>
 </ol>
 
       
@@ -361,7 +587,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/34/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/36/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/34/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/36/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -427,14 +653,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-07-08T09:53:15.569Z</updated>
+  <updated>2021-07-08T08:08:00.771Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -15,44 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>深度学习8 gpt</title>
-    <link href="https://chiechie.github.io/2021/07/08/deeplearning/gpt/"/>
-    <id>https://chiechie.github.io/2021/07/08/deeplearning/gpt/</id>
-    <published>2021-07-08T06:48:13.000Z</published>
-    <updated>2021-07-08T09:53:15.569Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="总结">总结</h2><ul><li><p>GPT的全称是generative pre-training，通用预训练模型，</p></li><li><p>elmo有94m个参数，bert有340m个参数，GPT有1542m个参数</p></li><li><p>GPT是transformer的decoder network</p></li><li><p>GPT的学习任务是，给定一些word，预测接下来的word是什么？</p></li><li><p>GPT神奇的地方：没有训练数据的情况下，可以做阅读理解（表现很好），生成摘要（一般般），翻译（一般般）。做到了zero-shot learning</p></li><li><p>GPT3也是一个语言模型，有史以来最大的语言模型，有1750yi个参数，训练一个商用的GPT3模型，要花1200w美元 <img src="img.png" alt="img.png" /></p></li><li><p>bert模型是需要对特定任务搜集特定数据持续学习的。GPT野心更大，想做zero-shot，fine tuing都不要，见下图： <img src="img_1.png" alt="img_1.png" /></p></li><li><p>举个例子， <img src="img_2.png" alt="img_2.png" /></p></li><li><p>GPT要解决三个任务：Few-shot Learning/One-shot Learning/Zero-shot Learning。</p><blockquote><p>注意，GPT的Few-shot Learning跟一般的Few-shot Learning不一样，GPT不会对模型去fining tuning ,bert是需要fine tuning的 <img src="img_3.png" alt="img_3.png" /></p></blockquote></li><li><p>GPT使用的是in context learning，跟meta learning有一点点不一样</p></li><li><p>GPT不擅长做NLU的问题，即逻辑判断的问题。</p></li></ul><h2 id="gpt系列的架构图">GPT系列的架构图</h2><figure><img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=DOG1L9lvsDY">GPT-youtube</a></li><li><a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses/DLHLP20/GPT3%20(v6).pdf">GPT-slide</a></li><li><a href="https://huggingface.co/openai-gpt">gpt-huggingface</a></li><li><a href="https://arxiv.org/pdf/2005.14165.pdf">gpt3-paper</a></li><li><a href="https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf">gpt2-paper</a></li><li><a href="https://www.cs.ubc.ca/~amuham01/LING530/papers/radford2018improving.pdf">gpt1-paper</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;GPT的全称是generative pre-training，通用预训练模型，&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;elmo有94m个参数，bert有340m个参数，GPT有1542m个参数&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;</summary>
-      
-    
-    
-    
-    <category term="深度学习" scheme="https://chiechie.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
-    
-    <category term="神经网络" scheme="https://chiechie.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
-    
-    <category term="模型可视化" scheme="https://chiechie.github.io/tags/%E6%A8%A1%E5%9E%8B%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
-    
-    <category term="Transformer" scheme="https://chiechie.github.io/tags/Transformer/"/>
-    
-    <category term="Bert" scheme="https://chiechie.github.io/tags/Bert/"/>
-    
-    <category term="attention" scheme="https://chiechie.github.io/tags/attention/"/>
-    
-  </entry>
   
   <entry>
     <title>深度学习7 Bert</title>
@@ -179,10 +141,10 @@
   
   <entry>
     <title>投资、投机与套利</title>
-    <link href="https://chiechie.github.io/2021/07/04/investment/quant/"/>
-    <id>https://chiechie.github.io/2021/07/04/investment/quant/</id>
+    <link href="https://chiechie.github.io/2021/07/04/reading_notes/investment/quant/"/>
+    <id>https://chiechie.github.io/2021/07/04/reading_notes/investment/quant/</id>
     <published>2021-07-04T07:10:19.000Z</published>
-    <updated>2021-07-05T12:42:39.451Z</updated>
+    <updated>2021-07-09T00:29:06.181Z</updated>
     
     <content type="html"><![CDATA[<ol type="1"><li>巴菲特希望通过分析公司基本面来做精准判断，通过每次投资的长期持有获得收益，而西蒙斯用机器算法来发现短期胜率，通过短期胜率超过50%加上大数定律（law of large numbers）来保证长时间的盈利</li><li>人在做投资决策的时候都会根据自己的经历和知识储备选取合适的策略。</li><li>从交易的方式来看，投资的策略有三种形式：投资（investment）、投机（speculation）和套利（arbitrage），三种形式都可以用量化的方法来提高胜率。</li><li>1949年，格雷厄姆在《聪明的投资者》里写到：“投资者与投机者最实际的区别在于他们对股市运动的态度上：投机者的兴趣主要在参与市场波动并从中谋取利润，投资者的兴趣主要在以适当的价格取得和持有适当的股票。”</li><li>所谓价值投资其实是“价值和价格之差”投资，然后低买高卖。他说投资的秘诀是“不要赔钱”。</li><li>在金融市场里，如果看不清30年这么长的时间线，分析交易量、交易价格和其它技术和基本面的数据，对股票未来短期内的变化，可以在日或周这样的时间线上找到机会。这样的投机行为并不关心股票未来的成长，但是只要在短期内做到足够好的判断，则可以成功地投机获利。</li><li>如果把时间线再缩短，就会有套利的机会。套利背后的逻辑是低买高卖</li><li>很多高频交易的策略，在市场的大量卖单和买单中找到规律，用一个较低的价格买回股票，然后找到下一个买家用高一点的价格卖出去。</li><li>从投资到投机再到套利，随着交易速度的提升，超额收益会越来越高，但是这样的速度提升也有缺点，那就是随着交易速度的提升，机会的窗口就比较小，盈利的容量会越来越小。如果把股市比作赌场，随着交易速度的提升，赢钱的概率会提高，但是能赢的钱的总量却是在下降的。</li><li>高频的量化投资有点像从沙子里捞金子，每捞一次在付出成本的同时都有一个概率找到金子，捞金子的收益可以从两方面得到，一是捞金子的成功率，这个可以通过优化算法加强预测准确率来得到；二是交易频率，可以通过增加单位时间的交易次数来达到。总收益大致和正确率与交易次数平方根的乘积是成正比的。这个原理叫主动管理基本定律The Fundamental Law of Active Management。</li><li>机器学习做交易策略的一个误区。大家一上来就在想办法预测股价，这个思路是最直接的，从数据分析的层面看，这并没有错，很多对算法很熟悉的人都非常厉害，可以迅速的找到一些算法（例如xgboost）来做非常好的样本内预测。但是一旦在实际股市中使用的时候就会发现预测准确度远远不如历史数据所做出来的。</li><li>问题不是机器学习的算法不够好，而是所有的预测模型都假设底层的市场逻辑没有变化，这样的假设是错误的，导致了过度拟合</li><li>如今的市场上，找一个会用厉害的算法做预测的码农并不难，难的是管理者和投资决策者需要知道如何从最底层理解金融市场的量化思维并发挥出算法的优势。</li></ol><h2 id="参考">参考</h2><ol type="1"><li>https://zhuanlan.zhihu.com/p/362383721</li></ol>]]></content>
     
@@ -271,35 +233,40 @@
   </entry>
   
   <entry>
-    <title>chapter1.5.3一种日志聚类的方法-LogCluster</title>
-    <link href="https://chiechie.github.io/2021/07/01/AIOps/AIOps-1_5_3-LogCluster-_ms/"/>
-    <id>https://chiechie.github.io/2021/07/01/AIOps/AIOps-1_5_3-LogCluster-_ms/</id>
-    <published>2021-07-01T10:56:03.000Z</published>
-    <updated>2021-07-08T09:41:56.612Z</updated>
+    <title>深度学习8 gpt</title>
+    <link href="https://chiechie.github.io/2021/06/30/deeplearning/gpt/"/>
+    <id>https://chiechie.github.io/2021/06/30/deeplearning/gpt/</id>
+    <published>2021-06-30T06:48:13.000Z</published>
+    <updated>2021-07-09T00:29:06.115Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>这篇文章讲了很多方案细节，实际中的需求，以及可以扩展到哪些应用。这篇文章属于detail &amp; application oriented 。</p><p>现在只看了实现方案，关于实现过程中的一些细微的需求，后面再看。</p></blockquote><h2 id="总结">总结</h2><ol type="1"><li><p>使用日志定位故障的基本假设：The delta sets of execution sequences between these two sets（tes和生产） could reflect the potential deployment failures。</p></li><li><p>一些提升效率的方法：</p><ul><li>对log event去重：removing repetitions and permutations of the sequences. For example, both of the following two sequences: “E1, E2, E3, E3, E5, E6” and “E1, E3, E5, E2, E6” are reduced to the sequence “E1, E2, E3, E5, E6”.</li></ul></li><li><p>向量化：将log sequence表达成一个N-dim的向量，N表示词典的大小，每个词代表一个patter或者一个token list。</p><p><span class="math display">\[w(t)=0.5 \times \operatorname{Norm}\left(w_{i d}(t)\right)+0.5 \times w_{c o n}(t)\]</span></p><figure><img src="img_2.png" alt="Log sequences represented as vectors" /><figcaption aria-hidden="true">Log sequences represented as vectors</figcaption></figure><ul><li>Norm is Sigmoid, which normalizes the IDF to [0, 1]. &gt; TF-IDF为词频-逆文件频率，用以评估一个词对于语料库中某一篇文章的重要程度，TF-IDF= TF*IDF. &gt; TF（term frequency）为词频，即一个词语在整个语料库中的出现频率，这个指标可以找到高频但是没有意义的词。 &gt; IDF（Inverse Document Frequency）为逆文档频率，这个指标可以筛选出稀有词，比如"量化"，而过滤掉没有意义的随处可见的词。以为词越常见，分母越大，取值越小，假设总共有n篇文章，一个词在其中k篇文章中出现，则idf值为idf=log2(n/k).衡量的是这个词在文章分布中的稀有程度。 &gt; 综合词频和稀有程度，可以得到一个词的重要性/信息含量</li></ul></li><li><p>层次聚类：聚类函数--N-维向量的cosine similarity， the cluster distance metric使用的是the maximum distance of all element pairs between two clusters，并且把 distance threshold θ作为stopping criterion for the clustering process <img src="img_3.png" alt="Agglomerative Hierarchical Clustering" /></p></li><li><p>提取每个cluster的代表性Log Sequence：计算每个log sequence离其他成员的平均距离作为分数，找出分数最小的那个log sequence，最为代表，时间复杂度为O(n^2),n表示该cluster的成员个数。</p></li><li><p>check生产环境是否产生了新的cluster？对比新cluster和知识库（离线产生的）中的cluster，计算两个cluster的representative log sequence的cosion相似度，使用跟层次聚类一样的距离参数<span class="math inline">\(\theta\)</span>作为决策标准。</p></li><li><p>评估：使用控制实验，先正常运行两个Hadoop应用---WordCount和pagerank，搜集相应的日志。然后注入以下故障以模拟生产环境：</p><ul><li>Machine Down: we turn off one server when the applications are running to simulate the machine failure.</li><li>Network Disconnection: we disconnect one server from the network to simulate the network connection failure.</li><li>Disk Full: we manually fill up one server’s hard disk when the applications are running to simulate the disk full failure.</li></ul></li><li><p>评估看两个方面, 一个是使用日志聚类之后，还需要人check的工作量，一个是定位到故障的准确率。</p></li></ol><p>Measured in terms of #log sequences to be examined. Numbers in brackets indicate the precision values (i.e., the percentage of examined log sequences that are associated with the actual failures). 8. 怎么评估聚类？使用NMI（normalized mutual information），a number between 0 and 1.越大越好 9. LogCLuster的不适用范围：非Hadoop应用；测试环境有bug（算法默认测试是标准）；不适合performance相关的异常定位（有时序性，算法在向量化的时候，就把时序性抹去了）. 10. 应用场景之一--rca，某个产品G对原始执行日志做聚类，得到clusters，每一个identified cluster 都分配一宜昌分数，根据cluster的大小/age/用户feedback。当某个服务经历一个live site issue时，在故障发生时，服务团队的工程师使用G去check异常程度最高的几个cluster，。 This allows for more efficient root cause analysis, which in turn leads to improvement in key metrics like “Mean Time to Mitigate” and “Mean Time to Fix”。</p><figure><img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption></figure><h2 id="附录">附录</h2><h3 id="难点">难点</h3><ol type="1"><li>数据量大：每天产生的日志达到10TB甚至1PB</li><li>故障转移：大部分在线系统都有故障转移（failover）机制，会根据节点的availability 和 performance，动态地给计算节点们分配jobs。系统可以主动杀死某个job，并且在另外一个地方重启，这样就产生很多包含“kill” 和“fail” keywords的logs。如果，只依赖关键词"fail"去搜索异常，势必产生很多误告。</li></ol><blockquote><p>故障转移，即当活动的服务或应用意外终止时，快速启用冗余或备用的服务器、系统、硬件或者网络接替它们工作。 故障转移(failover)与交换转移操作基本相同，只是故障转移通常是自动完成的，没有警告提醒手动完成，而交换转移需要手动进行。</p><p>对于要求高可用和高稳定性的服务器、系统或者网络，系统设计者通常会设计故障转移功能。</p><p>在服务器级别，自动故障转移通常使用一个“心跳”线连接两台服务器。只要主服务器与备用服务器间脉冲或“心跳”没有中断，备用服务器就不会启用。为了热切换和防止服务中断，也可能会有第三台服务器运行备用组件待命。当检测到主服务器“心跳”报警后，备用服务器会接管服务。有些系统有发送故障转移通知的功能。</p><p>有些系统故意设计为不能进行完全自动故障转移，而是需要管理员介入。这种“人工确认的自动故障转移”配置，当管理员确认进行故障转移后，整个过程将自动完成。</p></blockquote><h3 id="算法流程">算法流程</h3><figure><img src="img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption></figure><p>离线和在线的前半段流程：</p><p>collect log messages ---&gt; parse into log sequence --&gt; log vectorization ---&gt; group similar log sequences into clusters -- &gt; extract a representative log sequence from each cluster</p><p>abstract log message(or log event): 对原始日志泛化</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">E1: $DATE INFO [ContainerLauncher #$NUMBER]</span><br><span class="line">org.apache.hadoop.mapreduce.v2.app.launcher.ContainerLauncherImp</span><br><span class="line">l: Processing the event EventType:</span><br><span class="line">CONTAINER_REMOTE_CLEANUP for container $CONTAINERID</span><br><span class="line">taskAttempt $ATTEMPTID</span><br><span class="line">...</span><br><span class="line">E6: $DATE INFO [AsyncDispatcher event handler]</span><br><span class="line">org.apache.hadoop.mapreduce.v2.app.job.impl.TaskAttemptImpl:</span><br><span class="line">Diagnostics report from $ATTEMPTID: Container killed by the</span><br><span class="line">ApplicationMaster.</span><br></pre></td></tr></table></figure><p>log sequence： 属于同一个task ID的log message搜集起来。 (E1, E1, E2, E3, E4, E5, E6)</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://netman.aiops.org/~peidan/ANM2018Fall/6.LogAnomalyDetection/LectureCoverage/2016ICSE_Log%20Clustering%20based%20Problem%20Identification%20for%20Online%20Service%20Systems%20.pdf">Log Clustering based Problem Identification for Online Service Systems- 微软</a></li><li>https://zhuanlan.zhihu.com/p/31197209</li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="总结">总结</h2><ul><li><p>GPT的全称是generative pre-training，通用预训练模型，</p></li><li><p>elmo有94m个参数，bert有340m个参数，GPT有1542m个参数</p></li><li><p>GPT是transformer的decoder network</p></li><li><p>GPT的学习任务是，给定一些word，预测接下来的word是什么？</p></li><li><p>GPT神奇的地方：没有训练数据的情况下，可以做阅读理解（表现很好），生成摘要（一般般），翻译（一般般）。做到了zero-shot learning</p></li><li><p>GPT3也是一个语言模型，有史以来最大的语言模型，有1750yi个参数，训练一个商用的GPT3模型，要花1200w美元 <img src="img.png" alt="img.png" /></p></li><li><p>bert模型是需要对特定任务搜集特定数据持续学习的。GPT野心更大，想做zero-shot，fine tuing都不要，见下图： <img src="img_1.png" alt="img_1.png" /></p></li><li><p>举个例子， <img src="img_2.png" alt="img_2.png" /></p></li><li><p>GPT要解决三个任务：Few-shot Learning/One-shot Learning/Zero-shot Learning。</p><blockquote><p>注意，GPT的Few-shot Learning跟一般的Few-shot Learning不一样，GPT不会对模型去fining tuning ,bert是需要fine tuning的 <img src="img_3.png" alt="img_3.png" /></p></blockquote></li><li><p>GPT使用的是in context learning，跟meta learning有一点点不一样</p></li><li><p>GPT不擅长做NLU的问题，即逻辑判断的问题。</p></li></ul><h2 id="gpt系列的架构图">GPT系列的架构图</h2><figure><img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption></figure><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=DOG1L9lvsDY">GPT-youtube</a></li><li><a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses/DLHLP20/GPT3%20(v6).pdf">GPT-slide</a></li><li><a href="https://huggingface.co/openai-gpt">gpt-huggingface</a></li><li><a href="https://arxiv.org/pdf/2005.14165.pdf">gpt3-paper</a></li><li><a href="https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf">gpt2-paper</a></li><li><a href="https://www.cs.ubc.ca/~amuham01/LING530/papers/radford2018improving.pdf">gpt1-paper</a></li></ol>]]></content>
     
     
       
       
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;这篇文章讲了很多方案细节，实际中的需求，以及可以扩展到哪些应用。这篇文章属于detail &amp;amp; application oriented 。&lt;/p&gt;
-&lt;p&gt;现在只看了实现方案，关于实现过程中的一些细微的需求，后面再看。&lt;/p&gt;
-&lt;/block</summary>
+    <summary type="html">&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;GPT的全称是generative pre-training，通用预训练模型，&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;elmo有94m个参数，bert有340m个参数，GPT有1542m个参数&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;</summary>
       
     
     
     
-    <category term="AIOps" scheme="https://chiechie.github.io/categories/AIOps/"/>
+    <category term="深度学习" scheme="https://chiechie.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
-    
-    <category term="AIOps" scheme="https://chiechie.github.io/tags/AIOps/"/>
     
     <category term="NLP" scheme="https://chiechie.github.io/tags/NLP/"/>
     
-    <category term="日志分析" scheme="https://chiechie.github.io/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/"/>
+    <category term="神经网络" scheme="https://chiechie.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     
-    <category term="论文笔记" scheme="https://chiechie.github.io/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"/>
+    <category term="模型可视化" scheme="https://chiechie.github.io/tags/%E6%A8%A1%E5%9E%8B%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    
+    <category term="Transformer" scheme="https://chiechie.github.io/tags/Transformer/"/>
+    
+    <category term="Bert" scheme="https://chiechie.github.io/tags/Bert/"/>
+    
+    <category term="attention" scheme="https://chiechie.github.io/tags/attention/"/>
     
   </entry>
   
@@ -647,6 +614,36 @@
     
     
     <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于AGI？</title>
+    <link href="https://chiechie.github.io/2021/06/17/reading_notes/reality/about-AGI/"/>
+    <id>https://chiechie.github.io/2021/06/17/reading_notes/reality/about-AGI/</id>
+    <published>2021-06-17T09:04:32.000Z</published>
+    <updated>2021-07-09T00:29:06.213Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="chiechies-reflection">chiechie's reflection</h2><ol type="1"><li>理论突破不是技术爆发的必经之路，很多技术都没有理论，比如古代时候的发明，造船，造纸，造火药，爱迪森发明电灯泡，还有现代的量子计算机和深度学习，理论完备个P。</li><li>大部分发明都是做实验，通过试错迭代而产生的,而很多情况下理论都是滞后的。</li></ol><h2 id="无人驾驶现状">无人驾驶现状</h2><ol type="1"><li>一个技术在工业化生产之前，一般要经历三个阶段, 理论突破，技术验证，工程化<ol type="1"><li>理论突破，科学家在理论上证明其可行性，即产品要达到一个什么样的性能，在技术上是一定可以实现的；</li><li>技术突破，研究机构突破技术实现上壁垒，做出来达到预期的Demo；</li><li>工程化，主要解决产品设计，方案优化，功能完备，性能提升，良品率，鲁棒性，可用性提升，大规模复制的技术准备，成本降低等工程问题。</li></ol></li><li>通用无人驾驶在第一，第二阶段还彻底整明白的情况下，由资本驱动直接进入第三阶段.</li></ol><h2 id="agi的理论先行者">AGI的理论先行者</h2><ol type="1"><li>目前强化学习是最被看好的方向。</li><li>强化学习本质上是演化论的思路，跟自然界一样，给定一个reward，让机器放肆的学习探索。</li><li>目前还需要解决的问题是计算资源的问题。</li><li>自然界的演化大部分时间是平稳状态，只有极少数黑天鹅事件决定了演化的方向。</li><li>在计算机中模拟agent的演化过程，和自然界的演化类似，需要忍受长期的无秩序无进展。</li><li>如果全世界的资源往这方面倾斜，可能可以加快黑天鹅事件出现。</li><li>理论突破不是AGI成熟的必要条件，有可能是2者互相促进发展。</li><li>目前收到关注较多的公司--自动标注样本公司scale</li></ol><h2 id="参考">参考</h2><ol type="1"><li>https://www.zhihu.com/question/404870865/answer/1324577689</li><li>https://www.zhihu.com/question/464616760/answer/1940847401</li><li><a href="https://www.sciencedirect.com/science/article/pii/S0004370221000862">reward is enough ,david silver</a></li><li><a href="https://www.notboring.co/p/scale-rational-in-the-fullness-of?token=eyJ1c2VyX2lkIjoxNzY2NjQ2OSwicG9zdF9pZCI6Mzc4NDY2MzEsIl8iOiJrTHFWcCIsImlhdCI6MTYyNDQyNDU4NCwiZXhwIjoxNjI0NDI4MTg0LCJpc3MiOiJwdWItMTAwMjUiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.zWmuXLn35R720iDVtX7yTuTpM4kCMk25457XzZN8_Ks">not boring</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;chiechies-reflection&quot;&gt;chiechie&#39;s reflection&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;理论突破不是技术爆发的必经之路，很多技术都没有理论，比如古代时候的发明，造船，造纸，造火药，爱迪森发明电灯泡，还有现代的量子计算机</summary>
+      
+    
+    
+    
+    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="科技史" scheme="https://chiechie.github.io/tags/%E7%A7%91%E6%8A%80%E5%8F%B2/"/>
+    
+    <category term="人工智障" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E9%9A%9C/"/>
     
   </entry>
   

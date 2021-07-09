@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/data_structure/graph/PC-algo/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/11/reading_notes/economics/macro-economy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/09/data_structure/graph/PC-algo/" class="post-title-link" itemprop="url">PC算法</a>
+            <a href="/2021/03/11/reading_notes/economics/macro-economy/" class="post-title-link" itemprop="url">现代西方经济学的由来和演变</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-09 10:06:00" itemprop="dateCreated datePublished" datetime="2021-03-09T10:06:00+08:00">2021-03-09</time>
+              <time title="创建时间：2021-03-11 21:30:23" itemprop="dateCreated datePublished" datetime="2021-03-11T21:30:23+08:00">2021-03-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-28 09:34:19" itemprop="dateModified" datetime="2021-06-28T09:34:19+08:00">2021-06-28</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -219,74 +219,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="背景">背景</h1>
-<p>学术界有两种对因果关系建模的方法：因果图和结构方程。 对于构建因果图，目前使用的最多的是PC算法。</p>
-<p>通过观察N个独立同分布的样本，来挖掘随机变量的之间的因果关系。 每个样本都是来自M个随机变量的1组观测值。</p>
-<p>有点类似机器学习中，使用随机森林去学习特征的相关性。特征就类似因果图中的节点，也就是随机变量。</p>
+          <blockquote>
+<p>本文由一堆历史事实堆砌而成，没有任何reflection</p>
+<p>可以当经济学的字典用</p>
+</blockquote>
 <h2 id="基本概念">基本概念</h2>
 <ul>
-<li>因果图：因果模型的一种表达方式，因果图是一个DAG， G=（V，E），对于每一个节点v，给定了他的双亲pa（v），v跟所有非后代都是独立的。</li>
-<li>冲撞点（collider）：一种V型结构的因果图. 两个因导致一个果。</li>
-<li>马尔科夫条件：可用来区分因果关系和相关关系，被用于生成依赖关系集合，构造因果图框架。</li>
-<li>faithfulness假设：可以用来保证，V中的所有变量的独立关系，都可以通过D-seperation表达。</li>
-<li>PC算法的两个假设：马尔可夫条件和faithfulness。</li>
+<li><strong>滞涨</strong>：失业和通货膨胀共存。</li>
 </ul>
-<p>D-分离</p>
-<blockquote>
-<p>D分离（D-Separation）是一种用来判断两个变量是否条件独立的图形化方法，相比于非图形化方法，更加直观，且计算简单。</p>
-</blockquote>
-<p>定义: 设 X，Y，Z 是 DAG 中不相交的节点集合， <span class="math inline">\(\pi\)</span> 为一条连接 X 中某节点到 Y 中某节点的路径 （不管方向）。 如果路径 <span class="math inline">\(\pi\)</span> 上某节点满足如下的条件：</p>
+<h2 id="核心观点">核心观点</h2>
 <ol type="1">
-<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 V结构 , 即<span class="math inline">\(X \rightarrow w \leftarrow Y\)</span>，且 w 及其后代不在 Z中；(因为collider关系，w不可观测时,X,Y 相互独立)</li>
-<li>在路径<span class="math inline">\(\pi\)</span>上，w 点处为 非V结构 ，且w在Z中 。</li>
-</ol>
-<p>则称Z阻断了路径<span class="math inline">\(\pi\)</span>。</p>
-<p>如果Z阻断了所有的X到Y的路径，就说Z集合D分离了X和Y，记作<span class="math inline">\((X \perp Y \mid Z)_{G}\)</span>.</p>
-<h1 id="pc算法-概览">PC算法-概览</h1>
-<p>PC算法输入N个m维的样本，输出一个有向无环图（DAG）， 举个例子，如果要构建一个故障因果图，一个指标就是图中的一个节点，每个时间点的观测值，就是一个样本。 如果给定一个变量集合，S，A和B独立，即 A ⊥ B|S，那么A和B两个节点就没有边。</p>
-<p>PC算法分为四步:</p>
-<ol type="1">
-<li>构建一个全连接图，M个随机变量就对应M个节点</li>
-<li>条件独立性检验：对于每一组相邻的节点，给定置信度<span class="math inline">\(\alpha\)</span>, 如果条件独立，那么两个变量之间的边就remove掉。 条件变量S的大小每次迭代递增，直到没有多余的变量可以被加入S</li>
-<li>基于v-structure确定边的方向.</li>
-<li>确定剩下的边的方向，传播.</li>
-</ol>
-<p>PC算法是一种发现因果关系的算法，在满足一定的假设的前提下（基于马尔科夫条件 和 D-separation），使用基于统计的方法（显著性检验-<span class="math inline">\(G^2\)</span>），推导出因果关系（代表因果关系的DAG）。实现流程包括三步:</p>
-<figure>
-<img src="pc-overview.png" alt="图1-PC算法" /><figcaption aria-hidden="true">图1-PC算法</figcaption>
-</figure>
-<h2 id="条件独立性检验">条件独立性检验</h2>
-<p>从全连接图开始，移走条件独立的边</p>
-<figure>
-<img src="pc1.png" alt="图2-确定框架" /><figcaption aria-hidden="true">图2-确定框架</figcaption>
-</figure>
-<p>Z从空集开始，不断增加</p>
-<p>具体来说，可以用指标<span class="math inline">\(G^2\)</span>（条件交叉熵）来检验给定Z时，X和Y的独立性，这里X，Y，Z是互斥的。</p>
-<p><span class="math inline">\(G^{2}=2 m C E(X, Y \mid Z)\)</span></p>
+<li>资产阶级经济学的四个阶段：重商主义，古典经济学，庸俗经济学和庸俗经济学以后。</li>
+<li>1830年进入庸俗经济学阶段，主要在于反对空想社会主义。</li>
+<li>1890年以来，马歇尔为代表的经济学开始在西方流行，他们提出了完全竞争和充分就业假说，进而从供给和需求的角度分析市场价格，以解决资源分配问题。影响力持续到20世纪30年代。这个理论赞赏了资本主义的价格制度，生成资本主义使得每种生产要素都得到了应得的报酬，还说资本主义是一架可以自行调节的机器，能自行解决各种矛盾。在此理论之下，国家不干预经济生活的政策被解释为最好的政策。但是，这种思想随着资本主义的发展而有所削弱。</li>
+<li>19世纪30年代开始，传统经济学经历了3次较大的修改。
 <ul>
-<li>m：样本大小</li>
-<li>$ C E(X, Y Z)$:给定Z时，X和Y的条件交叉熵，</li>
-</ul>
-<blockquote>
-<p>显著性低于0.05，就说明条件分布和联合分布没有显著性差异，有因果关系 显著性超过0.05， 就说明条件分布和联合分布没有显著性差异，没有因果关系，是独立的。</p>
-</blockquote>
-<p>如果<span class="math inline">\(G^2\)</span>超过一个预先设定的显著性，比如0.05， 那么X和Y是条件独立的。</p>
-<p>PC算法使用一个全连接的无向图，然后使用<span class="math inline">\(G^2\)</span>描述条件独立性。</p>
-<h2 id="确定边的方向">确定边的方向</h2>
-<p>当DAG的架子搭起来了， 接下来的工作就是决定因果关系的方向了。这里使用到了D-seperation的方法。</p>
-<figure>
-<img src="pc2.png" alt="图3-确定方向" /><figcaption aria-hidden="true">图3-确定方向</figcaption>
-</figure>
-<h2 id="传播方向">传播方向</h2>
-<figure>
-<img src="pc3.png" alt="图4-传播方向" /><figcaption aria-hidden="true">图4-传播方向</figcaption>
-</figure>
-<h1 id="参考">参考</h1>
+<li>第一次修改-1933年-垄断理论：虽然实际情况中，资本主义已于19世纪末进入垄断阶段。但是，直到20世纪30年代，传统西方经济学仍然把"垄断"视为"例外"。为了改变这种理论和现实背离的状态，张伯伦和罗滨逊于1933年提出了垄断竞争理论。作为对传统西方经济学的补充。</li>
+<li>第二次修改-1936年-凯恩斯理论。由于1929年后的大萧条和国家垄断资本主义的发展，资产阶级为了干预经济，需要一个经济理论支撑。1936，凯恩斯发布了《就业，利息和货币通论》，凯恩斯认为，资本主义的自发作用，不能保证充分就业，需要国家的干预来解决就业。这个理论为国家干预经济政策制造了借口。</li>
+<li>第三次修改-1939年-希克斯出版的《价值与资本》，涉及到价值论和一般均衡论。</li>
+</ul></li>
+<li>第二次世界大战～20世纪60年代-萨缪尔森为首的「新古典综合派」。他们把第一次修改的垄断理论和第三次修改的价值称为微观经济学，把凯恩斯的理论称为宏观经济学。他们宣称，微观经济学是以充分就业为分析前提的，宏观经济学研究的是不同水平的就业量的情况。两种理论相辅相成。传统的自由放任（马歇尔理论）和凯恩斯的国家干预主张，是统一理论体系涉及到的两种不同的现实情况。该学派把现代资本主义说成是"混合经济"，由"私营"和"公营"两个部分组成。"私营"的部分由微观经济学分析，"公营"的部分由宏观经济学分析。</li>
+<li>「新古典综合派」在第二次世界大战之后一直处于正统地位，直到20世纪70年代，西方社会出现了「滞涨」，给了「新古典综合派」沉重的打击。该学派的理论表明，失业（经济活动小于充分就业）和通货膨胀是不可能共存的，这一理论跟当时的现实是不符合的。既无法解释，也提不出对策。</li>
+<li>除了「滞涨」，经济发展迟缓也是「新古典综合派」无法解决的问题。这些都严重动摇了「新古典综合派」在经济理论中的统治地位，西方经济学的其他派别纷纷对「新古典综合派」进行抨击，这些派别主要有货币主义，供给学派，理性预期学派等，但是这些学派自己也不能提出一套完整的理论，所以「新古典综合派」能在风雨飘摇中维持统治地位。</li>
+<li>现在「新古典综合派」已经放弃了"新古典综合"的称号，叫自己「现代经济学」或者「现代主流经济学」。除了维持原有的基本观点外，还吸收和容纳其他派别的论点，特别是「货币主义」和「理性预期」学派。这样，「现代主流经济学」成为缺乏统一理论体系的各派学说的混合物。虽然可消除各派观点的矛盾，但是仍然无法对「滞涨」问题提出对策。</li>
+</ol>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/volume8/kalisch07a/kalisch07a.pdf">2007-The Journal of MachineLearning Research-pc算法</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=o2A61bJ0UCw">pc算法-youtube</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269625734">因果图的基本概念-知乎</a></li>
-<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">Page,3-paper</a></li>
+<li>《现代西方经济学-上册》高鸿业 吴易凤，经济科学出版社，1988年</li>
 </ol>
 
       
@@ -307,7 +266,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/11/deeplearning/dl-basic4_rnn-1-lstm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -321,7 +280,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/09/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/" class="post-title-link" itemprop="url">《the book of why》读书笔记-6</a>
+            <a href="/2021/03/11/deeplearning/dl-basic4_rnn-1-lstm/" class="post-title-link" itemprop="url">深度学习5 循环神经网络2-长短期记忆网络（LSTM）</a>
         </h2>
 
         <div class="post-meta">
@@ -331,14 +290,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-09 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-09T08:33:38+08:00">2021-03-09</time>
+              <time title="创建时间：2021-03-11 10:48:04" itemprop="dateCreated datePublished" datetime="2021-03-11T10:48:04+08:00">2021-03-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-07 11:46:24" itemprop="dateModified" datetime="2021-07-07T11:46:24+08:00">2021-07-07</time>
+                <time title="修改时间：2021-07-08 11:06:17" itemprop="dateModified" datetime="2021-07-08T11:06:17+08:00">2021-07-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -346,7 +305,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
                 </span>
             </span>
 
@@ -361,75 +320,87 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>the book of why 的第6章-一些悖论</p>
-</blockquote>
-<h2 id="悖论1-蒙提-霍尔">悖论1-蒙提 霍尔</h2>
-<h3 id="背景">背景</h3>
-<p>一个竞猜游戏中，有三个用幕布遮住的们，其中有2个门后面是山羊，1个是汽车。有两种游戏规则，分别是：</p>
+          <h2 id="总结">总结</h2>
 <ol type="1">
-<li>观众先选择三个门中的一个，然后主持人从另外两个门中选择一个没有汽车的们打开，然后这个观众可以选择要不要换门？</li>
-<li>观众先选择三个门中的一个，然后主持人从另外两个门中随便选一个打开，然后这个观众可以选择要不要换门？</li>
+<li>LSTM是一个循环神经网络，即RNN模型，是对Simple RNN的一种改进，可以避免梯度消失问题, 可以有比simple RNN更长的记忆。LSTM的论文在1997年就发表了。</li>
+<li>LSTM的结构比simple-RNN的结构复杂很多，Simple RNN有1个参数矩阵，LSTM有四个参数矩阵。</li>
+<li>LSTM也可以看成一个带状态的函数，输入当前词的embedding向量（维度为m）和上一个时刻的状态向量（h维）和上一个时刻的记忆单元向量（h + m 维），输出当前时刻的状态向量（h维）和当前时刻的记忆单元向量（h维）。</li>
+<li>LSTM通过引入一个传输带（conveyor belt）来缓解梯度消失的问题。过去的信息通过传输带到达下一个时刻，不会发生很大变化。</li>
+<li>LSTM的处理流程可以描述为，对长期记忆选择性遗忘，对短期记忆选择性保留，两个求和得到了新的长期记忆；将新的长期记忆选择性输出，得到新的短期记忆。</li>
+<li>LSTM有3个门，分别为输入门，输出门，遗忘门，也是三个权重向量，取值范围从0到1
+<ul>
+<li><p>遗忘门：一个权重向量表示上一个时刻的传送带向量<span class="math inline">\(\mathbf{c}_{t-1}\)</span>需要遗忘多少信息</p></li>
+<li><p>输入门：一个权重向量，控制当前时刻的新的状态<span class="math inline">\(z\)</span>有多少信息要保留</p>
+<blockquote>
+<p>遗忘门 + 输入门共同作用的结果是，得到新的传送带向量</p>
+</blockquote></li>
+<li><p>输出门：控制当前传送带向量<span class="math inline">\(\tilde{\mathbf{c}}_{t}\)</span>有多少信息要输出给外部状态</p></li>
+</ul></li>
 </ol>
-<p>第一种强况下，选择换门的话，赢到车车的概率是2/3， 第二种情况下，选择换门的话，赢到的车车的概率是1/2</p>
+<h2 id="lstm应用-情感判断">LSTM应用-情感判断</h2>
+<p><img src="dl-basic2/img_3.png" /></p>
 <figure>
-<img src="./img789.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+<img src="./image_1212.png" alt="使用keras实现lstm" /><figcaption aria-hidden="true">使用keras实现lstm</figcaption>
 </figure>
-<h3 id="悖论的原因">悖论的原因</h3>
+<figure>
+<img src="./image_1213.png" alt="img_13.png" /><figcaption aria-hidden="true">img_13.png</figcaption>
+</figure>
+<h2 id="cnn-和-rnn视觉对比">cnn 和 rnn视觉对比</h2>
+<p>有两个图还蛮有意思的，</p>
+<figure>
+<img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" alt="cnn" /><figcaption aria-hidden="true">cnn</figcaption>
+</figure>
+<figure>
+<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FoIsH5iVKwV.png?alt=media&amp;token=05e8189e-dd5f-4781-910c-a46bb9fa4eaf" alt="rnn" /><figcaption aria-hidden="true">rnn</figcaption>
+</figure>
+<h2 id="cnn-vs-rnn-vs-attention">cnn vs rnn vs attention</h2>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_n2z_XQqI2.png?alt=media&amp;token=facfccac-e8ac-4895-a84c-7add43cd165a" /></p>
+<h2 id="附录">附录</h2>
+<h3 id="lstm的内部结构">LSTM的内部结构</h3>
 <ol type="1">
-<li><p>贝叶斯公式可以解释信息在非因果关系上的流动，也就是规则1，主持人选择了没有汽车的之后，第三个门的不确定性降低了（沿着门后有车的概率变大的方向），而整个空间的概率之和为1，所以第一个门有车的概率变小了。</p>
+<li><p>LSTM最重要的设计是一个传输带（conveyor belt），记为向量<span class="math inline">\(C_t\)</span>, 过去的信息通过传输带直接传到下一个时刻<span class="math inline">\(C_{t+1}\)</span> ，不会发生太大的变化。LSTM就是靠传输带来避免梯度小时的问题。</p></li>
+<li><p>遗忘门的输入是上一个时刻的状态<span class="math inline">\(h_{t-1}\)</span>和当前时刻的观测值<span class="math inline">\(x_t\)</span>，通过遗忘矩阵<span class="math inline">\(W^f\)</span>加上一个sigomid变换，得到一个概率向量。 <img src="./lstm.png" />。 <img src="image_123.png" alt="img_3.png" /></p></li>
+<li><p>LSTM的遗忘门（forget gate）的作用是，让传输带上的信息有选择性的通过，选择性是由遗忘门向量控制的，通过遗忘门向量与传送带向量<span class="math inline">\(C_t\)</span>点乘来实现。 <img src="image_122.png" alt="img_2.png" /></p></li>
+<li><p>输入门(input gate)的输入也是上一个时刻的状态<span class="math inline">\(h_{t-1}\)</span>和当前时刻的观测值<span class="math inline">\(x_t\)</span>。</p>
+<figure>
+<img src="image_125.png" alt="img_5.png" /><figcaption aria-hidden="true">img_5.png</figcaption>
+</figure></li>
+<li><p>输入门的目的是，让上一个时刻的状态和最新的信息，能有选择性的通过。通过计算输入门向量跟<span class="math inline">\([h_{t-1}, x_{t}]\)</span>的双曲正切向量的点乘来实现。</p>
 <blockquote>
-<p>主持人的这个决策带来了系统的熵减，系统坍塌到2号门某个确定状态的子空间去了。</p>
+<p>双曲正切函数可以把上一个时刻的状态和新的观测值组成的向量映射到【-1，1]之间，</p>
 </blockquote></li>
-<li><p>为什么直觉上很难接受规则1的结论，反而会认为比赛的机制不公平？这个跟人类大脑结构有关系：</p>
-<ul>
-<li>大脑不擅长处理概率问题，</li>
-<li>大脑自发抵制非因果关系的信息传递，这个是贝叶斯式变量控制的产物。</li>
-<li>习惯将相关性等同于因果性</li>
-<li>大脑天生难以接受</li>
-</ul></li>
+<li><p>输出门(output gate)的输入也是上一个时刻的状态<span class="math inline">\(h_{t-1}\)</span>和当前时刻的观测值<span class="math inline">\(x_t\)</span></p></li>
 </ol>
-<h2 id="悖论2-伯克森悖论">悖论2-伯克森悖论</h2>
-<ol type="1">
-<li>生物统计学家约瑟夫.伯克森在医院做实验时，观察到了一个现象：两种疾病本来在一般人群中毫无关联，但是在住院人群中却会观察到似是而非的相关性。</li>
-<li>医院样本实际上是一个冲撞模型，即，当一个人同时患了两种疾病时，一定会住院。</li>
-<li>所以，「医院样本」就好像一个经过精心挑选过的样本，体现出来的相关关系是控制了「住院」变量之后，疾病1和疾病2的伪相关性。 <img src="img7890.png" alt="img.png" /></li>
-<li>1956年，哲学家赖欣巴提出了一个猜想「共因原则」（common cause principle），他认为没有不含因果关系的相关关系，即，X和Y的相关不是偶然发生的，要么是一个变量导致另一个变量，要么是第三个变量，比如说出现在两个变量之前的Z变量，导致两者发生。</li>
-<li>设计一个抛硬币的实验就可以推翻「共因原则」：假设同时抛两枚硬币，抛100次，只记录其中至少又一枚硬币为正面的结果，实验结束，发现记录的75条记录中，发现只要硬币1反面，硬币2就是正面，是因为两个硬币互通消息了吗？不是的，是因为人为记录改变了测度空间。</li>
-<li>还有一个社会现象就是，在一些调查中发现，跟你约会的人中，哪些又魅力的人往往是混蛋。这个也是因为测度空间被你亲手改变了，因为长得丑的渣男最开始就被你过滤了。过滤之前，有魅力的渣男的概率是1/4，过滤之后有魅力的渣男概率是1/3。所以感觉这个比例增加了。</li>
+<figure>
+<img src="image_128.png" alt="img_8.png" /><figcaption aria-hidden="true">img_8.png</figcaption>
+</figure>
+<ol start="7" type="1">
+<li><p>输出门的目的是，让最新的长期记忆有选择性的输出，作为状态向量<span class="math inline">\(h_t\)</span>。计算状态向量, 将输出门向量<span class="math inline">\(o_t\)</span>跟传输带最新值<span class="math inline">\(c_t\)</span>的双曲正切映射进行点乘，得到新的状态向量<span class="math inline">\(h_t\)</span>。</p></li>
+<li><p>新的状态向量<span class="math inline">\(h_t\)</span>有两份copies，一份作为当前时刻的输出，一份作为下一个时刻lstm单元的输入。可以认为迄今为止，t个时刻的输入信息都被编码到了状态向量<span class="math inline">\(h_t\)</span>中。 <img src="image_129.png" alt="img_9.png" /></p></li>
+<li><p>LSTM有遗忘门，输入门，new value，输出门，一共对应4个参数矩阵。矩阵的行数是状态向量的长度，矩阵的列数是状态向量的长度+输入向量的长度。</p></li>
 </ol>
-<h2 id="悖论3-辛普森悖论">悖论3-辛普森悖论</h2>
-<ol type="1">
-<li>辛普森逆转：一个叫辛普森的医生，在文献上发现了一种新药D，可以治疗心脏病。论文的实验数据显示，女性患者服用药物之后，心脏病发作比例升高；男性患者服用药物之后，心脏病发作比例也升高。但是，在整体人群上，心脏病发作比例却降低了，因此该药物也被归为BBG（BAD/BAD/GOOD）型药物。然而，实际上这种药物不存在，虽然说在数学上没有什么问题。 <img src="judea-pearl_the-book-of-why7/img.png" alt="辛普森" /></li>
-<li>对整体人群来说，正确的结论应该是什么呢？可以这么操作，先控制性别：
-<ul>
-<li>do（性别）=女性，计算女性服药之后心脏病发作比例的变化 r1。</li>
-<li>do（性别）=男性，计算男性服药之后心脏病发作比例的变化 r2。</li>
-<li>假设整体人群中，男女比例为1：1，那么可以推断出整体人群，服药之后，心脏比发作比例的变化为（r1+r2）/2</li>
-</ul></li>
-<li>辛普森悖论是因为混杂因子的存在。</li>
-<li>当我们考察两个变量的因果效应时：
-<ul>
-<li>如果存在混在因子，只能用分层数据计算因果效应，采用控制混杂因子的方式，case by case，计算每个混在因子取值的情况下，两个变量的因果关系，然后按照混杂因子每个取值的概率汇总，得到整体上，两个变量之间的因果关系。 <img src="./img_2.png" alt="img_2.png" /></li>
-<li>如果不存在混杂因子（有可能存在中介物），可以用聚合数据计算因果效应 <img src="./img_1.png" alt="中介物" /></li>
-</ul></li>
-<li>混杂因子存在的警告：根据聚合数据估计出来的因果效应大于，根据分层数据估计出来的因果效应。</li>
+<figure>
+<img src="./image_1210.png" alt="img_10.png" /><figcaption aria-hidden="true">img_10.png</figcaption>
+</figure>
+<ol start="10" type="1">
+<li>更新长期记忆-传送带向量</li>
 </ol>
-<h2 id="关于悖论">关于悖论</h2>
-<ol type="1">
-<li><p>什么是悖论？绝大部分人深信不疑的两个信念之间的冲突。</p>
-<blockquote>
-<p>辛普森逆转并不算悖论，只是纠正了不懂数学的人，对"平均表现"的错误认识。</p>
-</blockquote></li>
-<li><p>如何解决悖论？</p>
-<ol type="1">
-<li>理解为什么大多数人会把它看成一个悖论？or大家对世界的直观看法到底在哪里存在重大缺陷？eg生理结构原因：大部分人不擅长处理概率问题；「过分擅长」处理因果问题</li>
-<li>如何纠正：刻意训练，完成大脑重塑。</li>
-</ol></li>
+<p><img src="dl-basic2/img_1.png" /></p>
+<ol start="11" type="1">
+<li>更新短期机器-状态向量</li>
 </ol>
-<h2 id="参考">参考</h2>
+<p><img src="dl-basic2/img_2.png" /></p>
+<ol start="12" type="1">
+<li>LSTM处理过程用数学公式表达 <img src="dl-basic2/img_5.png" alt="img_5.png" /> <img src="dl-basic2/img_4.png" alt="img_4.png" /></li>
+</ol>
+<h2 id="参考资料">参考资料</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="http://bayes.cs.ucla.edu/WHY/why-intro.pdf">the book of why-微信读书</a></li>
+<li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/a-comparison-of-dnn-cnn-and-lstm-using-tf-keras-2191f8c77bbe">a-comparison-of-dnn-cnn-and-lstm-using-tf-keras</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_recurrent-neural-networks/lstm.html">dive into deep learning-lstm</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Cc4ENs6BHQw&amp;list=PLvOO0btloRnuTUGN4XqO85eKPeFSZsEqK&amp;index=3">wangshusen-RNN-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DeepLearning">RNN模型与NLP应用(4/9)：LSTM模型</a></li>
+<li><a target="_blank" rel="noopener" href="https://nndl.github.io/nndl-book.pdf">神经网络与深度学习</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32085405">人人都能看懂的LSTM</a></li>
 </ol>
 
       
@@ -449,7 +420,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/80/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/80/">80</a><span class="page-number current">81</span><a class="page-number" href="/page/82/">82</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><a class="extend next" rel="next" href="/page/82/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/80/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/80/">80</a><span class="page-number current">81</span><a class="page-number" href="/page/82/">82</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/82/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -515,14 +486,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">188</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

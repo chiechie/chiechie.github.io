@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="策略梯度中的Baseline 1&#x2F;4-数学推导  https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;yNEqbptitZs Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。Baseline 可以是任何不依赖于动作的函数。这节课我们做数学推导，得出带有 baseline 的策略梯度，并对它做蒙特卡洛近似。在后面的两节课中，我们把它用在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习7 策略梯度中的baseline">
+<meta property="og:url" content="https://chiechie.github.io/2021/04/25/reinforcement_learning/rl7_baseline-in-policy-gradient/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
+<meta property="og:description" content="策略梯度中的Baseline 1&#x2F;4-数学推导  https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;yNEqbptitZs Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。Baseline 可以是任何不依赖于动作的函数。这节课我们做数学推导，得出带有 baseline 的策略梯度，并对它做蒙特卡洛近似。在后面的两节课中，我们把它用在">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVfCPRKT8Wg.png?alt=media&amp;token=aa73c63c-f5f4-4b48-b626-a5c5262b71ca">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMRYKuGAY2M.png?alt=media&amp;token=120372a3-7c92-4b48-be89-9bc99679e69c">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F2KjX--n5BX.png?alt=media&amp;token=5edb9a0b-aaec-4d99-addf-ff2898eccd99">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FWR1r0uRGvm.png?alt=media&amp;token=3bb38d00-ec27-4f8d-acf9-8aa0208cb791">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fi95LEON8Wl.png?alt=media&amp;token=626bdff1-fccd-4c9f-b1cc-c288c2ee0977">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F55QYQnU8wS.png?alt=media&amp;token=b116aa54-22c2-49ae-9fe5-a8b124f78d56">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Foc2FFolpEM.png?alt=media&amp;token=9f2955f5-98a1-4752-b475-094e41be8e6f">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4cy4PbmERs.png?alt=media&amp;token=07f13dfc-b03b-43f5-a99e-82690b8b6a79">
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNV4Q90x0xU.png?alt=media&amp;token=eed6b59f-01e5-4803-9475-27a7f594bab9">
+<meta property="article:published_time" content="2021-04-25T12:41:33.000Z">
+<meta property="article:modified_time" content="2021-07-09T00:29:06.227Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="强化学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVfCPRKT8Wg.png?alt=media&amp;token=aa73c63c-f5f4-4b48-b626-a5c5262b71ca">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/04/25/reinforcement_learning/rl7_baseline-in-policy-gradient/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>强化学习7 策略梯度中的baseline | Chiechie's Mini World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Mini World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/25/reinforcement_learning/rl7_baseline-in-policy-gradient/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          强化学习7 策略梯度中的baseline<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/reinforcement_learning/rl7_baseline-in-policy-gradient.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-25 20:41:33" itemprop="dateCreated datePublished" datetime="2021-04-25T20:41:33+08:00">2021-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">强化学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="策略梯度中的baseline-14-数学推导">策略梯度中的Baseline 1/4-数学推导</h2>
+<ul>
+<li>https://www.youtube.com/watch?v=yNEqbptitZs</li>
+<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。Baseline 可以是任何不依赖于动作的函数。这节课我们做数学推导，得出带有 baseline 的策略梯度，并对它做蒙特卡洛近似。在后面的两节课中，我们把它用在 REINFORCE 和 A2C 方法中。</li>
+<li>策略梯度中的数学推导</li>
+<li>将baseline 应用到reinforce算法中</li>
+<li>将baseline 应用到actor2critic方法中：
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FVfCPRKT8Wg.png?alt=media&amp;token=aa73c63c-f5f4-4b48-b626-a5c5262b71ca" /></li>
+<li>直观理解：
+<ul>
+<li>放到两军交战的场景，对于某一方来说
+<ul>
+<li>策略网络就像一个军师，对于每一种战况（state）给出行动建议（action）；</li>
+<li>价值网络就像一个先知，预测当前战况（state）的好坏（state value）。</li>
+<li>战斗是一个持续的过程，每次交锋（at）一次，根据即时的收益（rt）, 军队首领（agent）要反省得失，更新军师的策略：
+<ul>
+<li>根据先知对交锋前后的战况预测差异 ， 来评价刚刚行为（at）好坏（好坏用 td error来衡量，越大说明at越垃圾）， 并且用来指引接下来策略（梯度更新公式中出现的td error一项）</li>
+<li>此外，策略调整的方向 还有一个因子，就是 策略梯度，也就是 在st时，选择at的概率下降 的方向。是想让军师探索其他方向？？</li>
+</ul></li>
+<li>同时，也要更新先知的认知
+<ul>
+<li>梯度表示想要td error减少</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="策略梯度中的baseline-24-reinforce-with-baseline">策略梯度中的Baseline 2/4-REINFORCE with Baseline</h2>
+<ul>
+<li>Policy gradient (策略梯度) 方法中常用 baseline 来降低方差，加速收敛。这节课我们学习 REINFORCE with Baseline，它是一种策略梯度方法。它用价值网络近似 baseline 函数。它用带 baseline 的策略梯度学习策略网络，用价值网络去拟合观测到的回报。</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FMRYKuGAY2M.png?alt=media&amp;token=120372a3-7c92-4b48-be89-9bc99679e69c" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F2KjX--n5BX.png?alt=media&amp;token=5edb9a0b-aaec-4d99-addf-ff2898eccd99" /></li>
+<li></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FWR1r0uRGvm.png?alt=media&amp;token=3bb38d00-ec27-4f8d-acf9-8aa0208cb791" /></li>
+<li>接下来用reinforce训练策略网络，用回归算法训练价值网络</li>
+<li>更新策略网络：
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fi95LEON8Wl.png?alt=media&amp;token=626bdff1-fccd-4c9f-b1cc-c288c2ee0977" /></li>
+</ul></li>
+<li>更新价值网络
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F55QYQnU8wS.png?alt=media&amp;token=b116aa54-22c2-49ae-9fe5-a8b124f78d56" /></li>
+</ul></li>
+<li>整体：</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Foc2FFolpEM.png?alt=media&amp;token=9f2955f5-98a1-4752-b475-094e41be8e6f" /></li>
+</ul>
+<h2 id="策略梯度中的baseline-34-a2c-方法">策略梯度中的Baseline 3/4-A2C 方法</h2>
+<p>https://www.youtube.com/watch?v=mtT4TSGSon8</p>
+<h2 id="策略梯度中的baseline-44-reinforce与a2c的异同">策略梯度中的Baseline 4/4-REINFORCE与A2C的异同</h2>
+<ul>
+<li>先看A2C： 单步td算法和 多步td 算法（多步用的多一些）
+<ul>
+<li>one -step ：
+<ul>
+<li>step1 观察1个transition数据
+<ul>
+<li><span class="math inline">\(\left(s_{t}, a_{t}, r_{t}, s_{t+1}\right)\)</span></li>
+</ul></li>
+<li>step2 计算TD Target
+<ul>
+<li><span class="math inline">\(y_{t}=r_{t}+\gamma \cdot v\left(s_{t+1} ; \mathbf{w}\right)\)</span></li>
+</ul></li>
+<li>step 3 计算TD eror
+<ul>
+<li><span class="math inline">\(\delta_{t}=v\left(s_{t} ; \mathbf{w}\right)-y_{t}\)</span></li>
+</ul></li>
+<li>step 4 更新策略网络
+<ul>
+<li><span class="math inline">\(\boldsymbol{\theta} \leftarrow \boldsymbol{\theta}-\beta \cdot \delta_{t} \cdot \frac{\partial \ln \pi\left(a_{t} \mid s_{t} ; \boldsymbol{\theta}\right)}{\partial \boldsymbol{\theta}}\)</span></li>
+</ul></li>
+<li>step5 更新价值网络
+<ul>
+<li><span class="math inline">\(\mathbf{w} \leftarrow \mathbf{w}-\alpha \cdot \delta_{t} \cdot \frac{\partial v\left(s_{t} ; \mathbf{w}\right)}{\partial \mathbf{w}}\)</span></li>
+</ul></li>
+</ul></li>
+<li>multi-step
+<ul>
+<li>step1: 观察m个transitions数据<span class="math inline">\(\left\{\left(S_{t+i}, a_{t+i}, r_{t+i}, S_{t+i+1}\right)\right\}_{i=0}^{m-1}\)</span></li>
+<li>step2: 计算TD target：
+<ul>
+<li><span class="math inline">\(y_{t}=\sum\limits_{i=0}^{m-1} \gamma^{i} \cdot r_{t+i}+\gamma^{m} \cdot v\left(s_{t+m} ; \mathbf{w}\right)\)</span></li>
+</ul></li>
+<li>step3: 计算 TD error：
+<ul>
+<li><span class="math inline">\(\delta_t = v(s_t;w) - y_t\)</span></li>
+</ul></li>
+<li>step4: 更新策略网络（actor）
+<ul>
+<li><span class="math inline">\(\boldsymbol{\theta} \leftarrow \boldsymbol{\theta}-\beta \cdot \delta_{t} \cdot \frac{\partial \ln \pi\left(a_{t} \mid s_{t} ; \boldsymbol{\theta}\right)}{\partial \boldsymbol{\theta}}\)</span></li>
+</ul></li>
+<li>step5: 更新价值网络（critic）
+<ul>
+<li><span class="math inline">\(\mathbf{w} \leftarrow \mathbf{w}-\alpha \cdot \delta_{t} \cdot \frac{\partial v\left(s_{t} ; \mathbf{w}\right)}{\partial \mathbf{w}}\)</span></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>再看看reinforce with baseline
+<ul>
+<li>step1 获取一整局游戏的transition 数据</li>
+<li>step2 使用观测到的奖励来计算回报
+<ul>
+<li><span class="math inline">\(u_{t}=\sum_{i=t}^{n} \gamma^{i-t} \cdot r_{i}\)</span></li>
+</ul></li>
+<li>step3 计算error：价值网络和回报的差
+<ul>
+<li><span class="math inline">\(\delta_{t}=v\left(s_{t} ; \mathbf{w}\right)-u_{t}\)</span></li>
+</ul></li>
+<li>step4 更新策略网络
+<ul>
+<li><span class="math inline">\(\boldsymbol{\theta} \leftarrow \boldsymbol{\theta}-\beta \cdot \delta_{t} \cdot \frac{\partial \ln \pi\left(a_{t} \mid s_{t} ; \boldsymbol{\theta}\right)}{\partial \boldsymbol{\theta}}\)</span></li>
+</ul></li>
+<li>step5 更新价值网络
+<ul>
+<li><span class="math inline">\(\mathbf{w} \leftarrow \mathbf{w}-\alpha \cdot \delta_{t} \cdot \frac{\partial v\left(s_{t} ; \mathbf{w}\right)}{\partial \mathbf{w}}\)</span></li>
+</ul></li>
+</ul></li>
+<li>两者的关系：A2C 和 Reinforce
+<ul>
+<li>Reinforce 是A2C的一种特例，用到了更多的观测数据，没有使用bootsrap（a2c的第二项）
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F4cy4PbmERs.png?alt=media&amp;token=07f13dfc-b03b-43f5-a99e-82690b8b6a79" /></li>
+</ul></li>
+<li>one -step A2C 是 multi-step A2C 的一个特例，使用了最少的观测数据。multi-step的效果更好
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNV4Q90x0xU.png?alt=media&amp;token=eed6b59f-01e5-4803-9475-27a7f594bab9" /></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>https://www.youtube.com/watch?v=hN9WMIMMeAI&amp;t=64s</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
+              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag"># 强化学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/25/reading_notes/investment/pork-and-beef/" rel="prev" title="牛肉是不是未来的趋势之一？">
+      <i class="fa fa-chevron-left"></i> 牛肉是不是未来的趋势之一？
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/26/reinforcement_learning/rl8_continous-action/" rel="next" title="强化学习8 连续控制">
+      强化学习8 连续控制 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E4%B8%AD%E7%9A%84baseline-14-%E6%95%B0%E5%AD%A6%E6%8E%A8%E5%AF%BC"><span class="nav-number">1.</span> <span class="nav-text">策略梯度中的Baseline 1&#x2F;4-数学推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E4%B8%AD%E7%9A%84baseline-24-reinforce-with-baseline"><span class="nav-number">2.</span> <span class="nav-text">策略梯度中的Baseline 2&#x2F;4-REINFORCE with Baseline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E4%B8%AD%E7%9A%84baseline-34-a2c-%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">策略梯度中的Baseline 3&#x2F;4-A2C 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E4%B8%AD%E7%9A%84baseline-44-reinforce%E4%B8%8Ea2c%E7%9A%84%E5%BC%82%E5%90%8C"><span class="nav-number">4.</span> <span class="nav-text">策略梯度中的Baseline 4&#x2F;4-REINFORCE与A2C的异同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

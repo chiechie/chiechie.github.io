@@ -2,7 +2,7 @@
 title:  深度学习8 gpt
 author: chiechie
 mathjax: true
-date: 2021-07-0 14:48:13
+date: 2021-03-15 14:48:13
 tags: 
 - NLP
 - 神经网络

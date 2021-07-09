@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-07-08T08:08:00.771Z</updated>
+  <updated>2021-07-09T05:35:34.527Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -17,13 +17,44 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>数据结构1 线性数据结构</title>
+    <link href="https://chiechie.github.io/2021/07/09/data_structure/ds1-linear-data-structure/"/>
+    <id>https://chiechie.github.io/2021/07/09/data_structure/ds1-linear-data-structure/</id>
+    <published>2021-07-09T04:13:11.000Z</published>
+    <updated>2021-07-09T05:35:34.527Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="总结">总结</h1><ol type="1"><li>数组（array），链表（linked list），栈（stack），队列（queue）是最常用的线性的数据结构。</li><li>数组是一片连续的存储空间中，链表在物理空间中不是连续地存在一起的。</li></ol><h1 id="detail">detail</h1><h2 id="数组array">数组(array)</h2><ol type="1"><li><p>数组是一个很基本的数据结构，使用数组和pointer可以构建出所有的数据结构</p></li><li><p>数组分为静态数组（static array）和动态数组（dynamic array）两种.静态数组大小固定，动态数组可以扩展。</p><blockquote><p>wangshusen的视频里面分别叫array和向量vector，下面还是以动/静为标准。</p></blockquote></li><li><p>静态数组(static array)是一个固定长度的容器（container），包含了n个元素，每个元素有一个索引，索引值从[0,n-1]</p></li><li><p>动态数组（dynamic array）的大小可以增加或者减少。</p></li><li><p>indexable是什么意思？数组中的每一个槽位(slot)/索引(index)，都能关联到（be referenced with）一个数字。索引就好像给每个元素取的名字，是一个阿拉伯数字。</p></li><li><p>静态数组是存储在内存中的一片连续的区域。</p></li><li><p>什么时候使用静态数组：</p><ul><li>依次（sequentially）存储元素/读取（accessing）元素</li><li>在读入/输出流式数据的时候，一次性读入数据量太大，所以分chunk读入数据，并且用buffer去读取每个chunk的数据，buffer就是用array实现的</li><li>在lookuptable中，也会用到数组，因为可以按照index读取数据</li><li>如果某个函数只允许返回1个，但是有多个信息需要返回，可以使用array构造一个workaround，将多个信息打包成一个array，然后返回这个array的指针或者reference</li><li>动态规划：用于缓存子问题的answer，例如背包问题（knapsack problem）和 应变变换问题。</li></ul></li><li><p>静态数组和动态数组的时间复杂度</p><ul><li>读取的时间复杂度: 都是O(1)，因为数组是indexable的</li><li>查找的时间复杂度：都是O（n），有可能查找的值找不到</li><li>插入某个元素的时间复杂度：静态数组不允许插入（记住，他是一个长度固定的容器），动态数组插入的时间复杂度是O（n）- 添加的时间复杂度：</li><li>删除：</li></ul></li><li><p>获取静态数组中元素的唯一方式，就是通过index去reference（数组的成员只对外暴露他们的index编号）。</p></li><li><p>operations on 动态数组：静态数组上能做的操作，动态数组都能做，还能做的更多，比如增，删。</p></li><li><p>怎么实现一个动态数组？</p><ul><li>方法1--使用静态数组实现：<ul><li>初始化：创建一个静态数组，有一个初始容量，此后一遍增加元素一遍跟踪容器中元素的个数。</li><li>添加新元素时，如果容器没满，直接加入； 如果容器满了，自动扩容--创建一个新的静态数组，大小为当前容量的2倍，将老的静态数组的元素复制到新的静态数组中，然后加入该元素。</li></ul></li></ul></li></ol><h2 id="链表linked-list">链表(linked list)</h2><ol type="1"><li>链表上相邻的元素在物理存储上并不是相邻的，每个元素的物理未知只存在于他的上下游节点中。</li><li>链表分为单链表（singly linked lists）和双链表(doubly linked lists）。</li><li>按顺序查找链表也很快。</li><li>链表是一种数组的组织形式，将数据组织成一个有序的一系列节点（nodes）的形式，每个节点（node）代表一个数据，每个节点都指向其他代表数据的节点。</li><li>下面是一个单链表（singly linked），每个节点都包含一个数据，同时包含一个指针，指向他的邻居节点。最后一个节点的指针是空的。</li></ol><p><img src="img.png" alt="img.png" /> 6. 在哪里会用到链表？ - 需要实现某个抽象数据类型时会用到链表，比如要实现列表（lists），队列（Queue）和 栈（Stack），因为这些抽象数据类型需要频繁操作adding和remocving，而这两个操作对于链表来说是相当拿手的。 - 链表很容易对现实事物建模，如火车 - 创建循环列表时很有用，可以让链表的最后一个节点的指针指向第一个节点，训练列表对于建模重复事件循环很有用， - 实现哈希表通常使用链表处理冲突的问题。 7. 链表的几个关键元素： - head：指向链表的第一个节点的pointer， - tail：指向表示链表的最后一个节点的pointer， - pointer表示邻居节点的指针， - node：表示一个包含数据和指针的对象。在实现时，每个节点也可以被表示为structures，或者classes 8. 单链表和双链表的区别，单链表的每个节点只存储下一个邻居的pointer，双向链表的每个节点存储两个指针，分别是上一个邻居节点和下一个邻居节点。前者占用的内存是后者的1/2，缺点是不知道当前节点的前一个节点是什么，要找的话，只能从head开始遍历。如果要删除某个元素，双链表的时间复杂度是常数，单链表是线性的，因为他要重新遍历以找到上家，然后修改它的指针。 <img src="img_1.png" alt="单链表vs双链表-优缺点对比" /> 9. 链表中，同时存链表的第一个节点和最后一个节点，是为了更快速的添加和删除元素。 10. 链表中的复杂度分析： - 搜索某个值在链表中的位置：单链表和双链表的复杂度是O(n) - 在链表头部/尾部插入某个元素：单链表和双链表的复杂度是O(1) - 删除头部的元素：单链表和双链表的复杂度是O(1) - 删除尾部的元素：单链表的复杂度O(n)，双链表的复杂度是O(1) - 删除中间元素：单链表的时间复杂度为复杂度O(n)，双链表的复杂度是O(n)</p><h1 id="参考">参考</h1><ol type="1"><li><a href="https://github.com/akzare/Algorithms">algorithm-python-github</a></li><li><a href="https://www.youtube.com/watch?v=gXgEDyodOJU">youtube</a></li><li><a href="https://www.youtube.com/watch?v=V_TulH374hw">Graph-theoretic Models</a></li><li><a href="https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure">the difference-between-ADT和DS</a></li><li><a href="https://www.csie.ntu.edu.tw/~htlin/course/dsa21spring/">数据结构和算法</a></li><li><a href="https://www.youtube.com/watch?v=RBSGKlAvoiM&amp;t=102s">Data Structures Easy to Advanced Course</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;总结&quot;&gt;总结&lt;/h1&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;数组（array），链表（linked list），栈（stack），队列（queue）是最常用的线性的数据结构。&lt;/li&gt;
+&lt;li&gt;数组是一片连续的存储空间中，链表在物理空间中不是连续地存在一起的。&lt;/</summary>
+      
+    
+    
+    
+    <category term="数据结构" scheme="https://chiechie.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    
+    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
+    
+    <category term="编程" scheme="https://chiechie.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="数据结构" scheme="https://chiechie.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
     <title>深度学习7 Bert</title>
     <link href="https://chiechie.github.io/2021/07/08/deeplearning/bert/"/>
     <id>https://chiechie.github.io/2021/07/08/deeplearning/bert/</id>
     <published>2021-07-08T03:50:30.000Z</published>
-    <updated>2021-07-08T08:08:00.771Z</updated>
+    <updated>2021-07-09T02:20:00.064Z</updated>
     
-    <content type="html"><![CDATA[<p>为什么有了word2vec还不够？还需要bert干嘛？因为一词多义，同样的词在不同的上下文中表达的意思不一样，而word2vec的表示是静态的。 所以我们需要一个能对上下文编码的动态的embedding方法，bert就应运而生了。</p><h1 id="总结">总结</h1><ul><li>Bert也是是一个对词语生成词语向量的方法。</li><li>Bert可以认为是一个预训练Transformer的encoder部分</li><li>Bert的全称是Bidirectional Encoder Representations from Transformers，双向encoder表示</li><li>Bert的目的是预训练transformer模型的encoder网络，</li><li>Bert的学习目标是怎么设定的呢？bert用以下两个任务来预训练transformer中的encoder网络<ul><li>任务1-预测遮挡词（Predict Masked Words）： 随机遮挡上下文，让encoder根据上下文来预测被遮挡的单词，大概随机遮挡挡15%的单词</li><li>任务2-预测下一个句子（Predict the Next Sentence）： 把两个句子放在一起，让encoder判断两句话是不是原文里面相邻的两句话，正样本摘自原文，负样本是随机选择50%。</li></ul></li><li>Bert学习的时候，把上面两个任务结合起来</li><li>假如有两个词被遮挡，就要训练三个任务，2个预测遮挡词任务，1个预测是否邻近的任务。前面两个是一个multi-class分类；后面一个是一个二分类。前两个任务的损失函数是cross entropy，第三个任务的损失函数是binary-entropy。</li><li>最终的目标函数，是上面三个损失函数的求和，把最终的目标函数关于模型参数求梯度，然后使用梯度下降来求参数。</li><li>Bert的优点：不需要人工标注数据，训练数据可以从wiki/网页等，长度为2.5billion单词</li><li>Bert可以利用海量数据训练一个超级大的模型</li><li>Bert想法简单有效，计算大家大，bert有两个版本<ul><li>base： 1.1yi参数, 16个tpu训练4days，不算调参数，该参数是公开的</li><li>large：2.35yi参数，64个tpu训练4days，不算调参数，该参数是公开的</li></ul></li><li>想用transformer直接下载徐训练好的bert模型就好，拿到参数就可以对英文编码了</li><li>RoBERTa建议只用masking，而且是动态masking,</li></ul><h1 id="附录">附录</h1><h2 id="bert模型原理">bert模型原理</h2><p>[bert模型可视化] (https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&amp;rect=0%2C0%2C2668%2C3126&amp;w=1980&amp;h=2320)</p><h3 id="任务一--预测遮挡词">任务一--预测遮挡词</h3><p>任务可以描述为： 输入： “The _____ sat on the mat” 输出： What is the masked word?</p><figure><img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><p>如何学习？ - e：one-hot vector of the masked word “cat”. - 𝐩: output probability distribution at the masked position. - 损失函数Loss = CrossEntropy(𝐞, 𝐩 ) - • Performing one gradient descent to update the model parameters.</p><h3 id="任务二---predict-the-next-sentence">任务二-- Predict the Next Sentence</h3><p>任务可以描述为： • Given the sentence: “calculus is a branch of math”. • Is this the next sentence? “it was developed by newton and leibniz” 可以表述为一个而分类问题 • 输入: [CLS] “calculus is a branch of math” [SEP] “it was developed by newton and leibniz” • Target: true</p><p>• [CLS] is a token for classification. • [SEP] is for separating sentences.</p><p>学习过程 <img src="img_1.png" alt="img_1.png" /></p><h3 id="结合两个任务">结合两个任务</h3><p>• Input: “[CLS] calculus is a [MASK] of math [SEP] it [MASK] developed by newton and leibniz”.</p><p>• Targets: true, “branch”, “was”.</p><h2 id="bert实践todo">Bert实践【todo】</h2><p>如何使用BERT做迁移学习（Transfer Learning）？</p><ul><li>demo数据：https://www.kaggle.com/c/fake-news-pair-classification-challenge/data</li><li>预训练的中文bert模型：hugging face</li></ul><h1 id="参考">参考</h1><ol type="1"><li>Bahdanau, Cho, &amp; Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.</li><li>Cheng, Dong, &amp; Lapata. Long Short-Term Memory-Networks for Machine Reading. In EMNLP, 2016.</li><li>Vaswani et al. Attention Is All You Need. In NIPS, 2017.</li><li><a href="https://www.youtube.com/watch?v=UlC6AjQWao8&amp;t=26s">BERT (预训练Transformer模型)</a></li><li><a href="https://arxiv.org/pdf/1907.11692v1.pdf">RoBERTa</a></li><li>Devlin, Chang, Lee, and Toutanova. BERT: Pre-training of deep bidirectional transformers for language understanding. In ACL, 2019.</li><li>https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html</li></ol>]]></content>
+    <content type="html"><![CDATA[<p>为什么有了word2vec还不够？还需要bert干嘛？因为一词多义，同样的词在不同的上下文中表达的意思不一样，而word2vec的表示是静态的。 所以我们需要一个能对上下文编码的动态的embedding方法，bert就应运而生了。</p><h1 id="总结">总结</h1><ul><li>Bert也是是一个对词语生成词语向量的方法。</li><li>Bert可以认为是一个预训练Transformer的encoder部分</li><li>Bert的全称是Bidirectional Encoder Representations from Transformers，双向encoder表示</li><li>Bert的目的是预训练transformer模型的encoder网络，</li><li>Bert的学习目标是怎么设定的呢？bert用以下两个任务来预训练transformer中的encoder网络<ul><li>任务1-预测遮挡词（Predict Masked Words）： 随机遮挡上下文，让encoder根据上下文来预测被遮挡的单词，大概随机遮挡挡15%的单词</li><li>任务2-预测下一个句子（Predict the Next Sentence）： 把两个句子放在一起，让encoder判断两句话是不是原文里面相邻的两句话，正样本摘自原文，负样本是随机选择50%。</li></ul></li><li>Bert学习的时候，把上面两个任务结合起来</li><li>假如有两个词被遮挡，就要训练三个任务，2个预测遮挡词任务，1个预测是否邻近的任务。前面两个是一个multi-class分类；后面一个是一个二分类。前两个任务的损失函数是cross entropy，第三个任务的损失函数是binary-entropy。</li><li>最终的目标函数，是上面三个损失函数的求和，把最终的目标函数关于模型参数求梯度，然后使用梯度下降来求参数。</li><li>Bert的优点：不需要人工标注数据，训练数据可以从wiki/网页等，长度为2.5billion单词</li><li>Bert可以利用海量数据训练一个超级大的模型</li><li>Bert想法简单有效，计算大家大，bert有两个版本<ul><li>base： 1.1yi参数, 16个tpu训练4days，不算调参数，该参数是公开的</li><li>large：2.35yi参数，64个tpu训练4days，不算调参数，该参数是公开的</li></ul></li><li>想用transformer直接下载徐训练好的bert模型就好，拿到参数就可以对英文编码了</li><li>RoBERTa建议只用masking，而且是动态masking,</li></ul><h1 id="附录">附录</h1><h2 id="bert模型原理">bert模型原理</h2><p>[bert模型可视化] (https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&amp;rect=0%2C0%2C2668%2C3126&amp;w=1980&amp;h=2320)</p><h3 id="任务一--预测遮挡词">任务一--预测遮挡词</h3><p>任务可以描述为： 输入： “The _____ sat on the mat” 输出： What is the masked word?</p><figure><img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption></figure><p>如何学习？ - e：one-hot vector of the masked word “cat”. - 𝐩: output probability distribution at the masked position. - 损失函数Loss = CrossEntropy(𝐞, 𝐩 ) - • Performing one gradient descent to update the model parameters.</p><h3 id="任务二---predict-the-next-sentence">任务二-- Predict the Next Sentence</h3><p>任务可以描述为： • Given the sentence: “calculus is a branch of math”. • Is this the next sentence? “it was developed by newton and leibniz” 可以表述为一个而分类问题 • 输入: [CLS] “calculus is a branch of math” [SEP] “it was developed by newton and leibniz” • Target: true</p><p>• [CLS] is a token for classification. • [SEP] is for separating sentences.</p><p>学习过程 <img src="img_1.png" alt="img_1.png" /></p><h3 id="结合两个任务">结合两个任务</h3><p>• Input: “[CLS] calculus is a [MASK] of math [SEP] it [MASK] developed by newton and leibniz”.</p><p>• Targets: true, “branch”, “was”.</p><h2 id="bert实践todo">Bert实践【todo】</h2><p>如何使用BERT做迁移学习（Transfer Learning）？</p><ul><li>demo数据：https://www.kaggle.com/c/fake-news-pair-classification-challenge/data</li><li>预训练的中文bert模型：hugging face</li></ul><h2 id="要不要冻结bert的部分参数">要不要冻结BERT的部分参数？</h2><p>Why not to freeze BERT？</p><p>That said, BERT is meant to be fine-tuned. The paper talks about the feature-based (i.e., frozen) vs fine-tuning approaches in more general terms, but the module doc spells it out clearly: "fine-tuning all parameters is the recommended practice." This gives the final parts of computing the pooled output a better shot at adapting to the features that matter most for the task at hand.</p><p>when you fine-tune BERT, you can choose whether to freeze the BERT layers or not. Do you want BERT to learn to embed the words in a slightly different way, based on your new data, or do you just want to learn to classify the texts in a new way (with the standard BERT embedding of the words)?</p><p>I wanted to use BertViz visualisation to see what effect the classification tuning had on the attention heads, so I did fine-tuning with the first 8 layers of BERT frozen and the remaining 4 layers unfrozen.</p><p>Some people suggest doing gradual unfreezing of the BERT layers, ie finetuning with BERT frozen, then finetuning a bit more with just one layer unfrozen, etc.</p><h1 id="参考">参考</h1><ol type="1"><li>Bahdanau, Cho, &amp; Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.</li><li>Cheng, Dong, &amp; Lapata. Long Short-Term Memory-Networks for Machine Reading. In EMNLP, 2016.</li><li>Vaswani et al. Attention Is All You Need. In NIPS, 2017.</li><li><a href="https://www.youtube.com/watch?v=UlC6AjQWao8&amp;t=26s">BERT (预训练Transformer模型)</a></li><li><a href="https://arxiv.org/pdf/1907.11692v1.pdf">RoBERTa</a></li><li>Devlin, Chang, Lee, and Toutanova. BERT: Pre-training of deep bidirectional transformers for language understanding. In ACL, 2019.</li><li><a href="https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html"></a></li><li><a href="https://pytorch.org/hub/pytorch_fairseq_roberta/">ROBERTA-pytorch</a></li><li><a href="https://discuss.huggingface.co/t/fine-tune-bert-models/1554/2"></a></li><li>https://medium.com/swlh/painless-fine-tuning-of-bert-in-pytorch-b91c14912caa</li></ol>]]></content>
     
     
       
@@ -48,6 +79,40 @@
     <category term="Bert" scheme="https://chiechie.github.io/tags/Bert/"/>
     
     <category term="attention" scheme="https://chiechie.github.io/tags/attention/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据结构0 总览</title>
+    <link href="https://chiechie.github.io/2021/07/08/data_structure/ds0_summary/"/>
+    <id>https://chiechie.github.io/2021/07/08/data_structure/ds0_summary/</id>
+    <published>2021-07-08T01:17:29.000Z</published>
+    <updated>2021-07-09T05:37:50.282Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>数据结构是在计算机中存储数据的方法</p><p>一般情况下，精心挑选的数据结构能产生有效的算法</p></blockquote><h2 id="why-数据结构">why 数据结构？</h2><ol type="1"><li>数据结构是对数据的一种组织形式，以方便后续数据被高效地使用。</li><li>数据结构是创建快速高效算法的必要ingredeints，数据结构可以帮助管理和组织数据；让代码看起来更干净。</li><li>数据结构/抽象数据类/程序的关系就好像，使用乐高搭建一个建筑，层层抽象。</li></ol><h3 id="抽象数据类型和数据结构">抽象数据类型和数据结构</h3><ol start="2" type="1"><li>抽象数据类型(Abstract Data Type, ADT)是对数据结构的一个抽象，它只提供接口（interface），数据结构必须遵循该接口（interface），但是这个接口不涉及任何关于实施或者编程语言相关的细节。</li><li>抽象数据类型的数据结构的关系，举个例子，从一个地方A到另一个地方B有很多种方法，可以骑自行车或者走路或者坐火车，前者是抽象数据类型，后者是该抽象数据类型对应的具体的数据结构。</li><li>一个抽象数据类型之定义了数据结构应该实现什么功能，应该有哪些方法，至于方法的实现细节抽象数据类型是不管的。</li><li>举几个抽象数据类型和数据结构的例子<ul><li>抽象数据类型列表（list）可以使用动态数组或者链表实现，这两个数据结构都能实现add，removing，indexing元素。</li><li>抽象数据类型队列（Queue）可以使用Linked list based Queue/Array based Queue/Stack based Queue。</li><li>抽象数据类型（Map）可以使用Tree Map/Hash Map/Hash Table实现</li></ul></li><li>ADT is a logical description and data structure is concrete.</li><li>ADT is the logical picture of the data and the operations to manipulate the component elements of the data.</li><li>Data structure is the actual representation of the data during the implementation and the algorithms to manipulate the data elements.</li><li>ADT is in the logical level and data structure is in the implementation level.</li></ol><h3 id="计算复杂度分析">计算复杂度分析</h3><ol type="1"><li><p>为了分析我们的数据结构的性能：执行该算法需要花费多少时间和占用多少内存？</p></li><li><p>O(*)表示在worst case的情况下，一个算法复杂度上界是多少，当输入数据变得很大的时候，有助于评估性能, 一般来说有这么几种时间复杂度:</p><ul><li>常数时间: O(1)</li><li>对数时间： O(log(n))</li><li>线性时间： O(n)</li><li>linearithmix时间: O(nlog(n))</li><li>二次时间： O(n^2)</li><li>三次时间: O(n^3)</li><li>指数时间：O（b^n）</li><li>因子时间: O(n!)</li></ul><p>n表示输入的大小复杂度从低到高。</p></li><li><p>因为O（*）只关注当数据变得足够大的时候，算法的表现，所以算法的实际运行时间中的常数项，低阶项都可以省掉，系数都可以扔掉哦。 <span class="math inline">\(O(n + c) = O(n)\)</span> <span class="math inline">\(O(cn ) = O(n)\)</span> <span class="math inline">\(O(n^2 +2*n) = O(n^2)\)</span></p></li><li><p>二分查找是用在一个有序数组上的查找算法，时间复杂度是对数</p></li><li><p>找一个集合的所有子集-时间复杂度是指数O(2^n)</p></li><li><p>找一个字符串的所有排列O(n!)</p></li><li><p>使用合并排序算法来排序，时间复杂度是 O(nlogn)</p></li></ol><h2 id="数据结构有哪几种">数据结构有哪几种？</h2><ol type="1"><li><p>数据结构分为线性数据结构和非线性数据结构</p></li><li><p>线性数据结构包括数组（array），链表（linked list），栈（stack），队列（queue） <img src="b3728c27302a8548fe9e8a87e619ca83.png" alt="线性数据结构" /></p></li><li><p>非线性数据结构包括树和图,树可以认为是有向图的special case <img src="e6d5a8d9a75587abe612dfef9abffc01.png" alt="非线性数据结构" /></p></li><li><p>图分有向图和无向图 <img src="18c651092d22c7204021d10a5a79b0ff.png" alt="有向图vs无向图" /></p></li><li><p>无向图的一个实例是fb的社交网络，边表示好友关系。 <img src="f3fc896014d62fb1ec1c96c93210f7ff.png" alt="社交网络" /></p></li><li><p>基于社交网络这个数据结构有什么应用呢？好友推荐, 推荐朋友的朋友,网络社会科学的小世界</p><blockquote><p>小世界网络的重要性质：“流行病学”、“合作”、“知识”</p></blockquote></li><li><p>有向图的一个实例是万维网： <img src="b9b97250ce6e998045dcbb0d5b379724.png" alt="www" /></p></li><li><p>图还可以分有权图和无权图。无权图可认为是权图的special case，权重都为1。</p></li><li><p>有权图的一个实例是高速公路网,边代表距离 <img src="5b81b50b2d2b048ed3188b71af85a02f.png" alt="公路网" /></p></li><li><p>树的一个实例是家谱，树种，任意一对节点，有且只有一条通路（不存在loop嘛）</p></li><li><p>因果图是一个有向有权图。</p></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://github.com/williamfiset/Algorithms">algorithm-github</a></li><li><a href="https://www.youtube.com/watch?v=gXgEDyodOJU">youtube</a></li><li><a href="https://www.youtube.com/watch?v=V_TulH374hw">Graph-theoretic Models</a></li><li><a href="https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure">the difference-between-ADT和DS</a></li><li><a href="https://www.csie.ntu.edu.tw/~htlin/course/dsa21spring/">数据结构和算法</a></li><li><a href="https://www.youtube.com/watch?v=RBSGKlAvoiM&amp;t=102s">Data Structures Easy to Advanced Course</a></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;数据结构是在计算机中存储数据的方法&lt;/p&gt;
+&lt;p&gt;一般情况下，精心挑选的数据结构能产生有效的算法&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;why-数据结构&quot;&gt;why 数据结构？&lt;/h2&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;数据结构是对</summary>
+      
+    
+    
+    
+    <category term="数据结构" scheme="https://chiechie.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    
+    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
+    
+    <category term="编程" scheme="https://chiechie.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="数据结构" scheme="https://chiechie.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
   </entry>
   
@@ -429,40 +494,6 @@
   </entry>
   
   <entry>
-    <title>数据结构基础</title>
-    <link href="https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/"/>
-    <id>https://chiechie.github.io/2021/06/25/data_structure/data-structure-base/</id>
-    <published>2021-06-25T01:17:29.000Z</published>
-    <updated>2021-07-06T06:42:59.431Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>数据结构是在计算机中存储数据的方法</p><p>一般情况下，精心挑选的数据结构能产生有效的算法</p></blockquote><h2 id="总结">总结</h2><ol type="1"><li><p>数据结构分为线性数据结构和非线性数据结构</p></li><li><p>线性数据结构包括数组（array），链表（linked list），栈（stack），队列（queue）</p><figure><img src="b3728c27302a8548fe9e8a87e619ca83.png" alt="线性数据结构" /><figcaption aria-hidden="true">线性数据结构</figcaption></figure></li><li><p>非线性数据结构包括树和图,树可以认为是有向图的special case <img src="e6d5a8d9a75587abe612dfef9abffc01.png" alt="非线性数据结构" /></p></li><li><p>图分有向图和无向图</p><figure><img src="18c651092d22c7204021d10a5a79b0ff.png" alt="有向图vs无向图" /><figcaption aria-hidden="true">有向图vs无向图</figcaption></figure></li><li><p>无向图的一个实例是fb的社交网络，边表示好友关系。</p><figure><img src="f3fc896014d62fb1ec1c96c93210f7ff.png" alt="社交网络" /><figcaption aria-hidden="true">社交网络</figcaption></figure></li><li><p>基于社交网络这个数据结构有什么应用呢？好友推荐, 推荐朋友的朋友,网络社会科学的小世界</p><blockquote><p>小世界网络的重要性质：“流行病学”、“合作”、“知识”</p></blockquote></li><li><p>有向图的一个实例是万维网： <img src="b9b97250ce6e998045dcbb0d5b379724.png" alt="www" /></p></li><li><p>图还可以分有权图和无权图。无权图可认为是权图的special case，权重都为1。</p></li><li><p>有权图的一个实例是高速公路网,边代表距离 <img src="5b81b50b2d2b048ed3188b71af85a02f.png" alt="公路网" /></p></li><li><p>树的一个实例是家谱，树种，任意一对节点，有且只有一条通路（不存在loop嘛）</p></li><li><p>因果图是一个有向有权图。</p></li></ol><h2 id="附录">附录</h2><h3 id="抽象数据类型和数据结构">抽象数据类型和数据结构</h3><ol type="1"><li>ADT is a logical description and data structure is concrete.</li><li>ADT is the logical picture of the data and the operations to manipulate the component elements of the data.</li><li>Data structure is the actual representation of the data during the implementation and the algorithms to manipulate the data elements.</li><li>ADT is in the logical level and data structure is in the implementation level.</li></ol><h3 id="列表和链表">列表和链表</h3><ol type="1"><li>列表（list）或序列（sequence）是一种抽象数据类型(ADT),</li><li>链表是一种数据结构。</li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=gXgEDyodOJU">youtube</a></li><li><a href="https://www.youtube.com/watch?v=V_TulH374hw">Graph-theoretic Models</a></li><li><a href="https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure">the difference-between-ADT和DS</a></li><li><a href="https://www.csie.ntu.edu.tw/~htlin/course/dsa21spring/">数据结构和算法</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;数据结构是在计算机中存储数据的方法&lt;/p&gt;
-&lt;p&gt;一般情况下，精心挑选的数据结构能产生有效的算法&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;&lt;p&gt;数据结构分为线性数据结构和非线性</summary>
-      
-    
-    
-    
-    <category term="数据结构" scheme="https://chiechie.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-    
-    <category term="图数据" scheme="https://chiechie.github.io/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/"/>
-    
-    <category term="编程" scheme="https://chiechie.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="数据结构" scheme="https://chiechie.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-  </entry>
-  
-  <entry>
     <title>一些聚类算法</title>
     <link href="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/"/>
     <id>https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/</id>
@@ -614,36 +645,6 @@
     
     
     <category term="哲学" scheme="https://chiechie.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于AGI？</title>
-    <link href="https://chiechie.github.io/2021/06/17/reading_notes/reality/about-AGI/"/>
-    <id>https://chiechie.github.io/2021/06/17/reading_notes/reality/about-AGI/</id>
-    <published>2021-06-17T09:04:32.000Z</published>
-    <updated>2021-07-09T00:29:06.213Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="chiechies-reflection">chiechie's reflection</h2><ol type="1"><li>理论突破不是技术爆发的必经之路，很多技术都没有理论，比如古代时候的发明，造船，造纸，造火药，爱迪森发明电灯泡，还有现代的量子计算机和深度学习，理论完备个P。</li><li>大部分发明都是做实验，通过试错迭代而产生的,而很多情况下理论都是滞后的。</li></ol><h2 id="无人驾驶现状">无人驾驶现状</h2><ol type="1"><li>一个技术在工业化生产之前，一般要经历三个阶段, 理论突破，技术验证，工程化<ol type="1"><li>理论突破，科学家在理论上证明其可行性，即产品要达到一个什么样的性能，在技术上是一定可以实现的；</li><li>技术突破，研究机构突破技术实现上壁垒，做出来达到预期的Demo；</li><li>工程化，主要解决产品设计，方案优化，功能完备，性能提升，良品率，鲁棒性，可用性提升，大规模复制的技术准备，成本降低等工程问题。</li></ol></li><li>通用无人驾驶在第一，第二阶段还彻底整明白的情况下，由资本驱动直接进入第三阶段.</li></ol><h2 id="agi的理论先行者">AGI的理论先行者</h2><ol type="1"><li>目前强化学习是最被看好的方向。</li><li>强化学习本质上是演化论的思路，跟自然界一样，给定一个reward，让机器放肆的学习探索。</li><li>目前还需要解决的问题是计算资源的问题。</li><li>自然界的演化大部分时间是平稳状态，只有极少数黑天鹅事件决定了演化的方向。</li><li>在计算机中模拟agent的演化过程，和自然界的演化类似，需要忍受长期的无秩序无进展。</li><li>如果全世界的资源往这方面倾斜，可能可以加快黑天鹅事件出现。</li><li>理论突破不是AGI成熟的必要条件，有可能是2者互相促进发展。</li><li>目前收到关注较多的公司--自动标注样本公司scale</li></ol><h2 id="参考">参考</h2><ol type="1"><li>https://www.zhihu.com/question/404870865/answer/1324577689</li><li>https://www.zhihu.com/question/464616760/answer/1940847401</li><li><a href="https://www.sciencedirect.com/science/article/pii/S0004370221000862">reward is enough ,david silver</a></li><li><a href="https://www.notboring.co/p/scale-rational-in-the-fullness-of?token=eyJ1c2VyX2lkIjoxNzY2NjQ2OSwicG9zdF9pZCI6Mzc4NDY2MzEsIl8iOiJrTHFWcCIsImlhdCI6MTYyNDQyNDU4NCwiZXhwIjoxNjI0NDI4MTg0LCJpc3MiOiJwdWItMTAwMjUiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.zWmuXLn35R720iDVtX7yTuTpM4kCMk25457XzZN8_Ks">not boring</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;chiechies-reflection&quot;&gt;chiechie&#39;s reflection&lt;/h2&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;理论突破不是技术爆发的必经之路，很多技术都没有理论，比如古代时候的发明，造船，造纸，造火药，爱迪森发明电灯泡，还有现代的量子计算机</summary>
-      
-    
-    
-    
-    <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-    <category term="人工智能" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    
-    <category term="科技史" scheme="https://chiechie.github.io/tags/%E7%A7%91%E6%8A%80%E5%8F%B2/"/>
-    
-    <category term="人工智障" scheme="https://chiechie.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E9%9A%9C/"/>
     
   </entry>
   

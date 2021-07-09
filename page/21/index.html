@@ -165,6 +165,145 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/23/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/23/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/" class="post-title-link" itemprop="url">chapter2.1.5 基于拓扑的根因定位-CN-Softbei2020比赛</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-23 14:37:13" itemprop="dateCreated datePublished" datetime="2021-05-23T14:37:13+08:00">2021-05-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>数据来自CN-Softbei2020比赛--《基于网络拓扑及告警的故障根因定位系统实现及算法研究》</p>
+<p>现在实验一种很激进的做法---仅靠指标做根因分析</p>
+<p>当涉及的指标过多时, 得到的拓扑图非常复杂.</p>
+</blockquote>
+<p><strong>赛题名称:基于网络拓扑及告警的故障根因定位系统实现及算法研究</strong> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FQm8N2Yas2F.png?alt=media&amp;token=110a4f63-df4b-4080-96e7-538078152112" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FiscvbTqPV9.png?alt=media&amp;token=0fd1674e-9bc7-4ac2-8f48-add9cdf2c946" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fn2jiCvLL8K.png?alt=media&amp;token=6ee81f61-a008-4040-b1d0-5968b6ab5765" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbiDgXGazeM.png?alt=media&amp;token=60d55dac-68c7-42df-a7c4-4b8270ce0578" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FW1v20u-7tH.png?alt=media&amp;token=0702a100-6ee5-4e4d-98b1-a42e92ac1fa0" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fsvpv3-38IA.png?alt=media&amp;token=5b7e7f4f-0ac7-4180-bfa2-1e2447bffa3a" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FzflLEiJ2fa.png?alt=media&amp;token=d07f20d5-c2b7-4011-acd4-c6df97b7964b" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FherPwjhHIR.png?alt=media&amp;token=8cbd3491-37d9-46d6-9c12-7d6292e3689f" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FF47x1XYXV2.png?alt=media&amp;token=f837d32c-a170-4bf6-8a20-7be096537ba3" /> - 大型电商平台内部涉及上百个系统间的相互调用，每天会产生上万条告警数据。如何利用网络拓扑信息及告警数据，及时有效的对告警进行过滤、分析，最终给出有效告警及疑似根因是网络运维面临的主要挑战。 - 本赛题的目标是分析实际生产中的网络拓扑及告警数据，设计并实现一种故障根因定位算法，准确的定位出故障根因节点。 - 赛题的价值在于准确、快速的定位网络故障，提升一线网络运维的效率，降低网络故障产生的损失。 - 该赛题主要涉及数据分析、图论、信息论、自然语言处理、神经网络等技术，要求参赛队员掌握相关的基础知识，具有python数据分析、处理及功能开发能力。 # 业务背景：</p>
+<ul>
+<li>网络拓扑中一个节点出现故障，往往会导致与其相连的其他节点也发生异常，进而产生大量告警，将真正根因淹没掉。当出现大量告警时，为保证电商业务的稳定运行，我们需要对这些告警进行分析处理，过滤掉无效的告警，准确定位出可能的疑似根因节点，缩短故障定位时间。</li>
+<li>在实际中，同一故障触发的告警信息往往相似的。网络故障定位的一般过程为：先根据历史告警数据及标记进行离线分析，总结因果关系的规律；然后在线分析阶段，首先对告警数据进行去噪和聚类，然后对类内的告警进行因果关系匹配，得到当前告警的可能根因。</li>
+</ul>
+<h1 id="赛题场景">赛题场景：</h1>
+<ul>
+<li>提供实际生产中的网络拓扑数据，100组不同时间段的告警数据，每组中可能有根因，也可能没有根因，根据拓扑数据及告警数据，设计并实现故障根因定位算法，最终在测试数据上评估告警根因定位的F1值，可视化展现根因信息及根因关联的局部拓扑图。</li>
+</ul>
+<h1 id="要求">要求</h1>
+<ul>
+<li>1、基于提供的训练数据，设计并实现故障根因定位算法。</li>
+<li>2、故障根因定位算法中要包含告警数据预处理和故障根因定位两个模块；</li>
+<li>3、可视化展现根因信息及根因关联的局部拓扑图。</li>
+</ul>
+<h1 id="训练数据">训练数据</h1>
+<ul>
+<li>1、实际生产中的部分网络拓扑数据，json格式，key为父亲节点，value为孩子节点list。</li>
+<li>2、告警数据，csv格式，包括告警节点，告警信息，告警时间，告警级别，是否为根因。</li>
+<li>3、提供100组不同时间段的告警数据，每组中可能有根因，也可能没有根因，如果有根因，只有1个准确的根因。</li>
+<li>数据样例：</li>
+</ul>
+<ol type="1">
+<li>拓扑图样例：</li>
+</ol>
+<ul>
+<li>key为源节点，value为目标节点list，类似下面这样：AAA表示系统名，NG表示是Nginx。</li>
+<li><code>javascript &#123;   "AAA-10.10.0.1":     ["AAA-NG-10.10.0.2",      "AAA-NG-10.10.0.3",      "AAA-NG-10.10.0.4"],    "AAA-NG-10.10.0.2":    ["AAA-JBOSS-10.10.0.5",     "AAA-JBOSS-10.10.0.6",      "AAA-JBOSS-10.10.0.7"] &#125;</code> 2。告警数据样例：</li>
+</ul>
+<p>告警数据为csv格式，如下面所示，其中sysEname为系统名称, software为软件类型,time告警时间,triggername告警信息，里面包含ip信息，isrootcause表示是否为根因，0-否，1-是。 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">,sysEname,software,time,告警信息,isrootcause</span><br><span class="line"><span class="number">0</span>,AAA,Elasticsearch <span class="number">1.7</span><span class="number">.0</span> ,<span class="number">2019</span>-<span class="number">06</span>-<span class="number">01</span> <span class="number">00</span>:<span class="number">01</span>:<span class="number">04</span>,<span class="string">&quot;eth0 网卡接受数据流量,net.if.in[eth0],主机10.10.0.8(VM)网卡eth0接收流量持续10分钟平均值大于180M&quot;</span>,<span class="number">0</span></span><br><span class="line"><span class="number">1</span>,BBB,WildFly standalone ,<span class="number">2019</span>-<span class="number">06</span>-<span class="number">01</span> <span class="number">00</span>:<span class="number">01</span>:<span class="number">05</span>,主机<span class="number">10.10</span><span class="number">.0</span><span class="number">.9</span>日志中有READONLY信息,<span class="number">0</span></span><br><span class="line"><span class="number">2</span>,BBB,WildFly standalone ,<span class="number">2019</span>-<span class="number">06</span>-<span class="number">01</span> <span class="number">00</span>:<span class="number">01</span>:<span class="number">06</span>,主机<span class="number">10.10</span><span class="number">.0</span><span class="number">.10</span>日志中有READONLY信息,<span class="number">0</span></span><br></pre></td></tr></table></figure> 测试数据： - 1、提供20组训练数据，格式同训练数据，不提供根因标注（没有is_root列） - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F0iBs9_I--S.png?alt=media&amp;token=3963d6db-13df-4b57-9318-a0eb008c6766" /></p>
+<p>总结一下， -取发生故障的这段时间内(每次10到15min)： - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FhT-H9-YnH5.png?alt=media&amp;token=2b7a6f5f-c828-49c0-b6be-f274de231c1d" /> - 所有告警数据： 来自哪台机器，那个系统，哪个软件，告警描述 - 软硬件拓扑数据：静态的， - 根因incident可能存在也可能不存在 - 根因incident可能是1个也有可能是多个（多个是因为持续异常，所以就持续告警） - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FRgMOthtgUp.png?alt=media&amp;token=37da69ab-2425-472f-acc1-7ea85c517cf3" /> - - 训练数据有标记，人工标的根因事件 - 根因分析的样本粒度是 event，即一个告警事件，它的特征包括，主机id，系统名称，软件类型（optinal），告警信息</p>
+<ul>
+<li>还没有搞清楚，如何处理这些数据，已经定位到根因？
+<ul>
+<li>如何利用拓扑数据？</li>
+<li>如何利用标记数据？</li>
+<li>如何利用历史数据？--历史的告警数据</li>
+</ul></li>
+<li>看一下nokia的解决方案把[[bell给nokia做 故障诊断的 方案]]</li>
+</ul>
+<h2 id="数据解析">数据解析</h2>
+<figure>
+<img src="dataoverview.png" alt="dataoverview" /><figcaption aria-hidden="true">dataoverview</figcaption>
+</figure>
+<p>将每个事件看成一个指标的话，可以得到一个节点为2876的图</p>
+<h2 id="关联分析">关联分析</h2>
+<figure>
+<img src="./orr.png" alt="corr" /><figcaption aria-hidden="true">corr</figcaption>
+</figure>
+<figure>
+<img src="img.png" alt="节点个数" /><figcaption aria-hidden="true">节点个数</figcaption>
+</figure>
+<p>对应的 因果图巨大无比，如下：</p>
+<figure>
+<img src="./correlation_topology.png" alt="图1-关联拓扑" /><figcaption aria-hidden="true">图1-关联拓扑</figcaption>
+</figure>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="http://www.cnsoftbei.com/plus/view.php?aid=479">CN-Softbei2020比赛</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/Insighter/blob/master/aiops_CN-Softbei_2020.ipynb">chiechie的代码-github</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/23/data_structure/graph/randomwalking/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -254,177 +393,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/22/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/22/AIOps/AIOps-2_1_4-topo-rca-aiops2021/" class="post-title-link" itemprop="url">chapter2.1.4 基于拓扑的根因定位-AIOps挑战赛2021-demo方案</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-22 22:04:42" itemprop="dateCreated datePublished" datetime="2021-05-22T22:04:42+08:00">2021-05-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="数据解析">数据解析</h2>
-<p>比赛数据包括： 部署拓扑，指标数据，日志数据，调用链数据，故障标签</p>
-<h3 id="部署数据">部署数据</h3>
-<figure>
-<img src="./bushu.png" alt="部署数据" /><figcaption aria-hidden="true">部署数据</figcaption>
-</figure>
-<h3 id="指标数据">指标数据</h3>
-<p>指标数据包括业务指标 和 性能指标。 业务指标用于触发根因分析，性能指标用于局部的根因定位</p>
-<p>每个指标数据，都需要附带的信息有：归属物理设备id，以及相应用id，（这样才能做机器的指标依赖的额故障定位）</p>
-<h4 id="业务指标">业务指标</h4>
-<p>kpi_0304.csv</p>
-<ul>
-<li>rr：单位%，系统响应率</li>
-<li>sr：单位%，业务成功率</li>
-<li>cnt：单位条，交易量</li>
-<li>mrt：单位ms，平均响应时间</li>
-<li>tc：交易码, 有11种应用, 'ServiceTest1', 'ServiceTest10', 'ServiceTest11', 'ServiceTest2', 'ServiceTest3', 'ServiceTest4', 'ServiceTest5', 'ServiceTest6', 'ServiceTest7', 'ServiceTest8', 'ServiceTest9'</li>
-</ul>
-<figure>
-<img src="./yewu.png" alt="业务指标" /><figcaption aria-hidden="true">业务指标</figcaption>
-</figure>
-<h4 id="性能指标">性能指标</h4>
-<p>每个应用的指标, 每个kpi会有一个对应的机器id（即cmdb_id）</p>
-<ul>
-<li>cmdb_id: 指标归属的物理设备, 每个物理设备上收集到的指标一般来说包括两种，「操作系统」性能指标以及「服务」性能指标。</li>
-<li>kpi_name: 指标归属的服务类型，比如归属于操作系统/java虚拟机/Redis/Tomcat/Mysql等</li>
-</ul>
-<figure>
-<img src="./xingneng.png" alt="性能指标" /><figcaption aria-hidden="true">性能指标</figcaption>
-</figure>
-<h3 id="日志数据">日志数据</h3>
-<p>日志数据有3个重要字段：</p>
-<ul>
-<li>cmdb_id： 日志是从哪台物理机器上产生</li>
-<li>log_name: 日志对应的组件名和日志类别, 相当于4个采集器，eg catalina/gc/localhost/localhost_access_log</li>
-<li>value: 日志内容, 里面的信息包括，日志级别，egINFO/WARNING/SEVERE，具体报错信息</li>
-</ul>
-<p>目前只有Tomcat4台服务器有日志数据；并且根据采集的不同的组件，收集的日志。</p>
-<h3 id="调用链数据">调用链数据</h3>
-<p>调用链路数据来自：trace/trace_0304.csv</p>
-<p>重要的字段有：</p>
-<ul>
-<li>cmdb_id: 即对应的服务是部署在哪个机器上的, 一次全局的trace_id 可能跨越几个设备</li>
-<li>parent_id：子调用的上一次调用</li>
-<li>trace_id：一次trace对应的全局id，一个trace包括多次子调用</li>
-<li>span_id： 本流程的Span ID，</li>
-</ul>
-<figure>
-<img src="./trace.png" alt="调用链" /><figcaption aria-hidden="true">调用链</figcaption>
-</figure>
-<h3 id="故障标签">故障标签</h3>
-<p>故障类型可分为--'应用故障', '网络故障', '资源故障'</p>
-<ul>
-<li>应用故障可分为2类：'JVM CPU负载高', 'JVM OOM Heap'</li>
-<li>网络故障可分为两类：'网络延迟', '网络隔离'</li>
-<li>资源故障可分为三类：CPU使用率爬升，内存使用率过高，磁盘IO写使用率过高</li>
-</ul>
-<h2 id="demo方案">demo方案</h2>
-<p>流程：</p>
-<ol type="1">
-<li>对「业务指标」进行异常检测，异常则触发下面的诊断。</li>
-<li>调用链异常检测和根因定位:「业务」指标异常了，定位是哪个中间件或者服务出现了异常，以及根因的那个服务。</li>
-<li>对应机器的指标进行根因定位：定位到了调用链中的根因服务，然后对该服务所在的机器进行下钻分析，进行更细粒度的根因指标定位，使用到了机器和中间件的「性能指标」。</li>
-</ol>
-<h3 id="业务指标异常检测略">业务指标异常检测(略)</h3>
-<p>找出第一个故障发生时刻：</p>
-<ul>
-<li>2021-03-04 08:39:00 - 2021-03-04 08:44:00</li>
-</ul>
-<h3 id="调用链异常检测和根因定位">调用链异常检测和根因定位</h3>
-<ol type="1">
-<li>找出异常调用路径--trace_id</li>
-<li>找出对应的根因的子调用--span_id</li>
-<li>找到span_id的机器</li>
-</ol>
-<figure>
-<img src="./trace_rca.png" alt="调用链异常检测和根因定位" /><figcaption aria-hidden="true">调用链异常检测和根因定位</figcaption>
-</figure>
-<h3 id="对定位到的机器进行指标根因分析">对定位到的机器进行指标根因分析</h3>
-<ol type="1">
-<li>搜集该机器的所有性能指标，进行异常检测</li>
-<li>对于异常的指标，根据历史数据中学习到的因果图，进行根因推断。</li>
-</ol>
-<figure>
-<img src="./metric_rca.png" alt="指标根因分析" /><figcaption aria-hidden="true">指标根因分析</figcaption>
-</figure>
-<h3 id="对下-分析结果-和-标准答案">对下 分析结果 和 标准答案</h3>
-<figure>
-<img src="./evaluate.png" alt="对比" /><figcaption aria-hidden="true">对比</figcaption>
-</figure>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://iops.ai/competition_detail/?competition_id=17&amp;flag=1">aiops挑战赛2021-官网</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/22/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/22/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -490,7 +462,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">197</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -165,6 +165,134 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/09/data_structure/ds1-linear-data-structure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/09/data_structure/ds1-linear-data-structure/" class="post-title-link" itemprop="url">数据结构1 线性数据结构</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-09 12:13:11 / 修改时间：13:35:34" itemprop="dateCreated datePublished" datetime="2021-07-09T12:13:11+08:00">2021-07-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="总结">总结</h1>
+<ol type="1">
+<li>数组（array），链表（linked list），栈（stack），队列（queue）是最常用的线性的数据结构。</li>
+<li>数组是一片连续的存储空间中，链表在物理空间中不是连续地存在一起的。</li>
+</ol>
+<h1 id="detail">detail</h1>
+<h2 id="数组array">数组(array)</h2>
+<ol type="1">
+<li><p>数组是一个很基本的数据结构，使用数组和pointer可以构建出所有的数据结构</p></li>
+<li><p>数组分为静态数组（static array）和动态数组（dynamic array）两种.静态数组大小固定，动态数组可以扩展。</p>
+<blockquote>
+<p>wangshusen的视频里面分别叫array和向量vector，下面还是以动/静为标准。</p>
+</blockquote></li>
+<li><p>静态数组(static array)是一个固定长度的容器（container），包含了n个元素，每个元素有一个索引，索引值从[0,n-1]</p></li>
+<li><p>动态数组（dynamic array）的大小可以增加或者减少。</p></li>
+<li><p>indexable是什么意思？数组中的每一个槽位(slot)/索引(index)，都能关联到（be referenced with）一个数字。索引就好像给每个元素取的名字，是一个阿拉伯数字。</p></li>
+<li><p>静态数组是存储在内存中的一片连续的区域。</p></li>
+<li><p>什么时候使用静态数组：</p>
+<ul>
+<li>依次（sequentially）存储元素/读取（accessing）元素</li>
+<li>在读入/输出流式数据的时候，一次性读入数据量太大，所以分chunk读入数据，并且用buffer去读取每个chunk的数据，buffer就是用array实现的</li>
+<li>在lookuptable中，也会用到数组，因为可以按照index读取数据</li>
+<li>如果某个函数只允许返回1个，但是有多个信息需要返回，可以使用array构造一个workaround，将多个信息打包成一个array，然后返回这个array的指针或者reference</li>
+<li>动态规划：用于缓存子问题的answer，例如背包问题（knapsack problem）和 应变变换问题。</li>
+</ul></li>
+<li><p>静态数组和动态数组的时间复杂度</p>
+<ul>
+<li>读取的时间复杂度: 都是O(1)，因为数组是indexable的</li>
+<li>查找的时间复杂度：都是O（n），有可能查找的值找不到</li>
+<li>插入某个元素的时间复杂度：静态数组不允许插入（记住，他是一个长度固定的容器），动态数组插入的时间复杂度是O（n）- 添加的时间复杂度：</li>
+<li>删除：</li>
+</ul></li>
+<li><p>获取静态数组中元素的唯一方式，就是通过index去reference（数组的成员只对外暴露他们的index编号）。</p></li>
+<li><p>operations on 动态数组：静态数组上能做的操作，动态数组都能做，还能做的更多，比如增，删。</p></li>
+<li><p>怎么实现一个动态数组？</p>
+<ul>
+<li>方法1--使用静态数组实现：
+<ul>
+<li>初始化：创建一个静态数组，有一个初始容量，此后一遍增加元素一遍跟踪容器中元素的个数。</li>
+<li>添加新元素时，如果容器没满，直接加入； 如果容器满了，自动扩容--创建一个新的静态数组，大小为当前容量的2倍，将老的静态数组的元素复制到新的静态数组中，然后加入该元素。</li>
+</ul></li>
+</ul></li>
+</ol>
+<h2 id="链表linked-list">链表(linked list)</h2>
+<ol type="1">
+<li>链表上相邻的元素在物理存储上并不是相邻的，每个元素的物理未知只存在于他的上下游节点中。</li>
+<li>链表分为单链表（singly linked lists）和双链表(doubly linked lists）。</li>
+<li>按顺序查找链表也很快。</li>
+<li>链表是一种数组的组织形式，将数据组织成一个有序的一系列节点（nodes）的形式，每个节点（node）代表一个数据，每个节点都指向其他代表数据的节点。</li>
+<li>下面是一个单链表（singly linked），每个节点都包含一个数据，同时包含一个指针，指向他的邻居节点。最后一个节点的指针是空的。</li>
+</ol>
+<p><img src="img.png" alt="img.png" /> 6. 在哪里会用到链表？ - 需要实现某个抽象数据类型时会用到链表，比如要实现列表（lists），队列（Queue）和 栈（Stack），因为这些抽象数据类型需要频繁操作adding和remocving，而这两个操作对于链表来说是相当拿手的。 - 链表很容易对现实事物建模，如火车 - 创建循环列表时很有用，可以让链表的最后一个节点的指针指向第一个节点，训练列表对于建模重复事件循环很有用， - 实现哈希表通常使用链表处理冲突的问题。 7. 链表的几个关键元素： - head：指向链表的第一个节点的pointer， - tail：指向表示链表的最后一个节点的pointer， - pointer表示邻居节点的指针， - node：表示一个包含数据和指针的对象。在实现时，每个节点也可以被表示为structures，或者classes 8. 单链表和双链表的区别，单链表的每个节点只存储下一个邻居的pointer，双向链表的每个节点存储两个指针，分别是上一个邻居节点和下一个邻居节点。前者占用的内存是后者的1/2，缺点是不知道当前节点的前一个节点是什么，要找的话，只能从head开始遍历。如果要删除某个元素，双链表的时间复杂度是常数，单链表是线性的，因为他要重新遍历以找到上家，然后修改它的指针。 <img src="img_1.png" alt="单链表vs双链表-优缺点对比" /> 9. 链表中，同时存链表的第一个节点和最后一个节点，是为了更快速的添加和删除元素。 10. 链表中的复杂度分析： - 搜索某个值在链表中的位置：单链表和双链表的复杂度是O(n) - 在链表头部/尾部插入某个元素：单链表和双链表的复杂度是O(1) - 删除头部的元素：单链表和双链表的复杂度是O(1) - 删除尾部的元素：单链表的复杂度O(n)，双链表的复杂度是O(1) - 删除中间元素：单链表的时间复杂度为复杂度O(n)，双链表的复杂度是O(n)</p>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/akzare/Algorithms">algorithm-python-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=gXgEDyodOJU">youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=V_TulH374hw">Graph-theoretic Models</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure">the difference-between-ADT和DS</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~htlin/course/dsa21spring/">数据结构和算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RBSGKlAvoiM&amp;t=102s">Data Structures Easy to Advanced Course</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/08/deeplearning/bert/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -188,10 +316,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-07-08 11:50:30 / 修改时间：16:08:00" itemprop="dateCreated datePublished" datetime="2021-07-08T11:50:30+08:00">2021-07-08</time>
+              <time title="创建时间：2021-07-08 11:50:30" itemprop="dateCreated datePublished" datetime="2021-07-08T11:50:30+08:00">2021-07-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-09 10:20:00" itemprop="dateModified" datetime="2021-07-09T10:20:00+08:00">2021-07-09</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -260,6 +394,12 @@
 <li>demo数据：https://www.kaggle.com/c/fake-news-pair-classification-challenge/data</li>
 <li>预训练的中文bert模型：hugging face</li>
 </ul>
+<h2 id="要不要冻结bert的部分参数">要不要冻结BERT的部分参数？</h2>
+<p>Why not to freeze BERT？</p>
+<p>That said, BERT is meant to be fine-tuned. The paper talks about the feature-based (i.e., frozen) vs fine-tuning approaches in more general terms, but the module doc spells it out clearly: "fine-tuning all parameters is the recommended practice." This gives the final parts of computing the pooled output a better shot at adapting to the features that matter most for the task at hand.</p>
+<p>when you fine-tune BERT, you can choose whether to freeze the BERT layers or not. Do you want BERT to learn to embed the words in a slightly different way, based on your new data, or do you just want to learn to classify the texts in a new way (with the standard BERT embedding of the words)?</p>
+<p>I wanted to use BertViz visualisation to see what effect the classification tuning had on the attention heads, so I did fine-tuning with the first 8 layers of BERT frozen and the remaining 4 layers unfrozen.</p>
+<p>Some people suggest doing gradual unfreezing of the BERT layers, ie finetuning with BERT frozen, then finetuning a bit more with just one layer unfrozen, etc.</p>
 <h1 id="参考">参考</h1>
 <ol type="1">
 <li>Bahdanau, Cho, &amp; Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.</li>
@@ -268,191 +408,10 @@
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=UlC6AjQWao8&amp;t=26s">BERT (预训练Transformer模型)</a></li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1907.11692v1.pdf">RoBERTa</a></li>
 <li>Devlin, Chang, Lee, and Toutanova. BERT: Pre-training of deep bidirectional transformers for language understanding. In ACL, 2019.</li>
-<li>https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/07/AFML/AFML3-md/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/07/AFML/AFML3-md/" class="post-title-link" itemprop="url">《Advances in Financial Machine Learning》读书笔记3 回测</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-07-07 11:08:30" itemprop="dateCreated datePublished" datetime="2021-07-07T11:08:30+08:00">2021-07-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-08 15:49:20" itemprop="dateModified" datetime="2021-07-08T15:49:20+08:00">2021-07-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AFML/" itemprop="url" rel="index"><span itemprop="name">AFML</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="chapter-10-押注大小">chapter 10 押注大小</h2>
-<blockquote>
-<p>即使股价预测很准，但是头寸配置的不恰当，还是有可能亏钱。</p>
-</blockquote>
-<ol type="1">
-<li>假定三期股价为 [1, 0.5, 1.25]，仓位1: [0.5, 1, 0] &amp; 仓位2: [1, 0.5, 0]，则前者挣钱而后者亏钱。</li>
-<li>我们偏好这样的下注策略：建仓时保留一些现金，如果交易信号加强（股价变为0.5），就追加投资。</li>
-<li>交易信号越强，下注可以越大，因为交易信号很难变得更强了。所以预测的概率 与下注之间可以构建一种函数关系. <img src="img.png" alt="img.png" /></li>
-<li>如果每次预测时，如果交易信号的微小改变就要调仓，那换手率就太高了，作者建议可以对预测结果做滑动平均，或者将下注量离散化（如下图） <img src="img_1.png" alt="img_1.png" /></li>
-<li>当股票的市场价格<span class="math inline">\(p_t\)</span>和预测价格<span class="math inline">\(f_t\)</span>波动时，可用如下方法动态地确定下注量<span class="math inline">\(\hat{q}_{i, t}\)</span>： <span class="math display">\[\hat{q}_{i, t}=\operatorname{int}\left[\frac{x}{\sqrt{w+x^{2}}} \cdot Q\right]\]</span>, <span class="math inline">\(x=f_{i}-p_{t}\)</span>为预测价与当前价的差价， Q为最大持仓量。 &gt; label就是交易信号，表示买或者卖, 两个label 如果是基于相同时间段的收益率 计算出来的，就说是concurrent的.</li>
-<li>基于预测概率确定BET SIZING</li>
-<li>平均主动BETS</li>
-<li>动态BET SIZES 和 限定价格</li>
-</ol>
-<h2 id="chapter-11-回测有风险">chapter 11 回测有风险</h2>
-<p>回测是量化中最重要但也最容易被误用的工具，本章将介绍回测时容易犯的错误。</p>
-<ol type="1">
-<li>一个物理实验室可以通过控制变量来探究精确的因果关系，而回测不是实验，它并不能证明一个策略好，只能证明一个策略不好。</li>
-<li>要做好回测极其困难，我们至少会面临这些问题:
-<ul>
-<li>幸存者偏差：只用现存的股票构建投资组合回测，殊不知过去多少公司倒闭退市了；</li>
-<li>Look-ahead bias：回测时用到的数据在那一刻还没发布；</li>
-<li>事后诸葛亮（各种事后分析都在编故事）；</li>
-<li>手续费：要模拟手续费很难，唯一准确的方式是上实盘；</li>
-<li>空头：实际交易中如何找借方、空头的成本、空头的额度都需要考虑；</li>
-</ul></li>
-<li>即使避免了以上问题，你的回测也可能是错的——在一个数据集上回测了成百上千次才得到的漂亮结果，大概率是假的。如第八章所述，特征重要性分析帮助我们理解 ML 发现的结果，它在回测之前进行，是一种“事前“归因。相反，回测并不能帮我们理解为什么一个策略会盈利。通过回测发现的有效“因子”如同上一期彩票的中奖号码，对下一轮抽奖无益。回测前做好数据结构化、标签、加权比回测本身更重要。</li>
-<li>重复回测带来的过拟合可以认为是一种选择偏差，要避免这种偏差可能是量化中最根本的问题。</li>
-<li>以下步骤可以帮我们减少这种偏差:
-<ul>
-<li>在多种金融资产上回测：由于金融资产的多样性，如果你发现错误 只存在于债券，那该策略很可能是错的；</li>
-<li>用 bagging 减少过拟合；在完成本书章节1-10 的研究之前别回测；</li>
-<li>记录得到当前结果之前回测了多少次，从而推算出过拟合的可能性；</li>
-<li>假如回测结果没能得到有效的策略，从头开始。千万不要在回测结果的基础上继续研究。 &gt; Backtesting while researching is like drinking and driving. &gt; Do not research under the influence of a backtest.</li>
-</ul></li>
-<li>如果用标准CV回测来选择策略，一些回测路径会重复出现，导致极易过拟合。所以一些随机性非常有必要，例如基于probability of backtest overfitting (PBO) 的回测。</li>
-</ol>
-<h2 id="chapter-12-使用交叉验证做回测">chapter 12 使用交叉验证做回测</h2>
-<p>本章将介绍三种回测方法，希望能得到更准确的回测结果。</p>
-<ol type="1">
-<li>回测用历史数据来检验策略的样本外表现，这些历史数据有两种用法：狭义上，模拟策略的历史表现（walk-forward / WF）；广义上，模拟策略在特定市场环境（历史上不一定发生过）中的表现。前一种方式更广为人知，但两种方式各有利弊，都应掌握。WF 模拟策略在历史市场行情中的表现，如十一章所述，要正确地进行 WF 回测极为困难，没用通用方法。</li>
-<li>WF的优点：
-<ol type="1">
-<li>WF 有清晰的历史意义，与模拟盘的结果一致；</li>
-<li>WF 的测试集在训练集之后，只要正确 purging 后就不存在信息泄露（见第七章）。</li>
-</ol></li>
-<li>WF的缺点： 只有一种情形得到测试（即沿历史路径回测），所以容易过拟合；WF 不足以代表未来的表现，因为回测结果可能受到特定数据的影响而产生偏差；WF 回测时数据利用率不高（“most of the information is used by only a small portion of the decisions”）</li>
-<li>得到一个新策略时，投资者往往想知道这个策略在“非常时期”，如08年金融危机、15年股灾中表现如何。可以将我们希望测试的时期划为测试集，其他时期划为训练集，例如将 2008年作为测试集，2009至今作为训练集。训练集在测试集之后的划分从历史角度来看并不准确（not historically accurate），但通过 CV（cross-validation）回测的目的就是检验策略在不同市场行情（scenarios）下的表现，从而推断策略在未来的表现。</li>
-</ol>
-<blockquote>
-<p>For each period of the backtest, we simulate the performance of a classifier that knew everything except for that period.</p>
-</blockquote>
-<ol start="5" type="1">
-<li>CV的优点：1. 能检验不同市场行情；2. 每个决定用到的信息量相同；3. 能实现最长的样本外回测。（后两点不是特别理解 ）</li>
-<li>CV的缺点：1. 和 WF 一样，只有一条回测路径（尽管不是历史路径）；2. 没有明确的历史意义；3. 由于测试集可能位于训练集之前，容易发生信息泄露。</li>
-<li>combinatorial purged cross-validation (CPCV)克服了WF和CV的缺点。假定将全数据集分为 N 份，其中 k 份作为测试集，其余作为训练集，则共有<span class="math inline">\(C_N^k\)</span>种划分方案。所有回测路径数 （如下图所示） <img src="img_2.png" alt="img_2.png" /></li>
-<li>Assignment of testing groups to each of the 5 paths按照划分依次在训练集上训练、测试集上测试，最后可以计算<span class="math inline">\(\varphi[N, k]\)</span>条路径分别的技术指标（如夏普率），从而更全面地考察模型表现。相比 WF、CV，CPCV 得到的结果（如夏普率）方差小，从而能减少过拟合和错误回测的可能。</li>
-</ol>
-<h2 id="chapter-13-在合成数据上做回测">chapter 13 在合成数据上做回测</h2>
-<p>本章将探究如何合成数据并进行回测。</p>
-<ol type="1">
-<li>使用历史数据生成一个合成数据：先从从真实数据估计得到的分布，然后从分布中采样得到合成数据。</li>
-<li>使用合成数据去做回测的好处是，可以测试很多次，在unseen的情况下，因此可以减少得到一个过拟合策略的概率。</li>
-<li>利用合成数据回测能减少过拟合，但合成金融数据是一个很大的课题，我们先考察一下交易规则（trading rules）。交易策略假定市场不是有效的，它们用基本面 / 技术面分析试图找到套利机会。交易策略千变万化，但交易规则大同小异：比如策略的信号强于阈值则买入，达到盈利或止损点则卖出，这里的阈值、盈利止损点就是交易规则。如果用合成数据回测来确定交易规则，则过拟合的风险将大大减小。</li>
-<li>用离散OU过程（discrete O-U process）对资产价格建模，给定资产i当前价格和未来预测价格，其在 t 次交易后的盈亏<span class="math inline">\(\pi_{i,t}\)</span>服从正态分布。可以此为依据模拟价格走势进行实验，得到最佳交易规则，而无需用真实历史数据回测。</li>
-<li>作者在原文中给出了详细步骤以及图文分析，这里试举一例：下图是采取不同盈利、止损点进行模拟数据回测得到的夏普率热力图。对于中性市场（上图），最好的策略是设定较宽的止损空间和较窄的盈利点；对于走高市场（下图），最好的策略是采取较宽的盈利点，而止损点的设定可以比较宽泛。</li>
-<li>总而言之，通过探究引导价格波动的随机过程，而不是在真实历史数据上回测，我们得到的最佳交易规则不会在特定数据上过拟合。尽管这样得到的交易规则可能不是最优的，但也远好于过拟合的结果。本章仅以 OU 过程为例，也可以尝试其它建模方式。</li>
-</ol>
-<h2 id="chapter-14-回测统计">chapter 14 回测统计</h2>
-<ol type="1">
-<li>回测的三种范式：
-<ul>
-<li>历史模拟，向前游走</li>
-<li>情景模拟：交叉验证</li>
-<li>在模拟数据上做simulation</li>
-</ul></li>
-<li>回测统计量（Backtest statistics）应该帮助揭露策略的弊端（如可能的风险）、帮助投资者比较不同策略。</li>
-<li>一般统计量（general characteristics）能告诉我们回测的大致特性：时间范围（回测起讫时间）、资产规模（Average AUM） ，策略的资金容量（Capacity）、杠杆率（Leverage）、平均持仓时间（Average holding period）、换手率（Annualized turnover），Maximum dollar position size/Ratio of longs/Frequency of bets</li>
-<li>衡量策略表现（performance）的统计量包括：盈亏（PnL, Profit and Loss）、多头盈亏（PnL from long positions）、年化回报率（Annualized rate of return）、命中率（hit ratio）、命中回报率（Average return from hits）、失误回报率（Average return from misses）……</li>
-<li>策略的回报率往往在一段时间内连续为正 / 负，称之为“周期”（Runs）。周期的存在增加了策略回撤的风险，所以需要一些统计量来衡量，包括：Returns Concentration（衡量回报的集中程度）、drawdown（回撤）、time under water。</li>
-<li>某些策略错误地估计交易费用导致失败，这些需要考虑的统计量包括：Broker fees per turnover、Average slippage per turnover……</li>
-<li>一些考虑到风险的统计量包括：夏普比率（Sharpe Ratio/ SR）、PSR（Probabilistic SR）、DSR（Deflated SR）、信息率（Information ratio）…… &gt; 夏普值，衡量的是一项投资在对其调整风险后，相对于无风险资产的表现。它的定义是投资收益与无风险收益之差的期望值，再除以投资标准差（即其波动性）。它代表投资者额外承受的每一单位风险所获得的额外收益。</li>
-</ol>
-<blockquote>
-<p>Every backtest result must be reported in conjunction with all the trials involved in its production. Absent that information, it is impossible to assess the backtest’s “false discovery“ probability. —— MARCOS’ THIRD LAW OF BACKTESTING</p>
-</blockquote>
-<ol start="8" type="1">
-<li>基金经理往往希望对模型的收益进行归因（performance attribution），可以参考多因子模型（Barra’s multi-factor method）。</li>
-</ol>
-<h2 id="chapter-15-了解策略风险">chapter 15 了解策略风险</h2>
-<p>本章的目的是帮助你检验策略风险。</p>
-<ol type="1">
-<li>几乎所有策略都有盈利点和止损点，所以我们可以对策略的收益建模，检验策略对一些参数的敏感程度。</li>
-<li>假定一个策略每年进行 n次 IID 决策，每一次有p的概率盈利<span class="math inline">\(\pi\)</span>，1-p的概率盈利<span class="math inline">\(-\pi\)</span>，则该策略的年化夏普比率 。（盈亏额不对称的情形可做类似讨论）</li>
-<li>如果交易频率不高（ 不大），则需要较大的 才能达到高夏普比率。但即使 略大于 0.5，只要 足够大，夏普比率也可以很大，这是高频交易的思路。另一方面， 很大时， 的小幅波动会带来 的较大改变，很可能 降低 1% 就会抹去所有盈利——我们称之为策略风险（Strategy risk）。</li>
-<li>策略风险不同于资产组合风险（portfolio risk）：假定 为依照上面公式计算得到的盈亏平衡点，策略风险指 ；而资产组合风险是市场中存在的风险，由首席风险官监控。策略风险过大时，即使投资标的的风险不大，这个策略也有较大概率无法超过业绩标准。所以策略研发者需要想办法减小 ，比如调节 。</li>
-</ol>
-<h2 id="chapter-16-基于机器学习资产配置">chapter 16 基于机器学习资产配置</h2>
-<p>本章提出了基于图模型的层次风险平价方法（Hierarchical Risk Parity / HRP），其在统计性能上优于传统的资产组合优化方法。</p>
-<p>资产组合可谓金融中最历久弥新的问题了。60多年前，马科维茨提出了Critical Line Algorithm（CLA）用于不等式约束下的二次规划问题，尤其是资产组合优化问题。CLA 的缺点是鲁棒性不高，因为二次规划需要对资产间协方差矩阵取逆，当该矩阵条件数很大时会带来较大误差。</p>
-<p>资产组合中相关资产（多重共线性）越多，资产间协方差矩阵的条件数越大，结果越不稳定，这便是 Markowitz’s curse。此外资产越多，用于估计协方差矩阵的数据也越多，这些历史久远的数据也会造成误差。</p>
-<p>作者认为，二次规划试图构建全连接图（fully connected graph），其中每个节点可能替代其他节点。当有50支资产时，一个全连接图有1225条边，这种复杂结构造成二次规划结果的不稳定。很自然地，我们会希望减少不必要的边.</p>
-<p>当我们决定投资摩根大通时，下一步我们更可能考虑增/减持高盛的股票而不是一家地产公司的股票，因为摩根和高盛同属金融企业。依照这种思路，我们可以利用 ML 中的聚类算法，根据资产的特性 / 资产间相关性将所有资产建构成树状图，如下图所示。这被称为层次风险平价方法（HRP）</p>
-<p>实验中 HRP 构建的投资组合比 CLA 更分散，风险也更低，同时 HRP 的样本外夏普比率更高。考虑到 HRP 不需要计算逆矩阵，其适应性和鲁棒性也更强。</p>
-<p>HRP 不仅可以用于在不同资产上配置资金，还可用于在不同策略上配置资金。</p>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li>《Advances in Financial Machine Learning》</li>
-<li>https://blog.csdn.net/weixin_38753422/article/details/100179559</li>
-<li>https://zhuanlan.zhihu.com/p/29208399</li>
+<li><a target="_blank" rel="noopener" href="https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html"></a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/hub/pytorch_fairseq_roberta/">ROBERTA-pytorch</a></li>
+<li><a target="_blank" rel="noopener" href="https://discuss.huggingface.co/t/fine-tune-bert-models/1554/2"></a></li>
+<li>https://medium.com/swlh/painless-fine-tuning-of-bert-in-pytorch-b91c14912caa</li>
 </ol>
 
       
@@ -472,7 +431,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -538,7 +497,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">197</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

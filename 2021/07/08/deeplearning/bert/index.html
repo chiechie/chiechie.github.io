@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://chiechie.github.io/2021/07/08/deeplearning/bert/img.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/07/08/deeplearning/bert/img_1.png">
 <meta property="article:published_time" content="2021-07-08T03:50:30.000Z">
-<meta property="article:modified_time" content="2021-07-08T08:08:00.771Z">
+<meta property="article:modified_time" content="2021-07-09T02:20:00.064Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="NLP">
 <meta property="article:tag" content="神经网络">
@@ -198,10 +198,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-07-08 11:50:30 / 修改时间：16:08:00" itemprop="dateCreated datePublished" datetime="2021-07-08T11:50:30+08:00">2021-07-08</time>
+              <time title="创建时间：2021-07-08 11:50:30" itemprop="dateCreated datePublished" datetime="2021-07-08T11:50:30+08:00">2021-07-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-09 10:20:00" itemprop="dateModified" datetime="2021-07-09T10:20:00+08:00">2021-07-09</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -277,6 +283,12 @@
 <li>demo数据：https://www.kaggle.com/c/fake-news-pair-classification-challenge/data</li>
 <li>预训练的中文bert模型：hugging face</li>
 </ul>
+<h2 id="要不要冻结bert的部分参数">要不要冻结BERT的部分参数？</h2>
+<p>Why not to freeze BERT？</p>
+<p>That said, BERT is meant to be fine-tuned. The paper talks about the feature-based (i.e., frozen) vs fine-tuning approaches in more general terms, but the module doc spells it out clearly: "fine-tuning all parameters is the recommended practice." This gives the final parts of computing the pooled output a better shot at adapting to the features that matter most for the task at hand.</p>
+<p>when you fine-tune BERT, you can choose whether to freeze the BERT layers or not. Do you want BERT to learn to embed the words in a slightly different way, based on your new data, or do you just want to learn to classify the texts in a new way (with the standard BERT embedding of the words)?</p>
+<p>I wanted to use BertViz visualisation to see what effect the classification tuning had on the attention heads, so I did fine-tuning with the first 8 layers of BERT frozen and the remaining 4 layers unfrozen.</p>
+<p>Some people suggest doing gradual unfreezing of the BERT layers, ie finetuning with BERT frozen, then finetuning a bit more with just one layer unfrozen, etc.</p>
 <h1 id="参考">参考</h1>
 <ol type="1">
 <li>Bahdanau, Cho, &amp; Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.</li>
@@ -285,7 +297,10 @@
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=UlC6AjQWao8&amp;t=26s">BERT (预训练Transformer模型)</a></li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1907.11692v1.pdf">RoBERTa</a></li>
 <li>Devlin, Chang, Lee, and Toutanova. BERT: Pre-training of deep bidirectional transformers for language understanding. In ACL, 2019.</li>
-<li>https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html</li>
+<li><a target="_blank" rel="noopener" href="https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html"></a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/hub/pytorch_fairseq_roberta/">ROBERTA-pytorch</a></li>
+<li><a target="_blank" rel="noopener" href="https://discuss.huggingface.co/t/fine-tune-bert-models/1554/2"></a></li>
+<li>https://medium.com/swlh/painless-fine-tuning-of-bert-in-pytorch-b91c14912caa</li>
 </ol>
 
     </div>
@@ -310,10 +325,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/07/07/AFML/AFML3-md/" rel="prev" title="《Advances in Financial Machine Learning》读书笔记3 回测">
-      <i class="fa fa-chevron-left"></i> 《Advances in Financial Machine Learning》读书笔记3 回测
+    <a href="/2021/07/08/data_structure/ds0_summary/" rel="prev" title="数据结构0 总览">
+      <i class="fa fa-chevron-left"></i> 数据结构0 总览
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/09/data_structure/ds1-linear-data-structure/" rel="next" title="数据结构1 线性数据结构">
+      数据结构1 线性数据结构 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -372,7 +390,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bert%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">bert模型原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E4%B8%80--%E9%A2%84%E6%B5%8B%E9%81%AE%E6%8C%A1%E8%AF%8D"><span class="nav-number">2.1.1.</span> <span class="nav-text">任务一--预测遮挡词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E4%BA%8C---predict-the-next-sentence"><span class="nav-number">2.1.2.</span> <span class="nav-text">任务二-- Predict the Next Sentence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E5%90%88%E4%B8%A4%E4%B8%AA%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.1.3.</span> <span class="nav-text">结合两个任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bert%E5%AE%9E%E8%B7%B5todo"><span class="nav-number">2.2.</span> <span class="nav-text">Bert实践【todo】</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bert%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">bert模型原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E4%B8%80--%E9%A2%84%E6%B5%8B%E9%81%AE%E6%8C%A1%E8%AF%8D"><span class="nav-number">2.1.1.</span> <span class="nav-text">任务一--预测遮挡词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E4%BA%8C---predict-the-next-sentence"><span class="nav-number">2.1.2.</span> <span class="nav-text">任务二-- Predict the Next Sentence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E5%90%88%E4%B8%A4%E4%B8%AA%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.1.3.</span> <span class="nav-text">结合两个任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bert%E5%AE%9E%E8%B7%B5todo"><span class="nav-number">2.2.</span> <span class="nav-text">Bert实践【todo】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A6%81%E4%B8%8D%E8%A6%81%E5%86%BB%E7%BB%93bert%E7%9A%84%E9%83%A8%E5%88%86%E5%8F%82%E6%95%B0"><span class="nav-number">2.3.</span> <span class="nav-text">要不要冻结BERT的部分参数？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -386,7 +404,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">197</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

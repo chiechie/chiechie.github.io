@@ -165,6 +165,191 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/24/AIOps/AIOps-2_1_6-topo-rca-MicroCause/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/24/AIOps/AIOps-2_1_6-topo-rca-MicroCause/" class="post-title-link" itemprop="url">chapter2.1.6 基于因果分析的微服务根因定位-MicroCause</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-24 22:43:57" itemprop="dateCreated datePublished" datetime="2021-05-24T22:43:57+08:00">2021-05-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>清华阿里合作paper《基于因果分析的微服务内根因定位》, Localizing Failure Root Causes in a Microservice through Causality Inferenc</p>
+<p><strong>MicroCause</strong>，可以定位到导致微服务故障的根因指标，原理是，先使用路径条件时间序列算法（PCTS）挖掘时间序列之间的因果关系，然后使用随机游走方法（TCORW）来推断因果。TCORW方法综合分析了因果关系，指标异常程度和优先级信息。</p>
+<p>在86个实际故障实例中，MicroCause给出的top 5根因的准确性（AC @ 5）为98.7％。</p>
+</blockquote>
+<h2 id="总结">总结</h2>
+<ol type="1">
+<li>在微服务架构中，一个「应用程序」往往被分解为多个「微服务」。例如，图1展示了，在淘宝购物时，完成用户下单操作需要调用多个微服务。当前针对微服务系统的故障根因问题，学术界已有一些成熟的工作。这些工作主要是通过学习故障如何在微服务之间传播，并找到根因的微服务，例如，图1中Address微服务是导致支付异常的根因。但是更进一步，什么导致这个微服务故障？运维人员还是不得而知，进而不知道下一步要怎么响应。</li>
+</ol>
+<figure>
+<img src="./image-20200622132926186.png" alt="图1" /><figcaption aria-hidden="true">图1</figcaption>
+</figure>
+<p>图1：在线购物平台中，当接收到用户下单指令后，Order Creation微服务，将调用Inventory，Discount Coupon，Freight，Address这几个微服务来完成用户下单的需求。</p>
+<ol start="2" type="1">
+<li><p>怎么进一步定位微服务故障根因？ 上游组件，下游组件，部署环境。</p></li>
+<li><p>对于一个微服务来说，通常有上游组件（例如，微服务，中间件）调用它，并且它可以调用某些下游组件（例如，微服务，中间件）。如图2所示，用户在淘宝下了一个订单后，”Order Creation“微服务将调用“Discount Coupon”微服务查看可用的优惠券，“Discount Coupon”微服务将调用“Inventory”微服务，针对不同的库存计算不同的优惠金额。此外，微服务通常部署在一个或多个容器或虚拟机。 <img src="./image-20200622132951991.png" alt="图2：““Discount Coupon”微服务实现细节" /></p></li>
+<li><p>对每个微服务需要配置监控指标（如图2所示），包括用户可感知的KPI，上游组件相关的指标，下游组件相关的指标，与部署环境相关的指标（例如CPU）。当KPI异常时，通常表示微服务故障，</p></li>
+<li><p>运维人员通常会配置一系列监控指标以持续监视每个微服务的性能（如图2所示）。这些指标包括用户可感知的指标KPI，例如用户响应时间(RT)和指标Metrics. Metrics包括与上游组件相关的指标（例如，Web用户的每秒查询（QPS）），下游组件相关指标（例如中间件的RT），与部署环境相关的指标（例如CPU）。</p></li>
+<li><p>当KPI异常时表示微服务故障，到底是组件异常还是部署环境异常，可通过观察指标是否异常得到。</p></li>
+<li><p>因此，微服务故障的根本原因可以用异常metrics表示。例如，如图2中，由Web RT异常标明的微服务故障是由Web QPS异常引起的。</p></li>
+<li><p>因此在该问题中，我们将针对一个微服务故障实例，给出N个metrics，作为故障的Top N根因。通常一个故障实例由三部分信息组成：异常的KPI，异常的微服务ID和异常时间点。</p></li>
+<li><p>目前已有的解决方法主要是利用微服务之间的故障传播关系（cross），通常分为两个阶段：</p>
+<ol type="1">
+<li>构造依赖关系（relationship learning）：适用pc算法学习微服务之间依赖关系，或者采用系统工具获取依赖关系</li>
+<li>推断根因（rcf）：通过随机游走等基于相关性的方法推断根本原因。</li>
+</ol>
+<figure>
+<img src="./image-20200622133032479.png" alt="表1：微服务系统中已有解决方法" /><figcaption aria-hidden="true">表1：微服务系统中已有解决方法</figcaption>
+</figure></li>
+<li><p>研究挑战:没有现成的方法学习时序间的因果关系;因果推断还要考虑指标本身含义.</p></li>
+<li><p>已有的pc算法是基于iid的假设，不能捕捉延迟的因果关系，所以不适合指标因果图构建。</p></li>
+<li><p>已有的方法，要解决的问题比较简单，即只用分析微服务间的因果关系，相应的解决方案要么通过系统工具获取依赖关系，要么通过pc算法学习因果关系。</p></li>
+<li><p>但是现在的问题更有挑战性，除了微服务之间的因果，还想知道一个微服务的指标之间的因果。所以，提出了一种PC加强版因果挖掘的方法--PCTS。</p></li>
+<li><p>C算法，学习不到延迟的因果关系: PC算法假设不同时刻，指标之间的因果关系是独立的，以下图为例，PC算法假设17：17和17：18之间，4个指标的因果关系是独立. 但是，时序不是符合这个假设的，经常会有时间差. 以下图为例，如17:17分Web QPS会影响17:18的Web RT <img src="img.png" alt="图3：四个时间序列的因果关系图" /> 图中的每一个节点代表了时间序列的某一个时间点，两个节点之间的箭头，标明了两个时间点的数据之间的因果关系, 这说明PC算法学习不到延迟的因果关系</p></li>
+<li><p>做因果推断，除了从数据出发，考虑指标异常相关性，还要考虑指标本身的含义。同一类别指标比不同类别的相关更强。</p></li>
+<li><p>以某个故障案例为例：web请求次数过多导致了服务响应时间变长 <img src="./image-20200622132951991.png" alt="图2：Discount Coupon微服务的实现细节" /> 从数据上看，微服务的KPI--Web RT异常，现在把上下游的metric全部load过来，使用随机游走的方法，分析到的根因是Middleware1 Consumer RT。 <img src="./img_1.png" alt="图4：微服务中的4个监控指标" /> 其中Web RT是KPI，Web QPS, Middleware1 Consumer RT和JVM FGC Time是metrics。 但实际上这个故障实例的根因是上游组件的指标Web QPS。</p></li>
+<li><p>随机游走的视野太狭隘了，还应该考虑指标本身含义，同一类别指标比不同类别的相关更强。也就是说Web RT和Web QPS的相关性更强，和Middleware1 Consumer RT的相关性更弱.</p></li>
+<li><p>MicroCause的架构图如下（图5），</p>
+<figure>
+<img src="./image-20200622134206479.png" alt="图5:MicroCause架构图" /><figcaption aria-hidden="true">图5:MicroCause架构图</figcaption>
+</figure>
+<ul>
+<li>stage1-指标监控：当KPI异常时，MicroCause将被激活，将故障前数小时的监控指标将用作MicroCause的输入。</li>
+<li>stage2-构建因果图：生成故障因果图&amp;异常检测，可并行
+<ul>
+<li>使用PCTS算法，从故障kpi和相关指标学习出该故障的故障因果图，</li>
+<li>将故障前数小时的监控指标对metrics做异常检测，并生成异常事件序列。</li>
+</ul></li>
+<li>stage3-因果推断：使用TCORW，输出N个可能的根原。</li>
+</ul></li>
+<li><p>故障因果图学习: 使用PCTS算法学习基于指标的故障因果图。该算法算法分为两步:</p>
+<ol type="1">
+<li>第一步，得到每个时刻指标之间的因果图<span class="math inline">\(G_C\)</span>，基于PC算法的改进，该算法用于学习时间序列的因果图。该算法的结果如图3所示。但是由于我们需要利用指标之间的因果关系进行根因定位，我们对于改进的PC算法的结果进行了调整。 <img src="img.png" alt="图3：四个时间序列的因果关系图- G_C" /></li>
+<li>第二步，将<span class="math inline">\(G_C\)</span>转化为节点为指标的因果图<span class="math inline">\(G_{FCG}\)</span>，这样才能做根因定位。理论上，如果<span class="math inline">\(G_C\)</span>中时序A和时序B的时间点中存在一条边，那么<span class="math inline">\(G_{FCG}\)</span>中, 时列A到时序B就有一条边。</li>
+</ol>
+<figure>
+<img src="./image-20200622140031849.png" alt="图8：针对故障实例A,基于PCTS算法生成的因果图" /><figcaption aria-hidden="true">图8：针对故障实例A,基于PCTS算法生成的因果图</figcaption>
+</figure>
+<figure>
+<img src="./image-20200622135001778.png" alt="图6：四个指标间的故障因果图-G_FCG" /><figcaption aria-hidden="true">图6：四个指标间的故障因果图-G_FCG</figcaption>
+</figure></li>
+<li><p>异常检测：采用SPOT检测KPI和业务指标中的突增突降。</p></li>
+</ol>
+<p><span class="math display">\[\eta_{\max}^{i}=\max _{k \in O} \frac{| M_{k}^{i}-\phi_{M_{k}^{i}}|}{\phi_{M^{i}}}\]</span></p>
+<pre><code>- 其中是时间序列 在时刻的值，是时间序列 在时刻SPOT拟合的阈值。</code></pre>
+<ol start="20" type="1">
+<li><p>面向时间因果的随机游走(TCORW),主要分为三步：</p>
+<ul>
+<li>面向因果的随机游走，</li>
+<li>潜在根因得分</li>
+<li>根因排序</li>
+</ul></li>
+<li><p>总结一下根因推断的过程：</p>
+<ul>
+<li>先构建一个指标(潜在根因得分) = 随机游走的根因概率 + 指标的异常程度</li>
+<li>相关指标分为3层，每一层找出top2的两个指标，一起得到6个</li>
+<li>按照时间排序，得到前3个或者5个输出</li>
+</ul></li>
+<li><p>随机游走：利用监控指标之间的因果关系进行推断，通过在故障因果图上随机游走。跟传统的随机游走算法的区别在于，这里会使用偏相关系数（Partial Correlation)来计算转移概率矩阵。与Pearson相关性不同的是，和异常KPI因果性更强的metric指标将具有更高的偏相关系数，而Pearson相关性更注重两个指标之间的相关性。因此和异常KPI因果性更强的metric将在随机游走中获得更高的访问次数。</p></li>
+<li><p>潜在根因得分:这一步中我们利用，随机游走的结果和指标的异常程度对于异常的metric计算潜在根因得分，计算方式如下所示：</p></li>
+</ol>
+<p><span class="math display">\[\gamma_{i}=\lambda \bar{c}_{i}+(1-\lambda) \bar{\eta}_{\max }^{i}\]</span></p>
+<p>其中是归一化后的随机游走访问次数，是归一化后的异常程度，作为参数，将用于控制着两部分的贡献比例。</p>
+<ol start="24" type="1">
+<li>根因排序: 先利用指标间可能的故障传播关系，将指标分为三个级别Level1，Level2，Level3。 如表2所示，当Level1和Level2中的指标同时发生异常时，则认为Level1中的指标更有可能是根因。</li>
+</ol>
+<figure>
+<img src="./image-20200622135235013.png" alt="表2：指标分级" /><figcaption aria-hidden="true">表2：指标分级</figcaption>
+</figure>
+<p>基于指标分级信息，指标的异常时间和指标的潜在异常得分我们设计了如下算法给出最后的根因排序。 <img src="./image-20200622135254320.png" /></p>
+<ol start="24" type="1">
+<li>数据集和评估指标:从2019年9月~2020年1月，在某在线购物平台中监控超过400种微服务状态。收集了86**个真实的在线故障实例作为评估数据集，使用AC@k和avg<span class="citation" data-cites="k评估算法给出的Top">@k评估算法给出的Top</span> K个根因的准确性。</li>
+</ol>
+<p><span class="math display">\[ AC@ k=\frac{1}{|A|} \sum_{a \in A}\frac{\sum_{i&lt; k} R^{a}[i] \in V_{r c}^{a}}{\min (k,|\mathrm{V^a}|)} \]</span></p>
+<p><span class="math display">\[A v g @ k=\frac{1}{k} \sum_{1 \leq j \leq k} A C @ j\]</span></p>
+<h2 id="案例分析">案例分析</h2>
+<p>CauseInfer[INFOCOM14]中提到，使用PC算法来学习基于时间序列的因果图时容易生成的孤立子图。在那篇论文中，作者使用领域知识来弥补这一缺陷。 在我们的工作中，同样观察到了这种现象。从图7中，由PC生成的因果图可以看出，异常KPI与根因之间没有路径。</p>
+<p><img src="./image-20200622140008064.png" /> 图7：针对故障实例A,基于PC算法生成的因果图</p>
+<p>但是PCTS可解决这个问题，因为它可以表达时序之间的延迟因果关系（图8）。</p>
+<figure>
+<img src="./image-20200622140031849.png" alt="图8：针对故障实例A,基于PCTS算法生成的因果图" /><figcaption aria-hidden="true">图8：针对故障实例A,基于PCTS算法生成的因果图</figcaption>
+</figure>
+<h2 id="调用链的数据格式">调用链的数据格式</h2>
+<ol type="1">
+<li>做调用链路分析（TraceAnomaly）用到了耗时，以及调用链的结构信息。</li>
+<li>2021AIOps比赛的调用链的数据：每个span_id表示一个trace中的一次子调用，耗时表示当前服务从接受call，到开始response的时间间隔。该表格信息量很少，不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-ytiMaJaHaK2QpchQVB2rA">基于因果分析的微服务内根因定位</a></li>
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">causeinfer--paper</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/24/reading_notes/computer/visualize-graph/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -282,149 +467,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/23/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/23/AIOps/AIOps-2_1_5-topo-rca-cnsoftbei2020/" class="post-title-link" itemprop="url">chapter2.1.5 基于拓扑的根因定位-CN-Softbei2020比赛</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-23 14:37:13" itemprop="dateCreated datePublished" datetime="2021-05-23T14:37:13+08:00">2021-05-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>数据来自CN-Softbei2020比赛--《基于网络拓扑及告警的故障根因定位系统实现及算法研究》</p>
-<p>现在实验一种很激进的做法---仅靠指标做根因分析</p>
-<p>当涉及的指标过多时, 得到的拓扑图非常复杂.</p>
-</blockquote>
-<p><strong>赛题名称:基于网络拓扑及告警的故障根因定位系统实现及算法研究</strong> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FQm8N2Yas2F.png?alt=media&amp;token=110a4f63-df4b-4080-96e7-538078152112" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FiscvbTqPV9.png?alt=media&amp;token=0fd1674e-9bc7-4ac2-8f48-add9cdf2c946" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fn2jiCvLL8K.png?alt=media&amp;token=6ee81f61-a008-4040-b1d0-5968b6ab5765" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbiDgXGazeM.png?alt=media&amp;token=60d55dac-68c7-42df-a7c4-4b8270ce0578" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FW1v20u-7tH.png?alt=media&amp;token=0702a100-6ee5-4e4d-98b1-a42e92ac1fa0" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fsvpv3-38IA.png?alt=media&amp;token=5b7e7f4f-0ac7-4180-bfa2-1e2447bffa3a" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FzflLEiJ2fa.png?alt=media&amp;token=d07f20d5-c2b7-4011-acd4-c6df97b7964b" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FherPwjhHIR.png?alt=media&amp;token=8cbd3491-37d9-46d6-9c12-7d6292e3689f" /> - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FF47x1XYXV2.png?alt=media&amp;token=f837d32c-a170-4bf6-8a20-7be096537ba3" /> - 大型电商平台内部涉及上百个系统间的相互调用，每天会产生上万条告警数据。如何利用网络拓扑信息及告警数据，及时有效的对告警进行过滤、分析，最终给出有效告警及疑似根因是网络运维面临的主要挑战。 - 本赛题的目标是分析实际生产中的网络拓扑及告警数据，设计并实现一种故障根因定位算法，准确的定位出故障根因节点。 - 赛题的价值在于准确、快速的定位网络故障，提升一线网络运维的效率，降低网络故障产生的损失。 - 该赛题主要涉及数据分析、图论、信息论、自然语言处理、神经网络等技术，要求参赛队员掌握相关的基础知识，具有python数据分析、处理及功能开发能力。 # 业务背景：</p>
-<ul>
-<li>网络拓扑中一个节点出现故障，往往会导致与其相连的其他节点也发生异常，进而产生大量告警，将真正根因淹没掉。当出现大量告警时，为保证电商业务的稳定运行，我们需要对这些告警进行分析处理，过滤掉无效的告警，准确定位出可能的疑似根因节点，缩短故障定位时间。</li>
-<li>在实际中，同一故障触发的告警信息往往相似的。网络故障定位的一般过程为：先根据历史告警数据及标记进行离线分析，总结因果关系的规律；然后在线分析阶段，首先对告警数据进行去噪和聚类，然后对类内的告警进行因果关系匹配，得到当前告警的可能根因。</li>
-</ul>
-<h1 id="赛题场景">赛题场景：</h1>
-<ul>
-<li>提供实际生产中的网络拓扑数据，100组不同时间段的告警数据，每组中可能有根因，也可能没有根因，根据拓扑数据及告警数据，设计并实现故障根因定位算法，最终在测试数据上评估告警根因定位的F1值，可视化展现根因信息及根因关联的局部拓扑图。</li>
-</ul>
-<h1 id="要求">要求</h1>
-<ul>
-<li>1、基于提供的训练数据，设计并实现故障根因定位算法。</li>
-<li>2、故障根因定位算法中要包含告警数据预处理和故障根因定位两个模块；</li>
-<li>3、可视化展现根因信息及根因关联的局部拓扑图。</li>
-</ul>
-<h1 id="训练数据">训练数据</h1>
-<ul>
-<li>1、实际生产中的部分网络拓扑数据，json格式，key为父亲节点，value为孩子节点list。</li>
-<li>2、告警数据，csv格式，包括告警节点，告警信息，告警时间，告警级别，是否为根因。</li>
-<li>3、提供100组不同时间段的告警数据，每组中可能有根因，也可能没有根因，如果有根因，只有1个准确的根因。</li>
-<li>数据样例：</li>
-</ul>
-<ol type="1">
-<li>拓扑图样例：</li>
-</ol>
-<ul>
-<li>key为源节点，value为目标节点list，类似下面这样：AAA表示系统名，NG表示是Nginx。</li>
-<li><code>javascript &#123;   "AAA-10.10.0.1":     ["AAA-NG-10.10.0.2",      "AAA-NG-10.10.0.3",      "AAA-NG-10.10.0.4"],    "AAA-NG-10.10.0.2":    ["AAA-JBOSS-10.10.0.5",     "AAA-JBOSS-10.10.0.6",      "AAA-JBOSS-10.10.0.7"] &#125;</code> 2。告警数据样例：</li>
-</ul>
-<p>告警数据为csv格式，如下面所示，其中sysEname为系统名称, software为软件类型,time告警时间,triggername告警信息，里面包含ip信息，isrootcause表示是否为根因，0-否，1-是。 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">,sysEname,software,time,告警信息,isrootcause</span><br><span class="line"><span class="number">0</span>,AAA,Elasticsearch <span class="number">1.7</span><span class="number">.0</span> ,<span class="number">2019</span>-<span class="number">06</span>-<span class="number">01</span> <span class="number">00</span>:<span class="number">01</span>:<span class="number">04</span>,<span class="string">&quot;eth0 网卡接受数据流量,net.if.in[eth0],主机10.10.0.8(VM)网卡eth0接收流量持续10分钟平均值大于180M&quot;</span>,<span class="number">0</span></span><br><span class="line"><span class="number">1</span>,BBB,WildFly standalone ,<span class="number">2019</span>-<span class="number">06</span>-<span class="number">01</span> <span class="number">00</span>:<span class="number">01</span>:<span class="number">05</span>,主机<span class="number">10.10</span><span class="number">.0</span><span class="number">.9</span>日志中有READONLY信息,<span class="number">0</span></span><br><span class="line"><span class="number">2</span>,BBB,WildFly standalone ,<span class="number">2019</span>-<span class="number">06</span>-<span class="number">01</span> <span class="number">00</span>:<span class="number">01</span>:<span class="number">06</span>,主机<span class="number">10.10</span><span class="number">.0</span><span class="number">.10</span>日志中有READONLY信息,<span class="number">0</span></span><br></pre></td></tr></table></figure> 测试数据： - 1、提供20组训练数据，格式同训练数据，不提供根因标注（没有is_root列） - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F0iBs9_I--S.png?alt=media&amp;token=3963d6db-13df-4b57-9318-a0eb008c6766" /></p>
-<p>总结一下， -取发生故障的这段时间内(每次10到15min)： - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FhT-H9-YnH5.png?alt=media&amp;token=2b7a6f5f-c828-49c0-b6be-f274de231c1d" /> - 所有告警数据： 来自哪台机器，那个系统，哪个软件，告警描述 - 软硬件拓扑数据：静态的， - 根因incident可能存在也可能不存在 - 根因incident可能是1个也有可能是多个（多个是因为持续异常，所以就持续告警） - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FRgMOthtgUp.png?alt=media&amp;token=37da69ab-2425-472f-acc1-7ea85c517cf3" /> - - 训练数据有标记，人工标的根因事件 - 根因分析的样本粒度是 event，即一个告警事件，它的特征包括，主机id，系统名称，软件类型（optinal），告警信息</p>
-<ul>
-<li>还没有搞清楚，如何处理这些数据，已经定位到根因？
-<ul>
-<li>如何利用拓扑数据？</li>
-<li>如何利用标记数据？</li>
-<li>如何利用历史数据？--历史的告警数据</li>
-</ul></li>
-<li>看一下nokia的解决方案把[[bell给nokia做 故障诊断的 方案]]</li>
-</ul>
-<h2 id="数据解析">数据解析</h2>
-<figure>
-<img src="dataoverview.png" alt="dataoverview" /><figcaption aria-hidden="true">dataoverview</figcaption>
-</figure>
-<p>将每个事件看成一个指标的话，可以得到一个节点为2876的图</p>
-<h2 id="关联分析">关联分析</h2>
-<figure>
-<img src="./orr.png" alt="corr" /><figcaption aria-hidden="true">corr</figcaption>
-</figure>
-<figure>
-<img src="img.png" alt="节点个数" /><figcaption aria-hidden="true">节点个数</figcaption>
-</figure>
-<p>对应的 因果图巨大无比，如下：</p>
-<figure>
-<img src="./correlation_topology.png" alt="图1-关联拓扑" /><figcaption aria-hidden="true">图1-关联拓扑</figcaption>
-</figure>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://www.cnsoftbei.com/plus/view.php?aid=479">CN-Softbei2020比赛</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/Insighter/blob/master/aiops_CN-Softbei_2020.ipynb">chiechie的代码-github</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -490,7 +536,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">197</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -165,6 +165,189 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/26/AIOps/AIOps-2_3-trace_rca/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/26/AIOps/AIOps-2_3-trace_rca/" class="post-title-link" itemprop="url">chapter2.3 调用链根因分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-26 16:49:19" itemprop="dateCreated datePublished" datetime="2021-05-26T16:49:19+08:00">2021-05-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="总结">总结</h1>
+<ol type="1">
+<li>想解决的问题：监控一个web service S1的健康状况，并且在异常的时候给出根因--是哪个节点故障引起的？</li>
+</ol>
+<p>具体来说，这个web service S1由多个微服务组成，当外部应用向S1发起一个请求时（请求id就是uuid），S1 会将这个外部请求拆成一系列微服务之间的子调用。而如果其中微服务s1发生了故障，所有调用他的微服务s2,s3,...都会发生故障。</p>
+<p>发生故障的表现有两种：调用链结构异常 和 调用耗时异常。</p>
+<ul>
+<li>调用结构异常 比如某个微服务挂了，导致调用路径都没有记录，或者本不应该调用某个微服务但是产生了调用数据。</li>
+<li>调用耗时异常比如，本来a调用b，b通常的响应只需要1min，但是b所在的机器内存满了，导致s5响应完成用了10min。</li>
+</ul>
+<p>那么为了监控调用链路的，希望系统能回答两个问题</p>
+<ol type="1">
+<li>是当前调用是否异常？，</li>
+<li>如果异常，是哪个节点（微服务）引起的？</li>
+</ol>
+<p>文章的解决方案是这样的：</p>
+<p>针对1个web服务S1，将它的所有的trace数据搜集起来。按照uuid1个1个trace进行分析，对1个trace，提取出所有的节点和子调用路径以及耗时。此外，每个trace的每一次子调用call_path 都会统一存放到 call path list 中去，也就是说 call path list收集了 所有trace 的所有 的子调用路径。然后将这个自调用路径 作为维度，记录每一次trace 在 call path 取便 call path list中的每一个值时 对应的耗时，如果trace 中没有访问到 call path list中的某个call path，就记为-1。这样如果有100个trace，就可以得到100个样本，如果100个trace的所有call path的并集为32，那么样本的维度就是32。一个样本对应的特征向量就叫STV（Service Trace Vector）。得到了这个STV后要做两个事情：检测 和 定位</p>
+<ol type="1">
+<li>检测： 构造一个生成模型（vae），输入是原始的STV，输出是STV的对数概率。对数概率越小说明越异常</li>
+<li>根因定位：通过1知道了trace整体是异常的，那么到底是哪个维度导致的呢？需要进一步 找到当前trace 的 同伴们（同构调用链，HSTV）， 把每一个维度的耗时 跟 同伴们在 该维度的平均耗时进行对比（3-sigma），判断自己是不是异常的。进一步，将自己的所有异常的维度汇总，按照call path的 长度从大到小排序，call path长度最大的 维度 或者 它的下游call path 就是根因。</li>
+</ol>
+<p>冷启动问题：上面的方法对没在训练数据中出现过的call path是无效的，这个时候需要让运维人员进行人工审核call path是否符合预期，符合预期就放入白名单，。在下一轮训练启动之前，统一认为 是正常的并且不会判断其耗时。</p>
+<p>这样微服务和它们之间的调用（call path）关系就构成一个调用拓扑。当其中1个节点</p>
+<h1 id="附录">附录</h1>
+<h2 id="调用链的数据格式">调用链的数据格式</h2>
+<ul>
+<li>做调用链路分析（TraceAnomaly）用到了耗时，以及调用链的结构信息。</li>
+<li>2021AIOps比赛的调用链的数据：每个span_id表示一个trace中的一次子调用，耗时表示当前服务从接受call，到开始response的时间间隔。这里的表格信息量很少，它不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。</li>
+</ul>
+<h2 id="代码">代码</h2>
+<p>https://github.com/chiechie/TraceAnomaly</p>
+<h2 id="论文内容">论文内容：</h2>
+<h3 id="基本概念">基本概念</h3>
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fu9Iqc3l8Tq.png?alt=media&amp;token=b8798779-4d40-4c62-a9f6-0322561041b5" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FANIRoOIQ2o.png?alt=media&amp;token=da808004-780a-460e-98e0-eef80cfb7fe8" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FhVSU37d3Pd.png?alt=media&amp;token=bae28c0c-f5dc-4114-9313-c987ea0cf1d2" /></li>
+<li>call path ： A call path of a microservice s in a trace, denoted as (s, call path), is the sequence of call messages (sorted by sending time) before s is called. - 在一次调用中，从start 到 某个微服务s 被调用，所有被调用的s'.(按时间顺序)
+<ul>
+<li>srt：the sending time of the corresponding response message，某次调用的 发送时间</li>
+<li>rt：response time，某次调用的respnd时间</li>
+<li><span class="math display">\[ r t=s r t-rc t \]</span>，某次调用响应时长</li>
+<li>STV（Service Trace Vector）：微服务调用向量</li>
+<li>调用路径提取：
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fi4eYxs1D2B.png?alt=media&amp;token=fdaf077a-cddc-4e9a-bd0f-4f2c291b3b4d" /></li>
+</ul></li>
+</ul></li>
+<li><ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FzI6rcYmiD2.png?alt=media&amp;token=449f532b-a126-40b0-a6dd-f07067847e3a" /></li>
+</ul></li>
+</ul>
+<h3 id="traceanomaly总览">TraceAnomaly总览</h3>
+<ol type="1">
+<li>TraceAnomaly整体结构 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FAEYpjsaibJ.png?alt=media&amp;token=361e3b43-eeee-49af-90b7-fed65874868b" /></li>
+</ol>
+<h3 id="stv构造方法">STV构造方法</h3>
+<ol type="1">
+<li><p>在线检测时，每一个新的trace 被编码成一个向量（STV）:</p>
+<ul>
+<li>如果trace中包含有未见过的call path就认为是异常，当然这么简单粗暴的方式会带来误警，所以后面提出了白名单的方法（让运维人员去判断，当然只用判断1次）。</li>
+<li>如果trace中没有unseen call path,就丢到神经网络中计算vector 的likelihood</li>
+</ul></li>
+<li><p>从一个调用链数据（trace）中提取调用路径（call paths）和 响应时长（response times） <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FaOsHfGkpQQ.png?alt=media&amp;token=6b899aa5-ad63-4f57-899d-d97eb7f04e33" /></p></li>
+<li><p>计算微服务b的响应时间</p>
+<ul>
+<li>同一行的右边减去左边表示，source 到arget的通信时间。</li>
+<li>rt（respond time） = 处理完事务并开始响应的时间点（第11行红色的时间戳） - 接受到指令的时间（第2行红色的时间戳）= 处理事务消耗的时间</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Fkqz7HgJgWs.png?alt=media&amp;token=3be5adbe-1632-478e-b77e-39cae4d07068" /></li>
+</ul></li>
+<li><p>构造STV（Service Trace Vector）</p>
+<figure>
+<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FL-kGMqUym3.png?alt=media&amp;token=a388505b-f239-4b57-b5f2-770253d44ead" alt="Fig. 6: Trace t1 和 t2 结构一样, 但t1正常，t2 异常" /><figcaption aria-hidden="true">Fig. 6: Trace t1 和 t2 结构一样, 但t1正常，t2 异常</figcaption>
+</figure>
+<ul>
+<li>t1 ：业务逻辑不要 b调用e。</li>
+<li>t2 ：业务逻辑要b调用e，但是因为e故障了导致调用失败。</li>
+<li>两种情况都会导致看不到b-&gt;e的call path，但是t1是正常，而t2是异常。那么应该怎么做 才能找到 t2 ，而不误伤t1呢？看耗时</li>
+</ul></li>
+<li><p>STV的构造过程 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FIcq2XYIGEe.png?alt=media&amp;token=ac5e5876-cc3f-4fd2-94d4-fec58ebf3a1e" /> ### 根因定位算法</p></li>
+</ol>
+<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FTn7YZeNZvO.png?alt=media&amp;token=12611153-f760-45de-843f-d2db11015f81" /> - step1 先使用预测模型判断是否当前 trace是否异常 - step2 然后判断异常的维度是哪个？跟同构traces（valid dimension 一摸一样的traces）对比 每个维度的耗时。 - step3 链路最长的异常维度就是根因 - <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FZodnzghX6P.png?alt=media&amp;token=a6870609-66c6-472d-998c-4e6efe4356cd" /></p>
+<h3 id="对stv做异常检测">对STV做异常检测</h3>
+<ol type="1">
+<li>通过生成模型学习数据分布，VAE模型结构 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F5CUrxFwPhA.png?alt=media&amp;token=84b40833-873d-482b-979f-181f4fc3ad45" /></li>
+<li>训练VAE</li>
+<li>使用VAE异常检测
+<ul>
+<li><span class="math display">\[\log p_{\theta}(\mathbf{x}) \approx \log \frac{1}{L_{z}} \sum_{l=1}^{L_{z}}\left[\frac{p_{\theta}\left(\mathbf{x} \mid \mathbf{z}_{(l)}^{(K)}\right) p_{\theta}\left(\mathbf{z}_{(l)}^{(K)}\right)}{q_{\phi}^{(K)}\left(\mathbf{z}_{(l)}^{(K)} \mid \mathbf{x}\right)}\right]\]</span></li>
+<li>某个trace为异常 等价于 ，该trace 的对数概率明显小于 正常trace（要求同构吗？</li>
+</ul></li>
+<li>怎么界定正常呢？用kde来拟合对数概率的分布</li>
+</ol>
+<h3 id="实施和评估">实施和评估</h3>
+<ul>
+<li><p>A. Deployment at online services <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FYT-1AJDNXX.png?alt=media&amp;token=a4984091-89d3-424f-b97f-bfdbcfbf8409" /></p></li>
+<li><p>B. Dealing with Unseen Call Paths <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FSuilsPv1oH.png?alt=media&amp;token=6262ff2c-60ab-4e31-a60a-3fddc035ff7d" /></p></li>
+<li><p>B. Anomaly Detection Baseline Approaches <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FUrcO_5Aovy.png?alt=media&amp;token=92e2bcbf-7711-401b-927e-636b9ca2d296" /></p></li>
+<li><p>E. Localizing Root Cause <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F2-eRHdEbPI.png?alt=media&amp;token=708e7973-4439-424a-b037-2dac452daf98" /> <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FFJ0FxrFnTb.png?alt=media&amp;token=12d55bec-55c0-4df7-a6ba-c074c5d829db" /></p></li>
+<li><p>demo复现</p>
+<ul>
+<li><p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FA_n0kckFDJ.png?alt=media&amp;token=f438c18d-5396-4914-b321-903554ce6316" /></p></li>
+<li><p>微服务e的响应时长 是故障根因， <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGZoUsnaFDn.png?alt=media&amp;token=06311178-0f22-4f3d-90ef-a67405dd20e1" /></p></li>
+</ul></li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/sqYIb6i9z6xF5nDr8fuVsA">清华微众AIOps新作:基于深度学习的调用轨迹异常检测算法 -微信公众号</a></li>
+<li><a href="https://chiechie.github.io/2021/03/09/AI/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">chapter2.1.4 AIOps挑战赛2021-demo方案</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/25/AIOps/AIOps-2_2-multi-dimensional-rca/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -312,195 +495,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/24/AIOps/AIOps-2_1_6-topo-rca-MicroCause/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/24/AIOps/AIOps-2_1_6-topo-rca-MicroCause/" class="post-title-link" itemprop="url">chapter2.1.6 基于因果分析的微服务根因定位-MicroCause</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-24 22:43:57" itemprop="dateCreated datePublished" datetime="2021-05-24T22:43:57+08:00">2021-05-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>清华阿里合作paper《基于因果分析的微服务内根因定位》, Localizing Failure Root Causes in a Microservice through Causality Inferenc</p>
-<p><strong>MicroCause</strong>，可以定位到导致微服务故障的根因指标，原理是，先使用路径条件时间序列算法（PCTS）挖掘时间序列之间的因果关系，然后使用随机游走方法（TCORW）来推断因果。TCORW方法综合分析了因果关系，指标异常程度和优先级信息。</p>
-<p>在86个实际故障实例中，MicroCause给出的top 5根因的准确性（AC @ 5）为98.7％。</p>
-</blockquote>
-<h2 id="总结">总结</h2>
-<ol type="1">
-<li>在微服务架构中，一个「应用程序」往往被分解为多个「微服务」。例如，图1展示了，在淘宝购物时，完成用户下单操作需要调用多个微服务。当前针对微服务系统的故障根因问题，学术界已有一些成熟的工作。这些工作主要是通过学习故障如何在微服务之间传播，并找到根因的微服务，例如，图1中Address微服务是导致支付异常的根因。但是更进一步，什么导致这个微服务故障？运维人员还是不得而知，进而不知道下一步要怎么响应。</li>
-</ol>
-<figure>
-<img src="./image-20200622132926186.png" alt="图1" /><figcaption aria-hidden="true">图1</figcaption>
-</figure>
-<p>图1：在线购物平台中，当接收到用户下单指令后，Order Creation微服务，将调用Inventory，Discount Coupon，Freight，Address这几个微服务来完成用户下单的需求。</p>
-<ol start="2" type="1">
-<li><p>怎么进一步定位微服务故障根因？ 上游组件，下游组件，部署环境。</p></li>
-<li><p>对于一个微服务来说，通常有上游组件（例如，微服务，中间件）调用它，并且它可以调用某些下游组件（例如，微服务，中间件）。如图2所示，用户在淘宝下了一个订单后，”Order Creation“微服务将调用“Discount Coupon”微服务查看可用的优惠券，“Discount Coupon”微服务将调用“Inventory”微服务，针对不同的库存计算不同的优惠金额。此外，微服务通常部署在一个或多个容器或虚拟机。 <img src="./image-20200622132951991.png" alt="图2：““Discount Coupon”微服务实现细节" /></p></li>
-<li><p>对每个微服务需要配置监控指标（如图2所示），包括用户可感知的KPI，上游组件相关的指标，下游组件相关的指标，与部署环境相关的指标（例如CPU）。当KPI异常时，通常表示微服务故障，</p></li>
-<li><p>运维人员通常会配置一系列监控指标以持续监视每个微服务的性能（如图2所示）。这些指标包括用户可感知的指标KPI，例如用户响应时间(RT)和指标Metrics. Metrics包括与上游组件相关的指标（例如，Web用户的每秒查询（QPS）），下游组件相关指标（例如中间件的RT），与部署环境相关的指标（例如CPU）。</p></li>
-<li><p>当KPI异常时表示微服务故障，到底是组件异常还是部署环境异常，可通过观察指标是否异常得到。</p></li>
-<li><p>因此，微服务故障的根本原因可以用异常metrics表示。例如，如图2中，由Web RT异常标明的微服务故障是由Web QPS异常引起的。</p></li>
-<li><p>因此在该问题中，我们将针对一个微服务故障实例，给出N个metrics，作为故障的Top N根因。通常一个故障实例由三部分信息组成：异常的KPI，异常的微服务ID和异常时间点。</p></li>
-<li><p>目前已有的解决方法主要是利用微服务之间的故障传播关系（cross），通常分为两个阶段：</p>
-<ol type="1">
-<li>构造依赖关系（relationship learning）：适用pc算法学习微服务之间依赖关系，或者采用系统工具获取依赖关系</li>
-<li>推断根因（rcf）：通过随机游走等基于相关性的方法推断根本原因。</li>
-</ol>
-<figure>
-<img src="./image-20200622133032479.png" alt="表1：微服务系统中已有解决方法" /><figcaption aria-hidden="true">表1：微服务系统中已有解决方法</figcaption>
-</figure></li>
-<li><p>研究挑战:没有现成的方法学习时序间的因果关系;因果推断还要考虑指标本身含义.</p></li>
-<li><p>已有的pc算法是基于iid的假设，不能捕捉延迟的因果关系，所以不适合指标因果图构建。</p></li>
-<li><p>已有的方法，要解决的问题比较简单，即只用分析微服务间的因果关系，相应的解决方案要么通过系统工具获取依赖关系，要么通过pc算法学习因果关系。</p></li>
-<li><p>但是现在的问题更有挑战性，除了微服务之间的因果，还想知道一个微服务的指标之间的因果。所以，提出了一种PC加强版因果挖掘的方法--PCTS。</p></li>
-<li><p>C算法，学习不到延迟的因果关系: PC算法假设不同时刻，指标之间的因果关系是独立的，以下图为例，PC算法假设17：17和17：18之间，4个指标的因果关系是独立. 但是，时序不是符合这个假设的，经常会有时间差. 以下图为例，如17:17分Web QPS会影响17:18的Web RT <img src="img.png" alt="图3：四个时间序列的因果关系图" /> 图中的每一个节点代表了时间序列的某一个时间点，两个节点之间的箭头，标明了两个时间点的数据之间的因果关系, 这说明PC算法学习不到延迟的因果关系</p></li>
-<li><p>做因果推断，除了从数据出发，考虑指标异常相关性，还要考虑指标本身的含义。同一类别指标比不同类别的相关更强。</p></li>
-<li><p>以某个故障案例为例：web请求次数过多导致了服务响应时间变长 <img src="./image-20200622132951991.png" alt="图2：Discount Coupon微服务的实现细节" /> 从数据上看，微服务的KPI--Web RT异常，现在把上下游的metric全部load过来，使用随机游走的方法，分析到的根因是Middleware1 Consumer RT。 <img src="./img_1.png" alt="图4：微服务中的4个监控指标" /> 其中Web RT是KPI，Web QPS, Middleware1 Consumer RT和JVM FGC Time是metrics。 但实际上这个故障实例的根因是上游组件的指标Web QPS。</p></li>
-<li><p>随机游走的视野太狭隘了，还应该考虑指标本身含义，同一类别指标比不同类别的相关更强。也就是说Web RT和Web QPS的相关性更强，和Middleware1 Consumer RT的相关性更弱.</p></li>
-<li><p>MicroCause的架构图如下（图5），</p>
-<figure>
-<img src="./image-20200622134206479.png" alt="图5:MicroCause架构图" /><figcaption aria-hidden="true">图5:MicroCause架构图</figcaption>
-</figure>
-<ul>
-<li>stage1-指标监控：当KPI异常时，MicroCause将被激活，将故障前数小时的监控指标将用作MicroCause的输入。</li>
-<li>stage2-构建因果图：生成故障因果图&amp;异常检测，可并行
-<ul>
-<li>使用PCTS算法，从故障kpi和相关指标学习出该故障的故障因果图，</li>
-<li>将故障前数小时的监控指标对metrics做异常检测，并生成异常事件序列。</li>
-</ul></li>
-<li>stage3-因果推断：使用TCORW，输出N个可能的根原。</li>
-</ul></li>
-<li><p>故障因果图学习: 使用PCTS算法学习基于指标的故障因果图。该算法算法分为两步:</p>
-<ol type="1">
-<li>第一步，得到每个时刻指标之间的因果图<span class="math inline">\(G_C\)</span>，基于PC算法的改进，该算法用于学习时间序列的因果图。该算法的结果如图3所示。但是由于我们需要利用指标之间的因果关系进行根因定位，我们对于改进的PC算法的结果进行了调整。 <img src="img.png" alt="图3：四个时间序列的因果关系图- G_C" /></li>
-<li>第二步，将<span class="math inline">\(G_C\)</span>转化为节点为指标的因果图<span class="math inline">\(G_{FCG}\)</span>，这样才能做根因定位。理论上，如果<span class="math inline">\(G_C\)</span>中时序A和时序B的时间点中存在一条边，那么<span class="math inline">\(G_{FCG}\)</span>中, 时列A到时序B就有一条边。</li>
-</ol>
-<figure>
-<img src="./image-20200622140031849.png" alt="图8：针对故障实例A,基于PCTS算法生成的因果图" /><figcaption aria-hidden="true">图8：针对故障实例A,基于PCTS算法生成的因果图</figcaption>
-</figure>
-<figure>
-<img src="./image-20200622135001778.png" alt="图6：四个指标间的故障因果图-G_FCG" /><figcaption aria-hidden="true">图6：四个指标间的故障因果图-G_FCG</figcaption>
-</figure></li>
-<li><p>异常检测：采用SPOT检测KPI和业务指标中的突增突降。</p></li>
-</ol>
-<p><span class="math display">\[\eta_{\max}^{i}=\max _{k \in O} \frac{| M_{k}^{i}-\phi_{M_{k}^{i}}|}{\phi_{M^{i}}}\]</span></p>
-<pre><code>- 其中是时间序列 在时刻的值，是时间序列 在时刻SPOT拟合的阈值。</code></pre>
-<ol start="20" type="1">
-<li><p>面向时间因果的随机游走(TCORW),主要分为三步：</p>
-<ul>
-<li>面向因果的随机游走，</li>
-<li>潜在根因得分</li>
-<li>根因排序</li>
-</ul></li>
-<li><p>总结一下根因推断的过程：</p>
-<ul>
-<li>先构建一个指标(潜在根因得分) = 随机游走的根因概率 + 指标的异常程度</li>
-<li>相关指标分为3层，每一层找出top2的两个指标，一起得到6个</li>
-<li>按照时间排序，得到前3个或者5个输出</li>
-</ul></li>
-<li><p>随机游走：利用监控指标之间的因果关系进行推断，通过在故障因果图上随机游走。跟传统的随机游走算法的区别在于，这里会使用偏相关系数（Partial Correlation)来计算转移概率矩阵。与Pearson相关性不同的是，和异常KPI因果性更强的metric指标将具有更高的偏相关系数，而Pearson相关性更注重两个指标之间的相关性。因此和异常KPI因果性更强的metric将在随机游走中获得更高的访问次数。</p></li>
-<li><p>潜在根因得分:这一步中我们利用，随机游走的结果和指标的异常程度对于异常的metric计算潜在根因得分，计算方式如下所示：</p></li>
-</ol>
-<p><span class="math display">\[\gamma_{i}=\lambda \bar{c}_{i}+(1-\lambda) \bar{\eta}_{\max }^{i}\]</span></p>
-<p>其中是归一化后的随机游走访问次数，是归一化后的异常程度，作为参数，将用于控制着两部分的贡献比例。</p>
-<ol start="24" type="1">
-<li>根因排序: 先利用指标间可能的故障传播关系，将指标分为三个级别Level1，Level2，Level3。 如表2所示，当Level1和Level2中的指标同时发生异常时，则认为Level1中的指标更有可能是根因。</li>
-</ol>
-<figure>
-<img src="./image-20200622135235013.png" alt="表2：指标分级" /><figcaption aria-hidden="true">表2：指标分级</figcaption>
-</figure>
-<p>基于指标分级信息，指标的异常时间和指标的潜在异常得分我们设计了如下算法给出最后的根因排序。 <img src="./image-20200622135254320.png" /></p>
-<ol start="24" type="1">
-<li>数据集和评估指标:从2019年9月~2020年1月，在某在线购物平台中监控超过400种微服务状态。收集了86**个真实的在线故障实例作为评估数据集，使用AC@k和avg<span class="citation" data-cites="k评估算法给出的Top">@k评估算法给出的Top</span> K个根因的准确性。</li>
-</ol>
-<p><span class="math display">\[ AC@ k=\frac{1}{|A|} \sum_{a \in A}\frac{\sum_{i&lt; k} R^{a}[i] \in V_{r c}^{a}}{\min (k,|\mathrm{V^a}|)} \]</span></p>
-<p><span class="math display">\[A v g @ k=\frac{1}{k} \sum_{1 \leq j \leq k} A C @ j\]</span></p>
-<h2 id="案例分析">案例分析</h2>
-<p>CauseInfer[INFOCOM14]中提到，使用PC算法来学习基于时间序列的因果图时容易生成的孤立子图。在那篇论文中，作者使用领域知识来弥补这一缺陷。 在我们的工作中，同样观察到了这种现象。从图7中，由PC生成的因果图可以看出，异常KPI与根因之间没有路径。</p>
-<p><img src="./image-20200622140008064.png" /> 图7：针对故障实例A,基于PC算法生成的因果图</p>
-<p>但是PCTS可解决这个问题，因为它可以表达时序之间的延迟因果关系（图8）。</p>
-<figure>
-<img src="./image-20200622140031849.png" alt="图8：针对故障实例A,基于PCTS算法生成的因果图" /><figcaption aria-hidden="true">图8：针对故障实例A,基于PCTS算法生成的因果图</figcaption>
-</figure>
-<h2 id="调用链的数据格式">调用链的数据格式</h2>
-<ol type="1">
-<li>做调用链路分析（TraceAnomaly）用到了耗时，以及调用链的结构信息。</li>
-<li>2021AIOps比赛的调用链的数据：每个span_id表示一个trace中的一次子调用，耗时表示当前服务从接受call，到开始response的时间间隔。该表格信息量很少，不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。</li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-ytiMaJaHaK2QpchQVB2rA">基于因果分析的微服务内根因定位</a></li>
-<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">causeinfer--paper</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/18/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/20/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -566,7 +564,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">197</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -20,14 +20,15 @@ categories:
 1. 数据结构是对数据的一种组织形式，以方便后续数据被高效地使用。
 2. 数据结构是创建快速高效算法的必要ingredeints，数据结构可以帮助管理和组织数据；让代码看起来更干净。
 3. 数据结构/抽象数据类/程序的关系就好像，使用乐高搭建一个建筑，层层抽象。
+
 ### 抽象数据类型和数据结构
 
 2. 抽象数据类型(Abstract Data Type, ADT)是对数据结构的一个抽象，它只提供接口（interface），数据结构必须遵循该接口（interface），但是这个接口不涉及任何关于实施或者编程语言相关的细节。
 3. 抽象数据类型的数据结构的关系，举个例子，从一个地方A到另一个地方B有很多种方法，可以骑自行车或者走路或者坐火车，前者是抽象数据类型，后者是该抽象数据类型对应的具体的数据结构。
 5. 一个抽象数据类型之定义了数据结构应该实现什么功能，应该有哪些方法，至于方法的实现细节抽象数据类型是不管的。
 4. 举几个抽象数据类型和数据结构的例子
-    - 抽象数据类型列表（list）可以使用dynamic array或者链表（linked list）实现，这两个数据结构都能实现add，removing，indexing元素
-    - 抽象数据类型队列（Queue）可以使用Linked list based Queue/Array based Queue/Stack based Queue
+    - 抽象数据类型列表（list）可以使用动态数组或者链表实现，这两个数据结构都能实现add，removing，indexing元素。
+    - 抽象数据类型队列（Queue）可以使用Linked list based Queue/Array based Queue/Stack based Queue。
     - 抽象数据类型（Map）可以使用Tree Map/Hash Map/Hash Table实现
 1. ADT is a logical description and data structure is concrete. 
 2. ADT is the logical picture of the data and the operations to manipulate the component elements of the data. 

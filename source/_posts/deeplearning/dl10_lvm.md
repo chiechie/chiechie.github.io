@@ -170,17 +170,23 @@ $$\log p_\theta(\mathbf{x}) = \sum_{i} \log p_\theta(x_i \,|\, \mathrm{parents}(
 
    ![image-20210710155544308](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/deeplearning/dl10_lvm/image-20210710155544308.png)
 
-8. 变分推断（Amortized Inference
+8. 如何找到高斯混合模型$q_{\phi}$？对于每个样本$x^{(i)}$, q对应的z的分布都跟p对应的z的后验概率很接近（使用KL来定义距离），然后对所有样本的距离求和，得到n个KL，最小化这个KL就可以得到最接近p的q。
+
+![image-20210710171726674](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/deeplearning/dl10_lvm/image-20210710171726674.png)
 
 
 
+10. 上面的优化问题如何求解？毕竟$p_{\theta}$未知--也可以使用一个神经网络去拟合～待定系数。
 
+11. 由于KL(q, p)=logP(x) - 变分下界(VLB), 且KL>=0 ，所以VLB<=logP(x),  当且仅当q为p时,等号成立。
 
-1. ）
+12. 回到最开始的问题，我们想要找一个最接近p的q，按照这个标准假设找到了最优的q*，那么VLB就可以取得最大值。因此再次【reformulation problem】---转而求解优化问题：$max_{\phi} VLB$
 
-   how?
+    
 
+    
 
+    
 
 
 

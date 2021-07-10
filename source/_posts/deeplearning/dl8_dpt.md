@@ -25,13 +25,13 @@ categories:
 - GPT3也是一个语言模型，有史以来最大的语言模型，有1750yi个参数，训练一个商用的GPT3模型，要花1200w美元
 ![img.png](img.png)
 - bert模型是需要对特定任务搜集特定数据持续学习的。GPT野心更大，想做zero-shot，fine tuing都不要，见下图：
-  ![img_1.png](img_1.png)
+  ![img_1.png](./img_1.png)
 - 举个例子，
-![img_2.png](img_2.png)
+![img_2.png](./img_2.png)
 - GPT要解决三个任务：Few-shot Learning/One-shot Learning/Zero-shot Learning。
-    
+  
     > 注意，GPT的Few-shot Learning跟一般的Few-shot Learning不一样，GPT不会对模型去fining tuning ,bert是需要fine tuning的
-![img_3.png](img_3.png)
+  ![img_3.png](img_3.png)
 - GPT使用的是in context learning，跟meta learning有一点点不一样
 - GPT不擅长做NLU的问题，即逻辑判断的问题。
 

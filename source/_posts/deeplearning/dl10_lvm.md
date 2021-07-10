@@ -177,13 +177,11 @@ $$\log p_\theta(\mathbf{x}) = \sum_{i} \log p_\theta(x_i \,|\, \mathrm{parents}(
 10. 由于KL(q, p)=logP(x) - 变分下界(VLB), 且KL>=0 ，所以VLB<=logP(x),  当且仅当q为p时,等号成立。
 11. 回到最开始的问题，我们想要找一个最接近p的q，按照这个标准假设找到了最优的q*，那么VLB就可以取得最大值。因此再次【reformulation problem】---转而求解优化问题：$max_{\phi} VLB$
 
-13. 使用了变分推断的神经网络--VAE
+13. 将pathwise derivative应用到变分推断，得到VAE
 
-    ![image-20210710174532259](./image-20210710174532259.png)
+    ![image-20210710180433539](./image-20210710180433539.png)
 
-
-
-
+    ![img](./I0yVIbKz1a-74JbNr5P31z5ePUf1g7NBzEtvk5K3chlmwzySQPyvzqx1umTDG_1ynr1IiYA9t1cwI38vSvmLda_EeQA8Q5gbjZ9J_Ej1NCwkIDSnMo8HJAhoVBA5Mjliy4V_185bk5Y.png)
 
 
 

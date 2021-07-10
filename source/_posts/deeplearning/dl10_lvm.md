@@ -65,9 +65,9 @@ categories:
 
 7. 怎么设计分布函数？effectively represent complex joint distributions over x,并且yet remain easy to train
 
-8. 设计玩分布函数之后，使用相应的训练方法hand-in-hand学习参数，损失函数=真实分布和拟合分布的距离：
+8. 设计好分布函数族后（一般假设是高斯分布），使用相应的训练方法hand-in-hand去估计参数，损失函数=真实分布和拟合分布的距离：
 
-9. 最大似然的损失函数为样本的对数概率的相反数，记为：
+9. MLE的损失函数为样本的对数概率的相反数，记为：
 
   ​	$$\arg \min _{\theta} \operatorname{loss}\left(\theta, \mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(n)}\right)=\frac{1}{n} \sum_{i=1}^{n}-\log p_{\theta}\left(\mathbf{x}^{(i)}\right)$$
 
@@ -75,18 +75,17 @@ categories:
   $$
   \arg \min _{\theta} \mathbb{E}_{\mathbf{x} \sim \hat{p}_{\text {data }}}\left[-\log p_{\theta}(\mathbf{x})\right]
   $$
-
-10. 求解最大似然对应的优化问题--SGD。why？兼容神经网络，即使用神经网络去代替猜想分布。
-
-
-13. 现在要做的事情就是设计一个神经网络来代替$p_{\theta}$,主要想法是：设计一个贝叶斯网络 **Bayes net** structure，网络中包括其他变量，并且使用神经网络来对条件概率分布建模。 将问题转换为，设计一个基于likelihood-based 的模型，对于每一个变量（下图中的一个节点），很简单，将条件变量的值输入nn，nn会输出待预测变量的概率分布。其实就是构建一个nn去拟合边的属性---即在条件变量取不同的值时，相应的变量的概率分布是如何变化的。
-
-![img](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/deeplearning/dl10_lvm/K1rwN9LAHJs509x8IvCcix_7CkI6u8c5YsPUT0R1eoxuP2WvACnAQTVQQVAuqoWMtO5JIflxLnrNl_eFPnF1F3XBT658a6wyLfOSaynjAjyyWf5nFBwSww-TDvy7oYpwNCD3bRHo3Rc.png)
+  可以用神经网络对$p_{\theta}$建模，并使用SGD求解.
 
 
-11. 统计学家说 if the model family is expressive enough and if enough data is given, then solving the maximum likelihood problem will yield parameters that generate the data 
 
-12. 跟最大似然等价的问题为最小KL--经验分布和拟合分布的距离
+13. 如何设计一个神经网络来代替$p_{\theta}$,主要想法是这样的：先把生成数据的过程中，变量间的关系表达为一个贝叶斯网络（ **Bayes net**），并且使用神经网络来对条件概率分布建模（边）。 
+14. 于是将最小化logO**转换为，学习一个可以输出条件概率的nn，输入条件变量（一个变量就是一个节点）的值输，输出另外一个变量的概率分布。就是构建一个nn去拟合边的属性---即在条件变量取不同的值时，相应的变量的概率分布是如何变化的。
+
+![img](./K1rwN9LAHJs509x8IvCcix_7CkI6u8c5YsPUT0R1eoxuP2WvACnAQTVQQVAuqoWMtO5JIflxLnrNl_eFPnF1F3XBT658a6wyLfOSaynjAjyyWf5nFBwSww-TDvy7oYpwNCD3bRHo3Rc.png)
+
+
+11. 跟最大似然等价的问题为最小KL--经验分布和拟合分布的距离
 
     经验分布假设样本来自iid，则每个观测值的分布都为1（就是直方图）
 
@@ -96,6 +95,7 @@ categories:
 
     $$\mathrm{KL}\left(\hat{p}_{\mathrm{data}} \| p_{\theta}\right)=\mathbb{E}_{\mathbf{x} \sim \hat{p}_{\mathrm{data}}}\left[-\log p_{\theta}(\mathbf{x})\right]-H\left(\hat{p}_{\mathrm{data}}\right)$$
 
+
 ## 生成模型1- 自回归模型
 
 1. 给定贝叶斯网络，将条件概率分布设置为nn, 会得到一个可处理的对数likelihood和梯度，很好训练,
@@ -104,7 +104,7 @@ $$\log p_\theta(\mathbf{x}) = \sum_{i} \log p_\theta(x_i \,|\, \mathrm{parents}(
 
 2. 但是用nn建模出来的条件概率的表达能力够强吗？任何联合概率分布都可以表达为条件概率的乘积。 
 
-3. 自回归模型 **autoregressive model**:
+3. 自回归模型(**autoregressive model**):
    $$
    \log p(\mathbf{x})=\sum_{i=1}^{d} \log p\left(x_{i} \mid \mathbf{x}_{1: i-1}\right)
    $$
@@ -124,7 +124,7 @@ $$\log p_\theta(\mathbf{x}) = \sum_{i} \log p_\theta(x_i \,|\, \mathrm{parents}(
 
 6. [Karpathy, 2015]提出char-rnn方法
 
-   ![image-20210710152800599](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/deeplearning/dl10_lvm/image-20210710152800599.png)
+   ![image-20210710152800599](./image-20210710152800599.png)
 
 ## 生成模型2-隐变量模型
 
@@ -160,33 +160,30 @@ $$\log p_\theta(\mathbf{x}) = \sum_{i} \log p_\theta(x_i \,|\, \mathrm{parents}(
 
 5. 如果z的分布很难采样怎么办？分布变换：从原始的p转换成到q（q中也有待估计的参数），然后再q中采样，这就是变分（分布）法
 
-   ![image-20210710154905312](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/deeplearning/dl10_lvm/image-20210710154905312.png)
+   ![image-20210710154905312](./image-20210710154905312.png)
 
 6. 怎么设计q？有一种常规的思路，找一个高斯分布的q，使得这个q尽可能逼近z的后验概率。
 
-   ![image-20210710155220160](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/deeplearning/dl10_lvm/image-20210710155220160.png)
+   ![image-20210710155220160](./image-20210710155220160.png)
 
 7. 接着上面找q，即求解优化问题
 
-   ![image-20210710155544308](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/deeplearning/dl10_lvm/image-20210710155544308.png)
+   ![image-20210710155544308](./image-20210710155544308.png)
 
 8. 如何找到高斯混合模型$q_{\phi}$？对于每个样本$x^{(i)}$, q对应的z的分布都跟p对应的z的后验概率很接近（使用KL来定义距离），然后对所有样本的距离求和，得到n个KL，最小化这个KL就可以得到最接近p的q。
 
-![image-20210710171726674](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/deeplearning/dl10_lvm/image-20210710171726674.png)
+![image-20210710171726674](./image-20210710171726674.png)
+
+10. 由于KL(q, p)=logP(x) - 变分下界(VLB), 且KL>=0 ，所以VLB<=logP(x),  当且仅当q为p时,等号成立。
+11. 回到最开始的问题，我们想要找一个最接近p的q，按照这个标准假设找到了最优的q*，那么VLB就可以取得最大值。因此再次【reformulation problem】---转而求解优化问题：$max_{\phi} VLB$
+
+13. 使用了变分推断的神经网络--VAE
+
+    ![image-20210710174532259](./image-20210710174532259.png)
 
 
 
-10. 上面的优化问题如何求解？毕竟$p_{\theta}$未知--也可以使用一个神经网络去拟合～待定系数。
 
-11. 由于KL(q, p)=logP(x) - 变分下界(VLB), 且KL>=0 ，所以VLB<=logP(x),  当且仅当q为p时,等号成立。
-
-12. 回到最开始的问题，我们想要找一个最接近p的q，按照这个标准假设找到了最优的q*，那么VLB就可以取得最大值。因此再次【reformulation problem】---转而求解优化问题：$max_{\phi} VLB$
-
-    
-
-    
-
-    
 
 
 

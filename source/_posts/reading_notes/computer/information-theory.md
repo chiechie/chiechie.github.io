@@ -24,3 +24,4 @@ categories:
 ## 参考
 
 1. [交叉熵](https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#cross-entropy)
+2. https://www.youtube.com/watch?v=ErfnhcEV1O8&list=WL&index=17&t=85s

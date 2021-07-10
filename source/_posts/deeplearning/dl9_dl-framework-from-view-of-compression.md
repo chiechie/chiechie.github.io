@@ -7,6 +7,8 @@ tags:
 - 人工智能
 - 深度学习
 - 深度学习原理
+- AGI
+- high-level
 categories: 
 - 深度学习
 ---
@@ -14,9 +16,21 @@ categories:
 > 最近一篇工业界的人讲深度学习的第一性原理，结合mayi老师的文章，尤其是联想到中国哲学中的"名实之争"，有点意思，在这里记录一下
 
 
+
+## summary
+
+
+
+1. Ideal Intelligence或者AGI是什么？就是在做信号压缩，即从大量数据中找到所有的模式。
+
+2. 数据压缩就是describe the large amout of data in a more compact way
+3. finding all patterns = short description of raw data（low kolmogorov complexity）
+4. 
+
+
 ## 学术界的进展
 
-马毅老师的文章和袁进辉和文章都是想探索一种通用的方法，对任何数据找到其最优的神经网络。
+马毅老师的文章和袁进辉文章都是想探索一种通用的方法，对任何数据找到其最优的神经网络。
 
 都知道图像数据可能更适合cnn，序列数据更适合GPT-3，这些网络都是具有某个特殊的结构的DNN，这些奇奇怪怪的结构是无数次试错，人工设计出来的。
 
@@ -29,7 +43,7 @@ categories:
 1. 计算神经科学领域对这个问题已经研究很多年了，有一些非常经典的研究成果譬如ICA(独立成分分析）以及Sparse coding方法，这些方法的背后是一种基于信息论的原则，称之为efficient coding principle。
 2. 这个理论认为，大脑的结构源自亿万年的进化，进化的目标是形成外界物理环境的一种“最经济”的表达，这种表达是适应于（adapt to)自然界的统计规律，而且这种结构基本上是无监督的。这种理论已经能非常好的解释视网膜、侧膝体、初级视皮层神经元感受野的形成机理，近些年的研究开始向理解V2, V4等更高级的视皮层进发。
 3. 用efficient coding原则来理解卷积神经网络的一些关键技巧
-   
+  
     - 卷积: 在计算神经科学里，相当于初级视皮层神经元的局部感受野
     - 非线性的激活函数：计算神经科学里，站在信息论角度，通过非线性映射，可以把取值范围很大的activation映射到一个区间，比较重要的输入值编码的分辨率高一些，而不重要的输入不需要消耗太多能量去编码，就被映射到“饱和区”。
 4. efficient coding准则认为，神经元的感受野是用来表示输入刺激的统计规律，把输入转化成神经元的响应有助于去除输入之间的冗余性（redudancy）,也就是神经元的响应之间应该比输入 “统计上更接近于独立”。
@@ -67,6 +81,17 @@ categories:
 8. 要回答这些问题，就要和中国古代哲学里的”名实之论“有关系了。到底是先有”名“，还是先有”实“。一般认为是先有”实“，后有”名“，而”实“决定”名“。
 9. 回到机器学习问题上，就是数据的标签是后天出现的，一个东西到底用什么标签去称呼，本质上是由这个东西自身的规律决定的。换句话说，label可能是后天”涌现“（emerge)的，因为一些东西本质一样，张的像，所以人们才会给他们相同的命名。因此要寻求最优的分类器，可能首先要从”无监督“的数据分析入手。
 
+### lecake
+
+a cherry refers to the amount of data your getting，the information youare getting in
+reinforcement learning，the reward are not a very high throuput signal you you
+are getting。
+
+
+总结一下lecake的观点：以非监督学习为基石，辅以监督学习或者纯强化学习，是走向AFI的方向
+
+![lecake](./db22b6d4fc545430dce3009785f84b21.png)
+
 ## 工业界的进展
 
 1. 项研究和今天很受关注的大规模预训练模型也很相似，而且也有研究发现，大规模预训练模型中真正有效的实际上是一个很小的“子网络”，也就是很多连接的权重是接近零的。最近恰好出现了一些 MLP is all your need相关的研究，也不无道理。
@@ -77,3 +102,4 @@ categories:
 1. [Deep_Networks_from_First_Principles](https://cmsa.fas.harvard.edu/wp-content/uploads/2021/04/Deep_Networks_from_First_Principles.pdf)
 2. [我对深度学习“第一性原理”的探索和理解
 -袁进辉](https://mp.weixin.qq.com/s/no0u_6m3Ima8YlmV7msGqQ)
+3. https://www.youtube.com/watch?v=V9Roouqfu-M

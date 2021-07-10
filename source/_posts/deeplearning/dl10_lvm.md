@@ -129,12 +129,15 @@ $$\log p_\theta(\mathbf{x}) = \sum_{i} \log p_\theta(x_i \,|\, \mathrm{parents}(
 ## 生成模型2-隐变量模型
 
 1. 为什么需要latent variable模型?对比下自回归模型：采样的计算量太大了，采样只能按照顺序进行。
+
 2. latent varible只依赖latent varible，采样效率更高，相对于ar模型。
+
 3. 如果知道生成数据的因果过程，就可以设计一个latent varible了。
+
 4. 一般来说，我们不知道隐变量是什么，以及这些latent variables是怎么跟observation进行互动的。
   确定隐变量的最好的方法，仍未有定论。
-
-1. latent variable模型更像是一种更抽象的层次更高的认知。
+  
+5. latent variable模型更像是一种更抽象的层次更高的认知。
 
 2. 隐变量模型的一个例子：如下，Z是一个K维度的随机向量，X是一个L维的随机变量
 
@@ -158,41 +161,71 @@ $$\log p_\theta(\mathbf{x}) = \sum_{i} \log p_\theta(x_i \,|\, \mathrm{parents}(
 
 4. 求最大似然的时候，z的维度太多了怎么办？采样。
 
-5. 如果z的分布很难采样怎么办？分布变换：从原始的p转换成到q（q中也有待估计的参数），然后再q中采样，这就是变分（分布）法
+4. 如果z的分布p很难采样怎么办？分布变换：将分布p转换为一个简单的分布q（q中也有待估计的参数，经常把q设计成一个高斯分布），然后在q中采样，这就是变分法,。「变分」强行理解成「改变分布」。
 
    ![image-20210710154905312](./image-20210710154905312.png)
 
-6. 怎么设计q？有一种常规的思路，找一个高斯分布的q，使得这个q尽可能逼近z的后验概率。
+2. 求解Inference问题,相当于积分掉无关变量，求边际分布。如果变量维度过高，积分非常困难。一般来说，有两种方法，一种是蒙特卡洛模拟，一种是变分推断。前者是unbiased &&high variance，后者是biased-low&& variance。举个例子，求P(z|x)时，使用贝叶斯公式，可以转换为联合分布除以P(x), 求P(x)涉及到对z求多重积分，特别困难。
 
-   ![image-20210710155220160](./image-20210710155220160.png)
+   > 还有一些技术如（mean field）可将复杂的多元积分变成简单的多个一元积分的乘积，从而使得求多重积分变得可行。
 
-7. 接着上面找q，即求解优化问题
+   下面看一下有偏差的低方差的方法---变分推断。。
 
-   ![image-20210710155544308](./image-20210710155544308.png)
+### 变分推断
 
-8. 如何找到高斯混合模型$q_{\phi}$？对于每个样本$x^{(i)}$, q对应的z的分布都跟p对应的z的后验概率很接近（使用KL来定义距离），然后对所有样本的距离求和，得到n个KL，最小化这个KL就可以得到最接近p的q。
+> Any procedure which uses optimization to approximate a density can be termed ``variational inference''.---Jordan (2008) 对 Variational Inference 的定义
+
+1. 简单来说，变分就是用简单的分布q去近似复杂的分布p。
+
+![image-20210710155220160](./image-20210710155220160.png)
+
+2. 如何找到满意的$q_{\phi}$？对于每个样本$x^{(i)}$, q测量的z的分布都跟p测量的z的后验分布很接近。也就是说，希望找到一个q使得，n个KL之和最小。
+
 
 ![image-20210710171726674](./image-20210710171726674.png)
 
-10. 由于KL(q, p)=logP(x) - 变分下界(VLB), 且KL>=0 ，所以VLB<=logP(x),  当且仅当q为p时,等号成立。
-11. 回到最开始的问题，我们想要找一个最接近p的q，按照这个标准假设找到了最优的q*，那么VLB就可以取得最大值。因此再次【reformulation problem】---转而求解优化问题：$max_{\phi} VLB$
+3. 由于KL(q, p) + 变分下界(VLB) =logP(x) , 不管q如何变化，KL+ELBP是固定的，所以最小化KL等价于最大化$ ELBO$。KL因为含有后验分布$p_{z|x}$不好优化所以转为优化ELBO。
 
-13. 将pathwise derivative应用到变分推断，得到VAE
+	> 为什么要叫lower bound，因为KL>=0, 所以VLB<=logP(x), 所以VLB是logP(x)的一个下界，所以叫Lower bound
 
-    ![image-20210710180433539](./image-20210710180433539.png)
+4. 至此，vae的损失函数(ELBO)等价于两部分=重构误差+正则项，
 
-    ![img](./I0yVIbKz1a-74JbNr5P31z5ePUf1g7NBzEtvk5K3chlmwzySQPyvzqx1umTDG_1ynr1IiYA9t1cwI38vSvmLda_EeQA8Q5gbjZ9J_Ej1NCwkIDSnMo8HJAhoVBA5Mjliy4V_185bk5Y.png)
+  $$E L B O=\mathbb{E}_q\left[\log p\left(x \mid z\right)\right]-\mathbb{K} \mathbb{L}\left(q\left(z \mid x\right) \| p(z)\right)$$
 
-14. We have seen that a variational autoencoder is a latent variable model with Gaussian prior p(z) and approximate posterior q(z|x).Why is it called an “autoencoder”?
 
-    ![image-20210710180703035](./image-20210710180703035.png)
+
+   ![img](https://miro.medium.com/max/1400/1*Q5dogodt3wzKKktE0v3dMQ@2x.png)
+5. 其中正则项(regularity)是为了保证 latent space 更regular，即，希望生成模型实现连续性（**continuity**）和完备性（completness，不能胡说八道）。如果没有正则项，就跟auto-encoder一样专注于最小化重构误差，很有可能过拟合，没有泛化性。
+   ![img](https://miro.medium.com/max/2000/1*83S0T8IEJyudR_I5rI9now@2x.png)
+   
+6. auto-encoder和variational autoencoders的区别：注意decoder，vae的decoder将z映射为x，是确定性的，不是随机的。随机性之存在于对encoder的结果（u, sigma）中采样出z。
+
+   ![img](https://miro.medium.com/max/2000/1*ejNnusxYrn1NRDZf4Kg2lw@2x.png)
+
+
+7. 训练好了VAE后，单独拿decoder出来做生成模型。
+
+   > KL衡量的是p相对于q的距离，是一种非对称的local 距离。
+
+
+
+2. 将pathwise derivative应用到变分推断，得到VAE
+
+   ![image-20210710180433539](./image-20210710180433539.png)
+
+   ![img](./I0yVIbKz1a-74JbNr5P31z5ePUf1g7NBzEtvk5K3chlmwzySQPyvzqx1umTDG_1ynr1IiYA9t1cwI38vSvmLda_EeQA8Q5gbjZ9J_Ej1NCwkIDSnMo8HJAhoVBA5Mjliy4V_185bk5Y.png)
+
+   
+
 
 
 ## 参考
-1. https://sites.google.com/view/berkeley-cs294-158-sp20/home
 
-2. [L1 Introduction -- CS294-158-SP20 Deep Unsupervised Learning -- UC Berkeley, Spring 2020](https://www.youtube.com/watch?v=V9Roouqfu-M)
-3. [https://drive.google.com/file/d/1zWvkB5BNFs1IzyXarsf6ItXpfEc2OfZc/view](https://drive.google.com/file/d/1zWvkB5BNFs1IzyXarsf6ItXpfEc2OfZc/view)
+1. https://sites.google.com/view/berkeley-cs294-158-sp20/home
+2. [L1 Introduction--CS294-158-SP20-youtube](https://www.youtube.com/watch?v=V9Roouqfu-M)
+3. [L1 Introduction--CS294-158-SP20-slide](https://drive.google.com/file/d/1zWvkB5BNFs1IzyXarsf6ItXpfEc2OfZc/view)
 4. https://www.youtube.com/watch?v=V9Roouqfu-M
-5. [L2 Autoregressive Models -- CS294-158-SP20 Deep Unsupervised Learning -- UC Berkeley, Spring 2020]( https://www.youtube.com/watch?v=iyEOk8KCRUw)
+5. [L2 Autoregressive Models -- CS294-158-SP20-youtube]( https://www.youtube.com/watch?v=iyEOk8KCRUw)
+6. https://www.zhihu.com/question/41765860
+7. https://www.youtube.com/watch?v=uaaqyVS9-rM
 

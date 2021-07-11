@@ -14,19 +14,31 @@ categories:
 
 > 即使股价预测很准，但是头寸配置的不恰当，还是有可能亏钱。
 
-1. 假定三期股价为 [1, 0.5, 1.25]，仓位1: [0.5, 1, 0] & 仓位2: [1, 0.5, 0]，则前者挣钱而后者亏钱。
-2. 我们偏好这样的下注策略：建仓时保留一些现金，如果交易信号加强（股价变为0.5），就追加投资。
-3. 交易信号越强，下注可以越大，因为交易信号很难变得更强了。所以预测的概率  与下注之间可以构建一种函数关系.
-   ![img.png](img.png)
-4. 如果每次预测时，如果交易信号的微小改变就要调仓，那换手率就太高了，作者建议可以对预测结果做滑动平均，或者将下注量离散化（如下图）
-   ![img_1.png](img_1.png)
-5. 当股票的市场价格$p_t$和预测价格$f_t$波动时，可用如下方法动态地确定下注量$\hat{q}_{i, t}$：
-$$\hat{q}_{i, t}=\operatorname{int}\left[\frac{x}{\sqrt{w+x^{2}}} \cdot Q\right]$$,
-  $x=f_{i}-p_{t}$为预测价与当前价的差价， Q为最大持仓量。
-   > label就是交易信号，表示买或者卖, 两个label 如果是基于相同时间段的收益率 计算出来的，就说是concurrent的.
-6. 基于预测概率确定BET SIZING
-7. 平均主动BETS
-8. 动态BET SIZES 和 限定价格
+1. 假定三期股价为 [1, 0.5, 1.25]，仓位1: [0.5, 1, 0] & 仓位2: [1, 0.5, 0]，则前者挣钱而后者亏钱。这种情况下，更偏好这样的下注策略：建仓时保留一些现金，如果交易信号加强（股价变为0.5），就追加投资。
+
+3. 下图是交易信号(z)和最佳下注大小(m)之间的函数关系：
+   
+   横轴的z表示交易信号强弱，纵轴m代表最佳下注大小：$m = x (2Z [z] − 1), m\in{[-1,1]}$
+   
+   交易信号z是模型预测结果x的函数，预测结果x越极端，则分母越小，分子绝对值越大0， 则z越接近$+\infty$或者$-\infty$，则交易信号越强。
+   
+   总的来说，交易信号越强，下注越大，但是，当交易信号强度超过一定值，就可以不用加仓，最佳持仓水平m可以保持不变，这一点跟直觉是稳和的，价格猛涨多了一段时间之后，再往上走就很难了，这个时候不能追高。
+   
+   ![image-20210711134750210](./image-20210711134750210.png)
+   
+3. 如果每次预测时，如果交易信号的微小改变就要调仓，那换手率就太高了，作者建议可以对预测结果做滑动平均，或者将下注量离散化（如下图）![image-20210711140908880](./image-20210711140908880.png)
+
+4. 当股票的市场价格$p_t$和预测价格$f_t$波动时，可用如下方法动态地确定下注量$\hat{q}_{i, t}$：
+   $$\hat{q}_{i, t}=\operatorname{int}\left[\frac{x}{\sqrt{w+x^{2}}} \cdot Q\right]$$,
+   $x=f_{i}-p_{t}$为预测价与当前价的差价， Q为最大持仓量。
+
+    > label就是交易信号，表示买或者卖, 两个label 如果是基于相同时间段的收益率 计算出来的，就说是concurrent的.
+
+5. 基于预测概率确定BET SIZING
+
+6. 平均主动BETS
+
+7. 动态BET SIZES 和 限定价格
 
 
 ## chapter 11 回测有风险
@@ -97,7 +109,6 @@ $$\hat{q}_{i, t}=\operatorname{int}\left[\frac{x}{\sqrt{w+x^{2}}} \cdot Q\right]
 6. 某些策略错误地估计交易费用导致失败，这些需要考虑的统计量包括：Broker fees per turnover、Average slippage per turnover……
 7. 一些考虑到风险的统计量包括：夏普比率（Sharpe Ratio/ SR）、PSR（Probabilistic SR）、DSR（Deflated SR）、信息率（Information ratio）……
    > 夏普值，衡量的是一项投资在对其调整风险后，相对于无风险资产的表现。它的定义是投资收益与无风险收益之差的期望值，再除以投资标准差（即其波动性）。它代表投资者额外承受的每一单位风险所获得的额外收益。
-   
 > Every backtest result must be reported in conjunction with all the trials involved in its production. Absent that information, it is impossible to assess the backtest’s “false discovery“ probability.
 —— MARCOS’ THIRD LAW OF BACKTESTING
 

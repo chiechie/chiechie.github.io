@@ -17,13 +17,13 @@ categories:
 1. 数组（array），链表（linked list），栈（stack），队列（queue）是最常用的线性的数据结构。
 2. 数组是一片连续的存储空间中，链表在物理空间中不是连续地存在一起的。
 
-# detail
+#  通用的数据结构
 
 ## 数组(array) 
 
 1. 数组是一个很基本的数据结构，使用数组和pointer可以构建出所有的数据结构
 1. 数组分为静态数组（static array）和动态数组（dynamic array）两种.静态数组大小固定，动态数组可以扩展。
-   
+  
    > wangshusen的视频里面分别叫array和向量vector，下面还是以动/静为标准。
 
 2. 静态数组(static array)是一个固定长度的容器（container），包含了n个元素，每个元素有一个索引，索引值从[0,n-1]
@@ -48,7 +48,7 @@ categories:
       - 初始化：创建一个静态数组，有一个初始容量，此后一遍增加元素一遍跟踪容器中元素的个数。
       - 添加新元素时，如果容器没满，直接加入； 如果容器满了，自动扩容--创建一个新的静态数组，大小为当前容量的2倍，将老的静态数组的元素复制到新的静态数组中，然后加入该元素。
 
- 
+
 ## 链表(linked list)
 
 1. 链表上相邻的元素在物理存储上并不是相邻的，每个元素的物理未知只存在于他的上下游节点中。
@@ -79,10 +79,49 @@ categories:
    - 删除中间元素：单链表的时间复杂度为复杂度O(n)，双链表的复杂度是O(n)
 
 
+
+## 栈（stack）
+
+1. 栈是一种线性的数据结构，栈的一端是固定的，跟现实世界中的tack一样，stack有两个主要的操作：入栈（push）和出栈（pop）。
+2. 栈中有一个top指针指向栈的顶端。以为对栈的操作主要是集中在顶端。
+3. 数据出栈（pop）和入栈（push）符合后进先出的顺序，也叫LIFO/
+
+   ![image-20210711073942878](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/data_structure/image-20210711073942878.png)
+
+1. 可以使用数组或者链表来实现一个栈。
+5. 什么时候用到栈：括号匹配/撤销操作/汉诺塔/图遍历中的深度优先搜索。（DFS）
+
+##  队列
+
+1. 队列是一个线性的数据结构，有两个主要的操作，入队（enqueue/adding/offering）和出队（dequeue/polling）。入队就是添加数据到队尾添，出队就是删除队头的数据。
+
+2. 数据入队和出队，符合后进后出的顺序。（LILO）
+
+   ![image-20210711085139955](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/data_structure/image-20210711085139955.png)
+
+2. queue可以用于对排队场景建模；跟踪最新添加的k个数据；web server请求管理--谁先来就服务谁/图遍历中的广度优先搜索（BFS）。
+3. 可以用链表来实现队列。
+3. 使用队列实现BFS。
+   ![image-20210711091627179](./image-20210711091627179.png)
+
+
+# python中的数据结构
+
+1. 在python中，list就是一个动态的数组，append有时候效率很低。
+2. 在python中，collections.deque是一个double-ended queue，两端固定的队列，基于双向链表实现的插入效率更高一些。但是按照序号查找某个元素，效率不高。
+3. 在python中怎么实现一个栈？
+
+   1. 使用python内置的对象list，其自带的append和pop方法可以实现push和pop
+   2. 使用collections.deque，其自带的append和pop方法可以实现push和pop
+
+
+
 # 参考
+
 1. [algorithm-python-github](https://github.com/akzare/Algorithms)
 1. [youtube](https://www.youtube.com/watch?v=gXgEDyodOJU)
 2. [Graph-theoretic Models](https://www.youtube.com/watch?v=V_TulH374hw)
 3. [the difference-between-ADT和DS](https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure)
 4. [数据结构和算法](https://www.csie.ntu.edu.tw/~htlin/course/dsa21spring/)
 5. [Data Structures Easy to Advanced Course](https://www.youtube.com/watch?v=RBSGKlAvoiM&t=102s)
+7. https://realpython.com/how-to-implement-python-stack/#implementing-a-python-stack

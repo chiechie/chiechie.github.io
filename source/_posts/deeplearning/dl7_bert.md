@@ -43,8 +43,7 @@ categories:
 
 ## bert模型原理
 
-![bert模型可视化]
-(https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&rect=0%2C0%2C2668%2C3126&w=1980&h=2320)
+![bert模型可视化](https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&rect=0%2C0%2C2668%2C3126&w=1980&h=2320)
 
 ### 任务一--预测遮挡词
 
@@ -52,9 +51,10 @@ categories:
 输入： “The _____ sat on the mat”
 输出： What is the masked word?
 
-![img.png](img.png)
+![img.png](./img.png)
 
 如何学习？
+
 - e：one-hot vector of the masked word “cat”.
 - 𝐩: output probability distribution at the masked position.
 - 损失函数Loss = CrossEntropy(𝐞, 𝐩 )
@@ -63,6 +63,7 @@ categories:
 ### 任务二-- Predict the Next Sentence
 
 任务可以描述为：
+
 • Given the sentence:
 “calculus is a branch of math”.
 • Is this the next sentence?
@@ -77,7 +78,8 @@ categories:
 • [SEP] is for separating sentences.
 
 学习过程
-![img_1.png](img_1.png)
+
+![img_1.png](./img_1.png)
 
 
 ### 结合两个任务
@@ -93,7 +95,7 @@ categories:
 
 如何使用BERT做迁移学习（Transfer Learning）？
 
-- demo数据：https://www.kaggle.com/c/fake-news-pair-classification-challenge/data
+- (demo数据)[https://www.kaggle.com/c/fake-news-pair-classification-challenge/data]
 - 预训练的中文bert模型：hugging face
 
 ## 要不要冻结BERT的部分参数？
@@ -119,7 +121,7 @@ Some people suggest doing gradual unfreezing of the BERT layers, ie finetuning w
 4. [BERT (预训练Transformer模型)](https://www.youtube.com/watch?v=UlC6AjQWao8&t=26s)
 5. [RoBERTa](https://arxiv.org/pdf/1907.11692v1.pdf)
 6. Devlin, Chang, Lee, and Toutanova. BERT: Pre-training of deep bidirectional transformers for language understanding. In ACL, 2019.
-7. [](https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html)
+7. [attack_on_bert_transfer_learning_in_nlp-blog](https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html)
 8. [ROBERTA-pytorch](https://pytorch.org/hub/pytorch_fairseq_roberta/)
-9. [](https://discuss.huggingface.co/t/fine-tune-bert-models/1554/2)
+9. [huggingface](https://discuss.huggingface.co/t/fine-tune-bert-models/1554/2)
 10. https://medium.com/swlh/painless-fine-tuning-of-bert-in-pytorch-b91c14912caa

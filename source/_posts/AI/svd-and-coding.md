@@ -6,27 +6,24 @@ date: 2021-07-10 11:40:31
 tags: 
 - SVD
 - 信息论
+- 效率
 categories: 
 - 阅读
 ---
 
-
-
-> 随手写
+> 大矩阵怎么存？最简单的方式就是矩阵分块, 然后分chunk存/读/算，下一个chunk覆盖上一个chunk，始终占用一个chunk的内存。
+>
+> 如果还想去噪，可以用svd，下面推演一下用svd可以节省多少空间
 
 SVD技术可以应用于信号压缩
 
 SVD是这样的, 随意一个矩阵A可以做如下分解
 
-$$A = U\Lambda V^T$$
-
-==>
-
-$$U^T A = \Lambda V^T  $$
+$$A = U\Lambda V^T$$==>$$U^T A = \Lambda V^T  $$
 
 可以把$U^T$看成是encoding,  $U$看成是decoding, 压缩之后的信号是$\Lambda V^T$
 
-![奇异值分解](/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/svd-and-coding/奇异值分解.png)
+![奇异值分解](./奇异值分解.png)
 
 detail
 
@@ -36,11 +33,11 @@ $\Lambda$中的元素从大到小排列，前面k个元素绝对值大于0
 
 对三个矩阵分块，图中的阴影部分是我们要存储的部分
 
-$\Lambda = [\Lambda_k, \mathbf{0_{m-k}}], \Lambda_k \in R^{n * k}, \Lambda_{(m-k)} \in R^{n * (m-k)}$
+$$\Lambda = [\Lambda_k, \mathbf{0_{m-k}}], \Lambda_k \in R^{n * k}, \Lambda_{(m-k)} \in R^{n * (m-k)}$$
 
-$V = [ \mathbf{v_k},  \mathbf{v_{m-k}}],  \mathbf{v_k} \in R^{m*k},  \mathbf{v_k} \in R^{m*(m-k)} $
+$$V = [ \mathbf{v_k},  \mathbf{v_{m-k}}],  \mathbf{v_k} \in R^{m*k},  \mathbf{v_k} \in R^{m*(m-k)} $$
 
-$\Lambda V^T = [\Lambda_k, \mathbf{0_{m-k}}].[v_k, v_{m-k}]^T = \Lambda_k.v_k^T $
+$$\Lambda V^T = [\Lambda_k, \mathbf{0_{m-k}}].[v_k, v_{m-k}]^T = \Lambda_k.v_k^T $$
 
 经过U做encoding之后的信息仅有 $\Lambda_k$和$v_k$
 

@@ -165,6 +165,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/23/data_structure/graph/randomwalking/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/23/data_structure/graph/randomwalking/" class="post-title-link" itemprop="url">随机游走</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-23 12:52:46" itemprop="dateCreated datePublished" datetime="2021-05-23T12:52:46+08:00">2021-05-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-28 09:34:19" itemprop="dateModified" datetime="2021-06-28T09:34:19+08:00">2021-06-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="介绍">介绍</h2>
+<p>已知因果图时，随机游走可以用来做因果推断。</p>
+<p>原理是，基于因果关系，构建概率转移矩阵，通过模拟故障传播路径，得到故障根因。</p>
+<h2 id="随机游走算法-详细">随机游走算法-详细</h2>
+<ul>
+<li>Step 1. 生成一个关系图G. <span class="math inline">\(e_{ij} = 1\)</span> 表示节点i是节点j的原因（之一）</li>
+<li>Step 2. 计算转移矩阵Q:
+<ol type="1">
+<li>向前游走：从result节点到 the cause节点.理论上，跟异常节点越相关的节点，就越有可能是根因. 也就是说 <span class="math inline">\(Q_{ij} = R(v_{abnormal}, v_j)\)</span>, <span class="math inline">\(R(v_{abnormal}, v_j)\)</span>表示异常节点<span class="math inline">\(v_{abnormal}\)</span> 和 $ v_j$之间的相关系数, and <span class="math inline">\(e_{ji} = 1\)</span></li>
+<li>向后游走：从cause节点到result节点. 为了避免算法陷入跟异常不相关或者低相关的节点，随机游走允许从cause节点跳出到result节点。 如果 <span class="math inline">\(e_{j i} \in E\)</span>且 <span class="math inline">\(e_{ij} \notin E\)</span>, 那么 <span class="math display">\[Q_{ji} =\rho R\left(v_{abnormal}, v_{i}\right),\rho \in[0,1]\]</span>.</li>
+<li>维持原状：如果一个节点，它的邻居们都跟异常节点的相关性很低，这个节点很有可能就是根因了，所以游走者应该停留在这里， <span class="math display">\[Q_{i i}=\max \left[ 0, R\left(v_{abnormal}, v_{i}\right)- \max _{k: e_{k i} \in E} R\left(v_{abnormal}, v_{k}\right) \right]\]</span></li>
+</ol></li>
+<li>Step 3. 对行做归一化，得到转移概率矩阵 <span class="math display">\[\bar{Q}_{i j}=\frac{Q_{i j}}{\sum_{j} Q_{i j}}\]</span></li>
+<li>Step 4. 在G上面随机游走，使转移概率<span class="math inline">\(\bar{Q}\)</span></li>
+</ul>
+<p>采用类似pagerank的方法，得到每个节点的得分。</p>
+<h2 id="参考">参考</h2>
+<ol start="4" type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2020/06/%E5%AD%9F%E5%AA%9B.pdf">Page3,4 -paper</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/22/AIOps/AIOps-2_1_4-topo-rca-aiops2021/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -196,7 +289,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+                <time title="修改时间：2021-07-09 17:58:49" itemprop="dateModified" datetime="2021-07-09T17:58:49+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -228,6 +321,7 @@
 <h3 id="指标数据">指标数据</h3>
 <p>指标数据包括业务指标 和 性能指标。 业务指标用于触发根因分析，性能指标用于局部的根因定位</p>
 <p>每个指标数据，都需要附带的信息有：归属物理设备id，以及相应用id，（这样才能做机器的指标依赖的额故障定位）</p>
+<p>2021AIOps比赛的调用链的数据：每个span_id表示一个trace中的一次子调用，耗时表示当前服务从接受call，到开始response的时间间隔。这里的表格信息量很少，它不知道每次子调用，具体是那个应用在调用，也不知道此次子调用之前，该trace已经走过了哪些调用路径了。</p>
 <h4 id="业务指标">业务指标</h4>
 <p>kpi_0304.csv</p>
 <ul>
@@ -328,107 +422,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/22/data_structure/graph/pagerank/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/22/data_structure/graph/pagerank/" class="post-title-link" itemprop="url">PageRank算法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-22 18:07:11" itemprop="dateCreated datePublished" datetime="2021-05-22T18:07:11+08:00">2021-05-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-01 11:42:01" itemprop="dateModified" datetime="2021-07-01T11:42:01+08:00">2021-07-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>最近需要对图数据进行分析，了解下PageRank的原理</p>
-<p>BTW, PageRank还可以做社区划分？</p>
-</blockquote>
-<h2 id="总结一下">总结一下</h2>
-<p>pagerank: 假设，网上冲浪的人都是漫无目的的人，他们在网页一个链接接一个链接点下去，但是，整个互联网的节点，最终流量可能的分布能达到一个稳态。 也就是说，随机分布于各网页的流量经过次数足够多的转移之后，会达到一个稳定的状态，这个也代表每个网页的信息度。</p>
-<p>基于这个假设，可以构建一个模型， <span class="math display">\[V_n = M ^n * V_0\]</span></p>
-<p>一般来说，可以拿到网页之间调用拓扑，经过转换，可以将这个拓扑变为概率转移矩阵M，最终算出稳定态的V_n</p>
-<p>给定点之间的连接关系，输出每个节点的分数，</p>
-<p>补充下，最naive的方法存在终止点问题，也就是说，一个网站它不链接任何别的网站，或者一个微服务，它不调用其他任何微服务 按照上面的思路很可能出现一种情况，最终的流量全到这个自大狂网页那里去了，所以有一个改进的思路，假设冲浪着有一点点聪明，他并不是一味的接受灌输的链接，而是有一定概率，主动跳出去，到达一个新的站点，这个方式可以用下面的式子建模：</p>
-<p><span class="math display">\[V_n = d * M * V_{n-1} + (1-d) * e \]</span></p>
-<p>e = [1/n,...1/n]</p>
-<p>d表示按照当前页面推荐的链接继续点下去的概率 1-d表示从当前网页跳出来，主动输入一个新网页重新开始的概率</p>
-<h2 id="代码">代码</h2>
-<p>用代码验证一下，理解没有问题</p>
-<p>https://github.com/chiechie/BasicAlgo/blob/main/pagerank.py</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ground truth</span><br><span class="line"> [[0.25419178], [0.13803151], [0.13803151], [0.20599017], [0.26375504]]</span><br><span class="line">result</span><br><span class="line"> [0.25419178 0.13803151 0.13803151 0.20599017 0.26375504]</span><br></pre></td></tr></table></figure>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/gamer_gyt/article/details/47443877">pagerank-csdn</a></li>
-<li><a target="_blank" rel="noopener" href="https://scikit-network.readthedocs.io/en/latest/tutorials/ranking/pagerank.html">scikit-network-pagerank</a></li>
-<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/PageRank">wiki-PageRank</a></li>
-<li>https://blog.csdn.net/google19890102/article/details/48660239</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/21/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/23/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/21/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/23/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -494,7 +491,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">197</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -507,7 +504,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

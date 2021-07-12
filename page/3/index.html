@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/06/AFML/AFML1/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/08/data_structure/ds0_summary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/07/06/AFML/AFML1/" class="post-title-link" itemprop="url">《Advances in Financial Machine Learning》读书笔记1 数据分析</a>
+            <a href="/2021/07/08/data_structure/ds0_summary/" class="post-title-link" itemprop="url">数据结构0 总览</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-07-06 19:50:44" itemprop="dateCreated datePublished" datetime="2021-07-06T19:50:44+08:00">2021-07-06</time>
+              <time title="创建时间：2021-07-08 09:17:29" itemprop="dateCreated datePublished" datetime="2021-07-08T09:17:29+08:00">2021-07-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-08 10:55:20" itemprop="dateModified" datetime="2021-07-08T10:55:20+08:00">2021-07-08</time>
+                <time title="修改时间：2021-07-09 13:37:50" itemprop="dateModified" datetime="2021-07-09T13:37:50+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AFML/" itemprop="url" rel="index"><span itemprop="name">AFML</span></a>
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
                 </span>
             </span>
 
@@ -219,121 +219,78 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="chapter-2-金融数据结构">chapter 2 金融数据结构</h2>
-<ol type="1">
-<li><p>金融数据经常分为4类，基本面数据，市场交易数据，分析数据，另类数据（Alternative） <img src="image.png" alt="img.png" /></p></li>
-<li><p>基本面数据包括公司每个季度发布的会计报告，要注意发布时间和统计时间段的区别。</p></li>
-<li><p>另类数据（Alternative）包括个人数据，商业过程数据，卫星，天气数据。</p></li>
-<li><p>数据处理，为了让ml方法可用，需要将原始数据处理为表数据（bars）。两种处理方法，标准bar methods和信息驱动的方法。第二种在实践中用的多。</p></li>
-<li><p>标准bars方法：将不等间隔处理成等间隔数据，很多数据厂商都是提供这种格式。标准bars方法包括Time Bars，Tick Bars，Volume Bars，Dollar Bars</p>
-<blockquote>
-<p>一个tick表示一次成交事件</p>
-</blockquote></li>
-<li><p>【Tick Bars】每隔多少笔交易采样一次，属于一种基于信息的采样方法，其理论依据是：固定时间内的价格变化服从方差无限大的Paretian分布；固定交易笔数内的价格变化服从高斯分布。</p>
-<blockquote>
-<p>Price changes over a fixed number of transactions may have a Gaussian distribution. Price changes over a fixed time period may follow a stable Paretian distribution, whose variance is infinite. Since the number of transactions in any time period is random, the above statements are not necessarily in disagreement --Mandelbrot and Taylor</p>
-</blockquote></li>
-<li><p>上面的假设很重要，因为很多统计方法的依赖于假设--样本来自IID高斯过程。</p></li>
-<li><p>【Tick Bars】构造tick bars要留意异常点，很多交易所在看盘前和收盘后都有竞价（auction），这段时间，order book 积累 bids 和 offers单，并不撮合（match）。当竞价结束，有一笔数量很大的交易会公开，这一笔交易可等价于成千上万个ticks，虽然现实的是一个tick。</p></li>
-<li><p>【Volume Bars】tick bars的缺陷在于，真实情况下，我们下的一笔单子会被拆分成多笔交易去成交。因此看到的tick比我们实际下的tick变多了。Volume bars可以解决这个问题，他是按照一定证券价值变动的时间段，进行抽样。举个例子，we could sample prices every time a futures contract exchanges 1,000 units, regardless of the number of ticks involved.</p></li>
-<li><p>【Dollar Bars】每隔一段时间，市场上交易价值达到某个给定值（bar size），就进行抽样，the bar size could be adjusted dynamically as a function of the free-floating market capitalization of a company (in the case of stocks), or the outstanding amount of issued debt (in the case of fixed-income securities)</p></li>
-<li><p>tick bars， volumn bars， dollar bars 三者对比： If you compute tick bars and volume bars on E-mini S&amp;P 500 futures for a given bar size, the number of bars per day will vary wildly over the years. That range and speed of variation will be reduced once you compute the number of dollar bars per day over the years, for a constant bar size. 结论是前面两者每天的变动范围和变动速度，要远高于dollar bars <img src="./img_1.png" alt="img_1.png" /></p></li>
-<li><p>信息驱动的bars，目的在于，当有信息到达时，采样更频繁。信息驱动bars有几种方法：Tick Imbalance Bars，Volume/Dollar Imbalance Bars，Tick Runs Bars，Volume/Dollar Runs Bars</p></li>
-<li><p>【Tick Imbalance Bars】背后的想法是只要tick数据超过我们的期望，就去采样。这样设置index，累计的交易信号超过某个阈值，没看懂</p></li>
-<li><p>【Volume/Dollar Imbalance Bars】？</p></li>
-<li><p>【Tick Runs Bars】？</p></li>
-<li><p>【Volume/Dollar Runs Bars】？</p></li>
-<li><p>处理多产品序列：The ETF Trick、PCA Weights，Single Future Roll <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pcaWeights</span>(<span class="params">cov,riskDist=<span class="literal">None</span>,riskTarget=<span class="number">1.</span></span>):</span></span><br><span class="line">    <span class="comment"># Following the riskAlloc distribution, match riskTarget</span></span><br><span class="line">    eVal,eVec = np.linalg.eigh(cov) <span class="comment"># must be Hermitian              </span></span><br><span class="line">    indices = eVal.argsort()[::-<span class="number">1</span>] <span class="comment"># arguments for sorting eVal desc</span></span><br><span class="line">    eVal,eVec=eVal[indices],eVec[:,indices]</span><br><span class="line">    <span class="keyword">if</span> riskDist <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        riskDist=np.zeros(cov.shape[<span class="number">0</span>])</span><br><span class="line">        riskDist[-<span class="number">1</span>]=<span class="number">1.</span> </span><br><span class="line">    loads=riskTarget*(riskDist/eVal)**<span class="number">.5</span> </span><br><span class="line">    wghts=np.dot(eVec,np.reshape(loads,(-<span class="number">1</span>,<span class="number">1</span>))) </span><br><span class="line">    <span class="comment">#ctr= (loads/riskTarget)**2*eVal # verify riskDist </span></span><br><span class="line"><span class="comment"># return wghts</span></span><br></pre></td></tr></table></figure></p></li>
-<li><p>直接让ml预测涨跌很难， after certain catalytic conditions算法会更容易表现好。</p></li>
-<li><p>对特征进行采样的方法-Event-Based Sampling，其中一种方法叫The CUSUM Filter，利用CUSUM可以构造交易策略（Fama and Blume [1966]的filter trading strategy），同事也可以用来采样：当累计收益<span class="math inline">\(S_t\)</span>超过某个阈值时，进行采样，并将<span class="math inline">\(S\)</span>置为0，</p></li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getTEvents</span>(<span class="params">gRaw,h</span>):</span> </span><br><span class="line">    <span class="comment"># gRaw： raw time series</span></span><br><span class="line">    <span class="comment"># h: thresh</span></span><br><span class="line">    tEvents,sPos,sNeg=[],<span class="number">0</span>,<span class="number">0</span> </span><br><span class="line">    diff=gRaw.diff()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> diff.index[<span class="number">1</span>:]:</span><br><span class="line">        sPos,sNeg=<span class="built_in">max</span>(<span class="number">0</span>,sPos+diff.loc[i]),<span class="built_in">min</span>(<span class="number">0</span>,sNeg+diff.loc[i]) </span><br><span class="line">        <span class="keyword">if</span> sNeg&lt;-h:</span><br><span class="line">            sNeg=<span class="number">0</span></span><br><span class="line">            tEvents.append(i) </span><br><span class="line">        <span class="keyword">elif</span> sPos&gt;h:</span><br><span class="line">            sPos=<span class="number">0</span></span><br><span class="line">            Events.append(i) </span><br><span class="line">    <span class="keyword">return</span> pd.DatetimeIndex(tEvents)</span><br></pre></td></tr></table></figure>
-<ol start="19" type="1">
-<li><span class="math inline">\(S_t\)</span>可以是structural break statistics, entropy, or market microstructure measurement。比如，我们可以定义一个时间，之哟啊r SADF远离之前的取值足够远。</li>
-<li>使用event-based的方法获得了一个子集之后，可以让ml算法来分析，这些特殊事件有没有蕴含一些有值得决策的信息。</li>
-</ol>
-<h2 id="chapter-3-标记">chapter 3 标记</h2>
-<p>在监督学习中，需要输入label，那么在金融领域，如何定义label？ 固定时间范围方法不够准确（可用动态阈值来改进），同时未考虑价格变化的路径，更好的方法是三边界法；此外，元标签能结合各种先验知识，是基金公司做模型、裁员工必备工具。</p>
-<h3 id="固定时间段方法">固定时间段方法</h3>
-<ol type="1">
-<li>大部分论文都是采用的这个方法，即固定的一段时间收益率是否超过/低于某个取值。 <img src="./img_2.png" alt="img_2.png" /></li>
-<li>虽然大部分人这么用，但是这个方法跟固定时间段采样有一样的毛病，就是固定时间段内的样本并不服从gaussian分布。第二个缺陷是，这个阈值是固定的，无视当前市场波动率的变化，可能会导致错失很多有价值的正样本。</li>
-<li>有更优的标记方法：动态阈值（类似异常检测）和 volume /dollar bars（波动率更固定），</li>
-<li>即使改进了fixed time 和 fixed thresh，还有一个很显现实的问题就是，要考虑到价格路径，如果在半路触发margin call，那么预测得再准也没有用。</li>
-</ol>
-<h3 id="三边界方法the-triple-barrier-method">三边界方法（THE TRIPLE-BARRIER METHOD）</h3>
-<ol type="1">
-<li>简单说，固定一个窗口，价格先达到上沿就标记1，先达到下沿就标记-1，到窗口结束都被碰到就标记0。</li>
-<li>具体说，首先设置2个水平障碍和1个垂直障碍。2个水平障碍是基于变动的日波动率算出来的，1个垂直障碍是说，离上一次position take，经过了bars的个数。</li>
-<li>如果upper障碍最先触发，返回1；如果lower障碍最先触发，返回-1；如果垂直的障碍触发，返回-1/+1，或者0，具体情况具体分析.三重障碍方法是路径依赖的标记方法。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">applyPtSlOnT1</span>(<span class="params">close,events,ptSl,molecule</span>):</span></span><br><span class="line">    <span class="comment"># apply stop loss/profit taking, if it takes place before t1 (end of event)</span></span><br><span class="line">    events_=events.loc[molecule] </span><br><span class="line">    out=events_[[<span class="string">&#x27;t1&#x27;</span>]].copy(deep=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">if</span> ptSl[<span class="number">0</span>]&gt;<span class="number">0</span>:</span><br><span class="line">        pt=ptSl[<span class="number">0</span>]*events_[<span class="string">&#x27;trgt&#x27;</span>] </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        pt=pd.Series(index=events.index) <span class="comment"># NaNs</span></span><br><span class="line">    <span class="keyword">if</span> ptSl[<span class="number">1</span>]&gt;<span class="number">0</span>:</span><br><span class="line">        sl=-ptSl[<span class="number">1</span>]*events_[<span class="string">&#x27;trgt&#x27;</span>] </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        sl=pd.Series(index=events.index) <span class="comment"># NaNs</span></span><br><span class="line">    <span class="keyword">for</span> loc,t1 <span class="keyword">in</span> events_[<span class="string">&#x27;t1&#x27;</span>].fillna(close.index[-<span class="number">1</span>]).iteritems():</span><br><span class="line">        df0=close[loc:t1] <span class="comment"># path prices df0=(df0/close[loc]-1)*events_.at[loc,&#x27;side&#x27;] # path returns out.loc[loc,&#x27;sl&#x27;]=df0[df0&lt;sl[loc]].index.min() # earliest stop loss. out.loc[loc,&#x27;pt&#x27;]=df0[df0&gt;pt[loc]].index.min() # earliest profit taking.</span></span><br><span class="line">    <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure> 3 根据需要，三边界方法也可以有其他合理变体：下边界+右边界：我们会在一定时间后平仓，除非触发止损点提前平仓；上边界+下边界：如果没有触发盈利点和止损点，则一直持有股票；（见下图） <img src="img_4.png" alt="img_4.png" /> 这部分讨论了三边界方法的代码实现，即如何给样本打标签使得 ML 算法可以同时学习到一笔交易的方向和规模</li>
-</ol>
-<h3 id="同时学习方向和规模learning-side-and-size">同时学习方向和规模（LEARNING SIDE AND SIZE）</h3>
-<ol type="1">
-<li>这种标记可以让ml算法从side和size中学习到一些信息</li>
-<li>如果没有side信息，我们没法区分profit-taking 障碍 和 stop-loss 障碍。</li>
-</ol>
-<h3 id="meta-labeling">META-LABELING</h3>
-<p>假设你有个模型能决定交易方向，你只需要确定交易的规模（包括不交易，即规模为0）。这是金融从业者经常需要考虑的问题，我们确定要买或者卖，唯一的问题是这笔交易值得冒多大风险；同时，我们不需要 ML 模型学习交易方向，只需要它告诉我们合适的交易规模是多少。</p>
-<p>假如有一个基于金融理论的模型，告诉我们交易方向，那我们的标签就变成了 [公式] （ML模型只需要决定是否执行这个操作），而不是 [公式] （ML模型同时决定交易方向和规模）</p>
-<blockquote>
-<p>元标签的含义:</p>
-<p>金融中用ML的另一常见错误是同时学习仓位的方向和规模（据我所知很多论文仅对买/卖方向做决策，每笔交易的金额/股数是固定的）。具体而言，方向决策（买/卖）是最基本的决策，规模决策（size decision）是风险管理决策，即我们的风险承受能力有多大，以及对于方向决策有多大信心。我们没必要用一个模型处理两种决策，更好的做法是分别构建两个模型：第一个模型来做方向决策，第二个模型来预测第一个模型预测的准确度。很多ML模型表现出高精确度（precision）和低召回率（recall），这意味着这些模型过于保守，大量交易机会被错过。F1-score 综合考虑了精确度和召回率，是更好的衡量指标，元标签（META-LABELING）有助于构建高 F1-score 模型。首先（用专家知识）构建一个高召回率的基础模型，即对交易机会宁可错杀一千，不可放过一个。随后构建一个ML模型，用于决定我们是否应该执行基础模型给出的决策。元标签+ML有以下4个优势：1. 大家批评ML是黑箱，而元标签+ML则是在白箱（基础模型）的基础上构建的，具有更好的可解释性；2. 元标签+ML减少了过拟合的可能性，即ML模型仅对交易规模决策不对交易方向决策，避免一个ML模型对全部决策进行控制；3. 元标签+ML的处理方式允许更复杂的策略架构，例如：当基础模型判断应该多头，用ML模型来决定多头规模；当基础模型判断应该空头，用另一个ML模型来决定空头规模；4. 赢小输大会得不偿失，所以单独构建ML模型对规模决策是有必要的</p>
+          <blockquote>
+<p>数据结构是在计算机中存储数据的方法</p>
+<p>一般情况下，精心挑选的数据结构能产生有效的算法</p>
 </blockquote>
-<h3 id="量化-基本面方法">量化 + 基本面方法</h3>
-<p>THE QUANTAMENTAL WAY</p>
-<p>很多对冲基金——包括一些老牌基金——正在拥抱量化方法。元标签正是这些公司需要的：假设你有了一系列有预测力的特征，你既可以同时预测交易方向和规模；也可以用元标签方法。元标签方法中确定方向的基础模型可以是 ML模型、计量公式、交易规则、基本面分析，也可以是人类基于直觉的预测结果，可见元标签方法的普适性。</p>
-<p>举个例子，元标签方法可能会发现基金经理能及时预测市场风格转换，但无法在疲倦、压力下准确预测。由于基金经理必然会受生理心理等因素影响，元标签方法能评价基金经理的预测能力。综上所述，元标签方法为基金公司的量化之路指明了方向（做模型 &amp; 评价基金经理），它应该成为基金公司的基本工具。</p>
-<h3 id="丢掉不必要的label">丢掉不必要的label</h3>
-<p>it is preferable to drop extremely rare labels and focus on the more common outcomes. 当标签很多且类别不均衡（imbalance）时，一些ML模型表现不好。这种情况下，最好丢掉非常罕见的标签并专注于更常见的结果。这样做有另一个原因，即用bagging方法时罕见的标签可能无法采集到，这是 sklearn 的一个bug，短期难以解决，建议读者写自己的 class，扩展 sklearn的功能。</p>
-<h2 id="chapter-4-样本权重">chapter 4 样本权重</h2>
-<p>训练ML 模型需要抽取样本，本章我们会考虑抽样时如何给样本加权，以更好地训练模型。</p>
+<h2 id="why-数据结构">why 数据结构？</h2>
 <ol type="1">
-<li><p>大部分ML算法都是基于IID假设，而金融时序不是IID的，所以大部分ml应用直接套用到金融场景会失败。</p></li>
-<li><p>很多时候数据难免出现交叉（如三标签方法一段数据结束时间不确定），当两段数据出现交叉，标签序列就不再是IID了。这种场景经常出现在非time bars中。 <img src="img_3.png" alt="img_3.png" /></p></li>
-<li><p>对此我们有三种解决方案：一是丢弃重复数据，这会造成信息损失，不推荐；二是根据独特性加权抽样——一段数据与其他数据交叉越少，独特性越高，应该给予更多权重；三是 Sequential Bootstrap，即序列有放回抽样，每抽出一个样本，相应地减少与该样本有重叠的样本被抽取的概率，这样抽取的样本比普通 Bootstrap 更接近 IID。</p></li>
-<li><p>此外，绝对收益率（absolute return）大的样本应该给予更多权重，原因是对 ML 算法来说，绝对收益率小的样本不好预测，作为训练样本价值不大。</p>
-<blockquote>
-<p>The “neutral” case is unnecessary, as it can be implied by a “−1” or “1” prediction with low confidence.</p>
-</blockquote></li>
-<li><p>市场是常为新的，越新的数据与当前市场相关度越高，价值越大。</p>
-<blockquote>
-<p>Markets are adaptive systems (Lo [2017]). As markets evolve, older examples are less relevant than the newer ones.</p>
-</blockquote></li>
-<li><p>最后，我们还应该考虑类别权重。金融中不均衡数据集很常见，而且这些罕见的标签往往非常重要。在 sklearn 等科学计算包中可以设置为 class_weight='balanced' 。</p></li>
-<li><p>label表示 买/卖 信号, 两个label 如果是基于相同时间段的收益率 计算出来的，就说是 concurrent的.</p></li>
-<li><p>对样本使用bootstrap方法抽样，以期得到iid样本。</p></li>
-<li><p>基于uniqueness和absolute return对样本赋予权重。绝对收益高的的labels应该被给予更高的权重；收益取值越unique的也要给予更高的权重</p></li>
-<li><p>市场是演化着的，所以我们希望给新忘本更多的权重，给老样本更少的权重。</p></li>
-<li><p>怎么量化这个事件衰减效应？设计一个时间衰减因子（所有元素加起来为1），用这个因子乘以样本权重，</p></li>
-<li><p>使用机器学习做分类时，有的稀有事件（比如金融危机）出现次数很少，为了保证ml算法能重视这类事件，可以调整sample_weight</p></li>
-<li><p>具体来说，在scikit learn中，设置class_weight='balanced'，或者在bagging trees中设置class_weight='balanced_subsample'，小心<a target="_blank" rel="noopener" href="https://github.com/scikit-learn/scikit-learn/issues/4324">bug</a></p></li>
+<li>数据结构是对数据的一种组织形式，以方便后续数据被高效地使用。</li>
+<li>数据结构是创建快速高效算法的必要ingredeints，数据结构可以帮助管理和组织数据；让代码看起来更干净。</li>
+<li>数据结构/抽象数据类/程序的关系就好像，使用乐高搭建一个建筑，层层抽象。</li>
 </ol>
-<h2 id="chapter-5-分数差分">chapter 5 分数差分</h2>
-<p>分数差分--Fractionally Differentiated Features</p>
-<p>如何兼顾平稳性（adf）和 记忆性（跟price的相关性）？--分数差分</p>
-<h3 id="stationarity-vs.-memory的两难问题">STATIONARITY VS. MEMORY的两难问题</h3>
-<ol type="1">
-<li>金融序列大部分非平稳，且有很低信噪比，标准的平稳变换，例如差分变换，会丢失信息。</li>
-<li>价格序列有记忆，但是差分后的序列没有记忆了。</li>
-<li>接下来理论家们会从剩下的残差信号中使用各种fancy的工具去提取信息。</li>
-<li>金融序列不平稳的原因是，它有很长的记忆.所以要使用传统的方法的话要做invariant processes，例如看价格的收益率或者取对数差，波动性变化</li>
-<li>在信号处理中，我们是不希望所有的记忆都被抹除的，因为记忆是信号模型的basis。例如，均衡平稳模型需要一些记忆，来获取截止目前为止，结果偏离长期预测值多远，来预测。矛盾在于，收益是平稳的，但是没有记忆。价格有记忆，但是不是平稳的。 那么问题就来了：最小的差分阶数是什么？既能满足一个价格序列平稳，又能保留尽可能多的信息？</li>
-<li>协整（cointergration）方法可以使用记忆来建模。</li>
-<li>平稳性只是ml算法的必要不充分条件，但是通过差分变换的方法虽然获得了平稳性却丢失了记忆性，会导致ml基本上没有什么记忆能力。</li>
+<h3 id="抽象数据类型和数据结构">抽象数据类型和数据结构</h3>
+<ol start="2" type="1">
+<li>抽象数据类型(Abstract Data Type, ADT)是对数据结构的一个抽象，它只提供接口（interface），数据结构必须遵循该接口（interface），但是这个接口不涉及任何关于实施或者编程语言相关的细节。</li>
+<li>抽象数据类型的数据结构的关系，举个例子，从一个地方A到另一个地方B有很多种方法，可以骑自行车或者走路或者坐火车，前者是抽象数据类型，后者是该抽象数据类型对应的具体的数据结构。</li>
+<li>一个抽象数据类型之定义了数据结构应该实现什么功能，应该有哪些方法，至于方法的实现细节抽象数据类型是不管的。</li>
+<li>举几个抽象数据类型和数据结构的例子
+<ul>
+<li>抽象数据类型列表（list）可以使用动态数组或者链表实现，这两个数据结构都能实现add，removing，indexing元素。</li>
+<li>抽象数据类型队列（Queue）可以使用Linked list based Queue/Array based Queue/Stack based Queue。</li>
+<li>抽象数据类型（Map）可以使用Tree Map/Hash Map/Hash Table实现</li>
+</ul></li>
+<li>ADT is a logical description and data structure is concrete.</li>
+<li>ADT is the logical picture of the data and the operations to manipulate the component elements of the data.</li>
+<li>Data structure is the actual representation of the data during the implementation and the algorithms to manipulate the data elements.</li>
+<li>ADT is in the logical level and data structure is in the implementation level.</li>
 </ol>
-<p>下面会介绍一些转换方法，在保留记忆的同时，又能实现平稳变换。</p>
-<h3 id="分数差分方法">分数差分方法</h3>
+<h3 id="计算复杂度分析">计算复杂度分析</h3>
 <ol type="1">
-<li>如何解决平稳和记忆两难的问题？Hosking [1981]提出了分数差分的方法。 <img src="fd.png" alt="img.png" /></li>
-<li>使用迭代法计算权重向量 <img src="fd1.png" alt="img.png" /> <img src="fd2.png" alt="img_1.png" /></li>
-<li>在SP500上面做实验，当差分d=0.35时，跟原始价格序列的相关性仍然很高, 0.995，d=1时候，相关性只有0.03, 基本上丢失了记忆。从adf上看，d=0.35时, 序列的黏稠度也不高，adf约等于 –2.8623， 原始的adf是–0.3387,d=1对应的adf是–46.9114。</li>
-<li>Expanding Window 和 固定宽度窗口分数差分方法(Fixed-Width Window Fracdiff)</li>
+<li><p>为了分析我们的数据结构的性能：执行该算法需要花费多少时间和占用多少内存？</p></li>
+<li><p>O(*)表示在worst case的情况下，一个算法复杂度上界是多少，当输入数据变得很大的时候，有助于评估性能, 一般来说有这么几种时间复杂度:</p>
+<ul>
+<li>常数时间: O(1)</li>
+<li>对数时间： O(log(n))</li>
+<li>线性时间： O(n)</li>
+<li>linearithmix时间: O(nlog(n))</li>
+<li>二次时间： O(n^2)</li>
+<li>三次时间: O(n^3)</li>
+<li>指数时间：O（b^n）</li>
+<li>因子时间: O(n!)</li>
+</ul>
+<p>n表示输入的大小复杂度从低到高。</p></li>
+<li><p>因为O（*）只关注当数据变得足够大的时候，算法的表现，所以算法的实际运行时间中的常数项，低阶项都可以省掉，系数都可以扔掉哦。 <span class="math inline">\(O(n + c) = O(n)\)</span> <span class="math inline">\(O(cn ) = O(n)\)</span> <span class="math inline">\(O(n^2 +2*n) = O(n^2)\)</span></p></li>
+<li><p>二分查找是用在一个有序数组上的查找算法，时间复杂度是对数</p></li>
+<li><p>找一个集合的所有子集-时间复杂度是指数O(2^n)</p></li>
+<li><p>找一个字符串的所有排列O(n!)</p></li>
+<li><p>使用合并排序算法来排序，时间复杂度是 O(nlogn)</p></li>
+</ol>
+<h2 id="数据结构有哪几种">数据结构有哪几种？</h2>
+<ol type="1">
+<li><p>数据结构分为线性数据结构和非线性数据结构</p></li>
+<li><p>线性数据结构包括数组（array），链表（linked list），栈（stack），队列（queue） <img src="b3728c27302a8548fe9e8a87e619ca83.png" alt="线性数据结构" /></p></li>
+<li><p>非线性数据结构包括树和图,树可以认为是有向图的special case <img src="e6d5a8d9a75587abe612dfef9abffc01.png" alt="非线性数据结构" /></p></li>
+<li><p>图分有向图和无向图 <img src="18c651092d22c7204021d10a5a79b0ff.png" alt="有向图vs无向图" /></p></li>
+<li><p>无向图的一个实例是fb的社交网络，边表示好友关系。 <img src="f3fc896014d62fb1ec1c96c93210f7ff.png" alt="社交网络" /></p></li>
+<li><p>基于社交网络这个数据结构有什么应用呢？好友推荐, 推荐朋友的朋友,网络社会科学的小世界</p>
+<blockquote>
+<p>小世界网络的重要性质：“流行病学”、“合作”、“知识”</p>
+</blockquote></li>
+<li><p>有向图的一个实例是万维网： <img src="b9b97250ce6e998045dcbb0d5b379724.png" alt="www" /></p></li>
+<li><p>图还可以分有权图和无权图。无权图可认为是权图的special case，权重都为1。</p></li>
+<li><p>有权图的一个实例是高速公路网,边代表距离 <img src="5b81b50b2d2b048ed3188b71af85a02f.png" alt="公路网" /></p></li>
+<li><p>树的一个实例是家谱，树种，任意一对节点，有且只有一条通路（不存在loop嘛）</p></li>
+<li><p>因果图是一个有向有权图。</p></li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>《Advances in Financial Machine Learning》</li>
-<li>https://blog.csdn.net/weixin_38753422/article/details/100179559</li>
-<li>https://zhuanlan.zhihu.com/p/69231390</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/williamfiset/Algorithms">algorithm-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=gXgEDyodOJU">youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=V_TulH374hw">Graph-theoretic Models</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure">the difference-between-ADT和DS</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~htlin/course/dsa21spring/">数据结构和算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RBSGKlAvoiM&amp;t=102s">Data Structures Easy to Advanced Course</a></li>
 </ol>
 
       
@@ -354,7 +311,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/05/AFML/AFML0/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/07/AFML/AFML3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -368,7 +325,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/07/05/AFML/AFML0/" class="post-title-link" itemprop="url">《Advances in Financial Machine Learning》读书笔记0 为什么金融领域的机器学习项目经常失败？</a>
+            <a href="/2021/07/07/AFML/AFML3/" class="post-title-link" itemprop="url">《Advances in Financial Machine Learning》读书笔记3 回测</a>
         </h2>
 
         <div class="post-meta">
@@ -378,14 +335,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-07-05 09:49:02" itemprop="dateCreated datePublished" datetime="2021-07-05T09:49:02+08:00">2021-07-05</time>
+              <time title="创建时间：2021-07-07 11:08:30" itemprop="dateCreated datePublished" datetime="2021-07-07T11:08:30+08:00">2021-07-07</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-08 10:55:20" itemprop="dateModified" datetime="2021-07-08T10:55:20+08:00">2021-07-08</time>
+                <time title="修改时间：2021-07-12 08:57:59" itemprop="dateModified" datetime="2021-07-12T08:57:59+08:00">2021-07-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -408,134 +365,129 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="概览">概览</h1>
+          <h2 id="chapter-10-仓位大小">chapter 10 仓位大小</h2>
+<blockquote>
+<p>即使股价预测很准，但是仓位配置的不当，还是会亏钱。</p>
+</blockquote>
 <ol type="1">
-<li><p>市场上关于投资的书籍大致分为两类：一类是理论家写的，自己都没有实践过；一类是实践家写的，他们误用了数学工具。</p></li>
-<li><p>金融市场上现在鱼龙混扎，小散受到到不良媒体的诱导会冲动投资，造成市场动荡。量化工具可以减少这种套利机会，肃清这种风气。</p></li>
-<li><p>常见的陷阱： <img src="img1.png" alt="img.png" /></p>
+<li><p>假定三期股价为 [1, 0.5, 1.25]，仓位1: [0.5, 1, 0] &amp; 仓位2: [1, 0.5, 0]，则前者挣钱而后者亏钱。这种情况下，更偏好这样的下注策略：建仓时保留一些现金，如果交易信号加强（股价变为0.5），就追加投资。</p></li>
+<li><p>下图是交易信号(z)和最佳下注大小(m)之间的函数关系：</p>
+<p>横轴的z表示交易信号强弱，纵轴m代表最佳下注大小：<span class="math inline">\(m = x (2Z [z] − 1), m\in{[-1,1]}\)</span></p>
+<p>交易信号z是模型预测结果x的函数，预测结果x越极端，则分母越小，分子绝对值越大， z越接近<span class="math inline">\(+\infty\)</span>或者<span class="math inline">\(-\infty\)</span>，则交易信号越强, 但是可以看到仓位超过一定范围就饱和了。</p>
+<p>总的来说，交易信号越强，下注越大，但是，当交易信号强度超过一定值，就可以不用加仓，最佳持仓水平m可以保持不变，这一点跟直觉是稳和的，价格猛涨多了一段时间之后，再往上走就很难了，这个时候不能追高。</p>
 <figure>
-<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+<img src="./image-20210711134750210.png" alt="image-20210711134750210" /><figcaption aria-hidden="true">image-20210711134750210</figcaption>
 </figure></li>
-<li><p>是否意味着有了ai就没有human投资者的空间了？不是，可以人+ai</p></li>
+<li><p>如果每次预测时，如果交易信号的微小改变就要调仓，那换手率就太高了，作者建议可以对预测结果做滑动平均，或者将下注量离散化（如下图）<img src="./image-20210711140908880.png" alt="image-20210711140908880" /></p></li>
+<li><p>动态BET SIZES 和 限价：当股票的市场价格<span class="math inline">\(p_t\)</span>和预测价格<span class="math inline">\(f_t\)</span>波动时，可用如下方法动态地确定下注量<span class="math inline">\(\hat{q}_{i, t}\)</span>： <span class="math display">\[\hat{q}_{i, t}=\operatorname{int}\left[\frac{x}{\sqrt{w+x^{2}}} \cdot Q\right]\]</span> <span class="math inline">\(x=f_{i}-p_{t}\)</span>为预测价与当前价的差价，如果x绝对值大于0，说明当前市场出现了套利空间，绝对值越大，越要押注，</p></li>
 </ol>
-<h1 id="pitfall-1-西西弗斯模式">Pitfall 1: 西西弗斯模式</h1>
-<blockquote>
-<p>Pitfall 1: 西西弗斯模式（THE SISYPHUS PARADIGM）</p>
-<p>Solution 1: 元策略模式（THE META-STRATEGY PARADIGM）</p>
-</blockquote>
+<p>Q为最大持仓量, <em>𝜔</em>是一个用来控制sigmoid的宽度的系数， <em>𝜔</em>越小，策略就越保守。</p>
+<h2 id="chapter-11-回测有风险">chapter 11 回测有风险</h2>
+<p>回测是量化中最重要但也最容易被误用的工具，本章将介绍回测时容易犯的错误。</p>
 <ol type="1">
-<li>自由基金经理（Discretionary portfolio managers～DPM）的投资理念比较玄学，不会遵循特定的理论，这样的一群人开会时往往漫无目的、各执一词。DPMs天然地不能组成一个队伍：让50个DPM一起工作，他们的观点会相互影响，结果是老板发了50份工资，只得到一个idea。他们也不是不能成功，关键是要让他们为同一个目标工作，但尽量别交流。</li>
-<li>很多公司采用DPM模式做量化/ML 项目：让50个PhD分别去研究策略，结果要么得到严重过拟合的结果，要么得到烂大街&amp;低夏普率的多因子模型。即使有个别PhD研究出有效的策略，这种模式的投入产出比也极低。这便是所谓让每个员工日复一日搬石头上山的西西弗斯模式。</li>
-<li>量化是一项系统工程，包括数据、高性能计算设备、软件开发、特征研究、模拟交易系统……如果交给一个人做，无异于让一个工人造整辆车——这周他是焊接工，下周他是电工，下下周他是油漆工，尝试---&gt;失败---&gt;尝试---&gt;失败，循环往复。</li>
-<li>好的做法是将项目清晰地分成子任务，分别设定衡量质量的标准，每个quant在保持全局观的同时专注一个子任务，项目才能得以稳步推进。这是所谓元策略模式（THE META-STRATEGY PARADIGM）。</li>
+<li>一个物理实验室可以通过控制变量来探究精确的因果关系，而回测不是实验，它并不能证明一个策略好，只能证明一个策略不好。</li>
+<li>要做好回测极其困难，我们至少会面临这些问题:
+<ul>
+<li>幸存者偏差：只用现存的股票构建投资组合回测，殊不知过去多少公司倒闭退市了；</li>
+<li>Look-ahead bias：回测时用到的数据在那一刻还没发布；</li>
+<li>事后诸葛亮（各种事后分析都在编故事）；</li>
+<li>手续费：要模拟手续费很难，唯一准确的方式是上实盘；</li>
+<li>空头：实际交易中如何找借方、空头的成本、空头的额度都需要考虑；</li>
+</ul></li>
+<li>即使避免了以上问题，你的回测也可能是错的——在一个数据集上回测了成百上千次才得到的漂亮结果，大概率是假的。如第八章所述，特征重要性分析帮助我们理解 ML 发现的结果，它在回测之前进行，是一种“事前“归因。相反，回测并不能帮我们理解为什么一个策略会盈利。通过回测发现的有效“因子”如同上一期彩票的中奖号码，对下一轮抽奖无益。回测前做好数据结构化、标签、加权比回测本身更重要。</li>
+<li>重复回测带来的过拟合可以认为是一种选择偏差，要避免这种偏差可能是量化中最根本的问题。</li>
+<li>以下步骤可以帮我们减少这种偏差:
+<ul>
+<li>在多种金融资产上回测：由于金融资产的多样性，如果你发现错误 只存在于债券，那该策略很可能是错的；</li>
+<li>用 bagging 减少过拟合；在完成本书章节1-10 的研究之前别回测；</li>
+<li>记录得到当前结果之前回测了多少次，从而推算出过拟合的可能性；</li>
+<li>假如回测结果没能得到有效的策略，从头开始。千万不要在回测结果的基础上继续研究。 &gt; Backtesting while researching is like drinking and driving. &gt; Do not research under the influence of a backtest.</li>
+</ul></li>
+<li>如果用标准CV回测来选择策略，一些回测路径会重复出现，导致极易过拟合。所以一些随机性非常有必要，例如基于probability of backtest overfitting (PBO) 的回测。</li>
 </ol>
-<h1 id="pitfall-2-根据回测结果做研究">Pitfall 2: 根据回测结果做研究</h1>
-<blockquote>
-<p>Pitfall 2: 根据回测结果做研究（RESEARCH THROUGH BACKTESTING）</p>
-<p>Solution 2: 特征重要性分析（FEATURE IMPORTANCE ANALYSIS）</p>
-</blockquote>
+<h2 id="chapter-12-使用交叉验证做回测">chapter 12 使用交叉验证做回测</h2>
+<p>本章将介绍三种回测方法:向前游走;交叉验证，希望能得到更准确的回测结果。</p>
 <ol type="1">
-<li>金融研究中很普遍的错误是在特定数据上尝试ML模型，不断调参直到得到一个比较好看的回测结果——这显然是过拟合,学术期刊往往充斥面向测试集调参。</li>
-<li>考虑一个ML任务，我们可以构建一个分类器，在交叉检验集上评估其泛化误差。假定结果很好，一个自然的问题是：哪些特征对结果的贡献最大？“好的猎人不会对猎狗捕获的猎物照单全收”，回答了这个问题，我们可以增加对提高分类器预测力的特征，减少噪声特征。</li>
-<li>需关注ml发现的跟特征相关的模式：什么特征最重要、这些特征的重要性会随时间改变么、这种改变能否被识别和预测。</li>
-<li>总之，特征驱动的分析比回测结果驱动的分析更重要。</li>
-</ol>
-<h1 id="pitfall-3-按时间采样">Pitfall 3: 按时间采样</h1>
-<blockquote>
-<p>Pitfall 3: 按时间采样（CHRONOLOGICAL SAMPLING）</p>
-<p>Solution 3: 交易量钟（THE VOLUME CLOCK）</p>
-</blockquote>
+<li><p>向前游走即在回测时，使用历史数据来检验策略的样本外表现，历史数据有两种用法：</p>
 <ol type="1">
-<li>Bars：表格数据的一行或者说一个样本，叫一个bar。</li>
-<li>Time Bars:以固定的时间区间对数据进行取样（如每分钟一次）后得到的数据。</li>
-<li>Time bars使用广泛，但是有两个不足：第一，市场交易信息的数量在时间上的分布并不是均匀的。开盘后的一小时内交易通常会比午休前的一小时活跃许多。因此，使用Time bars 会导致交易活跃的时间区间的欠采样，以及交易冷清的时间区间的过采样。第二，根据时间采样的序列通常呈现出较差的统计特征，包括序列相关、异方差等。</li>
-<li>Tick bars 是指每隔固定的（如1000次）交易次数提取上述的变量信息。一些研究发现这一取样方法得到的数据更接近独立正态同分布 [Ane and Geman 2000]。 使用Tick Bars 还需注意异常值 (outliers) 的处理。一些交易所会在开盘和收盘时进行集中竞价，在竞价结束后以统一价格进行撮合。</li>
-<li>Volume Bars &amp; Dollar Bars：Volume Bars 是指每隔固定的成交量提取上述的变量信息。Dollar Bars 则使用了成交额。 使用 Dollar Bars更有优势的。假设一只股票在一定时间区间内股价翻倍，期初10000元可以购买的股票将会是期末10000元可购买股票手数的两倍。在股价有巨大波动的情况下，Tick Bars以及Volume Bars每天的数量都会随之有较大的波动。除此之外，增发、配股、回购等事件也会导致Tick Bars以及Volume Bars每天数量的波动</li>
-</ol>
-<h1 id="pitfall-4-整数差分">Pitfall 4: 整数差分</h1>
-<blockquote>
-<p>Pitfall 4: 整数差分（INTEGER DIFFERENTIATION）</p>
-<p>Solution #4: 非整数差分（FRACTIONAL DIFFERENTIATION）</p>
-</blockquote>
-<p>我们需要在数据平稳性和保留数据信息之间做取舍，非整数/分数差分就是一个较好的解决方案</p>
-<h1 id="pitfall-5-固定时间范围标签">Pitfall 5: 固定时间范围标签</h1>
-<blockquote>
-<p>Pitfall 5: 固定时间范围标签（FIXED-TIME HORIZON LABELING）</p>
-<p>Solution 5: 三边界方法（THE TRIPLE-BARRIER METHOD）</p>
-</blockquote>
-<ol type="1">
-<li>固定时间范围标签方法应用广泛, 但是有若干不足：time bars 的统计性质不好;常数阈值不顾波动性是不明智的;可能被强制平仓.</li>
-<li>三边界方法（THE TRIPLE-BARRIER METHOD）考虑到平仓的触发条件，是更好的处理方式，其包括上下水平边界和右边的垂直边界。水平边界需要综合考虑盈利和止损，其边界宽度是价格波动性的函数（波动大边界宽，波动小边界窄）；垂直边界考虑到建仓后 bar 的流量，如果不采用 time bars，垂直边界的宽度就不是固定的（翻译太艰难了，附上原文）</li>
-<li>如果未来价格走势先触及上边界，可以取1；先触及下边界，则取-2；先触及右边界，可以 0，或者根据盈利正负，取1或者-1 。</li>
-</ol>
-<h1 id="pitfall-6-同时学出方向和规模">Pitfall 6: 同时学出方向和规模</h1>
-<blockquote>
-<p>Pitfall 6: 同时学出方向和规模（LEARNING SIDE AND SIZE SIMULTANEOUSLY）</p>
-<p>Solution #6: 元标签（META-LABELING）</p>
-</blockquote>
-<ol type="1">
-<li>金融中用ML的另一常见错误是同时学习仓位的方向和规模。</li>
-<li>具体而言，方向决策（买/卖）是最基本的决策，规模决策（size decision）是风险管理决策，即我们的风险承受能力有多大，以及对于方向决策有多大信心。</li>
-<li>我们没必要用一个模型处理两种决策，更好的做法是分别构建两个模型：第一个模型来做方向决策，第二个模型来预测第一个模型预测的准确度。</li>
-<li>很多ML模型表现出高精确度（precision）和低召回率（recall）。这意味着这些模型过于保守，大量交易机会被错过。</li>
-<li>F1-score 综合考虑了精确度和召回率，是更好的衡量指标，元标签（META-LABELING）有助于构建高 F1-score 模型。首先（用专家知识）构建一个高召回率的基础模型。随后构建一个ML模型，用于决定我们是否应该执行基础模型给出的决策。</li>
-<li>元标签+ML有以下4个优势：
-<ol type="1">
-<li>元标签+ML则是在白箱（基础模型）的基础上构建的，具有更好的可解释性；</li>
-<li>元标签+ML减少了过拟合的可能性，即ML模型仅对交易规模决策不对交易方向决策，避免一个ML模型对全部决策进行控制；</li>
-<li>元标签+ML的处理方式允许更复杂的策略架构，例如：当基础模型判断应该多头，用ML模型来决定多头规模；当基础模型判断应该空头，用另一个ML模型来决定空头规模；</li>
-<li>赢小输大会得不偿失，所以单独构建ML模型对规模决策是有必要的。</li>
+<li><p>狭义上，模拟策略的历史表现（walk-forward，WF）；</p></li>
+<li><p>广义上，模拟策略在特定市场环境（历史上不一定发生过）中的表现。</p>
+<p>前一种方式更广为人知，但两种方式各有利弊，都应掌握。</p></li>
 </ol></li>
-</ol>
-<blockquote>
-<p>achieving high accuracy on small bets and low accuracy on large bets will ruin you</p>
-</blockquote>
-<h1 id="pitfall-7-非iid样本加权">Pitfall 7: 非IID样本加权</h1>
-<blockquote>
-<p>Solution #7: （UNIQUENESS WEIGHTING AND SEQUENTIAL BOOTSTRAPPING）</p>
-</blockquote>
-<p>样本不是iid的，比如按照volumn bars，到达1000的成交量才采集一个样本。</p>
-<p>如果实际数据中，交易发生拥堵，都集中在了t=10，那么： - t=1要到t=10才达到1000， - t=2其实也是到t=10达到1000， - t=3其实也是到t=10达到1000，</p>
-<p>因此，t=10这个样本就被用了很多次（最多9次），当然time bars是没有这个问题的。</p>
-<p>为了缓解这个样本重复出现的问题，作者定义了一个衰减因子即<span class="math inline">\(1/c_t\)</span>, <span class="math inline">\(c_t\)</span>表示t时刻的行情被用了多少次，所以t时刻的行情对应的return应该除以这个次数。</p>
-<p>这些只对那种按成交量或者其他非等时间划分样本的方法有意义 (1) labels are decided by outcomes; (2) outcomes are decided over multiple observations; (3) because labels overlap in time, we cannot be certain about what observed features caused an effect.</p>
-<h1 id="pitfall-8-交叉检验集泄露信息cross-validation-leakage">Pitfall 8: 交叉检验集泄露信息（CROSS-VALIDATION LEAKAGE）</h1>
-<blockquote>
-<p>Pitfall 8: 交叉检验集泄露信息（CROSS-VALIDATION LEAKAGE）</p>
-<p>Solution #8: 清理和禁止（PURGING AND EMBARGOING）</p>
-</blockquote>
+<li><p>向前游走的优点：</p>
 <ol type="1">
-<li>金融中需要警惕在训练集 / CV 集中引入未来信息。</li>
-<li>好的做法应该是在训练集和CV集之间设定一个间隔</li>
-</ol>
-<h1 id="pitfall-9-前向回测">Pitfall 9: 前向回测</h1>
-<blockquote>
-<p>Pitfall 9: 前向回测（WALK-FORWARD / HISTORICAL BACKTESTING）</p>
-<p>Solution #9: CPCV（COMBINATORIAL PURGED CROSS-VALIDATION）</p>
-</blockquote>
-<ol type="1">
-<li>常用的回测方法是前向回测（Walk-forward Backtesting）：根据当前时刻以前的数据做决策。这种方式容易解读同时也很直观，但存在几点不足：
-<ol type="1">
-<li>前向回测只测试了单个场景，容易过拟合；</li>
-<li>前向回测的结果未必能代表未来的表现。 2.作者提出了一种切分方法：将所有数据分为 N 份（注意避免信息泄露），从中任意取 k份作为测试集，剩下作为训练集，总共有很多种取法。这种方法最大的优势是允许我们得到某策略在不同时期的夏普率分布，而不是计算一个夏普率值。</li>
+<li>有清晰的历史意义，与模拟盘的结果一致；</li>
+<li>测试集在训练集之后，只要正确 purging 后就不存在信息泄露（见第七章）。</li>
 </ol></li>
-</ol>
-<h1 id="pitfall-10-回测过拟合">Pitfall 10: 回测过拟合</h1>
-<blockquote>
-<p>Pitfall 10: 回测过拟合（BACKTEST OVERFITTING）</p>
-<p>Solution 10: 保守夏普率（THE DEFLATED SHARPE RATIO）</p>
-</blockquote>
+<li><p>向前游走的缺点：</p>
 <ol type="1">
-<li>假设 <span class="math inline">\({y_i}\)</span> 独立同分布，可证明<span class="math inline">\(E\left[\max \left\{y_{i}\right\}_{i=1, \ldots, I}\right] \leq \sigma \cdot \sqrt{2 \log (I)}\)</span>。</li>
-<li>若<span class="math inline">\(y_i\)</span> 代表一系列回测结果的夏普率，则只要回测次数足够多，或者每次回测结果方差足够大，从中都能选出任意高的结果，尽管有可能 <span class="math inline">\(E(y_i)=0\)</span> 。</li>
-<li>这提醒我们要考虑到回测次数过多会造成过拟合，一种解决方案是保守夏普率（THE DEFLATED SHARPE RATIO，DSR），其思想是给定一系列对夏普率SR的估计值，通过统计检验的方法估计能否推翻零假设 SR=0 。</li>
+<li>只有一种情景测试（即历史重演），容易过拟合；</li>
+<li>不足以代表未来的表现，因为回测结果可能受到特定数据的影响而产生偏差；</li>
+<li>回测时数据利用率不高（“most of the information is used by only a small portion of the decisions”）</li>
+</ol></li>
+<li><p>交叉验证（cross-validation）得到一个新策略时，投资者往往想知道这个策略在“非常时期”，如08年金融危机、15年股灾中表现如何。可以将我们希望测试的时期划为测试集，其他时期划为训练集，例如将 2008年作为测试集，2009至今作为训练集。训练集在测试集之后的划分从历史角度来看并不准确（not historically accurate），但通过 CV回测的目的对策略做情景测试（scenarios），从而推断策略在未来的表现。</p></li>
 </ol>
+<blockquote>
+<p>For each period of the backtest, we simulate the performance of a classifier that knew everything except for that period.</p>
+</blockquote>
+<ol start="5" type="1">
+<li>交叉验证的缺点：
+<ol type="1">
+<li>只有一条回测路径（尽管不是历史路径）；</li>
+<li>没有明确的历史意义；</li>
+<li>由于测试集可能位于训练集之前，容易发生信息泄露。</li>
+</ol></li>
+<li>混合purged交叉验证 (CPCV)克服了向前游走和交叉验证的缺点。假定将全数据集分为 N 份，其中 k 份作为测试集，其余作为训练集，则共有<span class="math inline">\(C_N^k\)</span>种划分方案。所有回测路径数 （如下图所示） <img src="./img_2.png" alt="img_2.png" /></li>
+<li>Assignment of testing groups to each of the 5 paths，按照划分依次在训练集上训练、测试集上测试，最后可以计算<span class="math inline">\(\varphi[N, k]\)</span>条路径分别的技术指标（如夏普率），从而更全面地考察模型表现。向前游走和交叉验证，混合purged交叉验证得到的结果（如夏普率）方差小，从而能减少过拟合的可能。</li>
+</ol>
+<h2 id="chapter-13-在合成数据上做回测">chapter 13 在合成数据上做回测</h2>
+<p>本章将探究如何合成数据并进行回测。</p>
+<ol type="1">
+<li>使用历史数据生成一个合成数据：先从从真实数据估计得到的分布，然后从分布中采样得到合成数据。</li>
+<li>使用合成数据去做回测的好处是，可以测试很多次，在unseen的情况下，因此可以减少得到一个过拟合策略的概率。</li>
+<li>利用合成数据回测能减少过拟合，但合成金融数据是一个很大的课题，我们先考察一下交易规则（trading rules）。交易策略假定市场不是有效的，它们用基本面 / 技术面分析试图找到套利机会。交易策略千变万化，但交易规则大同小异：比如策略的信号强于阈值则买入，达到盈利或止损点则卖出，这里的阈值、盈利止损点就是交易规则。如果用合成数据回测来确定交易规则，则过拟合的风险将大大减小。</li>
+<li>用离散OU过程（discrete O-U process）对资产价格建模，给定资产i当前价格和未来预测价格，其在 t 次交易后的盈亏<span class="math inline">\(\pi_{i,t}\)</span>服从正态分布。可以此为依据模拟价格走势进行实验，得到最佳交易规则，而无需用真实历史数据回测。</li>
+<li>作者在原文中给出了详细步骤以及图文分析，这里试举一例：下图是采取不同盈利、止损点进行模拟数据回测得到的夏普率热力图。对于中性市场（上图），最好的策略是设定较宽的止损空间和较窄的盈利点；对于走高市场（下图），最好的策略是采取较宽的盈利点，而止损点的设定可以比较宽泛。</li>
+<li>总而言之，通过探究引导价格波动的随机过程，而不是在真实历史数据上回测，我们得到的最佳交易规则不会在特定数据上过拟合。尽管这样得到的交易规则可能不是最优的，但也远好于过拟合的结果。本章仅以 OU 过程为例，也可以尝试其它建模方式。</li>
+</ol>
+<h2 id="chapter-14-回测统计">chapter 14 回测统计</h2>
+<ol type="1">
+<li><p>回测的三种范式：</p>
+<ul>
+<li>历史模拟，向前游走</li>
+<li>情景模拟：交叉验证</li>
+<li>在模拟数据上做simulation</li>
+</ul></li>
+<li><p>回测统计量（Backtest statistics）应该帮助揭露策略的弊端（如可能的风险）、帮助投资者比较不同策略。</p></li>
+<li><p>一般统计量（general characteristics）能告诉我们回测的大致特性：时间范围（回测起讫时间）、资产规模（Average AUM） ，策略的资金容量（Capacity）、杠杆率（Leverage）、平均持仓时间（Average holding period）、换手率（Annualized turnover），Maximum dollar position size/Ratio of longs/Frequency of bets</p></li>
+<li><p>衡量策略表现（performance）的统计量包括：盈亏（PnL, Profit and Loss）、多头盈亏（PnL from long positions）、年化回报率（Annualized rate of return）、命中率（hit ratio）、命中回报率（Average return from hits）、失误回报率（Average return from misses）……</p></li>
+<li><p>策略的回报率往往在一段时间内连续为正 / 负，称之为“周期”（Runs）。周期的存在增加了策略回撤的风险，所以需要一些统计量来衡量，包括：Returns Concentration（衡量回报的集中程度）、drawdown（回撤）、time under water。</p></li>
+<li><p>某些策略错误地估计交易费用导致失败，这些需要考虑的统计量包括：Broker fees per turnover、Average slippage per turnover……</p></li>
+<li><p>一些考虑到风险的统计量包括：夏普比率（Sharpe Ratio/ SR）、PSR（Probabilistic SR）、DSR（Deflated SR）、信息率（Information ratio）…… &gt; 夏普值，衡量的是一项投资在对其调整风险后，相对于无风险资产的表现。它的定义是投资收益与无风险收益之差的期望值，再除以投资标准差（即其波动性）。它代表投资者额外承受的每一单位风险所获得的额外收益。 &gt; Every backtest result must be reported in conjunction with all the trials involved in its production. Absent that information, it is impossible to assess the backtest’s “false discovery“ probability. —— MARCOS’ THIRD LAW OF BACKTESTING</p></li>
+<li><p>基金经理往往希望对模型的收益进行归因（performance attribution），可以参考多因子模型（Barra’s multi-factor method）。</p></li>
+</ol>
+<h2 id="chapter-15-了解策略风险">chapter 15 了解策略风险</h2>
+<p>本章的目的是帮助你检验策略风险。</p>
+<ol type="1">
+<li>几乎所有策略都有盈利点和止损点，所以我们可以对策略的收益建模，检验策略对一些参数的敏感程度。</li>
+<li>假定一个策略每年进行 n次 IID 决策，每一次有p的概率盈利<span class="math inline">\(\pi\)</span>，1-p的概率盈利<span class="math inline">\(-\pi\)</span>，则该策略的年化夏普比率 。（盈亏额不对称的情形可做类似讨论）</li>
+<li>如果交易频率不高（ 不大），则需要较大的 才能达到高夏普比率。但即使 略大于 0.5，只要 足够大，夏普比率也可以很大，这是高频交易的思路。另一方面， 很大时， 的小幅波动会带来 的较大改变，很可能 降低 1% 就会抹去所有盈利——我们称之为策略风险（Strategy risk）。</li>
+<li>策略风险不同于资产组合风险（portfolio risk）：假定 为依照上面公式计算得到的盈亏平衡点，策略风险指 ；而资产组合风险是市场中存在的风险，由首席风险官监控。策略风险过大时，即使投资标的的风险不大，这个策略也有较大概率无法超过业绩标准。所以策略研发者需要想办法减小 ，比如调节 。</li>
+</ol>
+<h2 id="chapter-16-基于机器学习资产配置">chapter 16 基于机器学习资产配置</h2>
+<p>本章提出了基于图模型的层次风险平价方法（Hierarchical Risk Parity / HRP），其在统计性能上优于传统的资产组合优化方法。</p>
+<p>资产组合可谓金融中最历久弥新的问题了。60多年前，马科维茨提出了Critical Line Algorithm（CLA）用于不等式约束下的二次规划问题，尤其是资产组合优化问题。CLA 的缺点是鲁棒性不高，因为二次规划需要对资产间协方差矩阵取逆，当该矩阵条件数很大时会带来较大误差。</p>
+<p>资产组合中相关资产（多重共线性）越多，资产间协方差矩阵的条件数越大，结果越不稳定，这便是 Markowitz’s curse。此外资产越多，用于估计协方差矩阵的数据也越多，这些历史久远的数据也会造成误差。</p>
+<p>作者认为，二次规划试图构建全连接图（fully connected graph），其中每个节点可能替代其他节点。当有50支资产时，一个全连接图有1225条边，这种复杂结构造成二次规划结果的不稳定。很自然地，我们会希望减少不必要的边.</p>
+<p>当我们决定投资摩根大通时，下一步我们更可能考虑增/减持高盛的股票而不是一家地产公司的股票，因为摩根和高盛同属金融企业。依照这种思路，我们可以利用 ML 中的聚类算法，根据资产的特性 / 资产间相关性将所有资产建构成树状图，如下图所示。这被称为层次风险平价方法（HRP）</p>
+<p>实验中 HRP 构建的投资组合比 CLA 更分散，风险也更低，同时 HRP 的样本外夏普比率更高。考虑到 HRP 不需要计算逆矩阵，其适应性和鲁棒性也更强。</p>
+<p>HRP 不仅可以用于在不同资产上配置资金，还可用于在不同策略上配置资金。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li>《Advances in Financial Machine Learning》</li>
 <li>https://blog.csdn.net/weixin_38753422/article/details/100179559</li>
-<li>https://zhuanlan.zhihu.com/p/69231390</li>
 <li>https://zhuanlan.zhihu.com/p/29208399</li>
+<li>https://zhuanlan.zhihu.com/p/109934805</li>
 </ol>
 
       
@@ -555,7 +507,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -621,7 +573,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">197</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -634,7 +586,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

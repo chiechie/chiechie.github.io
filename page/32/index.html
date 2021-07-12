@@ -165,6 +165,186 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/14/AIOps/AIOps-1_5_1-log-analysis_logmine/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/14/AIOps/AIOps-1_5_1-log-analysis_logmine/" class="post-title-link" itemprop="url">chapter1.5.1 使用logmine加强版做日志聚类</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-14 11:01:18" itemprop="dateCreated datePublished" datetime="2021-05-14T11:01:18+08:00">2021-05-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>日志聚类本质上是在简洁性和信息丰富性之间trade-off。</p>
+<p>原始日志信息量爆炸，简洁性不够，所以要归纳, 要抽象，得到日志模版。</p>
+</blockquote>
+<h1 id="问题描述">问题描述</h1>
+<p>将不同来源的日志汇总分析，合并相似的日志，并且对每一类输出摘要，这个摘要就是日志模式（pattern）。</p>
+<h1 id="解决方案">解决方案</h1>
+<p>logmine使用的是基于聚类的方法，做日志摘要生成。</p>
+<p>主要思路是，一边构建cluster，一边提取pattern</p>
+<h2 id="找cluster">找cluster</h2>
+<ul>
+<li><p>先定义一个参数MaxDist， 表示cluster的半径</p></li>
+<li><p>对于一个新的日志，如果跟已有的cluster 距离都很远（半径之外），就以他为中心创建一个新的cluster。</p>
+<blockquote>
+<p>为了提升效率，判断是否属于某个cluster时使用early abandon的策略，如果已对比的字段累计距离超过了半径，就可以提前停止了，因为距离只会越来越大。</p>
+</blockquote></li>
+</ul>
+<h2 id="对于每个cluster提取pattern">对于每个cluster，提取pattern</h2>
+<figure>
+<img src="./image-20210226000021042.png" alt="图2-日志分析流程" /><figcaption aria-hidden="true">图2-日志分析流程</figcaption>
+</figure>
+<ul>
+<li>step1. 字段类型检测：将可变字段进行泛化，比如date，time，IP，数字，举个例子，将2015-07-09替换成date。这个模式和正则表达式可以让用户定义。</li>
+<li>step2. 分词，每条日志都得到一个word vector.</li>
+<li>step3. 一边聚类 一边提取pattern</li>
+</ul>
+<p><img src="img.png" /></p>
+<h2 id="怎么设置level">怎么设置level？</h2>
+<figure>
+<img src="./cost_function.png" alt="图3-评价当前pattern的信息含量" /><figcaption aria-hidden="true">图3-评价当前pattern的信息含量</figcaption>
+</figure>
+<p>怎么设置level？看每个level的信息损失程度，这里用cost function表示损耗的信息，值越大，表示丢失的信息越多</p>
+<p><span class="math display">\[\text { Cost }=\sum_{i=1}^{\# \text { of clusters }} \text { Size }_{i} \times\left(a_{1} W C_{i}+a_{2} V a r_{i}+a_{3} F V_{i}\right)\]</span></p>
+<ul>
+<li><span class="math inline">\({Size}_i\)</span>: 第i个pattern包含的日志个数，</li>
+<li><span class="math inline">\({WC}_i\)</span>: 第i个pattern，**的个数，对应权重a1，默认取1</li>
+<li><span class="math inline">\({Var}_i\)</span>:第i个pattern，变量的个数，对应权重a2，默认取0</li>
+<li><span class="math inline">\({FV}_i\)</span>: 第i个pattern，固定值的个数，对应权重a3，默认取0</li>
+</ul>
+<p>提取层次化模式，参考下图</p>
+<figure>
+<img src="./logmine_image-20210225214320632.png" alt="图1-层次化地提取日志模式" /><figcaption aria-hidden="true">图1-层次化地提取日志模式</figcaption>
+</figure>
+<figure>
+<img src="./logmin-result.png" alt="图2-logmine-result" /><figcaption aria-hidden="true">图2-logmine-result</figcaption>
+</figure>
+<h2 id="衡量两条日志的相似性">衡量两条日志的相似性</h2>
+<p>衡量两条日志相似性的函数：</p>
+<p><span class="math display">\[\operatorname{Dist}(P, Q)=1-\sum\limits_{i=1}^{\operatorname{Min}(\operatorname{len}(P), \operatorname{len}(Q))} \frac{\operatorname{Score}\left(P_{i}, Q_{i}\right)}{\operatorname{Max}(\operatorname{len}(P), \operatorname{len}(Q))}\]</span></p>
+<p><span class="math display">\[\operatorname{Score}(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
+<ul>
+<li><span class="math inline">\(P_i\)</span>：日志P的第i个字段，len(P): 日志P的字段的个数。</li>
+<li><span class="math inline">\(k_1\)</span>: 如果两个字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1。</li>
+</ul>
+<p>###衡量两个pattern的相似性</p>
+<p>pattern包含三类字段：fixed value， Variable 和 Wildcard</p>
+<ul>
+<li>固定值（fixed value field ）：如www, httpd, INFO，固化的。</li>
+<li>可变字段（A variable field）：需要用户定义name和regex，如IP地址，邮箱，数字，日期，属于一个具体的类型，但是取值是可变的，</li>
+<li>Wildcards ：就是**。</li>
+</ul>
+<p>衡量两个pattern相似性的函数（不同类型的word给的权重不一样）：</p>
+<p><span class="math display">\[\text { Score }(x, y)=\left\{\begin{array}{cl}k_{1} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are fixed value } \\ k_{2} &amp; \text { if } \mathrm{x}=\mathrm{y} \text { and both are variable } \\ 0 &amp; \text { otherwise }\end{array}\right.\]</span></p>
+<ul>
+<li><span class="math inline">\(k_1\)</span>: 如果两个fixed value字段一样，得<span class="math inline">\(k_1\)</span>分，默认值为1</li>
+<li><span class="math inline">\(k_2\)</span>: 如果两个变量字段一样，得<span class="math inline">\(k_2\)</span>分，默认值为2</li>
+</ul>
+<h2 id="怎么评估效果">怎么评估效果？</h2>
+<p>整个问题的评估可以拆分为两个小评估:</p>
+<ul>
+<li>评估聚类的准确率？</li>
+<li>评估模式的准确率？</li>
+</ul>
+<p>因为没有标签，所以聚类和评估都是跟baseline比</p>
+<blockquote>
+<p>都有了baseline，还要logmine的必要性在于：可能logmine有性能优势？</p>
+</blockquote>
+<ul>
+<li><p>聚类效果跟baseline--OPTICS对比: 看最大公共子集的比例（原文中的agreement score）。</p></li>
+<li><p>模式效果跟baseline--UPGMA比：UPGMA的结果作为ground truth，比较recall和precision.</p>
+<blockquote>
+<p>UPGMA算法的输入一批原始日志，输出是一个patten</p>
+</blockquote></li>
+</ul>
+<p><span class="math inline">\(\text { Total Accuracy }=\sum\limits_{i=1}^{\# \text { of clusters }}\left(A c c_{i} \times \text { Size }_{i}\right) \div \sum\limits_{i=1}^{\# \text { of clusters }} \text { Size }_{i}\)</span></p>
+<h1 id="chiechies对logmine的总结">chiechie's对logmine的总结</h1>
+<p>论文看完了，代码也跑了一遍，发现有几个问题：</p>
+<ol type="1">
+<li><p>所谓的不需要人工干预，没有做到。很重要的一个功能就是从原始文本中提取variable类型的字段（field），需要人指定variable的name以及正则匹配规则。否则代码是不会主动帮你探测的。 <img src="./c2.png" /></p></li>
+<li><p>不同的cluster的pattern可能存在如下的父子关系 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pattern36 : datetime dms<span class="emphasis">_frontend_</span>mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern50:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern53:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp 1c7c49d5 11024333 from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">pattern64:  datetime dms_frontend_mng.cpp 197 OnProcessFromClient D DMS update time stamp <span class="strong">**<span class="emphasis">* <span class="strong">**<span class="emphasis">* from <span class="strong">**<span class="emphasis">* to <span class="strong">**<span class="emphasis">*</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>聚类时，比的是原始日志log_signature和类中心log_signature的距离，<br />
+这有一个问题，有一些日志虽然跟该cluster的中心相距较远，但是提取出的pattern可能又很接近.</p>
+</blockquote></li>
+<li><p>2的解决方案：</p>
+<ol type="1">
+<li>对于每个cluster提取pattern时，只保留最抽象的一层</li>
+<li>所有的cluster构建完之后，将存在父子pattern的cluster手动合并。</li>
+</ol></li>
+</ol>
+<h1 id="参考资料">参考资料</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.cs.unm.edu/~mueen/Papers/LogMine.pdf">logmine-paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/trungdq88/logmine/tree/master/src">logmine-github</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">数据-apache_2k.log</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">logmine加强版-chiechie's github</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/14/reading_notes/investment/about-invement-education/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -284,119 +464,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/13/AIOps/AIOps-1_5-log-analysis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/13/AIOps/AIOps-1_5-log-analysis/" class="post-title-link" itemprop="url">chapter1.5 日志聚类</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-13 20:05:20" itemprop="dateCreated datePublished" datetime="2021-05-13T20:05:20+08:00">2021-05-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="做项目之前的分析">做项目之前的分析</h2>
-<p>系统出现故障时，运维人员一般先查看错误日志，定位故障原因。如果业务逻辑简单，故障时错误日志较少，运维人员一般一眼就能定位到问题。</p>
-<p>但是，业务逻辑的复杂的情况下，比如系统依赖很多的服务，引入很多的组件时，一旦整个故障时（如触发Bug、依赖服务超时等等），错误日志急剧增加。如何能快速找到最关键的日志报错信息呢？ 可以对报警进行聚类，整理出报警摘要，有了摘要运维就可以对的故障有个大致印象，再结合业务知识定位故障的根原。</p>
-<p>为了解决上面问题，下面介绍一种针对报警日志的聚类算法</p>
-<p>最近要做一个nlp的项目，需求就是从一堆杂乱无章的日志中，发现一些规律。 看看哪些日志其实是在说一个事情，可归为一类；哪些日志暗示着新的事情在发生，就告警。</p>
-<p>本质是一个EDA,有点类似给用户分群。跟用户分群相比，日志分析有一些特殊的需求，比如，我们通常先关注目前发生的事情严不严重，然后才关注细节。描述前者的典型字段包括时间，日志级别，其他关键词。描述后者的典型字段包括具体ip，网站，端口号等等。</p>
-<p>对一段时间内的告警数据进行聚类，将具有相同根因的告警归纳为泛化报警（Generalized Alarms），最终形成仅有几条泛化报警的报警摘要。如下图1所示意。</p>
-<figure>
-<img src="https://p0.meituan.net/travelcube/0405c8ee9e4e3ea813eedf46c803101122272.png" alt="图1" /><figcaption aria-hidden="true">图1</figcaption>
-</figure>
-<p>图1</p>
-<p>我们希望这些泛化报警既要具有很强的概括性，同时尽可能地保留细节。这样运维人员在收到报警时，便能快速定位到故障的大致方向，从而提高故障排查的效率。</p>
-<h2 id="看看别人怎么做的">看看别人怎么做的</h2>
-<h3 id="美团">美团</h3>
-<h3 id="log3c">log3C</h3>
-<p>《identifies service system problems from system logs》-log3C</p>
-<ul>
-<li>讲了通过数据挖掘-对纯文本进行分析的一种思路：原始日志--&gt;提取事件模版--&gt; 聚合成 时间戳 + session id的日志序列计数向量---&gt;聚类得到典型日志序列技术向量模式---&gt; 日志序列模式 和 系统状态（核心KPI 之间的关系）相关性分析</li>
-<li>将相关性分析 应用到了 具有 物理依赖关系的 数据上面，可以得到 因果关系。</li>
-<li>跟指标异常检测的思路不一样，这个不看日志中提取出来的数值指标，看的是日志间的序列关系，出现的先后顺序，更适合用来做辅助 系统的故障定位（复杂的网状调用调用链路），而前者更适合做系统的性能监控，需要人工定义感兴趣的测量方式（人工指定特征）。</li>
-<li>跟日志异常检测相比，本文的应用更加的end2end。</li>
-</ul>
-<blockquote>
-<p>实际中先不考虑这个方案，复杂且黑盒，不好调效果。</p>
-</blockquote>
-<h2 id="一些思考">一些思考</h2>
-<ol type="1">
-<li><p>要不要用一些文本模型，比如word2vec，doc2vec，transformer，bert？</p>
-<p>在当前日志的场景下，意义不大。 这些深度模型的本质是想将语义上的相似性通过embedding vector表达。 日志场景下，日志都是同一个print语句打出来的，可以看成是机器的语言，比较少有语言歧义（真的有这种近义词的，肯定不是一个组件打出来的日志），所以没必要去寻找语意上的相似性。 分词完之后，当成char就可以了。</p></li>
-</ol>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">apache_2k.log</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">关于logmine的改进版-code-chiechie</a></li>
-<li><a href="../AIOps-1_5_1-log-analysis_logmine/">关于logmine的实践--chiechie's blog</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/31/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><span class="page-number current">32</span><a class="page-number" href="/page/33/">33</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/33/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/31/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><span class="page-number current">32</span><a class="page-number" href="/page/33/">33</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/33/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -462,7 +533,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">197</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -475,7 +546,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -165,6 +165,148 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/16/deeplearning/dl9_dl-framework-from-view-of-compression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/16/deeplearning/dl9_dl-framework-from-view-of-compression/" class="post-title-link" itemprop="url">深度学习9 深度学习理论的统一框架-基于压缩视角</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-16 18:39:48" itemprop="dateCreated datePublished" datetime="2021-03-16T18:39:48+08:00">2021-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-12 08:27:44" itemprop="dateModified" datetime="2021-07-12T08:27:44+08:00">2021-07-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>最近一篇工业界的人讲深度学习的第一性原理，结合mayi老师的文章，尤其是联想到中国哲学中的"名实之争"，有点意思，在这里记录一下</p>
+</blockquote>
+<h2 id="summary">summary</h2>
+<ol type="1">
+<li><p>Ideal Intelligence或者AGI是什么？就是在做信号压缩，即从大量数据中找到所有的模式。</p></li>
+<li><p>数据压缩就是describe the large amout of data in a more compact way</p></li>
+<li><p>finding all patterns = short description of raw data（low kolmogorov complexity）</p></li>
+<li></li>
+</ol>
+<h2 id="学术界的进展">学术界的进展</h2>
+<p>马毅老师的文章和袁进辉文章都是想探索一种通用的方法，对任何数据找到其最优的神经网络。</p>
+<p>都知道图像数据可能更适合cnn，序列数据更适合GPT-3，这些网络都是具有某个特殊的结构的DNN，这些奇奇怪怪的结构是无数次试错，人工设计出来的。</p>
+<p>那么，有没有可能有一种脱离人的设计方法呢？即，不管是对图像数据，还是序列数据，统一的模型训练方法呢？更甚至，不管是有监督还是无监督，都能找到统一的模型训练方法呢？</p>
+<p>这个问题很宏大，涵盖了NAS这个方向。</p>
+<h3 id="计算神经科学">计算神经科学</h3>
+<ol type="1">
+<li><p>计算神经科学领域对这个问题已经研究很多年了，有一些非常经典的研究成果譬如ICA(独立成分分析）以及Sparse coding方法，这些方法的背后是一种基于信息论的原则，称之为efficient coding principle。</p></li>
+<li><p>这个理论认为，大脑的结构源自亿万年的进化，进化的目标是形成外界物理环境的一种“最经济”的表达，这种表达是适应于（adapt to)自然界的统计规律，而且这种结构基本上是无监督的。这种理论已经能非常好的解释视网膜、侧膝体、初级视皮层神经元感受野的形成机理，近些年的研究开始向理解V2, V4等更高级的视皮层进发。</p></li>
+<li><p>用efficient coding原则来理解卷积神经网络的一些关键技巧</p>
+<ul>
+<li>卷积: 在计算神经科学里，相当于初级视皮层神经元的局部感受野</li>
+<li>非线性的激活函数：计算神经科学里，站在信息论角度，通过非线性映射，可以把取值范围很大的activation映射到一个区间，比较重要的输入值编码的分辨率高一些，而不重要的输入不需要消耗太多能量去编码，就被映射到“饱和区”。</li>
+</ul></li>
+<li><p>efficient coding准则认为，神经元的感受野是用来表示输入刺激的统计规律，把输入转化成神经元的响应有助于去除输入之间的冗余性（redudancy）,也就是神经元的响应之间应该比输入 “统计上更接近于独立”。</p></li>
+</ol>
+<h3 id="信息瓶颈-和-mcr2">信息瓶颈 和 MCR^2</h3>
+<p>针对这个问题，学术界已有的研究方向主要是从信息论角度出发，有两项工作比较知名，一个是受Hinton推崇的“信息瓶颈”（Information bottleneck）理论，一个是马老师团队提出的MCR^2理论。</p>
+<p>以x，z，y 分别表示输入数据，学到的特征以及标签：</p>
+<ul>
+<li>信息瓶颈要解决有监督问题的目标是最大化z和y之间的互信息，而最小化x和z之间的互信息。</li>
+<li>MCR^2则一方面在最大化x和z之间的互信息，也在最大化z和y之间的互信息。</li>
+</ul>
+<p>信息瓶颈那篇论文里论述了这样一个结论:特征条件独立，最优分类器就是线性的。此外，Andrew Ng在论述Naive bayes和Logistic regression等价关系时讨论过.</p>
+<h3 id="mcr2细节">MCR^2细节</h3>
+<ol type="1">
+<li>用压缩的视角看clustering：聚成两类后是否比原来散开，占用空间小。</li>
+<li>对混合分布的数据进行分类，传统方法基于最大化后验概率（MAP），难点在于后验概率很难estimate和定义，当分布退化时。(所以svm和deep networks赢了)</li>
+<li>用压缩的角度看分类：记录每个类别中对每个样本编码的比特数，分类的原则--Minimum Incremental Coding Length (MICL)</li>
+</ol>
+<h3 id="有监督-vs-无监督之争">有监督 vs 无监督之争</h3>
+<ol type="1">
+<li>有监督or无监督？判别模型or生成模型？半监督学习有没有必要？本质上是在争论一个东西</li>
+<li>回看discriminative model和generative model之辩，前者直接学习用户关心的条件概率p(y|x)，但后者需要学习p(x|y)p(y)，也就是还要学习输入特征的概率分布。发明SVM的Vapnik 认为generative model做了一些和目标无关的、多余的事情，因此而更推崇前者，甚至抛出了奥卡姆剃刀“如无必要，勿增实体”。</li>
+<li>信息瓶颈处于一个极端，既然我们的目标是分类，那就直奔主题，它喜欢的特征就是对分类有效的特征，至于这个特征对最原始的输入的表示来说是不是好就不关心了，甚至要尽可能删除与分类无关的信息。</li>
+<li>MCR^2 的目标函数由两部分构成，第一部分与类别无关，实际上和InfoMax等价（InfoMax直接计算熵有缺陷，正如马老师论文提到的，熵在一些退化情况下没有良好的定义，所以他们用了率失真函数）。第二部分和类别相关，和信息瓶颈的目标一致。</li>
+<li>半监督学习到底成不成立？为什么不带标签的数据对训练分类模型也有帮助呢？比较一致的结论是，无标签数据相当于提供了一种正则化（regularization）,有助于更准确地学习到输入数据所分布的流形（manifold)，而这个低维流形就是数据的本质表示，它对分类有帮助。</li>
+<li>但这又带来一个问题：为什么数据的本质规律对预测它的标签有帮助？</li>
+<li>这又带来一个更本质的问题：数据的标签是怎么来的？</li>
+<li>要回答这些问题，就要和中国古代哲学里的”名实之论“有关系了。到底是先有”名“，还是先有”实“。一般认为是先有”实“，后有”名“，而”实“决定”名“。</li>
+<li>回到机器学习问题上，就是数据的标签是后天出现的，一个东西到底用什么标签去称呼，本质上是由这个东西自身的规律决定的。换句话说，label可能是后天”涌现“（emerge)的，因为一些东西本质一样，张的像，所以人们才会给他们相同的命名。因此要寻求最优的分类器，可能首先要从”无监督“的数据分析入手。</li>
+</ol>
+<h3 id="lecake">lecake</h3>
+<p>a cherry refers to the amount of data your getting，the information youare getting in reinforcement learning，the reward are not a very high throuput signal you you are getting。</p>
+<p>总结一下lecake的观点：以非监督学习为基石，辅以监督学习或者纯强化学习，是走向AFI的方向</p>
+<figure>
+<img src="./db22b6d4fc545430dce3009785f84b21.png" alt="lecake" /><figcaption aria-hidden="true">lecake</figcaption>
+</figure>
+<h2 id="工业界的进展">工业界的进展</h2>
+<ol type="1">
+<li>项研究和今天很受关注的大规模预训练模型也很相似，而且也有研究发现，大规模预训练模型中真正有效的实际上是一个很小的“子网络”，也就是很多连接的权重是接近零的。最近恰好出现了一些 MLP is all your need相关的研究，也不无道理。</li>
+<li>最近除了自然语言处理，在图像和语音领域，无监督和自监督学习也取得了很大进展，譬如Facebook 的wave2vec 基于无标注的语料可以训练出来和几年前有监督学习的SOTA模型相匹配的结果。可以期待，无监督学习未来会出现更多的成绩。</li>
+</ol>
+<h2 id="参考文献">参考文献</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://cmsa.fas.harvard.edu/wp-content/uploads/2021/04/Deep_Networks_from_First_Principles.pdf">Deep_Networks_from_First_Principles</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/no0u_6m3Ima8YlmV7msGqQ">我对深度学习“第一性原理”的探索和理解 -袁进辉</a></li>
+<li>https://www.youtube.com/watch?v=V9Roouqfu-M</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/16/reading_notes/investment/industry-research/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -303,152 +445,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/15/reading_notes/economics/xueqiu-QA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/15/reading_notes/economics/xueqiu-QA/" class="post-title-link" itemprop="url">雪球上的精彩问答</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-15 23:25:09" itemprop="dateCreated datePublished" datetime="2021-03-15T23:25:09+08:00">2021-03-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="出口为何对一个国家很重要">出口为何对一个国家很重要</h2>
-<p>净出口额一般只占据一个国家的gdp不到5%？美国甚至长期逆差？那么出口为何很重要？</p>
-<ul>
-<li>进出口是参与全球化社会分工的方式。</li>
-<li>社会分工的好处是，取人之长，避已之短，发挥专业性优势，把事情做到极致，提高效率。这个跟人与人之间的分工是一样的。</li>
-<li>现在大部分人不种粮食，不织布，不养鸡，他们只是从事复杂社会分工中的一个很细分环节，他们从事自己的分工获得收入可以理解为“出口”，他们用获得的收入购买别人的产品与服务可以理解为“进口”，进口与出口可能顺差，也可能逆差，但大体是均衡的，这样每个参与社会分工的人，都获得了比自己种粮、织布、养鸡高得多的生活水平。</li>
-</ul>
-<p>既然能通过工业品制造的优势赚取大量的钱，应该同等地扩大消费需求啊，进口和出口大致平衡才是正常的吧。就像一个人靠某项技能大把赚钱，还不是买房买车旅行等花掉？不知道是否和外汇管制有关系，赚到的美元并不能很自由买外国货。</p>
-<p>跟外汇管制没有关系，跟产业结构有关系。 中国产业品类齐全，竞争力越来越强，大部分产品与服务都是本国生产为主。 就以两个最大的品类不例，房地产完全自产，汽车自产比例越来越高，进口产品的吸引力下降，市场份额当然也下降。</p>
-<p>Q:中国为何可以长期对外保持顺差，就好像一个人长期赚的多花的少？</p>
-<p>A:这是因为，中国在最大宗的商品品类（工业品）方面的优势实在太大。</p>
-<p>世界变化之快是超出人想像的。100年前，中国所有工业品都要进口，自己出口些生丝、茶叶、桐油换点外汇。 现在中国大批出口工业品到美国，从美国购买大豆、玉米、小麦。。</p>
-<p>我觉得中国在服务业方面的优势，比工业更强。但这个品类不好出口。</p>
-<p>Q:但是有没有可能突然有天我们最具优势的就是服务业开始出口呢，毕竟全球化在有条不紊的进行中，就好比美团迅速占领世界<span class="math inline">\(美团-W(03690)\)</span></p>
-<p>A: 很难，主要是劳动力无法输出。</p>
-<p>所以现在最有可能出口的服务业是线上服务业，比如游戏，比如tiktok。</p>
-<p>Q: “大部分产品与服务都是本国生产为主”，这可能也和中国特殊国情有关系，比如汽车行业，如果去除关税、外汇等因素，中国人的汽车进口可能会大幅增加。也就是说，“中国产业品类齐全”，也未必就是自然竞争的结果。</p>
-<p>A:我觉得不会。</p>
-<p>以汽车为例，中国对大排量汽车（比如3.0以上）征收关税和大排量税，造成进口车比国外贵很多，如果取消这些税，会增加汽车的进口量。但这部分市场规模并不大。</p>
-<p>主流排量的汽车（2.0-2.5)已经完全国产化了，国内外价格相差不大，甚至，同样排量的汽车，国产的比进口的质量可能更好，根本没有必要进口了。</p>
-<p>https://xueqiu.com/1078554131/174396377</p>
-<h2 id="战略和战术">战略和战术</h2>
-<p>Q：在网络上，有关经营生意的信息中，有时会提到战略这个词，现在对战略的定义很多。 在商业范畴中，您认为什么是战略？ 战略决定生死吗？</p>
-<p>A：战略和战术，是相对的。</p>
-<p>更全面、更综合、更长期，就是战略；更局部，更单一，更短期，就是战术。</p>
-<p>比如在战争中，涉及到政治理念、资源组织、长期目标，就是战略。 以你谈到的中日云南战役为例，比如单兵战术、部队（中队、联队、师团、军）级别的作战，日军优势都比较强。 但是，在当时的全球战场上，日军在太平洋战争中已经全面溃败，本土已经开始挨炸；日本国内的经济资源已经完全支撑不了战争；而日本长期的目标（在太平洋地区建立一个日本为核心的殖地民体系）也与当时的全球政治环境格格不入，所以，战术上的优势毫无意义。</p>
-<p>放在企业经营层面，行业选择、长期目标规划、企业文化建设，就是战略。这些决定了企业的生死。</p>
-<p>https://xueqiu.com/9978035065/173274995</p>
-<h2 id="fb值得买吗">FB值得买吗？</h2>
-<p>Q：请问，FB未来三年的护城河会比今天宽吗？时间是FB的朋友吗？</p>
-<p>A：当然会更宽。</p>
-<p>首先社交关系和用户生产的内容会的沉淀。</p>
-<p>其次，公司正确的功能开发运营（比如电商,比如支付)，会强化产品的功能，让用户更离不开它。</p>
-<p>https://xueqiu.com/2751731294/173191111</p>
-<h2 id="特斯拉">特斯拉？</h2>
-<p>Q：为什么特斯拉不是理想的标的？</p>
-<p>A：大概是这样：</p>
-<p>汽车是一个产业规模很大，市场集中度受限的行业，单一公司的市场份额都会有天花板，不能形成绝对垄断格局，也难以维持特别高的利润率。</p>
-<p>汽车产品并无网络效应（越多人用越好用）。汽车生产有规模效应，但汽车产能的扩张高度依赖于资本投资。资本是开放的，不会给单一公司独享。</p>
-<p>汽车的技术变革会影响市场格局，但技术是外溢的，单一公司无法长期保持技术领先，也无法依赖技术领先或者独占性获得绝对垄断的市场份额。最终，效率（成本优势）与品牌（溢价）是汽车公司的核心竞争力。</p>
-<p>汽车与手机是有根本区别的。手机只是工具，差异化在于每个用户使用的软件及其连接的世界不同。而汽车，人们使用的是其本身（驾驶、乘坐、炫耀）的体验，消费者会追求其本身的差异化，而厂家也尽力满足这个差异化的需求。</p>
-<p>A2: 绝大部分认同，只有一点，即，数据的积累有可能会导致公司技术领先和规模效应。</p>
-<p>Q: 仿照ABB走品牌差异化路线还能保证一定的利润率，走大众路线的车厂最后拼硬件拼规模拼成本</p>
-<p>A: 现在看特斯拉的定价策略，是铁了心要靠价格走销量路线了。</p>
-<p>这方面会碰上中国企业硬杠。</p>
-<p>在价格路线（成本优势）上，没有企业能竞争得过中国人。</p>
-<p>Q: 绝大部分外资都在中国有工厂,原材料可能更便宜,但成本就是比中国高,这就是事实,不需要知道是为什么?如果一定要说,那就是外资更腐败.</p>
-<p>A: 我观察主要不是腐败，而是：</p>
-<ol type="1">
-<li>管理效率低而成本高。</li>
-<li>决策效率低，啥事都层层汇报。 本质上是远程管理的职业经理人跟中国本土企业家在竞争。</li>
-</ol>
-<p>Q：根据方丈的理论一般是决策链和本地化的问题。MSN当年加个功能换个版本啥的得几个月汇报沟通。汽车上适不适用倒是不一定。</p>
-<p>A：我给大家举个例子吧。</p>
-<p>就是沃尔沃在福特手上的时候，经营状况差得要命；后来吉利收购了，重新焕发了青春。</p>
-<p>那么这个过程中吉利做了什么呢？ 其实吉利做的最核心的一件事情，是把沃尔沃从（福特的）一个部门，恢复成一家独立（可以自主决策）的公司。</p>
-<p>原来在福特手里的时候，事事都要向（福特）总部汇报，而总部的决策效率很低，正确率也很低。</p>
-<p>这种体制真的能把企业搞死。</p>
-<ul>
-<li>我对汽车行业的商业模式有过思考，有过几个简单的结论。
-<ul>
-<li>第一、汽车制造是一个<strong>有规模效应、但没有网络效应的行业</strong>，这个行业的扩张高度依赖于资本的再投入，所以它的扩张成本很高，单一厂商的市场份额必然是有天花板的，利润率受制于竞争也是有天花板的。这是一个对汽车行业的整体看法，目前全球所有汽车公司都没能逃脱出这个模式。</li>
-<li>第二、关于新能源汽车，我自己算是一个对特斯拉，包括自动驾驶技术研究得比较深入的用户，综合下来我的结论，就是说<strong>没有一个公司</strong>能够在<strong>电池</strong>技术和<strong>自动驾驶技术</strong>方面<strong>长期拥有独家的技术优势</strong>，最后大家还是要在<strong>品牌</strong>和<strong>效率</strong>层面来竞争。</li>
-<li>第三、我刚才说过，我喜欢投资那种<strong>能够意识</strong>到<strong>个人能力和公司资源有限</strong>的企业，但是特斯拉高度不符合。芒格也说过，马斯克很聪明，但是比起一个人的智商有170，却认为自己的智商是250，他更愿意选择一个认为自己的智商是120，但实际上是130的人。特斯拉股价确实涨了很多，但我对我的想法没有任何变化，不能根据短期的股价涨跌，就认为自己的看法是错的。反过来，可能我卖出特斯拉不是错，买入可能才是错。</li>
-</ul></li>
-<li>投资很有意思，可能有的时候挣到了钱，但你是错的，有的时候亏了钱，但你是对的。所以还是<strong>要赚自己认知体系内的钱</strong>。</li>
-</ul>
-<h2 id="参考">参考</h2>
-<p>https://xueqiu.com/1547652891/170378968</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/76/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/76/">76</a><span class="page-number current">77</span><a class="page-number" href="/page/78/">78</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/78/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/76/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/76/">76</a><span class="page-number current">77</span><a class="page-number" href="/page/78/">78</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/78/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -514,7 +514,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">197</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -527,7 +527,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

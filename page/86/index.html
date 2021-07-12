@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/10/reading_notes/the-book-of-why/judea-pearl_the-book-of-why7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/09/reading_notes/the-book-of-why/judea-pearl_the-book-of-why6/" class="post-title-link" itemprop="url">《the book of why》读书笔记-6</a>
+            <a href="/2021/03/10/reading_notes/the-book-of-why/judea-pearl_the-book-of-why7/" class="post-title-link" itemprop="url">《the book of why》读书笔记-7</a>
         </h2>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-09 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-09T08:33:38+08:00">2021-03-09</time>
+              <time title="创建时间：2021-03-10 08:33:38" itemprop="dateCreated datePublished" datetime="2021-03-10T08:33:38+08:00">2021-03-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -220,70 +220,12 @@
 
       
           <blockquote>
-<p>the book of why 的第6章-一些悖论</p>
+<p>the book of why 的第7章 征服干预之峰</p>
 </blockquote>
-<h2 id="悖论1-蒙提-霍尔">悖论1-蒙提 霍尔</h2>
-<h3 id="背景">背景</h3>
-<p>一个竞猜游戏中，有三个用幕布遮住的们，其中有2个门后面是山羊，1个是汽车。有两种游戏规则，分别是：</p>
+<h2 id="前门规则和后门调整">前门规则和后门调整</h2>
 <ol type="1">
-<li>观众先选择三个门中的一个，然后主持人从另外两个门中选择一个没有汽车的们打开，然后这个观众可以选择要不要换门？</li>
-<li>观众先选择三个门中的一个，然后主持人从另外两个门中随便选一个打开，然后这个观众可以选择要不要换门？</li>
-</ol>
-<p>第一种强况下，选择换门的话，赢到车车的概率是2/3， 第二种情况下，选择换门的话，赢到的车车的概率是1/2</p>
-<figure>
-<img src="./img789.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
-</figure>
-<h3 id="悖论的原因">悖论的原因</h3>
-<ol type="1">
-<li><p>贝叶斯公式可以解释信息在非因果关系上的流动，也就是规则1，主持人选择了没有汽车的之后，第三个门的不确定性降低了（沿着门后有车的概率变大的方向），而整个空间的概率之和为1，所以第一个门有车的概率变小了。</p>
-<blockquote>
-<p>主持人的这个决策带来了系统的熵减，系统坍塌到2号门某个确定状态的子空间去了。</p>
-</blockquote></li>
-<li><p>为什么直觉上很难接受规则1的结论，反而会认为比赛的机制不公平？这个跟人类大脑结构有关系：</p>
-<ul>
-<li>大脑不擅长处理概率问题，</li>
-<li>大脑自发抵制非因果关系的信息传递，这个是贝叶斯式变量控制的产物。</li>
-<li>习惯将相关性等同于因果性</li>
-<li>大脑天生难以接受</li>
-</ul></li>
-</ol>
-<h2 id="悖论2-伯克森悖论">悖论2-伯克森悖论</h2>
-<ol type="1">
-<li>生物统计学家约瑟夫.伯克森在医院做实验时，观察到了一个现象：两种疾病本来在一般人群中毫无关联，但是在住院人群中却会观察到似是而非的相关性。</li>
-<li>医院样本实际上是一个冲撞模型，即，当一个人同时患了两种疾病时，一定会住院。</li>
-<li>所以，「医院样本」就好像一个经过精心挑选过的样本，体现出来的相关关系是控制了「住院」变量之后，疾病1和疾病2的伪相关性。 <img src="img7890.png" alt="img.png" /></li>
-<li>1956年，哲学家赖欣巴提出了一个猜想「共因原则」（common cause principle），他认为没有不含因果关系的相关关系，即，X和Y的相关不是偶然发生的，要么是一个变量导致另一个变量，要么是第三个变量，比如说出现在两个变量之前的Z变量，导致两者发生。</li>
-<li>设计一个抛硬币的实验就可以推翻「共因原则」：假设同时抛两枚硬币，抛100次，只记录其中至少又一枚硬币为正面的结果，实验结束，发现记录的75条记录中，发现只要硬币1反面，硬币2就是正面，是因为两个硬币互通消息了吗？不是的，是因为人为记录改变了测度空间。</li>
-<li>还有一个社会现象就是，在一些调查中发现，跟你约会的人中，哪些又魅力的人往往是混蛋。这个也是因为测度空间被你亲手改变了，因为长得丑的渣男最开始就被你过滤了。过滤之前，有魅力的渣男的概率是1/4，过滤之后有魅力的渣男概率是1/3。所以感觉这个比例增加了。</li>
-</ol>
-<h2 id="悖论3-辛普森悖论">悖论3-辛普森悖论</h2>
-<ol type="1">
-<li>辛普森逆转：一个叫辛普森的医生，在文献上发现了一种新药D，可以治疗心脏病。论文的实验数据显示，女性患者服用药物之后，心脏病发作比例升高；男性患者服用药物之后，心脏病发作比例也升高。但是，在整体人群上，心脏病发作比例却降低了，因此该药物也被归为BBG（BAD/BAD/GOOD）型药物。然而，实际上这种药物不存在，虽然说在数学上没有什么问题。 <img src="judea-pearl_the-book-of-why7/img.png" alt="辛普森" /></li>
-<li>对整体人群来说，正确的结论应该是什么呢？可以这么操作，先控制性别：
-<ul>
-<li>do（性别）=女性，计算女性服药之后心脏病发作比例的变化 r1。</li>
-<li>do（性别）=男性，计算男性服药之后心脏病发作比例的变化 r2。</li>
-<li>假设整体人群中，男女比例为1：1，那么可以推断出整体人群，服药之后，心脏比发作比例的变化为（r1+r2）/2</li>
-</ul></li>
-<li>辛普森悖论是因为混杂因子的存在。</li>
-<li>当我们考察两个变量的因果效应时：
-<ul>
-<li>如果存在混在因子，只能用分层数据计算因果效应，采用控制混杂因子的方式，case by case，计算每个混在因子取值的情况下，两个变量的因果关系，然后按照混杂因子每个取值的概率汇总，得到整体上，两个变量之间的因果关系。 <img src="./img_2.png" alt="img_2.png" /></li>
-<li>如果不存在混杂因子（有可能存在中介物），可以用聚合数据计算因果效应 <img src="./img_1.png" alt="中介物" /></li>
-</ul></li>
-<li>混杂因子存在的警告：根据聚合数据估计出来的因果效应大于，根据分层数据估计出来的因果效应。</li>
-</ol>
-<h2 id="关于悖论">关于悖论</h2>
-<ol type="1">
-<li><p>什么是悖论？绝大部分人深信不疑的两个信念之间的冲突。</p>
-<blockquote>
-<p>辛普森逆转并不算悖论，只是纠正了不懂数学的人，对"平均表现"的错误认识。</p>
-</blockquote></li>
-<li><p>如何解决悖论？</p>
-<ol type="1">
-<li>理解为什么大多数人会把它看成一个悖论？or大家对世界的直观看法到底在哪里存在重大缺陷？eg生理结构原因：大部分人不擅长处理概率问题；「过分擅长」处理因果问题</li>
-<li>如何纠正：刻意训练，完成大脑重塑。</li>
-</ol></li>
+<li>do条件概率和条件概率的区别是：当有混杂因子存在时，使用条件概率可能得出假的相关性。</li>
+<li>那么除了随机对照试验，还有什么办法能够排除掉混杂因子带来的影响呢？后门调整和前门标准。后门调整即使用便相关系数代替相关系数，前门调整是，在特殊的因果模型的情况下，使用条件概率代替do算子。 <img src="./img.png" alt="img.png" /></li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
@@ -308,7 +250,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/08/deeplearning/dl-basic1/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/09/deeplearning/dl2_basic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -322,7 +264,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/08/deeplearning/dl-basic1/" class="post-title-link" itemprop="url">深度学习基础2 神经网络训练的一些小tricks</a>
+            <a href="/2021/03/09/deeplearning/dl2_basic/" class="post-title-link" itemprop="url">深度学习基础3 attention和self-attention是什么？</a>
         </h2>
 
         <div class="post-meta">
@@ -332,7 +274,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-08 10:17:31" itemprop="dateCreated datePublished" datetime="2021-03-08T10:17:31+08:00">2021-03-08</time>
+              <time title="创建时间：2021-03-09 15:43:10" itemprop="dateCreated datePublished" datetime="2021-03-09T15:43:10+08:00">2021-03-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -362,65 +304,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="layer的输入输出">layer的输入输出</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model_m = Sequential()</span><br><span class="line">model_m.add(Reshape((TIME_PERIODS, num_sensors),</span><br><span class="line">                    input_shape=(input_shape,)))</span><br><span class="line">model_m.add(Conv1D(<span class="number">100</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>,</span><br><span class="line">                   input_shape=(TIME_PERIODS, num_sensors)))</span><br><span class="line">model_m.add(Conv1D(<span class="number">100</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model_m.add(MaxPooling1D(<span class="number">3</span>))</span><br><span class="line">model_m.add(Conv1D(<span class="number">160</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model_m.add(Conv1D(<span class="number">160</span>, <span class="number">10</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model_m.add(GlobalAveragePooling1D())</span><br><span class="line">model_m.add(Dropout(<span class="number">0.5</span>))</span><br><span class="line">model_m.add(Dense(num_classes, activation=<span class="string">&#x27;softmax&#x27;</span>))</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://miro.medium.com/max/2073/1*Y117iNR_CnBtBh8MWVtUDg.png" alt="Image for post" /><figcaption aria-hidden="true">Image for post</figcaption>
-</figure>
-<ul>
-<li>Conv1D：　model_m.add(Conv1D(100, 10, activation='relu', input_shape=(TIME_PERIODS, num_sensors)))：
-<ul>
-<li>输入：(timesteps, num_series)</li>
-<li>输出：(timesteps - kerner_size+1, num_kernels)</li>
-<li>参数个数：(kernel_size * num_sensors + 1) * num_kernels</li>
-</ul></li>
-<li>MaxPooling1D: model_m.add(MaxPooling1D(3))
-<ul>
-<li>输入：(timesteps, num_series)</li>
-<li>输出：(timesteps//3, num_series)</li>
-<li>备注：书的页数（channel）没变，但是每页的字数变成了1/3</li>
-<li><img src="https://miro.medium.com/max/3058/1*W34PwVsbTm_3EbJozaWWdA.jpeg" title="fig:" alt="Image for post" /></li>
-</ul></li>
-<li>GlobalAveragePooling1D：model_m.add(GlobalAveragePooling1D())
-<ul>
-<li>输入：　(timesteps, num_series) 或者（feature_values, feature_detectors）</li>
-<li>输出：　（１，num_series）或者（１, feature_detectors）</li>
-<li>备注： 书的页数（channel）没变，但是每页的字数变成了1</li>
-</ul></li>
-<li>Dropout: model_m.add(Dropout(0.5))： 形状不变 输入：（１，num_series） 输出：（１，num_series）</li>
-<li>LSTM：model.add(LSTM(units=128, dropout=0.5, return_sequences=True, input_shape=input_shape))
-<ul>
-<li>输入： (timestep, series)</li>
-<li>输出：(timestep, units)</li>
-</ul></li>
-<li>Dense： model_m.add(Dense(num_classes, activation='softmax'))
-<ul>
-<li>输入：（１，num_series）</li>
-<li>输出：（１，num_classes　×　２）</li>
-</ul></li>
-<li>BatchNormalization：
-<ul>
-<li>输入: (timestep, series)</li>
-<li>输出：(timestep, series)</li>
-<li>参数个数：４ * series (channel)
-<ul>
-<li><span class="math display">\[y=\gamma\left(\frac{x-\mu(x)}{\sigma(x)}\right)+\beta \]</span></li>
-</ul></li>
-</ul></li>
-</ul>
-<h2 id="layer如何设置初始化权重">layer如何设置初始化权重？</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.layers.Dense(<span class="number">10</span>, activation=<span class="string">&quot;relu&quot;</span>, kernel_initializer=<span class="string">&quot;he_normal&quot;</span>)</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="img.png" alt="3种初始化方法" /><figcaption aria-hidden="true">3种初始化方法</figcaption>
-</figure>
-<h2 id="训练过程太长">训练过程太长？</h2>
-<p>保存训练结果</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 设置loss，优化算法</span></span><br><span class="line">model.<span class="built_in">compile</span>(loss=..., optimizer=...,</span><br><span class="line">              metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br><span class="line"></span><br><span class="line">EPOCHS = <span class="number">10</span></span><br><span class="line">checkpoint_filepath = <span class="string">&#x27;/tmp/checkpoint&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 定义回调函数</span></span><br><span class="line">model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(</span><br><span class="line">    filepath=checkpoint_filepath,</span><br><span class="line">    save_weights_only=<span class="literal">True</span>,</span><br><span class="line">    monitor=<span class="string">&#x27;val_accuracy&#x27;</span>,</span><br><span class="line">    mode=<span class="string">&#x27;max&#x27;</span>,</span><br><span class="line">    save_best_only=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model weights are saved at the end of every epoch, if it&#x27;s the best seen</span></span><br><span class="line"><span class="comment"># so far.</span></span><br><span class="line"><span class="comment"># 3.在fit中传入回调函数，模型会一边训练一边存储</span></span><br><span class="line">model.fit(epochs=EPOCHS, callbacks=[model_checkpoint_callback])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 从缓存路径中加载模型</span></span><br><span class="line"><span class="comment"># The model weights (that are considered the best) are loaded into the model.</span></span><br><span class="line">model.load_weights(checkpoint_filepath)</span><br></pre></td></tr></table></figure>
+          <h2 id="attention">attention</h2>
+<ol type="1">
+<li>seq2seq有两个神经网络，一个encoder一个decoder。</li>
+<li>最早提出attention的设计是在2015年，bengio的一片机器翻译的文章，该文章中使用的seq2seq做机器翻译，创新之处在于对encoder的多个输出增加关注度，从而让decoder知道应该关注encoder的哪个地方的输出， 从而解决了长输入序列遗忘的问题。缺点是计算量很大</li>
+<li>Simple-RNN+attention层的工作机制：encoder结束工作之后，所有时刻的状态都要保留下来，需要计算decoder当前状态相对于encoder的状态中，每一个状态的相关性，得到一个长度为m的权重向量，每个元素都大于0，求和等于1。</li>
+<li>怎么计算decoder当前状态跟encoder状态间的相关性呢？第一种方法是原始论文的方法，定义成两种状态的非线性函数--含有trainnable参数， <img src="dl-basic6_NLP_2_transformer/img_1.png" alt="img_1.png" /></li>
+<li>第二种方法是先定义两个矩阵k矩阵，和q矩阵，然后分别对decoder的状态和encoder的状态做先行变换，然后将先行变换之后的两个向量求内积，最后对权重向量做softmax归一化。这种方法使用更多，Transformer也是这个方法。 <img src="dl-basic6_NLP_2_transformer/img_2.png" alt="img_2.png" /></li>
+<li>计算好了长度为m的权重向量之后，然后作用于encoder的所有状态向量，于是得到了一个context vector。</li>
+<li>decoder输入context vector和上一个时刻的状态，最新的观测值，输出下一个时刻的状态，中间的处理逻辑是怎样的？ <img src="dl-basic6_NLP_2_transformer/img_3.png" alt="img_3.png" /></li>
+<li>可以看到decoder输出的新的状态依赖于context vector向量，而context vector包含了输入的长序列中的信息，因此长输入序列遗忘的问题就可以避免了。</li>
+<li>值得注意的是，当decoder再次计算新的状态时，上一次算的权重向量和context vector就报废了，必须根据最新的状态和encoder的相关性刷新权重向量和context vector，这样也就是对输出的不同位置，给予输入不同位置不同的关注度。</li>
+<li>权重计算的时间复杂度是 mt,m为encoder长度，t为decoder长度。时间复杂度挺高的。</li>
+<li>英译法，当decoder想要更新state时，拿当前state跟encoder的额所有state对比了一下，发现短距离area对应的state最近，因此context vector非常接近area对应的state，因此输出的新的状态也会跟area更予以接近。 <img src="dl-basic6_NLP_2_transformer/img_4.png" alt="img_4.png" /></li>
+<li>总结一下，标准的seq2seq模型中，decode更新状态时，只看当前状态和最新的输入，这样产生的新状态可能已经忘记了encoder的部分输入。在seq2seq中加入attention之后，decoder每次更新state时，会先看一下decoder的所有状态。这样就知道encoder的完整信息，并不会遗忘。除了解决遗忘问题，attention还能告诉decoder应该更关注encoder的哪一个状态，这就是attention名字的由来。</li>
+<li>attention可以提升seq2seq的准确率，但是要付出更多的计算。</li>
+</ol>
+<h2 id="self-attention">self-attention</h2>
+<ol type="1">
+<li>如何将attention剥离seq2seq，只用在一个rnn网络上，就叫self-attention</li>
+<li>提出self attetion的文章发表于2016年，把attention用在了lstm上面。 <img src="dl-basic6_NLP_2_transformer/img_5.png" alt="img_5.png" /></li>
+<li>self-attention可以解决rnn的容易遗忘的问题，比如电影评论的情感分类，如果评论太长rnn的最后一个状态就很记不住整个语句，不能有效利用整句话的信息。 self-attention可以解决rnn容易遗忘的问题，每次更新状态之前都会看一下所有状态的重要性，这样就不会遗忘掉重要信息。下面这个图是</li>
+<li>下面的图中，红色的词表明当前输入，蓝色的阴影表明关注度得分。 <img src="dl-basic6_NLP_2_transformer/img_6.png" alt="img_6.png" /></li>
+</ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>Hands-On Machine Learning with Scikit-Learn and TensorFlow, P334</li>
-<li><a target="_blank" rel="noopener" href="https://keras.io/api/callbacks/model_checkpoint/">keras-model_checkpoint-官网文档</a></li>
-<li><a target="_blank" rel="noopener" href="https://keras.io/api/layers/merging_layers/concatenate/">concatenate</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=XhWdv7ghmQQ&amp;t=183s">RNN模型与NLP应用(8/9)：Attention (注意力机制)</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1601.06733">Long Short-Term Memory-Networks for Machine Reading</a></li>
 </ol>
 
       
@@ -440,7 +350,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/85/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/85/">85</a><span class="page-number current">86</span><a class="page-number" href="/page/87/">87</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/87/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/85/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/85/">85</a><span class="page-number current">86</span><a class="page-number" href="/page/87/">87</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/87/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -506,7 +416,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">197</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -519,7 +429,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

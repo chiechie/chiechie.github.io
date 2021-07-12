@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/09/data_structure/ds1-linear-data-structure/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/07/09/data_structure/ds1-linear-data-structure/" class="post-title-link" itemprop="url">数据结构1 线性数据结构</a>
+            <a href="/2021/07/11/data_structure/ds2-nonelinear-data-structure/" class="post-title-link" itemprop="url">数据结构2 非线性数据结构</a>
         </h2>
 
         <div class="post-meta">
@@ -188,10 +188,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-07-09 12:13:11 / 修改时间：13:35:34" itemprop="dateCreated datePublished" datetime="2021-07-09T12:13:11+08:00">2021-07-09</time>
+              <time title="创建时间：2021-07-11 13:20:51" itemprop="dateCreated datePublished" datetime="2021-07-11T13:20:51+08:00">2021-07-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-12 09:07:50" itemprop="dateModified" datetime="2021-07-12T09:07:50+08:00">2021-07-12</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -213,66 +219,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="总结">总结</h1>
+          <h2 id="总结">总结</h2>
 <ol type="1">
-<li>数组（array），链表（linked list），栈（stack），队列（queue）是最常用的线性的数据结构。</li>
-<li>数组是一片连续的存储空间中，链表在物理空间中不是连续地存在一起的。</li>
+<li>非线形数据结构包括堆，Union Find或者disjoint set。</li>
 </ol>
-<h1 id="detail">detail</h1>
-<h2 id="数组array">数组(array)</h2>
+<h2 id="堆和优先队列">堆和优先队列</h2>
 <ol type="1">
-<li><p>数组是一个很基本的数据结构，使用数组和pointer可以构建出所有的数据结构</p></li>
-<li><p>数组分为静态数组（static array）和动态数组（dynamic array）两种.静态数组大小固定，动态数组可以扩展。</p>
-<blockquote>
-<p>wangshusen的视频里面分别叫array和向量vector，下面还是以动/静为标准。</p>
-</blockquote></li>
-<li><p>静态数组(static array)是一个固定长度的容器（container），包含了n个元素，每个元素有一个索引，索引值从[0,n-1]</p></li>
-<li><p>动态数组（dynamic array）的大小可以增加或者减少。</p></li>
-<li><p>indexable是什么意思？数组中的每一个槽位(slot)/索引(index)，都能关联到（be referenced with）一个数字。索引就好像给每个元素取的名字，是一个阿拉伯数字。</p></li>
-<li><p>静态数组是存储在内存中的一片连续的区域。</p></li>
-<li><p>什么时候使用静态数组：</p>
-<ul>
-<li>依次（sequentially）存储元素/读取（accessing）元素</li>
-<li>在读入/输出流式数据的时候，一次性读入数据量太大，所以分chunk读入数据，并且用buffer去读取每个chunk的数据，buffer就是用array实现的</li>
-<li>在lookuptable中，也会用到数组，因为可以按照index读取数据</li>
-<li>如果某个函数只允许返回1个，但是有多个信息需要返回，可以使用array构造一个workaround，将多个信息打包成一个array，然后返回这个array的指针或者reference</li>
-<li>动态规划：用于缓存子问题的answer，例如背包问题（knapsack problem）和 应变变换问题。</li>
-</ul></li>
-<li><p>静态数组和动态数组的时间复杂度</p>
-<ul>
-<li>读取的时间复杂度: 都是O(1)，因为数组是indexable的</li>
-<li>查找的时间复杂度：都是O（n），有可能查找的值找不到</li>
-<li>插入某个元素的时间复杂度：静态数组不允许插入（记住，他是一个长度固定的容器），动态数组插入的时间复杂度是O（n）- 添加的时间复杂度：</li>
-<li>删除：</li>
-</ul></li>
-<li><p>获取静态数组中元素的唯一方式，就是通过index去reference（数组的成员只对外暴露他们的index编号）。</p></li>
-<li><p>operations on 动态数组：静态数组上能做的操作，动态数组都能做，还能做的更多，比如增，删。</p></li>
-<li><p>怎么实现一个动态数组？</p>
-<ul>
-<li>方法1--使用静态数组实现：
-<ul>
-<li>初始化：创建一个静态数组，有一个初始容量，此后一遍增加元素一遍跟踪容器中元素的个数。</li>
-<li>添加新元素时，如果容器没满，直接加入； 如果容器满了，自动扩容--创建一个新的静态数组，大小为当前容量的2倍，将老的静态数组的元素复制到新的静态数组中，然后加入该元素。</li>
-</ul></li>
-</ul></li>
+<li><p>优先队列（priority queue）是什么？优先队列是一个抽象数据类型（ADT），跟一般的normal很类似，除了一点，优先队列中的每个元素都有固定的优先级，优先级越高的元素，越先出队（dequeue）。</p></li>
+<li><p>注意，优先队列只能存储可比较的数据。</p></li>
+<li><p>优先队列出队（poll）是如何找到最优先的成员的？借助堆（heap）。</p></li>
+<li><p>优先队列通常是使堆实现，因为对优先队列进行操作时，使用堆构造的优先队列时间复杂度最低。除了堆还有别的数据结构也可以实现优先队列，例如一个无序的链表，但是时间复杂度较高。</p></li>
+<li><p>堆（heap）是什么？ 堆是一个基于树的数据结构，它满足堆不变性质（也叫堆属性）：堆中的所有的父节点的优先级都大于或者孩子节点的value。最大堆（max heap）是指，父节点的value都大于等于孩子节点。最小堆（min heap）是指，小于或者等于。 <img src="./image-20210711093249240.png" /></p></li>
+<li><p>什么时候需要使用优先队列？在图算法中会经常用到</p>
+<ol type="1">
+<li>最短路径搜索算法--Dijkstra;s</li>
+<li>动态获取下一个最好的或者最差的元素</li>
+<li>huffman编码（无损数据压缩）</li>
+<li>图遍厉中的Best优先搜索算法，例如A*，使用优先队列持续获取下一个最有潜力的节点</li>
+<li>最小生成树（Mininum Spannning Tree， MST）算法中会用到。</li>
+</ol></li>
+<li><p>将最小优先队列转换为最大优先队列：很多编程语言的标准库只提供最小优先队列的抽象数据类型，即按照值越小，优先级越高，但是实际应用中我们也会需要用到最大优先队列。如何使用已有的最小优先队列来满足我们构造最大优先队列的需求呢？将元素的值取相反数，然后使用最小优先队列排序。</p></li>
+<li><p>堆又很多种，binary heap/binomial heap等，最常用的堆是<strong>二叉堆</strong>（binary heap）。二叉堆是一个二叉树，并且支持堆不变性，二叉树中，每个节点都有2个孩子。</p></li>
+<li><p>完全二叉树：除了最后一层，每一层都是完全填充的，并且节点都会尽量往左边排。完全二叉树在数据插入的时候很有用</p>
+<p><img src="./image-20210711100432168.png" /></p></li>
+<li><p>怎么表示二叉堆？--数组。</p>
+<p><img src="./image-20210711102017358.png" /></p></li>
+<li><p>找到某个节点的父亲节点和孩子节点，利用左下方的公式计算相应的父节点/子节点的索引，然后去数组查找该索引对应的取值。 <img src="./image-20210711102047154.png" /></p></li>
+<li><p>在二叉堆中添加元素：先将该元素添加到最后一层的，最后一个节点的右边，然后不断的使用冒泡的方法，跟父亲节点互换位置,</p></li>
+<li><p>从二叉堆中删除顶端元素，时间复杂度为O（logn），从二叉堆中删除某个值的元素，时间复杂度为O(n), 因为时间花在找到这个元素上面了。</p></li>
+<li><p>有没有办法可以提升查找二叉堆中某个元素速度的方法呢？hash table，即提前将value和索引pair存到一个table中，要搜索的时候去查这个table就好了。这个表叫哈希表（hashtable）， key是hash（value），value是索引。如果有多个相同的值，就存成一个index set</p>
+<p><img src="./image-20210711104111050.png" /></p></li>
 </ol>
-<h2 id="链表linked-list">链表(linked list)</h2>
+<h2 id="union-find">Union-Find</h2>
 <ol type="1">
-<li>链表上相邻的元素在物理存储上并不是相邻的，每个元素的物理未知只存在于他的上下游节点中。</li>
-<li>链表分为单链表（singly linked lists）和双链表(doubly linked lists）。</li>
-<li>按顺序查找链表也很快。</li>
-<li>链表是一种数组的组织形式，将数据组织成一个有序的一系列节点（nodes）的形式，每个节点（node）代表一个数据，每个节点都指向其他代表数据的节点。</li>
-<li>下面是一个单链表（singly linked），每个节点都包含一个数据，同时包含一个指针，指向他的邻居节点。最后一个节点的指针是空的。</li>
+<li><p>Union-Find 也叫非连通集合（disjoint set），也是一种数据结构，主要操作是find 合uninion</p>
+<ol type="1">
+<li><p>find：给定一个element，union find 返回该element所属的group</p></li>
+<li><p>uninon：merge 2 groups，将其中一个group的root变为另外一个group的root的子节点</p>
+<p><img src="./image-20210711110158015.png" /></p></li>
+</ol></li>
+<li><p>union find在哪里会被用到？最小生成树算法--kruskal：</p>
+<p><img src="./image-20210711110757010.png" /></p></li>
+<li><p>Union find这个数据结构可以使用hashtable + 数组实现</p>
+<p><img src="./image-20210711115717168.png" /></p></li>
+<li><p>union find 应用之--path压缩, 每次union的时候，将属于某个pattern的所有节点全部指向root</p></li>
 </ol>
-<p><img src="img.png" alt="img.png" /> 6. 在哪里会用到链表？ - 需要实现某个抽象数据类型时会用到链表，比如要实现列表（lists），队列（Queue）和 栈（Stack），因为这些抽象数据类型需要频繁操作adding和remocving，而这两个操作对于链表来说是相当拿手的。 - 链表很容易对现实事物建模，如火车 - 创建循环列表时很有用，可以让链表的最后一个节点的指针指向第一个节点，训练列表对于建模重复事件循环很有用， - 实现哈希表通常使用链表处理冲突的问题。 7. 链表的几个关键元素： - head：指向链表的第一个节点的pointer， - tail：指向表示链表的最后一个节点的pointer， - pointer表示邻居节点的指针， - node：表示一个包含数据和指针的对象。在实现时，每个节点也可以被表示为structures，或者classes 8. 单链表和双链表的区别，单链表的每个节点只存储下一个邻居的pointer，双向链表的每个节点存储两个指针，分别是上一个邻居节点和下一个邻居节点。前者占用的内存是后者的1/2，缺点是不知道当前节点的前一个节点是什么，要找的话，只能从head开始遍历。如果要删除某个元素，双链表的时间复杂度是常数，单链表是线性的，因为他要重新遍历以找到上家，然后修改它的指针。 <img src="img_1.png" alt="单链表vs双链表-优缺点对比" /> 9. 链表中，同时存链表的第一个节点和最后一个节点，是为了更快速的添加和删除元素。 10. 链表中的复杂度分析： - 搜索某个值在链表中的位置：单链表和双链表的复杂度是O(n) - 在链表头部/尾部插入某个元素：单链表和双链表的复杂度是O(1) - 删除头部的元素：单链表和双链表的复杂度是O(1) - 删除尾部的元素：单链表的复杂度O(n)，双链表的复杂度是O(1) - 删除中间元素：单链表的时间复杂度为复杂度O(n)，双链表的复杂度是O(n)</p>
-<h1 id="参考">参考</h1>
+<h2 id="二叉树-和-二叉查找树">二叉树 和 二叉查找树</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/akzare/Algorithms">algorithm-python-github</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=gXgEDyodOJU">youtube</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=V_TulH374hw">Graph-theoretic Models</a></li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13965757/what-is-the-difference-between-an-abstract-data-typeadt-and-a-data-structure">the difference-between-ADT和DS</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.csie.ntu.edu.tw/~htlin/course/dsa21spring/">数据结构和算法</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RBSGKlAvoiM&amp;t=102s">Data Structures Easy to Advanced Course</a></li>
+<li><p>树是什么？一个无向图，无环的连通图，有N个节点，N-1条边</p></li>
+<li><p>树中任意一个节点都能成为一个root节点。</p></li>
+<li><p>子树（subtrees）可能是一个叶子结点</p></li>
+<li><p>二叉树：是一种特殊的树，树中每个节点最多只有2个子节点。</p></li>
+<li><p>二叉查找树（binary seach tree）是一种特殊的二叉树，树中的所有子树都满足二叉查找树不变性（BST invariant），即左边的树&gt;右边的树。</p></li>
+<li><p>二叉查找树有什么用？</p>
+<ol type="1">
+<li>可以实现很多抽象的数据类型。例如map，set</li>
+<li>可以用来实现平衡二叉查找树（balanced binar用search trees）</li>
+<li>实现语法树：编译器和计算机会用到</li>
+<li>Treap--一个基于概率的数据结构，使用了一个随机的二叉搜索树。</li>
+</ol></li>
+<li><p>如何在二叉查找树中插入一个元素：</p>
+<ol type="1">
+<li></li>
+</ol></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RBSGKlAvoiM&amp;t=11600s">Data Structures Easy to Advanced Course - Full Tutorial from a Google Engineer</a></li>
+<li></li>
 </ol>
 
       
@@ -293,7 +307,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/08/deeplearning/bert/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/10/AI/svd-and-coding/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -307,7 +321,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/07/08/deeplearning/bert/" class="post-title-link" itemprop="url">深度学习7 Bert</a>
+            <a href="/2021/07/10/AI/svd-and-coding/" class="post-title-link" itemprop="url">SVD和compression</a>
         </h2>
 
         <div class="post-meta">
@@ -317,14 +331,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-07-08 11:50:30" itemprop="dateCreated datePublished" datetime="2021-07-08T11:50:30+08:00">2021-07-08</time>
+              <time title="创建时间：2021-07-10 11:40:31" itemprop="dateCreated datePublished" datetime="2021-07-10T11:40:31+08:00">2021-07-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 10:20:00" itemprop="dateModified" datetime="2021-07-09T10:20:00+08:00">2021-07-09</time>
+                <time title="修改时间：2021-07-12 08:27:44" itemprop="dateModified" datetime="2021-07-12T08:27:44+08:00">2021-07-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -332,7 +346,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
                 </span>
             </span>
 
@@ -347,72 +361,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>为什么有了word2vec还不够？还需要bert干嘛？因为一词多义，同样的词在不同的上下文中表达的意思不一样，而word2vec的表示是静态的。 所以我们需要一个能对上下文编码的动态的embedding方法，bert就应运而生了。</p>
-<h1 id="总结">总结</h1>
-<ul>
-<li>Bert也是是一个对词语生成词语向量的方法。</li>
-<li>Bert可以认为是一个预训练Transformer的encoder部分</li>
-<li>Bert的全称是Bidirectional Encoder Representations from Transformers，双向encoder表示</li>
-<li>Bert的目的是预训练transformer模型的encoder网络，</li>
-<li>Bert的学习目标是怎么设定的呢？bert用以下两个任务来预训练transformer中的encoder网络
-<ul>
-<li>任务1-预测遮挡词（Predict Masked Words）： 随机遮挡上下文，让encoder根据上下文来预测被遮挡的单词，大概随机遮挡挡15%的单词</li>
-<li>任务2-预测下一个句子（Predict the Next Sentence）： 把两个句子放在一起，让encoder判断两句话是不是原文里面相邻的两句话，正样本摘自原文，负样本是随机选择50%。</li>
-</ul></li>
-<li>Bert学习的时候，把上面两个任务结合起来</li>
-<li>假如有两个词被遮挡，就要训练三个任务，2个预测遮挡词任务，1个预测是否邻近的任务。前面两个是一个multi-class分类；后面一个是一个二分类。前两个任务的损失函数是cross entropy，第三个任务的损失函数是binary-entropy。</li>
-<li>最终的目标函数，是上面三个损失函数的求和，把最终的目标函数关于模型参数求梯度，然后使用梯度下降来求参数。</li>
-<li>Bert的优点：不需要人工标注数据，训练数据可以从wiki/网页等，长度为2.5billion单词</li>
-<li>Bert可以利用海量数据训练一个超级大的模型</li>
-<li>Bert想法简单有效，计算大家大，bert有两个版本
-<ul>
-<li>base： 1.1yi参数, 16个tpu训练4days，不算调参数，该参数是公开的</li>
-<li>large：2.35yi参数，64个tpu训练4days，不算调参数，该参数是公开的</li>
-</ul></li>
-<li>想用transformer直接下载徐训练好的bert模型就好，拿到参数就可以对英文编码了</li>
-<li>RoBERTa建议只用masking，而且是动态masking,</li>
-</ul>
-<h1 id="附录">附录</h1>
-<h2 id="bert模型原理">bert模型原理</h2>
-<p>[bert模型可视化] (https://images.prismic.io/peltarionv2/e69c6ec6-50d9-43e9-96f0-a09bb338199f_BERT_model.png?auto=compress%2Cformat&amp;rect=0%2C0%2C2668%2C3126&amp;w=1980&amp;h=2320)</p>
-<h3 id="任务一--预测遮挡词">任务一--预测遮挡词</h3>
-<p>任务可以描述为： 输入： “The _____ sat on the mat” 输出： What is the masked word?</p>
+          <blockquote>
+<p>随手写</p>
+</blockquote>
+<p>SVD技术可以应用于信号压缩</p>
+<p>SVD是这样的, 随意一个矩阵A可以做如下分解</p>
+<p><span class="math display">\[A = U\Lambda V^T\]</span></p>
+<p>==&gt;</p>
+<p><span class="math display">\[U^T A = \Lambda V^T  \]</span></p>
+<p>可以把<span class="math inline">\(U^T\)</span>看成是encoding, <span class="math inline">\(U\)</span>看成是decoding, 压缩之后的信号是<span class="math inline">\(\Lambda V^T\)</span></p>
 <figure>
-<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+<img src="/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/svd-and-coding/奇异值分解.png" alt="奇异值分解" /><figcaption aria-hidden="true">奇异值分解</figcaption>
 </figure>
-<p>如何学习？ - e：one-hot vector of the masked word “cat”. - 𝐩: output probability distribution at the masked position. - 损失函数Loss = CrossEntropy(𝐞, 𝐩 ) - • Performing one gradient descent to update the model parameters.</p>
-<h3 id="任务二---predict-the-next-sentence">任务二-- Predict the Next Sentence</h3>
-<p>任务可以描述为： • Given the sentence: “calculus is a branch of math”. • Is this the next sentence? “it was developed by newton and leibniz” 可以表述为一个而分类问题 • 输入: [CLS] “calculus is a branch of math” [SEP] “it was developed by newton and leibniz” • Target: true</p>
-<p>• [CLS] is a token for classification. • [SEP] is for separating sentences.</p>
-<p>学习过程 <img src="img_1.png" alt="img_1.png" /></p>
-<h3 id="结合两个任务">结合两个任务</h3>
-<p>• Input: “[CLS] calculus is a [MASK] of math [SEP] it [MASK] developed by newton and leibniz”.</p>
-<p>• Targets: true, “branch”, “was”.</p>
-<h2 id="bert实践todo">Bert实践【todo】</h2>
-<p>如何使用BERT做迁移学习（Transfer Learning）？</p>
-<ul>
-<li>demo数据：https://www.kaggle.com/c/fake-news-pair-classification-challenge/data</li>
-<li>预训练的中文bert模型：hugging face</li>
-</ul>
-<h2 id="要不要冻结bert的部分参数">要不要冻结BERT的部分参数？</h2>
-<p>Why not to freeze BERT？</p>
-<p>That said, BERT is meant to be fine-tuned. The paper talks about the feature-based (i.e., frozen) vs fine-tuning approaches in more general terms, but the module doc spells it out clearly: "fine-tuning all parameters is the recommended practice." This gives the final parts of computing the pooled output a better shot at adapting to the features that matter most for the task at hand.</p>
-<p>when you fine-tune BERT, you can choose whether to freeze the BERT layers or not. Do you want BERT to learn to embed the words in a slightly different way, based on your new data, or do you just want to learn to classify the texts in a new way (with the standard BERT embedding of the words)?</p>
-<p>I wanted to use BertViz visualisation to see what effect the classification tuning had on the attention heads, so I did fine-tuning with the first 8 layers of BERT frozen and the remaining 4 layers unfrozen.</p>
-<p>Some people suggest doing gradual unfreezing of the BERT layers, ie finetuning with BERT frozen, then finetuning a bit more with just one layer unfrozen, etc.</p>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li>Bahdanau, Cho, &amp; Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.</li>
-<li>Cheng, Dong, &amp; Lapata. Long Short-Term Memory-Networks for Machine Reading. In EMNLP, 2016.</li>
-<li>Vaswani et al. Attention Is All You Need. In NIPS, 2017.</li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=UlC6AjQWao8&amp;t=26s">BERT (预训练Transformer模型)</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1907.11692v1.pdf">RoBERTa</a></li>
-<li>Devlin, Chang, Lee, and Toutanova. BERT: Pre-training of deep bidirectional transformers for language understanding. In ACL, 2019.</li>
-<li><a target="_blank" rel="noopener" href="https://leemeng.tw/attack_on_bert_transfer_learning_in_nlp.html"></a></li>
-<li><a target="_blank" rel="noopener" href="https://pytorch.org/hub/pytorch_fairseq_roberta/">ROBERTA-pytorch</a></li>
-<li><a target="_blank" rel="noopener" href="https://discuss.huggingface.co/t/fine-tune-bert-models/1554/2"></a></li>
-<li>https://medium.com/swlh/painless-fine-tuning-of-bert-in-pytorch-b91c14912caa</li>
-</ol>
+<p>detail</p>
+<p>假设<span class="math inline">\(A \in R^{n*m}, U\in R^{n*n}, \Lambda \in R^{n*m}, V \in R^{m*m}\)</span></p>
+<p><span class="math inline">\(\Lambda\)</span>中的元素从大到小排列，前面k个元素绝对值大于0</p>
+<p>对三个矩阵分块，图中的阴影部分是我们要存储的部分</p>
+<p><span class="math inline">\(\Lambda = [\Lambda_k, \mathbf{0_{m-k}}], \Lambda_k \in R^{n * k}, \Lambda_{(m-k)} \in R^{n * (m-k)}\)</span></p>
+<p>$V = [ , ],  R^{m<em>k},  R^{m</em>(m-k)} $</p>
+<p>$V^T = [_k, ].[v_k, v_{m-k}]^T = _k.v_k^T $</p>
+<p>经过U做encoding之后的信息仅有 <span class="math inline">\(\Lambda_k\)</span>和<span class="math inline">\(v_k\)</span></p>
+<p>其中<span class="math inline">\(\Lambda_k\)</span>可以存为稀疏矩阵，含k个非零元素</p>
+<p><span class="math inline">\(v_k \in R^{m*k}\)</span>占用空间m*k</p>
+<p>U做类似的分解占用空间n*k</p>
+<p>一起需要存储的元素个数为<span class="math inline">\(k + m*k + n*k\)</span></p>
+<p>不做encoding的话，需要存储m * n 个元素</p>
+<p>总结一下:用了压缩算法之后，空间复杂度从O(n*m)降低到O(m)或O(n)</p>
+<p>当m,n很大，又很容冗余信息（k很小），svd分解能大量降低矩阵存储空间</p>
 
       
     </div>
@@ -431,7 +406,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -497,7 +472,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">197</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -510,7 +485,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

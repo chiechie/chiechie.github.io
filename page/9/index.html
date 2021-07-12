@@ -165,6 +165,171 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/23/AI/machine_learning/clustering/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/23/AI/machine_learning/clustering/" class="post-title-link" itemprop="url">一些聚类算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-23 11:20:42" itemprop="dateCreated datePublished" datetime="2021-06-23T11:20:42+08:00">2021-06-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-06 16:00:14" itemprop="dateModified" datetime="2021-07-06T16:00:14+08:00">2021-07-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>除了kmeans，聚类算法中还有一类更简单直观的方法，就是层次聚类。</p>
+</blockquote>
+<h2 id="总结">总结</h2>
+<ol type="1">
+<li>我们常常对表数据使用kmeans来实现聚类，内部流程分为两步，第一步是是将多维的表数据（维度代表特征），转为2D的相似图（一个节点代表一个样本）。第二步，是对这个图进行聚类。</li>
+<li>kmeans在实际中应用较多，但是并没有理论保证其收敛。 &gt; ...I don't think there is a nice theory of convergence or rate of convergence, But is a very popular algorimth,..., But that's one sort of hack that works quite well--Gilbert Strang</li>
+<li>对一个图，找到其中的一些cluster，kmeans是其中一种方法，还有谱聚类（spectral clustring）。</li>
+<li>除此之外，还可以使用终极大招--使用数值方法去求解优化问题（比如BP，就是alternative methods的一个特例）。</li>
+<li>按照理论严密从高到低，实现聚类的算法可以分为三类：谱聚类，基于运筹优化的聚类，一些直觉类的方法。直觉类的方法包括kmeans，层次聚类</li>
+</ol>
+<h2 id="聚类算法summary">聚类算法summary</h2>
+<p>目前常用的聚类算法大概分为三类：</p>
+<ul>
+<li>层次聚类： nearest neigbour</li>
+<li>基于分区的聚类（partitional）：Kmeans系列/FCM/图理论</li>
+<li>基于密度：DBSCAN</li>
+<li>其他：ACODF</li>
+</ul>
+<figure>
+<img src="./img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<h2 id="层次聚类">层次聚类</h2>
+<p>层次聚类算法,又称为树聚类算法,它使用数据的联接规则,透过一种层次架构方式,反复将数据进行分裂或聚合,以形成一个层次序列的聚类问题解.</p>
+<p>本文仅以层次聚类算法中的层次聚合算法为例进行介绍.</p>
+<p>层次聚合算法的时间复杂度为<span class="math inline">\(O(n^2)\)</span>,适合于小数据集的分类.</p>
+<p>该算法由树状结构的底部开始逐层向上进行聚合,假定样本集S={o1,o2,...,on}共有n个样本.</p>
+<ol type="1">
+<li>初始化：每个样本 <span class="math inline">\(o_i\)</span> 为一个类; 共形成 n 个类:<span class="math inline">\(o_1,o_2,...,o_n\)</span></li>
+<li>找最近的<strong>两个类</strong>：从现有所有类中找出相似度最大的<strong>两个</strong>类<span class="math inline">\(o_r\)</span> 和 <span class="math inline">\(o_k\)</span> <span class="math display">\[distance(o_r,o_k) = min_{\forall{o_u,o_v \in S,o_u \neq o_v}}distance(o_u,o_v)\]</span></li>
+<li>将类<span class="math inline">\(o_r\)</span>和<span class="math inline">\(o_k\)</span>合并成一个新类<span class="math inline">\(o_{rk}\)</span>，现有cluster个数减1</li>
+<li>若所有的样本都属于同一个类,则终止;否则,返回步骤2.</li>
+</ol>
+<p>层次聚类最大的优点，它一次性地得到了整个聚类的过程。如果想要改变cluster个数，不需要重新训练聚类模型，取聚类树的中间某一层就好了。相比之下kmeans是要重新弄训练的。</p>
+<p>层次聚类的缺点是计算量比较大，因为要每次都要计算多个cluster内所有数据点的两两距离，复杂度是O(n^2*d)，d表示聚类树的深度。</p>
+<p>还有一个缺点，超参数比较难设置，跟kmeans一样。最终到底聚成多少类，需人工给定一个distance threshold，这个阈值跟sample有关，跟距离函数的定义也有关，并且聚类结果对这个参数比较敏感。</p>
+<p>btw，如何判断两个cluster之间的距离？</p>
+<ul>
+<li>一开始每个数据点独自作为一个类，它们的距离就是这两个点之间的距离。</li>
+<li>对于包含不止一个数据点的cluster，最常用的方法是average-linkage，即计算两个cluster各自数据点的两两距离的平均值。 其他方法还有single-linkage/complete-linkage，选择两个cluster中距离最短/最长的一对数据点的距离作为类的距离。 个人经验complete-linkage基本没用，single-linkage通过关注局域连接，可以得到一些形状奇特的cluster，但是因为太过极端，所以效果也不是太好。</li>
+</ul>
+<h2 id="基于graph的聚类">基于Graph的聚类</h2>
+<p>基于Graph的聚类算法，大致思路是，计算样本两两之间的相似度，并设定阈值，高于阈值就右边，低于阈值就无边，以此构造有权无向图，权重即为相似度。</p>
+<h3 id="谱聚类">谱聚类</h3>
+<p>什么是spectrum？</p>
+<p>矩阵的spectrum就是矩阵的特征根。 spectral clustring就是使用矩阵的特征根聚类</p>
+<p>回忆一下，其拉普拉斯矩阵定义为 <span class="math inline">\(L=D-A\)</span>.</p>
+<p>怎么根据L来找到目标的clusters（or centriod）？ 对L进行谱分解（特征根分解），并且找到L的fieder向量。</p>
+<p>fieder向量中的元素有正的，也有负的， 正的位置对应的样本分配到cluster1，负元素对应的样本分配到cluster2</p>
+<p>谱聚类的流程是：</p>
+<p>输入：n个样本, 类别k</p>
+<ol type="1">
+<li>根据样本两两之间的相似度，构建有权无向图，以及邻接矩阵W。</li>
+<li>计算出拉普拉斯矩阵L，对L做谱分解（相当于降维）：计算拉普拉斯矩阵L的最小的k个特征值对应的特征向量u1, u2,...,uk,将这些向量组成n*k维的矩阵U,</li>
+<li>将U中的每一行作为一个样本，共n个样本，使用k-means对这n个样本进行聚类</li>
+</ol>
+<p>得到簇划分C(c1,c2,...ck).</p>
+<h2 id="聚类应用">聚类应用</h2>
+<h3 id="日志分析">日志分析</h3>
+<h3 id="图像分割">图像分割</h3>
+<p>图像的分割是图聚类的其中一个应用场景。</p>
+<p>层次聚类可看成框架，而基于图的图像分割是在层次聚类上加了骨头，使他更适用于图像分割的领域，而使用者可以在骨头上继续加肉来达到不同的分割效果。</p>
+<p>图像中的每一个像素点是一个item，图像分割的任务即对所有items聚类，属于一个cluster的所有像素就构成了一个区域， 最终的分割结构就是若干个区域（即clusters）组成的。由此我们过渡到本文的第二部分，</p>
+<p>基于图的图像分割算法，主要流程如下</p>
+<p>输入一个图<span class="math inline">\(G=(V,E)\)</span>，有n个点和m个边。输出是一个分割V，分割成<span class="math inline">\(S=(C_1,...,C_2).\)</span></p>
+<ol type="1">
+<li><p>对边E进行排序，生成非递减的序列<span class="math inline">\(\pi = (o_1,...,o_m)\)</span></p></li>
+<li><p>从初始分割<span class="math inline">\(S^0\)</span>开始，每一个点<span class="math inline">\(v_i\)</span>自己就是一个区域</p></li>
+<li><p>对于每一个边<span class="math inline">\(q = 1,...,m\)</span>重复步骤3，通过<span class="math inline">\(S^{q-1}\)</span>构建<span class="math inline">\(S^q\)</span>，使用如下的方式</p>
+<ul>
+<li>令<span class="math inline">\(v_i\)</span>和<span class="math inline">\(v_j\)</span>表示按顺序排列的第q条边的两个点，比如<span class="math inline">\(o_q = (v_i,v_j)\)</span>。</li>
+<li>如果<span class="math inline">\(v_i\)</span>和<span class="math inline">\(v_j\)</span>在<span class="math inline">\(S^{q-1}\)</span>中连个不同的区域下，并且<span class="math inline">\(w(o_q)\)</span>比两个区域的内部差异都小，那么合并这连个区域，否则什么也不做。</li>
+<li>用公式来表达就是：
+<ul>
+<li>令<span class="math inline">\(C_{i}^{q-1}\)是\(S^{q-1}\)</span>的一个区域，它包含点<span class="math inline">\(v_i\)</span>；令<span class="math inline">\(C_{j}^{q-1}\)是\(S^{q-1}\)</span>的一个区域，它包含点<span class="math inline">\(v_j\)</span>。</li>
+<li>如果<span class="math inline">\(C_{i}^{q-1} \neq C_{j}^{q-1}\)</span> 并且<span class="math inline">\(w(o_q) \leq MInt(C_i^{q-1},C_j^{q-1})\)</span>，那么通过合并<span class="math inline">\(C_{i}^{q-1}\)</span>和<span class="math inline">\(C_{j}^{q-1}\)</span>得到了<span class="math inline">\(S^q\)</span>；</li>
+<li>否则的话<span class="math inline">\(S^q = S^{q-1}\)</span>，返回<span class="math inline">\(S = S^m\)</span></li>
+</ul></li>
+</ul></li>
+</ol>
+<p>图像分割结果如下</p>
+<figure>
+<img src="img1.png" alt="图像分割" /><figcaption aria-hidden="true">图像分割</figcaption>
+</figure>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://patentimages.storage.googleapis.com/34/c0/df/3417293b1602a5/CN105468677A.pdf">一种基于图结构的日志聚类算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78382376">常用聚类算法综述</a></li>
+<li><a target="_blank" rel="noopener" href="https://buptjz.github.io/2014/04/21/cluster">从层次聚类到Graph-based图像分割</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.jos.org.cn/1000-9825/19/48.pdf">聚类算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=cxTmmasBiC8">35. Finding Clusters in Graphs-mit-youtube</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/22/data_structure/graph/graph-basic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -312,130 +477,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/06/21/reading_notes/zhexue/hongloumengxishuo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/21/reading_notes/zhexue/hongloumengxishuo/" class="post-title-link" itemprop="url">细说红楼梦</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-21 10:02:37" itemprop="dateCreated datePublished" datetime="2021-06-21T10:02:37+08:00">2021-06-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-22 14:21:25" itemprop="dateModified" datetime="2021-06-22T14:21:25+08:00">2021-06-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="第一回">第一回</h2>
-<p>空空道人有批注：“因空见色，由色生情，传情入色，自色悟空，遂易名为情僧……”</p>
-<p>“因空见色”，是说本来就白茫茫一片，什么都没有，（六祖慧能：本来无一物），因为我们的幻觉，看到好多好多的现象，“由色生情”，情多了就会陷进去，陷进了更深的色的幻觉，“传情入色”，要经过多少彻悟之后，再从里面出来，“自色悟空”，再回到白茫茫一片真干净。</p>
-<p>甄士隐经了这许多人生起伏，有一天突然又看见跛足道士来了，口里唱一首《好了歌》：</p>
-<blockquote>
-<p>世人都晓神仙好，惟有功名忘不了！古今将相在何方？荒冢一堆草没了。世人都晓神仙好，只有金银忘不了！终朝只恨聚无多，及到多时眼闭了。世人都晓神仙好，只有姣妻忘不了！君生日日说恩情，君死又随人去了。世人都晓神仙好，只有儿孙忘不了！痴心父母古来多，孝顺儿孙谁见了？</p>
-</blockquote>
-<p>甄士隐说：“你唱什么？我只听见‘好’‘了’、‘好’‘了’两个字。道人说：</p>
-<blockquote>
-<p>好便是了，了便是好。若不了，便不好；若要好，须是了。</p>
-</blockquote>
-<p>跛足道人讲的是道家的哲学，对儒家社会秩序，有很大的颠覆性。儒家修身齐家治国平天下这一套道理，要建立的是稳定的社会秩序（social order），鼓励人入世，求功名、利禄、妻子、儿女，儒家宗法社会下面，大概就是这些。</p>
-<p>跛足道人给了很大的一个警告，好就是了，了就是好，等于给恋恋在红尘中的人临头棒喝、醍醐灌顶。</p>
-<p>人大概都经过几个阶段：年轻的时候，大家都是入世哲学，儒家那一套，要求功名利禄。到了中年，大概受了些挫折，于是道家来了，点你一下，有所醒悟。到了最后，要超脱人生境界的时候，佛家就来了。</p>
-<p>所以过去的中国人，从儒道释，大致都经过这么三个阶段，有意思的是这三个阶段不冲突。在同一个人身上，这三样哲学都有。所以中国人既出世又入世的态度，常常造成整个文化的一种紧张，也就是说，我们的人生态度在这之间常常有一种徘徊迟疑，我想，这就是文学的起因。</p>
-<p>文学写什么呢？写一个人求道提升，讲他的目标求道，讲这一生多么地艰难，往往很多人没有求到，在半路已经失败。不管是爱情也好，理想也好，各种的失败，我想，文学写的就是这些。《红楼梦》写的也是这些。</p>
-<p>甄士隐对《好了歌》的注解：</p>
-<blockquote>
-<p>陋室空堂，当年笏满床；衰草枯杨，曾为歌舞场。蛛丝儿结满雕梁，绿纱今又糊在蓬窗上。说什么脂正浓、粉正香，如何两鬓又成霜？昨日黄土陇头送白骨，今宵红灯帐底卧鸳鸯。金满箱，银满箱，展眼乞丐人皆谤。正叹他人命不长，那知自己归来丧！训有方，保不定日后作强梁。择膏粱，谁承望流落在烟花巷！因嫌纱帽小，致使锁枷扛；昨怜破袄寒，今嫌紫蟒长：乱烘烘你方唱罢我登场，反认他乡是故乡。甚荒唐，到头来都是为他人作嫁衣裳！</p>
-</blockquote>
-<p>人生不就是个大舞台，一个人唱完下来，第二个人上去唱，唱完又一鞠躬下台，又换个人上去唱，“乱烘烘你方唱罢我登场”，然后“反认他乡是故乡”。</p>
-<p>佛家说，我们以为这是我们自己的故乡，其实也靠不住，一下子一把火就整个烧掉了。道家说，要醒悟这一点，才找到你真正理想的地方。甚荒唐！到头来都是为他人做嫁衣裳。讲起来，整个一生是白忙一场，都为他人做嫁衣裳，所有事情都是为他人做的。</p>
-<p>甄士隐、贾雨村，一个代表出世，一个代表入世。后来甄士隐变成道士，贾雨村经过好多官宦历程的折腾，到了书结束的时候，这两人又碰到一起。甄士隐想要度化贾雨村，贾雨村还是迷恋红尘。各走各的路，两个分歧，自己去看，自己去选择。</p>
-<h2 id="第二章">第二章</h2>
-<p>贾政，自觉是遵从儒家理想的一个人。他非常正直，也想用儒家那一套思想道德来持家，但是太过守法，太过拘束了。中国社会能够生存下来，光靠儒家思想、书生之见是不够的，还需要别种哲学，譬如很要紧的法家，很实在的、很现实的顶在后边。儒家的很多理想不一定都能实现，碰到了现实问题，常常不能解决。不过儒家也很重要，它是一种道德力量（moral force），没有它也不行，但光是有它也不行，所以，还要配合别的东西。</p>
-<p>贾雨村听冷子兴讲了半天贾宝玉这个怪人，也发表了一篇言论：</p>
-<p>“天地生人，除大仁大恶两种，馀者皆无大异。若大仁者，则应运而生，大恶者，则应劫而生。运生世治，劫生世危。尧、舜、禹、汤、文、武、周、召、孔、孟、董、韩、周、程、张、朱，皆应运而生者。蚩尤、共工、桀、纣、始皇、王莽、曹操、桓温、安禄山、秦桧等，皆应劫而生者。大仁者，修治天下；大恶者，挠乱天下。清明灵秀，天地之正气，仁者之所秉也；残忍乖僻，天地之邪气，恶者之所秉也。今当运隆祚永之朝，太平无为之世，清明灵秀之气所秉者，上至朝廷，下及草野，比比皆是。所馀之秀气，漫无所归，遂为甘露、为和风，洽然溉及四海。彼残忍乖僻之邪气，不能荡溢于光天化日之中，遂凝结充塞于深沟大壑之内，偶因风荡，或被云摧，略有摇动感发之意，一丝半缕误而泄出者，偶值灵秀之气适过，正不容邪，邪复妒正，两不相下，亦如风水雷电，地中既遇，既不能消，又不能让，必至搏击掀发后始尽。故其气亦必赋人，发泄一尽始散。使男女偶秉此气而生者，在上则不能成仁人君子，下亦不能为大凶大恶。置之于万万人中，其聪俊灵秀之气，则在万万人之上；其乖僻邪谬不近人情之态，又在万万人之下。若生于公侯富贵之家，则为情痴情种；若生于诗书清贫之族，则为逸士高人；纵再偶生于薄祚寒门，断不能为走卒健仆，甘遭庸人驱制驾驭，必为奇优名娼。如前代之许由、陶潜、阮籍、嵇康、刘伶、王谢二族、顾虎头、陈后主、唐明皇、宋徽宗、刘庭芝、温飞卿、米南宫、石曼卿、柳耆卿、秦少游，近日之倪云林、唐伯虎、祝枝山，再如李龟年、黄幡绰、敬新磨、卓文君、红拂、薛涛、崔莺、朝云之流，此皆易地则同之人也。”</p>
-<h2 id="第四章">第四章</h2>
-<p>再看看贾雨村这个人，他也是有高度象征性的一个人，象征这个世界上每一个为求功名利禄不择手段往上爬的凡俗之人。</p>
-<p>贾雨村刚刚做官，还不太清楚。葫芦僧就讲，贾、王、史、薛这四大家族是互相牵连、互相庇护的，你一动薛家，其他家族就暗中使力，根本没法去办他们。的确是！后来薛蟠又打死人，贾家去讲讲情也就过了。</p>
-<p>为官为政的这些人，像贾雨村者也是很典型的，一旦发迹，若从前是贫贱出身，他不愿意人家知道他的过去，哪个不长心眼儿的去碰他的过去的话，砍掉！因为他要维持现在的形象，掩掉过去。后来贾家没落的时候，贾雨村果然对有恩的贾家加踹一脚，这正是官场反复无情的写照。</p>
-<h2 id="第五章">第五章</h2>
-<p>无常，我们看起来好像是个悲剧，在佛家看，人所有的一切就是如此。佛教很理性地看待人生，看待一切的事物，没有永远存在的东西，因为时间会破坏一切、会毁灭一切，有时间的转动，春夏秋冬的转动，就会有无常现象。人生无常，什么都无常。所以，“生关死劫谁能躲？闻说道，西方宝树唤婆娑，上结着长生果。”这是惜春的醒悟！佛教的传说，佛陀释迦牟尼圆寂的时候，是在两棵宝树中间，那两棵宝树叫作“娑罗”。佛教对“婆娑”两字另有所解，长生果，佛家讲修成正果，要悟道了以后，从而解脱。最后惜春出家了，她是找到解脱最彻底的一个人物。</p>
-<p>王熙凤，机关算尽太聪明，她最精明，涉入红尘也最深，《好了歌》讲：“世人都晓神仙好，只有金银忘不了！”等到聚多之时缘尽了。凤姐放高利贷，到处攒钱，聚敛多时，一下子抄家抄得精光，一场空欢喜！她在贾府最得宠，掌大权，抄家的原因之一是她放高利贷给抄出来了，一世的颜面丢得精光。“反算了卿卿性命”，后来王熙凤的下场也很悲惨。</p>
-<p>对照一下，惜春走一条路，王熙凤走另外一条路，一个出世，一个入世，两种不同的道路。甄士隐跟贾雨村，也是出世和入世的辩证。曹雪芹从未批判哪方，他只是写出各人选的道路。儒家的入世在《红楼梦》的结局也很重要，贾府衰败，王熙凤死了，也还有接班人，谁呢？薛宝钗，她把贾府重新扛起来，这就是人生。</p>
-<p>中国人的人生，常常有三种哲学的循环。年轻的时候有所求，中年醒悟，晚年一切看开。有这三种哲学，才是完整的中国文化，三者相克相生，互用互补。 《红楼梦》曲最后收尾的曲子：</p>
-<blockquote>
-<p>为官的，家业凋零；富贵的，金银散尽；有恩的，死里逃生；无情的，分明报应。欠命的，命已还；欠泪的，泪已尽。冤冤相报实非轻，分离聚合皆前定。欲知命短问前生，老来富贵也真侥幸。看破的，遁入空门；痴迷的，枉送了性命。好一似食尽鸟投林，落了片白茫茫大地真干净！</p>
-</blockquote>
-<h2 id="第16回">第16回</h2>
-<p>儒家跟道家人生观，宇宙、社会的看法，互相冲突。《红楼梦》的悲剧，并不是一个突发性的意外，而是人生必然的过程，</p>
-<h2 id="第22回">第22回</h2>
-<p>宝玉出的灯谜：南面而坐，北面而朝，“象忧亦忧，象喜亦喜”。 佛家有一句话说镜花水月，一切都是幻象。宝玉看到的一切，由色入空，一切都是幻象。</p>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li>https://weread.qq.com/web/reader/3c432fc05d0f283c488450e</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -501,7 +546,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">197</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -514,7 +559,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

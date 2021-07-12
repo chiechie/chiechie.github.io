@@ -165,6 +165,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/22/data_structure/graph/pagerank/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/22/data_structure/graph/pagerank/" class="post-title-link" itemprop="url">PageRank算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-22 18:07:11" itemprop="dateCreated datePublished" datetime="2021-05-22T18:07:11+08:00">2021-05-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-01 11:42:01" itemprop="dateModified" datetime="2021-07-01T11:42:01+08:00">2021-07-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>最近需要对图数据进行分析，了解下PageRank的原理</p>
+<p>BTW, PageRank还可以做社区划分？</p>
+</blockquote>
+<h2 id="总结一下">总结一下</h2>
+<p>pagerank: 假设，网上冲浪的人都是漫无目的的人，他们在网页一个链接接一个链接点下去，但是，整个互联网的节点，最终流量可能的分布能达到一个稳态。 也就是说，随机分布于各网页的流量经过次数足够多的转移之后，会达到一个稳定的状态，这个也代表每个网页的信息度。</p>
+<p>基于这个假设，可以构建一个模型， <span class="math display">\[V_n = M ^n * V_0\]</span></p>
+<p>一般来说，可以拿到网页之间调用拓扑，经过转换，可以将这个拓扑变为概率转移矩阵M，最终算出稳定态的V_n</p>
+<p>给定点之间的连接关系，输出每个节点的分数，</p>
+<p>补充下，最naive的方法存在终止点问题，也就是说，一个网站它不链接任何别的网站，或者一个微服务，它不调用其他任何微服务 按照上面的思路很可能出现一种情况，最终的流量全到这个自大狂网页那里去了，所以有一个改进的思路，假设冲浪着有一点点聪明，他并不是一味的接受灌输的链接，而是有一定概率，主动跳出去，到达一个新的站点，这个方式可以用下面的式子建模：</p>
+<p><span class="math display">\[V_n = d * M * V_{n-1} + (1-d) * e \]</span></p>
+<p>e = [1/n,...1/n]</p>
+<p>d表示按照当前页面推荐的链接继续点下去的概率 1-d表示从当前网页跳出来，主动输入一个新网页重新开始的概率</p>
+<h2 id="代码">代码</h2>
+<p>用代码验证一下，理解没有问题</p>
+<p>https://github.com/chiechie/BasicAlgo/blob/main/pagerank.py</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ground truth</span><br><span class="line"> [[0.25419178], [0.13803151], [0.13803151], [0.20599017], [0.26375504]]</span><br><span class="line">result</span><br><span class="line"> [0.25419178 0.13803151 0.13803151 0.20599017 0.26375504]</span><br></pre></td></tr></table></figure>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/gamer_gyt/article/details/47443877">pagerank-csdn</a></li>
+<li><a target="_blank" rel="noopener" href="https://scikit-network.readthedocs.io/en/latest/tutorials/ranking/pagerank.html">scikit-network-pagerank</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/PageRank">wiki-PageRank</a></li>
+<li>https://blog.csdn.net/google19890102/article/details/48660239</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/AIOps/AIOps-2_1_3-topo-rca-aiops2020/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -252,93 +349,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/21/reading_notes/investment/xindong-analysis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/21/reading_notes/investment/xindong-analysis/" class="post-title-link" itemprop="url">对心动的股票分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-21 10:27:35" itemprop="dateCreated datePublished" datetime="2021-05-21T10:27:35+08:00">2021-05-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%95%E8%B5%84/" itemprop="url" rel="index"><span itemprop="name">投资</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="key-performance">key performance</h2>
-<ol type="1">
-<li>2020年TapTap中国版的MAU为2570万，同比增长43.7%；海外版MAU为481万，同步增长330.9%，且去年Q4的平均MAU已经达到了1070万；游戏下载次数为4.1亿，同比增长15.8%；而心动的信息服务收入（主要为TapTap广告业务）为5.2亿，同比增长12.2%。</li>
-<li>4月6日，心动收购云服务提供商LeanCloud，后者2020年超50％收入来自游戏客户。在未来，LeanCloud将与TapTap的开发者服务（TDS）团队一起负责公司面向开发者的产品线。</li>
-<li>LeanCloud是AVOS中国团队在2013年9月发布的应用开发一站式后端服务，为开发者提供数据存储、实时消息、消息推送以及统计分析等服务。AVOS则是由YouTube联合创始人陈士骏和Chad Hurley创建，2011年4月，Chad Hurley和陈士骏从雅虎手中收购了书签网站Delicious，并在此基础上成立了AVOS公司。游戏客户在LeanCloud 2020年的收入里已经占到一半以上。</li>
-</ol>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li>游戏葡萄</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -404,7 +418,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">197</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -417,7 +431,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

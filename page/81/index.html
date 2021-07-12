@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/12/reading_notes/reality/about-angry/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/12/reading_notes/reality/about-angry/" class="post-title-link" itemprop="url">情绪管理</a>
+            <a href="/2021/03/13/deeplearning/dl6_transformer/" class="post-title-link" itemprop="url">深度学习7 Transformer</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-12 09:17:16" itemprop="dateCreated datePublished" datetime="2021-03-12T09:17:16+08:00">2021-03-12</time>
+              <time title="创建时间：2021-03-13 00:04:13" itemprop="dateCreated datePublished" datetime="2021-03-13T00:04:13+08:00">2021-03-13</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+                <time title="修改时间：2021-07-09 15:27:39" itemprop="dateModified" datetime="2021-07-09T15:27:39+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
                 </span>
             </span>
 
@@ -219,21 +219,134 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>故常无欲, 以观其妙 ; 常有欲，以观其徼（jiǎo）</p>
-</blockquote>
-<h1 id="总结">总结</h1>
-<p>工作中生活中，经常会有情绪失控的时候，该如何应对？</p>
-<p>目前能做到的就是，沟通的时候：</p>
+          <h1 id="transformer总结">Transformer总结</h1>
+<ul>
+<li>Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。</li>
+<li>Transformer的亮点在于将attention和self-attention完全剥离开之前rnn的结构，只跟dense层组合。</li>
+<li>Transformer跟RNN没有关系, 只有attention和全连接层</li>
+<li>Transformer比所有的rnn+attention效果都要好，机器翻译的王者</li>
+<li>Transformer是一个翻译模型，在机器翻译任务中，eg德译英，输入一个德文句子，输出十一句英文。</li>
+<li>Transformer由两部分组成：encoders和decoders</li>
+<li>encoders由6个encoder堆叠而成，decoders由6个decoder堆叠而成，一个encoder或一个decoder叫做一个block。</li>
+<li>encoders的每个block有2层：self-attention和dense，每个block结构相同，但不共享权重。</li>
+<li>decoders的每个block有3层：self-attention，attention和dense，其中attenton用来关注encoder的输出，</li>
+<li>attention技术的演进：attention + 基于rnn的seq2seq --&gt; self-attention + lstm --&gt; attention/self attention + dense.</li>
+<li>论文通过增加"多头"注意机制强化self-attention layer。 这在两个方面改善了self-attention层的表现:它扩展了模型关注不同位置的能力。单头机制虽然会注意到其他单词，但是注意力还是 很有可能完全被当前自己的状态牵制。多头的话，相当于多审视几遍 这个注意力，减少完全 关注自己 情况发生的可能性。 它给予attention层多个"表示子空间"。 正如我们接下来将看到的，通过多头，我们不仅有一组，而且有多组 query / key / value 权重矩阵(Transformer 使用八个头，因此我们最终为每个encoders / decoders设置了八组)。 这些集合中的每一个都是随机初始化的。训练完后，每组的三个矩阵，用于将embedding输入映射到表征子空间。</li>
+</ul>
+<h1 id="附录">附录</h1>
+<h2 id="输入和位置编码">输入和位置编码</h2>
 <ol type="1">
-<li>关注问题而不是情绪 ，这点对我来说很有用。因为人的注意力有限, 一旦专注于解决问题，很自然地不会管其他人的情绪和自己的情绪。</li>
-<li>即使当时没克制住情绪，就算了，不会苛责自己,let it go。</li>
-<li>放弃直接克制情绪：直接克制情绪有点难，可能是一个长期的修行。阅历多了，奇葩见多了，才能非常淡定。</li>
-<li>提升专业能力：与其把时间花在克制情绪上，还不如花在提升自己专业能力上。比如跟弱者合作，一个人就要把整体方案和所有的细节想清楚，不要指望别人，这样也就没有那么多负面的情绪了。</li>
+<li>和一般的NLP任务一样，用embedding algorithm将每个输入单词转化为词向量之后，才能作为Transformer的输入使用。</li>
+<li>如下图，3个单词被embedded为3个512维的向量 <img src="./transformer_embeddings.png" /></li>
+<li>接下来，将这3个512维的词向量传入self-attention和dense层 <img src="./transformer_encoder_with_tensors.png" /></li>
+<li>位置编码（Positional Encoding）表示序列的顺序, 为了让模型学习到词的顺序关系，transformer向每个输入embedding向量（x1）又加上一个位置编码向量（t1）。 <img src="./transformer_positional_encoding_vectors.png" alt="img" /></li>
+<li>假设embedding的维度是4，那么实际的位置编码看起来是这样的: <img src="./transformer_positional_encoding_example.png" alt="img" /></li>
 </ol>
+<h2 id="多头self-attention">多头self attention</h2>
+<ol type="1">
+<li>每个单头self-attention层有三个参数矩阵，单头的context vector是一个d * m维的矩阵 <img src="./img_6.png" alt="单头self-attention" /></li>
+<li>多头attention层就有3<em>l个参数矩阵（l代表头的个数），多头的context vector是一个(dl) </em>m维的矩阵 <img src="./img_7.png" alt="多头self-attention" /> <img src="./transformer_attention_heads_qkv.png" alt="img" /></li>
+<li>类似上面提到的单头self-attention计算，我们现在只是用8个不同的权重矩阵算了8次，并且得到了8个不同的 z 矩阵 <img src="./transformer_attention_heads_z.png" alt="img" /></li>
+<li>当解读一个句子中的一个word时， Transforme中的encoder通过self-attention来回顾上下文信息，找出输入序列中的重要的word，从而更关注重要信息，并且会把重要word的value vector编码到自己的向量里面去。 RNN通过hidden state策略，使得它将当前词与上下文（准确来说只有上文）的信息进行融合。</li>
+<li>self-attention的输入是m个词向量，输出是m个context vector，vector表示融合了上下文之后，对word再次编码。 <img src="./img_2.png" alt="img_2.png" /> <img src="./img_3.png" alt="img_3.png" /></li>
+<li>如何实现self-attention layer？即如何实现计算context vector？</li>
+</ol>
+<ul>
+<li>step1: 对于每个输入的word的此向量分别计算3个表示向量：
+<ul>
+<li>Query vector： <span class="math inline">\(q_i\)</span>, to match others；</li>
+<li>Key vector：<span class="math inline">\(k_i\)</span>, to be matched；</li>
+<li>Value vector：<span class="math inline">\(v_i\)</span> to be weighted averaged 。</li>
+<li>这些向量是通过将输入的词向量做三次线性变换得到的，当然对应的三个矩阵是需要学习的。</li>
+<li>请注意，得到的新向量的维度（64）比embedding（512）小。这么设计为了保证，加入多头self-attention之后，encoder的输出和输入维度（512）还能保持一致。 &gt; 8头 * 64 = 512</li>
+</ul></li>
+<li>step2: 计算权重分数, 目的是量化其他单词应该被关注的程度。
+<ul>
+<li>计算当前单词的query vector和其他单词的key vector的内积</li>
+</ul></li>
+<li>step3: 权重分数归一化。将上一步算出来的权重得分向量（长度为m）进行归一化，目的是让权重不要受到key vector的长度（paper里面是64）的影响，这样算梯度就更稳定。</li>
+<li>step4：将归一化的权重得分向量（长度为m）送入softmax，目的是得到一个概率向量，所有数值加起来为1。示每个单词应该被当前单词关注的程度，值越大越应该被关注。。</li>
+<li>step5：计算contect vector。将每个单词的value vector使用权重概率向量进行加权求和，作为当前单词的self-attention表达（输出长度为64 * 8个头 = 512）。</li>
+</ul>
+<ol start="6" type="1">
+<li>把刚刚的过程再加入一个维度，也就是从一个单词 变成 多个单词，计算他们各自的self-attention表示，用矩阵表达该计算流程：</li>
+</ol>
+<ul>
+<li>第一步是计算 Query、 Key 和 Value 矩阵：
+<ul>
+<li>我们将embeddings塞到一个矩阵x：行数表示单词个数，列表示embedding的长度</li>
+<li>权重矩阵(WQ、 WK、 WV）：行代表embedding向量的长度，列分别代表query空间，key空间，value空间的维度</li>
+<li>X分别和这几个矩阵相乘 <img src="./transformer_self-attention-matrix-calculation.png" /></li>
+</ul></li>
+<li>第二步，利用第一步的结果来计算attention的输出，用一个矩阵计算来表达，简洁优雅 <img src="./transformer_self-attention-matrix-calculation-2.png" /></li>
+</ul>
+<h2 id="dense层">dense层</h2>
+<ol type="1">
+<li>后面怎么跟dense层进行衔接呢？1. 将这8个z矩阵进行列拼接（concat）；2. 拼接后的矩阵大小为m<em>(8</em>64) = m *512，丢入dense层 <img src="./transformer_attention_heads_weight_matrix_o.png" alt="img" /></li>
+<li>这就是multi-headed self-attention的大部分内容。把整个过程放在一个图中描述： <img src="./transformer_multi-headed_self-attention-recap.png" alt="img" /></li>
+</ol>
+<h2 id="encoder-block-多头self-attention-dense-layer">encoder block = 多头self-attention + dense layer</h2>
+<ol type="1">
+<li>encoder block ≈ 多头self-attention + dense。encoder block的输入维度是512×𝑚，输出维度是512×𝑚.</li>
+<li>以一个短句为例,看看encoder的处理流程:
+<ol type="1">
+<li>将[x1，...,xm]输入多头self-attention层, 得到m个context vector</li>
+<li>将m个context vector输入dense + relu，得到m个重新编码后的向量[u1,...,um]，dense层对m个word生效。</li>
+<li>将[u1,...,um]传递给下一个编码器encoder2作为输入。 <img src="./img_9.png" alt="img_9.png" /> <img src="./img_10.png" alt="img_10.png" /></li>
+</ol></li>
+</ol>
+<h2 id="残差连接和layer-normalization">残差连接和layer-normalization</h2>
+<ol type="1">
+<li>每个encoder block中，self-attention和dense都有一个残差连接，然后接一个层标准化（layer-normalization）。 <img src="./transformer_resideual_layer_norm.png" alt="img" /></li>
+<li>如果我们将残差连接和layer normalization用矩阵表示，就是下图： <img src="./transformer_resideual_layer_norm_2.png" alt="img" /></li>
+<li>decoder的sub-layers 也同样用到了add &amp; normalization的设计。 下图是一个简化版的Transformer架构：由2个stacked encoder和2个stacked decoder组成。 <img src="./transformer_resideual_layer_norm_3.png" alt="img" /></li>
+<li>更准确来说 encoder block = positional codeing + 多头self-attention + add &amp; normalizatioin + dense layer + add &amp; normalizatioin</li>
+</ol>
+<h2 id="encoder-network-6-encoder-block">encoder network = 6 * encoder block</h2>
+<p>encoder network is a stack of 6 encoder blocks.</p>
+<figure>
+<img src="./img_11.png" alt="img_11.png" /><figcaption aria-hidden="true">img_11.png</figcaption>
+</figure>
+<h2 id="多头attention">多头attention</h2>
+<ol type="1">
+<li>单头attention层，要计算3个向量，先计算q跟每个k的相关性（求内积），然后做softmax变换得到权重得分，对所有的v使用该权重求和，得到decoder的这个词相对encoder的表示，也就是context vector。 <img src="img.png" alt="单头atttion" /></li>
+<li>decoder中的attention，q来自两部分：下面的decoder的输出和最上面encoder中的Keys矩阵和Values矩阵 。 <img src="img_17.png" alt="img_17.png" /> <img src="img_18.png" alt="img_18.png" /></li>
+<li>Attention 层的Queries</li>
+</ol>
+<p><img src="./img_1.png" alt="img_1.png" /> <img src="./img_5.png" alt="img_5.png" /><br />
+<img src="./img_8.png" alt="img_8.png" /></p>
+<h2 id="decoder-block-多头self-attention-多头attention-dense-layer">decoder block = 多头self-attention + 多头attention + dense layer</h2>
+<p><img src="./img_13.png" alt="img_13.png" /> 1. 1个decoder block ≈ 多头self-attention + 多头attention + dense。decoder block的输入有两个，一个是encoder的输出（512×m）， 一个来自decoder当前的的输出（512×t ）. 2. encoding阶段（phase）完成后，我们开始decoding阶段，decoding的每个step描述如下： <img src="./transformer_decoding_1.gif" alt="img" /> <img src="./transformer_decoding_2.png" alt="img" /> 1. 每个时刻，输入第6个encoder产生的m个keys vectors和value vectors，输出一个element的概率分布pdf。 2. 从pdf中抽样出word（或者直接选择概率最大的word），作为decoder的输入。 3. 重复step1，直到产生结束符。 3. decoder也会用到位置编码. 4. decoder中的self attention layers:与encoder的运作方式略有不同,在decoder中，self-attention layer只能接触到输出序列中的前半部分。怎么做到呢？在softmax操作之前，masking序列后半部分(设为 -inf)</p>
+<h2 id="decoder-network-6-decoder-block">decoder network = 6 * decoder block</h2>
+<ol type="1">
+<li><p>Decoder network is a stack of 6 decoder blocks.</p>
+<p><img src="./img_12.png" /> <img src="./Transformer_decoder.png" /></p></li>
+<li><p>stack decoders输出一个数值向量。 我们怎么把它变成一个词呢？ 这是最后的dense层+softmax在做的事情。它将stack of decoders的输出映射为一个权重向量。（长度就是输出词汇表的大小）</p></li>
+<li><p>这个图从底部开始，生成一个vector作为decoder stack的输出。 然后它被转换成一个输出单词。 <img src="./transformer_decoder_output_softmax.gif" alt="img" /></p></li>
+</ol>
+<h2 id="transformer-encoder-network-decoder-network">Transformer = encoder network+ decoder network</h2>
+<p><img src="./img_14.png" alt="img_14.png" /> <img src="./img_15.png" alt="img_15.png" /> <img src="./transformer_encoders_decoders.png" alt="Transformer=encoders+decoders" /> <img src="./transformer_encoder_decoder_stack.png" /></p>
+<h2 id="训练">训练</h2>
+<p>学习的目标？ 将模型输出与目标输出进行比较，然后使用反向传播方法调整模型的权重，使模型输出更接近目标输出。</p>
+<p>如何比较两种概率分布？ 可查看 <a target="_blank" rel="noopener" href="https://colah.github.io/posts/2015-09-Visual-Information/">cross-entropy</a>和 <a target="_blank" rel="noopener" href="https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained">Kullback-Leibler</a>. 。</p>
+<p>目标概率分布：</p>
+<figure>
+<img src="./output_target_probability_distributions.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>模型输出：</p>
+<figure>
+<img src="./transformer_output_trained_model_probability_distributions.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="应用的一个例子">应用的一个例子</h2>
+<figure>
+<img src="img_20.png" alt="img_20.png" /><figcaption aria-hidden="true">img_20.png</figcaption>
+</figure>
 <h1 id="参考">参考</h1>
 <ol type="1">
-<li>播客-得意忘形-46期-人生中的那些欲言又止</li>
+<li>Bahdanau, Cho, &amp; Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.</li>
+<li>Cheng, Dong, &amp; Lapata. Long Short-Term Memory-Networks for Machine Reading. In EMNLP, 2016.</li>
+<li>Vaswani et al. Attention Is All You Need. In NIPS, 2017.</li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=aJRsr39F4dI">Transformer模型(2/2): 从Attention层到Transformer网络</a></li>
 </ol>
 
       
@@ -254,7 +367,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/11/reading_notes/economics/macro-economy/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/12/deeplearning/dl5_word2vec/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -268,7 +381,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/11/reading_notes/economics/macro-economy/" class="post-title-link" itemprop="url">现代西方经济学的由来和演变</a>
+            <a href="/2021/03/12/deeplearning/dl5_word2vec/" class="post-title-link" itemprop="url">深度学习6 word2vec</a>
         </h2>
 
         <div class="post-meta">
@@ -278,14 +391,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-11 21:30:23" itemprop="dateCreated datePublished" datetime="2021-03-11T21:30:23+08:00">2021-03-11</time>
+              <time title="创建时间：2021-03-12 22:23:20" itemprop="dateCreated datePublished" datetime="2021-03-12T22:23:20+08:00">2021-03-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+                <time title="修改时间：2021-07-09 15:27:39" itemprop="dateModified" datetime="2021-07-09T15:27:39+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -293,7 +406,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
                 </span>
             </span>
 
@@ -309,32 +422,134 @@
 
       
           <blockquote>
-<p>本文由一堆历史事实堆砌而成，没有任何reflection</p>
-<p>可以当经济学的字典用</p>
+<p>词嵌入（word embedding）是指把一个词映射为一个实数域的向量，这个向量也叫词向量。</p>
+<p>word2vec是一个词嵌入模型，有两个变形，跳字模型和连续词袋模型。跳字模型是基于中心词来生成背景词。连续词袋模型假设基于背景词来生成中心词。</p>
+<p>word2vec模型学习到了一个词的两个表示（背景词向量和中心词向量），下游节点用的是哪个呢？</p>
 </blockquote>
-<h2 id="基本概念">基本概念</h2>
+<h2 id="why-word2vec">why word2vec？</h2>
+<p>实现词嵌入的方法有很多，最简单的就是one-hot，即，先构建一次词典，然后将该word映射为索引向量。</p>
+<p>那么为什么还要提出来word2vec方法？直接使用one-hot有什么问题吗？</p>
+<p>one-hot vector没有表达word在语义上的相似性。 举个例子，假如用余弦函数来描述word之间的相似度， 那么one-hot的表达方式，就会使所有word之间的相似度为0，这样就丢失了词语的语义上的信息。</p>
+<p>所以，需要一种词的表示方法，能表达语义上的相关性，word2vec就应运而生了。</p>
+<h2 id="what-word2vec">what word2vec？</h2>
+<p>wod2vec跟传统的线性降维方法如PCA一样，本质上都是在寻找对原始输入（词语）的一种更经济、高效的表达。</p>
+<p>PCA和Word2vec的区别在于，两者对于何为「最优表达」的定义不一样：</p>
 <ul>
-<li><strong>滞涨</strong>：失业和通货膨胀共存。</li>
+<li>PCA认为重构误差最小的表达，就是最好的表达。即经过编码-解码之后,重构回原来空间时丢失尽可能少。</li>
+<li>word2vec认为如果一个中心词的表达跟上下文表达关联最大，就是最好的表达。即经过编码-解码之后，中心词映射为背景词，或者，背景词映射为中心词。想预测另外一个东西。 其中，前者是（Skip-gram model，SG），后者是连续词袋模型（Continuous Bag-of-Words，CBOW）。</li>
 </ul>
-<h2 id="核心观点">核心观点</h2>
+<figure>
+<img src="img.png" alt="img.png" /><figcaption aria-hidden="true">img.png</figcaption>
+</figure>
+<h2 id="how-word2vec">how word2vec?</h2>
+<p>先看跳字模型</p>
+<h3 id="跳字模型skip-gram--基于中心词来生成背景词">跳字模型（skip gram）--基于中心词来生成背景词</h3>
+<h4 id="high-level">high-level</h4>
+<p>跳字模型就是将一个中心词映射成多个背景词，大概思路，</p>
+<p><img src="./img1.png" /></p>
 <ol type="1">
-<li>资产阶级经济学的四个阶段：重商主义，古典经济学，庸俗经济学和庸俗经济学以后。</li>
-<li>1830年进入庸俗经济学阶段，主要在于反对空想社会主义。</li>
-<li>1890年以来，马歇尔为代表的经济学开始在西方流行，他们提出了完全竞争和充分就业假说，进而从供给和需求的角度分析市场价格，以解决资源分配问题。影响力持续到20世纪30年代。这个理论赞赏了资本主义的价格制度，生成资本主义使得每种生产要素都得到了应得的报酬，还说资本主义是一架可以自行调节的机器，能自行解决各种矛盾。在此理论之下，国家不干预经济生活的政策被解释为最好的政策。但是，这种思想随着资本主义的发展而有所削弱。</li>
-<li>19世纪30年代开始，传统经济学经历了3次较大的修改。
-<ul>
-<li>第一次修改-1933年-垄断理论：虽然实际情况中，资本主义已于19世纪末进入垄断阶段。但是，直到20世纪30年代，传统西方经济学仍然把"垄断"视为"例外"。为了改变这种理论和现实背离的状态，张伯伦和罗滨逊于1933年提出了垄断竞争理论。作为对传统西方经济学的补充。</li>
-<li>第二次修改-1936年-凯恩斯理论。由于1929年后的大萧条和国家垄断资本主义的发展，资产阶级为了干预经济，需要一个经济理论支撑。1936，凯恩斯发布了《就业，利息和货币通论》，凯恩斯认为，资本主义的自发作用，不能保证充分就业，需要国家的干预来解决就业。这个理论为国家干预经济政策制造了借口。</li>
-<li>第三次修改-1939年-希克斯出版的《价值与资本》，涉及到价值论和一般均衡论。</li>
-</ul></li>
-<li>第二次世界大战～20世纪60年代-萨缪尔森为首的「新古典综合派」。他们把第一次修改的垄断理论和第三次修改的价值称为微观经济学，把凯恩斯的理论称为宏观经济学。他们宣称，微观经济学是以充分就业为分析前提的，宏观经济学研究的是不同水平的就业量的情况。两种理论相辅相成。传统的自由放任（马歇尔理论）和凯恩斯的国家干预主张，是统一理论体系涉及到的两种不同的现实情况。该学派把现代资本主义说成是"混合经济"，由"私营"和"公营"两个部分组成。"私营"的部分由微观经济学分析，"公营"的部分由宏观经济学分析。</li>
-<li>「新古典综合派」在第二次世界大战之后一直处于正统地位，直到20世纪70年代，西方社会出现了「滞涨」，给了「新古典综合派」沉重的打击。该学派的理论表明，失业（经济活动小于充分就业）和通货膨胀是不可能共存的，这一理论跟当时的现实是不符合的。既无法解释，也提不出对策。</li>
-<li>除了「滞涨」，经济发展迟缓也是「新古典综合派」无法解决的问题。这些都严重动摇了「新古典综合派」在经济理论中的统治地位，西方经济学的其他派别纷纷对「新古典综合派」进行抨击，这些派别主要有货币主义，供给学派，理性预期学派等，但是这些学派自己也不能提出一套完整的理论，所以「新古典综合派」能在风雨飘摇中维持统治地位。</li>
-<li>现在「新古典综合派」已经放弃了"新古典综合"的称号，叫自己「现代经济学」或者「现代主流经济学」。除了维持原有的基本观点外，还吸收和容纳其他派别的论点，特别是「货币主义」和「理性预期」学派。这样，「现代主流经济学」成为缺乏统一理论体系的各派学说的混合物。虽然可消除各派观点的矛盾，但是仍然无法对「滞涨」问题提出对策。</li>
+<li>对词典中每个词，构建2个向量表示，这个是待估参数。</li>
+<li>类似多分类问题，构造一个映射函数，输入中心词的one-hot（长度为<span class="math inline">\(\mathcal{V}\)</span>），输出背景词的概率分布（长度为<span class="math inline">\(\mathcal{V}\)</span>）</li>
+<li>类似逻辑回归的参数估计，使用交叉熵作为损失函数。</li>
 </ol>
+<p>总体来说，从low-level，跳字模型，就很像是一个多分类的逻辑回归，跳字模型保留的是参数，而逻辑回归需要用的是输出的概率。</p>
+<p>下面是一些细节可以跳过</p>
+<h4 id="细节">细节</h4>
+<ul>
+<li><p>词典索引集： <span class="math inline">\(\mathcal{V} =\{0,1, \ldots,|\mathcal{V}|-1\}\)</span></p></li>
+<li><p>假设某个词在词典中的索引为i，这个词被表示成2个d维向量:</p>
+<ul>
+<li>中心词向量：<span class="math inline">\(\boldsymbol{v}_{i} \in \mathbb{R}^{d}\)</span></li>
+<li>背景词向量：<span class="math inline">\(\boldsymbol{u}_{i} \in \mathbb{R}^{d}\)</span></li>
+</ul></li>
+<li><p>模型的输出是条件概率，假设中心词<span class="math inline">\(w_c\)</span>在词典中的索引为c，背景词<span class="math inline">\(w_o\)</span>在词典中的索引为o，那么给定中心词生成背景词的条件概率为</p>
+<p><span class="math display">\[P\left(w_{o} \mid w_{c}\right)=\frac{\exp \left(\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}\right)}{\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)}\]</span></p></li>
+<li><p>假设给定一个长度为 T 的文本序列，设时间步 t 的词为 w(t) 。假设给定中心词的情况下背景词的生成相互独立，当背景窗口大小为 m 时，跳字模型的似然函数即给定任一中心词生成所有背景词的概率 <span class="math display">\[P\left(w_{o} \mid w_{c}\right)=\frac{\exp \left(\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}\right)}{\sum_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)}\]</span> 这里小于1或大于 T 的时间步可以被忽略。</p></li>
+<li><p>参数估计方法：MLE, 即最大化如下对数似然函数来估计参数，等价于最小化交叉熵（用来计算两个函数或者概率之间的距离）</p>
+<p><span class="math display">\[  \prod\limits_{t=1}^{T} \prod\limits_{-m \leq j \leq m, j \neq 0} P\left(w^{(t+j)} \mid w^{(t)}\right)\]</span> 等价于最小化如下 损失函数 <span class="math display">\[ -\sum\limits_{i=1}^{T} \sum\limits_{-m \leq j \leq m, j \neq 0} \log P\left(w^{(t+j)} \mid w^{(t)}\right)\]</span> 根据定义 <span class="math display">\[\log P\left(w_{o} \mid w_{c}\right)=\boldsymbol{u}_{o}^{\top} \boldsymbol{v}_{c}-\log \left(\sum\limits_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)\right)\]</span></p>
+<p>按照梯度上升的思路，先求损失函数其中一项相对于<span class="math inline">\(v_c\)</span>的梯度 <span class="math display">\[\begin{aligned} \frac{\partial \log P\left(w_{o} \mid w_{c}\right)}{\partial \boldsymbol{v}_{c}} &amp;=\boldsymbol{u}_{o}-\frac{\sum_{j \in \mathcal{V}} \exp \left(\boldsymbol{u}_{j}^{\top} \boldsymbol{v}_{c}\right) \boldsymbol{u}_{j}}{\sum_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)} \\ &amp;=\boldsymbol{u}_{o}-\sum_{j \in \mathcal{V}}\left(\frac{\exp \left(\boldsymbol{u}_{j}^{\top} \boldsymbol{v}_{c}\right)}{\sum_{i \in \mathcal{V}} \exp \left(\boldsymbol{u}_{i}^{\top} \boldsymbol{v}_{c}\right)}\right) \boldsymbol{u}_{j} \\ &amp;=\boldsymbol{u}_{o}-\sum_{j \in \mathcal{V}} P\left(w_{j} \mid w_{c}\right) \boldsymbol{u}_{j} \end{aligned}\]</span></p></li>
+</ul>
+<p>训练结束后，对于词典中的任一索引为i的词，我们均得到该词作为中心词和背景词的两组词向量 <span class="math inline">\(v_i\)</span> 和 <span class="math inline">\(u_i\)</span> 。在自然语言处理应用中，一般使用跳字模型的中心词向量作为词的表征向量。</p>
+<h4 id="使用tensorflow实现一个跳字模型">使用tensorflow实现一个跳字模型</h4>
+<h5 id="建模">建模</h5>
+<p>word2vec将每个词表示成一个定长的向量，并使得这些向量能较好地表达不同词之间的相似和类比关系</p>
+<ul>
+<li>第一步：获取训练样本
+<ul>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FjpuHAmzTik.png?alt=media&amp;token=47e0004c-bc7c-4fc5-af22-d227532a7548" /></li>
+</ul></li>
+<li>第二步：构建1个神经网络
+<ul>
+<li>输入：上面的中心词的one-hot向量，形状为（词典大小，）</li>
+<li>输出：中心词周围出现的词的概率向量（相近词的概率），形状也是（词典大小）</li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FsFuwRdSRxR.png?alt=media&amp;token=03f6ea4c-aee0-4e11-993f-468505022f8d" /></li>
+<li>模型参数（or权重向量）的形状和含义：
+<ul>
+<li>网络 第一层有300（词向量长度）个单元，权重向量的形状是 (词典大小，词向量长度)，表示 每个词的中心词向量</li>
+<li>网络 第二层有10000（词典大小）个单元，权重向量的形状是（词向量长度，词典大小），表示 每个词的背景词向量</li>
+</ul></li>
+</ul></li>
+</ul>
+<h5 id="评估">评估</h5>
+<ul>
+<li>影响词向量质量的三个因素：
+<ul>
+<li>训练数据的数量和质量</li>
+<li>词向量的大小</li>
+<li>训练算法</li>
+</ul></li>
+</ul>
+<p>google提供了 测试数据 和 测试脚本</p>
+<ul>
+<li>chiechie：先人工定义一些 近义词组，反义词组，不相关词组，计算这些词组的 余弦距离，看是否跟之前定义的语义距离 一致。</li>
+<li>提供2份 相关性测试集（relation test set）:
+<ul>
+<li>word relation test set :<strong>./demo-word-accuracy.sh</strong>,</li>
+<li>phrase relation test set:<strong>./demo-phrase-accuracy.sh</strong></li>
+</ul></li>
+<li>最好的结果：准确率 70% + 覆盖率 100%.</li>
+</ul>
+<h3 id="连续词袋模型continous-bag-of-words">连续词袋模型（continous bag of words）</h3>
+<p>连续词袋模型与跳字模型类似。与跳字模型最大的不同在于，连续词袋模型假设基于某中心词在文本序列前后的背景词来生成该中心词。在同样的文本序列“the”“man”“loves”“his”“son”里，以“loves”作为中心词，且背景窗口大小为2时，连续词袋模型关心的是，给定背景词“the”“man”“his”“son”生成中心词“loves”的条件概率（如图10.2所示），也就是</p>
+<p><img src="img2.png" /></p>
+<p>一般使用连续词袋模型的背景词向量作为词的表征向量。</p>
+<h2 id="优化版">优化版</h2>
+<p>梯度上式的复杂度为|V|, 为了提高计算效率，有两个近似训练方案：负采样 和 层次化softmax</p>
+<h3 id="近似的学习方法-负采样">近似的学习方法-负采样</h3>
+<p>负采样的想法是，最后一层不用softmax，而是sigmoid,损失函数交叉熵：观测到就是正样本，没观测到就是负样本（通过对词典采样K次得到） （类似异常检测）</p>
+<p><span class="math inline">\(P\left(w^{(t+j)} \mid w^{(t)}\right)=P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right) \prod\limits_{k=1, w_{k} \sim P(w)}^{K} P\left(D=0 \mid w^{(t)}, w_{k}\right)\)</span></p>
+<p>取对数就是</p>
+<p><span class="math inline">\(\begin{aligned}-\log P\left(w^{(t+j)} \mid w^{(t)}\right) &amp;=-\log P\left(D=1 \mid w^{(t)}, w^{(t+j)}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log P\left(D=0 \mid w^{(t)}, w_{k}\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \left(1-\sigma\left(\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right)\right) \\ &amp;=-\log \sigma\left(\boldsymbol{u}_{i_{t+j}}^{\top} \boldsymbol{y}_{i_{t}}\right)-\sum_{k=1, w_{k} \sim P(w)}^{K} \log \sigma\left(-\boldsymbol{u}_{h_{k}}^{\top} \boldsymbol{v}_{i_{t}}\right) \end{aligned}\)</span></p>
+<p>好处是：计算 梯度的 复杂度 从N 减少到 K</p>
+<h2 id="点积or余弦">点积or余弦</h2>
+<blockquote>
+<p>word2vec中的优化目标是点积，但实际使用的却是使用向量夹角的余弦？</p>
+</blockquote>
+<ol type="1">
+<li>点积和余弦, 差了一个量岗，即向量模长。</li>
+<li>如果是在一个空间中找近义词，肯定是要用带归一化的距离函数--余弦；</li>
+<li>在训练的时候，为了迁就损失函数-sigmod，才将量岗还原。</li>
+</ol>
+<h2 id="detail">detail</h2>
+<ul>
+<li>训练时，优化的是input/output vector的点积，预测时使用的是夹角余弦.</li>
+<li>训练的时候之所以不用cos相似度，而用点积，是因为如果先做cos，会将神经网络的输出限制到[-1, 1]，使网络的表达能力（p=σ(w*c)）受限，performance下降很多。w, c来自不同的空间， w为input vector，c为output vector。</li>
+<li>如果效仿word2vec设计(user, item)这类点击率预估模型，二者的不同之处：
+<ul>
+<li>word2vec使用的是input vector，点击率预估模型使用的是最后参与点积运算的user vector, item vector；</li>
+<li>word2vec预测时是求word的knn word（word2vec的源码文件distance.c，用的是余弦距离），</li>
+<li>点击率预估模型求的是user的knn item</li>
+</ul></li>
+</ul>
 <h2 id="参考">参考</h2>
 <ol type="1">
-<li>《现代西方经济学-上册》高鸿业 吴易凤，经济科学出版社，1988年</li>
+<li>https://mk.woa.com/q/267975?strict=true&amp;ADTAG=daily</li>
+<li>Distributed Representations of Words and Phrases and their Compositionality, Section 2</li>
+</ol>
+<h2 id="参考-1">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/tmikolov/word2vec">word2vec开源实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_natural-language-processing/word2vec.html#%E8%BF%9E%E7%BB%AD%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B">dive into deep learning</a></li>
 </ol>
 
       
@@ -354,7 +569,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/80/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/80/">80</a><span class="page-number current">81</span><a class="page-number" href="/page/82/">82</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/82/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/80/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/80/">80</a><span class="page-number current">81</span><a class="page-number" href="/page/82/">82</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/82/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -420,7 +635,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">197</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -433,7 +648,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

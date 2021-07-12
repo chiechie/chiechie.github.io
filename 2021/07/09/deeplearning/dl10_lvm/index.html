@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="非监督学习  非监督学习是指，从原始数据中学习rich模式，以一种label free的方式。 非监督学习又分为两类：生成模型和自监督学习。 生成模型指的是, 学习原始数据的分布，例如基于高斯分布的异常检测 自监督学习指的是, 学到关于原始输入的一些reprentation，可以做到语意理解，可能在未来的有一些任务中会有用，有点像做题训练（puzzle）。例如， Bert训练需要解决两个puzzl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习10 非监督学习">
+<meta property="og:url" content="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
+<meta property="og:description" content="非监督学习  非监督学习是指，从原始数据中学习rich模式，以一种label free的方式。 非监督学习又分为两类：生成模型和自监督学习。 生成模型指的是, 学习原始数据的分布，例如基于高斯分布的异常检测 自监督学习指的是, 学到关于原始输入的一些reprentation，可以做到语意理解，可能在未来的有一些任务中会有用，有点像做题训练（puzzle）。例如， Bert训练需要解决两个puzzl">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/K1rwN9LAHJs509x8IvCcix_7CkI6u8c5YsPUT0R1eoxuP2WvACnAQTVQQVAuqoWMtO5JIflxLnrNl_eFPnF1F3XBT658a6wyLfOSaynjAjyyWf5nFBwSww-TDvy7oYpwNCD3bRHo3Rc.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/image-20210710152800599.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/image-20210709233421079.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/image-20210709234327994.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/image-20210710154905312.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/image-20210710155220160.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/image-20210710171726674.png">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*Q5dogodt3wzKKktE0v3dMQ@2x.png">
+<meta property="og:image" content="https://miro.medium.com/max/2000/1*83S0T8IEJyudR_I5rI9now@2x.png">
+<meta property="og:image" content="https://miro.medium.com/max/2000/1*ejNnusxYrn1NRDZf4Kg2lw@2x.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/image-20210710180433539.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/I0yVIbKz1a-74JbNr5P31z5ePUf1g7NBzEtvk5K3chlmwzySQPyvzqx1umTDG_1ynr1IiYA9t1cwI38vSvmLda_EeQA8Q5gbjZ9J_Ej1NCwkIDSnMo8HJAhoVBA5Mjliy4V_185bk5Y.png">
+<meta property="article:published_time" content="2021-07-09T10:20:08.000Z">
+<meta property="article:modified_time" content="2021-07-12T00:27:44.908Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="backtesting">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/K1rwN9LAHJs509x8IvCcix_7CkI6u8c5YsPUT0R1eoxuP2WvACnAQTVQQVAuqoWMtO5JIflxLnrNl_eFPnF1F3XBT658a6wyLfOSaynjAjyyWf5nFBwSww-TDvy7oYpwNCD3bRHo3Rc.png">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>深度学习10 非监督学习 | Chiechie's Mini World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Mini World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/07/09/deeplearning/dl10_lvm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深度学习10 非监督学习<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/deeplearning/dl10_lvm.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-09 18:20:08" itemprop="dateCreated datePublished" datetime="2021-07-09T18:20:08+08:00">2021-07-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-12 08:27:44" itemprop="dateModified" datetime="2021-07-12T08:27:44+08:00">2021-07-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="非监督学习">非监督学习</h2>
+<ol type="1">
+<li><p>非监督学习是指，从原始数据中学习rich模式，以一种label free的方式。</p></li>
+<li><p>非监督学习又分为两类：生成模型和自监督学习。</p></li>
+<li><p>生成模型指的是, 学习原始数据的分布，例如基于高斯分布的异常检测</p></li>
+<li><p>自监督学习指的是, 学到关于原始输入的一些reprentation，可以做到语意理解，可能在未来的有一些任务中会有用，有点像做题训练（puzzle）。例如， Bert训练需要解决两个puzzle：遮挡词预测；下一个句子预测。再例如，对图像翻转90度/180度，喂给neural network，让nn来预测对应的操作（90/180），这个似乎在监督学习中用的很多</p></li>
+<li><p>非监督学习有哪些应用？</p>
+<ol type="1">
+<li><p>生成正常数据，比如生成回测中的合成数据</p></li>
+<li><p>条件的合成技术,包括WaveNet和GAN-pix2pix，比如talktotranfomer.com</p></li>
+<li><p>数据压缩</p></li>
+<li><p>【最重要】在监督学习之前做自监督学习可以提升下游任务的准确率。</p>
+<blockquote>
+<p>这个技术在工业界已经有应用了：谷歌搜索是由bert支持的</p>
+</blockquote></li>
+</ol></li>
+<li><p>What is true now,but not true ayear before?</p>
+<blockquote>
+<p>以前自监督的预训练比监督模型在检测和识别中效果更差，现在效果赶超有监督了</p>
+</blockquote></li>
+<li><p>目前已经成熟的技术：语言生成模型（GPT3），图像生成模型（VIT），预训练的语言模型（Bert），预训练的图像模型。</p></li>
+<li><p>目前还没有研究成熟的方向：自回归密度模型（AgressiveRgression Density Modelings），Flows，VAE，UnsupervisedLearning for RL。</p></li>
+</ol>
+<h2 id="生成模型0-summary">生成模型0-summary</h2>
+<ol type="1">
+<li><p>简单的生成模型比如直方图/高斯分布。复杂的生成模型比如自回归模型（Autoregressive Models）</p></li>
+<li><p>自回归模型的技术关键词有参数化分布（Parameterized distributions） 和最大似然（maximum likelihood）。</p></li>
+<li><p>常见的两个自回归模型有循环神经网络（Recurrent Neural Nets）和遮挡模型（Masking-based Models）</p></li>
+<li><p>基于likelihood的模型要解决的任务是什么？</p></li>
+<li><p>生成数据：合成的图像，合成的语音，合成的文本，合成的视频</p></li>
+<li><p>数据压缩：对原始文件高效编码，原始数据的entropy越大，压缩比例就越低，怎么知道当前数据的entropy有多大从而使用合适的压缩比例呢？需要去学习一个模型，这个模型可以输出当前数据的信息含量。</p></li>
+<li><p>异常检测：比如在自动驾驶的场景中，如果遇到了一个训练样本中未见过的样本，就不一样让机器强行决策，正确的方法是，使用异常检测--将该场景先和训练样本先对比一下--如果该场景是异常的，就让人来接手。</p></li>
+</ol>
+<pre><code>&gt; Good!!!可以用在回测中</code></pre>
+<ol start="5" type="1">
+<li><p>基于likelihood的模型怎么实现？从样本数据中估计出样本分布的参数。</p></li>
+<li><p>The field of deep generative models is concerned with jointly designing these ingredients to train <em>flexible and powerful</em> models <span class="math display">\[p_\theta\]</span> capable of approximating distributions over high-dimensional data <span class="math display">\[\mathbf{x}\]</span>.</p></li>
+<li><p>怎么设计分布函数？effectively represent complex joint distributions over x,并且yet remain easy to train</p></li>
+<li><p>设计好分布函数族后（一般假设是高斯分布），使用相应的训练方法hand-in-hand去估计参数，损失函数=真实分布和拟合分布的距离：</p></li>
+<li><p>MLE的损失函数为样本的对数概率的相反数，记为：</p></li>
+</ol>
+<p>​ <span class="math display">\[\arg \min _{\theta} \operatorname{loss}\left(\theta, \mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(n)}\right)=\frac{1}{n} \sum_{i=1}^{n}-\log p_{\theta}\left(\mathbf{x}^{(i)}\right)\]</span></p>
+<p>等价于 <span class="math display">\[
+  \arg \min _{\theta} \mathbb{E}_{\mathbf{x} \sim \hat{p}_{\text {data }}}\left[-\log p_{\theta}(\mathbf{x})\right]
+  \]</span> 可以用神经网络对<span class="math inline">\(p_{\theta}\)</span>建模，并使用SGD求解.</p>
+<ol start="13" type="1">
+<li>如何设计一个神经网络来代替<span class="math inline">\(p_{\theta}\)</span>,主要想法是这样的：先把生成数据的过程中，变量间的关系表达为一个贝叶斯网络（ <strong>Bayes net</strong>），并且使用神经网络来对条件概率分布建模（边）。</li>
+<li>于是将最小化logO**转换为，学习一个可以输出条件概率的nn，输入条件变量（一个变量就是一个节点）的值输，输出另外一个变量的概率分布。就是构建一个nn去拟合边的属性---即在条件变量取不同的值时，相应的变量的概率分布是如何变化的。</li>
+</ol>
+<figure>
+<img src="./K1rwN9LAHJs509x8IvCcix_7CkI6u8c5YsPUT0R1eoxuP2WvACnAQTVQQVAuqoWMtO5JIflxLnrNl_eFPnF1F3XBT658a6wyLfOSaynjAjyyWf5nFBwSww-TDvy7oYpwNCD3bRHo3Rc.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<ol start="11" type="1">
+<li><p>跟最大似然等价的问题为最小KL--经验分布和拟合分布的距离</p>
+<p>经验分布假设样本来自iid，则每个观测值的分布都为1（就是直方图）</p>
+<p><span class="math display">\[\hat{p}_{\text {data }}(\mathbf{x})=\frac{1}{n} \sum_{i=1}^{n} \mathbf{1}\left[\mathbf{x}=\mathbf{x}^{(i)}\right]\]</span></p>
+<p>那么经验分布和猜想分布<span class="math inline">\(p_{\theta}\)</span>之间的kl divergence为：</p>
+<p><span class="math display">\[\mathrm{KL}\left(\hat{p}_{\mathrm{data}} \| p_{\theta}\right)=\mathbb{E}_{\mathbf{x} \sim \hat{p}_{\mathrm{data}}}\left[-\log p_{\theta}(\mathbf{x})\right]-H\left(\hat{p}_{\mathrm{data}}\right)\]</span></p></li>
+</ol>
+<h2 id="生成模型1--自回归模型">生成模型1- 自回归模型</h2>
+<ol type="1">
+<li>给定贝叶斯网络，将条件概率分布设置为nn, 会得到一个可处理的对数likelihood和梯度，很好训练,</li>
+</ol>
+<p><span class="math display">\[\log p_\theta(\mathbf{x}) = \sum_{i} \log p_\theta(x_i \,|\, \mathrm{parents}(x_i))\]</span></p>
+<ol start="2" type="1">
+<li><p>但是用nn建模出来的条件概率的表达能力够强吗？任何联合概率分布都可以表达为条件概率的乘积。</p></li>
+<li><p>自回归模型(<strong>autoregressive model</strong>): <span class="math display">\[
+\log p(\mathbf{x})=\sum_{i=1}^{d} \log p\left(x_{i} \mid \mathbf{x}_{1: i-1}\right)
+\]</span> 一个使用nn预测条件概率的表达充分的贝叶斯网络，可以对p(x)构建一个表达充分的模型，同时也很好训练</p></li>
+<li><p>一个简单的自回归模型：</p>
+<p>两个随机变量: x1, x2</p>
+<p>对联合分布建模：Model: p(x1, x2) = p(x1) p(x2|x1)</p>
+<p>边际概率分布分布p(x1)是一个直方图</p>
+<p>条件概率分布p(x2|x1)是一个mlp，输入是<span class="math inline">\(x_1\)</span>, 输出是<span class="math inline">\(x_2\)</span>的logits</p></li>
+<li><p>如何让不同的边--即不同的标间概率之间共享信息？RNN和masking方法</p></li>
+<li><p>[Karpathy, 2015]提出char-rnn方法</p>
+<figure>
+<img src="./image-20210710152800599.png" alt="image-20210710152800599" /><figcaption aria-hidden="true">image-20210710152800599</figcaption>
+</figure></li>
+</ol>
+<h2 id="生成模型2-隐变量模型">生成模型2-隐变量模型</h2>
+<ol type="1">
+<li><p>为什么需要latent variable模型?对比下自回归模型：采样的计算量太大了，采样只能按照顺序进行。</p></li>
+<li><p>latent varible只依赖latent varible，采样效率更高，相对于ar模型。</p></li>
+<li><p>如果知道生成数据的因果过程，就可以设计一个latent varible了。</p></li>
+<li><p>一般来说，我们不知道隐变量是什么，以及这些latent variables是怎么跟observation进行互动的。 确定隐变量的最好的方法，仍未有定论。</p></li>
+<li><p>latent variable模型更像是一种更抽象的层次更高的认知。</p></li>
+<li><p>隐变量模型的一个例子：如下，Z是一个K维度的随机向量，X是一个L维的随机变量</p>
+<p>对Z抽样得到一个K维的0/1向量z，通过一个函数（DNN）映射为一个参数<span class="math inline">\(\theta\)</span>, X的分布变为一个参数为<span class="math inline">\(\theta\)</span>的bernoulli分布，从该分布中采样得到一个L维的0/1向量x。举例子，z代表股市是牛市/熊市，X代表股票上涨/下跌，牛市时X的分布的均值要高于熊市时X的分布均值</p>
+<figure>
+<img src="./image-20210709233421079.png" alt="image-20210709233421079" /><figcaption aria-hidden="true">image-20210709233421079</figcaption>
+</figure></li>
+<li><p>如何训练上面的DNN？最大似然估计，再往前可以追朔到亚里士多德的三段论，大前提，小前提==&gt; 结论。</p>
+<p>大前提：我们观测到的一系列<span class="math inline">\(x^{(i)}\)</span>, 是客观存在的，不是伪造的</p>
+<p>小前提：有一个隐变量X，服从某个bernouli分布，有一个可观测的随机变量X服从某个bernouli分布，并且该bernouli分布的参数跟X有关</p>
+<p>结论: 一系列<span class="math inline">\(x^{(i)}\)</span>的概率很大</p>
+<p>为了使得三段论成立，我们希望找到一个最优的DNN，使得<span class="math inline">\(x^{(i)}\)</span>的likelihood尽可能大。</p>
+<p>其实，即使likelihood很大，也不能一定保证小前提成立，这里只是折中罢了。</p>
+<figure>
+<img src="./image-20210709234327994.png" alt="image-20210709234327994" /><figcaption aria-hidden="true">image-20210709234327994</figcaption>
+</figure></li>
+<li><p>求最大似然的时候，z的维度太多了怎么办？采样。</p></li>
+<li><p>如果z的分布p很难采样怎么办？分布变换：将分布p转换为一个简单的分布q（q中也有待估计的参数，经常把q设计成一个高斯分布），然后在q中采样，这就是变分法,。「变分」强行理解成「改变分布」。</p>
+<figure>
+<img src="./image-20210710154905312.png" alt="image-20210710154905312" /><figcaption aria-hidden="true">image-20210710154905312</figcaption>
+</figure></li>
+<li><p>求解Inference问题,相当于积分掉无关变量，求边际分布。如果变量维度过高，积分非常困难。一般来说，有两种方法，一种是蒙特卡洛模拟，一种是变分推断。前者是unbiased &amp;&amp;high variance，后者是biased-low&amp;&amp; variance。举个例子，求P(z|x)时，使用贝叶斯公式，可以转换为联合分布除以P(x), 求P(x)涉及到对z求多重积分，特别困难。</p>
+<blockquote>
+<p>还有一些技术如（mean field）可将复杂的多元积分变成简单的多个一元积分的乘积，从而使得求多重积分变得可行。</p>
+</blockquote>
+<p>下面看一下有偏差的低方差的方法---变分推断。。</p></li>
+</ol>
+<h3 id="变分推断">变分推断</h3>
+<blockquote>
+<p>Any procedure which uses optimization to approximate a density can be termed ``variational inference''.---Jordan (2008) 对 Variational Inference 的定义</p>
+</blockquote>
+<ol type="1">
+<li>简单来说，变分就是用简单的分布q去近似复杂的分布p。</li>
+</ol>
+<figure>
+<img src="./image-20210710155220160.png" alt="image-20210710155220160" /><figcaption aria-hidden="true">image-20210710155220160</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>如何找到满意的<span class="math inline">\(q_{\phi}\)</span>？对于每个样本<span class="math inline">\(x^{(i)}\)</span>, q测量的z的分布都跟p测量的z的后验分布很接近。也就是说，希望找到一个q使得，n个KL之和最小。</li>
+</ol>
+<figure>
+<img src="./image-20210710171726674.png" alt="image-20210710171726674" /><figcaption aria-hidden="true">image-20210710171726674</figcaption>
+</figure>
+<ol start="3" type="1">
+<li><p>由于KL(q, p) + 变分下界(VLB) =logP(x) , 不管q如何变化，KL+ELBP是固定的，所以最小化KL等价于最大化$ ELBO<span class="math inline">\(。KL因为含有后验分布\)</span>p_{z|x}$不好优化所以转为优化ELBO。</p>
+<blockquote>
+<p>为什么要叫lower bound，因为KL&gt;=0, 所以VLB&lt;=logP(x), 所以VLB是logP(x)的一个下界，所以叫Lower bound</p>
+</blockquote></li>
+<li><p>至此，vae的损失函数(ELBO)等价于两部分=重构误差+正则项，</p></li>
+</ol>
+<p><span class="math display">\[E L B O=\mathbb{E}_q\left[\log p\left(x \mid z\right)\right]-\mathbb{K} \mathbb{L}\left(q\left(z \mid x\right) \| p(z)\right)\]</span></p>
+<p><img src="https://miro.medium.com/max/1400/1*Q5dogodt3wzKKktE0v3dMQ@2x.png" alt="img" /> 5. 其中正则项(regularity)是为了保证 latent space 更regular，即，希望生成模型实现连续性（<strong>continuity</strong>）和完备性（completness，不能胡说八道）。如果没有正则项，就跟auto-encoder一样专注于最小化重构误差，很有可能过拟合，没有泛化性。 <img src="https://miro.medium.com/max/2000/1*83S0T8IEJyudR_I5rI9now@2x.png" alt="img" /></p>
+<ol start="6" type="1">
+<li><p>auto-encoder和variational autoencoders的区别：注意decoder，vae的decoder将z映射为x，是确定性的，不是随机的。随机性之存在于对encoder的结果（u, sigma）中采样出z。</p>
+<figure>
+<img src="https://miro.medium.com/max/2000/1*ejNnusxYrn1NRDZf4Kg2lw@2x.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure></li>
+<li><p>训练好了VAE后，单独拿decoder出来做生成模型。</p>
+<blockquote>
+<p>KL衡量的是p相对于q的距离，是一种非对称的local 距离。</p>
+</blockquote></li>
+<li><p>将pathwise derivative应用到变分推断，得到VAE</p>
+<figure>
+<img src="./image-20210710180433539.png" alt="image-20210710180433539" /><figcaption aria-hidden="true">image-20210710180433539</figcaption>
+</figure>
+<figure>
+<img src="./I0yVIbKz1a-74JbNr5P31z5ePUf1g7NBzEtvk5K3chlmwzySQPyvzqx1umTDG_1ynr1IiYA9t1cwI38vSvmLda_EeQA8Q5gbjZ9J_Ej1NCwkIDSnMo8HJAhoVBA5Mjliy4V_185bk5Y.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>https://sites.google.com/view/berkeley-cs294-158-sp20/home</li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=V9Roouqfu-M">L1 Introduction--CS294-158-SP20-youtube</a></li>
+<li><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1zWvkB5BNFs1IzyXarsf6ItXpfEc2OfZc/view">L1 Introduction--CS294-158-SP20-slide</a></li>
+<li>https://www.youtube.com/watch?v=V9Roouqfu-M</li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=iyEOk8KCRUw">L2 Autoregressive Models -- CS294-158-SP20-youtube</a></li>
+<li>https://www.zhihu.com/question/41765860</li>
+<li>https://www.youtube.com/watch?v=uaaqyVS9-rM</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"># 深度学习</a>
+              <a href="/tags/backtesting/" rel="tag"># backtesting</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/09/data_structure/ds1-linear-data-structure/" rel="prev" title="数据结构1 线性数据结构">
+      <i class="fa fa-chevron-left"></i> 数据结构1 线性数据结构
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/10/AI/svd-and-coding/" rel="next" title="SVD和compression">
+      SVD和compression <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">非监督学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B0-summary"><span class="nav-number">2.</span> <span class="nav-text">生成模型0-summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B1--%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">生成模型1- 自回归模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B2-%E9%9A%90%E5%8F%98%E9%87%8F%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">生成模型2-隐变量模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E5%88%86%E6%8E%A8%E6%96%AD"><span class="nav-number">4.1.</span> <span class="nav-text">变分推断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">200</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">208</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

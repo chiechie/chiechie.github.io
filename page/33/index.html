@@ -165,6 +165,115 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/13/AIOps/AIOps-1_5-log-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/13/AIOps/AIOps-1_5-log-analysis/" class="post-title-link" itemprop="url">chapter1.5 日志聚类</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-13 20:05:20" itemprop="dateCreated datePublished" datetime="2021-05-13T20:05:20+08:00">2021-05-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="做项目之前的分析">做项目之前的分析</h2>
+<p>系统出现故障时，运维人员一般先查看错误日志，定位故障原因。如果业务逻辑简单，故障时错误日志较少，运维人员一般一眼就能定位到问题。</p>
+<p>但是，业务逻辑的复杂的情况下，比如系统依赖很多的服务，引入很多的组件时，一旦整个故障时（如触发Bug、依赖服务超时等等），错误日志急剧增加。如何能快速找到最关键的日志报错信息呢？ 可以对报警进行聚类，整理出报警摘要，有了摘要运维就可以对的故障有个大致印象，再结合业务知识定位故障的根原。</p>
+<p>为了解决上面问题，下面介绍一种针对报警日志的聚类算法</p>
+<p>最近要做一个nlp的项目，需求就是从一堆杂乱无章的日志中，发现一些规律。 看看哪些日志其实是在说一个事情，可归为一类；哪些日志暗示着新的事情在发生，就告警。</p>
+<p>本质是一个EDA,有点类似给用户分群。跟用户分群相比，日志分析有一些特殊的需求，比如，我们通常先关注目前发生的事情严不严重，然后才关注细节。描述前者的典型字段包括时间，日志级别，其他关键词。描述后者的典型字段包括具体ip，网站，端口号等等。</p>
+<p>对一段时间内的告警数据进行聚类，将具有相同根因的告警归纳为泛化报警（Generalized Alarms），最终形成仅有几条泛化报警的报警摘要。如下图1所示意。</p>
+<figure>
+<img src="https://p0.meituan.net/travelcube/0405c8ee9e4e3ea813eedf46c803101122272.png" alt="图1" /><figcaption aria-hidden="true">图1</figcaption>
+</figure>
+<p>图1</p>
+<p>我们希望这些泛化报警既要具有很强的概括性，同时尽可能地保留细节。这样运维人员在收到报警时，便能快速定位到故障的大致方向，从而提高故障排查的效率。</p>
+<h2 id="看看别人怎么做的">看看别人怎么做的</h2>
+<h3 id="美团">美团</h3>
+<h3 id="log3c">log3C</h3>
+<p>《identifies service system problems from system logs》-log3C</p>
+<ul>
+<li>讲了通过数据挖掘-对纯文本进行分析的一种思路：原始日志--&gt;提取事件模版--&gt; 聚合成 时间戳 + session id的日志序列计数向量---&gt;聚类得到典型日志序列技术向量模式---&gt; 日志序列模式 和 系统状态（核心KPI 之间的关系）相关性分析</li>
+<li>将相关性分析 应用到了 具有 物理依赖关系的 数据上面，可以得到 因果关系。</li>
+<li>跟指标异常检测的思路不一样，这个不看日志中提取出来的数值指标，看的是日志间的序列关系，出现的先后顺序，更适合用来做辅助 系统的故障定位（复杂的网状调用调用链路），而前者更适合做系统的性能监控，需要人工定义感兴趣的测量方式（人工指定特征）。</li>
+<li>跟日志异常检测相比，本文的应用更加的end2end。</li>
+</ul>
+<blockquote>
+<p>实际中先不考虑这个方案，复杂且黑盒，不好调效果。</p>
+</blockquote>
+<h2 id="一些思考">一些思考</h2>
+<ol type="1">
+<li><p>要不要用一些文本模型，比如word2vec，doc2vec，transformer，bert？</p>
+<p>在当前日志的场景下，意义不大。 这些深度模型的本质是想将语义上的相似性通过embedding vector表达。 日志场景下，日志都是同一个print语句打出来的，可以看成是机器的语言，比较少有语言歧义（真的有这种近义词的，肯定不是一个组件打出来的日志），所以没必要去寻找语意上的相似性。 分词完之后，当成char就可以了。</p></li>
+</ol>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/logpai/logparser/blob/master/logs/Apache/Apache_2k.log">apache_2k.log</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chiechie/LogRobot">关于logmine的改进版-code-chiechie</a></li>
+<li><a href="../AIOps-1_5_1-log-analysis_logmine/">关于logmine的实践--chiechie's blog</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/12/AIOps/AIOps-1_4-kpi-correlation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -277,111 +386,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/11/AIOps/AIOps-1_2-fault-prediction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/11/AIOps/AIOps-1_2-fault-prediction/" class="post-title-link" itemprop="url">chapter1.2 故障预测</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-11 11:01:18" itemprop="dateCreated datePublished" datetime="2021-05-11T11:01:18+08:00">2021-05-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="背景">背景</h1>
-<p>最近10年，随着服务器数量快速增长, 服务器老化的问题（商家超过5）日趋严重。越老的服务器发生故障的概率越高，这个会带了不小的负面影响，从而提高运营成本。</p>
-<p>服务器的所有故障中，占比最高的类型属于磁盘故障，达到70%。第二名是主板故障。 因为磁盘生命周期短，一般只有3到5年，而整个服务器使用和年限一般都会超过5年，所以一台服务器的生命周期中几乎必然会发生磁盘故障。</p>
-<p>如何降低磁盘故障带来的影响？业务的方案是，实施监控以及事后自动修复，修复不了就更换磁盘，并且做业务迁移。</p>
-<p>但是这个时候损失已经发生，如果能够在磁盘故障之前，就预测到即将到来的故障，并且提前做预案，是可以避免业务损失的。</p>
-<p>下面就介绍一下，如何预测磁盘故障，从而减少业务损失。</p>
-<h1 id="方案">方案</h1>
-<h2 id="搜集数据">搜集数据</h2>
-<p>范围：即将故障的硬盘以及其宿主的信息 根据经验可以提取如下指标：磁盘负载，磁盘I/O，具体来说</p>
-<ul>
-<li>每秒磁盘读写块数： 902-读，903-写</li>
-<li>每秒中用于I/O操作的CPU时间占的比例：即999，</li>
-</ul>
-<p>其中，I/O指标差分，简称为IO跳变跟故障相关度较高</p>
-<p>此外考虑了磁盘SMART（Self-Monitoring Analysis and Reporting Technology——自我检测、分析及报告技术）。之所以考虑用SMART作为核心数据，因其相关技术发展比较成熟，至今20年了，业界对其认可度较高。</p>
-<h2 id="预测模型">预测模型</h2>
-<p>使用一个分类器（SVM），搜集历史故障样本和非故障样本，</p>
-<h2 id="总结">总结</h2>
-<ol type="1">
-<li>现已完成希捷SATA硬盘预测，各型号预测正确率和故障覆盖率如表3所示。其中前六种型号达到运营要求，已进入推广，具体覆盖65%的SATA盘</li>
-<li>关于正样本数据的搜集：刚开始我们把预测单与实际故障单作对比时，得到的准确率很低。因为模型报出来的预故障单都是从SMART上看，属于“亚健康”甚至“病危”状态的硬盘。而实际故障单是以磁盘自检失败并且不可在线修复和系统dmesg信息中的错误关键字（主要包括SCSI设备掉线，ATA设备超时和设备故障）为准发起故障处理流程，并且结单故障类型为硬盘故障，也就是说一定要有实际换盘的，这个定义其实是相当严苛的，会漏掉很多情况。因为结单故障类型是现场去确认后填写的，如果没有换盘或者没有填写结单故障类型就会算是我们的误报。 并且，实际故障单更多的侧重于依赖OS层面的判断，一定程度漏掉了一些健康堪忧但并未报障的硬盘。我们把这部分「误报」的部分提供给厂商确认，的确被确诊为病态盘甚至于高危盘。所以是否故障的判断，不能仅依赖结单故障类型，还要关注单块硬盘自身的健康状态--如果它的SMART核心指标远离安全阈值，也应判断为故障。</li>
-<li>下一步工作-现在核心主要侧重于SATA盘的故障预测，后续二期我们会把SAS、SSD作为核心，希望能有更大的作为。</li>
-</ol>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://km.oa.com/group/23255/articles/show/251071">部件故障预测初论</a></li>
-<li><a target="_blank" rel="noopener" href="https://km.woa.com/group/11783/articles/show/170959?sessionKey=Q3i7YOn2ZcLaDSNohaOIZgxO5ztyEuU8">磁盘IO与磁盘故障率研究</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/32/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><span class="page-number current">33</span><a class="page-number" href="/page/34/">34</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/34/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/32/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><span class="page-number current">33</span><a class="page-number" href="/page/34/">34</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/34/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -447,7 +455,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">197</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -460,7 +468,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

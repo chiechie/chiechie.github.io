@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="交叉熵 交叉熵表示，拥有信念Q的人，在观察到真实分布P后，他的惊讶程度。 这个绝对惊讶程度 可以拆解为 一个baseline（真实分布P的熵） + 一个相对差距（P和Q的距离）  img_1.png  参考  交叉熵">
+  <meta name="description" content="熵 信息 信息即information,衡量的是一个event发生了，带给我们的惊奇程度 I &#x3D; -logP(x) 比如今天播报一条新闻，深圳7月下雪，那么我们说这个信息I很大，因为其跟常识偏差很大，可以用概率代表常识，跟常识偏离很远即概率很小。 比如今天新闻说，深圳7月下雨，那么这个信息I很小，因为根据常识也能知道会发生这个事情。 熵 熵即entropy, 衡量的是一个随机变量取不同的值的平均信">
 <meta property="og:type" content="article">
 <meta property="og:title" content="信息论">
 <meta property="og:url" content="https://chiechie.github.io/2021/04/18/reading_notes/computer/information-theory/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="交叉熵 交叉熵表示，拥有信念Q的人，在观察到真实分布P后，他的惊讶程度。 这个绝对惊讶程度 可以拆解为 一个baseline（真实分布P的熵） + 一个相对差距（P和Q的距离）  img_1.png  参考  交叉熵">
+<meta property="og:description" content="熵 信息 信息即information,衡量的是一个event发生了，带给我们的惊奇程度 I &#x3D; -logP(x) 比如今天播报一条新闻，深圳7月下雪，那么我们说这个信息I很大，因为其跟常识偏差很大，可以用概率代表常识，跟常识偏离很远即概率很小。 比如今天新闻说，深圳7月下雨，那么这个信息I很小，因为根据常识也能知道会发生这个事情。 熵 熵即entropy, 衡量的是一个随机变量取不同的值的平均信">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chiechie.github.io/2021/04/18/reading_notes/computer/information-theory/img_1.png">
 <meta property="article:published_time" content="2021-04-18T03:19:24.000Z">
-<meta property="article:modified_time" content="2021-06-07T00:17:56.761Z">
+<meta property="article:modified_time" content="2021-07-12T00:27:44.936Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="熵">
 <meta name="twitter:card" content="summary">
@@ -200,7 +200,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
+                <time title="修改时间：2021-07-12 08:27:44" itemprop="dateModified" datetime="2021-07-12T08:27:44+08:00">2021-07-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -230,15 +230,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="交叉熵">交叉熵</h2>
+        <h1 id="熵">熵</h1>
+<h2 id="信息">信息</h2>
+<p>信息即information,衡量的是一个event发生了，带给我们的惊奇程度</p>
+<p>I = -logP(x)</p>
+<p>比如今天播报一条新闻，深圳7月下雪，那么我们说这个信息I很大，因为其跟常识偏差很大，可以用概率代表常识，跟常识偏离很远即概率很小。 比如今天新闻说，深圳7月下雨，那么这个信息I很小，因为根据常识也能知道会发生这个事情。</p>
+<h2 id="熵-1">熵</h2>
+<p>熵即entropy, 衡量的是一个随机变量取不同的值的平均信息量，</p>
+<p><span class="math display">\[Entropy = - \sum PlogP\]</span></p>
+<p>均匀分布的随机变量， 其平均信息很小，熵很小，这是一个平庸的随机变量；</p>
+<p>极端分布的随机变量，其平均信息很大，熵很大，这是一个不甘平庸的随机变量。</p>
+<h2 id="交叉熵">交叉熵</h2>
 <p>交叉熵表示，拥有信念Q的人，在观察到真实分布P后，他的惊讶程度。</p>
 <p>这个绝对惊讶程度 可以拆解为 一个baseline（真实分布P的熵） + 一个相对差距（P和Q的距离）</p>
 <figure>
 <img src="./img_1.png" alt="img_1.png" /><figcaption aria-hidden="true">img_1.png</figcaption>
 </figure>
+<h2 id="kl">KL</h2>
+<p>KL（q||p）衡量的是分布p相对于分布q的距离，是一种非对称的local 距离。</p>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html#cross-entropy">交叉熵</a></li>
+<li>https://www.youtube.com/watch?v=ErfnhcEV1O8&amp;list=WL&amp;index=17&amp;t=85s</li>
 </ol>
 
     </div>
@@ -323,7 +336,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5"><span class="nav-number">1.</span> <span class="nav-text">交叉熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%86%B5"><span class="nav-number">1.</span> <span class="nav-text">熵</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.</span> <span class="nav-text">信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%86%B5-1"><span class="nav-number">1.2.</span> <span class="nav-text">熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5"><span class="nav-number">1.3.</span> <span class="nav-text">交叉熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kl"><span class="nav-number">1.4.</span> <span class="nav-text">KL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -337,7 +350,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">197</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -350,7 +363,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

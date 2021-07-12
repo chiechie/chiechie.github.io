@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/28/deeplearning/dl-framework-from-view-of-compression/">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/28/reinforcement_learning/rl10_gym/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,7 +179,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/28/deeplearning/dl-framework-from-view-of-compression/" class="post-title-link" itemprop="url">深度学习8 深度学习理论的统一框架-基于压缩视角</a>
+            <a href="/2021/04/28/reinforcement_learning/rl10_gym/" class="post-title-link" itemprop="url">强化学习10 使用gym规划出租车行车路线的demo</a>
         </h2>
 
         <div class="post-meta">
@@ -189,14 +189,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-28 18:39:48" itemprop="dateCreated datePublished" datetime="2021-04-28T18:39:48+08:00">2021-04-28</time>
+              <time title="创建时间：2021-04-28 20:33:14" itemprop="dateCreated datePublished" datetime="2021-04-28T20:33:14+08:00">2021-04-28</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-08 11:11:27" itemprop="dateModified" datetime="2021-07-08T11:11:27+08:00">2021-07-08</time>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -204,7 +204,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                  <a href="/categories/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">强化学习</span></a>
                 </span>
             </span>
 
@@ -220,59 +220,56 @@
 
       
           <blockquote>
-<p>最近一篇工业界的人讲深度学习的第一性原理，结合mayi老师的文章，尤其是联想到中国哲学中的"名实之争"，有点意思，在这里记录一下</p>
+<p>看完了强化学习的理论，现在来动手试一试</p>
 </blockquote>
-<h2 id="学术界的进展">学术界的进展</h2>
-<p>马毅老师的文章和袁进辉和文章都是想探索一种通用的方法，对任何数据找到其最优的神经网络。</p>
-<p>都知道图像数据可能更适合cnn，序列数据更适合GPT-3，这些网络都是具有某个特殊的结构的DNN，这些奇奇怪怪的结构是无数次试错，人工设计出来的。</p>
-<p>那么，有没有可能有一种脱离人的设计方法呢？即，不管是对图像数据，还是序列数据，统一的模型训练方法呢？更甚至，不管是有监督还是无监督，都能找到统一的模型训练方法呢？</p>
-<p>这个问题很宏大，涵盖了NAS这个方向。</p>
-<h3 id="计算神经科学">计算神经科学</h3>
-<ol type="1">
-<li><p>计算神经科学领域对这个问题已经研究很多年了，有一些非常经典的研究成果譬如ICA(独立成分分析）以及Sparse coding方法，这些方法的背后是一种基于信息论的原则，称之为efficient coding principle。</p></li>
-<li><p>这个理论认为，大脑的结构源自亿万年的进化，进化的目标是形成外界物理环境的一种“最经济”的表达，这种表达是适应于（adapt to)自然界的统计规律，而且这种结构基本上是无监督的。这种理论已经能非常好的解释视网膜、侧膝体、初级视皮层神经元感受野的形成机理，近些年的研究开始向理解V2, V4等更高级的视皮层进发。</p></li>
-<li><p>用efficient coding原则来理解卷积神经网络的一些关键技巧</p>
+<h2 id="场景介绍">场景介绍</h2>
+<p>以出租车司机路线规划为背景，下面演示一下如何由强化学习解决这个问题</p>
+<p>为了将问题进一步简化，基于已有的强化学习框架gym，我就可以更关注在策略实现了</p>
+<p>首先强化学习将问题建模为两个部分：环境（environment）和 决策主体（agent）。 环境基于state，action给出反馈（reward），以及下一个时刻的reward。 agent基于state，给出最佳的action。</p>
+<p>对于「出租车路线规划问题」，state就是给定区域：出租车坐标，行人坐标，行人目的地，障碍物（墙）的坐标，出租车当前是否已经载人</p>
+<p>action就4个方向（东南西北），2个动作（载人，下客）</p>
+<h2 id="开始编程实现啦">开始编程实现啦</h2>
+<h3 id="step1-加载出租车路线规划这个环境">step1: 加载「出租车路线规划」这个环境</h3>
+<p>因为gym已经带有这个环境，直接可用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gym</span><br><span class="line"></span><br><span class="line">env = gym.make(<span class="string">&quot;Taxi-v3&quot;</span>)</span><br><span class="line">env.reset()</span><br><span class="line"><span class="comment"># visulize current state</span></span><br><span class="line">env.render()</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="img.png" alt="environment" /><figcaption aria-hidden="true">environment</figcaption>
+</figure>
+<p>上图环境渲染的图中</p>
 <ul>
-<li>卷积: 在计算神经科学里，相当于初级视皮层神经元的局部感受野</li>
-<li>非线性的激活函数：计算神经科学里，站在信息论角度，通过非线性映射，可以把取值范围很大的activation映射到一个区间，比较重要的输入值编码的分辨率高一些，而不重要的输入不需要消耗太多能量去编码，就被映射到“饱和区”。</li>
-</ul></li>
-<li><p>efficient coding准则认为，神经元的感受野是用来表示输入刺激的统计规律，把输入转化成神经元的响应有助于去除输入之间的冗余性（redudancy）,也就是神经元的响应之间应该比输入 “统计上更接近于独立”。</p></li>
-</ol>
-<h3 id="信息瓶颈-和-mcr2">信息瓶颈 和 MCR^2</h3>
-<p>针对这个问题，学术界已有的研究方向主要是从信息论角度出发，有两项工作比较知名，一个是受Hinton推崇的“信息瓶颈”（Information bottleneck）理论，一个是马老师团队提出的MCR^2理论。</p>
-<p>以x，z，y 分别表示输入数据，学到的特征以及标签：</p>
-<ul>
-<li>信息瓶颈要解决有监督问题的目标是最大化z和y之间的互信息，而最小化x和z之间的互信息。</li>
-<li>MCR^2则一方面在最大化x和z之间的互信息，也在最大化z和y之间的互信息。</li>
+<li>黄色方块代表出租车当前的位置</li>
+<li>“|”代表一堵墙，不能穿透</li>
+<li>蓝色的字母表示载人地方</li>
+<li>紫色的字母表示下客的地方</li>
+<li>出租车接到人之后会编程绿色</li>
 </ul>
-<p>信息瓶颈那篇论文里论述了这样一个结论:特征条件独立，最优分类器就是线性的。此外，Andrew Ng在论述Naive bayes和Logistic regression等价关系时讨论过.</p>
-<h3 id="mcr2细节">MCR^2细节</h3>
+<p>注意，这些颜色，形状只是方便人理解，算法内部只关心有5个状态</p>
+<h3 id="step2-看一下action的6个状态">step2： 看一下action的6个状态</h3>
+<p>看一下action的6个状态， down (0), up (1), right (2), left (3), pick-up (4), and drop-off (5). <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(env.action_space)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    print(env.action_space.sample())</span><br></pre></td></tr></table></figure> <img src="img_1.png" alt="img_1.png" /></p>
+<h3 id="step3-跟env交互一次">step3: 跟env交互一次</h3>
+<p>跟env交互一次，拿到反馈和最新的状态</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">state, reward, done, info = env.step(action=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="img_3.png" alt="img_3.png" /> 注意：每个Gym环境的step方法都返回state, reward, done, info这四个变量，输入某个action</p>
+<h3 id="step4-使用某个简单策略随机策略">step4： 使用某个简单策略（随机策略）</h3>
+<p>使用某个简单策略（随机策略），让出租车跑完一轮</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">state = env.reset()</span><br><span class="line">env.render()</span><br><span class="line">n = <span class="number">0</span></span><br><span class="line">r = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    state, reward, done, info = env.step(action=env.action_space.sample())</span><br><span class="line">    r += reward</span><br><span class="line">    n = n + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> done:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">print(<span class="string">&quot;totally make %d decisions&quot;</span> % (n+<span class="number">1</span>), <span class="string">&quot;total reward&quot;</span>, r)</span><br><span class="line">env.render()</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="img_4.png" alt="img_4.png" /><figcaption aria-hidden="true">img_4.png</figcaption>
+</figure>
+<h3 id="step5-升级策略-q-table-跑多轮">step5: 升级策略-Q-table, 跑多轮</h3>
+<p>Q-table使用bellman方程迭代更新策略，并且存放到一张表中（这个表就是Q-table），即每个状态，每个action对应的Q-value</p>
+<p><span class="math display">\[Q_{t+1}\left(s_{t}, a_{t}\right)=\underbrace{Q_{t}\left(s_{t}, a_{t}\right)}_{\text {old value }}+\underbrace{\alpha_{t}\left(s_{t}, a_{t}\right)}_{\text {learning rate }} \times[\overbrace{\underbrace{R_{t+1}}_{\text {reward }}+\underbrace{\gamma}_{\text {discount factor }} \underbrace{\max _{a} Q_{t}\left(s_{t+1}, a_{t}\right)}_{\text {estimate of optimal future value }}}^{\text {learned value }}-\underbrace{Q_{t}\left(s_{t}, a_{t}\right)}_{\text {old value }}]\]</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">n_state = env.observation_space.n</span><br><span class="line">n_action = env.action_space.n</span><br><span class="line">Q_table = np.zeros((n_state, n_action))</span><br><span class="line">alpha = <span class="number">0.615</span></span><br><span class="line">gamma = <span class="number">0.9</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> episode <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">    state = env.reset()</span><br><span class="line">    <span class="comment">#env.render()</span></span><br><span class="line">    n = <span class="number">0</span></span><br><span class="line">    r = <span class="number">0</span></span><br><span class="line">    done = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">while</span> done <span class="keyword">is</span> <span class="literal">False</span>:</span><br><span class="line">        best_action = np.argmax(Q_table[state, :])</span><br><span class="line">        state2, reward, done, info = env.step(action=best_action)</span><br><span class="line">        Q_table[state, best_action] = Q_table[state, best_action] + alpha *(reward + gamma * np.<span class="built_in">max</span>(Q_table[state2]) - Q_table[state, best_action])</span><br><span class="line">        r += reward</span><br><span class="line">        n = n + <span class="number">1</span></span><br><span class="line">        <span class="comment"># 别漏了</span></span><br><span class="line">        state = state2 </span><br><span class="line">    <span class="keyword">if</span> episode % <span class="number">50</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">&#x27;Episode &#123;&#125; Total Reward: &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(episode,r))</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="img_6.png" alt="img_6.png" /><figcaption aria-hidden="true">img_6.png</figcaption>
+</figure>
+<h2 id="遗留问题">遗留问题</h2>
 <ol type="1">
-<li>用压缩的视角看clustering：聚成两类后是否比原来散开，占用空间小。</li>
-<li>对混合分布的数据进行分类，传统方法基于最大化后验概率（MAP），难点在于后验概率很难estimate和定义，当分布退化时。(所以svm和deep networks赢了)</li>
-<li>用压缩的角度看分类：记录每个类别中对每个样本编码的比特数，分类的原则--Minimum Incremental Coding Length (MICL)</li>
+<li>策略函数要设置约束，比如不能撞墙</li>
 </ol>
-<h3 id="有监督-vs-无监督之争">有监督 vs 无监督之争</h3>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li>有监督or无监督？判别模型or生成模型？半监督学习有没有必要？本质上是在争论一个东西</li>
-<li>回看discriminative model和generative model之辩，前者直接学习用户关心的条件概率p(y|x)，但后者需要学习p(x|y)p(y)，也就是还要学习输入特征的概率分布。发明SVM的Vapnik 认为generative model做了一些和目标无关的、多余的事情，因此而更推崇前者，甚至抛出了奥卡姆剃刀“如无必要，勿增实体”。</li>
-<li>信息瓶颈处于一个极端，既然我们的目标是分类，那就直奔主题，它喜欢的特征就是对分类有效的特征，至于这个特征对最原始的输入的表示来说是不是好就不关心了，甚至要尽可能删除与分类无关的信息。</li>
-<li>MCR^2 的目标函数由两部分构成，第一部分与类别无关，实际上和InfoMax等价（InfoMax直接计算熵有缺陷，正如马老师论文提到的，熵在一些退化情况下没有良好的定义，所以他们用了率失真函数）。第二部分和类别相关，和信息瓶颈的目标一致。</li>
-<li>半监督学习到底成不成立？为什么不带标签的数据对训练分类模型也有帮助呢？比较一致的结论是，无标签数据相当于提供了一种正则化（regularization）,有助于更准确地学习到输入数据所分布的流形（manifold)，而这个低维流形就是数据的本质表示，它对分类有帮助。</li>
-<li>但这又带来一个问题：为什么数据的本质规律对预测它的标签有帮助？</li>
-<li>这又带来一个更本质的问题：数据的标签是怎么来的？</li>
-<li>要回答这些问题，就要和中国古代哲学里的”名实之论“有关系了。到底是先有”名“，还是先有”实“。一般认为是先有”实“，后有”名“，而”实“决定”名“。</li>
-<li>回到机器学习问题上，就是数据的标签是后天出现的，一个东西到底用什么标签去称呼，本质上是由这个东西自身的规律决定的。换句话说，label可能是后天”涌现“（emerge)的，因为一些东西本质一样，张的像，所以人们才会给他们相同的命名。因此要寻求最优的分类器，可能首先要从”无监督“的数据分析入手。</li>
-</ol>
-<h2 id="工业界的进展">工业界的进展</h2>
-<ol type="1">
-<li>项研究和今天很受关注的大规模预训练模型也很相似，而且也有研究发现，大规模预训练模型中真正有效的实际上是一个很小的“子网络”，也就是很多连接的权重是接近零的。最近恰好出现了一些 MLP is all your need相关的研究，也不无道理。</li>
-<li>最近除了自然语言处理，在图像和语音领域，无监督和自监督学习也取得了很大进展，譬如Facebook 的wave2vec 基于无标注的语料可以训练出来和几年前有监督学习的SOTA模型相匹配的结果。可以期待，无监督学习未来会出现更多的成绩。</li>
-</ol>
-<h2 id="参考文献">参考文献</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://cmsa.fas.harvard.edu/wp-content/uploads/2021/04/Deep_Networks_from_First_Principles.pdf">Deep_Networks_from_First_Principles</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/no0u_6m3Ima8YlmV7msGqQ">我对深度学习“第一性原理”的探索和理解 -袁进辉</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.oreilly.com/radar/introduction-to-reinforcement-learning-and-openai-gym/">强化学习环境框架-gym</a>)</li>
 </ol>
 
       
@@ -394,7 +391,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/41/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><span class="page-number current">42</span><a class="page-number" href="/page/43/">43</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/43/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/41/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><span class="page-number current">42</span><a class="page-number" href="/page/43/">43</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/43/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -460,7 +457,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">197</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -473,7 +470,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">203</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Transformer总结  Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。 Transformer的亮点在于将attention和self-attention完全剥离开之前rnn的结构，只跟dense层组合。 Transformer跟RNN没有关系, 只有attention和全连接层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习7 Transformer">
+<meta property="og:url" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/index.html">
+<meta property="og:site_name" content="Chiechie&#39;s Mini World">
+<meta property="og:description" content="Transformer总结  Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。 Transformer的亮点在于将attention和self-attention完全剥离开之前rnn的结构，只跟dense层组合。 Transformer跟RNN没有关系, 只有attention和全连接层">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_embeddings.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_encoder_with_tensors.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_positional_encoding_vectors.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_positional_encoding_example.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_6.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_7.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_attention_heads_qkv.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_attention_heads_z.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_2.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_3.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_self-attention-matrix-calculation.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_self-attention-matrix-calculation-2.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_attention_heads_weight_matrix_o.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_multi-headed_self-attention-recap.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_9.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_10.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_resideual_layer_norm.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_resideual_layer_norm_2.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_resideual_layer_norm_3.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_11.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_17.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_18.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_1.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_5.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_8.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_13.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_decoding_1.gif">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_decoding_2.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_12.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/Transformer_decoder.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_decoder_output_softmax.gif">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_14.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_15.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_encoders_decoders.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_encoder_decoder_stack.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/output_target_probability_distributions.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_output_trained_model_probability_distributions.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/img_20.png">
+<meta property="article:published_time" content="2021-03-12T16:04:13.000Z">
+<meta property="article:modified_time" content="2021-07-09T07:27:39.469Z">
+<meta property="article:author" content="Chiechie">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="神经网络">
+<meta property="article:tag" content="attention">
+<meta property="article:tag" content="模型可视化">
+<meta property="article:tag" content="Transformer">
+<meta property="article:tag" content="Bert">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/transformer_embeddings.png">
+
+<link rel="canonical" href="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>深度学习7 Transformer | Chiechie's Mini World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Chiechie's Mini World" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chiechie's Mini World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Set your course by the stars, not by the lights of passing ships. —— Omar Bradley</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/03/13/deeplearning/dl6_transformer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深度学习7 Transformer<a href="https://github.com/chiechie/chiechie.github.io/tree/master/source/_posts/deeplearning/dl6_transformer.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-13 00:04:13" itemprop="dateCreated datePublished" datetime="2021-03-13T00:04:13+08:00">2021-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-09 15:27:39" itemprop="dateModified" datetime="2021-07-09T15:27:39+08:00">2021-07-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="transformer总结">Transformer总结</h1>
+<ul>
+<li>Transformer是google2016年在《attention is all you need》提出的一个机器翻译模型，是一个很典型的seq2seq架构。</li>
+<li>Transformer的亮点在于将attention和self-attention完全剥离开之前rnn的结构，只跟dense层组合。</li>
+<li>Transformer跟RNN没有关系, 只有attention和全连接层</li>
+<li>Transformer比所有的rnn+attention效果都要好，机器翻译的王者</li>
+<li>Transformer是一个翻译模型，在机器翻译任务中，eg德译英，输入一个德文句子，输出十一句英文。</li>
+<li>Transformer由两部分组成：encoders和decoders</li>
+<li>encoders由6个encoder堆叠而成，decoders由6个decoder堆叠而成，一个encoder或一个decoder叫做一个block。</li>
+<li>encoders的每个block有2层：self-attention和dense，每个block结构相同，但不共享权重。</li>
+<li>decoders的每个block有3层：self-attention，attention和dense，其中attenton用来关注encoder的输出，</li>
+<li>attention技术的演进：attention + 基于rnn的seq2seq --&gt; self-attention + lstm --&gt; attention/self attention + dense.</li>
+<li>论文通过增加"多头"注意机制强化self-attention layer。 这在两个方面改善了self-attention层的表现:它扩展了模型关注不同位置的能力。单头机制虽然会注意到其他单词，但是注意力还是 很有可能完全被当前自己的状态牵制。多头的话，相当于多审视几遍 这个注意力，减少完全 关注自己 情况发生的可能性。 它给予attention层多个"表示子空间"。 正如我们接下来将看到的，通过多头，我们不仅有一组，而且有多组 query / key / value 权重矩阵(Transformer 使用八个头，因此我们最终为每个encoders / decoders设置了八组)。 这些集合中的每一个都是随机初始化的。训练完后，每组的三个矩阵，用于将embedding输入映射到表征子空间。</li>
+</ul>
+<h1 id="附录">附录</h1>
+<h2 id="输入和位置编码">输入和位置编码</h2>
+<ol type="1">
+<li>和一般的NLP任务一样，用embedding algorithm将每个输入单词转化为词向量之后，才能作为Transformer的输入使用。</li>
+<li>如下图，3个单词被embedded为3个512维的向量 <img src="./transformer_embeddings.png" /></li>
+<li>接下来，将这3个512维的词向量传入self-attention和dense层 <img src="./transformer_encoder_with_tensors.png" /></li>
+<li>位置编码（Positional Encoding）表示序列的顺序, 为了让模型学习到词的顺序关系，transformer向每个输入embedding向量（x1）又加上一个位置编码向量（t1）。 <img src="./transformer_positional_encoding_vectors.png" alt="img" /></li>
+<li>假设embedding的维度是4，那么实际的位置编码看起来是这样的: <img src="./transformer_positional_encoding_example.png" alt="img" /></li>
+</ol>
+<h2 id="多头self-attention">多头self attention</h2>
+<ol type="1">
+<li>每个单头self-attention层有三个参数矩阵，单头的context vector是一个d * m维的矩阵 <img src="./img_6.png" alt="单头self-attention" /></li>
+<li>多头attention层就有3<em>l个参数矩阵（l代表头的个数），多头的context vector是一个(dl) </em>m维的矩阵 <img src="./img_7.png" alt="多头self-attention" /> <img src="./transformer_attention_heads_qkv.png" alt="img" /></li>
+<li>类似上面提到的单头self-attention计算，我们现在只是用8个不同的权重矩阵算了8次，并且得到了8个不同的 z 矩阵 <img src="./transformer_attention_heads_z.png" alt="img" /></li>
+<li>当解读一个句子中的一个word时， Transforme中的encoder通过self-attention来回顾上下文信息，找出输入序列中的重要的word，从而更关注重要信息，并且会把重要word的value vector编码到自己的向量里面去。 RNN通过hidden state策略，使得它将当前词与上下文（准确来说只有上文）的信息进行融合。</li>
+<li>self-attention的输入是m个词向量，输出是m个context vector，vector表示融合了上下文之后，对word再次编码。 <img src="./img_2.png" alt="img_2.png" /> <img src="./img_3.png" alt="img_3.png" /></li>
+<li>如何实现self-attention layer？即如何实现计算context vector？</li>
+</ol>
+<ul>
+<li>step1: 对于每个输入的word的此向量分别计算3个表示向量：
+<ul>
+<li>Query vector： <span class="math inline">\(q_i\)</span>, to match others；</li>
+<li>Key vector：<span class="math inline">\(k_i\)</span>, to be matched；</li>
+<li>Value vector：<span class="math inline">\(v_i\)</span> to be weighted averaged 。</li>
+<li>这些向量是通过将输入的词向量做三次线性变换得到的，当然对应的三个矩阵是需要学习的。</li>
+<li>请注意，得到的新向量的维度（64）比embedding（512）小。这么设计为了保证，加入多头self-attention之后，encoder的输出和输入维度（512）还能保持一致。 &gt; 8头 * 64 = 512</li>
+</ul></li>
+<li>step2: 计算权重分数, 目的是量化其他单词应该被关注的程度。
+<ul>
+<li>计算当前单词的query vector和其他单词的key vector的内积</li>
+</ul></li>
+<li>step3: 权重分数归一化。将上一步算出来的权重得分向量（长度为m）进行归一化，目的是让权重不要受到key vector的长度（paper里面是64）的影响，这样算梯度就更稳定。</li>
+<li>step4：将归一化的权重得分向量（长度为m）送入softmax，目的是得到一个概率向量，所有数值加起来为1。示每个单词应该被当前单词关注的程度，值越大越应该被关注。。</li>
+<li>step5：计算contect vector。将每个单词的value vector使用权重概率向量进行加权求和，作为当前单词的self-attention表达（输出长度为64 * 8个头 = 512）。</li>
+</ul>
+<ol start="6" type="1">
+<li>把刚刚的过程再加入一个维度，也就是从一个单词 变成 多个单词，计算他们各自的self-attention表示，用矩阵表达该计算流程：</li>
+</ol>
+<ul>
+<li>第一步是计算 Query、 Key 和 Value 矩阵：
+<ul>
+<li>我们将embeddings塞到一个矩阵x：行数表示单词个数，列表示embedding的长度</li>
+<li>权重矩阵(WQ、 WK、 WV）：行代表embedding向量的长度，列分别代表query空间，key空间，value空间的维度</li>
+<li>X分别和这几个矩阵相乘 <img src="./transformer_self-attention-matrix-calculation.png" /></li>
+</ul></li>
+<li>第二步，利用第一步的结果来计算attention的输出，用一个矩阵计算来表达，简洁优雅 <img src="./transformer_self-attention-matrix-calculation-2.png" /></li>
+</ul>
+<h2 id="dense层">dense层</h2>
+<ol type="1">
+<li>后面怎么跟dense层进行衔接呢？1. 将这8个z矩阵进行列拼接（concat）；2. 拼接后的矩阵大小为m<em>(8</em>64) = m *512，丢入dense层 <img src="./transformer_attention_heads_weight_matrix_o.png" alt="img" /></li>
+<li>这就是multi-headed self-attention的大部分内容。把整个过程放在一个图中描述： <img src="./transformer_multi-headed_self-attention-recap.png" alt="img" /></li>
+</ol>
+<h2 id="encoder-block-多头self-attention-dense-layer">encoder block = 多头self-attention + dense layer</h2>
+<ol type="1">
+<li>encoder block ≈ 多头self-attention + dense。encoder block的输入维度是512×𝑚，输出维度是512×𝑚.</li>
+<li>以一个短句为例,看看encoder的处理流程:
+<ol type="1">
+<li>将[x1，...,xm]输入多头self-attention层, 得到m个context vector</li>
+<li>将m个context vector输入dense + relu，得到m个重新编码后的向量[u1,...,um]，dense层对m个word生效。</li>
+<li>将[u1,...,um]传递给下一个编码器encoder2作为输入。 <img src="./img_9.png" alt="img_9.png" /> <img src="./img_10.png" alt="img_10.png" /></li>
+</ol></li>
+</ol>
+<h2 id="残差连接和layer-normalization">残差连接和layer-normalization</h2>
+<ol type="1">
+<li>每个encoder block中，self-attention和dense都有一个残差连接，然后接一个层标准化（layer-normalization）。 <img src="./transformer_resideual_layer_norm.png" alt="img" /></li>
+<li>如果我们将残差连接和layer normalization用矩阵表示，就是下图： <img src="./transformer_resideual_layer_norm_2.png" alt="img" /></li>
+<li>decoder的sub-layers 也同样用到了add &amp; normalization的设计。 下图是一个简化版的Transformer架构：由2个stacked encoder和2个stacked decoder组成。 <img src="./transformer_resideual_layer_norm_3.png" alt="img" /></li>
+<li>更准确来说 encoder block = positional codeing + 多头self-attention + add &amp; normalizatioin + dense layer + add &amp; normalizatioin</li>
+</ol>
+<h2 id="encoder-network-6-encoder-block">encoder network = 6 * encoder block</h2>
+<p>encoder network is a stack of 6 encoder blocks.</p>
+<figure>
+<img src="./img_11.png" alt="img_11.png" /><figcaption aria-hidden="true">img_11.png</figcaption>
+</figure>
+<h2 id="多头attention">多头attention</h2>
+<ol type="1">
+<li>单头attention层，要计算3个向量，先计算q跟每个k的相关性（求内积），然后做softmax变换得到权重得分，对所有的v使用该权重求和，得到decoder的这个词相对encoder的表示，也就是context vector。 <img src="img.png" alt="单头atttion" /></li>
+<li>decoder中的attention，q来自两部分：下面的decoder的输出和最上面encoder中的Keys矩阵和Values矩阵 。 <img src="img_17.png" alt="img_17.png" /> <img src="img_18.png" alt="img_18.png" /></li>
+<li>Attention 层的Queries</li>
+</ol>
+<p><img src="./img_1.png" alt="img_1.png" /> <img src="./img_5.png" alt="img_5.png" /><br />
+<img src="./img_8.png" alt="img_8.png" /></p>
+<h2 id="decoder-block-多头self-attention-多头attention-dense-layer">decoder block = 多头self-attention + 多头attention + dense layer</h2>
+<p><img src="./img_13.png" alt="img_13.png" /> 1. 1个decoder block ≈ 多头self-attention + 多头attention + dense。decoder block的输入有两个，一个是encoder的输出（512×m）， 一个来自decoder当前的的输出（512×t ）. 2. encoding阶段（phase）完成后，我们开始decoding阶段，decoding的每个step描述如下： <img src="./transformer_decoding_1.gif" alt="img" /> <img src="./transformer_decoding_2.png" alt="img" /> 1. 每个时刻，输入第6个encoder产生的m个keys vectors和value vectors，输出一个element的概率分布pdf。 2. 从pdf中抽样出word（或者直接选择概率最大的word），作为decoder的输入。 3. 重复step1，直到产生结束符。 3. decoder也会用到位置编码. 4. decoder中的self attention layers:与encoder的运作方式略有不同,在decoder中，self-attention layer只能接触到输出序列中的前半部分。怎么做到呢？在softmax操作之前，masking序列后半部分(设为 -inf)</p>
+<h2 id="decoder-network-6-decoder-block">decoder network = 6 * decoder block</h2>
+<ol type="1">
+<li><p>Decoder network is a stack of 6 decoder blocks.</p>
+<p><img src="./img_12.png" /> <img src="./Transformer_decoder.png" /></p></li>
+<li><p>stack decoders输出一个数值向量。 我们怎么把它变成一个词呢？ 这是最后的dense层+softmax在做的事情。它将stack of decoders的输出映射为一个权重向量。（长度就是输出词汇表的大小）</p></li>
+<li><p>这个图从底部开始，生成一个vector作为decoder stack的输出。 然后它被转换成一个输出单词。 <img src="./transformer_decoder_output_softmax.gif" alt="img" /></p></li>
+</ol>
+<h2 id="transformer-encoder-network-decoder-network">Transformer = encoder network+ decoder network</h2>
+<p><img src="./img_14.png" alt="img_14.png" /> <img src="./img_15.png" alt="img_15.png" /> <img src="./transformer_encoders_decoders.png" alt="Transformer=encoders+decoders" /> <img src="./transformer_encoder_decoder_stack.png" /></p>
+<h2 id="训练">训练</h2>
+<p>学习的目标？ 将模型输出与目标输出进行比较，然后使用反向传播方法调整模型的权重，使模型输出更接近目标输出。</p>
+<p>如何比较两种概率分布？ 可查看 <a target="_blank" rel="noopener" href="https://colah.github.io/posts/2015-09-Visual-Information/">cross-entropy</a>和 <a target="_blank" rel="noopener" href="https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained">Kullback-Leibler</a>. 。</p>
+<p>目标概率分布：</p>
+<figure>
+<img src="./output_target_probability_distributions.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>模型输出：</p>
+<figure>
+<img src="./transformer_output_trained_model_probability_distributions.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="应用的一个例子">应用的一个例子</h2>
+<figure>
+<img src="img_20.png" alt="img_20.png" /><figcaption aria-hidden="true">img_20.png</figcaption>
+</figure>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li>Bahdanau, Cho, &amp; Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.</li>
+<li>Cheng, Dong, &amp; Lapata. Long Short-Term Memory-Networks for Machine Reading. In EMNLP, 2016.</li>
+<li>Vaswani et al. Attention Is All You Need. In NIPS, 2017.</li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=aJRsr39F4dI">Transformer模型(2/2): 从Attention层到Transformer网络</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NLP/" rel="tag"># NLP</a>
+              <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag"># 神经网络</a>
+              <a href="/tags/attention/" rel="tag"># attention</a>
+              <a href="/tags/%E6%A8%A1%E5%9E%8B%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag"># 模型可视化</a>
+              <a href="/tags/Transformer/" rel="tag"># Transformer</a>
+              <a href="/tags/Bert/" rel="tag"># Bert</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/12/deeplearning/dl5_word2vec/" rel="prev" title="深度学习6 word2vec">
+      <i class="fa fa-chevron-left"></i> 深度学习6 word2vec
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/13/reading_notes/economics/classical-economy/" rel="next" title="古典宏观经济模型">
+      古典宏观经济模型 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#transformer%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">Transformer总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E5%92%8C%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">输入和位置编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%A4%B4self-attention"><span class="nav-number">2.2.</span> <span class="nav-text">多头self attention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dense%E5%B1%82"><span class="nav-number">2.3.</span> <span class="nav-text">dense层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#encoder-block-%E5%A4%9A%E5%A4%B4self-attention-dense-layer"><span class="nav-number">2.4.</span> <span class="nav-text">encoder block &#x3D; 多头self-attention + dense layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AE%8B%E5%B7%AE%E8%BF%9E%E6%8E%A5%E5%92%8Clayer-normalization"><span class="nav-number">2.5.</span> <span class="nav-text">残差连接和layer-normalization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#encoder-network-6-encoder-block"><span class="nav-number">2.6.</span> <span class="nav-text">encoder network &#x3D; 6 * encoder block</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%A4%B4attention"><span class="nav-number">2.7.</span> <span class="nav-text">多头attention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#decoder-block-%E5%A4%9A%E5%A4%B4self-attention-%E5%A4%9A%E5%A4%B4attention-dense-layer"><span class="nav-number">2.8.</span> <span class="nav-text">decoder block &#x3D; 多头self-attention + 多头attention + dense layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#decoder-network-6-decoder-block"><span class="nav-number">2.9.</span> <span class="nav-text">decoder network &#x3D; 6 * decoder block</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transformer-encoder-network-decoder-network"><span class="nav-number">2.10.</span> <span class="nav-text">Transformer &#x3D; encoder network+ decoder network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83"><span class="nav-number">2.11.</span> <span class="nav-text">训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90"><span class="nav-number">2.12.</span> <span class="nav-text">应用的一个例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chiechie</p>
+  <div class="site-description" itemprop="description">a reader & thinker</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">200</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">208</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/chiechie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:328499034@qq.com" title="E-Mail → mailto:328499034@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/chiechie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;chiechie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chiechie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

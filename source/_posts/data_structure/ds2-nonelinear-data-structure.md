@@ -65,7 +65,7 @@ categories:
 
    1. find：给定一个element，union find 返回该element所属的group
 
-   2. uninon：merge 2 groups
+   2. uninon：merge 2 groups，将其中一个group的root变为另外一个group的root的子节点
 
       ![](./image-20210711110158015.png)
 
@@ -76,3 +76,10 @@ categories:
 3. Union find这个数据结构可以使用hashtable + 数组实现
 
    ![](./image-20210711115717168.png)
+
+4. union find 应用之--path压缩
+
+   
+
+   
+

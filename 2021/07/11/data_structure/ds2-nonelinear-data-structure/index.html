@@ -35,12 +35,17 @@
 <meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210711110158015.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210711110757010.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210711115717168.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210712095559490.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210712100625802.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210712105721400.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210712105759814.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210712105840283.png">
 <meta property="article:published_time" content="2021-07-11T05:20:51.000Z">
-<meta property="article:modified_time" content="2021-07-12T01:07:50.905Z">
+<meta property="article:modified_time" content="2021-07-12T03:40:14.390Z">
 <meta property="article:author" content="Chiechie">
-<meta property="article:tag" content="图数据">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="图数据">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210711093249240.png">
 
@@ -209,7 +214,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-12 09:07:50" itemprop="dateModified" datetime="2021-07-12T09:07:50+08:00">2021-07-12</time>
+                <time title="修改时间：2021-07-12 11:40:14" itemprop="dateModified" datetime="2021-07-12T11:40:14+08:00">2021-07-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -290,7 +295,7 @@
 <li><p>树中任意一个节点都能成为一个root节点。</p></li>
 <li><p>子树（subtrees）可能是一个叶子结点</p></li>
 <li><p>二叉树：是一种特殊的树，树中每个节点最多只有2个子节点。</p></li>
-<li><p>二叉查找树（binary seach tree）是一种特殊的二叉树，树中的所有子树都满足二叉查找树不变性（BST invariant），即左边的树&gt;右边的树。</p></li>
+<li><p>二叉查找树（binary seach tree）是一种特殊的二叉树，树中的所有子树都满足二叉查找树不变性（BST invariant），即左边的树更小，右边的树更大。</p></li>
 <li><p>二叉查找树有什么用？</p>
 <ol type="1">
 <li>可以实现很多抽象的数据类型。例如map，set</li>
@@ -298,9 +303,52 @@
 <li>实现语法树：编译器和计算机会用到</li>
 <li>Treap--一个基于概率的数据结构，使用了一个随机的二叉搜索树。</li>
 </ol></li>
-<li><p>如何在二叉查找树中插入一个元素：</p>
+<li><p>如何在二叉查找树中插入一个元素？二叉查找树要求元素可比较大小，先查找插入位置，然后插入，注意这是一个贪婪的对此迭代的过程，总共有4种位置以及对应的行动</p>
 <ol type="1">
-<li></li>
+<li>if 插入值&lt; case: recurse down 左子树</li>
+<li>if 插入值&gt; case:recurse down 右子树</li>
+<li>if 插入值== case: do something</li>
+<li>if 无节点可供插入值比较:的创建一个新的节点</li>
+</ol></li>
+<li><p>平均来看，在二叉查找树种插入一个元素需要对数时间，在最坏情况下（如下图， 需要平衡二叉搜索树），插入一个元素退化为线性时间，</p>
+<figure>
+<img src="./image-20210712095559490.png" alt="image-20210712095559490" /><figcaption aria-hidden="true">image-20210712095559490</figcaption>
+</figure></li>
+<li><p>在二叉查找树中删除一个元素的步骤：</p>
+<ol type="1">
+<li><p>找到元素在树种的位置：</p>
+<ol type="1">
+<li>使用贪婪算法从根节点点开始持续查找，当我们找到一个null戒电视，迭代结束，意味着这个二叉树中没有这个元素。</li>
+<li>每遍历到一个点，比较当前值和value的大小，当相等时，返回；当value小于该节点时，去左子树继续找；当value=该节点时，去右子树继续找。</li>
+</ol></li>
+<li><p>找到了二叉查找树种想删除节点，要删除该节点了，也面临4种情况：这个节点在是叶子结点；这个节点只有右子树；这个节点只有左子树；既有左子树又有右子树。</p>
+<figure>
+<img src="./image-20210712100625802.png" alt="image-20210712100625802" /><figcaption aria-hidden="true">image-20210712100625802</figcaption>
+</figure>
+<ul>
+<li>叶子节点直接删除，节点只有一个子树的，将子树顶上来</li>
+<li>最复杂的是被删除的节点有两个子树，可以找左子树的最大的节点/右子树最小的节点，将这个值 复制到root（上图中的⭕️），注意 左子树的最大的节点/右子树最小的节点 是左子树最右边路径的叶子，是右子树最左边路径的叶子，删除该节点的操作必然输入case1/2/3的一种，即这个节点最多包含一个子树。</li>
+</ul></li>
+</ol></li>
+</ol>
+<h2 id="树遍历算法">树遍历算法</h2>
+<ol type="1">
+<li><p>树遍历的三个算法：先序遍历(preorder traversal)，中序遍历（inorder traversal）后序遍历（postorder traversal）。递归调用，开始遍历到一个节点，将这个节点入栈，该节点遍历完，出栈。</p></li>
+<li><p>先序遍历(preorder traversal)：先打印当前节点的值，再开始遍历左右节点。top down</p>
+<figure>
+<img src="./image-20210712105721400.png" alt="image-20210712105721400" /><figcaption aria-hidden="true">image-20210712105721400</figcaption>
+</figure></li>
+<li><p>中序遍历（inorder traversal）：把左子树遍历完，打印当前值，开始遍历右子树。bottom up， 块状优先</p>
+<figure>
+<img src="./image-20210712105759814.png" alt="image-20210712105759814" /><figcaption aria-hidden="true">image-20210712105759814</figcaption>
+</figure></li>
+<li><p>后序遍历（postorder traversal）：遍历完子节点后，打印当前节点的值，bottem up的方式。<img src="./image-20210712105840283.png" alt="image-20210712105840283" /></p></li>
+<li><p>level order 遍历，需要广度优先搜索(Breadth First Search) 以top down的方式遍历</p></li>
+<li><p>怎么实现广度优先搜索(Breadth First Search)?</p>
+<ol type="1">
+<li>构造一个队列，放置当前待访问的节点。初始值是root，</li>
+<li>每访问一个节点，让这个节点出列（dequeue），将该节点的所有子节点入列（enqueue）。</li>
+<li>直到访问到最后一层，只dequeue没有enque，queue变为空时，就访问完成</li>
 </ol></li>
 </ol>
 <h2 id="参考">参考</h2>
@@ -317,9 +365,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/" rel="tag"># 图数据</a>
               <a href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag"># 编程</a>
               <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+              <a href="/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/" rel="tag"># 图数据</a>
           </div>
 
         
@@ -390,7 +438,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E5%92%8C%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97"><span class="nav-number">2.</span> <span class="nav-text">堆和优先队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#union-find"><span class="nav-number">3.</span> <span class="nav-text">Union-Find</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91-%E5%92%8C-%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91"><span class="nav-number">4.</span> <span class="nav-text">二叉树 和 二叉查找树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E5%92%8C%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97"><span class="nav-number">2.</span> <span class="nav-text">堆和优先队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#union-find"><span class="nav-number">3.</span> <span class="nav-text">Union-Find</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91-%E5%92%8C-%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91"><span class="nav-number">4.</span> <span class="nav-text">二叉树 和 二叉查找树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%E9%81%8D%E5%8E%86%E7%AE%97%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">树遍历算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -417,7 +465,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">208</span>
+        <span class="site-state-item-count">209</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

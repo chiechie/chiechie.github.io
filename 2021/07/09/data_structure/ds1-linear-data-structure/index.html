@@ -33,11 +33,11 @@
 <meta property="og:image" content="https://chiechie.github.io/Users/shihuanzhao/research_space/chiechie.github.io/source/_posts/data_structure/image-20210711085139955.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/07/09/data_structure/ds1-linear-data-structure/image-20210711091627179.png">
 <meta property="article:published_time" content="2021-07-09T04:13:11.000Z">
-<meta property="article:modified_time" content="2021-07-12T00:57:59.703Z">
+<meta property="article:modified_time" content="2021-07-12T02:50:05.213Z">
 <meta property="article:author" content="Chiechie">
-<meta property="article:tag" content="图数据">
 <meta property="article:tag" content="编程">
 <meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="图数据">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://chiechie.github.io/2021/07/09/data_structure/ds1-linear-data-structure/img.png">
 
@@ -206,7 +206,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-12 08:57:59" itemprop="dateModified" datetime="2021-07-12T08:57:59+08:00">2021-07-12</time>
+                <time title="修改时间：2021-07-12 10:50:05" itemprop="dateModified" datetime="2021-07-12T10:50:05+08:00">2021-07-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -290,7 +290,7 @@
 <p><img src="img.png" alt="img.png" /> 6. 在哪里会用到链表？ - 需要实现某个抽象数据类型时会用到链表，比如要实现列表（lists），队列（Queue）和 栈（Stack），因为这些抽象数据类型需要频繁操作adding和remocving，而这两个操作对于链表来说是相当拿手的。 - 链表很容易对现实事物建模，如火车 - 创建循环列表时很有用，可以让链表的最后一个节点的指针指向第一个节点，训练列表对于建模重复事件循环很有用， - 实现哈希表通常使用链表处理冲突的问题。 7. 链表的几个关键元素： - head：指向链表的第一个节点的pointer， - tail：指向表示链表的最后一个节点的pointer， - pointer表示邻居节点的指针， - node：表示一个包含数据和指针的对象。在实现时，每个节点也可以被表示为structures，或者classes 8. 单链表和双链表的区别，单链表的每个节点只存储下一个邻居的pointer，双向链表的每个节点存储两个指针，分别是上一个邻居节点和下一个邻居节点。前者占用的内存是后者的1/2，缺点是不知道当前节点的前一个节点是什么，要找的话，只能从head开始遍历。如果要删除某个元素，双链表的时间复杂度是常数，单链表是线性的，因为他要重新遍历以找到上家，然后修改它的指针。 <img src="img_1.png" alt="单链表vs双链表-优缺点对比" /> 9. 链表中，同时存链表的第一个节点和最后一个节点，是为了更快速的添加和删除元素。 10. 链表中的复杂度分析： - 搜索某个值在链表中的位置：单链表和双链表的复杂度是O(n) - 在链表头部/尾部插入某个元素：单链表和双链表的复杂度是O(1) - 删除头部的元素：单链表和双链表的复杂度是O(1) - 删除尾部的元素：单链表的复杂度O(n)，双链表的复杂度是O(1) - 删除中间元素：单链表的时间复杂度为复杂度O(n)，双链表的复杂度是O(n)</p>
 <h2 id="栈stack">栈（stack）</h2>
 <ol type="1">
-<li><p>栈是一种线性的数据结构，栈的一端是固定的，跟现实世界中的tack一样，stack有两个主要的操作：入栈（push）和出栈（pop）。</p></li>
+<li><p>栈是一种线性的数据结构，栈的一端是固定的，跟现实世界中的stack一样，stack有两个主要的操作：入栈（push）和出栈（pop）。</p></li>
 <li><p>栈中有一个top指针指向栈的顶端。以为对栈的操作主要是集中在顶端。</p></li>
 <li><p>数据出栈（pop）和入栈（push）符合后进先出的顺序，也叫LIFO/</p>
 <figure>
@@ -339,9 +339,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/" rel="tag"># 图数据</a>
               <a href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag"># 编程</a>
               <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+              <a href="/tags/%E5%9B%BE%E6%95%B0%E6%8D%AE/" rel="tag"># 图数据</a>
           </div>
 
         
@@ -442,7 +442,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">208</span>
+        <span class="site-state-item-count">209</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

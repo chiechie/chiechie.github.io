@@ -17,7 +17,7 @@ categories:
 1. 假定三期股价为 [1, 0.5, 1.25]，仓位1: [0.5, 1, 0] & 仓位2: [1, 0.5, 0]，则前者挣钱而后者亏钱。这种情况下，更偏好这样的下注策略：建仓时保留一些现金，如果交易信号加强（股价变为0.5），就追加投资。
 
 3. 下图是交易信号(z)和最佳下注大小(m)之间的函数关系：
-   
+  
    横轴的z表示交易信号强弱，纵轴m代表最佳下注大小：$m = x (2Z [z] − 1), m\in{[-1,1]}$
    
    交易信号z是模型预测结果x的函数，预测结果x越极端，则分母越小，分子绝对值越大， z越接近$+\infty$或者$-\infty$，则交易信号越强, 但是可以看到仓位超过一定范围就饱和了。
@@ -112,12 +112,36 @@ categories:
     - 在模拟数据上做simulation
 
 2. 回测统计量（Backtest statistics）应该帮助揭露策略的弊端（如可能的风险）、帮助投资者比较不同策略。
+
 3. 一般统计量（general characteristics）能告诉我们回测的大致特性：时间范围（回测起讫时间）、资产规模（Average AUM） ，策略的资金容量（Capacity）、杠杆率（Leverage）、平均持仓时间（Average holding period）、换手率（Annualized turnover），Maximum dollar position size/Ratio of longs/Frequency of bets
+
 4. 衡量策略表现（performance）的统计量包括：盈亏（PnL, Profit and Loss）、多头盈亏（PnL from long positions）、年化回报率（Annualized rate of return）、命中率（hit ratio）、命中回报率（Average return from hits）、失误回报率（Average return from misses）……
+
 5. 策略的回报率往往在一段时间内连续为正 / 负，称之为“周期”（Runs）。周期的存在增加了策略回撤的风险，所以需要一些统计量来衡量，包括：Returns Concentration（衡量回报的集中程度）、drawdown（回撤）、time under water。
+
 6. 某些策略错误地估计交易费用导致失败，这些需要考虑的统计量包括：Broker fees per turnover、Average slippage per turnover……
-7. 一些考虑到风险的统计量包括：夏普比率（Sharpe Ratio/ SR）、PSR（Probabilistic SR）、DSR（Deflated SR）、信息率（Information ratio）……
-   > 夏普值，衡量的是一项投资在对其调整风险后，相对于无风险资产的表现。它的定义是投资收益与无风险收益之差的期望值，再除以投资标准差（即其波动性）。它代表投资者额外承受的每一单位风险所获得的额外收益。
+
+7. 回测通常看以下指标：
+
+   1. 绝对收益：净损失/收益（Net Profit/Loss），投资收益率
+   2. 剔除通货膨胀的收益：风险调整之后的收益率（risk-adjusted return），市场敞口，波动性
+
+8. 一些考虑到风险的统计量包括：夏普率（Sharpe Ratio，SR）、概率夏普比率（Probabilistic SR， PSR）、DSR（Deflated SR）、信息率（Information ratio）……
+
+   > 夏普率衡量的是一项投资在对其调整风险后，相对于无风险资产的表现。
+   >
+   > 夏普率 = (投资收益 - 无风险收益)/投资标准差(or波动率）。
+   >
+   > 夏普率代表投资者额外承受的每一单位风险所获得的额外收益。
+
+   ![image-20210712151844519](./image-20210712151844519.png)
+
+   
+
+   - Usually, any **Sharpe ratio** greater than 1.0 is considered acceptable to good by investors. 
+   - A **ratio** higher than 2.0 is rated as very good.
+   -  A **ratio** of 3.0 or higher is considered excellent. 
+   - A **ratio** under 1.0 is considered sub-optimal.
 > Every backtest result must be reported in conjunction with all the trials involved in its production. Absent that information, it is impossible to assess the backtest’s “false discovery“ probability.
 —— MARCOS’ THIRD LAW OF BACKTESTING
 

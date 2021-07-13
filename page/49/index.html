@@ -349,7 +349,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+                <time title="修改时间：2021-07-13 18:10:25" itemprop="dateModified" datetime="2021-07-13T18:10:25+08:00">2021-07-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -372,39 +372,41 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="几个问题">几个问题：</h2>
-<ul>
-<li>价值 指的是什么？</li>
-<li>怎么使用深度学习技术来求解这个问题？难点在哪里？</li>
-<li>跟DQN并列的概念还有哪些？</li>
-<li>DQN网络的输入输出是什么？中间结构是什么？</li>
-<li>DQN怎么更新参数？</li>
-</ul>
-<h2 id="回答">回答</h2>
-<ul>
-<li>「价值」 指的是 <strong>最优动作价值函数</strong>，即如果后续action都遵循<strong>最优策略</strong>，那么当前的&lt;state，action&gt;的得分。</li>
-<li><strong>最优动作价值函数</strong> 相当于 一个 先知。</li>
-<li>回到强化学习要解决的问题本身（MDP）--agent的目标是 打赢游戏（最大化total reward），那么我们将这个目标拆解为两个步骤，
-<ul>
-<li><ol type="1">
+          <h1 id="总结">总结</h1>
+<h1 id="附录-自问自答">附录 （自问自答）</h1>
+<h2 id="几个问题">几个问题：</h2>
+<ol type="1">
+<li><p>价值 指的是什么？</p>
+<p>「价值」 指的是 <strong>最优动作价值函数</strong>，即如果后续action都遵循<strong>最优策略</strong>，那么当前的&lt;state，action&gt;的得分。<strong>最优动作价值函数</strong> 相当于 一个 先知。</p></li>
+<li><p>怎么使用深度学习技术来求解这个问题？</p>
+<p>回到强化学习要解决的问题本身（MDP）--agent的目标是 打赢游戏（最大化total reward），那么我们将这个目标拆解为两个步骤，</p>
+<ol type="1">
 <li>找到最优动作价值函数</li>
-</ol></li>
-<li><ol start="2" type="1">
 <li>在最优价值函数的指引下作出最优决策</li>
 </ol></li>
+<li><p>使用深度学习技术来学习价值函数，难点在哪里？</p>
+<p>难点在于，谁都不知道先知（<strong>最优价值函数</strong>）长什么样子（股票的话，如果认为只有一条价格路径，可以算出来，如果只是众多路径中的一条，算不出来）</p></li>
+<li><p>DQN的主要思路是什么？</p>
+<p>DQN的想法就是，使用一个深度神经网络拟合 <strong>最优动作价值函数，</strong></p></li>
+<li><p>跟DQN并列的概念还有哪些？</p></li>
+<li><p>DQN网络的输入输出是什么？中间结构是什么？</p>
+<p>DQN的输入是state，输出是所有action对应的分数。</p></li>
+<li><p>DQN怎么更新参数？</p>
+<ul>
+<li><p>可以把一整局（episode）游戏玩完，搜集到反馈信号（total reward）再去更新DQN的参数。</p></li>
+<li><p>也可以玩一步，更新一下参数----就是TD算法</p></li>
 </ul></li>
-<li>DQN的想法就是，使用一个深度神经网络拟合 <strong>最优动作价值函数</strong></li>
-<li>难点在于，谁都不知道 先知（<strong>最优价值函数</strong>）长什么样子（少数情况，如玩游戏可能可以知道）</li>
-<li>DQN的输入是state，输出是所有action对应的分数
+<li><p>Q函数 和 reward 函数 是不是可以相互转化？--是这样吗？</p>
+<ul>
+<li>Q 函数 == reward （来自 environment）+ 策略（来自 agent）</li>
+<li>Q * 函数 == reward （来自 environment）+ 最优策略（来自 agent）</li>
+</ul>
+<p>不是啊，策略输出的是行为概率，Q是价值。量纲都不一样。</p></li>
+</ol>
+<h2 id="一图胜千言">一图胜千言</h2>
 <ul>
 <li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FfsQADMgSRa.png?alt=media&amp;token=18bf844e-aa59-4016-85d6-8cdfc801a9ce" title="fig:" alt="价值网络" /></li>
 <li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&amp;token=71ba382a-432c-4c00-8759-692d84c03f3d" title="fig:" alt="策略网络" /></li>
-</ul></li>
-<li>怎么更新模型参数
-<ul>
-<li>可以把一整局游戏玩完，搜集到反馈信号（total reward）再去更新DQN的参数。</li>
-<li>也可以玩一步，更新一下参数，就是TD算法</li>
-</ul></li>
 </ul>
 <h2 id="时序差分算法td算法">时序差分算法（TD算法）</h2>
 <ul>
@@ -418,15 +420,6 @@
 <li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FROMmZ-LTGx.png?alt=media&amp;token=dae7cba7-84e1-4e7f-8638-60eaa2b1c166" /></li>
 </ul></li>
 <li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FEuWKISitjj.png?alt=media&amp;token=0427aa38-bad9-46f3-98bd-a1eb051df5cd" title="fig:" alt="时序差分算法" /></li>
-</ul>
-<h2 id="没想清楚">没想清楚</h2>
-<ul>
-<li>更新模型参数时，如果 把一整局游戏玩完，搜集到反馈信号（total reward）再去更新DQN的参数，那么，中间的决策过程怎么放到训练样本里面来？玩多次么？怎么搜集「最优价值」的反馈信号？</li>
-<li>Q函数 和 reward 函数 是不是可以相互转化？--是这样把？
-<ul>
-<li>Q 函数 == reward （来自 environment）+ 策略（来自 agent）</li>
-<li>Q * 函数 == reward （来自 environment）+ 最优策略（来自 agent）</li>
-</ul></li>
 </ul>
 <h2 id="时序差分算法的其他资料">时序差分算法的其他资料</h2>
 <ol type="1">

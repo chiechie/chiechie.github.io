@@ -40,8 +40,10 @@
 <meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210712105721400.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210712105759814.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210712105840283.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210713113655458.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/07/11/data_structure/ds2-nonelinear-data-structure/image-20210713122803380.png">
 <meta property="article:published_time" content="2021-07-11T05:20:51.000Z">
-<meta property="article:modified_time" content="2021-07-13T03:07:40.828Z">
+<meta property="article:modified_time" content="2021-07-13T08:06:37.443Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="图数据">
 <meta property="article:tag" content="编程">
@@ -214,7 +216,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-13 11:07:40" itemprop="dateModified" datetime="2021-07-13T11:07:40+08:00">2021-07-13</time>
+                <time title="修改时间：2021-07-13 16:06:37" itemprop="dateModified" datetime="2021-07-13T16:06:37+08:00">2021-07-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -254,7 +256,8 @@
 <li><p>注意，优先队列只能存储可比较的数据。</p></li>
 <li><p>优先队列出队（poll）是如何找到最优先的成员的？借助堆（heap）。</p></li>
 <li><p>优先队列通常是使堆实现，因为对优先队列进行操作时，使用堆构造的优先队列时间复杂度最低。除了堆还有别的数据结构也可以实现优先队列，例如一个无序的链表，但是时间复杂度较高。</p></li>
-<li><p>堆（heap）是什么？ 堆是一个基于树的数据结构，它满足堆不变性质（也叫堆属性）：堆中的所有的父节点的优先级都大于或者孩子节点的value。最大堆（max heap）是指，父节点的value都大于等于孩子节点。最小堆（min heap）是指，小于或者等于。 <img src="./image-20210711093249240.png" /></p></li>
+<li><p>堆（heap）是什么？ 堆是一个基于树的数据结构，它满足堆不变性质（也叫堆属性）：堆中的所有的父节点的优先级都大于或者孩子节点的value。最大堆（max heap）是指，父节点的value都大于等于孩子节点。最小堆（min heap）是指，小于或者等于。</p>
+<p><img src="./image-20210711093249240.png" /></p></li>
 <li><p>什么时候需要使用优先队列？在图算法中会经常用到</p>
 <ol type="1">
 <li>最短路径搜索算法--Dijkstra;s</li>
@@ -267,8 +270,10 @@
 <li><p>堆又很多种，binary heap/binomial heap等，最常用的堆是<strong>二叉堆</strong>（binary heap）。二叉堆是一个二叉树，并且支持堆不变性，二叉树中，每个节点都有2个孩子。</p></li>
 <li><p>完全二叉树：除了最后一层，每一层都是完全填充的，并且节点都会尽量往左边排。完全二叉树在数据插入的时候很有用</p>
 <p><img src="./image-20210711100432168.png" /></p></li>
-<li><p>怎么表示二叉堆？--数组。</p>
-<p><img src="./image-20210711102017358.png" /></p></li>
+<li><p>怎么表示二叉堆？--数组。</p></li>
+</ol>
+<p><img src="./image-20210711102017358.png" /></p>
+<ol start="11" type="1">
 <li><p>找到某个节点的父亲节点和孩子节点，利用左下方的公式计算相应的父节点/子节点的索引，然后去数组查找该索引对应的取值。 <img src="./image-20210711102047154.png" /></p></li>
 <li><p>在二叉堆中添加元素：先将该元素添加到最后一层的，最后一个节点的右边，然后不断的使用冒泡的方法，跟父亲节点互换位置,</p></li>
 <li><p>从二叉堆中删除顶端元素，时间复杂度为O（logn），从二叉堆中删除某个值的元素，时间复杂度为O(n), 因为时间花在找到这个元素上面了。</p></li>
@@ -331,6 +336,14 @@
 </ul></li>
 </ol></li>
 </ol>
+<h2 id="fenwick树todo">Fenwick树【todo】</h2>
+<h2 id="平衡二叉查找树todo">平衡二叉查找树【todo】</h2>
+<ol type="1">
+<li>一个平衡二叉查找树是一个自平衡二叉叉招数，这个树会调整自己的顺序，以保持一个低的层数，允许更快速的操作，例如插入和删除。</li>
+<li>相对二叉查找树，一般情况下，增删改查的平均时间复杂度是对数级别，最坏情况下，二叉查找树时间复杂度是线性的，平衡二叉查找树的时间复杂度还是非线形的。</li>
+<li>平衡二叉树的秘密配方：树不变性；树的翻转（rotation）。</li>
+</ol>
+<p>【如何操作？】</p>
 <h2 id="树遍历算法">树遍历算法</h2>
 <ol type="1">
 <li><p>树遍历的三个算法：先序遍历(preorder traversal)，中序遍历（inorder traversal）后序遍历（postorder traversal）。递归调用，开始遍历到一个节点，将这个节点入栈，该节点遍历完，出栈。</p></li>
@@ -342,7 +355,10 @@
 <figure>
 <img src="./image-20210712105759814.png" alt="image-20210712105759814" /><figcaption aria-hidden="true">image-20210712105759814</figcaption>
 </figure></li>
-<li><p>后序遍历（postorder traversal）：遍历完子节点后，打印当前节点的值，bottem up的方式。<img src="./image-20210712105840283.png" alt="image-20210712105840283" /></p></li>
+<li><p>后序遍历（postorder traversal）：遍历完子节点后，打印当前节点的值，bottem up的方式。</p>
+<figure>
+<img src="./image-20210712105840283.png" alt="image-20210712105840283" /><figcaption aria-hidden="true">image-20210712105840283</figcaption>
+</figure></li>
 <li><p>level order 遍历，需要广度优先搜索(Breadth First Search) 以top down的方式遍历</p></li>
 <li><p>怎么实现广度优先搜索(Breadth First Search)?</p>
 <ol type="1">
@@ -364,25 +380,30 @@
 <p>概率函数probing function）有时候会陷入死循环，更合适的做法是找一个值域超过N的函数 作为概率函数。</p>
 </blockquote></li>
 </ol></li>
-<li><p>hash表是一个数据结构，提供key到value的映射，映射规则是hashing</p></li>
-<li></li>
+<li><p>哈希表是一个数据结构，提供key到value的映射，映射规则是hashing</p></li>
 </ol>
 <h2 id="后缀数组">后缀数组</h2>
 <ol type="1">
 <li><p>后缀（suffix）一个字符串的尾端的子字符串。</p></li>
-<li><p>后缀数组（suffix array）是一个数组，由一个字符串的所有后缀组成</p></li>
-<li><p>LCP数组是一个数组，每个值 记录 两个相邻（按照首字母排序）后缀子串的有多少个相同的字符。</p></li>
+<li><p>后缀数组（suffix array）是一个数组，由一个字符串的所有后缀组成，成员个数为字符串长度。</p></li>
+<li><p>后缀数组比后缀树在空间上更优，功能上比后缀树还多一点信息--LCP数组。</p></li>
+<li><p>最长公共前缀(LongestCommonPrefix, LCP)是一个数组，每个值记录两个相邻（按照首字母排序）后缀子串的有多少个相同的字符。</p>
+<figure>
+<img src="./image-20210713113655458.png" alt="image-20210713113655458" /><figcaption aria-hidden="true">image-20210713113655458</figcaption>
+</figure></li>
 <li><p>有很多方法可以构造LCP向量</p></li>
-<li><p>后缀数组的应用之：</p>
-<ol type="1">
-<li>查找唯一的子字符串</li>
-</ol></li>
-<li><p>最长公共前缀数组（LongestCommonPrefix）L</p></li>
+<li><p>怎么计算一个字符串包含的所有的字符子串，要去重：</p>
+<figure>
+<img src="./image-20210713122803380.png" alt="image-20210713122803380" /><figcaption aria-hidden="true">image-20210713122803380</figcaption>
+</figure></li>
+<li><p>后缀数组的应用之--查找最长的公共字符子串</p>
+<h2 id="带索引的优先队列todo">带索引的优先队列[todo]</h2>
+<p>Indexed Priority Queue</p></li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RBSGKlAvoiM&amp;t=11600s">Data Structures Easy to Advanced Course - Full Tutorial from a Google Engineer</a></li>
-<li></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/akzare/Algorithms">Algorithms &amp; data structures project</a></li>
 </ol>
 
     </div>
@@ -466,7 +487,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E5%92%8C%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97"><span class="nav-number">2.</span> <span class="nav-text">堆和优先队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#union-find"><span class="nav-number">3.</span> <span class="nav-text">Union-Find</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91-%E5%92%8C-%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91"><span class="nav-number">4.</span> <span class="nav-text">二叉树 和 二叉查找树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%E9%81%8D%E5%8E%86%E7%AE%97%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">树遍历算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="nav-number">6.</span> <span class="nav-text">哈希表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84"><span class="nav-number">7.</span> <span class="nav-text">后缀数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E5%92%8C%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97"><span class="nav-number">2.</span> <span class="nav-text">堆和优先队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#union-find"><span class="nav-number">3.</span> <span class="nav-text">Union-Find</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91-%E5%92%8C-%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91"><span class="nav-number">4.</span> <span class="nav-text">二叉树 和 二叉查找树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fenwick%E6%A0%91todo"><span class="nav-number">5.</span> <span class="nav-text">Fenwick树【todo】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91todo"><span class="nav-number">6.</span> <span class="nav-text">平衡二叉查找树【todo】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%E9%81%8D%E5%8E%86%E7%AE%97%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">树遍历算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="nav-number">8.</span> <span class="nav-text">哈希表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84"><span class="nav-number">9.</span> <span class="nav-text">后缀数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%A6%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97todo"><span class="nav-number">10.</span> <span class="nav-text">带索引的优先队列[todo]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">11.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

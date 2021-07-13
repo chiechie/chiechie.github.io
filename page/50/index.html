@@ -286,7 +286,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+                <time title="修改时间：2021-07-13 17:55:14" itemprop="dateModified" datetime="2021-07-13T17:55:14+08:00">2021-07-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -309,26 +309,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ul>
-<li>强化学习的基础是马尔可夫决策过程一个马尔可夫决策过程由状态空间，决策空间，状态转移，奖励函数组成。</li>
-<li>总结一下，强化学习就是一系列的决策过程，他试图找到一个长期收益最大的一系列的决策行为。</li>
-</ul>
-<h1 id="马尔可夫过程">马尔可夫过程</h1>
+          <blockquote>
+<p>强化学习就是一系列的决策过程，他试图找到一个长期收益最大的策略，马尔可夫决策过程可以看成是一个浓缩版的强化学习</p>
+</blockquote>
+<h1 id="马尔可夫过程马尔可夫奖励过程马尔可夫决策过程">马尔可夫过程/马尔可夫奖励过程/马尔可夫决策过程</h1>
 <h2 id="基本概念">基本概念</h2>
 <ul>
-<li>状态转移矩阵(P)：<span class="math inline">\(p\left(s_{t+1}=s^{\prime} \mid s_{t}=s\right)\)</span>
+<li><p>状态转移矩阵(P)：<span class="math inline">\(p\left(s_{t+1}=s^{\prime} \mid s_{t}=s\right)\)</span></p>
 <ul>
 <li><span class="math inline">\(P=\left[\begin{array}{cccc}P\left(s_{1} \mid s_{1}\right) &amp; P\left(s_{2} \mid s_{1}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{1}\right) \\ P\left(s_{1} \mid s_{2}\right) &amp; P\left(s_{2} \mid s_{2}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{2}\right) \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ P\left(s_{1} \mid s_{N}\right) &amp; P\left(s_{2} \mid s_{N}\right) &amp; \ldots &amp; P\left(s_{N} \mid s_{N}\right)\end{array}\right]\)</span></li>
 </ul></li>
-<li>horizon：在每个episode中，最大时间步数</li>
-<li>轨迹(episode)：从这个马尔可夫链中采样得到的，每采样一轮就得到叫一个轨迹</li>
-<li>马尔可夫性质： future is independent of the past given the present
+<li><p>horizon：在每个episode中，最大时间步数</p></li>
+<li><p>轨迹(episode)：从这个马尔可夫链中采样得到的，每采样一轮就得到叫一个轨迹，例如一局游戏</p></li>
+<li><p>马尔可夫性质： future is independent of the past given the present， <span class="math inline">\(s_t\)</span>是符合马尔可夫性质的：</p>
 <ul>
-<li>历史状态： <span class="math inline">\(h_{t}=\left\{s_{1}, s_{2}, s_{3}, \ldots, s_{t}\right\}\)</span></li>
-<li><span class="math inline">\(s_t\)</span>是符合马尔可夫性质的： <span class="math inline">\(\begin{aligned} p\left(s_{t+1} \mid s_{t}\right) &amp;=p\left(s_{t+1} \mid h_{t}\right) \\ p\left(s_{t+1} \mid s_{t}, a_{t}\right) &amp;=p\left(s_{t+1} \mid h_{t}, a_{t}\right) \end{aligned}\)</span></li>
+<li><p>给定历史状态： <span class="math inline">\(h_{t}=\left\{s_{1}, s_{2}, s_{3}, \ldots, s_{t}\right\}\)</span></p>
+<p><span class="math display">\[\begin{aligned} p\left(s_{t+1} \mid s_{t}\right) &amp;=p\left(s_{t+1} \mid h_{t}\right) \\ p\left(s_{t+1} \mid s_{t}, a_{t}\right) &amp;=p\left(s_{t+1} \mid h_{t}, a_{t}\right) \end{aligned}\]</span></p></li>
 </ul></li>
 </ul>
-<h2 id="马尔可夫链mp">马尔可夫链（MP）</h2>
+<h2 id="马尔可夫过程mp">马尔可夫过程（MP）</h2>
 <p>马尔可夫链 （MP， Markov Process）：<span class="math inline">\(\left(S, P^{\pi}\right)\)</span></p>
 <ul>
 <li>一个状态转移如果符合马尔可夫，即一个状态的下一个状态只取决于当前状态，而跟他当前状态之前的状态都没有关系</li>
@@ -392,13 +391,13 @@
 </ul></li>
 <li>计算图
 <ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FDt61DqVl6N.png?alt=media&amp;token=9736af0f-e3ef-457b-86d6-abae268af1a3" /><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FB2u5I82qnF.png?alt=media&amp;token=02a1de1d-4a08-4f43-983b-65eb815df328" /></li>
+<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FDt61DqVl6N.png?alt=media&amp;token=9736af0f-e3ef-457b-86d6-abae268af1a3" /><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FB2u5I82qnF.png?alt=media&amp;token=02a1de1d-4a08-4f43-983b-65eb815df328" /> ## 马尔可夫决策过程（ MDP）</li>
 </ul></li>
 </ul>
-<h2 id="马尔可夫决策过程-mdp">马尔可夫决策过程（ MDP）</h2>
 <p>马尔可夫决策过程（MDP， Markov Decision Process）： <span class="math inline">\(\operatorname{MDP}(S, A, P, R, \gamma)\)</span></p>
 <ul>
 <li>MDP能够对现实世界中很多问题建模，是研究强化学习的基础框架</li>
+<li>一个马尔可夫决策过程由状态空间，决策空间，状态转移，奖励函数组成。</li>
 <li>MDP要求环境变量是完全可观测，但是现实中部分可观测问题也可转化为MDP问题</li>
 <li>「马尔可夫决策过程」相对于「马尔可夫奖励过程」多了决策，所以需要建模的对象多了两个要素：action 和 概率转移<span class="math inline">\(P\left(s_{t+1}=s^{\prime} \mid s_{t}=s, a_{t}=a\right)\)</span>。 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbPx8H2l13W.png?alt=media&amp;token=6e62ffdf-8434-40b4-b312-5037d805f911" /></li>
 <li>马尔可夫决策过程中的策略函数（policy evaluation）</li>
@@ -409,31 +408,33 @@
 <li>预测问题：给定策略时，求某个状态的价值函数。（先知）</li>
 <li>控制问题：最优的策略，和对应的状态价值函数。（军师）</li>
 </ul>
-<h2 id="mpmrpmdp三者的关系">MP/MRP/MDP三者的关系</h2>
+<h2 id="马尔可夫过程马尔可夫奖励过程马尔可夫决策过程三者的关系">马尔可夫过程/马尔可夫奖励过程/马尔可夫决策过程三者的关系</h2>
 <ul>
-<li>MP和MRP是MDP的简化版</li>
-<li>MP只有一个概率转移</li>
-<li>MRP是MP + Reward，但是还是随波逐流</li>
-<li>MDP + action，多了主观能动性</li>
+<li>马尔可夫过程和马尔可夫奖励过程是马尔可夫决策过程的简化版</li>
+<li>马尔可夫过程(MP)只有一个概率转移</li>
+<li>马尔可夫奖励过程(MRP) = 马尔可夫过程(MP) + Reward，但是没有自由意志，还是随波逐流</li>
+<li>马尔可夫决策过程(MDP) = 马尔可夫奖励过程 （MRP）+ action，多了自由意志</li>
 <li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FIuFRm5JvB6.png?alt=media&amp;token=1ad94ce8-0886-4329-8902-dbf859b8ef22" /></li>
 </ul>
-<h1 id="基于模型的方法">基于模型的方法</h1>
-<h2 id="课前--大大问号">课前--大大问号</h2>
-<ul>
-<li>model-based 是什么？对环境建模是什么意思？model-based是强化学习中一种技术，核心思想就是对环境建模，使用计算机构建仿真环境。</li>
-<li>提出该方法是为了解决什么问题？有哪些应用场景？model-based是为了解决样本获取成本高的问题。例如，无人驾驶/无人机，如果让机器在真实交通环境中行驶，并且通过于真实环境互动来获取数据，那必然以发生多次严重车祸作为获取样本的巨大代价。在机器人场景中应用较多。</li>
-<li>类似的流派或者同级别的 不同的流派 还有什么？跟model-based相对的概念是model-free，它直接通过跟环境交互来获取样本，假设现实中获取样本的成本几乎为0。现在的强化学习论文中，大部分是采用的这个方法。</li>
-<li>model-based方法是怎么实现的？对环境建模：输入&lt;state,action&gt;，输出下一个&lt;state,reward&gt; 。</li>
-<li>在多大程度上能解决背景中的问题。有没有引发新的问题？</li>
-<li>有没有理论支撑？</li>
-<li>不能做什么？
-<ul>
-<li>有理论支撑的话，理论上能证明解决不了什么问题？</li>
-<li>工程或者落地时的难点？</li>
-</ul></li>
-<li>我们的基于股票预测结果构造策略 可以reformulate 成强化学习中的 什么方法？</li>
-</ul>
-<h2 id="参考资料">参考资料</h2>
+<h1 id="附录自问自答">附录（自问自答）</h1>
+<ol type="1">
+<li><p>model-based 是什么？对环境建模是什么意思？</p>
+<p>model-based是强化学习中一种技术，核心思想就是对环境建模，使用计算机构建仿真环境。比如构建一个模拟环境，更新状态和reward。</p></li>
+<li><p>提出model-based是为了解决什么问题？有哪些应用场景？</p>
+<p>model-based是为了解决样本获取成本高的问题。例如，无人驾驶/无人机，如果让机器在真实交通环境中行驶，并且通过于真实环境互动来获取数据，那必然以发生多次严重车祸作为获取样本的巨大代价。在机器人场景中应用较多。</p></li>
+<li><p>类似model-based的流派或者同级别的不同的流派 还有什么？</p>
+<p>跟model-based相对的概念是无模型（model-free）方法，它直接通过跟环境交互来获取样本，假设现实中获取样本的成本几乎为0。但是现在的强化学习论文大部分都采用model-free的方法，可见离落地还有一段距离。</p></li>
+<li><p>model-based方法是怎么实现的？</p>
+<p>对环境建模：输入&lt;state,action&gt;，输出下一个&lt;state,reward&gt; 。</p></li>
+<li><p>在多大程度上能解决背景中的问题。有没有引发新的问题？</p></li>
+<li><p>Model-based不能做什么？</p></li>
+<li><p>有没有相关理论支撑？理论上能证明解决不了什么问题？</p></li>
+<li><p>工程或者落地时的难点？</p></li>
+<li><p>基于股票预测结果构造策略 可以reformulate 成强化学习中的 什么方法？</p>
+<p>model-free的方法就可以，但是样本很少，因为历史不会重演。</p>
+<p>理论上是可以使用model-based的方法，从观测数据中估计生成模型的参数，然后从该分布中采样路径，构造多份合成数据，然后在这个模拟环境中，学习策略vs回测效果。</p></li>
+</ol>
+<h1 id="参考资料">参考资料</h1>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hV411d7Sg">周博磊课程-bilibili</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/318703290/answer/751123263">知乎：model-based和model-free模型优缺点</a></li>

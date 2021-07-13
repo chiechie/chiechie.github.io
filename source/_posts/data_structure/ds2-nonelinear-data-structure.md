@@ -152,11 +152,42 @@ categories:
 ## 哈希表
 
 1. hash函数是什么？就是一个函数，它把key映射为固定范围内的一个数。key可以是string，list等多种类型
-2. hash函数的属性，value不同对应的key一定不相同，key相同对应的value一定相同。
-3. hash表是一个数据结构，提供key到value的映射，映射规则是hashing
-4. key是什么都可以，只要是唯一值就可以了，value可以存任何值，例如存储一篇文章中，所有单词出现的次数。
 
-4. hash
+2. hash函数的属性，value不同对应的key一定不相同，key相同对应的value一定相同。
+
+3. key是什么都可以，只要是唯一值就可以了，value可以存任何值，例如存储一篇文章中，所有单词出现的次数。
+
+4. hash函数需要解决哈希冲撞（hash collision）的问题，有两个方法
+
+   1. separate chaining： 维护一个单独的数据结构例如链表（数组，二叉树，自平衡二叉树都行），把一个value对应的多个key存到一起。separate chaining是最常用的方法。
+
+   2. 公开地址（open addressing）：需要关注哈希表的负载，需要hash value已经占用的话，就找一个未被占用的slot（怎么找？需要构造一个概率函数），把key存进去
+
+      > 概率函数probing function）有时候会陷入死循环，更合适的做法是找一个值域超过N的函数 作为概率函数。
+
+5. hash表是一个数据结构，提供key到value的映射，映射规则是hashing
+
+6. 
+
+## 后缀数组
+
+1. 后缀（suffix）一个字符串的尾端的子字符串。
+
+2. 后缀数组（suffix array）是一个数组，由一个字符串的所有后缀组成
+
+3. LCP数组是一个数组，每个值 记录 两个相邻（按照首字母排序）后缀子串的有多少个相同的字符。
+
+4. 有很多方法可以构造LCP向量
+
+5. 后缀数组的应用之：
+
+   1. 查找唯一的子字符串
+
+6. 最长公共前缀数组（LongestCommonPrefix）L
+
+   
+
+
 
 ## 参考
 

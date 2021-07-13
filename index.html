@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-12 11:40:14" itemprop="dateModified" datetime="2021-07-12T11:40:14+08:00">2021-07-12</time>
+                <time title="修改时间：2021-07-13 11:07:40" itemprop="dateModified" datetime="2021-07-13T11:07:40+08:00">2021-07-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -325,6 +325,34 @@
 <li>每访问一个节点，让这个节点出列（dequeue），将该节点的所有子节点入列（enqueue）。</li>
 <li>直到访问到最后一层，只dequeue没有enque，queue变为空时，就访问完成</li>
 </ol></li>
+</ol>
+<h2 id="哈希表">哈希表</h2>
+<ol type="1">
+<li><p>hash函数是什么？就是一个函数，它把key映射为固定范围内的一个数。key可以是string，list等多种类型</p></li>
+<li><p>hash函数的属性，value不同对应的key一定不相同，key相同对应的value一定相同。</p></li>
+<li><p>key是什么都可以，只要是唯一值就可以了，value可以存任何值，例如存储一篇文章中，所有单词出现的次数。</p></li>
+<li><p>hash函数需要解决哈希冲撞（hash collision）的问题，有两个方法</p>
+<ol type="1">
+<li><p>separate chaining： 维护一个单独的数据结构例如链表（数组，二叉树，自平衡二叉树都行），把一个value对应的多个key存到一起。separate chaining是最常用的方法。</p></li>
+<li><p>公开地址（open addressing）：需要关注哈希表的负载，需要hash value已经占用的话，就找一个未被占用的slot（怎么找？需要构造一个概率函数），把key存进去</p>
+<blockquote>
+<p>概率函数probing function）有时候会陷入死循环，更合适的做法是找一个值域超过N的函数 作为概率函数。</p>
+</blockquote></li>
+</ol></li>
+<li><p>hash表是一个数据结构，提供key到value的映射，映射规则是hashing</p></li>
+<li></li>
+</ol>
+<h2 id="后缀数组">后缀数组</h2>
+<ol type="1">
+<li><p>后缀（suffix）一个字符串的尾端的子字符串。</p></li>
+<li><p>后缀数组（suffix array）是一个数组，由一个字符串的所有后缀组成</p></li>
+<li><p>LCP数组是一个数组，每个值 记录 两个相邻（按照首字母排序）后缀子串的有多少个相同的字符。</p></li>
+<li><p>有很多方法可以构造LCP向量</p></li>
+<li><p>后缀数组的应用之：</p>
+<ol type="1">
+<li>查找唯一的子字符串</li>
+</ol></li>
+<li><p>最长公共前缀数组（LongestCommonPrefix）L</p></li>
 </ol>
 <h2 id="参考">参考</h2>
 <ol type="1">

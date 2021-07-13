@@ -11,24 +11,29 @@ categories:
 ---
 
 
-- 强化学习的基础是马尔可夫决策过程一个马尔可夫决策过程由状态空间，决策空间，状态转移，奖励函数组成。
-- 总结一下，强化学习就是一系列的决策过程，他试图找到一个长期收益最大的一系列的决策行为。
 
-# 马尔可夫过程
+>  强化学习就是一系列的决策过程，他试图找到一个长期收益最大的策略，马尔可夫决策过程可以看成是一个浓缩版的强化学习
+
+
+
+# 马尔可夫过程/马尔可夫奖励过程/马尔可夫决策过程
 
 ## 基本概念
 
 - 状态转移矩阵(P)：$p\left(s_{t+1}=s^{\prime} \mid s_{t}=s\right)$
     - $P=\left[\begin{array}{cccc}P\left(s_{1} \mid s_{1}\right) & P\left(s_{2} \mid s_{1}\right) & \ldots & P\left(s_{N} \mid s_{1}\right) \\ P\left(s_{1} \mid s_{2}\right) & P\left(s_{2} \mid s_{2}\right) & \ldots & P\left(s_{N} \mid s_{2}\right) \\ \vdots & \vdots & \ddots & \vdots \\ P\left(s_{1} \mid s_{N}\right) & P\left(s_{2} \mid s_{N}\right) & \ldots & P\left(s_{N} \mid s_{N}\right)\end{array}\right]$
+    
 - horizon：在每个episode中，最大时间步数
-- 轨迹(episode)：从这个马尔可夫链中采样得到的，每采样一轮就得到叫一个轨迹
-- 马尔可夫性质： future is independent of the past given the present
-    - 历史状态： $h_{t}=\left\{s_{1}, s_{2}, s_{3}, \ldots, s_{t}\right\}$
-    - $s_t$是符合马尔可夫性质的： 
-      $\begin{aligned} p\left(s_{t+1} \mid s_{t}\right) &=p\left(s_{t+1} \mid h_{t}\right) \\ p\left(s_{t+1} \mid s_{t}, a_{t}\right) &=p\left(s_{t+1} \mid h_{t}, a_{t}\right) \end{aligned}$
+
+- 轨迹(episode)：从这个马尔可夫链中采样得到的，每采样一轮就得到叫一个轨迹，例如一局游戏
+
+- 马尔可夫性质： future is independent of the past given the present， $s_t$是符合马尔可夫性质的： 
+    - 给定历史状态： $h_{t}=\left\{s_{1}, s_{2}, s_{3}, \ldots, s_{t}\right\}$
+    
+      $$\begin{aligned} p\left(s_{t+1} \mid s_{t}\right) &=p\left(s_{t+1} \mid h_{t}\right) \\ p\left(s_{t+1} \mid s_{t}, a_{t}\right) &=p\left(s_{t+1} \mid h_{t}, a_{t}\right) \end{aligned}$$
 
 
-## 马尔可夫链（MP）
+## 马尔可夫过程（MP）
 
 马尔可夫链 （MP， Markov Process）：$\left(S, P^{\pi}\right)$
 
@@ -72,12 +77,12 @@ categories:
         - $q^{\pi}(s, a)=R(s, a)+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) \sum_{a^{\prime} \in A} \pi\left(a^{\prime} \mid s^{\prime}\right) q^{\pi}\left(s^{\prime}, a^{\prime}\right)$
 - 计算图
     - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FDt61DqVl6N.png?alt=media&token=9736af0f-e3ef-457b-86d6-abae268af1a3)![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FB2u5I82qnF.png?alt=media&token=02a1de1d-4a08-4f43-983b-65eb815df328)
-    
 ##  马尔可夫决策过程（ MDP）
 
 马尔可夫决策过程（MDP， Markov Decision Process）： $\operatorname{MDP}(S, A, P, R, \gamma)$ 
 
 - MDP能够对现实世界中很多问题建模，是研究强化学习的基础框架
+- 一个马尔可夫决策过程由状态空间，决策空间，状态转移，奖励函数组成。
 - MDP要求环境变量是完全可观测，但是现实中部分可观测问题也可转化为MDP问题
 - 「马尔可夫决策过程」相对于「马尔可夫奖励过程」多了决策，所以需要建模的对象多了两个要素：action 和 概率转移$P\left(s_{t+1}=s^{\prime} \mid s_{t}=s, a_{t}=a\right)$。
     ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FbPx8H2l13W.png?alt=media&token=6e62ffdf-8434-40b4-b312-5037d805f911)
@@ -89,32 +94,61 @@ categories:
 - 预测问题：给定策略时，求某个状态的价值函数。（先知）
 - 控制问题：最优的策略，和对应的状态价值函数。（军师）
 
-## MP/MRP/MDP三者的关系
+## 马尔可夫过程/马尔可夫奖励过程/马尔可夫决策过程三者的关系
 
-- MP和MRP是MDP的简化版
-- MP只有一个概率转移
-- MRP是MP + Reward，但是还是随波逐流
-- MDP + action，多了主观能动性
+- 马尔可夫过程和马尔可夫奖励过程是马尔可夫决策过程的简化版
+- 马尔可夫过程(MP)只有一个概率转移
+- 马尔可夫奖励过程(MRP) = 马尔可夫过程(MP) + Reward，但是没有自由意志，还是随波逐流
+- 马尔可夫决策过程(MDP) = 马尔可夫奖励过程 （MRP）+ action，多了自由意志
 - ![](https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FIuFRm5JvB6.png?alt=media&token=1ad94ce8-0886-4329-8902-dbf859b8ef22)
 
 
-# 基于模型的方法
+# 附录（自问自答）
 
-## 课前--大大问号
+1. model-based 是什么？对环境建模是什么意思？
 
-- model-based 是什么？对环境建模是什么意思？model-based是强化学习中一种技术，核心思想就是对环境建模，使用计算机构建仿真环境。
-- 提出该方法是为了解决什么问题？有哪些应用场景？model-based是为了解决样本获取成本高的问题。例如，无人驾驶/无人机，如果让机器在真实交通环境中行驶，并且通过于真实环境互动来获取数据，那必然以发生多次严重车祸作为获取样本的巨大代价。在机器人场景中应用较多。
-- 类似的流派或者同级别的 不同的流派 还有什么？跟model-based相对的概念是model-free，它直接通过跟环境交互来获取样本，假设现实中获取样本的成本几乎为0。现在的强化学习论文中，大部分是采用的这个方法。
-- model-based方法是怎么实现的？对环境建模：输入<state,action>，输出下一个<state,reward> 。
-- 在多大程度上能解决背景中的问题。有没有引发新的问题？
-- 有没有理论支撑？
-- 不能做什么？
-    - 有理论支撑的话，理论上能证明解决不了什么问题？
-    - 工程或者落地时的难点？
-- 我们的基于股票预测结果构造策略 可以reformulate 成强化学习中的 什么方法？
+   
+
+   model-based是强化学习中一种技术，核心思想就是对环境建模，使用计算机构建仿真环境。比如构建一个模拟环境，更新状态和reward。
+
+2. 提出model-based是为了解决什么问题？有哪些应用场景？
+
+   
+
+   model-based是为了解决样本获取成本高的问题。例如，无人驾驶/无人机，如果让机器在真实交通环境中行驶，并且通过于真实环境互动来获取数据，那必然以发生多次严重车祸作为获取样本的巨大代价。在机器人场景中应用较多。
+
+   
+
+3. 类似model-based的流派或者同级别的不同的流派 还有什么？
+
+   
+
+   跟model-based相对的概念是无模型（model-free）方法，它直接通过跟环境交互来获取样本，假设现实中获取样本的成本几乎为0。但是现在的强化学习论文大部分都采用model-free的方法，可见离落地还有一段距离。
+
+4. model-based方法是怎么实现的？
+
+   
+
+   对环境建模：输入<state,action>，输出下一个<state,reward> 。
+
+5. 在多大程度上能解决背景中的问题。有没有引发新的问题？
+
+6. Model-based不能做什么？
+
+7. 有没有相关理论支撑？理论上能证明解决不了什么问题？
+
+8. 工程或者落地时的难点？
+
+9. 基于股票预测结果构造策略 可以reformulate 成强化学习中的 什么方法？
+
+   model-free的方法就可以，但是样本很少，因为历史不会重演。
+
+   理论上是可以使用model-based的方法，从观测数据中估计生成模型的参数，然后从该分布中采样路径，构造多份合成数据，然后在这个模拟环境中，学习策略vs回测效果。
+
+   
 
 
-## 参考资料
+# 参考资料
 
 1. [周博磊课程-bilibili](https://www.bilibili.com/video/BV1hV411d7Sg)
 2. [知乎：model-based和model-free模型优缺点](https://www.zhihu.com/question/318703290/answer/751123263)

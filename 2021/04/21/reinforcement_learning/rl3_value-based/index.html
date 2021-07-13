@@ -20,24 +20,25 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="总结 附录 （自问自答） 几个问题：  价值 指的是什么？ 「价值」 指的是 最优动作价值函数，即如果后续action都遵循最优策略，那么当前的&lt;state，action&gt;的得分。最优动作价值函数 相当于 一个 先知。 怎么使用深度学习技术来求解这个问题？ 回到强化学习要解决的问题本身（MDP）--agent的目标是 打赢游戏（最大化total reward），那么我们将这个目标拆解为">
+  <meta name="description" content="总结  强化学习方法之一有价值学习方法，在价值学习中，如果我们能得到最优动作函数，就能知道agent在不同的state下该有如何的表现了。 如何学习最优动作价值函数呢？目前最有效的办法就是DQN，Deep Q Network。DQN通过构造一个神经网路去拟合最优行动价值函数，然后通过与环境互动获得训练数据，从而训练出一个神经网络版的先知，他知道在每一个state下，每个action能带来的长期的最">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强化学习3 基于价值的强化学习方法">
 <meta property="og:url" content="https://chiechie.github.io/2021/04/21/reinforcement_learning/rl3_value-based/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="总结 附录 （自问自答） 几个问题：  价值 指的是什么？ 「价值」 指的是 最优动作价值函数，即如果后续action都遵循最优策略，那么当前的&lt;state，action&gt;的得分。最优动作价值函数 相当于 一个 先知。 怎么使用深度学习技术来求解这个问题？ 回到强化学习要解决的问题本身（MDP）--agent的目标是 打赢游戏（最大化total reward），那么我们将这个目标拆解为">
+<meta property="og:description" content="总结  强化学习方法之一有价值学习方法，在价值学习中，如果我们能得到最优动作函数，就能知道agent在不同的state下该有如何的表现了。 如何学习最优动作价值函数呢？目前最有效的办法就是DQN，Deep Q Network。DQN通过构造一个神经网路去拟合最优行动价值函数，然后通过与环境互动获得训练数据，从而训练出一个神经网络版的先知，他知道在每一个state下，每个action能带来的长期的最">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FfsQADMgSRa.png?alt=media&amp;token=18bf844e-aa59-4016-85d6-8cdfc801a9ce">
-<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&amp;token=71ba382a-432c-4c00-8759-692d84c03f3d">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/21/reinforcement_learning/rl3_value-based/imgs%2Fapp%2Frf_learning%2FfsQADMgSRa.png?alt=media&amp;token=18bf844e-aa59-4016-85d6-8cdfc801a9ce.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/04/21/reinforcement_learning/rl3_value-based/imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&amp;token=71ba382a-432c-4c00-8759-692d84c03f3d.png">
+<meta property="og:image" content="https://chiechie.github.io/Users/stellazhao/research_space/chiechie.github.io/source/_posts/reinforcement_learning/rl3_value-based/image-20210713200249948.png">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FROMmZ-LTGx.png?alt=media&amp;token=dae7cba7-84e1-4e7f-8638-60eaa2b1c166">
 <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FEuWKISitjj.png?alt=media&amp;token=0427aa38-bad9-46f3-98bd-a1eb051df5cd">
 <meta property="article:published_time" content="2021-04-21T12:30:11.000Z">
-<meta property="article:modified_time" content="2021-07-13T10:10:25.640Z">
+<meta property="article:modified_time" content="2021-07-13T12:38:06.741Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="强化学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FfsQADMgSRa.png?alt=media&amp;token=18bf844e-aa59-4016-85d6-8cdfc801a9ce">
+<meta name="twitter:image" content="https://chiechie.github.io/2021/04/21/reinforcement_learning/rl3_value-based/imgs%2Fapp%2Frf_learning%2FfsQADMgSRa.png?alt=media&amp;token=18bf844e-aa59-4016-85d6-8cdfc801a9ce.png">
 
 <link rel="canonical" href="https://chiechie.github.io/2021/04/21/reinforcement_learning/rl3_value-based/">
 
@@ -204,7 +205,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-13 18:10:25" itemprop="dateModified" datetime="2021-07-13T18:10:25+08:00">2021-07-13</time>
+                <time title="修改时间：2021-07-13 20:38:06" itemprop="dateModified" datetime="2021-07-13T20:38:06+08:00">2021-07-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -235,6 +236,33 @@
 
       
         <h1 id="总结">总结</h1>
+<ol type="1">
+<li><p>强化学习方法之一有价值学习方法，在价值学习中，如果我们能得到最优动作函数，就能知道agent在不同的state下该有如何的表现了。</p></li>
+<li><p>如何学习最优动作价值函数呢？目前最有效的办法就是DQN，Deep Q Network。DQN通过构造一个神经网路去拟合最优行动价值函数，然后通过与环境互动获得训练数据，从而训练出一个神经网络版的先知，他知道在每一个state下，每个action能带来的长期的最大价值。 &gt; 在离散的动作空间中，该价值网络输入的是state，输出每个action对应的Q值, &gt; &gt; 那么如果是连续的决策呢？</p></li>
+<li><p>如何训练价值网络？最根本的问题在于如何获得训练样本，这个样本的feature为state，label为每个action对应的Qvalue。这个label怎么获取呢？</p>
+<ol type="1">
+<li>通过玩很多局游戏，然后记录每个state下面的最优的</li>
+</ol></li>
+<li><p>Q-learning算法是一种时序差分算法（TD），是一种训练DQN的方法：</p>
+<ul>
+<li>TD error: 未来的我回到现在来做决策，优于现在的我做决策的程度。</li>
+<li>TD target：未来的我回到现在的世界来做决策，可以得多少分。</li>
+</ul></li>
+<li><p>轨迹 <strong>(Trajectory)</strong> 是指一回合 (Episode) 游戏中，智能体观测到的所有的状态、动作、奖励: s1,a1,r1, s2,a2,r2, s3,a3,r3, ···</p></li>
+<li><p>DQN 的训练可以分割成两个独立的部分:收集训练数据、更新参数 w。</p>
+<ol type="1">
+<li><p>收集训练数据：可以使用行为策略(Behaviour Policy)让agent根环境互动，将一条轨迹的数据分成多个<span class="math inline">\((s_t, a_t, r_t, s_{t+1})\)</span>四元组，将四元组统一存放到经验回放数组(Replay Buffer)</p></li>
+<li><p>更新DQN参数:从经验回放数组中取出一个四元组，使用时序差分（TD）算法更新参数</p>
+<ol type="1">
+<li><p>使用DQN计算当前时刻价值网络的预测值<span class="math inline">\(\hat q_j\)</span> ，下一个时刻价值网络的预测值 <span class="math inline">\(\hat q_{j+1}\)</span>。</p></li>
+<li><p>更新DQN参数的目标是为了让TD误差变小，所以可以将当前的学习目标设置为，最小化TD误差平方和，即： <span class="math display">\[
+\min L(\boldsymbol{w})=\frac{1}{2}\left[Q\left(s_{t}, a_{t} ; \boldsymbol{w}\right)-\widehat{y}_{t}\right]^{2}
+\]</span></p></li>
+<li><p>更新DQN的参数：根据样本中的<span class="math inline">\(r_t\)</span>, 计算出TD误差<span class="math inline">\(\delta_{j}\)</span>，对 DQN 做反向传播，得到梯度<span class="math inline">\(\boldsymbol{g}_{j}=\nabla_{\boldsymbol{w}} Q\left(s_{j}, a_{j} ; \boldsymbol{w}_{\mathrm{now}}\right)\)</span></p>
+<p><span class="math inline">\(\boldsymbol{w}_{\mathrm{new}} \leftarrow \boldsymbol{w}_{\mathrm{now}}-\alpha \cdot \delta_{j} \cdot \boldsymbol{g}_{j}\)</span></p></li>
+</ol></li>
+</ol></li>
+</ol>
 <h1 id="附录-自问自答">附录 （自问自答）</h1>
 <h2 id="几个问题">几个问题：</h2>
 <ol type="1">
@@ -247,7 +275,7 @@
 <li>在最优价值函数的指引下作出最优决策</li>
 </ol></li>
 <li><p>使用深度学习技术来学习价值函数，难点在哪里？</p>
-<p>难点在于，谁都不知道先知（<strong>最优价值函数</strong>）长什么样子（股票的话，如果认为只有一条价格路径，可以算出来，如果只是众多路径中的一条，算不出来）</p></li>
+<p>难点在于，谁都不知道先知（<strong>最优价值函数</strong>）长什么样子（股票的话，如果认为只有一条价格路径，可以算出来，如果只是众多路径中的一条，算不出来）, 不过只要有足够多的“经验”，就能训练出“先知”。</p></li>
 <li><p>DQN的主要思路是什么？</p>
 <p>DQN的想法就是，使用一个深度神经网络拟合 <strong>最优动作价值函数，</strong></p></li>
 <li><p>跟DQN并列的概念还有哪些？</p></li>
@@ -267,16 +295,26 @@
 </ol>
 <h2 id="一图胜千言">一图胜千言</h2>
 <ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FfsQADMgSRa.png?alt=media&amp;token=18bf844e-aa59-4016-85d6-8cdfc801a9ce" title="fig:" alt="价值网络" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&amp;token=71ba382a-432c-4c00-8759-692d84c03f3d" title="fig:" alt="策略网络" /></li>
+<li><p>价值网络 <img src="./imgs%2Fapp%2Frf_learning%2FfsQADMgSRa.png?alt=media&amp;token=18bf844e-aa59-4016-85d6-8cdfc801a9ce.png" alt="价值网络" /></p></li>
+<li><p>策略网络</p>
+<figure>
+<img src="./imgs%2Fapp%2Frf_learning%2FGqFFfS975r.png?alt=media&amp;token=71ba382a-432c-4c00-8759-692d84c03f3d.png" alt="策略网络" /><figcaption aria-hidden="true">策略网络</figcaption>
+</figure></li>
 </ul>
 <h2 id="时序差分算法td算法">时序差分算法（TD算法）</h2>
 <ul>
-<li>TD error: 对于上一步&lt;<span class="math inline">\(s_{t-1}, a_{t-1}\)</span>&gt;的reward， 模型估值-真实值
+<li>优化目标--最小化TD误差： 由最优贝尔曼方程（Optimal Bellman Equations）推导出理想情况下，Qvalue应该满足的表达式：</li>
+</ul>
+<figure>
+<img src="/Users/stellazhao/research_space/chiechie.github.io/source/_posts/reinforcement_learning/rl3_value-based/image-20210713200249948.png" alt="image-20210713200249948" /><figcaption aria-hidden="true">image-20210713200249948</figcaption>
+</figure>
+<p>并且将最小化左边和右边的误差平方 作为优化目标，来求Q，</p>
+<ul>
+<li>TD error: 对于上一步&lt;<span class="math inline">\(s_{t-1}, a_{t-1}\)</span>&gt;的reward， 模型估值-真实值，有点像未来的我回到现在来做决策，优于现在的我做决策的程度。
 <ul>
 <li>模型作出的估计（模型对上一个状态估计的价值 - 模型对当前状态估计的价值） - 真实 reward （来自 environment）</li>
 </ul></li>
-<li>TD target： 对于上一步&lt;<span class="math inline">\(s_{t-1}, a_{t-1}\)</span>&gt;的长期value，
+<li>TD target： 对于上一步&lt;<span class="math inline">\(s_{t-1}, a_{t-1}\)</span>&gt;的长期value，未来的我回到现在的世界来做决策可以打多少分。
 <ul>
 <li>真实reward（来自 environment） + 折扣* 模型对当前状态估计的价值</li>
 <li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FROMmZ-LTGx.png?alt=media&amp;token=dae7cba7-84e1-4e7f-8638-60eaa2b1c166" /></li>
@@ -386,7 +424,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">200</span>
+          <span class="site-state-item-count">199</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

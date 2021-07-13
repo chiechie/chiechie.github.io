@@ -165,110 +165,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/27/reading_notes/computer/principle-of-network/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/27/reading_notes/computer/principle-of-network/" class="post-title-link" itemprop="url">私网IP 和 公网IP</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-27 17:38:13" itemprop="dateCreated datePublished" datetime="2021-02-27T17:38:13+08:00">2021-02-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-06-07 08:17:56" itemprop="dateModified" datetime="2021-06-07T08:17:56+08:00">2021-06-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="私网ip-和-公网ip-分别是什么">私网IP 和 公网IP 分别是什么？</h2>
-<ul>
-<li>私网IP，也叫private ip address，或者内网IP。是一个局域网内部，用于识别彼此身份的一个id。</li>
-<li>公网IP，也叫public ip address，或者外网IP。是在因特网中，用户识别设备身份的一个id。</li>
-</ul>
-<blockquote>
-<p>早期，当联网设备只有一台电脑时，将你的电脑连向一个modem，会被分配一个ip，就是public ip，这个ip就是你的电脑在整个互联网的一个id 随着家中联网设备变多（电视机，手机，平板），需要有一个路由的功能，加上上面的modem的功能，就是现在的路由器。他可以将public ip映射为家庭环境中的多个id，分配给多个设备。注意家庭中联网设备构成了一个局域网（LAN）。</p>
-</blockquote>
-<ul>
-<li>(https://ljvmiranda921.github.io/notebook/2018/01/31/running-a-jupyter-notebook/)https://ljvmiranda921.github.io/notebook/2018/01/31/running-a-jupyter-notebook/</li>
-</ul>
-<h2 id="modem-和-路由器-有什么区别">modem 和 路由器 有什么区别？</h2>
-<ul>
-<li>一台电脑如要跟其他电脑通信，需先hook up on 一个modem，然后modem给他分配一个IP，也就是外网ip。</li>
-<li>路由器是modem的升级版。 路由有两个作用：一个是连接家里的设备，另外一个是连接外面的世界。 家里的多个设备组成了一个局域网，即使不跟外面通信，他们之间是可以通信的，通信的过程中如何识别彼此呢？ 这就是路由器的第二个作用，给局域网中的每个设备分配一个IP--也就是内网IP，这个是局域网的成员才能读懂的代码。</li>
-</ul>
-<h2 id="端口转发是什么">端口转发是什么？</h2>
-<p>由于外网只知道内网设备的外网地址，如何能让外网访问内网某个设备的某个端口的服务呢？ 一个办法就是将局域网中的所有设备和服务，先注册到路由器中，路由器就可以根据外网的请求的端口号码，将之转移到内网提供相应服务的设备上。 这个就是端口转发做的事情。</p>
-<h2 id="网络中的三种设备-集线器交换机-和-路由器">网络中的三种设备-集线器，交换机 和 路由器</h2>
-<p>集线器和交换机是用来创建一个个小网络（局域网），路由器将这些小网络连接起来，变成因特网。</p>
-<ul>
-<li>集线器（hub）： 把内网中的网络设备连接起来，只能广播。</li>
-<li>交换机（switch）：维护一个交换机表，记录了连接的网络设备的mac地址，支持网络设备间p2p通信</li>
-<li>路由器（router）：网关（gateway），网络出入口</li>
-</ul>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=92b-jjBURkw&amp;list=LL70j7MlBEzFqOk5aIHKzmxQ">私有ip和公共ip，以及端口forward</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=92b-jjBURkw&amp;list=LL70j7MlBEzFqOk5aIHKzmxQ">How to Enable SSH in Ubuntu---Install openssh-server？</a></li>
-<li><a target="_blank" rel="noopener" href="https://superuser.com/questions/104929/how-do-you-run-a-ssh-server-on-mac-os-x">how-do-you-run-a-ssh-server-on-mac-os-x</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/26/reading_notes/computer/principle-of-zip/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -355,6 +251,130 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/02/26/reading_notes/reality/how-to-read-paper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/26/reading_notes/reality/how-to-read-paper/" class="post-title-link" itemprop="url">如何读专业文献?</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-26 09:30:52" itemprop="dateCreated datePublished" datetime="2021-02-26T09:30:52+08:00">2021-02-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="看文章的时候要注意啥">看文章的时候要注意啥？</h2>
+<blockquote>
+<p>文章太多看不过来？</p>
+<p>进入一个新领域，刚开始文章看不懂咋办？</p>
+<p>有些文章文笔晦涩，但是跟自己研究领域相关。如何用最少时间获取到有用的信息呢？</p>
+<p>看完之后，脑袋空空如也，怎么避免？</p>
+</blockquote>
+<p>总结一下，主动 + 克制。</p>
+<p>主动，即脑袋里面始终要带着问题；</p>
+<p>克制，对于一般的文章，解决自己的问题即可。打住！ 把精力放在更经典的文章上面！</p>
+<h2 id="如何快速地读懂一篇文献">如何快速地读懂一篇文献？</h2>
+<ol type="1">
+<li>看摘要--解决什么问题？主要思路是什么？</li>
+<li>看所有的图和图标题，按顺序看。脑补出作者想讲一个什么故事？</li>
+<li>对上面有疑问的地方，加以验证：
+<ul>
+<li>比如图中冒出来的新概念，去原文找定义</li>
+<li>脑补出的故事对不对？一般在论文的第二章会对论文的方法提出一个framework的说明 基本上一般的文章到这里就可以了，如果碰到了特别好的，或者经典的文章，要精读，进入第4步</li>
+</ul></li>
+<li>精度，主要原则就是揉碎了读，读完一个段落，trick，记录下来，记为一个段落。 全部读完之后，将碎片重组，按照自己的理解，讲一个故事。然后再读一遍文章，验证一下。</li>
+</ol>
+<h2 id="怎么样就算把文章读懂了">怎么样就算把文章读懂了？</h2>
+<blockquote>
+<p>“What I cannot create, I do not understand.” - Richard Feynman</p>
+</blockquote>
+<p>主要靠输出来检验自己，输出3个版本：</p>
+<ul>
+<li>1分钟类讲清楚，这个文章做了什么？目的是什么？</li>
+<li>5分钟内讲清楚，这个文章用的什么方法？做了什么事情？</li>
+<li>10分钟讲清楚，这个文章提出的方案的framework是什么？有哪些小trick？怎么评估的？应用局限是什么？还可以应用到哪些其他场景？</li>
+</ul>
+<h2 id="读文献的时候看不懂卡住怎么办">读文献的时候看不懂卡住怎么办？</h2>
+<ul>
+<li>给作者发邮件</li>
+<li>搜这篇文章相关的代码和数据，侧面理解</li>
+<li>网上搜别人写的论文笔记，看别人怎么理解</li>
+<li>看作者的早期文章（侧重找描述背景的），或者更有影响力的文章（文笔更好）</li>
+<li>上面的方法都不行，先放弃这篇文章，看一下解决该问题的其他文章</li>
+</ul>
+<blockquote>
+<p>chiechie一次读文献的经历:</p>
+<p>log3C的文章，看了半天，一头雾水，没有测试数据+给的代码不完整。 于是给作者发了邮件咨询。</p>
+<p>同时为了不浪费时间，去搜索作者主页，发现他16年发表的一篇“日志异常检测”的文章获得了“最有影响力paper“，思索着 文章质量应该不会差，恰好也是日志分析领域的。 于是决定，看下这篇文章来补充背景知识。 看完之后确实有收获 ，对一些基本概念这才算是搞清楚了（日志分析领域对算法/标记/样本的定义），同时也搞清楚了日志分析的流程是什么，日志解析器 可以 做什么事。 有种 意外之喜。</p>
+<p>然后满怀信心 回来再看一遍log3C，</p>
+<p>还是看不懂，要抑郁了。。。</p>
+<p>决定先放一放，看看其他做日志分析的文章</p>
+</blockquote>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2MTUyODU2NA==&amp;mid=2247496362&amp;idx=1&amp;sn=7542b88c1602a792156fc5e26bff1ba0&amp;source=41#wechat_redirect">科研新手该如何读文献？| 开启科研之路</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -424,7 +444,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">200</span>
+          <span class="site-state-item-count">199</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

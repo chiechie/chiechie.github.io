@@ -165,154 +165,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/19/reinforcement_learning/rl1_basic-concepts/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/19/reinforcement_learning/rl1_basic-concepts/" class="post-title-link" itemprop="url">强化学习1 基本概念</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-19 20:27:02" itemprop="dateCreated datePublished" datetime="2021-04-19T20:27:02+08:00">2021-04-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-13 17:59:16" itemprop="dateModified" datetime="2021-07-13T17:59:16+08:00">2021-07-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">强化学习</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="总结">总结</h1>
-<ol type="1">
-<li><p>强化学习是一个序列决策过程，它试图找到一个策略，使得agent在跟环境互动的过程中，获得最大的价值。</p></li>
-<li><p>agent和环境：agent就是一个机器人，是我们希望去设计出来的一个AI，环境负责跟AI进行互动，对agent的动作评价，以及生成新的状态。agent接受当前时刻的状态，返回动作agent，环境接受行动，返回下个时刻的的状态，以及奖励。</p></li>
-<li><p>状态(state)表示当前环境，在围棋例子中，表示当前的棋局。</p></li>
-<li><p>状态转移：状态转移可以是确定的也可以是随机的（随机性来源于环境）</p></li>
-<li><p>行动(action)表示当前agent的行动空间，在围棋例子中，棋盘上有361个落子位置，对应有361个action</p></li>
-<li><p>动作空间<strong>(ActionSpace)</strong>是指所有可能动作的集合，在围棋例子中，动作空间是 A = {1, 2, 3, · · · , 361}。</p></li>
-<li><p>策略函数(policy)表示agent根据观测到的状态做出决策. 策略函数常常被定义为一个条件概率密度函数，输入当前state，输出动作空间每个动作的概率得分。强化学习的目的，就是希望让agent学习到一个聪明的策略函数。</p></li>
-<li><p>强化学习中的两个收益：即时收益（reward)和长期收益（discounted return, aka，cumulative discounted future reward）</p>
-<ol type="1">
-<li>Reward对于某个&lt;s，a&gt;，是在agent执行一个动作之后，环境返回的一个激励信号，是一个数值记为<span class="math inline">\(R_t\)</span>，取值越大说明越赞赏当前的行动.</li>
-<li>Return对于某个&lt;s，a&gt;，即时收益的折扣累积就是长期收益, 记为<span class="math inline">\(U_t\)</span><span class="math display">\[U_{t}=R_{t}+ \gamma R_{t+1}+\gamma ^{2} R_{t+2}  \cdots\]</span></li>
-<li>reward和return都是随机变量：reward的随机性来自当前状态和当前行动。return的随机性来自状态转移和 policy。</li>
-</ol></li>
-<li><p>如何引导agent做出好的策略？定义合适的收益函数，并且对收益求期望--即价值，然后以最大化价值作为目标来训练agent。</p></li>
-<li><p>强化学习中的价值函数主要有两个作用：一是用来判断agent的策略的好坏，一是用来判断当前局势（state）的好坏。强化学习中有3个价值函数: 行动价值函数，最优行动价值函数，状态价值函数</p></li>
-<li><p>行动价值函数（action-value function）：表示在当前&lt;s, a&gt;下，采取某个策略<span class="math inline">\(\pi\)</span>之后的价值，<span class="math inline">\(Q_{\pi}\left(s_{t}, a_{t}\right)=E_{\pi}\left(U_{t} \mid S_{t}=s_{t}, A_{t}=a_{t}\right)\)</span></p></li>
-<li><p>最优动作价值函数(optimal action-value function):表示采取最优策略<span class="math inline">\(\pi^{\star}\)</span>时，给当前的&lt;s, a&gt;打分</p>
-<p><span class="math inline">\(Q^{*}\left(s_{t}, a_t\right)=\max\limits_{\pi} Q_{\pi}\left(s_{t}, a_t\right)\)</span></p></li>
-<li><p>状态价值函数(state value function):在后续采取某个策略<span class="math inline">\(\pi\)</span>的情况下，评判当前局势的好坏（是快赢了还是快输了）。用于给当前state打分。如果对s求期望<span class="math inline">\(\mathbb{E}_{S}\left[V_{\pi}(S)\right]\)</span>，就是对策略<span class="math inline">\(\pi\)</span>打分。<span class="math inline">\(V_{\pi}\left(s_{t}\right)=\operatorname{E_A}\left(Q_{\pi}\left(s_{t}, A\right)\right), A \sim \pi(.\mid s_t)\)</span> - 如果动作（action）是离散变量：<span class="math inline">\(V_{\pi}\left(s_{t}\right) = \sum\limits_{a}Q_{\pi}(s_t,a) \pi\left(a \mid s_{t}\right)\)</span> - 如果动作（action）是连续变量： <span class="math inline">\(V_{\pi}\left(s_{t}\right) = \int_{a} Q_{\pi} \left(s_{t}, a\right) \pi\left(a \mid s_{t} \right) da\)</span> - 总结一下，动作价值函数和最优动作价值函数是来给&lt;state,action&gt;打分，状态价值函数是在给当前&lt;state，&gt;打分，不涉评价动作。</p></li>
-<li><p>策略网络：使用一个神经网络来近似策略函数</p></li>
-<li><p>轨迹 <strong>(Trajectory)</strong> 是指一回合 (zEpisode) 游戏中，智能体观测到的所有的状态、动作、奖励: s1,a1,r1, s2,a2,r2, s3,a3,r3, ···</p></li>
-</ol>
-<h2 id="强化学习的两个方向-价值学习和策略学习">强化学习的两个方向: 价值学习和策略学习</h2>
-<p>强化学习的方法通常分为两类，基于模型的方法（model-based）和 无模型的方法（model-free）。</p>
-<p>无模型的方法又分为价值学习和策略学习。</p>
-<p>价值学习:</p>
-<ol type="1">
-<li><p>价值学习 (Value-Based Learning) ，是指 以最大化价值函数（3个价值函数都可）为目标去训练agent。</p></li>
-<li><p>价值学习的大致思路是这样的，每次agent观测到一个<span class="math inline">\(s_t\)</span>,就把它输入价值函数，让价值函数来对所有动作做评价（分数越高越好）</p></li>
-<li><p>那么问题来了，如何去学习价值函数呢？可以使用一个神经网络来近似价值函数。</p></li>
-<li><p>最有名的价值学习方法是DQN, 还有Q-learning</p></li>
-</ol>
-<p>策略学习</p>
-<ol type="1">
-<li>策略学习指的是学习策略函数<span class="math inline">\(\pi\)</span>, 然后agent可利用策略函数计算不同state下行动的得分，然后随机选一个执行。</li>
-<li>那么问题来了，如何去学习策略函数呢？可以使用一个神经网络来近似策略函数，然后使用策略梯度来更新网络参数。</li>
-</ol>
-<h1 id="附录">附录</h1>
-<h2 id="价值学习">价值学习</h2>
-<p>价值学习： value-based，目的是学习最优行动价值函数。</p>
-<ul>
-<li>Deep Q network: 近似最优行动价值函数</li>
-<li>时间差分（TD）算法:TD（Temporal Difference）算法：
-<ul>
-<li>SARSA算法：基于表格的方法和基于神经网络的方法</li>
-<li>Q-learning算法</li>
-<li>Multi-step TD target</li>
-</ul></li>
-<li>策略学习：policy-based，目的是让agent直接学会最优策略。 actor critic
-<ul>
-<li>使用策略网络来近似策略函数， 使用策略梯度更新网络参数
-<ul>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2Frx6kfw7dc6.png?alt=media&amp;token=22e1d520-3194-42b5-b624-e52034b62b4d" /></li>
-</ul></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FNC2bv9ZwlF.png?alt=media&amp;token=8fb33ced-8383-42fe-8fee-4742d9abadc4" /></li>
-<li><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FV4DSavxJZ8.png?alt=media&amp;token=408e1eb5-24f9-4fd9-bbf5-a7d20a53f7fb" /></li>
-<li>计算策略梯度和行动价值函数
-<ul>
-<li>方法1-跟环境互动获取长期的收益<img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F8F3Gq0YTEB.png?alt=media&amp;token=d6cd369f-ea76-41b0-84e1-66953c0d4e56" /></li>
-<li>方法2-构造价值网络来计算action-value</li>
-</ul></li>
-</ul></li>
-<li>价值学习和策略学习结合： actor critic <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FQX2HjRc5gn.png?alt=media&amp;token=18a877c8-f337-4c15-a9f5-7b3f410c8475" /></li>
-</ul>
-<h2 id="怎么理解两个价值函数">怎么理解两个价值函数？</h2>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FDl41z9c-9y.png?alt=media&amp;token=d5e65193-4372-4d43-b8c4-85237c20b61d" /></p>
-<h2 id="控制agent的两种方法-基于策略和基于最优动作价值函数">控制agent的两种方法-基于策略和基于最优动作价值函数</h2>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FtnK44wspcQ.png?alt=media&amp;token=259a4682-aa14-4b7d-8f55-e88d29cdb319" /></p>
-<p><img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FJf9FJZ0nSH.png?alt=media&amp;token=8fb09202-0693-4658-9c45-d2bec3f8642c" /></p>
-<h2 id="参考资料">参考资料</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://github.com/wangshusen/DRL/blob/master/Slides/1_Basics_1.pdf">wangshusen-slide</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reinforcement_learning/rl0_summary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -464,6 +316,130 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/18/reading_notes/zhexue/taleb-blackswan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/18/reading_notes/zhexue/taleb-blackswan/" class="post-title-link" itemprop="url">黑天鹅</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-18 19:55:49" itemprop="dateCreated datePublished" datetime="2021-04-18T19:55:49+08:00">2021-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-10 17:29:43" itemprop="dateModified" datetime="2021-06-10T17:29:43+08:00">2021-06-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="序言">序言</h1>
+<ul>
+<li>黑天鹅举例子
+<ul>
+<li>能带来收益的：风险投资，科技发现</li>
+<li>能带来损失的：金融危机，失业</li>
+</ul></li>
+<li>关于学习，人性又一个弱点：习惯学习精确的东西，而不是从整体上把握
+<ul>
+<li>【马其诺防线的故事】第一次世界大战之后，为了避免德国人再次入侵，法国人沿德国人曾经入侵的路线修建了一条防御工事，而希特勒（几乎）毫不费力地绕过了它。</li>
+<li>问题产生于我们的思维结构：我们不学习规律，而是学习事实，而且只学习事实。。我们似乎不太善于认识到我们的超规律（即我们倾向于不学习规律的规律）。我们蔑视抽象的东西——疯狂地蔑视。</li>
+</ul></li>
+<li>这个问题为什么很重要？
+<ul>
+<li>这种直觉的方法论，对于现代复杂且越来越具循环性的环境来说是非常不切实际的。</li>
+</ul></li>
+<li>我们的生物基因决定了，我们其实不擅长思考。
+<ul>
+<li>我们的头脑似乎不是用来思考和内省的，远古时期，我进行反常规内省和努力思考的祖先会被老虎吃掉，而他不爱思考但身体反应迅速的表亲早已跑开躲了起来。</li>
+</ul></li>
+<li>因为钟形曲线忽（高斯曲线）略大的离差，无法解释它们，但还要让我们相信不确定性是可以控制的，我在本书中戏称它为“智力大骗局”。</li>
+<li>【关于模型】模型和结构并不永远是错的，它们只错在一些具体的运用上。困难在于你不可能事前知道哪里会错（而只能事后知道），也不可能知道错误会导致严重后果。这些模型就像某些可能有效，但同时也可能具有非常严重的副作用的药品。</li>
+<li>教室中的人从没有面对过在不确定性条件下进行决策的真实情况，意识不到什么是重要的，什么是不重要的，即使他们是关于不确定性问题的学者。我所说的不确定性实践，可以是当海盗、做商品投机、职业赌博、在黑手党的某个分部效力，或者是简单的持续创业</li>
+</ul>
+<h1 id="第一部分-极端斯坦-与-黑天鹅现象">第一部分 极端斯坦 与 黑天鹅现象</h1>
+<h2 id="第一章-自我欺骗的人类">第一章 自我欺骗的人类</h2>
+<ul>
+<li>面对历史，人类的思想会犯三个毛病：
+<ul>
+<li>第一宠迷雾：我们以为我们生活的这个世界比他实际上更加可理解，可解释，可预测</li>
+</ul></li>
+</ul>
+<h2 id="第三章-极端斯坦与平均斯坦">第三章 极端斯坦与平均斯坦</h2>
+<ul>
+<li>关于职业选择，有两类职业：
+<ul>
+<li>“一劳永逸型”：
+<ul>
+<li>录音师和电影演员也是一样：他们会让电影院的音效工程师调好播放器，而不必在每一次播放电影时都出现。</li>
+</ul></li>
+<li>“苦力活”
+<ul>
+<li>面包师必须为每一位新客户——烤出面包。</li>
+</ul></li>
+<li>假如我必须给出建议的话，我会建议选择一个收入不具有突破性的职业---面包师！收入具有突破性的职业只有在你成功的时候对你是有利的。这样的职业竞争更激烈，导致更大的不平均和不确定性，在努力和回报之间存在巨大差异，因为少数人获得蛋糕的大部分，其他人可能什么也得不到，而这怪不了别人</li>
+</ul></li>
+<li>可以这样陈述平均斯坦的最高法则：当你的样本量足够大时，任何个例都不会对整体产生重大影响。最大的观察值虽然令人吃惊，但对整体而言最终微不足道。</li>
+<li></li>
+</ul>
+<h1 id="第三部分-极端斯坦的灰天鹅">第三部分 极端斯坦的灰天鹅</h1>
+<h2 id="第十八章-骗子的不确定性">第十八章 骗子的不确定性</h2>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -533,7 +509,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">200</span>
+          <span class="site-state-item-count">199</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

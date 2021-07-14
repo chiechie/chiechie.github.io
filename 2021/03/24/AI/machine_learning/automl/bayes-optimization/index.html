@@ -20,18 +20,19 @@
     var CONFIG = {"hostname":"chiechie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="「贝叶斯优化」技术是求解黑盒最优化问题的一种方法，该技术可拓展到auto-ml的自动调参场景中。 接下来从直觉的角度，描述「贝叶斯优化」的思路 效用函数是我对采集函数（acquisition function）的意译，得「意」可忘形，没必要扣字眼。  背景 什么是「黑盒优化」？ 求解 $ _{x } f(x)$ 但是\(f(x)\)的内部运行机制，我们一无所知，即\(f(x)\)对我们而言就是一">
+  <meta name="description" content="「贝叶斯优化」技术是求解黑盒最优化问题的一种方法，该技术可拓展到auto-ml的自动调参场景中。 接下来介绍下「贝叶斯优化」的思路 采集函数（acquisition function）下面有些地方也用效用函数代替  黑盒优化和自动调参 什么是「黑盒优化」？对一个黑盒函数求最优解。 求解 $ _{x } f(x)$，但是f(x)是个黑盒函数，我们对f内部运行机制一无所知，只知道输入输出。 调参的过">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自动调参之贝叶斯优化">
 <meta property="og:url" content="https://chiechie.github.io/2021/03/24/AI/machine_learning/automl/bayes-optimization/index.html">
 <meta property="og:site_name" content="Chiechie&#39;s Mini World">
-<meta property="og:description" content="「贝叶斯优化」技术是求解黑盒最优化问题的一种方法，该技术可拓展到auto-ml的自动调参场景中。 接下来从直觉的角度，描述「贝叶斯优化」的思路 效用函数是我对采集函数（acquisition function）的意译，得「意」可忘形，没必要扣字眼。  背景 什么是「黑盒优化」？ 求解 $ _{x } f(x)$ 但是\(f(x)\)的内部运行机制，我们一无所知，即\(f(x)\)对我们而言就是一">
+<meta property="og:description" content="「贝叶斯优化」技术是求解黑盒最优化问题的一种方法，该技术可拓展到auto-ml的自动调参场景中。 接下来介绍下「贝叶斯优化」的思路 采集函数（acquisition function）下面有些地方也用效用函数代替  黑盒优化和自动调参 什么是「黑盒优化」？对一个黑盒函数求最优解。 求解 $ _{x } f(x)$，但是f(x)是个黑盒函数，我们对f内部运行机制一无所知，只知道输入输出。 调参的过">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chiechie.github.io/2021/03/24/AI/machine_learning/automl/bayes-optimization/grid_random_search.png">
 <meta property="og:image" content="https://chiechie.github.io/2021/03/24/AI/machine_learning/automl/bayes-optimization/bianxing.png">
-<meta property="og:image" content="https://chiechie.github.io/2021/03/24/AI/machine_learning/automl/bayes-optimization/dl-framework/img.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/24/AI/machine_learning/automl/bayes-optimization/image-20210714194513883.png">
+<meta property="og:image" content="https://chiechie.github.io/2021/03/24/AI/machine_learning/automl/bayes-optimization/img.png">
 <meta property="article:published_time" content="2021-03-24T02:30:05.000Z">
-<meta property="article:modified_time" content="2021-05-19T02:44:56.396Z">
+<meta property="article:modified_time" content="2021-07-14T11:50:36.909Z">
 <meta property="article:author" content="Chiechie">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="auto ml">
@@ -204,7 +205,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-19 10:44:56" itemprop="dateModified" datetime="2021-05-19T10:44:56+08:00">2021-05-19</time>
+                <time title="修改时间：2021-07-14 19:50:36" itemprop="dateModified" datetime="2021-07-14T19:50:36+08:00">2021-07-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,57 +237,64 @@
       
         <blockquote>
 <p>「贝叶斯优化」技术是求解黑盒最优化问题的一种方法，该技术可拓展到auto-ml的自动调参场景中。</p>
-<p>接下来从直觉的角度，描述「贝叶斯优化」的思路</p>
-<p>效用函数是我对采集函数（acquisition function）的意译，得「意」可忘形，没必要扣字眼。</p>
+<p>接下来介绍下「贝叶斯优化」的思路</p>
+<p>采集函数（acquisition function）下面有些地方也用效用函数代替</p>
 </blockquote>
-<h2 id="背景">背景</h2>
-<p>什么是「黑盒优化」？</p>
-<p>求解 $ _{x } f(x)$ 但是<span class="math inline">\(f(x)\)</span>的内部运行机制，我们一无所知，即<span class="math inline">\(f(x)\)</span>对我们而言就是一个黑盒</p>
-<h2 id="技术选型">技术选型</h2>
-<h3 id="进一步明确问题">进一步明确问题</h3>
-<p>「自动调参」（或者「超参转化」）本质上就是在求解一组最优的超参数，使得这组超参在样本集上的效果最好。 这个需求可以抽象为一个典型的黑盒优化问题，即 $ _{x } f(x)$</p>
+<h2 id="黑盒优化和自动调参">黑盒优化和自动调参</h2>
+<p>什么是「黑盒优化」？对一个黑盒函数求最优解。</p>
+<p>求解 $ _{x } f(x)$，但是f(x)是个黑盒函数，我们对f内部运行机制一无所知，只知道输入输出。</p>
+<p>调参的过程，少部分经验来自算法理论和工程实践，大部分来自试错。</p>
+<p>模型越复杂，单次训练的时间就越长；</p>
+<p>超参数越多，即x的维度就越高，搜索超参数的空间就越大，</p>
+<p>两者都导致调参工作随着模型的复杂度增加而大幅增加。</p>
+<p>那么有没有什么技术能将人力从跳参的工作中解放出来呢？即有没有「自动调参」的技术呢？</p>
+<p>有，可以将该问题建模为一个黑盒优化问题，然后使用相关技术求解。</p>
+<p>即将「自动调参」定义为这么一个优化问题：</p>
+<p>求最优的一组超参数，使得组超参训练出来的模型的准确率最高 <span class="math display">\[\max\limits_{x \in \mathcal{X}} f(x)\]</span></p>
 <ul>
-<li>x代表一组超参数的取值，是一个向量，每个元素代表一个超参数，一个算法可能包含成千上万个超参数。</li>
-<li>f(x)代表一组超参数取某个值时，模型的准确率）。</li>
+<li><p>x代表一组超参数的取值，是一个向量，每个元素代表一个超参的取值，向量长度等于超参的个数。</p></li>
+<li><p>f(x)代表某组超参对应的模型的准确率。</p></li>
 </ul>
-<p>模型越复杂，超参数就越多（即x里面的元素越多），调参的工作就越依赖经验，并且也非常耗时。</p>
-<p>调参的过程中存在的痛点：极其依赖算法理论和工程经验，调试过程繁琐。</p>
-<p>那么有没有什么技术能将人力解放出来呢？</p>
-<p>有的，目前比较常用的思路有贝叶斯优化算法（Bayes Optimization），随机搜索，网络搜索, 以及贝叶斯优化的变形（SMAC和TPE）</p>
-<h3 id="候选方案">候选方案</h3>
-<p>先看随机搜索 和 网格搜索</p>
+<p>求解黑盒优化问题比较常用的方法有贝叶斯优化算法（Bayes Optimization），随机搜索，网络搜索, 以及贝叶斯优化的变形（SMAC和TPE）</p>
+<h2 id="随机搜索网格搜索和贝叶斯优化">随机搜索，网格搜索和贝叶斯优化</h2>
+<p>先看两种最简单的方法，随机搜索 和 网格搜索</p>
+<figure>
+<img src="./grid_random_search.png" alt="随机搜索和网格搜索" /><figcaption aria-hidden="true">随机搜索和网格搜索</figcaption>
+</figure>
 <ul>
-<li><p>网格搜索和随机搜索: <img src="grid_random_search.png" alt="随机搜索和网格搜索" /></p>
-<ul>
-<li>网格搜索：如左图，需要指定搜索范围和间隔， 优点：考虑到了搜索空间内所有的参数组，缺点：存在组合爆炸的问题.</li>
-<li>随机搜索：意思是，在超参空间进行随机采样，将采样得到的超参作为best guess。如右图，采用随机采样的方式得到新的超参。优点：容易理解。缺点：可能搜索不到最优的超参.</li>
-</ul></li>
-<li><p>贝叶斯优化: BayesOptimazation(r，p, m，n_iters，算法名称，</p>
-<ul>
-<li>优点：不需要指定搜索范围，效果优于随机搜索</li>
-</ul></li>
+<li><p>网格搜索：如左图，需要指定搜索范围和间隔， 优点：考虑到了搜索空间内所有的参数组，缺点：存在组合爆炸的问题.</p></li>
+<li><p>随机搜索：意思是，在超参空间进行随机采样，将采样得到的超参作为best guess。如右图，采用随机采样的方式得到新的超参。优点：容易理解。缺点：可能搜索不到最优的超参.</p></li>
+<li><p>贝叶斯优化: BayesOptimazation(r，p, m，n_iters，算法名称)，优点：不需要指定搜索范围，可自动调节搜索过程中的步长</p></li>
 <li><p>贝叶斯优化的变形-SMAC和TPE</p>
 <ul>
 <li>SMAC：代理函数变成了回归随机森林</li>
-<li>TPE：代理函数变成了高斯混合模型 <img src="bianxing.png" alt="img.png" /></li>
+<li>TPE：代理函数变成了高斯混合模型 <img src="./bianxing.png" alt="img.png" /></li>
 </ul></li>
+<li><p>实际中，随机搜索其实已经很有效了。</p></li>
 </ul>
-<h2 id="贝叶斯优化概述">贝叶斯优化概述</h2>
-<h3 id="文字版">文字版</h3>
-<p>贝叶斯优化算法（Bayes Optimization），它的大概思路是这样的：</p>
+<h2 id="贝叶斯优化">贝叶斯优化</h2>
+<p>贝叶斯优化算法（Bayes Optimization）大概思路是这样的：</p>
+<p>为了求解该问题： <span class="math inline">\(x^{*}=\arg \max _{x \in \mathcal{X}} f(x)\)</span></p>
 <ol type="1">
-<li>收集样本&lt;x,f(x)&gt;，x是一组超参，f(x)表示这组超参下，训练出来的模型的准确率。</li>
-<li>使用样本&lt;x,f(x)&gt; 拟合一个高斯过程回归器（GaussianProgressRegressor）</li>
-<li>基于高斯过程回归器构造一个acquisition函数,用来衡量超参数空间中，当前每个区域的潜在收益。一般来说acquisition函数就是均值加上n倍方差（Upper condence bound算法）。</li>
+<li>收集样本<span class="math inline">\(&lt;x_i,f(x_i)&gt;\)</span>，x是一组超参，f(x)表示这组超参对应的模型准确率。</li>
+<li>使用样本<span class="math inline">\(&lt;x_i,f(x_i)&gt;\)</span>拟合一个高斯过程回归器（GaussianProgressRegressor）<span class="math inline">\(\hat G\)</span></li>
+<li>基于<span class="math inline">\(\hat G\)</span>构造一个效用函数。效用函数是用来衡量当前的超参数组成的空间中，探索每个区域的潜在收益或者效用（注意我们的目标是，找到<span class="math inline">\(x^\star\)</span>，使得f(x)取最大）。 最简单的acquisition function就是均值加上n倍方差（Upper condence bound算法）。</li>
 <li>搜索acquisition函数的最大值，即最值得探索的点（Next Best Guess）。</li>
 <li>将找到Best Guess（一组超参）带入原来算法，重新训练一遍，并记录下此时模型的准确率。</li>
 <li>将5得到的新样本数据加入样本集中，回到第二步，进行下一个迭代，循环往复，直到模型的准确率没有提升或者达到最大的迭代次数。</li>
 </ol>
-<h3 id="图形版">图形版</h3>
+<h2 id="附录">附录</h2>
+<h2 id="贝叶斯优化和强化学习">贝叶斯优化和强化学习</h2>
+<p>贝叶斯优化跟强化学习有些许相似之处</p>
 <figure>
-<img src="dl-framework/img.png" alt="贝叶斯优化" /><figcaption aria-hidden="true">贝叶斯优化</figcaption>
+<img src="./image-20210714194513883.png" alt="image-20210714194513883" /><figcaption aria-hidden="true">image-20210714194513883</figcaption>
 </figure>
-<p>https://distill.pub/2020/bayesian-optimization/ 上图中</p>
+<h3 id="贝叶斯优化图">贝叶斯优化图</h3>
+<figure>
+<img src="./img.png" alt="贝叶斯优化" /><figcaption aria-hidden="true">贝叶斯优化</figcaption>
+</figure>
+<p>https://distill.pub/2020/bayesian-optimization/</p>
+<p>上图中</p>
 <ul>
 <li>横轴是超参，</li>
 <li>上面图的纵轴：超参数取不同值时，模型的准确率。
@@ -296,31 +304,20 @@
 </ul></li>
 <li>下面图的纵轴：超参数取不同值时，采集函数的值，取值越大，表示该区域越有可能存在最优超参。</li>
 </ul>
-<h2 id="贝叶斯优化细节">贝叶斯优化细节</h2>
-<p>调参的过程中存在的痛点：极其依赖算法理论和工程经验，调试过程繁琐。那么有没有什么技术能将人力解放出来呢？ 有的，目前比较常用的思路就是贝叶斯优化算法（Bayes Optimization），它的大概思路是这样的：</p>
-<p>为了求解该问题： <span class="math inline">\(x^{*}=\arg \max _{x \in \mathcal{X}} f(x)\)</span></p>
-<ol type="1">
-<li>收集样本<span class="math inline">\(&lt;x_i,f(x_i)&gt;\)</span>，x是一组超参，f(x)表示这组超参下，训练出来的模型的准确率。</li>
-<li>使用样本<span class="math inline">\(&lt;x_i,f(x_i)&gt;\)</span>拟合一个高斯过程回归器（GaussianProgressRegressor）<span class="math inline">\(\hat G\)</span></li>
-<li>基于<span class="math inline">\(\hat G\)</span>构造一个效用函数。效用函数是用来衡量当前的超参数组成的空间中，探索每个区域的潜在收益或者效用（注意我们的目标是，找到<span class="math inline">\(x_\star\)</span>，使得f(x)取到最大值）。 最简单的acquisition function就是均值加上n倍方差（Upper condence bound算法）。</li>
-<li>利用效用函数,我们去找最值得探索的点（Next Best Guess）</li>
-<li>将找到的最佳的超参组合带入模型重新训练一遍，并记录下此时模型的准确率。<span class="math inline">\(&lt;x_j,f(x_j)&gt;\)</span></li>
-<li>将5得到的新样本数据加入样本集中，回到第二步，进行下一个迭代，循环往复，直到模型的准确率没有提升。</li>
-</ol>
 <h3 id="代理函数">代理函数</h3>
 <p>代理函数，就是对黑盒模型性能的评估函数。 原始的贝叶斯优化算法，使用的是高斯过程，后面一些变形就变成了其他的算法。</p>
 <h3 id="采集函数">采集函数</h3>
-<p>怎么采集下一步要探索的超参？</p>
-<p>采集函数（acquisition function）综合考虑了两种因素，期望和不确定性。对值得探索的超参的空间，给予高估值。</p>
+<p>怎么设计采集函数（acquisition function）？</p>
+<p>需考虑2个因素--期望和不确定性。期望和不确定性都很大的区域，值得对重点探索，所以采集函数给予这些区域更高的分支</p>
 <h3 id="难点离散变量">难点离散变量</h3>
 <p>贝叶斯优化本身只适用于连续变量，但是实际上很多模型地参数都是离散的，那么如何解决呢？ 直觉上来说，有两个思路:</p>
 <ol type="1">
-<li>层次的混合搜索：整形参数采用网格搜索或者随机搜索</li>
+<li>混合搜索（贝叶斯+网格搜索）：整数类型的参数采用网格搜索或者随机搜索，然后连续型的超参求子参数空间的优化问题。</li>
 <li>贝叶斯模型：在连续空间搜多到best guess之后，截断成整数，加工成样本，然后送入下一次迭代</li>
 </ol>
 <h3 id="贝叶斯优化和梯度算法的区别是什么">贝叶斯优化和梯度算法的区别是什么？</h3>
-<p>小同事问了我一个问题，贝叶斯和梯度算法是不是一类东西呀？感觉都是在求最优秀解。</p>
-<p>我回答，对，都是优化算法 但是贝叶斯优化的野心更大，他不需要目标函数的具体表达式, 只要知道这个目标函数的输入输出就好了。 梯度算法解决的问题更小，必须知道目标函数的表达式，并且这个函数还要可以求导。</p>
+<p>贝叶斯优化和梯度算法是不是一类东西呀？感觉都是在求最优秀解。</p>
+<p>两者都是优化算法。但是贝叶斯优化的野心更大，他不需要目标函数的具体表达式, 只要知道这个目标函数的输入输出就好了。 梯度算法解决的问题更小，必须知道目标函数的表达式以及梯度。</p>
 <h2 id="参考资料">参考资料</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/29779000">贝叶斯优化-通俗版-tobe-知乎</a></li>
@@ -330,6 +327,7 @@
 <li><a target="_blank" rel="noopener" href="https://cloud.google.com/ai-platform/optimizer/docs/overview">谷歌的调参工具</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xys430381_1/article/details/103871212">超参数优---贝叶斯优化及其改进（PBT优化）csdn</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3587b24f1a6d">微软新工具 NNI 使用指南之 Tuner 篇-jianshu</a></li>
+<li>https://docs.qq.com/flowchart/DVFVYeEZpd1NMTEtX</li>
 </ol>
 
     </div>
@@ -416,7 +414,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">技术选型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E6%98%8E%E7%A1%AE%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">进一步明确问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%99%E9%80%89%E6%96%B9%E6%A1%88"><span class="nav-number">2.2.</span> <span class="nav-text">候选方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%98%E5%8C%96%E6%A6%82%E8%BF%B0"><span class="nav-number">3.</span> <span class="nav-text">贝叶斯优化概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E5%AD%97%E7%89%88"><span class="nav-number">3.1.</span> <span class="nav-text">文字版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E7%89%88"><span class="nav-number">3.2.</span> <span class="nav-text">图形版</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%98%E5%8C%96%E7%BB%86%E8%8A%82"><span class="nav-number">4.</span> <span class="nav-text">贝叶斯优化细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">代理函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%87%E9%9B%86%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">采集函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%BE%E7%82%B9%E7%A6%BB%E6%95%A3%E5%8F%98%E9%87%8F"><span class="nav-number">4.3.</span> <span class="nav-text">难点离散变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%98%E5%8C%96%E5%92%8C%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">4.4.</span> <span class="nav-text">贝叶斯优化和梯度算法的区别是什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%91%E7%9B%92%E4%BC%98%E5%8C%96%E5%92%8C%E8%87%AA%E5%8A%A8%E8%B0%83%E5%8F%82"><span class="nav-number">1.</span> <span class="nav-text">黑盒优化和自动调参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%90%9C%E7%B4%A2%E7%BD%91%E6%A0%BC%E6%90%9C%E7%B4%A2%E5%92%8C%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%98%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">随机搜索，网格搜索和贝叶斯优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">贝叶斯优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%98%E5%8C%96%E5%92%8C%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-number">5.</span> <span class="nav-text">贝叶斯优化和强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%98%E5%8C%96%E5%9B%BE"><span class="nav-number">5.1.</span> <span class="nav-text">贝叶斯优化图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-number">5.2.</span> <span class="nav-text">代理函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%87%E9%9B%86%E5%87%BD%E6%95%B0"><span class="nav-number">5.3.</span> <span class="nav-text">采集函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%BE%E7%82%B9%E7%A6%BB%E6%95%A3%E5%8F%98%E9%87%8F"><span class="nav-number">5.4.</span> <span class="nav-text">难点离散变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E4%BC%98%E5%8C%96%E5%92%8C%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">5.5.</span> <span class="nav-text">贝叶斯优化和梯度算法的区别是什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

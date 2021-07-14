@@ -109,7 +109,7 @@ categories:
 - 优化目标--最小化TD误差：
 由最优贝尔曼方程（Optimal Bellman Equations）推导出理想情况下，Qvalue应该满足的表达式：
 
-![image-20210713200249948](/Users/stellazhao/research_space/chiechie.github.io/source/_posts/reinforcement_learning/rl3_value-based/image-20210713200249948.png)
+![image-20210713200249948](./image-20210713200249948.png)
 
   并且将最小化左边和右边的误差平方 作为优化目标，来求Q，
 

@@ -1,0 +1,83 @@
+---
+title: 时间序列介绍
+author: chiechie
+mathjax: true
+date: 2021-07-15 08:25:11
+tags: 
+- 最佳实践
+- 人工智能
+- 时序预测
+- 量化交易
+categories: 
+- AI
+---
+
+
+
+## 总结
+
+1. 时间序列可以想象成，一个随机变量，每隔一段时间，我们搜集到的 关于这个 随机变量的 观测值。
+2. 随机过程，有一系列的随机变量组成，这些随机变量是按照时间排序
+3. 序列的随机行为，由概率密度函数定义，如果我们能穷举出所有有限时间索引集合的分布，才能确定这个随机过程。
+
+	>	 随机过程的定义并没有提到平移不变性。
+4. 平移不变性，移动一个时间步之后，概率分布保持不变。
+1. 严格平稳性，表示一个随机过程的所有有限时间索引集合对应的概率分布，都满足平移不变性。
+
+   >  随机过程如果有了平移不变性，就可以用更简洁的pdf来表达, 从而可以使用观测数据去估计出来。
+6. 弱平稳性，也叫协方差平稳性，表示一个随机过程的所有2维时间索引集合对应的概率分布, 都满足平移不变性。
+
+7. 相对严格平稳性，弱平稳性对随机过程的限制条件更少，因此表达能力更强，可以对更多类型的时间序列建模。同时理论性质也还可以。
+
+8. 相关系数：两个随机变量标准化到均值=0，方差=1之后的，求协方差。
+
+9. 满足协方差平稳性的随机过程满足表示定理(wold representation)/
+
+   ![image-20210715091517366](/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715091517366.png)
+
+10. 表示定义的应用-给定一个时间序列，希望确定背后的分布：
+
+    1. 假设：背后的随机过程由两部分构成，历史信息 + 白噪声，历史信息是过去p段时间的信息的线性变换，白噪声是的平稳的随机过程
+
+    2. 参数估计：使用最小二乘估计出线形变换
+
+    3. 模型诊断：基于假设+数据，推断出一些其他的统计量，将这些统计量带回假设，检验一致性。
+
+       > 观测值减去历史信息，就是白噪声的观测值，接下来检测，这个白噪声是否如step1的 假设所描述
+
+       1. 正交性检验：测试白噪声是否跟p个变量的相关性为0，不为0的话，就要将p的值变大，重新做实验。
+       2. 检验是否是白噪声 : 不是白噪声的话，要么调整ma模型，要么在线性变换中加入更多的lag项，或者其他的确定性变量
+
+    ![image-20210715095528794](/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715095528794.png)
+
+1. 什么是好的模型？p尽可能小，或者ma中的q尽可能小。
+
+2. 使用滞后算子表述表达定理
+
+   ![image-20210715101032432](/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715101032432.png)
+
+3. 协方差平稳过程${X_t}$的脉冲响应函数（impulse response function）表示某个时刻的噪声（innovation）怎么影响后面的随机过程，the impact of the innovation on the process。
+
+   ​	![image-20210715102145421](/Users/stellazhao/Library/Application Support/typora-user-images/image-20210715102145421.png)
+
+   > 脉冲响应函数，有点像这个因子的能量衰减函数，总能量(long-run cumalative response)=1,  每过一段时间，这个因子释放一点能量，从而对观测值造成影响，释放能量随时间逐渐疲乏，趋近于0.
+
+4. $\psi$和$\psi^{-1}$类似收集能量（或者innovation造成的影响）和消除能量（或者innovation造成的影响）。
+
+5. 对$X_t$进行消除能量操作（历史innovation的影响）之后，就只剩下当下时刻的innovation带来的影响了。
+
+   ![image-20210715103831167](/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715103831167.png)
+
+1. 如果$\psi$的逆存在，那么原始的ma过程等价于ar过程。即一个随机过程，既可以表达为从历史innovation中收集能量的过程，也可以表达为，对历史观测值中剔除能量的过程。
+2. 经典的时序分析模型ARMA
+3. ARMA拓展到非平稳数据--ARIMA
+
+
+
+
+
+
+
+## 参考
+
+1. [8. Time Series Analysis I](https://www.youtube.com/watch?v=uBeM1FUk4Ps&t=362s)

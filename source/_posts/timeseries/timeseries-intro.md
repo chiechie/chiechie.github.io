@@ -31,9 +31,9 @@ categories:
 
 8. 相关系数：两个随机变量标准化到均值=0，方差=1之后的，求协方差。
 
-9. 满足协方差平稳性的随机过程满足表示定理(wold representation)/
+9. 满足协方差平稳性的随机过程满足表示定理(wold representation):
 
-   ![image-20210715091517366](/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715091517366.png)
+   
 
 10. 表示定义的应用-给定一个时间序列，希望确定背后的分布：
 
@@ -48,17 +48,17 @@ categories:
        1. 正交性检验：测试白噪声是否跟p个变量的相关性为0，不为0的话，就要将p的值变大，重新做实验。
        2. 检验是否是白噪声 : 不是白噪声的话，要么调整ma模型，要么在线性变换中加入更多的lag项，或者其他的确定性变量
 
-    ![image-20210715095528794](/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715095528794.png)
+    ![image-20210715095528794](./image-20210715095528794.png)
 
 1. 什么是好的模型？p尽可能小，或者ma中的q尽可能小。
 
 2. 使用滞后算子表述表达定理
 
-   ![image-20210715101032432](/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715101032432.png)
+   ![image-20210715101032432](./image-20210715101032432.png)
 
 3. 协方差平稳过程${X_t}$的脉冲响应函数（impulse response function）表示某个时刻的噪声（innovation）怎么影响后面的随机过程，the impact of the innovation on the process。
 
-   ​	![image-20210715102145421](/Users/stellazhao/Library/Application Support/typora-user-images/image-20210715102145421.png)
+   ​	![image-20210715102145421](./image-20210715102145421.png)
 
    > 脉冲响应函数，有点像这个因子的能量衰减函数，总能量(long-run cumalative response)=1,  每过一段时间，这个因子释放一点能量，从而对观测值造成影响，释放能量随时间逐渐疲乏，趋近于0.
 
@@ -66,15 +66,32 @@ categories:
 
 5. 对$X_t$进行消除能量操作（历史innovation的影响）之后，就只剩下当下时刻的innovation带来的影响了。
 
-   ![image-20210715103831167](/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715103831167.png)
+   ![image-20210715103831167](./image-20210715103831167.png)
 
-1. 如果$\psi$的逆存在，那么原始的ma过程等价于ar过程。即一个随机过程，既可以表达为从历史innovation中收集能量的过程，也可以表达为，对历史观测值中剔除能量的过程。
-2. 经典的时序分析模型ARMA
-3. ARMA拓展到非平稳数据--ARIMA
+6. 如果$\psi$的逆存在，那么原始的ma过程等价于ar过程。即一个随机过程，既可以表达为从历史innovation中收集能量的过程，也可以表达为，对历史观测值中剔除能量的过程，观测值的系数就是自回归系数。
+
+![image-20210715105014565](./image-20210715105014565.png)
+
+7. 经典的时序分析模型ARMA(p, q) 表示，对观测变量的多项式滞后操作+对噪声的多项式滞后操作，噪声$\eta_t$是一个维纳过程
+8. 随机游走就是一个一阶自回归模型，但是非平稳
+9. ARMA拓展到非平稳数据--ARIMA
 
 
 
 
+
+## 附录
+
+1. wold representation定理
+
+   ![wold representation](./image-20210715091517366.png)
+
+2. ARMA模型
+
+   ![image-20210715140721430](/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715140721430.png)
+
+3. AR（p）模型
+4. 
 
 
 

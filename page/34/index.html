@@ -165,6 +165,122 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/12/AIOps/AIOps-1_4-kpi-correlation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/12/AIOps/AIOps-1_4-kpi-correlation/" class="post-title-link" itemprop="url">chapter1.4 指标异常关联</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-12 22:32:17" itemprop="dateCreated datePublished" datetime="2021-05-12T22:32:17+08:00">2021-05-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>CoFlux挖掘KPI之间的异常波动关联, 是清华和阿里巴巴公司的合作成果。</p>
+<p>波动关联关系结果结果可应用于：报警压缩、推荐TOP-N的可能原因、构建异常波动传播链。</p>
+</blockquote>
+<h1 id="问题描述">问题描述</h1>
+<p>在实际的运维管理工作中，当服务发生故障时，与故障原因相关的许多KPI数据也会出波动。如果可以自动挖掘KPI之间的异常波动关系，就可以帮助运维进行更加高效地排查故障。</p>
+<p>CoFlux的目的是挖掘两个KPI之间的波动关联关系，这种关系包括三个具体问题： 1. 两个KPI的波动是否相关？如果相关， 2. 波动的先后顺序如何（同时发生或者某根曲线的波动先发生）？ 3. 波动的方向是否一致（波动方向一致或者相反）？</p>
+<h1 id="方案介绍">方案介绍</h1>
+<h2 id="符号说明">符号说明</h2>
+<ul>
+<li><span class="math inline">\(S = [s_1, s_2,…, s_m]\)</span>：表示对于一个时间序列S，<span class="math inline">\(s_i\)</span>是KPI S在时刻i的数据，m是KPI的长度。</li>
+<li><span class="math inline">\(P = [p_1, p_2, …, p_m]\)</span>：表示KPI S的预测序列，<span class="math inline">\(p_i\)</span>是<span class="math inline">\(s_i\)</span>的预测值。</li>
+<li><span class="math inline">\(F = [f_1, f_2, …, f_m]\)</span>：表示预测残差序列，<span class="math inline">\(f_i = s_i – *p_i\)</span></li>
+</ul>
+<p>CoFlux使用KPI的预测误差序列来表示该KPI的波动特征。如果两个KPI的波动特征曲线相关（即波动同时发生或者发生时有一定的相位差），那么两个KPI的波动相关。</p>
+<h2 id="难点">难点</h2>
+<p>分析判断KPI的波动关联关系，主要的难点为，KPI曲线数据众多且曲线特征各异（例如不同的周期性、平稳性、趋势等），因此，没有通用的方法可以对所有的KPI进行波动特征提取。</p>
+<h2 id="方法">方法</h2>
+<p>CoFlux的输入是两根KPI曲线，输出结果是波动关联关系：两个KPI是否波动相关，如果相关，同时输出波动的先后顺序和波动的方向。</p>
+<p>算法整体分为两个大的部分：特征工程和相关性计算。</p>
+<figure>
+<img src="img_1.png" alt="CoFlux架构" /><figcaption aria-hidden="true">CoFlux架构</figcaption>
+</figure>
+<h3 id="特征工程">特征工程</h3>
+<p>特征工程主要包括两个步骤，特征提取、特征放大。</p>
+<p>特征放大：一个KPI大部分时间范围内都是正常的，没有很大波动，只有随机的噪声。只有当服务受到影响时，才会产生波动。因此，波动的数量是远远小于正常数据的。为了削弱噪声的影响，我们采用改进版的激励函数：一个KPI的波动程度越大，波动特征也就会被放大的越大，这样就使得我们的波动特征更具区别度，对最后的相关性判断也更有帮助。</p>
+<h3 id="相关性判断">相关性判断</h3>
+<p>对两个KPI的波动特征进行相关性判断时，需要考虑到KPI波动的轻微形变以及相位差。因此，我们挑选Cross-Correlation来测量两个波动特征的相关性结果。</p>
+<figure>
+<img src="img_2.png" alt="相关性判断" /><figcaption aria-hidden="true">相关性判断</figcaption>
+</figure>
+<h3 id="应用实例">应用实例</h3>
+<p>CoFlux的结果可以在以下三个方面助力故障排查：</p>
+<ul>
+<li>报警压缩：对于大量的KPI，我们首先利用CoFlux计算所有KPI的两两之间的波动相关程度，然后使用K-means进行聚类（K可以使用轮廓系数方法选择）。每一类内的KPI可以当成一个报警簇，在报警的时候当成一个整体进行报警。</li>
+<li>推荐TOP N的可能原因：对于任一KPI X，通过CoFlux可找到该KPI的TOP N相关的KPI曲线。在进行故障排查时，运维人员可以优先检查这TOP N个指标。</li>
+<li>构建异常波动传播链：我们可以利用KPI之间的波动传播关系来构建异常波动传播链，这个异常波动传播链可以反映不同KPI之间的波动是如何关联在一起的。相比较人工的方式，CoFlux在不需要专家领域知识的情况下可以自动准确的构建异常波动传播链。</li>
+</ul>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://netman.aiops.org/wp-content/uploads/2019/05/CoFlux_camera-ready1.pdf">CoFlux英文paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SpiIquuz-8Ud_C3e4oVyaQ">CoFlux中文介绍</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/11/AIOps/AIOps-1_2-fault-prediction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -262,179 +378,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/05/10/AIOps/AIOps-1_1_2-feature/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/10/AIOps/AIOps-1_1_2-feature/" class="post-title-link" itemprop="url">chapter1.1 单指标异常检测</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-10 16:37:13" itemprop="dateCreated datePublished" datetime="2021-05-10T16:37:13+08:00">2021-05-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-09 08:29:06" itemprop="dateModified" datetime="2021-07-09T08:29:06+08:00">2021-07-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AIOps/" itemprop="url" rel="index"><span itemprop="name">AIOps</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="概述">1. 概述</h2>
-<p>大型集群系统中，可能存在软件问题和硬件问题导致的系统故障，严重影响了系统的高可用性。这就要求7*24小时，对系统不间断监控。这就意味着需要不间断地监控大量时间序列数据，以便检测系统潜在的故障和异常现象。然而，实际当中的系统异常很多，且不容易发现；从而导致人工方式监控方式效率很低。</p>
-<p>异常场景本质上是一个或者多个数据点；数据点一般在系统运行过程中产生，且能反应系统的功能是否正常，多以日志形式呈现。当系统功能发生异常时，就会产生异常数据。快速高效地发现这些异常值，对于快速止损具有重要意义。对此，我们提出一种基于时间序列的异常识别模型，用来及时发现异常。</p>
-<p>对于多数系统，一般都有成功率、流量等指标，故障发生时，这些指标也会出现响应的异常。我们将系统成功率、流量统一称为特征值变量，并对其进行建模，从而方便后续其它特征变量的扩展。为了更好地感知这些特征变量的突变，需要对特征变量进行计算处理或者空间转换。那么异常识别问题就转换为以下两个问题：</p>
-<ul>
-<li>特征变量的计算处理和转换</li>
-<li>突变的判断</li>
-</ul>
-<p>针对这两个关键问题，我们将在下文中进行建模和分析。</p>
-<h2 id="异常识别">2. 异常识别</h2>
-<p>如下图，通过计算器进行特征变量的计算处理和转换，通过异常检测器来判断数值的突变，从而解决上面的两个问题。其中，异常检测器由比较器和决策器组成。</p>
-<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20180815093422131.png"><img src="http://www.datadriven.top/images/image-20180815093422131.png" alt="image-20180815093422131" /></a>image-20180815093422131</p>
-<p>对于给定时间序列二维矩阵X={xmt∈R：∀t≥0,∀m≥0}X={xtm∈R：∀t≥0,∀m≥0} ，xmtxtm为tt时刻的第m个指标的真实数据，umtutm表示时间tt的xmtxtm的计算值，ymtytm为第m个指标的输出结果，ytyt为整体预测结果。</p>
-<p>xmtxtm通过计算器得到计算值umtutm，然后xmtxtm 和 umtutm分别作为比较器的输入，得到第m个指标的输出ymtytm。y1tyt1,y2tyt2…ymtytm作为决策器的输入得到ytyt。ytyt是一个二元值，可以用<code>TRUE</code>（表示输出数据正常），<code>FALSE</code>（表示输入数据异常）表示。下面对计算器和检测器进行说明。</p>
-<h3 id="计算器">2.1 计算器</h3>
-<p><strong>计算器</strong>用来对输入值xmtxtm 进行计算或者空间转换，从而得到特征变量的计算值umtutm。一般情况下，特征变量具有趋势性、周期性等特征。基于这些特征，计算值的获取，可以使用以下三种方式：累计窗口均值计算器、基于趋势性的环比计算器、基于周期性的同比计算器。</p>
-<h4 id="累积窗口均值计算器">2.1.1 累积窗口均值计算器</h4>
-<p>输入值为xtxt（为了方便省略指标参数<code>m</code>），如果直接只用单个点xtxt的抖动来判断，受噪声影响较大。因此，使用累积窗口均值的方式：</p>
-<figure>
-<img src="../_image/image-20191012164029688.png" alt="image-20191012164029688" /><figcaption aria-hidden="true">image-20191012164029688</figcaption>
-</figure>
-<p>其中，ww为累计窗口的大小。通过窗口平滑之后，会过滤掉尖刺等噪声。</p>
-<h4 id="基于趋势性的计算器">2.1.2 基于趋势性的计算器</h4>
-<p>为了描述数据的趋势性，引入环比类算法。对<span class="math inline">\(x_t\)</span>进行空间转换，得到环比，再使用检测器进行检测。</p>
-<figure>
-<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20191012163924379.png" alt="image-20191012163924379" /><figcaption aria-hidden="true">image-20191012163924379</figcaption>
-</figure>
-<p>其中，分子为当前窗口w内的数据，分母为上一窗口w内数据。通过窗口w对数据进行平滑。</p>
-<h4 id="基于周期性的计算器">2.1.3 基于周期性的计算器</h4>
-<p>为了描述数据的周期性，引入同比算法。当同比值过大或者过小时，认为发生故障。同比公式如下：</p>
-<figure>
-<img src="/Users/stellazhao/research_space/EasyMLBOOK/_image/image-20191012164057696.png" alt="image-20191012164057696" /><figcaption aria-hidden="true">image-20191012164057696</figcaption>
-</figure>
-<p>其中TT为周期，kk表示第几个周期。一般选取kk为<code>1</code>、<code>7</code>、<code>30</code>，来表示昨天、上周、上个月。</p>
-<h4 id="其他类型计算器">2.1.4 其他类型计算器</h4>
-<p>计算器还可以使用其他算法，包括：</p>
-<ul>
-<li>统计类算法：包括同比、环比算法的改进，或者其他统计算法。此时，计算器的输出结果为预测值，预测值和输入值进行比较即可。</li>
-<li>时序型算法：包含ARIMA、Holter-Winter等时序型算法。计算器的输出结果为预测值。</li>
-<li>机器学习：根据有监督、无监督、深度学习(LSTM)等算法，训练出的模型即为计算器。此时，计算器的输出结果一般为归一化的值，根据归一化的值进行比较。</li>
-</ul>
-<p>这些算法，在这里不再做深入研究和阐述。</p>
-<h3 id="异常检测器">2.2 异常检测器</h3>
-<p>当数据出现异常时，计算值会出现较大偏差，该偏差由<strong>异常检测器</strong>来判断。<strong>异常检测器</strong>由比较器和决策器组成，计算值和真实值通过该模块后，得到最终预测结果。</p>
-<h4 id="比较器">2.2.1 比较器</h4>
-<p>比较器的本质是求解如下公式的过程：</p>
-<p>f(xmt,umt;hm) = boolean(4)(4)f(xtm,utm;hm) = boolean</p>
-<p>其中，xmtxtm为真实值，uu为计算值，hmhm为阈值参数，booleanboolean为结果<code>TRUE/FALSE</code>。真实值已知，计算值通过计算器得到；剩下的阈值参数hmhm，则需要根据故障发生时的实际值进行参数估计。</p>
-<p>很多场景下，该公式还可以简化为：f(umt;hm) = booleanf(utm;hm) = boolean ，即计算值直接和阈值比较即可。</p>
-<h5 id="比较器种类">2.2.1.1 比较器种类</h5>
-<p>比较器有两种：相对值比较器和绝对值比较器。给定计算值umtutm和输入值xmtxtm，得到绝对值比较器：</p>
-<p>f=xmt−umt opretor hm(5)(5)f=xtm−utm opretor hm</p>
-<p>其中，opretoropretor为比较操作符，比如<code>&gt; &lt; &gt;= &lt;=</code>。由于utut由xtxt得到，所以很多情况下公式可以简化为 umtopretorhmtutmopretorhtm，即确定计算值的阈值即可。</p>
-<p>对于一些场景来说，需要捕获特征变量的相对性。因此，引入相对值比较器：</p>
-<p>f=xmt−umtumt opretor hm(6)(6)f=xtm−utmutm opretor hm</p>
-<p>通过对相对值比较器进行阈值处理，既可以检测异常值，同时还能对期望值进行归一化。</p>
-<h5 id="比较器阈值h的选取">2.2.1.2 比较器阈值h的选取</h5>
-<p>一般情况下，阈值参数决定了异常检测模块的敏感度。最优阈值的选择，取决于数据分布的性质以及先验数据。一般情况下，<strong>阈值的选取方法为</strong>：</p>
-<ul>
-<li>方法一：跟踪一组故障数据和正常数据，根据经验估计阈值。</li>
-<li>方法二：跟踪一组故障数据和正常数据，根据经验，并结合<code>3σ准则</code>确定，来确定阈值。（特征变量或者特征变量的组合，服从正态分布）</li>
-</ul>
-<h4 id="决策器">2.2.2 决策器</h4>
-<p>如下公式，基于逻辑操作符，对比较器结果进行合并.</p>
-<ul>
-<li>方式一：逻辑组合</li>
-</ul>
-<p>yt=y1t &amp;| y2t &amp;| y3t &amp;| ... ymt(7)(7)yt=yt1 &amp;| yt2 &amp;| yt3 &amp;| ... ytm</p>
-<p>其中，||表示逻辑或操作，&amp;&amp;表示逻辑与操作。</p>
-<ul>
-<li><p>方式二：权重设置法</p>
-<p>yt=k1∗y1t + k2∗y2t + k3∗y3t + ... km∗ymt(8)</p></li>
-</ul>
-<p>其中，kmkm为系数，这种方式一般适合基本无负样本的场景，参数的确定需要使用<code>层次分析法</code>，将在后面的文章进行说明。</p>
-<h2 id="故障止损">3. 故障止损</h2>
-<p>上面主要阐述了异常识别的方式。如果条件过于严格，刚开始并不容易被识别出来；如果条件过松，可能导致误识别。对此，我们将止损策略分为两级：</p>
-<ul>
-<li>级别一：预警。对于不能完全确定故障发生的场景，使用级别一。</li>
-<li>级别二：预警+止损（踢IDC）。对于能确定IDC故障的场景，使用级别二。</li>
-</ul>
-<h2 id="实际场景应用">4. 实际场景应用</h2>
-<p>下面通过一个规则的场景，进行举例说明。假如存在如下异常场景：</p>
-<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20181108211144340.png"><img src="http://www.datadriven.top/images/image-20181108211144340.png" alt="image-20181108211144340" /></a>image-20181108211144340</p>
-<p><strong>体现在模型中，则级别一（预警）的模型图</strong></p>
-<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20180815093336600.png"><img src="http://www.datadriven.top/images/image-20180815093336600.png" alt="image-20180815093336600" /></a>image-20180815093336600</p>
-<p><strong>级别二（预警+踢IDC）的模型图：</strong></p>
-<p><a target="_blank" rel="noopener" href="http://www.datadriven.top/images/image-20180815093352931.png"><img src="http://www.datadriven.top/images/image-20180815093352931.png" alt="image-20180815093352931" /></a>image-20180815093352931</p>
-<p>最终，得到故障识别规则：</p>
-<ul>
-<li>级别一触发条件: u1&lt;h1 | (u5&lt;h5 &amp; u6&lt;h6 &amp; u7&lt;h7)u1&lt;h1 | (u5&lt;h5 &amp; u6&lt;h6 &amp; u7&lt;h7)</li>
-<li>级别二触发条件：u1&lt;h2 &amp; u3&gt;h3u1&lt;h2 &amp; u3&gt;h3</li>
-</ul>
-<p>其中，h1,h2,h3,h5,h6,h7h1,h2,h3,h5,h6,h7为阈值参数。需要结合经验和实际数据估计得到。</p>
-<h2 id="小结">5. 小结</h2>
-<p>本文主要基于时间序列的数据，提出了异常场景识别模型，并重点对基于规则的识别进行了说明。</p>
-<h2 id="参考">参考</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://dl.acm.org/citation.cfm?id=2788611">Generic and Scalable Framework for Automated Time-series Anomaly Detection</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.datadriven.top/categories/数据驱动/">数据驱动应用（一）：整体概述</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -504,7 +447,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">199</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

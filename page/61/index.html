@@ -165,6 +165,254 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/07/timeseries/timeseries-ziliao-huizong/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chiechie">
+      <meta itemprop="description" content="a reader & thinker">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiechie's Mini World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/07/timeseries/timeseries-ziliao-huizong/" class="post-title-link" itemprop="url">时间序列资料汇总</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-07 11:36:11" itemprop="dateCreated datePublished" datetime="2021-04-07T11:36:11+08:00">2021-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-02 19:04:36" itemprop="dateModified" datetime="2021-07-02T19:04:36+08:00">2021-07-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="算法">算法</h1>
+<h2 id="深度学习算法">深度学习算法</h2>
+<ul>
+<li>DeepAR,2017, ref 146, p12
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1704.04110.pdf">paper</a> | <a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/tree/master/src/gluonts/model/deepar">code</a></li>
+</ul></li>
+<li>DeepFactor, 2019 ICML，ref 15,使用全局的RNN模型学习不同时序间共同的模式，以及对每一个时间序列学习一个局部模型
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.12417">paper</a></li>
+</ul></li>
+<li>Deep State Space Models,2018
+<ul>
+<li><a target="_blank" rel="noopener" href="https://papers.nips.cc/paper/8004-deep-state-space-models-for-time-series-forecasting.pdf">paper</a></li>
+</ul></li>
+<li>Spline Regression RNN , Gasthaus et. al., 2019</li>
+<li>TCN: ref08， p14，2018
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1803.01271.pdf">paper</a> | <a target="_blank" rel="noopener" href="https://github.com/locuslab/TCN">code</a></li>
+</ul></li>
+<li>TFT: ref 7次，p27，2019
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.09363.pdf">paper</a> | <a target="_blank" rel="noopener" href="https://github.com/google-research/google-research/tree/master/tft">code</a></li>
+</ul></li>
+<li>prophet, 2017,ref 370
+<ul>
+<li><a target="_blank" rel="noopener" href="https://peerj.com/preprints/3190.pdf">paper</a> | <a target="_blank" rel="noopener" href="https://github.com/facebook/prophet">code</a></li>
+</ul></li>
+<li>stock2vec
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2010.01197">paper</a></li>
+</ul></li>
+<li>Forecasting: Principles and Practic
+<ul>
+<li>https://otexts.com/fpp2/</li>
+</ul></li>
+<li>N-BEATS
+<ul>
+<li><a target="_blank" rel="noopener" href="http://arxiv.org/abs/1905.10437">paper</a></li>
+</ul></li>
+</ul>
+<h1 id="框架">框架</h1>
+<ul>
+<li>GluonTS: Probabilistic Time Series Models in Python.
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1906.05264.pdf">paper</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts/blob/master/REFERENCES.md">支持的算法列表</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/awslabs/gluon-ts">code</a> | <a target="_blank" rel="noopener" href="https://gluon-ts.mxnet.io/">doc</a></li>
+</ul></li>
+<li>Probabilistic Demand Forecasting at Scale
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.vldb.org/pvldb/vol10/p1694-schelter.pdf">paper</a></li>
+</ul></li>
+<li>Criteria for classifying forecasting methods,被引用次数：21 相关文章 所有 2 个版本,2020，p11
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S0169207019301529">paper</a></li>
+</ul></li>
+<li>Forecasting big time series: old and new,2019
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/abs/10.1145/3292500.3332289">paper</a></li>
+</ul></li>
+<li>Time Series Forecasting With Deep Learning: A Survey 被引用2次，2020
+<ul>
+<li><a href="/Users/stellazhao/Desktop/paper_2020时序预测综述.pdf">paper</a>:</li>
+</ul></li>
+<li>Neural forecasting: Introduction and literature overview，2020, 被引用5次
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2004.10240">paper</a></li>
+</ul></li>
+<li>Forecasting big time series: old and new, 被引用次数：23 相关文章 所有 5 个版本
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/abs/10.14778/3229863.3229878">paper</a></li>
+</ul></li>
+</ul>
+<h1 id="比赛">比赛</h1>
+<h2 id="商品销量预测">商品销量预测</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/walmart-recruiting-store-sales-forecasting">Walmart Store Sales Forecasting (2014)</a></p>
+<ul>
+<li>Use historical markdown data to predict store sales</li>
+<li>评估指标：weighted mean absolute error (WMAE) <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FLDPLxG_AsI.png?alt=media&amp;token=d615d942-e378-43d5-8fc4-a26d146bb0ac" /></li>
+<li>样本id： 商场id+部门id+日期（包含当天，未来一周） <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FATkOrisXUk.png?alt=media&amp;token=2dea8db9-d230-4266-9676-9e15bb2ed884" /></li>
+</ul>
+<h2 id="极端天气下的商品销量预测">极端天气下的商品销量预测</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/walmart-recruiting-sales-in-stormy-weather">Walmart Sales in Stormy Weather (2015)</a> - Predict how sales of weather-sensitive products are affected by snow and rain - 评估指标：Root Mean Squared Logarithmic Error (RMSLE) <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F_jeBzeQgo1.png?alt=media&amp;token=45740607-7629-4005-bb27-773c8df4e9d2" /> - 样本id：商场id + 商品id + 日期 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FD_Ba2ZU9Nw.png?alt=media&amp;token=09ce23f2-d4a1-425d-a23c-ee85efea58a4" /></p>
+<h2 id="营业收入预测">营业收入预测</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/rossmann-store-sales">Rossmann Store Sales (2015)</a></p>
+<ul>
+<li>Forecast sales using store, promotion, and competitor data</li>
+<li>tuneover：营业收入</li>
+<li>评估指标：rmspe <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FEA2frU1QNu.png?alt=media&amp;token=e8991a1c-d50f-4390-833c-3925da591c89" /></li>
+<li>样本id： 商场id+日期 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FHbQ0SWOSpS.png?alt=media&amp;token=a01d1b85-c213-45a4-8a5f-d52f1aaf698b" /></li>
+</ul>
+<h2 id="肉类销量预测">肉类销量预测</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/favorita-grocery-sales-forecasting">Corporación Favorita Grocery Sales Forecasting (2018)</a></p>
+<ul>
+<li>accurately predict sales for a large grocery chain?</li>
+<li>评估指标： Root Mean Squared Logarithmic Error (NWRMSLE)
+<ul>
+<li>容易腐烂（Perishable）的品类给了更高的权重1.25, 其他品类给的1.</li>
+</ul></li>
+<li>样本id： 商品 id</li>
+</ul>
+<h2 id="餐厅人流量预测">餐厅人流量预测</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/recruit-restaurant-visitor-forecasting">Recruit Restaurant Visitor Forecasting (2018)</a>:</p>
+<ul>
+<li>Predict how many future visitors a restaurant will receive</li>
+<li>样本id为： 餐馆id+日期 <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FM2vtlhu-kH.png?alt=media&amp;token=0042496a-1f4e-4800-a982-8f2c0e6a8de7" /></li>
+<li>评估指标：<a target="_blank" rel="noopener" href="https://www.kaggle.com/wiki/RootMeanSquaredLogarithmicError">root mean squared logarithmic error</a>. <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FkPPvo0OwMp.png?alt=media&amp;token=fd0cfe95-5a29-46ee-8ce6-905edfcf31c5" /></li>
+</ul>
+<h2 id="流行病人数预测">流行病人数预测</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/covid19-global-forecasting-week-5">COVID19 Global Forecasting (2020)</a>:</p>
+<p>预测新冠疫情世界各地，未来15天，每天确诊人数和死亡人数:</p>
+<ul>
+<li>输出：两个指标，3个分位数</li>
+<li>样本id：城市id + 日期 + 指标id <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2FmBk7V4JsDj.png?alt=media&amp;token=39226fde-0ee6-4f72-bef0-8182809ae110" /></li>
+<li>评估指标： Weighted Pinball Loss. <img src="https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.com/o/imgs%2Fapp%2Frf_learning%2F6KVBbgq7pC.png?alt=media&amp;token=a5eb8da1-0f10-45d7-8caf-5119b3d8c46c" /></li>
+</ul>
+<h1 id="公开数据">公开数据</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014">electricity数据集--Electricity dataset from UCI</a>：
+<ul>
+<li>370 个 家庭的用电量 from 2011 to 2014， hourly数据</li>
+<li>训练数据（单位points）：30000 points * 370 = 1110 w
+<ul>
+<li>[from] 2011-01-01 00:00:00 [to] 2014-06-04 00:00:00</li>
+</ul></li>
+<li>测试数据（单位points）：5065 points * 370 = 187 w # need additional 7 days as given info
+<ul>
+<li>[from] 2014-06-04 00:00:00 [to] 2015-01-01 01:00:00</li>
+</ul></li>
+</ul></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/numenta/NAB/tree/master/data/realTweets">realTweets</a> :twitter上的品牌（如Apple，Amazon等）的热度，粒度为5min</li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/airplane-crashes">Airplane Crashes</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/us-air-pollution-data">U.S. Air Pollution Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/us-chronic-disease-data">U.S. Chronic Disease Data</a></li>
+<li><a target="_blank" rel="noopener" href="http://archive.ics.uci.edu/ml/datasets/Air+Quality">Air quality from UCI</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/zhiyongc/Seattle-Loop-Data">Seattle freeway traffic speed</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/youth-tobacco-survey-data">Youth Tobacco Survey Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/hxchua/populationsg">Singapore Population</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/airlines-delay">Airlines Delay</a></li>
+<li><a target="_blank" rel="noopener" href="https://archive.ics.uci.edu/ml/datasets/PEMS-SF">Traffic dataset from UCI</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/city-of-baltimore-crime-data">City of Baltimore Crime Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/discover-the-menu">Discover The Menu</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/global-climate-change-data">Global Climate Change Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/global-health-nutrition-data">Global Health Nutrition Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/jbrownlee/Datasets/master/pollution.csv">Beijing PM2.5 Data Set</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jbrownlee/Datasets/blob/master/airline-passengers.csv">Airline Passengers dataset</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/government-finance-statistics">Government Finance Statistics</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/historical-public-debt-data">Historical Public Debt Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/kansas-city-crime-data">Kansas City Crime Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://data.world/data-society/nyc-crime-data">NYC Crime Data</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/web-traffic-time-series-forecasting">Kaggle-Web Traffic Time Series Forecasting</a></li>
+</ul>
+<h1 id="练手项目">练手项目</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/tensorflow-sequences-time-series-and-prediction/ungradedLti/sFRBW/exercise-4-sunspots">coursera-使用tensorfow构建时间序列预测模型</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/forecasting/tree/master/fclib/fclib/models">微软-forcasting</a>:dilated_cnn/lightgbm/multiple_linear_regression</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Azure/DeepLearningForTimeSeriesForecasting">微软-example</a>：
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Azure/DeepLearningForTimeSeriesForecasting/blob/master/1_CNN_dilated.ipynb">1_cnn_dilated.ipynb</a>：值得学习的是--如何在keras中 构造空洞因果卷积？</li>
+<li>RNN_encoder_decoder</li>
+</ul></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Alro10/deep-learning-time-series/tree/master/notebooks">个人项目-基于深度学习的时间序列预测</a></li>
+<li>pytorch-forecasting
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pytorch-forecasting.readthedocs.io/en/latest/contribute.html">doc</a> | <a target="_blank" rel="noopener" href="https://github.com/jdb78/pytorch-forecasting">code</a></li>
+</ul></li>
+</ul>
+<h1 id="比赛-1">比赛</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://github.com/jbrownlee/Datasets">数据集</a></li>
+<li><a target="_blank" rel="noopener" href="https://mofc.unic.ac.cy/m5-competition/">M5 Competition</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Mcompetitions/M4-methods">M4 Competition</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cuge1995/awesome-time-series#Datasets">awesome time series--github</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/06/reading_notes/reality/xuxiaonian-shangyedebenzhi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -495,88 +743,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://chiechie.github.io/2021/04/06/reading_notes/reality/xiangbiao-bazijizuoweifangfa/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chiechie">
-      <meta itemprop="description" content="a reader & thinker">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chiechie's Mini World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/06/reading_notes/reality/xiangbiao-bazijizuoweifangfa/" class="post-title-link" itemprop="url">把自己作为方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-06 23:17:52" itemprop="dateCreated datePublished" datetime="2021-04-06T23:17:52+08:00">2021-04-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-08 15:37:21" itemprop="dateModified" datetime="2021-04-08T15:37:21+08:00">2021-04-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li>项：用中文整理思路，对我自己来讲是一个学习过程。非常重要的是，在访谈的时候我们不能用学术的语言，说的话都比较实在，是不假的话，也是我<strong>已经想得比较明白的话。只有想明白了，才能用大白话讲出来</strong>。<strong>把模糊的想法清晰化，能够用直白的语言表述出来，需要很高的造诣</strong>，所以访谈也是一个自我提高的过程。</li>
-<li>为什么需要互动？
-<ul>
-<li>让我听到一些声音，看到一些正在发生的变化。变革，不一定是革命性的大变革，我们所处的每一刻都可以是历史的拐弯点，都蕴含着多种变化的可能。<strong>怎么去理解、把握这些拐点，就成了一个很重要的问题</strong></li>
-</ul></li>
-</ul>
-<h2 id="chiechie总结">chiechie总结</h2>
-<p>人类历史发展到现在，依赖的 思考工具 发生了很大的变化。以前是专家式的工具，如分析和设计经济运行，社会资源再分配，城市规划等等，这种工具只有专家掌握，专家经过分析得到“最佳”的执行方法后，再去告诉群众，以前的社会变化 主要靠 这种专家式工具推动。现在不是这样了，随着大家受教育程度提高，人人都可以去推动社会的变化，但是还缺了一个适合大众的思考工具。项老师说，这个大众思考工具应该是内化的，也就是，在每个人的脑中的，但是需要一个外界的孵化器 去激发 这个内在工具，去引导我们自己，提醒我们自己。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -646,7 +812,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">199</span>
+          <span class="site-state-item-count">200</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

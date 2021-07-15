@@ -6,7 +6,7 @@
   <link href="https://chiechie.github.io/atom.xml" rel="self"/>
   
   <link href="https://chiechie.github.io/"/>
-  <updated>2021-07-15T03:45:25.880Z</updated>
+  <updated>2021-07-15T09:55:28.126Z</updated>
   <id>https://chiechie.github.io/</id>
   
   <author>
@@ -17,21 +17,22 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>时间序列介绍</title>
+    <title>时间序列1</title>
     <link href="https://chiechie.github.io/2021/07/15/timeseries/timeseries-intro/"/>
     <id>https://chiechie.github.io/2021/07/15/timeseries/timeseries-intro/</id>
     <published>2021-07-15T00:25:11.000Z</published>
-    <updated>2021-07-15T03:45:25.880Z</updated>
+    <updated>2021-07-15T09:55:28.126Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="总结">总结</h2><ol type="1"><li><p>时间序列可以想象成，一个随机变量，每隔一段时间，我们搜集到的 关于这个 随机变量的 观测值。</p></li><li><p>随机过程，有一系列的随机变量组成，这些随机变量是按照时间排序</p></li><li><p>序列的随机行为，由概率密度函数定义，如果我们能穷举出所有有限时间索引集合的分布，才能确定这个随机过程。</p><blockquote><p>随机过程的定义并没有提到平移不变性。</p></blockquote></li><li><p>平移不变性，移动一个时间步之后，概率分布保持不变。</p></li><li><p>严格平稳性，表示一个随机过程的所有有限时间索引集合对应的概率分布，都满足平移不变性。</p><blockquote><p>随机过程如果有了平移不变性，就可以用更简洁的pdf来表达, 从而可以使用观测数据去估计出来。</p></blockquote></li><li><p>弱平稳性，也叫协方差平稳性，表示一个随机过程的所有2维时间索引集合对应的概率分布, 都满足平移不变性。</p></li><li><p>相对严格平稳性，弱平稳性对随机过程的限制条件更少，因此表达能力更强，可以对更多类型的时间序列建模。同时理论性质也还可以。</p></li><li><p>相关系数：两个随机变量标准化到均值=0，方差=1之后的，求协方差。</p></li><li><p>满足协方差平稳性的随机过程满足表示定理(wold representation)/</p><figure><img src="/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715091517366.png" alt="image-20210715091517366" /><figcaption aria-hidden="true">image-20210715091517366</figcaption></figure></li><li><p>表示定义的应用-给定一个时间序列，希望确定背后的分布：</p><ol type="1"><li><p>假设：背后的随机过程由两部分构成，历史信息 + 白噪声，历史信息是过去p段时间的信息的线性变换，白噪声是的平稳的随机过程</p></li><li><p>参数估计：使用最小二乘估计出线形变换</p></li><li><p>模型诊断：基于假设+数据，推断出一些其他的统计量，将这些统计量带回假设，检验一致性。</p><blockquote><p>观测值减去历史信息，就是白噪声的观测值，接下来检测，这个白噪声是否如step1的 假设所描述</p></blockquote><ol type="1"><li>正交性检验：测试白噪声是否跟p个变量的相关性为0，不为0的话，就要将p的值变大，重新做实验。</li><li>检验是否是白噪声 : 不是白噪声的话，要么调整ma模型，要么在线性变换中加入更多的lag项，或者其他的确定性变量</li></ol></li></ol><figure><img src="/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715095528794.png" alt="image-20210715095528794" /><figcaption aria-hidden="true">image-20210715095528794</figcaption></figure></li><li><p>什么是好的模型？p尽可能小，或者ma中的q尽可能小。</p></li><li><p>使用滞后算子表述表达定理</p><figure><img src="/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715101032432.png" alt="image-20210715101032432" /><figcaption aria-hidden="true">image-20210715101032432</figcaption></figure></li><li><p>协方差平稳过程<span class="math inline">\({X_t}\)</span>的脉冲响应函数（impulse response function）表示某个时刻的噪声（innovation）怎么影响后面的随机过程，the impact of the innovation on the process。</p><p>​ <img src="/Users/stellazhao/Library/Application%20Support/typora-user-images/image-20210715102145421.png" alt="image-20210715102145421" /></p><blockquote><p>脉冲响应函数，有点像这个因子的能量衰减函数，总能量(long-run cumalative response)=1, 每过一段时间，这个因子释放一点能量，从而对观测值造成影响，释放能量随时间逐渐疲乏，趋近于0.</p></blockquote></li><li><p><span class="math inline">\(\psi\)</span>和<span class="math inline">\(\psi^{-1}\)</span>类似收集能量（或者innovation造成的影响）和消除能量（或者innovation造成的影响）。</p></li><li><p>对<span class="math inline">\(X_t\)</span>进行消除能量操作（历史innovation的影响）之后，就只剩下当下时刻的innovation带来的影响了。</p><figure><img src="/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715103831167.png" alt="image-20210715103831167" /><figcaption aria-hidden="true">image-20210715103831167</figcaption></figure></li><li><p>如果<span class="math inline">\(\psi\)</span>的逆存在，那么原始的ma过程等价于ar过程。即一个随机过程，既可以表达为从历史innovation中收集能量的过程，也可以表达为，对历史观测值中剔除能量的过程，观测值的系数就是自回归系数。</p><figure><img src="/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715105014565.png" alt="image-20210715105014565" /><figcaption aria-hidden="true">image-20210715105014565</figcaption></figure></li><li><p>经典的时序分析模型ARMA</p></li><li><p>ARMA拓展到非平稳数据--ARIMA</p></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=uBeM1FUk4Ps&amp;t=362s">8. Time Series Analysis I</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="总结">总结</h2><ol type="1"><li><p>随机过程，由一系列按照时间排序的随机变量组成。</p></li><li><p>序列的随机行为，由概率密度函数定义，如果我们能穷举出所有有限时间索引集合的分布，才能确定这个随机过程。</p><blockquote><p>随机过程的定义并没有提到平移不变性。</p></blockquote></li><li><p>平移不变性，移动一个时间步之后，概率分布保持不变。</p></li><li><p>严格平稳性，表示一个随机过程的所有有限时间索引集合对应的概率分布，都满足平移不变性。</p><blockquote><p>随机过程如果有了平移不变性，就可以用更简洁的pdf来表达, 从而可以使用观测数据去估计出来。</p></blockquote></li><li><p>弱平稳性，也叫协方差平稳性，表示一个随机过程的所有2维时间索引集合对应的概率分布, 都满足平移不变性。</p></li><li><p>相对严格平稳性，弱平稳性对随机过程的限制条件更少，因此表达能力更强，可以对更多类型的时间序列建模。同时理论性质也还可以。</p></li><li><p>相关系数：两个随机变量标准化到均值=0，方差=1之后的，求协方差。</p></li><li><p>满足协方差平稳性的随机过程满足表示定理(wold representation):</p></li><li><p>什么是好的模型？p尽可能小，或者ma中的q尽可能小。</p></li><li><p>使用滞后算子表述表达定理</p><figure><img src="./image-20210715101032432.png" alt="image-20210715101032432" /><figcaption aria-hidden="true">image-20210715101032432</figcaption></figure></li><li><p>协方差平稳过程<span class="math inline">\({X_t}\)</span>的脉冲响应函数（impulse response function）表示某个时刻的噪声（innovation）怎么影响后面的随机过程，the impact of the innovation on the process。</p><p>​ <img src="./image-20210715102145421.png" alt="image-20210715102145421" /></p><blockquote><p>脉冲响应函数，有点像这个因子的能量衰减函数，总能量(long-run cumalative response)=1, 每过一段时间，这个因子释放一点能量，从而对观测值造成影响，释放能量随时间逐渐疲乏，趋近于0.</p></blockquote></li><li><p><span class="math inline">\(\psi\)</span>和<span class="math inline">\(\psi^{-1}\)</span>类似收集能量（或者innovation造成的影响）和消除能量（或者innovation造成的影响）。</p></li><li><p>对<span class="math inline">\(X_t\)</span>进行消除能量操作（历史innovation的影响）之后，就只剩下当下时刻的innovation带来的影响了。</p><figure><img src="./image-20210715103831167.png" alt="image-20210715103831167" /><figcaption aria-hidden="true">image-20210715103831167</figcaption></figure></li><li><p>如果<span class="math inline">\(\psi\)</span>的逆存在，那么原始的ma过程等价于ar过程。即一个随机过程，既可以表达为从历史innovation中收集能量的过程，也可以表达为，对历史观测值中剔除能量的过程，观测值的系数就是自回归系数。</p><figure><img src="./image-20210715105014565.png" alt="image-20210715105014565" /><figcaption aria-hidden="true">image-20210715105014565</figcaption></figure></li><li><p>经典的时序分析模型ARMA(p, q) 表示，对观测变量的多项式滞后操作+对噪声的多项式滞后操作，噪声<span class="math inline">\(\eta_t\)</span>是一个维纳过程</p></li><li><p>随机游走就是一个一阶自回归模型，但是非平稳.</p></li><li><p>自回归模型如果满足，特征方程的p个根（复数），都在单位元外面，该随机过程是平稳的。本质上是对回归函数的逆函数施加的收敛性约束。</p></li><li><p>ARMA拓展到非平稳随机过程建模-ARIMA。</p></li><li><p>金融数据大部分都是非平稳的，像随机游走，box和jenkins想出来了一种移除非平稳趋势的方法--差分</p></li><li><p>平稳性测试：H0是平稳的，检验方法有KPSS测试</p><p>非平稳性测试，H0假设是非平稳的，常用来检测非平稳性的方法单位根检验方法，例如Dickey-Fuller测试</p></li><li><p>DF测试是一种单位根检测，它的流程是这样的，先假设随机过程服从AR（1）模型，拟合一个AR（1）的模型，然后定义一个根<span class="math inline">\(\phi\)</span>相关的统计量，</p><ol type="1"><li>如果 <span class="math inline">\(\phi=1\)</span>, 那就应该观察到t服从一个DF分布，对应的随机过程就是是随机游走，是一个非平稳的随机过程。</li><li>如果<span class="math inline">\(|\phi|=1\)</span>,那么估计量和真实<span class="math inline">\(\phi\)</span>的差值就近似一个正态分布，以真实<span class="math inline">\(\phi^2\)</span>为方差。</li></ol></li></ol><h2 id="附录">附录</h2><ol type="1"><li><p>wold representation定理</p><figure><img src="./image-20210715091517366.png" alt="wold representation" /><figcaption aria-hidden="true">wold representation</figcaption></figure></li></ol><h2 id="表示定理的应用">表示定理的应用</h2><p>表示定义的应用-给定一个时间序列，希望确定背后的分布：</p><ol type="1"><li><p>假设：背后的随机过程由两部分构成，历史信息 + 白噪声，历史信息是过去p段时间的信息的线性变换，白噪声是的平稳的随机过程</p></li><li><p>参数估计：使用最小二乘估计出线形变换</p></li><li><p>模型诊断：基于假设+数据，推断出一些其他的统计量，将这些统计量带回假设，检验一致性。</p><blockquote><p>观测值减去历史信息，就是白噪声的观测值，接下来检测，这个白噪声是否如step1的 假设所描述</p></blockquote><ol type="1"><li>正交性检验：测试白噪声是否跟p个变量的相关性为0，不为0的话，就要将p的值变大，重新做实验。</li><li>检验是否是白噪声 : 不是白噪声的话，要么调整ma模型，要么在线性变换中加入更多的lag项，或者其他的确定性变量</li></ol></li></ol><figure><img src="./image-20210715095528794.png" alt="image-20210715095528794" /><figcaption aria-hidden="true">image-20210715095528794</figcaption></figure><h2 id="arma模型">ARMA模型</h2><figure><img src="./image-20210715140721430.png" alt="image-20210715140721430" /><figcaption aria-hidden="true">image-20210715140721430</figcaption></figure><ol start="3" type="1"><li><p>AR（p）模型的平稳条件：</p><figure><img src="./image-20210715145052508.png" alt="image-20210715145052508" /><figcaption aria-hidden="true">image-20210715145052508</figcaption></figure></li><li><p>yuler walker方程：AR（P）的协方差<span class="math inline">\(\gamma\)</span>和<span class="math inline">\(\phi\)</span>满足的某个方程</p></li><li><p>有了协方差矩阵的估计量，求yuler walker方程，就可以得出AR（p）的p个参数，再就可以算出波动率。</p></li><li><figure><img src="./image-20210715153433604.png" alt="image-20210715153433604" /><figcaption aria-hidden="true">image-20210715153433604</figcaption></figure><ol type="1"><li>使用原始的p阶自回归过程，</li></ol></li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://www.youtube.com/watch?v=uBeM1FUk4Ps&amp;t=362s">8. Time Series Analysis I</a></li><li>https://ocw.mit.edu/courses/mathematics/18-s096-topics-in-mathematics-with-applications-in-finance-fall-2013/</li></ol>]]></content>
     
     
       
       
     <summary type="html">&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
 &lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;&lt;p&gt;时间序列可以想象成，一个随机变量，每隔一段时间，我们搜集到的 关于这个 随机变量的 观测值。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;随机过程，有一系列的随机变量组成，这些随机变量是按照时间排序&lt;/p&gt;&lt;/</summary>
+&lt;li&gt;&lt;p&gt;随机过程，由一系列按照时间排序的随机变量组成。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;序列的随机行为，由概率密度函数定义，如果我们能穷举出所有有限时间索引集合的分布，才能确定这个随机过程。&lt;/p&gt;
+&lt;bl</summary>
       
     
     
@@ -332,9 +333,9 @@
     <link href="https://chiechie.github.io/2021/07/03/reading_notes/zhexue/wushitangwang/"/>
     <id>https://chiechie.github.io/2021/07/03/reading_notes/zhexue/wushitangwang/</id>
     <published>2021-07-03T07:30:45.000Z</published>
-    <updated>2021-07-05T06:53:28.420Z</updated>
+    <updated>2021-07-15T05:57:29.723Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="停顿世界">停顿世界</h2><blockquote><p>stopping the world。</p></blockquote><ol type="1"><li>抹掉一切个人历史，免得我们受别人思想的牵绊。</li><li>"他们一旦知道你，你就被视为理所当然的，从那一刻开始，你就没有办法打破他们思想的束缚。我个人很喜欢那种（抹掉个人历史带来的）不为人知的终极自由。没有人能确切地了解我，像人们了解你一样"，唐望说。</li><li>“如果一个人没有个人历史，不论他说什么，都不会被当成谎言，而你的麻烦是你一定得向每个人说明每一件事，同时又希望保持行为的新鲜感。可是在说明所做的一切之后，你没法再兴奋，为了能好好活下去，你只好撒谎。</li><li>“从现在开始，你必须只让人知道你愿意让人知道的，但是不必说明你是怎样做到的。”</li><li>我们只有两条路；或者把一切都当成确定的、真实的：或者不这么做。如果走第一条路，最后会对自己以及世界感到厌倦至死。如果走第二条路，抹去个人历史，我们就在自己周围制造出一层雾，那是一种让人刺激而且神秘的状态，没有人知道兔子会从哪里冒出来，甚至连自己也不知道。</li><li>在没有一样事情是确定时，我们会一直保持警觉，会永远小心翼翼，不知道兔子藏在哪丛灌木后面，要远比假装知道一切来得刺激。</li><li>“你把自己看得太重了，”他慢条斯理地说，“在你心里，你把你自己看得太该死的重要。一定要改！你是如此该死的重要，使你觉得可以理直气壮地对每件事恼火。你是如此该死的重要，所以事情只要不如你的意，你可以掉头就走。你大概以为那样表示你有个性。胡扯！你是又软弱，又自命不凡！”.他指出，因为我加在身上这种夸大的重要感，使我这辈子一事无成。</li><li>“自我重要感是另一件必须丢弃的东西，就像个人历史。”</li><li>我喜欢他这种如谜般的谈话，神秘而带挑战性。不过，我无法判断这些是深奥难懂还是一派胡言。</li><li>我们现在所关心的是丢掉自我重要感。只要你还是感觉你是世界上最重要的事物，就不能真正欣赏周围的世界，就好像一匹戴着眼罩的马只能看到一个远离一切事物的自己</li><li>“死亡是我们永恒的伴侣，”唐望以最严肃的语气说，“它永远在我们的左边，一臂之遥。在你监视白鹰时，它也在监视你，它在你耳边低语，于是你感觉到了它的寒意，就像今天一样。死亡永远在监视你，直到有一天它轻轻碰触你。”</li><li>“你这个男孩，偷偷地潜行追踪猎物，也知道耐心等待，就像死亡的等待。你非常清楚死亡就在我们的左边，就像你在白鹰的左边那样。”</li><li>“如果我们知道死亡正在潜猎我们，又怎能感觉自己如此重要呢？”他问。</li><li>“当你不耐烦时，”他继续说，“你应该转向左边，向死亡寻求忠告。如果死亡对你打个手势，或你瞥见了它，或者你只要感觉它在那儿守望你，你就可以抛弃许多令人心烦的琐事。”</li><li>“死亡是我们仅有的明智忠告者。当你觉得一切都不顺利，一切就要完蛋的时候，转身问问死亡事实是否如此。你的死亡会告诉你，你错了；除了它的触摸之外，一切都无关紧要。它会告诉你：‘我还没有碰你呢！’”</li><li>不知为什么，他的笑声不再像过去那样无礼而令人讨厌。我不认为笑的声调、大小、笑意和过去有什么不同，不同的是我的心情。从死亡随时会降临的观点看，我的恐惧与恼火都失去了意义。</li></ol><p>猎人知道他会一次又一次地把猎物引进陷阱里，因此他不忧虑。他忧虑的话，就会被得到，不知不觉地被得到。一旦你开始忧虑，你就会因为绝望而抓住任何东西；一旦你抓住东西不放，就会为之耗尽你的力量，或耗尽你所抓住的人或东西。</p><p>把你的注意力集中在你和死亡的联系上，没有反悔、悲伤或忧虑。集中心思去想，你已经没有时间了，然后让你的行动自然发生，让你的一举一动都成为你在世上的最后一战。只有在这种情况下，你的行动才有正当的力量。否则，你穷尽一生所为，也不过是个胆怯的人而已</p><h2 id="参考">参考</h2><ol type="1"><li><a href="https://weread.qq.com/web/reader/7c332a60717d350b7c30d04">唐王三部曲-微信读书</a></li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="停顿世界">停顿世界</h2><blockquote><p>stopping the world。</p><p>丢掉自我重要感 和 抹掉个人历史</p></blockquote><ol type="1"><li>抹掉一切个人历史，免得我们受别人思想的牵绊。</li><li>"他们一旦知道你，你就被视为理所当然的，从那一刻开始，你就没有办法打破他们思想的束缚。我个人很喜欢那种（抹掉个人历史带来的）不为人知的终极自由。没有人能确切地了解我，像人们了解你一样"。</li><li>“如果一个人没有个人历史，不论他说什么，都不会被当成谎言，而你的麻烦是你一定得向每个人说明每一件事，同时又希望保持行为的新鲜感。可是在说明所做的一切之后，你没法再兴奋，为了能好好活下去，你只好撒谎。</li><li>“从现在开始，你必须只让人知道你愿意让人知道的，但是不必说明你是怎样做到的。”</li><li>我们只有两条路；或者把一切都当成确定的、真实的：或者不这么做。如果走第一条路，最后会对自己以及世界感到厌倦至死。如果走第二条路，抹去个人历史，我们就在自己周围制造出一层雾，那是一种让人刺激而且神秘的状态，没有人知道兔子会从哪里冒出来，甚至连自己也不知道。</li><li>在没有一样事情是确定时，我们会一直保持警觉，会永远小心翼翼，不知道兔子藏在哪丛灌木后面，要远比假装知道一切来得刺激。</li><li>“你把自己看得太重了，”他慢条斯理地说，“在你心里，你把你自己看得太该死的重要。一定要改！你是如此该死的重要，使你觉得可以理直气壮地对每件事恼火。你是如此该死的重要，所以事情只要不如你的意，你可以掉头就走。你大概以为那样表示你有个性。胡扯！你是又软弱，又自命不凡！”.他指出，因为我加在身上这种夸大的重要感，使我这辈子一事无成。</li><li>“自我重要感是另一件必须丢弃的东西，就像个人历史。”</li><li>我喜欢他这种如谜般的谈话，神秘而带挑战性。不过，我无法判断这些是深奥难懂还是一派胡言。</li><li>我们现在所关心的是丢掉自我重要感。只要你还是感觉你是世界上最重要的事物，就不能真正欣赏周围的世界，就好像一匹戴着眼罩的马只能看到一个远离一切事物的自己</li><li>死亡是我们永恒的伴侣，”唐望以最严肃的语气说，“它永远在我们的左边，一臂之遥。在你监视白鹰时，它也在监视你，它在你耳边低语，于是你感觉到了它的寒意，就像今天一样。死亡永远在监视你，直到有一天它轻轻碰触你。</li><li>“你这个男孩，偷偷地潜行追踪猎物，也知道耐心等待，就像死亡的等待。你非常清楚死亡就在我们的左边，就像你在白鹰的左边那样。”</li><li>“如果我们知道死亡正在潜猎我们，又怎能感觉自己如此重要呢？”他问。</li><li>“当你不耐烦时，”他继续说，“你应该转向左边，向死亡寻求忠告。如果死亡对你打个手势，或你瞥见了它，或者你只要感觉它在那儿守望你，你就可以抛弃许多令人心烦的琐事。”</li><li>死亡是我们仅有的明智忠告者。当你觉得一切都不顺利，一切就要完蛋的时候，转身问问死亡事实是否如此。你的死亡会告诉你，你错了；除了它的触摸之外，一切都无关紧要。它会告诉你：‘我还没有碰你呢！’</li><li>不知为什么，他的笑声不再像过去那样无礼而令人讨厌。我不认为笑的声调、大小、笑意和过去有什么不同，不同的是我的心情。从死亡随时会降临的观点看，我的恐惧与恼火都失去了意义。</li><li>猎人知道他会一次又一次地把猎物引进陷阱里，因此他不忧虑。他忧虑的话，就会被得到，不知不觉地被得到。一旦你开始忧虑，你就会因为绝望而抓住任何东西；一旦你抓住东西不放，就会为之耗尽你的力量，或耗尽你所抓住的人或东西。</li><li>把你的注意力集中在你和死亡的联系上，没有反悔、悲伤或忧虑。集中心思去想，你已经没有时间了，然后让你的行动自然发生，让你的一举一动都成为你在世上的最后一战。只有在这种情况下，你的行动才有正当的力量。否则，你穷尽一生所为，也不过是个胆怯的人而已</li></ol><h2 id="参考">参考</h2><ol type="1"><li><a href="https://weread.qq.com/web/reader/7c332a60717d350b7c30d04">唐王三部曲-微信读书</a></li></ol>]]></content>
     
     
       
@@ -342,10 +343,10 @@
     <summary type="html">&lt;h2 id=&quot;停顿世界&quot;&gt;停顿世界&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;stopping the world。&lt;/p&gt;
+&lt;p&gt;丢掉自我重要感 和 抹掉个人历史&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;抹掉一切个人历史，免得我们受别人思想的牵绊。&lt;/li&gt;
-&lt;li&gt;&quot;他们一旦知道你，你就被</summary>
+&lt;li&gt;抹掉一切个人历史，免得我们受别人思想的牵</summary>
       
     
     
@@ -419,13 +420,13 @@
     <category term="阅读" scheme="https://chiechie.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="计算机原理" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    <category term="大数据" scheme="https://chiechie.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
     <category term="读书笔记" scheme="https://chiechie.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
-    <category term="分布式计算" scheme="https://chiechie.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/"/>
+    <category term="计算机原理" scheme="https://chiechie.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
     
-    <category term="大数据" scheme="https://chiechie.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    <category term="分布式计算" scheme="https://chiechie.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/"/>
     
   </entry>
   

@@ -33,8 +33,6 @@ categories:
 
 9. 满足协方差平稳性的随机过程满足表示定理(wold representation):
 
-   
-
 10. 表示定义的应用-给定一个时间序列，希望确定背后的分布：
 
     1. 假设：背后的随机过程由两部分构成，历史信息 + 白噪声，历史信息是过去p段时间的信息的线性变换，白噪声是的平稳的随机过程
@@ -73,8 +71,9 @@ categories:
 ![image-20210715105014565](./image-20210715105014565.png)
 
 7. 经典的时序分析模型ARMA(p, q) 表示，对观测变量的多项式滞后操作+对噪声的多项式滞后操作，噪声$\eta_t$是一个维纳过程
-8. 随机游走就是一个一阶自回归模型，但是非平稳
-9. ARMA拓展到非平稳数据--ARIMA
+8. 随机游走就是一个一阶自回归模型，但是非平稳.
+9. 自回归模型如果满足，特征方程的p个根（复数），都在单位元外面，该随机过程是平稳的。本质上是对回归函数的逆函数施加的收敛性约束。
+10. ARMA拓展到非平稳数据--ARIMA
 
 
 
@@ -90,7 +89,10 @@ categories:
 
    ![image-20210715140721430](/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715140721430.png)
 
-3. AR（p）模型
+3. AR（p）模型的平稳条件：
+
+   ![image-20210715145052508](/Users/stellazhao/research_space/chiechie.github.io/source/_posts/timeseries/timeseries-intro/image-20210715145052508.png)
+
 4. 
 
 
